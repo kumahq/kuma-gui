@@ -84,38 +84,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/meshes/{mesh}/dataplanes/{name}/_overview": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getDataplaneOverview"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/meshes/{mesh}/dataplanes/_overview": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getDataplaneOverviewList"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/meshes/{mesh}/dataplanes/{name}/_config": {
         parameters: {
             query?: never;
@@ -128,6 +96,126 @@ export interface paths {
          * @description Returns the [xds](https://www.envoyproxy.io/docs/envoy/latest/api-docs/xds_protocol) configuration of the proxy.
          */
         get: operations["get-dataplanes-xds-config"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/meshes/{mesh}/dataplanes/{name}/_layout": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get networking layout for this dataplane
+         * @description Returns detailed dataplane networking layout with most important information on dataplane and list of its inbounds and outbounds
+         */
+        get: operations["get-dataplanes-layout"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/meshes/{mesh}/dataplanes/{name}/_policies": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get proxy policies for this dataplane
+         * @description Returns proxy level policy configuration derived from combining all proxy policies selecting this dataplane
+         */
+        get: operations["get-proxy-policy-conf"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/meshes/{mesh}/dataplanes/{name}/_inbounds/{inbound-kri}/_policies": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get policies for this inbound
+         * @description Returns inbound policy configuration derived from combining all policies selecting this dataplane
+         */
+        get: operations["get-inbound-policy-conf"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/meshes/{mesh}/dataplanes/{name}/_outbounds/{kri}/_policies": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get policies for this outbound
+         * @description Returns outbound policy configuration derived from combining all policies selecting this dataplane
+         */
+        get: operations["get-outbound-policy-conf"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/meshes/{mesh}/dataplanes/{name}/_outbounds/{kri}/_routes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get routes configuration for this outbound
+         * @description Returns routes configuration derived from combining all routes on this outbound
+         */
+        get: operations["get-outbound-routes"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/meshes/{mesh}/dataplanes/{name}/_outbounds/{outbound-kri}/_routes/{route-kri}/_policies": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get policies for this route
+         * @description Returns route policy configuration derived from combining all policies selecting this dataplane
+         */
+        get: operations["get-route-policy-conf"];
         put?: never;
         post?: never;
         delete?: never;
@@ -788,6 +876,38 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/meshes/{mesh}/dataplanes/{name}/_overview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getDataplaneOverview"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/meshes/{mesh}/dataplanes/_overview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getDataplaneOverviewList"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/meshes/{name}": {
         parameters: {
             query?: never;
@@ -1158,7 +1278,6 @@ export interface components {
             next?: string;
             items: components["schemas"]["Meta"][];
         };
-        DataplaneOverviewWithMeta: components["schemas"]["Meta"] & components["schemas"]["DataplaneOverview"];
         /** DataplaneXDSConfig */
         DataplaneXDSConfig: {
             /** @description The raw XDS config as an inline JSON object */
@@ -1319,6 +1438,25 @@ export interface components {
         InspectHostnameZone: {
             /** @example east */
             name: string;
+        };
+        /**
+         * DataplaneLayout
+         * @description Dataplane networking layout. It contains information most important information about dataplane and lists of available inbounds and outbounds
+         */
+        DataplaneNetworkingLayout: {
+            /** @example kri_dp_default_default_kuma-demo_demo-app-75ff54499c-ttwd7_http-port */
+            kri: string;
+            /** @example {
+             *       "k8s.kuma.io/namespace": "kuma-demo",
+             *       "kuma.io/display-name": "demo-app",
+             *       "kuma.io/mesh": "default",
+             *       "kuma.io/origin": "zone"
+             *     } */
+            labels: {
+                [key: string]: string;
+            };
+            inbounds: components["schemas"]["DataplaneInbound"][];
+            outbounds: components["schemas"]["DataplaneOutbound"][];
         };
         /** Invalid Parameters */
         InvalidParameters: {
@@ -1512,447 +1650,6 @@ export interface components {
             hash: string;
             match: Record<string, never>;
         };
-        PrometheusMetricsBackendConfig: {
-            /** @description Map with the configuration of applications which metrics are going to be
-             *     scrapped by kuma-dp. */
-            aggregate?: {
-                /** @description Address on which a service expose HTTP endpoint with Prometheus metrics. */
-                address?: string;
-                /** @description If false then the application won't be scrapped. If nil, then it is treated
-                 *     as true and kuma-dp scrapes metrics from the service. */
-                enabled?: boolean;
-                /** @description Name which identify given configuration. */
-                name?: string;
-                /** @description Path on which a service expose HTTP endpoint with Prometheus metrics. */
-                path?: string;
-                /** @description Port on which a service expose HTTP endpoint with Prometheus metrics. */
-                port?: number;
-            }[];
-            /** @description Configuration of Envoy's metrics. */
-            envoy?: {
-                /** @description FilterRegex value that is going to be passed to Envoy for filtering
-                 *     Envoy metrics. */
-                filterRegex?: string;
-                /** @description If true then return metrics that Envoy has updated (counters incremented
-                 *     at least once, gauges changed at least once, and histograms added to at
-                 *     least once). If nil, then it is treated as false. */
-                usedOnly?: boolean;
-            };
-            /** @description Path on which a dataplane should expose HTTP endpoint with Prometheus
-             *     metrics. */
-            path?: string;
-            /** @description Port on which a dataplane should expose HTTP endpoint with Prometheus
-             *     metrics. */
-            port?: number;
-            /** @description If true then endpoints for scraping metrics won't require mTLS even if mTLS
-             *     is enabled in Mesh. If nil, then it is treated as false. */
-            skipMTLS?: boolean;
-            /** @description Tags associated with an application this dataplane is deployed next to,
-             *     e.g. service=web, version=1.0.
-             *     `service` tag is mandatory. */
-            tags?: {
-                [key: string]: string;
-            };
-            /** @description Configuration of TLS for prometheus listener. */
-            tls?: {
-                /** @description mode defines how configured is the TLS for Prometheus.
-                 *     Supported values, delegated, disabled, activeMTLSBackend. Default to
-                 *     `activeMTLSBackend`. */
-                mode?: string | number;
-            };
-        };
-        DataplaneOverview: {
-            dataplane?: {
-                /** @description Configuration for metrics that should be collected and exposed by the
-                 *     data plane proxy.
-                 *
-                 *     Settings defined here will override their respective defaults
-                 *     defined at a Mesh level. */
-                metrics?: {
-                    conf?: components["schemas"]["PrometheusMetricsBackendConfig"];
-                    /** @description Name of the backend, can be then used in Mesh.metrics.enabledBackend */
-                    name?: string;
-                    /** @description Type of the backend (Kuma ships with 'prometheus') */
-                    type?: string;
-                };
-                /** @description Networking describes inbound and outbound interfaces of the data plane
-                 *     proxy. */
-                networking?: {
-                    /** @description IP on which the data plane proxy is accessible to the control plane and
-                     *     other data plane proxies in the same network. This can also be a
-                     *     hostname, in which case the control plane will periodically resolve it. */
-                    address?: string;
-                    /** @description Admin describes configuration related to Envoy Admin API.
-                     *     Due to security, all the Envoy Admin endpoints are exposed only on
-                     *     localhost. Additionally, Envoy will expose `/ready` endpoint on
-                     *     `networking.address` for health checking systems to be able to check the
-                     *     state of Envoy. The rest of the endpoints exposed on `networking.address`
-                     *     are always protected by mTLS and only meant to be consumed internally by
-                     *     the control plane. */
-                    admin?: {
-                        /** @description Port on which Envoy Admin API server will be listening */
-                        port?: number;
-                    };
-                    /** @description In some situations, a data plane proxy resides in a private network (e.g.
-                     *     Docker) and is not reachable via `address` to other data plane proxies.
-                     *     `advertisedAddress` is configured with a routable address for such data
-                     *     plane proxy so that other proxies in the mesh can connect to it over
-                     *     `advertisedAddress` and not via address.
-                     *
-                     *     Envoy still binds to the `address`, not `advertisedAddress`. */
-                    advertisedAddress?: string;
-                    /** @description Gateway describes a configuration of the gateway of the data plane proxy. */
-                    gateway?: {
-                        /** @description Tags associated with a gateway of this data plane to, e.g.
-                         *     `kuma.io/service=gateway`, `env=prod`. `kuma.io/service` tag is
-                         *     mandatory. */
-                        tags?: {
-                            [key: string]: string;
-                        };
-                        /** @description Type of gateway this data plane proxy manages.
-                         *     There are two types: `DELEGATED` and `BUILTIN`. Defaults to
-                         *     `DELEGATED`.
-                         *
-                         *     A `DELEGATED` gateway is an independently deployed proxy (e.g., Kong,
-                         *     Contour, etc) that receives inbound traffic that is not proxied by
-                         *     Kuma, and it sends outbound traffic into the data plane proxy.
-                         *
-                         *     The `BUILTIN` gateway type causes the data plane proxy itself to be
-                         *     configured as a gateway.
-                         *
-                         *     See https://kuma.io/docs/latest/explore/gateway/ for more information. */
-                        type?: string | number;
-                    };
-                    /** @description Inbound describes a list of inbound interfaces of the data plane proxy.
-                     *
-                     *     Inbound describes a service implemented by the data plane proxy.
-                     *     All incoming traffic to a data plane proxy is going through inbound
-                     *     listeners. For every defined Inbound there is a corresponding Envoy
-                     *     Listener. */
-                    inbound?: {
-                        /** @description Address on which inbound listener will be exposed.
-                         *     Defaults to `networking.address`. */
-                        address?: string;
-                        /** @description Health describes the status of an inbound.
-                         *     If 'health' is nil we consider data plane proxy as healthy.
-                         *     Unhealthy data plane proxies are excluded from Endpoints Discovery
-                         *     Service (EDS). On Kubernetes, it is filled automatically by the control
-                         *     plane if Pod has readiness probe configured. On Universal, it can be
-                         *     set by the external health checking system, but the most common way is
-                         *     to use service probes.
-                         *
-                         *     See https://kuma.io/docs/latest/documentation/health for more
-                         *     information. */
-                        health?: {
-                            /** @description Ready indicates if the data plane proxy is ready to serve the
-                             *     traffic. */
-                            ready?: boolean;
-                        };
-                        /** @description Name adds another way of referencing this port, usable with MeshService */
-                        name?: string;
-                        /** @description Port of the inbound interface that will forward requests to the
-                         *     service.
-                         *
-                         *     When transparent proxying is used, it is a port on which the service is
-                         *     listening to. When transparent proxying is not used, Envoy will bind to
-                         *     this port. */
-                        port?: number;
-                        /** @description Address of the service that requests will be forwarded to.
-                         *     Defaults to 'inbound.address', since Kuma DP should be deployed next
-                         *     to the service. */
-                        serviceAddress?: string;
-                        /** @description Port of the service that requests will be forwarded to.
-                         *     Defaults to the same value as `port`. */
-                        servicePort?: number;
-                        /** @description ServiceProbe defines parameters for probing the service next to
-                         *     sidecar. When service probe is defined, Envoy will periodically health
-                         *     check the application next to it and report the status to the control
-                         *     plane. On Kubernetes, Kuma deployments rely on Kubernetes probes so
-                         *     this is not used.
-                         *
-                         *     See https://kuma.io/docs/latest/documentation/health for more
-                         *     information. */
-                        serviceProbe?: {
-                            /**
-                             * Format: uint32
-                             * @description Number of consecutive healthy checks before considering a host
-                             *     healthy.
-                             */
-                            healthyThreshold?: number;
-                            /** @description Interval between consecutive health checks. */
-                            interval?: {
-                                nanos?: number;
-                                seconds?: number;
-                            };
-                            /** @description Tcp checker tries to establish tcp connection with destination */
-                            tcp?: Record<string, never>;
-                            /** @description Maximum time to wait for a health check response. */
-                            timeout?: {
-                                nanos?: number;
-                                seconds?: number;
-                            };
-                            /**
-                             * Format: uint32
-                             * @description Number of consecutive unhealthy checks before considering a host
-                             *     unhealthy.
-                             */
-                            unhealthyThreshold?: number;
-                        };
-                        /** @description State describes the current state of the listener. */
-                        state?: string | number;
-                        /** @description Tags associated with an application this data plane proxy is deployed
-                         *     next to, e.g. `kuma.io/service=web`, `version=1.0`. You can then
-                         *     reference these tags in policies like MeshTrafficPermission.
-                         *     `kuma.io/service` tag is mandatory. */
-                        tags?: {
-                            [key: string]: string;
-                        };
-                    }[];
-                    /** @description Outbound describes a list of services consumed by the data plane proxy.
-                     *     For every defined Outbound, there is a corresponding Envoy Listener. */
-                    outbound?: {
-                        /** @description IP on which the consumed service will be available to this data plane
-                         *     proxy. On Kubernetes, it's usually ClusterIP of a Service or PodIP of a
-                         *     Headless Service. Defaults to 127.0.0.1 */
-                        address?: string;
-                        /** @description BackendRef is a way to target MeshService.
-                         *     Experimental. Do not use on production yet. */
-                        backendRef?: {
-                            /** @description Kind is a type of the object to target. Allowed: MeshService */
-                            kind?: string;
-                            /** @description Labels to select a single object.
-                             *     If no object is selected then outbound is not created.
-                             *     If multiple objects are selected then the oldest one is used. */
-                            labels?: {
-                                [key: string]: string;
-                            };
-                            /** @description Name of the targeted object */
-                            name?: string;
-                            /** @description Port of the targeted object. Required when kind is MeshService. */
-                            port?: number;
-                        };
-                        /** @description Port on which the consumed service will be available to this data plane
-                         *     proxy. When transparent proxying is not used, Envoy will bind to this
-                         *     port. */
-                        port?: number;
-                        /** @description Tags of consumed data plane proxies.
-                         *     `kuma.io/service` tag is required.
-                         *     These tags can then be referenced in `destinations` section of policies
-                         *     like TrafficRoute or in `to` section in policies like MeshAccessLog. It
-                         *     is recommended to only use `kuma.io/service`. If you need to consume
-                         *     specific data plane proxy of a service (for example: `version=v2`) the
-                         *     better practice is to use TrafficRoute. */
-                        tags?: {
-                            [key: string]: string;
-                        };
-                    }[];
-                    /** @description TransparentProxying describes the configuration for transparent proxying.
-                     *     It is used by default on Kubernetes. */
-                    transparentProxying?: {
-                        /** @description List of services that will be accessed directly via IP:PORT
-                         *     Use `*` to indicate direct access to every service in the Mesh.
-                         *     Using `*` to directly access every service is a resource-intensive
-                         *     operation, use it only if needed. */
-                        directAccessServices?: string[];
-                        /** @description The IP family mode to enable for. Can be "IPv4" or "DualStack". */
-                        ipFamilyMode?: string | number;
-                        /** @description Reachable backend via transparent proxy when running with
-                         *     MeshExternalService, MeshService and MeshMultiZoneService. Setting an
-                         *     explicit list of refs can dramatically improve the performance of the
-                         *     mesh. If not specified, all services in the mesh are reachable. */
-                        reachableBackends?: {
-                            refs?: {
-                                /** @description Type of the backend: MeshService or MeshExternalService
-                                 *
-                                 *     	+required */
-                                kind?: string;
-                                /** @description Labels used to select backends
-                                 *
-                                 *     	+optional */
-                                labels?: {
-                                    [key: string]: string;
-                                };
-                                /** @description Name of the backend.
-                                 *
-                                 *     	+optional */
-                                name?: string;
-                                /** @description Namespace of the backend. Might be empty
-                                 *
-                                 *     	+optional */
-                                namespace?: string;
-                                /**
-                                 * Format: uint32
-                                 * @description Port of the backend.
-                                 *
-                                 *     	+optional
-                                 */
-                                port?: number;
-                            }[];
-                        };
-                        /** @description List of reachable services (represented by the value of
-                         *     `kuma.io/service`) via transparent proxying. Setting an explicit list
-                         *     can dramatically improve the performance of the mesh. If not specified,
-                         *     all services in the mesh are reachable. */
-                        reachableServices?: string[];
-                        /** @description Port on which all inbound traffic is being transparently redirected. */
-                        redirectPortInbound?: number;
-                        /** @description Port on which all outbound traffic is being transparently redirected. */
-                        redirectPortOutbound?: number;
-                    };
-                };
-                /** @description Probes describe a list of endpoints that will be exposed without mTLS.
-                 *     This is useful to expose the health endpoints of the application so the
-                 *     orchestration system (e.g. Kubernetes) can still health check the
-                 *     application.
-                 *
-                 *     See
-                 *     https://kuma.io/docs/latest/policies/service-health-probes/#virtual-probes
-                 *     for more information.
-                 *     Deprecated: this feature will be removed for Universal; on Kubernetes, it's
-                 *     not needed anymore. */
-                probes?: {
-                    /** @description List of endpoints to expose without mTLS. */
-                    endpoints?: {
-                        /** @description Inbound path is a path of the application from which we expose the
-                         *     endpoint. It is recommended to be as specific as possible. */
-                        inboundPath?: string;
-                        /** @description Inbound port is a port of the application from which we expose the
-                         *     endpoint. */
-                        inboundPort?: number;
-                        /** @description Path is a path on which we expose inbound path on the probes port. */
-                        path?: string;
-                    }[];
-                    /** @description Port on which the probe endpoints will be exposed. This cannot overlap
-                     *     with any other ports. */
-                    port?: number;
-                };
-            };
-            dataplaneInsight?: {
-                /** @description Insights about mTLS for Dataplane. */
-                mTLS?: {
-                    /** @description Expiration time of the last certificate that was generated for a
-                     *     Dataplane. */
-                    certificateExpirationTime?: {
-                        nanos?: number;
-                        seconds?: number;
-                    };
-                    /** @description Number of certificate regenerations for a Dataplane. */
-                    certificateRegenerations?: number;
-                    /** @description Backend that was used to generate current certificate */
-                    issuedBackend?: string;
-                    /** @description Time on which the last certificate was generated. */
-                    lastCertificateRegeneration?: {
-                        nanos?: number;
-                        seconds?: number;
-                    };
-                    /** @description Supported backends (CA). */
-                    supportedBackends?: string[];
-                };
-                metadata?: Record<string, never>;
-                /** @description List of ADS subscriptions created by a given Dataplane. */
-                subscriptions?: {
-                    /** @description Time when a given Dataplane connected to the Control Plane. */
-                    connectTime?: {
-                        nanos?: number;
-                        seconds?: number;
-                    };
-                    /** @description Control Plane instance that handled given subscription. */
-                    controlPlaneInstanceId?: string;
-                    /** @description Time when a given Dataplane disconnected from the Control Plane. */
-                    disconnectTime?: {
-                        nanos?: number;
-                        seconds?: number;
-                    };
-                    /** @description Generation is an integer number which is periodically increased by the
-                     *     status sink */
-                    generation?: number;
-                    /** @description Unique id per ADS subscription. */
-                    id?: string;
-                    /** @description Status of the ADS subscription. */
-                    status?: {
-                        /** @description CDS defines all CDS stats. */
-                        cds?: {
-                            /** @description Number of xDS responses ACKed by the Dataplane. */
-                            responsesAcknowledged?: number;
-                            /** @description Number of xDS responses NACKed by the Dataplane. */
-                            responsesRejected?: number;
-                            /** @description Number of xDS responses sent to the Dataplane. */
-                            responsesSent?: number;
-                        };
-                        /** @description EDS defines all EDS stats. */
-                        eds?: {
-                            /** @description Number of xDS responses ACKed by the Dataplane. */
-                            responsesAcknowledged?: number;
-                            /** @description Number of xDS responses NACKed by the Dataplane. */
-                            responsesRejected?: number;
-                            /** @description Number of xDS responses sent to the Dataplane. */
-                            responsesSent?: number;
-                        };
-                        /** @description Time when status of a given ADS subscription was most recently updated. */
-                        lastUpdateTime?: {
-                            nanos?: number;
-                            seconds?: number;
-                        };
-                        /** @description LDS defines all LDS stats. */
-                        lds?: {
-                            /** @description Number of xDS responses ACKed by the Dataplane. */
-                            responsesAcknowledged?: number;
-                            /** @description Number of xDS responses NACKed by the Dataplane. */
-                            responsesRejected?: number;
-                            /** @description Number of xDS responses sent to the Dataplane. */
-                            responsesSent?: number;
-                        };
-                        /** @description RDS defines all RDS stats. */
-                        rds?: {
-                            /** @description Number of xDS responses ACKed by the Dataplane. */
-                            responsesAcknowledged?: number;
-                            /** @description Number of xDS responses NACKed by the Dataplane. */
-                            responsesRejected?: number;
-                            /** @description Number of xDS responses sent to the Dataplane. */
-                            responsesSent?: number;
-                        };
-                        /** @description Total defines an aggregate over individual xDS stats. */
-                        total?: {
-                            /** @description Number of xDS responses ACKed by the Dataplane. */
-                            responsesAcknowledged?: number;
-                            /** @description Number of xDS responses NACKed by the Dataplane. */
-                            responsesRejected?: number;
-                            /** @description Number of xDS responses sent to the Dataplane. */
-                            responsesSent?: number;
-                        };
-                    };
-                    /** @description Version of Envoy and Kuma dataplane */
-                    version?: {
-                        /** @description Versions of other dependencies, i.e. CoreDNS */
-                        dependencies?: {
-                            [key: string]: string;
-                        };
-                        /** @description Version of Envoy */
-                        envoy?: {
-                            /** @description Full build tag of Envoy version */
-                            build?: string;
-                            /** @description True iff Envoy version is compatible with Kuma DP version */
-                            kumaDpCompatible?: boolean;
-                            /** @description Version number of Envoy */
-                            version?: string;
-                        };
-                        /** @description Version of Kuma Dataplane */
-                        kumaDp?: {
-                            /** @description Build date of Kuma Dataplane version */
-                            buildDate?: string;
-                            /** @description Git commit of Kuma Dataplane version */
-                            gitCommit?: string;
-                            /** @description Git tag of Kuma Dataplane version */
-                            gitTag?: string;
-                            /** @description True iff Kuma DP version is compatible with Kuma CP version */
-                            kumaCpCompatible?: boolean;
-                            /** @description Version number of Kuma Dataplane */
-                            version?: string;
-                        };
-                    };
-                }[];
-            };
-        };
         JsonPatchItem: {
             /**
              * @description Operation to be performed.
@@ -1963,6 +1660,69 @@ export interface components {
             path: string;
             /** @description The value to be used within the operations. */
             value: unknown;
+        };
+        DataplaneInbound: {
+            kri: string;
+            port: number;
+            protocol: string;
+        };
+        DataplaneOutbound: {
+            kri: string;
+            port: number;
+            protocol: string;
+        };
+        /** @description The list of policies KRI that contributed to the 'conf'. The order is important as it reflects in what order confs were merged to get the resulting 'conf'. */
+        PolicyOrigin: {
+            kri: string;
+        };
+        PolicyConf: {
+            kind: string;
+            /** @description The final computed configuration for the data plane proxy, derived by merging all policies whose 'targetRef' field matches the proxy. The merging process follows [RFC 7396 (JSON Merge Patch)](https://datatracker.ietf.org/doc/html/rfc7396), with the order of merging influenced by factors such as where the policy was applied (e.g., custom namespace, system, or global control plane), policy role, and targetRef specificity. */
+            conf: {
+                [key: string]: unknown;
+            };
+            /** @description The list of policies KRI that contributed to the 'conf'. The order is important as it reflects in what order confs were merged to get the resulting 'conf'. */
+            origins: components["schemas"]["PolicyOrigin"][];
+        };
+        PoliciesList: {
+            /** @description The final computed configuration, derived by merging all policies whose 'targetRef' field matches the proxy. The merging process follows [RFC 7396 (JSON Merge Patch)](https://datatracker.ietf.org/doc/html/rfc7396), with the order of merging influenced by factors such as where the policy was applied (e.g., custom namespace, system, or global control plane), policy role, and targetRef specificity. */
+            policies: components["schemas"]["PolicyConf"][];
+        };
+        PolicyRule: {
+            /** @description The final computed configuration for the data plane proxy, derived by merging all policies whose 'targetRef' field matches the proxy. The merging process follows [RFC 7396 (JSON Merge Patch)](https://datatracker.ietf.org/doc/html/rfc7396), with the order of merging influenced by factors such as where the policy was applied (e.g., custom namespace, system, or global control plane), policy role, and targetRef specificity. */
+            conf: {
+                [key: string]: unknown;
+            };
+        };
+        InboundPolicyConf: {
+            kind: string;
+            rules: components["schemas"]["PolicyRule"][];
+            /** @description The list of policies KRI that contributed to the 'conf'. The order is important as it reflects in what order confs were merged to get the resulting 'conf'. */
+            origins: components["schemas"]["PolicyOrigin"][];
+        };
+        InboundPoliciesList: {
+            /** @description The final computed configuration, derived by merging all policies whose 'targetRef' field matches the proxy. The merging process follows [RFC 7396 (JSON Merge Patch)](https://datatracker.ietf.org/doc/html/rfc7396), with the order of merging influenced by factors such as where the policy was applied (e.g., custom namespace, system, or global control plane), policy role, and targetRef specificity. */
+            policies: components["schemas"]["InboundPolicyConf"][];
+        };
+        RouteConf: {
+            kind: string;
+            /** @description Computed list of routing rules */
+            rules: {
+                kri: string;
+                /** @description List of matches for which this rule will apply */
+                matches: {
+                    [key: string]: unknown;
+                }[];
+                /** @description The final computed configuratio for the data plane proxy, derived by merging all policies whose 'targetRef' field matches the proxy. The merging process follows [RFC 7396 (JSON Merge Patch)](https://datatracker.ietf.org/doc/html/rfc7396), with the order of merging influenced by factors such as where the policy was applied (e.g., custom namespace, system, or global control plane), policy role, and targetRef specificity. */
+                conf: {
+                    [key: string]: unknown;
+                };
+            }[];
+            origins?: components["schemas"]["PolicyOrigin"];
+        };
+        RoutesList: {
+            /** @description Computed list of routes */
+            routes: components["schemas"]["RouteConf"][];
         };
         NotFoundError: components["schemas"]["Error"] & {
             /** @example 404 */
@@ -4074,6 +3834,47 @@ export interface components {
                     /** @description Default is a configuration specific to the group of destinations referenced in
                      *     'targetRef' */
                     default?: {
+                        /** @description HashPolicies specify a list of request/connection properties that are used to calculate a hash.
+                         *     These hash policies are executed in the specified order. If a hash policy has the “terminal” attribute
+                         *     set to true, and there is already a hash generated, the hash is returned immediately,
+                         *     ignoring the rest of the hash policy list. */
+                        hashPolicies?: {
+                            connection?: {
+                                /** @description Hash on source IP address. */
+                                sourceIP?: boolean;
+                            };
+                            cookie?: {
+                                /** @description The name of the cookie that will be used to obtain the hash key. */
+                                name: string;
+                                /** @description The name of the path for the cookie. */
+                                path?: string;
+                                /** @description If specified, a cookie with the TTL will be generated if the cookie is not present. */
+                                ttl?: string;
+                            };
+                            filterState?: {
+                                /** @description The name of the Object in the per-request filterState, which is
+                                 *     an Envoy::Hashable object. If there is no data associated with the key,
+                                 *     or the stored object is not Envoy::Hashable, no hash will be produced. */
+                                key: string;
+                            };
+                            header?: {
+                                /** @description The name of the request header that will be used to obtain the hash key. */
+                                name: string;
+                            };
+                            queryParameter?: {
+                                /** @description The name of the URL query parameter that will be used to obtain the hash key.
+                                 *     If the parameter is not present, no hash will be produced. Query parameter names
+                                 *     are case-sensitive. */
+                                name: string;
+                            };
+                            /** @description Terminal is a flag that short-circuits the hash computing. This field provides
+                             *     a ‘fallback’ style of configuration: “if a terminal policy doesn’t work, fallback
+                             *     to rest of the policy list”, it saves time when the terminal policy works.
+                             *     If true, and there is already a hash computed, ignore rest of the list of hash polices. */
+                            terminal?: boolean;
+                            /** @enum {string} */
+                            type: "Header" | "Cookie" | "Connection" | "SourceIP" | "QueryParameter" | "FilterState";
+                        }[];
                         /** @description LoadBalancer allows to specify load balancing algorithm. */
                         loadBalancer?: {
                             /** @description LeastRequest selects N random available hosts as specified in 'choiceCount' (2 by default)
@@ -5329,7 +5130,7 @@ export interface components {
                     /** @description Default is a configuration specific to the group of destinations referenced in
                      *     'targetRef' */
                     default?: {
-                        /** @description gRPC defines a configuration of retries for gRPC traffic */
+                        /** @description GRPC defines a configuration of retries for GRPC traffic */
                         grpc?: {
                             /** @description BackOff is a configuration of durations which will be used in an exponential
                              *     backoff strategy between retries. */
@@ -6752,6 +6553,448 @@ export interface components {
             readonly warnings?: string[];
         };
         DataplaneDeleteSuccessResponse: Record<string, never>;
+        PrometheusMetricsBackendConfig: {
+            /** @description Map with the configuration of applications which metrics are going to be
+             *     scrapped by kuma-dp. */
+            aggregate?: {
+                /** @description Address on which a service expose HTTP endpoint with Prometheus metrics. */
+                address?: string;
+                /** @description If false then the application won't be scrapped. If nil, then it is treated
+                 *     as true and kuma-dp scrapes metrics from the service. */
+                enabled?: boolean;
+                /** @description Name which identify given configuration. */
+                name?: string;
+                /** @description Path on which a service expose HTTP endpoint with Prometheus metrics. */
+                path?: string;
+                /** @description Port on which a service expose HTTP endpoint with Prometheus metrics. */
+                port?: number;
+            }[];
+            /** @description Configuration of Envoy's metrics. */
+            envoy?: {
+                /** @description FilterRegex value that is going to be passed to Envoy for filtering
+                 *     Envoy metrics. */
+                filterRegex?: string;
+                /** @description If true then return metrics that Envoy has updated (counters incremented
+                 *     at least once, gauges changed at least once, and histograms added to at
+                 *     least once). If nil, then it is treated as false. */
+                usedOnly?: boolean;
+            };
+            /** @description Path on which a dataplane should expose HTTP endpoint with Prometheus
+             *     metrics. */
+            path?: string;
+            /** @description Port on which a dataplane should expose HTTP endpoint with Prometheus
+             *     metrics. */
+            port?: number;
+            /** @description If true then endpoints for scraping metrics won't require mTLS even if mTLS
+             *     is enabled in Mesh. If nil, then it is treated as false. */
+            skipMTLS?: boolean;
+            /** @description Tags associated with an application this dataplane is deployed next to,
+             *     e.g. service=web, version=1.0.
+             *     `service` tag is mandatory. */
+            tags?: {
+                [key: string]: string;
+            };
+            /** @description Configuration of TLS for prometheus listener. */
+            tls?: {
+                /** @description mode defines how configured is the TLS for Prometheus.
+                 *     Supported values, delegated, disabled, activeMTLSBackend. Default to
+                 *     `activeMTLSBackend`. */
+                mode?: string | number;
+            };
+        };
+        DataplaneOverviewWithMeta: components["schemas"]["Meta"] & components["schemas"]["DataplaneOverview"];
+        DataplaneOverview: {
+            dataplane?: {
+                /** @description Configuration for metrics that should be collected and exposed by the
+                 *     data plane proxy.
+                 *
+                 *     Settings defined here will override their respective defaults
+                 *     defined at a Mesh level. */
+                metrics?: {
+                    conf?: components["schemas"]["PrometheusMetricsBackendConfig"];
+                    /** @description Name of the backend, can be then used in Mesh.metrics.enabledBackend */
+                    name?: string;
+                    /** @description Type of the backend (Kuma ships with 'prometheus') */
+                    type?: string;
+                };
+                /** @description Networking describes inbound and outbound interfaces of the data plane
+                 *     proxy. */
+                networking?: {
+                    /** @description IP on which the data plane proxy is accessible to the control plane and
+                     *     other data plane proxies in the same network. This can also be a
+                     *     hostname, in which case the control plane will periodically resolve it. */
+                    address?: string;
+                    /** @description Admin describes configuration related to Envoy Admin API.
+                     *     Due to security, all the Envoy Admin endpoints are exposed only on
+                     *     localhost. Additionally, Envoy will expose `/ready` endpoint on
+                     *     `networking.address` for health checking systems to be able to check the
+                     *     state of Envoy. The rest of the endpoints exposed on `networking.address`
+                     *     are always protected by mTLS and only meant to be consumed internally by
+                     *     the control plane. */
+                    admin?: {
+                        /** @description Port on which Envoy Admin API server will be listening */
+                        port?: number;
+                    };
+                    /** @description In some situations, a data plane proxy resides in a private network (e.g.
+                     *     Docker) and is not reachable via `address` to other data plane proxies.
+                     *     `advertisedAddress` is configured with a routable address for such data
+                     *     plane proxy so that other proxies in the mesh can connect to it over
+                     *     `advertisedAddress` and not via address.
+                     *
+                     *     Envoy still binds to the `address`, not `advertisedAddress`. */
+                    advertisedAddress?: string;
+                    /** @description Gateway describes a configuration of the gateway of the data plane proxy. */
+                    gateway?: {
+                        /** @description Tags associated with a gateway of this data plane to, e.g.
+                         *     `kuma.io/service=gateway`, `env=prod`. `kuma.io/service` tag is
+                         *     mandatory. */
+                        tags?: {
+                            [key: string]: string;
+                        };
+                        /** @description Type of gateway this data plane proxy manages.
+                         *     There are two types: `DELEGATED` and `BUILTIN`. Defaults to
+                         *     `DELEGATED`.
+                         *
+                         *     A `DELEGATED` gateway is an independently deployed proxy (e.g., Kong,
+                         *     Contour, etc) that receives inbound traffic that is not proxied by
+                         *     Kuma, and it sends outbound traffic into the data plane proxy.
+                         *
+                         *     The `BUILTIN` gateway type causes the data plane proxy itself to be
+                         *     configured as a gateway.
+                         *
+                         *     See https://kuma.io/docs/latest/explore/gateway/ for more information. */
+                        type?: string | number;
+                    };
+                    /** @description Inbound describes a list of inbound interfaces of the data plane proxy.
+                     *
+                     *     Inbound describes a service implemented by the data plane proxy.
+                     *     All incoming traffic to a data plane proxy is going through inbound
+                     *     listeners. For every defined Inbound there is a corresponding Envoy
+                     *     Listener. */
+                    inbound?: {
+                        /** @description Address on which inbound listener will be exposed.
+                         *     Defaults to `networking.address`. */
+                        address?: string;
+                        /** @description Health describes the status of an inbound.
+                         *     If 'health' is nil we consider data plane proxy as healthy.
+                         *     Unhealthy data plane proxies are excluded from Endpoints Discovery
+                         *     Service (EDS). On Kubernetes, it is filled automatically by the control
+                         *     plane if Pod has readiness probe configured. On Universal, it can be
+                         *     set by the external health checking system, but the most common way is
+                         *     to use service probes.
+                         *
+                         *     See https://kuma.io/docs/latest/documentation/health for more
+                         *     information. */
+                        health?: {
+                            /** @description Ready indicates if the data plane proxy is ready to serve the
+                             *     traffic. */
+                            ready?: boolean;
+                        };
+                        /** @description Name adds another way of referencing this port, usable with MeshService */
+                        name?: string;
+                        /** @description Port of the inbound interface that will forward requests to the
+                         *     service.
+                         *
+                         *     When transparent proxying is used, it is a port on which the service is
+                         *     listening to. When transparent proxying is not used, Envoy will bind to
+                         *     this port. */
+                        port?: number;
+                        /** @description Address of the service that requests will be forwarded to.
+                         *     Defaults to 'inbound.address', since Kuma DP should be deployed next
+                         *     to the service. */
+                        serviceAddress?: string;
+                        /** @description Port of the service that requests will be forwarded to.
+                         *     Defaults to the same value as `port`. */
+                        servicePort?: number;
+                        /** @description ServiceProbe defines parameters for probing the service next to
+                         *     sidecar. When service probe is defined, Envoy will periodically health
+                         *     check the application next to it and report the status to the control
+                         *     plane. On Kubernetes, Kuma deployments rely on Kubernetes probes so
+                         *     this is not used.
+                         *
+                         *     See https://kuma.io/docs/latest/documentation/health for more
+                         *     information. */
+                        serviceProbe?: {
+                            /**
+                             * Format: uint32
+                             * @description Number of consecutive healthy checks before considering a host
+                             *     healthy.
+                             */
+                            healthyThreshold?: number;
+                            /** @description Interval between consecutive health checks. */
+                            interval?: {
+                                nanos?: number;
+                                seconds?: number;
+                            };
+                            /** @description Tcp checker tries to establish tcp connection with destination */
+                            tcp?: Record<string, never>;
+                            /** @description Maximum time to wait for a health check response. */
+                            timeout?: {
+                                nanos?: number;
+                                seconds?: number;
+                            };
+                            /**
+                             * Format: uint32
+                             * @description Number of consecutive unhealthy checks before considering a host
+                             *     unhealthy.
+                             */
+                            unhealthyThreshold?: number;
+                        };
+                        /** @description State describes the current state of the listener. */
+                        state?: string | number;
+                        /** @description Tags associated with an application this data plane proxy is deployed
+                         *     next to, e.g. `kuma.io/service=web`, `version=1.0`. You can then
+                         *     reference these tags in policies like MeshTrafficPermission.
+                         *     `kuma.io/service` tag is mandatory. */
+                        tags?: {
+                            [key: string]: string;
+                        };
+                    }[];
+                    /** @description Outbound describes a list of services consumed by the data plane proxy.
+                     *     For every defined Outbound, there is a corresponding Envoy Listener. */
+                    outbound?: {
+                        /** @description IP on which the consumed service will be available to this data plane
+                         *     proxy. On Kubernetes, it's usually ClusterIP of a Service or PodIP of a
+                         *     Headless Service. Defaults to 127.0.0.1 */
+                        address?: string;
+                        /** @description BackendRef is a way to target MeshService.
+                         *     Experimental. Do not use on production yet. */
+                        backendRef?: {
+                            /** @description Kind is a type of the object to target. Allowed: MeshService */
+                            kind?: string;
+                            /** @description Labels to select a single object.
+                             *     If no object is selected then outbound is not created.
+                             *     If multiple objects are selected then the oldest one is used. */
+                            labels?: {
+                                [key: string]: string;
+                            };
+                            /** @description Name of the targeted object */
+                            name?: string;
+                            /** @description Port of the targeted object. Required when kind is MeshService. */
+                            port?: number;
+                        };
+                        /** @description Port on which the consumed service will be available to this data plane
+                         *     proxy. When transparent proxying is not used, Envoy will bind to this
+                         *     port. */
+                        port?: number;
+                        /** @description Tags of consumed data plane proxies.
+                         *     `kuma.io/service` tag is required.
+                         *     These tags can then be referenced in `destinations` section of policies
+                         *     like TrafficRoute or in `to` section in policies like MeshAccessLog. It
+                         *     is recommended to only use `kuma.io/service`. If you need to consume
+                         *     specific data plane proxy of a service (for example: `version=v2`) the
+                         *     better practice is to use TrafficRoute. */
+                        tags?: {
+                            [key: string]: string;
+                        };
+                    }[];
+                    /** @description TransparentProxying describes the configuration for transparent proxying.
+                     *     It is used by default on Kubernetes. */
+                    transparentProxying?: {
+                        /** @description List of services that will be accessed directly via IP:PORT
+                         *     Use `*` to indicate direct access to every service in the Mesh.
+                         *     Using `*` to directly access every service is a resource-intensive
+                         *     operation, use it only if needed. */
+                        directAccessServices?: string[];
+                        /** @description The IP family mode to enable for. Can be "IPv4" or "DualStack". */
+                        ipFamilyMode?: string | number;
+                        /** @description Reachable backend via transparent proxy when running with
+                         *     MeshExternalService, MeshService and MeshMultiZoneService. Setting an
+                         *     explicit list of refs can dramatically improve the performance of the
+                         *     mesh. If not specified, all services in the mesh are reachable. */
+                        reachableBackends?: {
+                            refs?: {
+                                /** @description Type of the backend: MeshService or MeshExternalService
+                                 *
+                                 *     	+required */
+                                kind?: string;
+                                /** @description Labels used to select backends
+                                 *
+                                 *     	+optional */
+                                labels?: {
+                                    [key: string]: string;
+                                };
+                                /** @description Name of the backend.
+                                 *
+                                 *     	+optional */
+                                name?: string;
+                                /** @description Namespace of the backend. Might be empty
+                                 *
+                                 *     	+optional */
+                                namespace?: string;
+                                /**
+                                 * Format: uint32
+                                 * @description Port of the backend.
+                                 *
+                                 *     	+optional
+                                 */
+                                port?: number;
+                            }[];
+                        };
+                        /** @description List of reachable services (represented by the value of
+                         *     `kuma.io/service`) via transparent proxying. Setting an explicit list
+                         *     can dramatically improve the performance of the mesh. If not specified,
+                         *     all services in the mesh are reachable. */
+                        reachableServices?: string[];
+                        /** @description Port on which all inbound traffic is being transparently redirected. */
+                        redirectPortInbound?: number;
+                        /** @description Port on which all outbound traffic is being transparently redirected. */
+                        redirectPortOutbound?: number;
+                    };
+                };
+                /** @description Probes describe a list of endpoints that will be exposed without mTLS.
+                 *     This is useful to expose the health endpoints of the application so the
+                 *     orchestration system (e.g. Kubernetes) can still health check the
+                 *     application.
+                 *
+                 *     See
+                 *     https://kuma.io/docs/latest/policies/service-health-probes/#virtual-probes
+                 *     for more information.
+                 *     Deprecated: this feature will be removed for Universal; on Kubernetes, it's
+                 *     not needed anymore. */
+                probes?: {
+                    /** @description List of endpoints to expose without mTLS. */
+                    endpoints?: {
+                        /** @description Inbound path is a path of the application from which we expose the
+                         *     endpoint. It is recommended to be as specific as possible. */
+                        inboundPath?: string;
+                        /** @description Inbound port is a port of the application from which we expose the
+                         *     endpoint. */
+                        inboundPort?: number;
+                        /** @description Path is a path on which we expose inbound path on the probes port. */
+                        path?: string;
+                    }[];
+                    /** @description Port on which the probe endpoints will be exposed. This cannot overlap
+                     *     with any other ports. */
+                    port?: number;
+                };
+            };
+            dataplaneInsight?: {
+                /** @description Insights about mTLS for Dataplane. */
+                mTLS?: {
+                    /** @description Expiration time of the last certificate that was generated for a
+                     *     Dataplane. */
+                    certificateExpirationTime?: {
+                        nanos?: number;
+                        seconds?: number;
+                    };
+                    /** @description Number of certificate regenerations for a Dataplane. */
+                    certificateRegenerations?: number;
+                    /** @description Backend that was used to generate current certificate */
+                    issuedBackend?: string;
+                    /** @description Time on which the last certificate was generated. */
+                    lastCertificateRegeneration?: {
+                        nanos?: number;
+                        seconds?: number;
+                    };
+                    /** @description Supported backends (CA). */
+                    supportedBackends?: string[];
+                };
+                metadata?: Record<string, never>;
+                /** @description List of ADS subscriptions created by a given Dataplane. */
+                subscriptions?: {
+                    /** @description Time when a given Dataplane connected to the Control Plane. */
+                    connectTime?: {
+                        nanos?: number;
+                        seconds?: number;
+                    };
+                    /** @description Control Plane instance that handled given subscription. */
+                    controlPlaneInstanceId?: string;
+                    /** @description Time when a given Dataplane disconnected from the Control Plane. */
+                    disconnectTime?: {
+                        nanos?: number;
+                        seconds?: number;
+                    };
+                    /** @description Generation is an integer number which is periodically increased by the
+                     *     status sink */
+                    generation?: number;
+                    /** @description Unique id per ADS subscription. */
+                    id?: string;
+                    /** @description Status of the ADS subscription. */
+                    status?: {
+                        /** @description CDS defines all CDS stats. */
+                        cds?: {
+                            /** @description Number of xDS responses ACKed by the Dataplane. */
+                            responsesAcknowledged?: number;
+                            /** @description Number of xDS responses NACKed by the Dataplane. */
+                            responsesRejected?: number;
+                            /** @description Number of xDS responses sent to the Dataplane. */
+                            responsesSent?: number;
+                        };
+                        /** @description EDS defines all EDS stats. */
+                        eds?: {
+                            /** @description Number of xDS responses ACKed by the Dataplane. */
+                            responsesAcknowledged?: number;
+                            /** @description Number of xDS responses NACKed by the Dataplane. */
+                            responsesRejected?: number;
+                            /** @description Number of xDS responses sent to the Dataplane. */
+                            responsesSent?: number;
+                        };
+                        /** @description Time when status of a given ADS subscription was most recently updated. */
+                        lastUpdateTime?: {
+                            nanos?: number;
+                            seconds?: number;
+                        };
+                        /** @description LDS defines all LDS stats. */
+                        lds?: {
+                            /** @description Number of xDS responses ACKed by the Dataplane. */
+                            responsesAcknowledged?: number;
+                            /** @description Number of xDS responses NACKed by the Dataplane. */
+                            responsesRejected?: number;
+                            /** @description Number of xDS responses sent to the Dataplane. */
+                            responsesSent?: number;
+                        };
+                        /** @description RDS defines all RDS stats. */
+                        rds?: {
+                            /** @description Number of xDS responses ACKed by the Dataplane. */
+                            responsesAcknowledged?: number;
+                            /** @description Number of xDS responses NACKed by the Dataplane. */
+                            responsesRejected?: number;
+                            /** @description Number of xDS responses sent to the Dataplane. */
+                            responsesSent?: number;
+                        };
+                        /** @description Total defines an aggregate over individual xDS stats. */
+                        total?: {
+                            /** @description Number of xDS responses ACKed by the Dataplane. */
+                            responsesAcknowledged?: number;
+                            /** @description Number of xDS responses NACKed by the Dataplane. */
+                            responsesRejected?: number;
+                            /** @description Number of xDS responses sent to the Dataplane. */
+                            responsesSent?: number;
+                        };
+                    };
+                    /** @description Version of Envoy and Kuma dataplane */
+                    version?: {
+                        /** @description Versions of other dependencies, i.e. CoreDNS */
+                        dependencies?: {
+                            [key: string]: string;
+                        };
+                        /** @description Version of Envoy */
+                        envoy?: {
+                            /** @description Full build tag of Envoy version */
+                            build?: string;
+                            /** @description True iff Envoy version is compatible with Kuma DP version */
+                            kumaDpCompatible?: boolean;
+                            /** @description Version number of Envoy */
+                            version?: string;
+                        };
+                        /** @description Version of Kuma Dataplane */
+                        kumaDp?: {
+                            /** @description Build date of Kuma Dataplane version */
+                            buildDate?: string;
+                            /** @description Git commit of Kuma Dataplane version */
+                            gitCommit?: string;
+                            /** @description Git tag of Kuma Dataplane version */
+                            gitTag?: string;
+                            /** @description True iff Kuma DP version is compatible with Kuma CP version */
+                            kumaCpCompatible?: boolean;
+                            /** @description Version number of Kuma Dataplane */
+                            version?: string;
+                        };
+                    };
+                }[];
+            };
+        };
         FileLoggingBackendConfig: {
             /** @description Path to a file that logs will be written to */
             path?: string;
@@ -7057,6 +7300,11 @@ export interface components {
             readonly warnings?: string[];
         };
         MeshGatewayDeleteSuccessResponse: Record<string, never>;
+        Zone: {
+            /** @description enable allows to turn the zone on/off and exclude the whole zone from
+             *     balancing traffic on it */
+            enabled?: boolean;
+        };
         HostnameGeneratorItem: {
             /**
              * @description the type of the resource
@@ -7095,7 +7343,7 @@ export interface components {
                         };
                     };
                 };
-                template?: string;
+                template: string;
             };
             /**
              * Format: date-time
@@ -7143,7 +7391,10 @@ export interface components {
                      * @example example.com
                      */
                     address: string;
-                    /** @description Port of the endpoint */
+                    /**
+                     * Format: int32
+                     * @description Port of the endpoint
+                     */
                     port: number;
                 }[];
                 /** @description Extension struct for a plugin configuration, in the presence of an extension `endpoints` and `tls` are not required anymore - it's up to the extension to validate them independently. */
@@ -7155,7 +7406,10 @@ export interface components {
                 };
                 /** @description Match defines traffic that should be routed through the sidecar. */
                 match: {
-                    /** @description Port defines a port to which a user does request. */
+                    /**
+                     * Format: int32
+                     * @description Port defines a port to which a user does request.
+                     */
                     port: number;
                     /**
                      * @description Protocol defines a protocol of the communication. Possible values: `tcp`, `grpc`, `http`, `http2`.
@@ -7352,8 +7606,7 @@ export interface components {
                 selector: {
                     /** @description MeshService selects MeshServices */
                     meshService: {
-                        /** @description MatchLabels matches multiple MeshServices by labels */
-                        matchLabels: {
+                        matchLabels?: {
                             [key: string]: string;
                         };
                     };
@@ -7658,29 +7911,6 @@ export interface components {
                 "application/json": components["schemas"]["DataplaneXDSConfig"];
             };
         };
-        /** @description A response containing the overview of a dataplane. */
-        GetDataplaneOverviewResponse: {
-            headers: {
-                [name: string]: unknown;
-            };
-            content: {
-                "application/json": components["schemas"]["DataplaneOverviewWithMeta"];
-            };
-        };
-        /** @description A response containing the overview of a dataplane. */
-        GetDataplaneOverviewListResponse: {
-            headers: {
-                [name: string]: unknown;
-            };
-            content: {
-                "application/json": {
-                    /** @example 200 */
-                    total?: number;
-                    next?: string;
-                    items?: components["schemas"]["DataplaneOverviewWithMeta"][];
-                };
-            };
-        };
         /** @description A response containing policies that match a resource */
         InspectRulesResponse: {
             headers: {
@@ -7699,6 +7929,60 @@ export interface components {
                 "application/json": components["schemas"]["InspectHostnames"];
             };
         };
+        /** @description A response containing dataplane networking layout. */
+        DataplaneNetworkingLayoutResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["DataplaneNetworkingLayout"];
+            };
+        };
+        /** @description A response containing policies configuration for selected dataplane */
+        ProxyPolicyConfResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["PoliciesList"];
+            };
+        };
+        /** @description A response containing policies configuration for selected inbound */
+        InboundPolicyConfResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["InboundPoliciesList"];
+            };
+        };
+        /** @description A response containing policies configuration for selected outbound */
+        OutboundPolicyConfResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["PoliciesList"];
+            };
+        };
+        /** @description A response containing routes configuration for selected outbound */
+        RoutesListResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["RoutesList"];
+            };
+        };
+        /** @description A response containing policies configuration for selected route */
+        RoutePolicyConfResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["PoliciesList"];
+            };
+        };
         /** @description Bad Request */
         BadRequest: {
             headers: {
@@ -7710,6 +7994,24 @@ export interface components {
         };
         /** @description Internal Server Error */
         Internal: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/problem+json": components["schemas"]["Error"];
+            };
+        };
+        /** @description Bad Request */
+        "responses-BadRequest": {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/problem+json": components["schemas"]["Error"];
+            };
+        };
+        /** @description Internal Server Error */
+        "responses-Internal": {
             headers: {
                 [name: string]: unknown;
             };
@@ -8134,6 +8436,29 @@ export interface components {
                 };
             };
         };
+        /** @description A response containing the overview of a dataplane. */
+        GetDataplaneOverviewResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["DataplaneOverviewWithMeta"];
+            };
+        };
+        /** @description A response containing the overview of a dataplane. */
+        GetDataplaneOverviewListResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    /** @example 200 */
+                    total?: number;
+                    next?: string;
+                    items?: components["schemas"]["DataplaneOverviewWithMeta"][];
+                };
+            };
+        };
         /** @description Successful response */
         MeshItem: {
             headers: {
@@ -8305,8 +8630,8 @@ export interface operations {
         requestBody?: never;
         responses: {
             200: components["responses"]["IndexResponse"];
-            400: components["responses"]["BadRequest"];
-            500: components["responses"]["Internal"];
+            400: components["responses"]["responses-BadRequest"];
+            500: components["responses"]["responses-Internal"];
         };
     };
     "get-resource-type-description": {
@@ -8319,8 +8644,8 @@ export interface operations {
         requestBody?: never;
         responses: {
             200: components["responses"]["ResourceTypeDescriptionListResponse"];
-            400: components["responses"]["BadRequest"];
-            500: components["responses"]["Internal"];
+            400: components["responses"]["responses-BadRequest"];
+            500: components["responses"]["responses-Internal"];
         };
     };
     "get-global-insight": {
@@ -8333,8 +8658,8 @@ export interface operations {
         requestBody?: never;
         responses: {
             200: components["responses"]["GlobalInsightResponse"];
-            400: components["responses"]["BadRequest"];
-            500: components["responses"]["Internal"];
+            400: components["responses"]["responses-BadRequest"];
+            500: components["responses"]["responses-Internal"];
         };
     };
     "inspect-dataplanes-rules": {
@@ -8363,44 +8688,8 @@ export interface operations {
         requestBody?: never;
         responses: {
             200: components["responses"]["InspectRulesResponse"];
-            400: components["responses"]["BadRequest"];
-            500: components["responses"]["Internal"];
-        };
-    };
-    getDataplaneOverview: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description The mesh of the DPP to get the diff for. */
-                mesh: string;
-                /** @description The name of the DPP within the mesh to get the diff for. */
-                name: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: components["responses"]["GetDataplaneOverviewResponse"];
-            400: components["responses"]["BadRequest"];
-            500: components["responses"]["Internal"];
-        };
-    };
-    getDataplaneOverviewList: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description The mesh of the DPP to get the diff for. */
-                mesh: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: components["responses"]["GetDataplaneOverviewListResponse"];
-            400: components["responses"]["BadRequest"];
-            500: components["responses"]["Internal"];
+            400: components["responses"]["responses-BadRequest"];
+            500: components["responses"]["responses-Internal"];
         };
     };
     "get-dataplanes-xds-config": {
@@ -8426,7 +8715,131 @@ export interface operations {
         requestBody?: never;
         responses: {
             200: components["responses"]["GetDataplaneXDSConfigResponse"];
-            400: components["responses"]["BadRequest"];
+            400: components["responses"]["responses-BadRequest"];
+            500: components["responses"]["Internal"];
+        };
+    };
+    "get-dataplanes-layout": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The mesh of the DPP to get the layout for. */
+                mesh: string;
+                /** @description The name of the DPP within the mesh to get the layout for. */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["DataplaneNetworkingLayoutResponse"];
+            400: components["responses"]["responses-BadRequest"];
+            500: components["responses"]["Internal"];
+        };
+    };
+    "get-proxy-policy-conf": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The mesh of the DPP to get the diff for. */
+                mesh: string;
+                /** @description The name of the DPP within the mesh to get the diff for. */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["ProxyPolicyConfResponse"];
+            400: components["responses"]["responses-BadRequest"];
+            500: components["responses"]["Internal"];
+        };
+    };
+    "get-inbound-policy-conf": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The mesh of the DPP to get the policies for. */
+                mesh: string;
+                /** @description The name of the DPP within the mesh to get the policies for. */
+                name: string;
+                /** @description The name of the Inbound from DPP to get the policies for. */
+                "inbound-kri": string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["InboundPolicyConfResponse"];
+            400: components["responses"]["responses-BadRequest"];
+            500: components["responses"]["Internal"];
+        };
+    };
+    "get-outbound-policy-conf": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The mesh of the DPP to get the policies for. */
+                mesh: string;
+                /** @description The name of the DPP within the mesh to get the policies for. */
+                name: string;
+                /** @description The KRI of the Outbound to get the policies for. */
+                kri: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["OutboundPolicyConfResponse"];
+            400: components["responses"]["responses-BadRequest"];
+            500: components["responses"]["Internal"];
+        };
+    };
+    "get-outbound-routes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The mesh of the DPP to get the policies for. */
+                mesh: string;
+                /** @description The name of the DPP within the mesh to get the policies for. */
+                name: string;
+                /** @description The KRI of the Outbound to get the routes for. */
+                kri: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["RoutesListResponse"];
+            400: components["responses"]["responses-BadRequest"];
+            500: components["responses"]["Internal"];
+        };
+    };
+    "get-route-policy-conf": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The mesh of the DPP to get the policies for. */
+                mesh: string;
+                /** @description The name of the DPP within the mesh to get the policies for. */
+                name: string;
+                /** @description The KRI of the Outbound to get the routes for. */
+                "outbound-kri": string;
+                /** @description The KRI of the Route to get the configuration for. */
+                "route-kri": string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["RoutePolicyConfResponse"];
+            400: components["responses"]["responses-BadRequest"];
             500: components["responses"]["Internal"];
         };
     };
@@ -8463,7 +8876,7 @@ export interface operations {
         requestBody?: never;
         responses: {
             200: components["responses"]["InspectDataplanesForPolicyResponse"];
-            400: components["responses"]["BadRequest"];
+            400: components["responses"]["responses-BadRequest"];
             500: components["responses"]["Internal"];
         };
     };
@@ -8493,7 +8906,7 @@ export interface operations {
         requestBody?: never;
         responses: {
             200: components["responses"]["InspectHostnamesResponse"];
-            400: components["responses"]["BadRequest"];
+            400: components["responses"]["responses-BadRequest"];
             404: components["responses"]["NotFound"];
             500: components["responses"]["Internal"];
         };
@@ -10468,6 +10881,42 @@ export interface operations {
         requestBody?: never;
         responses: {
             200: components["responses"]["DataplaneList"];
+        };
+    };
+    getDataplaneOverview: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The mesh of the DPP to get the diff for. */
+                mesh: string;
+                /** @description The name of the DPP within the mesh to get the diff for. */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["GetDataplaneOverviewResponse"];
+            400: components["responses"]["BadRequest"];
+            500: components["responses"]["Internal"];
+        };
+    };
+    getDataplaneOverviewList: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The mesh of the DPP to get the diff for. */
+                mesh: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["GetDataplaneOverviewListResponse"];
+            400: components["responses"]["BadRequest"];
+            500: components["responses"]["Internal"];
         };
     };
     getMesh: {

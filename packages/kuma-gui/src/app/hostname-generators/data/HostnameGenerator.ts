@@ -22,7 +22,7 @@ export const HostnameGenerator = {
       zone: labels['kuma.io/origin'] === 'zone' && labels['kuma.io/zone'] ? labels['kuma.io/zone'] : '',
       creationTime: item.creationTime ?? '',
       modificationTime: item.modificationTime ?? '',
-      spec: ((item = {}) => {
+      spec: ((item = { template: '' }) => {
         return {
           ...item,
           selector: ((item = {}) => {

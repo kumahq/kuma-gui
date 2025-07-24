@@ -54,7 +54,7 @@
             <template
               #body
             >
-              <template v-if="Object.keys(data.spec.selector.meshService.matchLabels).length">
+              <template v-if="Object.keys(data.spec.selector.meshService.matchLabels ?? {}).length">
                 <XLayout
                   type="separated"
                   truncate
