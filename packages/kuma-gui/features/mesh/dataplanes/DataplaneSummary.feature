@@ -13,6 +13,7 @@ Feature: Dataplane summary
     And the environment
       """
       KUMA_SUBSCRIPTION_COUNT: 2
+      KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: true
       """
     And the URL "/meshes/default/dataplanes/_overview" responds with
       """

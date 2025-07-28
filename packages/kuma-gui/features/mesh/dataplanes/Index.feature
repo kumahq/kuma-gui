@@ -16,6 +16,7 @@ Feature: mesh / dataplanes / index
       | button-search    | [data-testid='filter-bar-submit-query-button']   |
     And the environment
       """
+      KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: true
       KUMA_MODE: global
       KUMA_DATAPLANE_COUNT: 9
       KUMA_DATAPLANEINBOUND_COUNT: 1

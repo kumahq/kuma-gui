@@ -7,6 +7,7 @@ Feature: dataplanes / no-subscriptions
       | overview-content | [data-testid='data-plane-detail-view']      |
     And the environment
       """
+      KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: true
       KUMA_SUBSCRIPTION_COUNT: 0
       KUMA_DATAPLANEINBOUND_COUNT: 1
       """

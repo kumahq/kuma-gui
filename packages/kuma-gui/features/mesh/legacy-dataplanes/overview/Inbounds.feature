@@ -7,6 +7,10 @@ Feature: mesh / dataplanes / connections / Inbounds
       | traffic     | [data-testid='dataplane-traffic']           |
       | inbound     | [data-testid='dataplane-inbound']           |
       | outbound    | [data-testid='dataplane-outbound']          |
+    And the environment
+      """
+      KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: false
+      """
 
   Scenario: An inbound with port 49151 isn't shown
     Given the environment

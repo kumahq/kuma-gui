@@ -6,6 +6,10 @@ Feature: Dataplane details for delegated gateway
       | detail-view | [data-testid='data-plane-detail-tabs-view']                     |
       | warnings    | [data-testid^='notification-data-planes.notifications.no-mtls'] |
       | details     | [data-testid='dataplane-details']                               |
+    And the environment
+      """
+      KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: true
+      """
 
   Scenario: Overview tab has expected content
     Given the environment

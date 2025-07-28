@@ -1,4 +1,10 @@
-Feature: mesh / dataplanes / connections / clusterNames
+Feature: 
+
+  Background:
+    Given the environment
+      """
+      KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: false
+      """
 
   Scenario: MeshServices type clusterNames with hashes are matched correctly
     Given the CSS selectors

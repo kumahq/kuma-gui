@@ -9,6 +9,7 @@ import { sources } from './sources'
 import { services as dataplanes } from '@/app/data-planes'
 import { services as externalServicesModule } from '@/app/external-services'
 import { services as gatewaysModule } from '@/app/gateways'
+import { services as legacyDataplanes } from '@/app/legacy-data-planes'
 import { services as policies } from '@/app/policies'
 import { services as rules } from '@/app/rules'
 import { services as servicesModule } from '@/app/services'
@@ -52,6 +53,17 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
             if (item.name === 'control-plane-root-view') {
               item.children = (item.children ?? []).concat(routes(r[0], r[1], r[2], r[3]))
             }
+            // if(item.name === 'data-plane-detail-tabs-view') {
+            //   console.log(item)
+              
+            //   item = {
+            //     path: '',
+            //     name: 'data-plane-root-view',
+            //     component: () => import('@/app/legacy-data-planes/views/RootView.vue'),
+            //     children: [item],
+            //   }
+            //   // item.children = (item.children ?? []).concat(dataplanes().item())
+            // }
           },
         ]
       },
@@ -72,6 +84,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
     ...externalServicesModule(mesh),
     ...gatewaysModule(mesh),
     ...dataplanes(mesh),
+    ...legacyDataplanes(mesh),
     ...policies(mesh),
     ...rules(mesh),
   ]

@@ -6,7 +6,8 @@ export const features = (): Features => {
     'use service-insights': (_can, mesh: Mesh) => {
       runInDebug(() => {
         if (typeof mesh === 'undefined') {
-          throw new Error('argument `mesh` not provided for can(`use service-insights`)')
+          // throw new Error('argument `mesh` not provided for can(`use service-insights`)')
+          return false
         }
       })
       return mesh.meshServices.mode !== 'Exclusive'

@@ -17,6 +17,8 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
   const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
   const isMtlsEnabledOverride = env('KUMA_MTLS_ENABLED', '')
   const defaultType = env('KUMA_DATAPLANE_TYPE', '')
+  const unifiedResourceNaming = env('KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED', '')
+  const isUnifiedResourceNamingEnabled = unifiedResourceNaming.length ? unifiedResourceNaming === 'true' : fake.datatype.boolean()
 
   const outboundCount = parseInt(env('KUMA_DATAPLANEOUTBOUND_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
   const subscriptionCount = parseInt(env('KUMA_SUBSCRIPTION_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
@@ -172,7 +174,10 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
           }
         }),
         metadata: {
-          features: fake.kuma.dataplaneFeatures(),
+          features: [
+            ...fake.kuma.dataplaneFeatures(),
+            ...(isUnifiedResourceNamingEnabled ? ['feature-unified-resource-naming'] : []),
+          ],
         },
       },
     },

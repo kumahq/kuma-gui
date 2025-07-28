@@ -24,6 +24,7 @@ Feature: Dataplane policies
     And the environment
       """
         KUMA_RESOURCE_COUNT: 100
+        KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: false
       """
 
   Rule: Any networking type
