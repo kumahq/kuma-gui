@@ -83,7 +83,7 @@ jobs:
       - run: |
           make -C ${{ matrix.package.path }} build
 
-      - uses: Kong/public-shared-actions/security-actions/sca@b5b91fe7aca381f8d31a30c1916151e7eaa7f16a
+      - uses: Kong/public-shared-actions/security-actions/sca@ec3f7e6638900dfb56c6963b61659512fc6dbe54
         id: sbom
         env:
           SYFT_SOURCE_NAME: ${{ github.repository }}
