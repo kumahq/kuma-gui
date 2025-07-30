@@ -64,7 +64,6 @@ watch(() => router.currentRoute.value.name, async (val) => {
     const _routes = walkRoutes(
       addRouteName,
       can('use unified-resource-naming', props.data) ? dataplaneRoutes() : legacyDataplaneRoutes(),
-      // can('use unified-resource-naming', props.data) ? dataplaneRoutes().item() : routes().item(),
     )
     router.addRoute('data-plane-root-view', _routes[0])
     await router.replace(router.currentRoute.value.fullPath)

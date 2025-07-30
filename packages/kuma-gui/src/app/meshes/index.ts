@@ -53,17 +53,6 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
             if (item.name === 'control-plane-root-view') {
               item.children = (item.children ?? []).concat(routes(r[0], r[1], r[2], r[3]))
             }
-            // if(item.name === 'data-plane-detail-tabs-view') {
-            //   console.log(item)
-              
-            //   item = {
-            //     path: '',
-            //     name: 'data-plane-root-view',
-            //     component: () => import('@/app/legacy-data-planes/views/RootView.vue'),
-            //     children: [item],
-            //   }
-            //   // item.children = (item.children ?? []).concat(dataplanes().item())
-            // }
           },
         ]
       },
