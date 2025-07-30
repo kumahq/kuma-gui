@@ -5,7 +5,8 @@ export const createFetch = (client: RestClient) => {
   return async (r: Request | string) => {
     const req = typeof r === 'string' ? new Request(r) : r
     const url = new URL(req.url)
-    const payload = ['GET', 'DELETE'].includes(req.method) ? undefined : req.body ? (await new Response(req.body).json()) : {}
+    const body = req.body ?? await req.blob?.()
+    const payload = ['GET', 'DELETE'].includes(req.method) ? undefined : body ? (await new Response(body).json()) : {}
     const options = {
       ...req,
       params: url.searchParams.size > 0 ? Object.fromEntries(url.searchParams.entries()) : undefined,
