@@ -20,7 +20,7 @@
     "@kumahq/container": "*",
     "@kumahq/settings": "*",
     "@vue/shared": "^3.5.18",
-    "@vueuse/core": "^13.5.0",
+    "@vueuse/core": "^13.6.0",
     "deepmerge": "^4.3.1",
     "js-yaml": "^4.1.0",
     "object.groupby": "^1.0.3",
