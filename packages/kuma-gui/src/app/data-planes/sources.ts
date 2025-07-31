@@ -6,6 +6,7 @@ import {
   DataplaneOverview,
   MeshGatewayDataplane,
   SidecarDataplane,
+  DataplaneNetworkingLayout,
 } from './data'
 import type { DataSourceResponse } from '@/app/application'
 import { YAML } from '@/app/application'
@@ -199,6 +200,19 @@ export const sources = (api: KumaApi) => {
         offset,
         size,
       }))
+    },
+
+    '/meshes/:mesh/dataplanes/:name/layout': async (params) => {
+      const { mesh, name } = params
+      const res = await http.GET('/meshes/{mesh}/dataplanes/{name}/_layout', {
+        params: {
+          path: {
+            mesh,
+            name,
+          },
+        },
+      })
+      return DataplaneNetworkingLayout.fromObject(res.data!)
     },
   })
 }

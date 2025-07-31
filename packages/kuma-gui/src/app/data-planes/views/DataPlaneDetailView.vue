@@ -8,7 +8,7 @@
       subscription: '',
     }"
     name="data-plane-detail-view"
-    v-slot="{ route, t, can, me }"
+    v-slot="{ route, t, can, me, uri }"
   >
     <AppView
       :notifications="true"
@@ -334,7 +334,147 @@
           </XLayout>
         </XAboutCard>
 
-        <!-- Placeholder traffic inbounds/outbounds -->
+        <XCard
+          class="traffic"
+          data-testid="dataplane-traffic"
+        >
+          <DataLoader
+            :src="uri(sources, '/meshes/:mesh/dataplanes/:name/layout', {
+              mesh: route.params.mesh,
+              name: route.params.proxy,
+            })"
+            v-slot="{ data: dataplaneLayout, refresh, error }"
+          >
+            <XLayout
+              type="columns"
+            >
+              <ConnectionTraffic>
+                <template
+                  #title
+                >
+                  <XLayout
+                    type="separated"
+                  >
+                    <XIcon
+                      name="inbound"
+                    />
+                    <span>Inbounds</span>
+                  </XLayout>
+                </template>
+                <template
+                  v-for="inbounds in [dataplaneLayout.inbounds]"
+                  :key="typeof inbounds"
+                >
+                  <ConnectionGroup
+                    type="inbound"
+                    data-testid="dataplane-inbounds"
+                  >
+                    <!-- don't show a card for anything on port 49151 as those are service-less inbounds -->
+                    <DataCollection
+                      type="inbounds"
+                      :items="inbounds"
+                      :predicate="(item) => item.port !== 49151"
+                    >
+                      <template
+                        v-if="props.data.dataplaneType === 'delegated'"
+                        #empty
+                      >
+                        <XEmptyState>
+                          <p>
+                            This proxy is a delegated gateway therefore {{ t('common.product.name') }} does not have any
+                            visibility into inbounds for this gateway.
+                          </p>
+                        </XEmptyState>
+                      </template>
+                      <template
+                        #default="{ items: _inbounds }"
+                      >
+                        <XLayout
+                          type="stack"
+                          size="small"
+                        >
+                          <template
+                            v-for="item in _inbounds"
+                            :key="`${item.kri}`"
+                          >
+                            <ConnectionCard
+                              data-testid="dataplane-inbound"
+                              :protocol="item.protocol"
+                              :port-name="item.port.toString()"
+                            >
+                              {{ item.proxyResourceName }}
+                            </ConnectionCard>
+                          </template>
+                        </XLayout>
+                      </template>
+                    </DataCollection>
+                  </ConnectionGroup>
+                </template>
+              </ConnectionTraffic>
+              
+              <ConnectionTraffic>
+                <template
+                  #actions
+                >
+                  <XAction
+                    action="refresh"
+                    appearance="primary"
+                    @click="refresh"
+                  >
+                    Refresh
+                  </XAction>
+                </template>
+                <template
+                  #title
+                >
+                  <XLayout type="separated">
+                    <XIcon name="outbound" />
+                    <span>Outbounds</span>
+                  </XLayout>
+                </template>
+                <!-- we don't want to show an error here -->
+                <!-- instead we show a No Data EmptyState -->
+                <template
+                  v-if="typeof error === 'undefined' && dataplaneLayout.outbounds.length > 0"
+                >
+                  <DataCollection
+                    type="outbounds"
+                    :items="dataplaneLayout.outbounds"
+                    v-slot="{ items: outbounds }"
+                  >
+                    <ConnectionGroup
+                      type="outbound"
+                      data-testid="dataplane-outbounds"
+                    >
+                      <XLayout
+                        type="stack"
+                        size="small"
+                      >
+                        <template
+                          v-for="outbound in outbounds"
+                          :key="outbound.kri"
+                        >
+                          <ConnectionCard
+                            data-testid="dataplane-outbound"
+                            :protocol="outbound.protocol"
+                            :port-name="outbound.port.toString()"
+                          >
+                            {{ outbound.proxyResourceName }}
+                          </ConnectionCard>
+                        </template>
+                      </XLayout>
+                    </ConnectionGroup>
+                  </DataCollection>
+                </template>
+                <template
+                  v-else
+                >
+                  <XEmptyState />
+                </template>
+              </ConnectionTraffic>
+            </XLayout>
+          </DataLoader>
+        </XCard>
 
         <RouterView
           v-slot="child"
@@ -455,11 +595,15 @@
 </template>
 
 <script lang="ts" setup>
+import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
 import TagList from '@/app/common/TagList.vue'
+import ConnectionCard from '@/app/connections/components/connection-traffic/ConnectionCard.vue'
+import ConnectionGroup from '@/app/connections/components/connection-traffic/ConnectionGroup.vue'
+import ConnectionTraffic from '@/app/connections/components/connection-traffic/ConnectionTraffic.vue'
 import type { DataplaneOverview } from '@/app/legacy-data-planes/data'
 import type { Mesh } from '@/app/meshes/data'
 import { useRoute } from '@/app/vue'
