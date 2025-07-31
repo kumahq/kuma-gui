@@ -145,3 +145,5 @@ export const destroy: Destroyer = (_src, source) => {
     source.close()
   }
 }
+
+export class ValidationError extends Error {}

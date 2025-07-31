@@ -1,6 +1,7 @@
 import { token, createInjections } from '@kumahq/container'
 
 import locales from './locales/en-us/index.yaml'
+import { ValidationError } from '../application/services/data-source'
 import KumaPort from '@/app/kuma/components/kuma-port/KumaPort.vue'
 import { ApiError } from '@/app/kuma/services/kuma-api/ApiError'
 import KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
@@ -57,7 +58,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       service: () => {
         return (e: Error | ErrorEvent) => {
           const error = 'error' in e ? e.error : e
-          if (error instanceof ApiError) {
+          if (error instanceof ApiError || error instanceof ValidationError) {
             return
           }
           console.error(error)
