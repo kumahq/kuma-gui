@@ -9,7 +9,7 @@ export type DataSourceResponse<T> = {
   error: Error | undefined
   refresh: () => void
 }
-type PaginationParams = {
+export type PaginationParams = {
   size: number
   page: number
   search: string

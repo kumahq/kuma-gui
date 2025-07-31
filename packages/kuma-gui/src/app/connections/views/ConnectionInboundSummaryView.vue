@@ -70,7 +70,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { DataplaneInbound, DataplaneNetworking } from '@/app/data-planes/data/'
+import type { DataplaneInbound, DataplaneNetworking } from '@/app/legacy-data-planes/data/'
 
 const props = defineProps<{
   data: DataplaneInbound[]

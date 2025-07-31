@@ -9,6 +9,10 @@ Feature: Dataplane details for built-in gateway
       | details           | [data-testid='dataplane-details']                                  |
       | route-item        | [data-testid='builtin-gateway-dataplane-policies'] .accordion-item |
       | route-item-button | $route-item:nth-child(1) [data-testid='accordion-item-button']     |
+    And the environment
+      """
+      KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: true
+      """
 
   Scenario: Overview tab has expected content
     Given the environment
@@ -60,36 +64,6 @@ Feature: Dataplane details for built-in gateway
       | kuma.io/protocol:http |
       | kuma.io/zone:zone-1   |
     And the "$warnings" element doesn't exists
-
-  Scenario: Policies tab has expected content
-    Given the environment
-      """
-      KUMA_MODE: zone
-      """
-    And the URL "/meshes/default/dataplanes/dataplane-gateway-builtin-1/policies" responds with
-      """
-      body:
-        listeners:
-          - hosts:
-              - routes:
-                 - destinations:
-                    - tags:
-                        kuma.io/service: demo-app_kuma-demo_svc_5000
-                      policies:
-                        CircuitBreaker:
-                          name: circuit-breaker-1
-        policies:
-          TrafficLog:
-            name: traffic-log-1
-          TrafficTrace:
-            name: traffic-trace-1
-      """
-    When I visit the "/meshes/default/data-planes/dataplane-gateway-builtin-1/policies" URL
-    Then the "$policies-view" element contains "traffic-log-1"
-    And the "$policies-view" element contains "traffic-trace-1"
-    When I click the "$route-item-button" element
-    Then the "$policies-view" element contains "circuit-breaker-1"
-    And the "$policies-view" element contains "demo-app_kuma-demo_svc_5000"
 
   Scenario: Overview tab shows warning when no mTLS is set
     And the URL "/meshes/default/dataplanes/dataplane-gateway_builtin-1/_overview" responds with

@@ -1,0 +1,153 @@
+data-planes:
+  notifications:
+    recommend-reachable: !!text/markdown |
+      We've identified outbound services that would benefit from using { mode, select,
+        Exclusive { <a href="{KUMA_DOCS_URL}/production/dp-config/transparent-proxying/#reachable-backends" target="_blank">Reachable Backends</a> }
+        ReachableBackends { <a href="{KUMA_DOCS_URL}/production/dp-config/transparent-proxying/#reachable-backends" target="_blank">Reachable Backends</a> }
+        other { <a href="{KUMA_DOCS_URL}/production/dp-config/transparent-proxying/#reachable-services" target="_blank">Reachable Services</a> }
+      } to dramatically improve performance.
+    dp-cp-incompatible: !!text/markdown |
+      Unsupported version of Kuma DP (**{ kumaDp }**)
+    envoy-dp-incompatible: !!text/markdown |
+      Envoy (**{ envoy }**) is unsupported by the current version of Kuma DP (**{ kumaDp }**)
+    dp-zone-cp-incompatible: !!text/markdown |
+      There is a mismatch between versions of Kuma DP (**{ kumaDp }**) and the zone control plane.
+    certificate-expired: !!text/markdown |
+      The certificate for this dataplane has expired
+    certificate-expires-soon: !!text/markdown |
+      The certificate for this dataplane will expire soon
+    no-mtls: !!text/markdown |
+      This data plane proxy does not have mTLS configured, yet —
+      <a href="{KUMA_DOCS_URL}/policies/mutual-tls?{KUMA_UTM_QUERY_PARAMS}" target="_blank">Learn about certificates in {KUMA_PRODUCT_NAME}</a>
+    stats-not-enhanced: !!text/markdown |
+      The below view is not enhanced with runtime stats (Error loading stats: **{ error }**)
+    networking-transparent-proxying: !!text/markdown |
+      This data plane runs without <a target="_blank" href="{KUMA_DOCS_URL}/production/dp-config/transparent-proxying">transparent proxying</a>.
+      In order to communicate to other services in the mesh, make sure to define <a target="_blank" href="{KUMA_DOCS_URL}/production/dp-config/dpp-on-universal">outbounds</a>.
+
+
+  x-empty-state:
+    title: There are no data planes present
+  components:
+    service_traffic_card:
+      1xx: 1xx
+      2xx: 2xx
+      3xx: 3xx
+      4xx: 4xx
+      5xx: 5xx
+      cx: Total connections
+      tx: Bytes sent
+      rx: Bytes received
+      grpc_success: Successful
+      grpc_failure: Failed
+      protocol:
+        passthrough: Passthrough
+    data-plane-list:
+      version_mismatch: Version mismatch
+      cert_expired: Certificate expired
+      certificate:
+        none: No certificate
+  routes:
+    item:
+      title: "{name}"
+      breadcrumbs: Data plane proxies
+      navigation:
+        data-plane-detail-view: 'Overview'
+        data-plane-policies-view: 'Policies'
+        data-plane-xds-config-view: 'XDS configuration'
+        data-plane-stats-view: 'Stats'
+        data-plane-clusters-view: 'Clusters'
+        data-plane-config-view: 'YAML'
+        data-plane-inbound-summary-overview-view: 'Overview'
+        data-plane-inbound-summary-stats-view: 'Stats'
+        data-plane-inbound-summary-clusters-view: 'Clusters'
+        data-plane-outbound-summary-overview-view: 'Overview'
+        data-plane-outbound-summary-stats-view: 'Stats'
+        data-plane-outbound-summary-clusters-view: 'Clusters'
+        data-plane-summary-overview-view: Overview
+        data-plane-summary-config-view: YAML
+        service-data-plane-summary-overview-view: Overview
+        service-data-plane-summary-config-view: YAML
+        mesh-service-data-plane-summary-overview-view: Overview
+        mesh-service-data-plane-summary-config-view: YAML
+        mesh-multi-zone-service-service-data-plane-summary-overview-view: Overview
+        mesh-multi-zone-service-data-plane-summary-config-view: YAML
+        builtin-gateway-data-plane-summary-overview-view: Overview
+        builtin-gateway-data-plane-summary-config-view: YAML
+        delegated-gateway-data-plane-summary-overview-view: Overview
+        delegated-gateway-data-plane-summary-config-view: YAML
+      download:
+        title: Download bundle
+        description: !!text/markdown |
+          Include the following:
+        error: !!text/markdown |
+          Unable to generate bundle, please try again.
+        action: Download
+        options:
+          xds: XDS configuration
+          eds: Include EDS
+          proxy: Data plane configuration
+          policies: Policies
+          clusters: Envoy clusters
+          stats: Envoy stats
+      about:
+        title: About this data plane proxy
+      gateway: 'Gateway'
+      config: Configuration
+      format: Format
+      formats:
+        universal: Universal
+        k8s: Kubernetes
+        structured: Structured
+      inbounds: 'Inbounds'
+      outbounds: Outbounds
+      inbound_name: '{service}'
+      outbound_name: '{service}'
+      port: ':{port}'
+      namespace: 'Namespace'
+      certificate_info: 'Certificate info'
+      no_certificate: 'No certificate'
+      health:
+        ready: 'Healthy'
+        not_ready: 'Unhealthy'
+      unhealthy_inbound: 'Inbound on port {port} is not ready (kuma.io/service: {service})'
+      mtls:
+        title: 'TLS'
+        expiration_time:
+          title: Certificate expires at
+        generation_time:
+          title: Certificate generated at
+        regenerations:
+          title: Certificate generation
+        issued_backend:
+          title: Certificate issued by
+        supported_backends:
+          title: Supported CAs
+      subscriptions:
+        title: XDS connections
+        description: !!text/markdown |
+          Communication channels used by the control plane to dynamically configure and manage data plane proxies.
+      rules:
+        proxy: Proxy rule
+        to: To rules
+        from: From rules
+        inbound: Inbound rules
+      legacy_policies: Legacy policies
+      matches_everything: 'Matches everything'
+    items:
+      title: Data plane proxies
+      intro: !!text/markdown |
+        Data plane proxies are sidecar proxies deployed alongside each service instance, responsible for handling all traffic, enforcing policies and facilitating communication between services.
+      warnings:
+        dp-cp-incompatible: Version mismatch
+        certificate-expires-soon: Certificate expires soon
+        certificate-expired: Certificate expired
+  href:
+    docs:
+      data_plane_proxy: '{KUMA_DOCS_URL}/production/dp-config/dpp?{KUMA_UTM_QUERY_PARAMS}'
+      gateway: '{KUMA_DOCS_URL}/explore/gateway?{KUMA_UTM_QUERY_PARAMS}'
+  type:
+    all: 'All'
+    standard: 'Proxy'
+    builtin: 'Built-in gateway'
+    delegated: 'Delegated gateway'

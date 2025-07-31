@@ -71,6 +71,7 @@ export type MockEnvKeys = keyof {
   KUMA_STATUS_CODE: string
   KUMA_RESOURCE_COUNT: string
   KUMA_ACTIVE_RESOURCE_COUNT: string
+  KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: string
 }
 export type EndpointDependencies = {
   fake: FakeKuma

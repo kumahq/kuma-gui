@@ -1,5 +1,11 @@
 Feature: mesh / dataplanes / connections / clusters
 
+  Background:
+    Given the environment
+      """
+      KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: false
+      """
+
   Scenario: The inbound clusters tab correctly filters by 'localhost_<port>'
     Given the CSS selectors
       | Alias | Selector                                                                                         |

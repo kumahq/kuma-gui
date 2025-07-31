@@ -67,7 +67,7 @@
 </template>
 <script lang="ts" setup>
 import { sources } from '../sources'
-import type { DataplaneInbound, DataplaneNetworking } from '@/app/data-planes/data/'
+import type { DataplaneInbound, DataplaneNetworking } from '@/app/legacy-data-planes/data/'
 import type { ZoneEgress } from '@/app/zone-egresses/data/'
 import type { ZoneIngress } from '@/app/zone-ingresses/data/'
 

@@ -9,6 +9,10 @@ Feature: Dataplane details for standard Data Plane Proxy
       | config-universal   | [data-testid='codeblock-yaml-universal']    |
       | config-k8s         | [data-testid='codeblock-yaml-k8s']          |
       | select-environment | [data-testid='select-input']                |
+    And the environment
+      """
+      KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: true
+      """
 
   Scenario: Overview tab has expected content
     Given the environment

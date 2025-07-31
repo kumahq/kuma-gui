@@ -9,6 +9,10 @@ Feature: Dataplane policy summary
       | summary-content            | $summary-slideout-container [data-testid='data-plane-policy-summary-view'] |
       | select-preference          | $summary [data-testid='select-input']                                      |
       | structured-view            | $summary [data-testid='structured-view']                                   |
+    And the environment
+      """
+      KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: false
+      """
 
   Scenario: Policy Summary View has expected content
     Given the URL "/meshes/default/meshhttproutes/the-other-http-route" responds with

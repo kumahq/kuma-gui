@@ -117,7 +117,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
         guards: NavigationGuard[],
         walkers: RouteWalker[],
       ) => {
-
+        
         const router = createRouter({
           history: createWebHistory(env('KUMA_BASE_PATH')),
           routes: walkRoutes((item, parent) => {

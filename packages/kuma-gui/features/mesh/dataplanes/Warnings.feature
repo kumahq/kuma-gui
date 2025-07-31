@@ -9,6 +9,10 @@ Feature: mesh / dataplanes / warnings
       | unsupported-envoy-warning       | [data-testid^='notification-data-planes.notifications.envoy-dp-incompatible']           |
       | unsupported-zone-warning        | [data-testid^='notification-data-planes.notifications.dp-zone-cp-incompatible']         |
       | networking-transparent-proxying | [data-testid^='notification-data-planes.notifications.networking-transparent-proxying'] |
+    And the environment
+      """
+      KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: true
+      """
 
   Scenario: With a certificate expires soon (at least 1 week before) a cert warning is shown
     Given the URL "/meshes/default/dataplanes/dpp-1/_overview" responds with

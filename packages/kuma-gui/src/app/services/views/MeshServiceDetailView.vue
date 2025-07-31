@@ -438,7 +438,7 @@ import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import ResourceStatus from '@/app/common/ResourceStatus.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
-import { sources } from '@/app/data-planes/sources'
+import { sources } from '@/app/legacy-data-planes/sources'
 import { sources as servicesSources } from '@/app/services/sources'
 
 const props = defineProps<{

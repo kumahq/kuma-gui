@@ -63,7 +63,7 @@
 </template>
 <script lang="ts" setup>
 import { sources } from '../sources'
-import { DataplaneInbound } from '@/app/data-planes/data'
+import { DataplaneInbound } from '@/app/legacy-data-planes/data'
 const props = defineProps<{
   routeName: string
   data: DataplaneInbound

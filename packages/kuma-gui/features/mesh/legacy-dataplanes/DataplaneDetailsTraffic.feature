@@ -8,6 +8,10 @@ Feature: mesh / dataplanes / DataplaneDetailsTraffic
       | traffic         | [data-testid='dataplane-traffic']                                          |
       | outbounds       | [data-testid='dataplane-outbounds']                                        |
       | inactiveToggle  | [data-testid='dataplane-outbounds-inactive-toggle']                        |
+    And the environment
+      """
+      KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: false
+      """
 
   Scenario: Standard sidecar proxy shows the traffic component
     Given the environment
