@@ -1665,11 +1665,13 @@ export interface components {
             kri: string;
             port: number;
             protocol: string;
+            proxyResourceName: string;
         };
         DataplaneOutbound: {
             kri: string;
             port: number;
             protocol: string;
+            proxyResourceName: string;
         };
         /** @description The list of policies KRI that contributed to the 'conf'. The order is important as it reflects in what order confs were merged to get the resulting 'conf'. */
         PolicyOrigin: {
@@ -1704,21 +1706,23 @@ export interface components {
             /** @description The final computed configuration, derived by merging all policies whose 'targetRef' field matches the proxy. The merging process follows [RFC 7396 (JSON Merge Patch)](https://datatracker.ietf.org/doc/html/rfc7396), with the order of merging influenced by factors such as where the policy was applied (e.g., custom namespace, system, or global control plane), policy role, and targetRef specificity. */
             policies: components["schemas"]["InboundPolicyConf"][];
         };
+        RouteRules: {
+            kri: string;
+            /** @description List of matches for which this rule will apply */
+            matches: {
+                [key: string]: unknown;
+            }[];
+            /** @description The final computed configuration for the data plane proxy, derived by merging all policies whose 'targetRef' field matches the proxy. The merging process follows [RFC 7396 (JSON Merge Patch)](https://datatracker.ietf.org/doc/html/rfc7396), with the order of merging influenced by factors such as where the policy was applied (e.g., custom namespace, system, or global control plane), policy role, and targetRef specificity. */
+            conf: {
+                [key: string]: unknown;
+            };
+        };
         RouteConf: {
             kind: string;
             /** @description Computed list of routing rules */
-            rules: {
-                kri: string;
-                /** @description List of matches for which this rule will apply */
-                matches: {
-                    [key: string]: unknown;
-                }[];
-                /** @description The final computed configuratio for the data plane proxy, derived by merging all policies whose 'targetRef' field matches the proxy. The merging process follows [RFC 7396 (JSON Merge Patch)](https://datatracker.ietf.org/doc/html/rfc7396), with the order of merging influenced by factors such as where the policy was applied (e.g., custom namespace, system, or global control plane), policy role, and targetRef specificity. */
-                conf: {
-                    [key: string]: unknown;
-                };
-            }[];
-            origins?: components["schemas"]["PolicyOrigin"];
+            rules: components["schemas"]["RouteRules"][];
+            /** @description The list of policies KRI that contributed to the 'conf'. The order is important as it reflects in what order confs were merged to get the resulting 'conf'. */
+            origins: components["schemas"]["PolicyOrigin"][];
         };
         RoutesList: {
             /** @description Computed list of routes */
@@ -6481,28 +6485,23 @@ export interface components {
                     reachableBackends?: {
                         refs?: {
                             /** @description Type of the backend: MeshService or MeshExternalService
-                             *
-                             *     	+required */
+                             *      +required */
                             kind?: string;
                             /** @description Labels used to select backends
-                             *
-                             *     	+optional */
+                             *      +optional */
                             labels?: {
                                 [key: string]: string;
                             };
                             /** @description Name of the backend.
-                             *
-                             *     	+optional */
+                             *      +optional */
                             name?: string;
                             /** @description Namespace of the backend. Might be empty
-                             *
-                             *     	+optional */
+                             *      +optional */
                             namespace?: string;
                             /**
                              * Format: uint32
                              * @description Port of the backend.
-                             *
-                             *     	+optional
+                             *      +optional
                              */
                             port?: number;
                         }[];
@@ -6805,28 +6804,23 @@ export interface components {
                         reachableBackends?: {
                             refs?: {
                                 /** @description Type of the backend: MeshService or MeshExternalService
-                                 *
-                                 *     	+required */
+                                 *      +required */
                                 kind?: string;
                                 /** @description Labels used to select backends
-                                 *
-                                 *     	+optional */
+                                 *      +optional */
                                 labels?: {
                                     [key: string]: string;
                                 };
                                 /** @description Name of the backend.
-                                 *
-                                 *     	+optional */
+                                 *      +optional */
                                 name?: string;
                                 /** @description Namespace of the backend. Might be empty
-                                 *
-                                 *     	+optional */
+                                 *      +optional */
                                 namespace?: string;
                                 /**
                                  * Format: uint32
                                  * @description Port of the backend.
-                                 *
-                                 *     	+optional
+                                 *      +optional
                                  */
                                 port?: number;
                             }[];
@@ -7173,7 +7167,6 @@ export interface components {
         ProvidedCertificateAuthorityConfig: {
             cert?: {
                 /** @description Types that are assignable to Type:
-                 *
                  *     	*DataSource_Secret
                  *     	*DataSource_File
                  *     	*DataSource_Inline
@@ -7182,7 +7175,6 @@ export interface components {
             };
             key?: {
                 /** @description Types that are assignable to Type:
-                 *
                  *     	*DataSource_Secret
                  *     	*DataSource_File
                  *     	*DataSource_Inline
@@ -7254,7 +7246,6 @@ export interface components {
                          *     ECDSA key and certificate. */
                         certificates?: {
                             /** @description Types that are assignable to Type:
-                             *
                              *     	*DataSource_Secret
                              *     	*DataSource_File
                              *     	*DataSource_Inline
