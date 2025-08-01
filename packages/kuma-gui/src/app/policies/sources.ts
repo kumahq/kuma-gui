@@ -2,6 +2,7 @@ import { paths } from '@kumahq/kuma-http-api'
 import createClient from 'openapi-fetch'
 
 import { Policy, PolicyDataplane, PolicyResourceType } from './data'
+import { DataplaneInboundPolicies, DataplaneOutboundPolicies } from './data/DataplaneTrafficPolicies'
 import { defineSources } from '../application/services/data-source'
 import type { DataSourceResponse } from '@/app/application'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
@@ -53,6 +54,34 @@ export const sources = (api: KumaApi) => {
       const { mesh, path, name } = params
 
       return api.getSinglePolicyEntity({ mesh, path, name }, { format: 'kubernetes' })
+    },
+        
+    '/meshes/:mesh/dataplanes/:name/policies/for/inbound/:kri': async (params) => {
+      const { mesh, name, kri } = params
+      const res = await http.GET('/meshes/{mesh}/dataplanes/{name}/_inbounds/{inbound-kri}/_policies', {
+        params: {
+          path: {
+            mesh,
+            name,
+            'inbound-kri': kri,
+          },
+        },
+      })
+      return DataplaneInboundPolicies.fromCollection(res.data!)
+    },
+    
+    '/meshes/:mesh/dataplanes/:name/policies/for/outbound/:kri': async (params) => {
+      const { mesh, name, kri } = params
+      const res = await http.GET('/meshes/{mesh}/dataplanes/{name}/_outbounds/{kri}/_policies', {
+        params: {
+          path: {
+            mesh,
+            name,
+            kri,
+          },
+        },
+      })
+      return DataplaneOutboundPolicies.fromCollection(res.data!)
     },
   })
 }

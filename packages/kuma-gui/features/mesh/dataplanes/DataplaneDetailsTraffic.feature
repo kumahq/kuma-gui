@@ -2,10 +2,10 @@ Feature: mesh / dataplanes / DataplaneDetailsTraffic
 
   Background:
     Given the CSS selectors
-      | Alias           | Selector                                                                   |
-      | traffic         | [data-testid='dataplane-traffic']                                          |
-      | inbounds        | [data-testid='dataplane-inbounds']                                         |
-      | outbounds       | [data-testid='dataplane-outbounds']                                        |
+      | Alias     | Selector                            |
+      | traffic   | [data-testid='dataplane-traffic']   |
+      | inbounds  | [data-testid='dataplane-inbounds']  |
+      | outbounds | [data-testid='dataplane-outbounds'] |
     And the environment
       """
       KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: true

@@ -16,22 +16,36 @@ export const dataplaneRoutes = (): RouteRecordRaw[] => {
           children: [
             ...connections('data-plane').map(item => {
               if (item.name === 'data-plane-connection-inbound-summary-view' && item.children) {
-                item.children.unshift(
-                  {
-                    path: 'overview',
-                    name: 'data-plane-connection-inbound-summary-overview-view',
-                    component: () => import('@/app/legacy-data-planes/views/DataPlaneInboundSummaryOverviewView.vue'),
-                  },
-                )
+                item.component = () => import('@/app/data-planes/views/DataPlaneTrafficSummaryView.vue')
+                // temporarily exclude all children but overview
+                item.children = [{
+                  path: 'overview',
+                  name: 'data-plane-connection-inbound-summary-overview-view',
+                  component: () => import('@/app/data-planes/views/DataPlaneInboundSummaryOverviewView.vue'),
+                }]
+                // item.children.unshift(
+                //   {
+                //     path: 'overview',
+                //     name: 'data-plane-connection-inbound-summary-overview-view',
+                //     component: () => import('@/app/data-planes/views/DataPlaneInboundSummaryOverviewView.vue'),
+                //   },
+                // )
               }
               if (item.name === 'data-plane-connection-outbound-summary-view' && item.children) {
-                item.children.unshift(
-                  {
-                    path: 'overview',
-                    name: 'data-plane-connection-outbound-summary-overview-view',
-                    component: () => import('@/app/legacy-data-planes/views/DataPlaneOutboundSummaryOverviewView.vue'),
-                  },
-                )
+                item.component = () => import('@/app/data-planes/views/DataPlaneTrafficSummaryView.vue')
+                // temporarily exclude all children but overview
+                item.children = [{
+                  path: 'overview',
+                  name: 'data-plane-connection-outbound-summary-overview-view',
+                  component: () => import('@/app/data-planes/views/DataPlaneOutboundSummaryOverviewView.vue'),
+                }]
+                // item.children.unshift(
+                //   {
+                //     path: 'overview',
+                //     name: 'data-plane-connection-outbound-summary-overview-view',
+                //     component: () => import('@/app/data-planes/views/DataPlaneOutboundSummaryOverviewView.vue'),
+                //   },
+                // )
               }
               return item
             }),
@@ -42,7 +56,7 @@ export const dataplaneRoutes = (): RouteRecordRaw[] => {
         {
           path: 'config',
           name: 'data-plane-config-view',
-          component: () => import('@/app/legacy-data-planes/views/DataPlaneConfigView.vue'),
+          component: () => import('@/app/data-planes/views/DataPlaneConfigView.vue'),
         },
       ],
     },
@@ -66,7 +80,7 @@ export const routes = () => {
       {
         path: ':proxy',
         name: `${fullPrefix}data-plane-summary-view`,
-        component: () => import('@/app/legacy-data-planes/views/DataPlaneSummaryView.vue'),
+        component: () => import('@/app/data-planes/views/DataPlaneSummaryView.vue'),
       },
     ]
   }
@@ -77,7 +91,7 @@ export const routes = () => {
         {
           path: 'data-planes',
           name: 'data-plane-list-view',
-          component: () => import('@/app/legacy-data-planes/views/DataPlaneListView.vue'),
+          component: () => import('@/app/data-planes/views/DataPlaneListView.vue'),
           children: summary(),
         },
       ]

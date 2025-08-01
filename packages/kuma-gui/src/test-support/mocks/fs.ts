@@ -13,7 +13,9 @@ import _17 from './src/meshes/_/circuit-breakers'
 import _18 from './src/meshes/_/circuit-breakers/_'
 import _125 from './src/meshes/_/circuit-breakers/_/_resources/dataplanes'
 import _19 from './src/meshes/_/dataplanes/_'
+import _231 from './src/meshes/_/dataplanes/_/_inbounds/_/_policies'
 import _123 from './src/meshes/_/dataplanes/_/_layout'
+import _232 from './src/meshes/_/dataplanes/_/_outbounds/_/_policies.ts'
 import _22 from './src/meshes/_/dataplanes/_/_overview'
 import _128 from './src/meshes/_/dataplanes/_/_rules'
 import _122 from './src/meshes/_/dataplanes/_/clusters'
@@ -179,6 +181,8 @@ export const fs: FS = {
   '/meshes/:mesh/meshfaultinjections': _52,
   '/meshes/:mesh/meshfaultinjections/:name': _53,
   '/meshes/:mesh/meshfaultinjections/:name/_resources/dataplanes': _54,
+  '/meshes/:mesh/dataplanes/:name/_inbounds/:kri/_policies': _231,
+  '/meshes/:mesh/dataplanes/:name/_outbounds/:kri/_policies': _232,
   // resources
   '/_resources': _3,
   // legacy mesh
