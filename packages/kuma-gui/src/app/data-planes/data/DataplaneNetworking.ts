@@ -25,6 +25,17 @@ type PartialDataplaneOutbound = NonNullable<NonNullable<NonNullable<components['
 
 export type DataplaneGateway = PartialDataplaneGateway & {}
 
+type PartialDataplaneNetworkingLayout = components['schemas']['DataplaneNetworkingLayout']
+
+export const DataplaneNetworkingLayout =  {
+  fromObject(dataplaneNetworkingLayout: PartialDataplaneNetworkingLayout) {
+    return {
+      ...dataplaneNetworkingLayout,
+    } satisfies PartialDataplaneNetworkingLayout
+  },
+}
+export type DataplaneNetworkingLayout = ReturnType<typeof DataplaneNetworkingLayout.fromObject>
+
 const DataplaneOutbound = {
   fromObject(item: PartialDataplaneOutbound) {
     const address = item.address ?? '127.0.0.1'

@@ -164,3 +164,4 @@ http:
       http2: HTTP2
       http: HTTP
       tcp: TCP
+      tls: TLS

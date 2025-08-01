@@ -472,6 +472,14 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
 
     return this.faker.helpers.arrayElements(items, minmax({ min: 0, max: items.length }, count))
   }
+
+  kri({ shortName, mesh, zone, namespace, name, sectionName }: Partial<{ shortName: string, mesh: string, zone: string, namespace: string, name: string, sectionName: string }> = {}) {
+    return `kri_${shortName ?? this.faker.word.noun()}_${mesh ?? this.faker.word.noun()}_${zone ?? this.faker.word.noun()}_${namespace ?? this.k8s.namespace()}_${name ?? this.faker.word.noun()}_${sectionName ?? this.faker.word.noun()}`
+  }
+
+  contextualKri({ context, name }: { context: string, name: string }) {
+    return `self_${context}_${name}`
+  }
 }
 
 export default class FakeKuma extends Faker {

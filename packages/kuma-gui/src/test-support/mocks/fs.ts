@@ -13,6 +13,7 @@ import _17 from './src/meshes/_/circuit-breakers'
 import _18 from './src/meshes/_/circuit-breakers/_'
 import _125 from './src/meshes/_/circuit-breakers/_/_resources/dataplanes'
 import _19 from './src/meshes/_/dataplanes/_'
+import _123 from './src/meshes/_/dataplanes/_/_layout'
 import _22 from './src/meshes/_/dataplanes/_/_overview'
 import _128 from './src/meshes/_/dataplanes/_/_rules'
 import _122 from './src/meshes/_/dataplanes/_/clusters'
@@ -151,6 +152,7 @@ export const fs: FS = {
   '/meshes/:mesh/dataplanes/_overview': _21,
   '/meshes/:mesh/dataplanes/:name': _19,
   '/meshes/:mesh/dataplanes/:name/_overview': _22,
+  '/meshes/:mesh/dataplanes/:name/_layout': _123,
   '/meshes/:mesh/dataplanes/:name/_rules': _128,
   '/meshes/:mesh/dataplanes/:name/policies': _20,
   '/meshes/:mesh/dataplanes/:name/xds': _120,
