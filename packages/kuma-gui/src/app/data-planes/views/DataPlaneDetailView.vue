@@ -8,7 +8,7 @@
       subscription: '',
     }"
     name="data-plane-detail-view"
-    v-slot="{ route, t, can, me, uri }"
+    v-slot="{ route, t, can, uri }"
   >
     <DataLoader
       :src="uri(sources, '/meshes/:mesh/dataplanes/:name/layout', {
@@ -159,7 +159,7 @@
                   <template
                     #title
                   >
-                    {{ t('http.api.proptery.type') }}
+                    {{ t('http.api.property.type') }}
                   </template>
 
                   <template
@@ -238,7 +238,7 @@
               <XLayout
                 v-if="props.data.dataplaneInsight.mTLS"
                 data-testid="dataplane-mtls"
-                class="dataplane-mtls"
+                class="about-subsection"
                 size="small"
               >
                 <h3>{{ t('data-planes.routes.item.mtls.title') }}</h3>
@@ -335,6 +335,52 @@
                         </template>
                       </DefinitionCard>
                     </XLayout>
+                  </template>
+                </XLayout>
+              </XLayout>
+
+              <XLayout
+                v-if="props.data.dataplaneInsight.subscriptions.length > 0"
+                data-testid="about-dataplane-subscriptions"
+                class="about-subsection"
+              >
+                <XLayout type="separated">
+                  <h3>{{ t('data-planes.routes.item.subscriptions.title') }}</h3>
+                  <XAction
+                    data-action
+                    appearance="anchor"
+                    :to="{
+                      name: 'data-plane-subscriptions-summary-view',
+                      params: {
+                        mesh: route.params.mesh,
+                        proxy: route.params.proxy,
+                      },
+                      query: {
+                        inactive: route.params.inactive,
+                      },
+                    }"
+                  >
+                    ({{ t('data-planes.routes.item.xds.show-more') }})
+                  </XAction>
+                </XLayout>
+
+                <XLayout type="separated">
+                  <template
+                    v-for="subscription in props.data.dataplaneInsight.subscriptions"
+                    :key="subscription.id"
+                  >
+                    <template
+                      v-for="connection in [subscription.connectTime && !subscription.disconnectTime ? 'healthy' : 'unhealthy'] as const"
+                      :key="`${connection}`"
+                    >
+                      <XBadge :appearance="connection === 'healthy' ? 'success' : 'danger'">
+                        <XLayout type="separated">
+                          <XIcon :name="connection">
+                            {{ t(`common.connection.${connection}`) }}
+                          </XIcon> {{ subscription.controlPlaneInstanceId }}
+                        </XLayout>
+                      </XBadge>
+                    </template>
                   </template>
                 </XLayout>
               </XLayout>
@@ -506,7 +552,7 @@
           >
             <SummaryView
               v-if="child.route.name !== route.name"
-              width="670px"
+              :width="child.route.name === 'data-plane-subscriptions-summary-view' ? '900px' : '670px'"
               @close="function () {
                 route.replace({
                   name: 'data-plane-detail-view',
@@ -526,95 +572,10 @@
                 :data="route.params.subscription.length > 0 ? props.data.dataplaneInsight.subscriptions : (child.route.name as string).includes('-inbound-') ? dataplaneLayout.inbounds : dataplaneLayout.outbounds"
                 :data-plane-overview="props.data"
                 :networking="props.data.dataplane.networking"
+                :subscriptions="props.data.dataplaneInsight.subscriptions"
               />
             </SummaryView>
           </RouterView>
-
-          <div
-            v-if="props.data.dataplaneInsight.subscriptions.length > 0"
-            data-testid="dataplane-subscriptions"
-          >
-            <XCard>
-              <template
-                #title
-              >
-                <h2>{{ t('data-planes.routes.item.subscriptions.title') }}</h2>
-              </template>
-
-              <XLayout>
-                <XI18n path="data-planes.routes.item.subscriptions.description" />
-                <AppCollection
-                  :headers="[
-                    { ...me.get('headers.connection'), label: '&nbsp;', key: 'connection' },
-                    { ...me.get('headers.instanceId'), label: t('http.api.property.instanceId'), key: 'instanceId' },
-                    { ...me.get('headers.version'), label: t('http.api.property.version'), key: 'version' },
-                    { ...me.get('headers.connected'), label: t('http.api.property.connected'), key: 'connected' },
-                    { ...me.get('headers.disconnected'), label: t('http.api.property.disconnected'), key: 'disconnected' },
-                    { ...me.get('headers.responses'), label: t('http.api.property.responses'), key: 'responses' },
-                  ]"
-                  :is-selected-row="item => item.id === route.params.subscription"
-                  :items="props.data.dataplaneInsight.subscriptions.map((_, i, arr) => arr[arr.length - (i + 1)])"
-                  @resize="me.set"
-                >
-                  <template
-                    #connection="{ row: item }"
-                  >
-                    <template
-                      v-for="connection in [item.connectTime && !item.disconnectTime ? 'healthy' : 'unhealthy'] as const"
-                      :key="`${connection}`"
-                    >
-                      <XIcon :name="connection">
-                        {{ t(`common.connection.${connection}`) }}
-                      </XIcon>
-                    </template>
-                  </template>
-                  <template
-                    #instanceId="{ row: item }"
-                  >
-                    <XAction
-                      data-action
-                      :to="{
-                        name: 'data-plane-subscription-summary-view',
-                        params: {
-                          subscription: item.id,
-                        },
-                      }"
-                    >
-                      {{ item.controlPlaneInstanceId }}
-                    </XAction>
-                  </template>
-                  <template
-                    #version="{ row: item }"
-                  >
-                    {{ item.version?.kumaDp?.version ?? '-' }}
-                  </template>
-                  <template
-                    #connected="{ row: item }"
-                  >
-                    {{ t('common.formats.datetime', { value: Date.parse(item.connectTime ?? '') }) }}
-                  </template>
-                  <template
-                    #disconnected="{ row: item }"
-                  >
-                    <template
-                      v-if="item.disconnectTime"
-                    >
-                      {{ t('common.formats.datetime', { value: Date.parse(item.disconnectTime) }) }}
-                    </template>
-                  </template>
-                  <template
-                    #responses="{ row: item }"
-                  >
-                    <template
-                      v-for="responses in [item.status?.total ?? {}]"
-                    >
-                      {{ responses.responsesSent }}/{{ responses.responsesAcknowledged }}
-                    </template>
-                  </template>
-                </AppCollection>
-              </XLayout>
-            </XCard>
-          </div>
         </XLayout>
       </AppView>
     </DataLoader>
@@ -625,7 +586,6 @@
 import { provide } from 'vue'
 
 import { sources } from '../sources'
-import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
@@ -643,7 +603,6 @@ const props = defineProps<{
   data: DataplaneOverview
   mesh: Mesh
 }>()
-
 provide('data-plane-overview', props.data)
 </script>
 
@@ -682,16 +641,16 @@ provide('data-plane-overview', props.data)
   }
 }
 
-.dataplane-mtls {
+.about-subsection {
   border-top: $kui-border-width-10 solid $kui-color-border;
   padding-top: $kui-space-70;
-
-  h3 {
-    color: $kui-color-text;
-  }
 }
 
 :deep(.about-section .about-section-content) {
   display: block !important;
+
+  h3 {
+    color: $kui-color-text;
+  }
 }
 </style>

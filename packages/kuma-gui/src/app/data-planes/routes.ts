@@ -49,7 +49,12 @@ export const dataplaneRoutes = (): RouteRecordRaw[] => {
               }
               return item
             }),
-            ...subscriptions('data-plane'),
+            {
+              path: 'subscriptions',
+              name: 'data-plane-subscriptions-summary-view',
+              component: () => import('@/app/data-planes/views/DataPlaneSubscriptionsSummaryView.vue'),
+              children: [...subscriptions('data-plane')],
+            },
           ],
         },
         ...networking('data-plane'),

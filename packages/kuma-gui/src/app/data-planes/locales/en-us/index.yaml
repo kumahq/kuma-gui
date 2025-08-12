@@ -134,6 +134,8 @@ data-planes:
         inbound: Inbound rules
       legacy_policies: Legacy policies
       matches_everything: 'Matches everything'
+      xds:
+        show-more: Show more
     items:
       title: Data plane proxies
       intro: !!text/markdown |

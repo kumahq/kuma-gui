@@ -35,7 +35,13 @@ export const legacyDataplaneRoutes = (): RouteRecordRaw[] => {
               }
               return item
             }),
-            ...subscriptions('data-plane'),
+            {
+              path: 'subscriptions',
+              name: 'data-plane-subscriptions-summary-view',
+              component: () => import('@/app/data-planes/views/DataPlaneSubscriptionsSummaryView.vue'),
+              children: [...subscriptions('data-plane')],
+            },
+            // ...subscriptions('data-plane'),
           ],
         },
         {
