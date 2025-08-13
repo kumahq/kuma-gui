@@ -1052,6 +1052,42 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/meshes/{mesh}/meshidentities/{name}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Returns MeshIdentity entity */
+        get: operations["getMeshIdentity"];
+        /** Creates or Updates MeshIdentity entity */
+        put: operations["putMeshIdentity"];
+        post?: never;
+        /** Deletes MeshIdentity entity */
+        delete: operations["deleteMeshIdentity"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/meshes/{mesh}/meshidentities": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Returns a list of MeshIdentity in the mesh. */
+        get: operations["getMeshIdentityList"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/meshes/{mesh}/meshmultizoneservices/{name}": {
         parameters: {
             query?: never;
@@ -1116,6 +1152,42 @@ export interface paths {
         };
         /** Returns a list of MeshService in the mesh. */
         get: operations["getMeshServiceList"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/meshes/{mesh}/meshtrusts/{name}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Returns MeshTrust entity */
+        get: operations["getMeshTrust"];
+        /** Creates or Updates MeshTrust entity */
+        put: operations["putMeshTrust"];
+        post?: never;
+        /** Deletes MeshTrust entity */
+        delete: operations["deleteMeshTrust"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/meshes/{mesh}/meshtrusts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Returns a list of MeshTrust in the mesh. */
+        get: operations["getMeshTrustList"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1695,6 +1767,7 @@ export interface components {
             conf: {
                 [key: string]: unknown;
             };
+            kri?: string;
         };
         InboundPolicyConf: {
             kind: string;
@@ -6205,6 +6278,51 @@ export interface components {
                         };
                     };
                 }[];
+                /** @description Rules defines inbound permissions configuration */
+                rules?: {
+                    default: {
+                        /** @description Allow definees a list of matches for which access will be allowed */
+                        allow?: {
+                            /** @description SpiffeId defines a matcher configuration for SpiffeId matching */
+                            spiffeId?: {
+                                /**
+                                 * @description Type defines how to match incoming traffic by SpiffeId. `Exact` or `Prefix` are allowed.
+                                 * @enum {string}
+                                 */
+                                type: "Exact" | "Prefix";
+                                /** @description Value is SpiffeId of a client that needs to match for the configuration to be applied */
+                                value: string;
+                            };
+                        }[];
+                        /** @description AllowWithShadowDeny defines a list of matches for which access will be allowed but emits logs as if
+                         *     requests are denied */
+                        allowWithShadowDeny?: {
+                            /** @description SpiffeId defines a matcher configuration for SpiffeId matching */
+                            spiffeId?: {
+                                /**
+                                 * @description Type defines how to match incoming traffic by SpiffeId. `Exact` or `Prefix` are allowed.
+                                 * @enum {string}
+                                 */
+                                type: "Exact" | "Prefix";
+                                /** @description Value is SpiffeId of a client that needs to match for the configuration to be applied */
+                                value: string;
+                            };
+                        }[];
+                        /** @description Deny defines a list of matches for which access will be denied */
+                        deny?: {
+                            /** @description SpiffeId defines a matcher configuration for SpiffeId matching */
+                            spiffeId?: {
+                                /**
+                                 * @description Type defines how to match incoming traffic by SpiffeId. `Exact` or `Prefix` are allowed.
+                                 * @enum {string}
+                                 */
+                                type: "Exact" | "Prefix";
+                                /** @description Value is SpiffeId of a client that needs to match for the configuration to be applied */
+                                value: string;
+                            };
+                        }[];
+                    };
+                }[];
                 /** @description TargetRef is a reference to the resource the policy takes an effect on.
                  *     The resource could be either a real store object or virtual resource
                  *     defined inplace. */
@@ -7563,6 +7681,156 @@ export interface components {
             readonly warnings?: string[];
         };
         MeshExternalServiceDeleteSuccessResponse: Record<string, never>;
+        MeshIdentityItem: {
+            /**
+             * @description the type of the resource
+             * @enum {string}
+             */
+            type: "MeshIdentity";
+            /**
+             * @description Mesh is the name of the Kuma mesh this resource belongs to. It may be omitted for cluster-scoped resources.
+             * @default default
+             */
+            mesh: string;
+            /** @description Name of the Kuma resource */
+            name: string;
+            /** @description The labels to help identity resources */
+            labels?: {
+                [key: string]: string;
+            };
+            /** @description Spec is the specification of the Kuma MeshIdentity resource. */
+            spec: {
+                provider: {
+                    /** @description Bundled provides information about certificates that are generated by the control plane,
+                     *     either autogenerated or provided by the user. */
+                    bundled?: {
+                        /** @description Autogenerate configures the control plane to use self-signed certificates. */
+                        autogenerate?: {
+                            enabled?: boolean;
+                        };
+                        /** @description CA has configuration related to the CA */
+                        ca?: {
+                            /** @description Certificate allows the user to specify a custom certificate. */
+                            certificate?: {
+                                envVar?: {
+                                    name: string;
+                                };
+                                file?: {
+                                    path: string;
+                                };
+                                insecureInline?: {
+                                    value: string;
+                                };
+                                secretRef?: {
+                                    /** @enum {string} */
+                                    kind: "Secret";
+                                    name: string;
+                                };
+                                /** @enum {string} */
+                                type: "File" | "Secret" | "EnvVar" | "InsecureInline";
+                            };
+                            /** @description PrivateKey allows the user to specify a custom private key. */
+                            privateKey?: {
+                                envVar?: {
+                                    name: string;
+                                };
+                                file?: {
+                                    path: string;
+                                };
+                                insecureInline?: {
+                                    value: string;
+                                };
+                                secretRef?: {
+                                    /** @enum {string} */
+                                    kind: "Secret";
+                                    name: string;
+                                };
+                                /** @enum {string} */
+                                type: "File" | "Secret" | "EnvVar" | "InsecureInline";
+                            };
+                        };
+                        /** @description CertificateParameters allows users to define certificate generation parameters. */
+                        certificateParameters?: {
+                            expiry?: string;
+                        };
+                        /** @description InsecureAllowSelfSigned allows users to enable the use of self-signed certificates. */
+                        insecureAllowSelfSigned?: boolean;
+                        /**
+                         * @description MeshTrustCreation defines whether a MeshTrust resource should be automatically created
+                         *     from an existing MeshIdentity. If not defined, the control plane automatically generates a MeshTrust.
+                         * @enum {string}
+                         */
+                        meshTrustCreation?: "Enabled" | "Disabled";
+                    };
+                    /** @description Spire indicates that SPIRE is used for certificate delivery. */
+                    spire?: {
+                        /** @description Spire agent configuration */
+                        agent?: {
+                            /** @description Connection timeout to the socket exposed by Spire agent
+                             *     Default 1 second. */
+                            timeout?: string;
+                        };
+                    };
+                    /**
+                     * @description Type specifies the type of certificate provider.
+                     * @enum {string}
+                     */
+                    type: "Bundled" | "Spire";
+                };
+                selector?: {
+                    dataplane?: {
+                        matchLabels?: {
+                            [key: string]: string;
+                        };
+                    };
+                };
+                spiffeID?: {
+                    path?: string;
+                    trustDomain?: string;
+                };
+            };
+            /**
+             * Format: date-time
+             * @description Time at which the resource was created
+             * @example 0001-01-01T00:00:00Z
+             */
+            readonly creationTime?: string;
+            /**
+             * Format: date-time
+             * @description Time at which the resource was updated
+             * @example 0001-01-01T00:00:00Z
+             */
+            readonly modificationTime?: string;
+            /** @description Status is the current status of the Kuma MeshIdentity resource. */
+            readonly status?: {
+                /** @description Conditions is an array of hostname generator conditions. */
+                conditions?: {
+                    /** @description message is a human readable message indicating details about the transition.
+                     *     This may be an empty string. */
+                    message: string;
+                    /** @description reason contains a programmatic identifier indicating the reason for the condition's last transition.
+                     *     Producers of specific condition types may define expected values and meanings for this field,
+                     *     and whether the values are considered a guaranteed API.
+                     *     The value should be a CamelCase string.
+                     *     This field may not be empty. */
+                    reason: string;
+                    /**
+                     * @description status of the condition, one of True, False, Unknown.
+                     * @enum {string}
+                     */
+                    status: "True" | "False" | "Unknown";
+                    /** @description type of condition in CamelCase or in foo.example.com/CamelCase. */
+                    type: string;
+                }[];
+            };
+        };
+        MeshIdentityCreateOrUpdateSuccessResponse: {
+            /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
+             *     Warning messages describe a problem the client making the API request should correct or be aware of.
+             *      */
+            readonly warnings?: string[];
+        };
+        MeshIdentityDeleteSuccessResponse: Record<string, never>;
         MeshMultiZoneServiceItem: {
             /**
              * @description the type of the resource
@@ -7792,6 +8060,67 @@ export interface components {
             readonly warnings?: string[];
         };
         MeshServiceDeleteSuccessResponse: Record<string, never>;
+        MeshTrustItem: {
+            /**
+             * @description the type of the resource
+             * @enum {string}
+             */
+            type: "MeshTrust";
+            /**
+             * @description Mesh is the name of the Kuma mesh this resource belongs to. It may be omitted for cluster-scoped resources.
+             * @default default
+             */
+            mesh: string;
+            /** @description Name of the Kuma resource */
+            name: string;
+            /** @description The labels to help identity resources */
+            labels?: {
+                [key: string]: string;
+            };
+            /** @description Spec is the specification of the Kuma MeshTrust resource. */
+            spec: {
+                /** @description CABundles contains a list of CA bundles supported by this TrustDomain.
+                 *     At least one CA bundle must be specified. */
+                caBundles: {
+                    /** @description Pem contains the PEM-encoded CA bundle if the Type is set to a PEM-based format. */
+                    pem?: {
+                        /** @description Value holds the PEM-encoded CA bundle as a string. */
+                        value: string;
+                    };
+                    /**
+                     * @description Type specifies the format or source type of the CA bundle.
+                     * @enum {string}
+                     */
+                    type: "Pem";
+                }[];
+                /** @description Origin specifies whether the resource was created from a MeshIdentity. */
+                origin?: {
+                    /** @description Resource identifier */
+                    kri?: string;
+                };
+                /** @description TrustDomain is the trust domain associated with this resource. */
+                trustDomain: string;
+            };
+            /**
+             * Format: date-time
+             * @description Time at which the resource was created
+             * @example 0001-01-01T00:00:00Z
+             */
+            readonly creationTime?: string;
+            /**
+             * Format: date-time
+             * @description Time at which the resource was updated
+             * @example 0001-01-01T00:00:00Z
+             */
+            readonly modificationTime?: string;
+        };
+        MeshTrustCreateOrUpdateSuccessResponse: {
+            /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
+             *     Warning messages describe a problem the client making the API request should correct or be aware of.
+             *      */
+            readonly warnings?: string[];
+        };
+        MeshTrustDeleteSuccessResponse: Record<string, never>;
         ControlPlaneConfig: unknown;
         MeshInsight: components["schemas"]["Entity"] & {
             /** @enum {string} */
@@ -8547,6 +8876,30 @@ export interface components {
             };
         };
         /** @description Successful response */
+        MeshIdentityItem: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["MeshIdentityItem"];
+            };
+        };
+        /** @description List */
+        MeshIdentityList: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    items?: components["schemas"]["MeshIdentityItem"][];
+                    /** @description The total number of entities */
+                    total?: number;
+                    /** @description URL to the next page */
+                    next?: string;
+                };
+            };
+        };
+        /** @description Successful response */
         MeshMultiZoneServiceItem: {
             headers: {
                 [name: string]: unknown;
@@ -8587,6 +8940,30 @@ export interface components {
             content: {
                 "application/json": {
                     items?: components["schemas"]["MeshServiceItem"][];
+                    /** @description The total number of entities */
+                    total?: number;
+                    /** @description URL to the next page */
+                    next?: string;
+                };
+            };
+        };
+        /** @description Successful response */
+        MeshTrustItem: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["MeshTrustItem"];
+            };
+        };
+        /** @description List */
+        MeshTrustList: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    items?: components["schemas"]["MeshTrustItem"][];
                     /** @description The total number of entities */
                     total?: number;
                     /** @description URL to the next page */
@@ -11356,6 +11733,122 @@ export interface operations {
             200: components["responses"]["MeshExternalServiceList"];
         };
     };
+    getMeshIdentity: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshIdentity */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["MeshIdentityItem"];
+            404: components["responses"]["NotFound"];
+        };
+    };
+    putMeshIdentity: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshIdentity */
+                name: string;
+            };
+            cookie?: never;
+        };
+        /** @description Put request */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MeshIdentityItem"];
+            };
+        };
+        responses: {
+            /** @description Updated */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeshIdentityCreateOrUpdateSuccessResponse"];
+                };
+            };
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeshIdentityCreateOrUpdateSuccessResponse"];
+                };
+            };
+        };
+    };
+    deleteMeshIdentity: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshIdentity */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeshIdentityDeleteSuccessResponse"];
+                };
+            };
+            404: components["responses"]["NotFound"];
+        };
+    };
+    getMeshIdentityList: {
+        parameters: {
+            query?: {
+                /**
+                 * @description offset in the list of entities
+                 * @example 0
+                 */
+                offset?: number;
+                /** @description the number of items per page */
+                size?: number;
+                /**
+                 * @description filter by labels when multiple filters are present, they are ANDed
+                 * @example {
+                 *       "label.k8s.kuma.io/namespace": "my-ns"
+                 *     }
+                 */
+                filter?: {
+                    key?: string;
+                    value?: string;
+                };
+            };
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["MeshIdentityList"];
+        };
+    };
     getMeshMultiZoneService: {
         parameters: {
             query?: never;
@@ -11586,6 +12079,122 @@ export interface operations {
         requestBody?: never;
         responses: {
             200: components["responses"]["MeshServiceList"];
+        };
+    };
+    getMeshTrust: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshTrust */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["MeshTrustItem"];
+            404: components["responses"]["NotFound"];
+        };
+    };
+    putMeshTrust: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshTrust */
+                name: string;
+            };
+            cookie?: never;
+        };
+        /** @description Put request */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MeshTrustItem"];
+            };
+        };
+        responses: {
+            /** @description Updated */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeshTrustCreateOrUpdateSuccessResponse"];
+                };
+            };
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeshTrustCreateOrUpdateSuccessResponse"];
+                };
+            };
+        };
+    };
+    deleteMeshTrust: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshTrust */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeshTrustDeleteSuccessResponse"];
+                };
+            };
+            404: components["responses"]["NotFound"];
+        };
+    };
+    getMeshTrustList: {
+        parameters: {
+            query?: {
+                /**
+                 * @description offset in the list of entities
+                 * @example 0
+                 */
+                offset?: number;
+                /** @description the number of items per page */
+                size?: number;
+                /**
+                 * @description filter by labels when multiple filters are present, they are ANDed
+                 * @example {
+                 *       "label.k8s.kuma.io/namespace": "my-ns"
+                 *     }
+                 */
+                filter?: {
+                    key?: string;
+                    value?: string;
+                };
+            };
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["MeshTrustList"];
         };
     };
 }
