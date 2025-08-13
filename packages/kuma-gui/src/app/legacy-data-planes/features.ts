@@ -10,7 +10,7 @@ export const features = (_env: Env['var']): Features => {
         new Set(dataplaneOverview.dataplaneInsight.metadata.features).intersection(new Set(['feature-transparent-proxy-in-dataplane-metadata', 'bind-outbounds'])).size > 0
     },
     'use unified-resource-naming': (_can, dataplaneOverview: DataplaneOverview) => {
-      return dataplaneOverview.dataplaneInsight.metadata.features.includes('feature-unified-resource-naming')
+      return dataplaneOverview.dataplaneType === 'standard' && dataplaneOverview.dataplaneInsight.metadata.features.includes('feature-unified-resource-naming')
     },
   }
 }
