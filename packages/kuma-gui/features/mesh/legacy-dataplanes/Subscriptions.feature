@@ -23,10 +23,10 @@ Feature: dataplanes / subscriptions
         dataplaneInsight:
           subscriptions:
             - controlPlaneInstanceId: foo
+              disconnectTime: !!js/undefined
       """
     When I visit the "/meshes/default/data-planes/backend/overview" URL
     Then the "$about-section" element contains "XDS connections"
-    And I wait for 500 ms
     And the "$about-dp-subscriptions" element contains "foo"
 
   Scenario: Go to subscription detail and back

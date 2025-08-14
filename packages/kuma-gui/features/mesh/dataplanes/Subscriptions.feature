@@ -23,6 +23,7 @@ Feature: dataplanes / subscriptions
         dataplaneInsight:
           subscriptions:
             - controlPlaneInstanceId: foo
+              disconnectTime: !!js/undefined
       """
     When I visit the "/meshes/default/data-planes/backend/overview" URL
     Then the "$about-section" element contains "XDS connections"
