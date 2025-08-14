@@ -369,7 +369,7 @@
                       },
                     }"
                   >
-                    ({{ t('data-planes.routes.item.xds.show-more') }})
+                    ({{ t('data-planes.routes.item.xds.show-details') }})
                   </XAction>
                 </XLayout>
 

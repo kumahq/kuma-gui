@@ -135,7 +135,11 @@ data-planes:
       legacy_policies: Legacy policies
       matches_everything: 'Matches everything'
       xds:
-        show-more: Show more
+        show-details: Show details
+        connected: Connected since
+        instance: Control plane instance
+        version: Version
+        disconnected: There are no active connections to a control plane instance. Check the details for more information.
     items:
       title: Data plane proxies
       intro: !!text/markdown |

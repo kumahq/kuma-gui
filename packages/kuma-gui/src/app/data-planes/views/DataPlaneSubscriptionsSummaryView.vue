@@ -30,7 +30,7 @@
             { ...me.get('headers.responses'), label: t('http.api.property.responses'), key: 'responses' },
           ]"
           :is-selected-row="item => item.id === route.params.subscription"
-          :items="props.subscriptions.map((_, i, arr) => arr[arr.length - (i + 1)])"
+          :items="[...props.subscriptions].reverse()"
           @resize="me.set"
         >
           <template
