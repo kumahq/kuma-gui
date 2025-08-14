@@ -373,22 +373,58 @@
                   </XAction>
                 </XLayout>
 
-                <XLayout type="separated">
+                <XLayout
+                  v-for="subscriptions in [[...props.data.dataplaneInsight.subscriptions].reverse()]"
+                  :key="typeof subscriptions"
+                  type="separated"
+                >
                   <template
-                    v-for="subscription in props.data.dataplaneInsight.subscriptions"
+                    v-for="subscription in [subscriptions.find((sub) => !sub.disconnectTime) ?? subscriptions[0]]"
                     :key="subscription.id"
                   >
-                    <template
-                      v-for="connection in [subscription.connectTime && !subscription.disconnectTime ? 'healthy' : 'unhealthy'] as const"
-                      :key="`${connection}`"
-                    >
-                      <XBadge :appearance="connection === 'healthy' ? 'success' : 'danger'">
-                        <XLayout type="separated">
-                          <XIcon :name="connection">
-                            {{ t(`common.connection.${connection}`) }}
-                          </XIcon> {{ subscription.controlPlaneInstanceId }}
-                        </XLayout>
-                      </XBadge>
+                    <template v-if="!subscription.disconnectTime && subscription.connectTime">
+                      <DefinitionCard layout="horizontal">
+                        <template #title>
+                          <XI18n
+                            path="data-planes.routes.item.xds.connected"
+                          />
+                        </template>
+    
+                        <template #body>
+                          <XBadge appearance="neutral">
+                            {{ t('common.formats.datetime', { value: Date.parse(subscription.connectTime) }) }}
+                          </XBadge>
+                        </template>
+                      </DefinitionCard>
+                      <DefinitionCard layout="horizontal">
+                        <template #title>
+                          <XI18n
+                            path="data-planes.routes.item.xds.instance"
+                          />
+                        </template>
+    
+                        <template #body>
+                          <XBadge appearance="info">
+                            {{ subscription.controlPlaneInstanceId }}
+                          </XBadge>
+                        </template>
+                      </DefinitionCard>
+                      <DefinitionCard layout="horizontal">
+                        <template #title>
+                          <XI18n
+                            path="data-planes.routes.item.xds.version"
+                          />
+                        </template>
+    
+                        <template #body>
+                          <XBadge appearance="info">
+                            {{ subscription.version?.kumaDp?.version ?? t('common.unknown') }}
+                          </XBadge>
+                        </template>
+                      </DefinitionCard>
+                    </template>
+                    <template v-else>
+                      <XI18n path="data-planes.routes.item.xds.disconnected" />
                     </template>
                   </template>
                 </XLayout>
