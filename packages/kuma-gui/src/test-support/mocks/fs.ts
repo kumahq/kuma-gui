@@ -17,6 +17,7 @@ import _231 from './src/meshes/_/dataplanes/_/_inbounds/_/_policies'
 import _123 from './src/meshes/_/dataplanes/_/_layout'
 import _232 from './src/meshes/_/dataplanes/_/_outbounds/_/_policies.ts'
 import _22 from './src/meshes/_/dataplanes/_/_overview'
+import _233 from './src/meshes/_/dataplanes/_/_policies.ts'
 import _128 from './src/meshes/_/dataplanes/_/_rules'
 import _122 from './src/meshes/_/dataplanes/_/clusters'
 import _20 from './src/meshes/_/dataplanes/_/policies'
@@ -183,6 +184,7 @@ export const fs: FS = {
   '/meshes/:mesh/meshfaultinjections/:name/_resources/dataplanes': _54,
   '/meshes/:mesh/dataplanes/:name/_inbounds/:kri/_policies': _231,
   '/meshes/:mesh/dataplanes/:name/_outbounds/:kri/_policies': _232,
+  '/meshes/:mesh/dataplanes/:name/_policies': _233,
   // resources
   '/_resources': _3,
   // legacy mesh
