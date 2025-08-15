@@ -116,6 +116,10 @@ Feature: application / MainNavigation
     And the "[data-testid='data-plane-stats-view-tab'].active" element exists
 
   Scenario: Tertiary navigation
+    Given the environment
+      """
+      KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: false
+      """
     When I visit the "/meshes/default/data-planes/dp-name/overview/inbound/localhost_51112/stats" URL
     And the URL "/meshes/default/dataplanes/dp-name/_overview" responds with
       """
