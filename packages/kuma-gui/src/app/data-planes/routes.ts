@@ -55,6 +55,11 @@ export const dataplaneRoutes = (): RouteRecordRaw[] => {
               component: () => import('@/app/data-planes/views/DataPlaneSubscriptionsSummaryView.vue'),
               children: [...subscriptions('data-plane')],
             },
+            {
+              path: 'policy/:policy',
+              name: 'data-plane-policy-config-summary-view',
+              component: () => import('@/app/data-planes/views/DataplanePolicyConfigSummaryView.vue'),
+            },
           ],
         },
         ...networking('data-plane'),
