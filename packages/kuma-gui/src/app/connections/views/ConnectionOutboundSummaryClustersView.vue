@@ -23,14 +23,14 @@
           name: route.params.proxy,
           mesh: route.params.mesh || '*',
         })"
-        v-slot="{ data, refresh }"
+        v-slot="{ data: clusters, refresh }"
       >
         <template
           v-for="prefix in [route.params.connection]"
           :key="typeof prefix"
         >
           <DataCollection
-            :items="data.split('\n')"
+            :items="clusters.split('\n')"
             :predicate="item => item.startsWith(`${prefix}::`)"
             v-slot="{ items: lines }"
           >
