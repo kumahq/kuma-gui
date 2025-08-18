@@ -41,7 +41,19 @@ export const legacyDataplaneRoutes = (): RouteRecordRaw[] => {
               component: () => import('@/app/data-planes/views/DataPlaneSubscriptionsSummaryView.vue'),
               children: [...subscriptions('data-plane')],
             },
-            // ...subscriptions('data-plane'),
+
+            /**
+             * The legacy data planes are not using the policy config summary view, but the router requires
+             * the route to be defined, otherwise a deep-link would always lead to the /404 route.
+             * In order to allow deep-linking to the policy config summary view in case the dp has `feature-unified-resource-naming` enabled,
+             * we define the route here, but it will never be used in the legacy data planes.
+             * The actual handling of this happens in the `DataPlaneRouteGuard: router.beforeResolve`.
+             */
+            {
+              path: 'policy/:policy',
+              name: 'data-plane-policy-config-summary-view',
+              component: () => import('@/app/data-planes/views/DataplanePolicyConfigSummaryView.vue'),
+            },
           ],
         },
         {

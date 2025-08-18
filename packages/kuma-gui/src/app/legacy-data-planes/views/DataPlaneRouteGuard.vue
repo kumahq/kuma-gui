@@ -57,6 +57,17 @@ const addRouteName = (item: RouteRecordRaw) => {
   }
 }
 
+router.beforeResolve(async (to, _from, next) => {
+  if(
+    !can('use unified-resource-naming', props.data) &&
+    ['data-plane-policy-config-summary-view'].includes(to.name as string)
+  ) {
+    next({ name: 'app-not-found-view' })
+  } else {
+    next()
+  }
+})
+
 watch(() => router.currentRoute.value.name, async (val) => {
   if(typeof val === 'string' && val.includes('data-plane-')) {
     isRouteLoaded.value = undefined
