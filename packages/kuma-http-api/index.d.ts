@@ -7960,7 +7960,7 @@ export interface components {
             spec: {
                 identities?: {
                     /** @enum {string} */
-                    type: "ServiceTag";
+                    type: "ServiceTag" | "SpiffeID";
                     value: string;
                 }[];
                 ports?: {
@@ -8314,24 +8314,6 @@ export interface components {
         };
         /** @description Internal Server Error */
         Internal: {
-            headers: {
-                [name: string]: unknown;
-            };
-            content: {
-                "application/problem+json": components["schemas"]["Error"];
-            };
-        };
-        /** @description Bad Request */
-        "responses-BadRequest": {
-            headers: {
-                [name: string]: unknown;
-            };
-            content: {
-                "application/problem+json": components["schemas"]["Error"];
-            };
-        };
-        /** @description Internal Server Error */
-        "responses-Internal": {
             headers: {
                 [name: string]: unknown;
             };
@@ -8998,8 +8980,8 @@ export interface operations {
         requestBody?: never;
         responses: {
             200: components["responses"]["IndexResponse"];
-            400: components["responses"]["responses-BadRequest"];
-            500: components["responses"]["responses-Internal"];
+            400: components["responses"]["BadRequest"];
+            500: components["responses"]["Internal"];
         };
     };
     "get-resource-type-description": {
@@ -9012,8 +8994,8 @@ export interface operations {
         requestBody?: never;
         responses: {
             200: components["responses"]["ResourceTypeDescriptionListResponse"];
-            400: components["responses"]["responses-BadRequest"];
-            500: components["responses"]["responses-Internal"];
+            400: components["responses"]["BadRequest"];
+            500: components["responses"]["Internal"];
         };
     };
     "get-global-insight": {
@@ -9026,8 +9008,8 @@ export interface operations {
         requestBody?: never;
         responses: {
             200: components["responses"]["GlobalInsightResponse"];
-            400: components["responses"]["responses-BadRequest"];
-            500: components["responses"]["responses-Internal"];
+            400: components["responses"]["BadRequest"];
+            500: components["responses"]["Internal"];
         };
     };
     "inspect-dataplanes-rules": {
@@ -9056,8 +9038,8 @@ export interface operations {
         requestBody?: never;
         responses: {
             200: components["responses"]["InspectRulesResponse"];
-            400: components["responses"]["responses-BadRequest"];
-            500: components["responses"]["responses-Internal"];
+            400: components["responses"]["BadRequest"];
+            500: components["responses"]["Internal"];
         };
     };
     "get-dataplanes-xds-config": {
@@ -9083,7 +9065,7 @@ export interface operations {
         requestBody?: never;
         responses: {
             200: components["responses"]["GetDataplaneXDSConfigResponse"];
-            400: components["responses"]["responses-BadRequest"];
+            400: components["responses"]["BadRequest"];
             500: components["responses"]["Internal"];
         };
     };
@@ -9102,7 +9084,7 @@ export interface operations {
         requestBody?: never;
         responses: {
             200: components["responses"]["DataplaneNetworkingLayoutResponse"];
-            400: components["responses"]["responses-BadRequest"];
+            400: components["responses"]["BadRequest"];
             500: components["responses"]["Internal"];
         };
     };
@@ -9121,7 +9103,7 @@ export interface operations {
         requestBody?: never;
         responses: {
             200: components["responses"]["ProxyPolicyConfResponse"];
-            400: components["responses"]["responses-BadRequest"];
+            400: components["responses"]["BadRequest"];
             500: components["responses"]["Internal"];
         };
     };
@@ -9142,7 +9124,7 @@ export interface operations {
         requestBody?: never;
         responses: {
             200: components["responses"]["InboundPolicyConfResponse"];
-            400: components["responses"]["responses-BadRequest"];
+            400: components["responses"]["BadRequest"];
             500: components["responses"]["Internal"];
         };
     };
@@ -9163,7 +9145,7 @@ export interface operations {
         requestBody?: never;
         responses: {
             200: components["responses"]["OutboundPolicyConfResponse"];
-            400: components["responses"]["responses-BadRequest"];
+            400: components["responses"]["BadRequest"];
             500: components["responses"]["Internal"];
         };
     };
@@ -9184,7 +9166,7 @@ export interface operations {
         requestBody?: never;
         responses: {
             200: components["responses"]["RoutesListResponse"];
-            400: components["responses"]["responses-BadRequest"];
+            400: components["responses"]["BadRequest"];
             500: components["responses"]["Internal"];
         };
     };
@@ -9207,7 +9189,7 @@ export interface operations {
         requestBody?: never;
         responses: {
             200: components["responses"]["RoutePolicyConfResponse"];
-            400: components["responses"]["responses-BadRequest"];
+            400: components["responses"]["BadRequest"];
             500: components["responses"]["Internal"];
         };
     };
@@ -9244,7 +9226,7 @@ export interface operations {
         requestBody?: never;
         responses: {
             200: components["responses"]["InspectDataplanesForPolicyResponse"];
-            400: components["responses"]["responses-BadRequest"];
+            400: components["responses"]["BadRequest"];
             500: components["responses"]["Internal"];
         };
     };
@@ -9274,7 +9256,7 @@ export interface operations {
         requestBody?: never;
         responses: {
             200: components["responses"]["InspectHostnamesResponse"];
-            400: components["responses"]["responses-BadRequest"];
+            400: components["responses"]["BadRequest"];
             404: components["responses"]["NotFound"];
             500: components["responses"]["Internal"];
         };
