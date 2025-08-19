@@ -8,6 +8,7 @@ Feature: mesh / mesh-services / item
       | config-universal   | [data-testid='codeblock-yaml-universal']       |
       | config-k8s         | [data-testid='codeblock-yaml-k8s']             |
       | select-environment | [data-testid='select-input']                   |
+      | identities         | [data-testid='mesh-service-identities']        |
 
   Scenario: The dataplane table exists
     Given the environment
@@ -48,3 +49,21 @@ Feature: mesh / mesh-services / item
     When I click the "[data-testid='select-item-k8s'] button" element
     Then the "$config-k8s" element exists
     And the URL contains "?environment=k8s"
+
+  Scenario: Shows identities in the table
+    Given the URL "/meshes/default/meshservices/firewall-1" responds with
+      """
+      body:
+        spec:
+          identities:
+            - type: ServiceTag
+              value: firewall-1-tag
+            - type: SpiffeID
+              value: spiffe://kuma.io/ns/firewall-app/sa/firewall-1
+      """
+    When I visit the "/meshes/default/services/mesh-services/firewall-1/overview" URL
+    Then the "$identities" element exists
+    And the "$identities" element contains "firewall-1-tag"
+    And the "$identities" element contains "ServiceTag"
+    And the "$identities" element contains "spiffe://kuma.io/ns/firewall-app/sa/firewall-1" 
+    And the "$identities" element contains "SpiffeID"
