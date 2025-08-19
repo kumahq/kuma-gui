@@ -26,6 +26,17 @@
               </XBadge>
             </template>
           </DefinitionCard>
+          <DefinitionCard
+            layout="horizontal"
+          >
+            <template #title>
+              Port
+            </template>
+
+            <template #body>
+              {{ props.data.port }}
+            </template>
+          </DefinitionCard>
         </div>
         <XLayout
           v-if="props.data"

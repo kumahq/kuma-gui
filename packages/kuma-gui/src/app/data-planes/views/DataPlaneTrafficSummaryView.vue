@@ -56,6 +56,7 @@
             :is="child.Component"
             :data="items[0]"
             :networking="props.networking"
+            :data-plane-overview="props.dataPlaneOverview"
           />
         </RouterView>
       </AppView>
@@ -65,11 +66,12 @@
 
 <script lang="ts" setup>
 import { DataplaneNetworkingLayout } from '../data'
-import type { DataplaneNetworking } from '@/app/data-planes/data/'
+import type { DataplaneNetworking, DataplaneOverview } from '@/app/data-planes/data/'
 
 const props = defineProps<{
   data: DataplaneNetworkingLayout['inbounds'] | DataplaneNetworkingLayout['outbounds']
   networking: DataplaneNetworking
   routeName: string
+  dataPlaneOverview: DataplaneOverview
 }>()
 </script>
