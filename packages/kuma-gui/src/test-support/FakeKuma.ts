@@ -480,6 +480,16 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
   contextualKri({ context, name }: { context: string, name: string }) {
     return `self_${context}_${name}`
   }
+
+  spiffeId(options: Partial<{ mesh: string, namespace: string, k8sNamespace: string, sa: string }>) {
+    const {
+      mesh = this.faker.word.noun(),
+      namespace = this.faker.word.noun(),
+      k8sNamespace = this.k8s.namespace(),
+      sa = this.faker.word.noun(),
+    } = options
+    return `spiffe://${mesh}.${namespace}.mesh.local/ns/${k8sNamespace}/sa/${sa}`
+  }
 }
 
 export default class FakeKuma extends Faker {

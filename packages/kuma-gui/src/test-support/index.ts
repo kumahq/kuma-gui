@@ -1,4 +1,4 @@
-import { en } from '@faker-js/faker'
+import { base, en } from '@faker-js/faker'
 
 import FakeKuma from './FakeKuma'
 import type { RestRequest, MockResponder, FS as FakeFS } from '@kumahq/fake-api'
@@ -79,7 +79,7 @@ export type EndpointDependencies = {
   env: (key: Parameters<Env['var']>[0] | MockEnvKeys, d: string) => string
 }
 export const dependencies = {
-  fake: new FakeKuma({ locale: en }),
+  fake: new FakeKuma({ locale: [base, en] }),
   pager,
   env: <T extends string = Parameters<Env['var']>[0] | MockEnvKeys>(_key: T, d = '') => d,
 }
