@@ -18,34 +18,34 @@ export const dataplaneRoutes = (): RouteRecordRaw[] => {
               if (item.name === 'data-plane-connection-inbound-summary-view' && item.children) {
                 item.component = () => import('@/app/data-planes/views/DataPlaneTrafficSummaryView.vue')
                 // temporarily exclude all children but overview
-                item.children = [{
-                  path: 'overview',
-                  name: 'data-plane-connection-inbound-summary-overview-view',
-                  component: () => import('@/app/data-planes/views/DataPlaneInboundSummaryOverviewView.vue'),
-                }]
-                // item.children.unshift(
-                //   {
-                //     path: 'overview',
-                //     name: 'data-plane-connection-inbound-summary-overview-view',
-                //     component: () => import('@/app/data-planes/views/DataPlaneInboundSummaryOverviewView.vue'),
-                //   },
-                // )
+                // item.children = [{
+                //   path: 'overview',
+                //   name: 'data-plane-connection-inbound-summary-overview-view',
+                //   component: () => import('@/app/data-planes/views/DataPlaneInboundSummaryOverviewView.vue'),
+                // }]
+                item.children.unshift(
+                  {
+                    path: 'overview',
+                    name: 'data-plane-connection-inbound-summary-overview-view',
+                    component: () => import('@/app/data-planes/views/DataPlaneInboundSummaryOverviewView.vue'),
+                  },
+                )
               }
               if (item.name === 'data-plane-connection-outbound-summary-view' && item.children) {
                 item.component = () => import('@/app/data-planes/views/DataPlaneTrafficSummaryView.vue')
                 // temporarily exclude all children but overview
-                item.children = [{
-                  path: 'overview',
-                  name: 'data-plane-connection-outbound-summary-overview-view',
-                  component: () => import('@/app/data-planes/views/DataPlaneOutboundSummaryOverviewView.vue'),
-                }]
-                // item.children.unshift(
-                //   {
-                //     path: 'overview',
-                //     name: 'data-plane-connection-outbound-summary-overview-view',
-                //     component: () => import('@/app/data-planes/views/DataPlaneOutboundSummaryOverviewView.vue'),
-                //   },
-                // )
+                // item.children = [{
+                //   path: 'overview',
+                //   name: 'data-plane-connection-outbound-summary-overview-view',
+                //   component: () => import('@/app/data-planes/views/DataPlaneOutboundSummaryOverviewView.vue'),
+                // }]
+                item.children.unshift(
+                  {
+                    path: 'overview',
+                    name: 'data-plane-connection-outbound-summary-overview-view',
+                    component: () => import('@/app/data-planes/views/DataPlaneOutboundSummaryOverviewView.vue'),
+                  },
+                )
               }
               return item
             }),

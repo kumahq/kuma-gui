@@ -5,6 +5,7 @@ import { services as controlPlanes } from '@/app/control-planes'
 import { services as hostnameGenerators } from '@/app/hostname-generators'
 import { services as me } from '@/app/me'
 import { services as meshes } from '@/app/meshes'
+import { services as resources } from '@/app/resources'
 import X from '@/app/x'
 import { services as zones } from '@/app/zones'
 import type { ServiceDefinition, Token } from '@kumahq/container'
@@ -31,5 +32,6 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
     ...zones(app),
     ...meshes(app),
     ...hostnameGenerators(app),
+    ...resources(app),
   ]
 }

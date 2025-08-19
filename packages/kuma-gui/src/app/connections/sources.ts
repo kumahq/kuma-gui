@@ -192,7 +192,7 @@ export const sources = (api: KumaApi) => {
             // this one won't work yet see
             // https://github.com/kumahq/kuma/issues/12093
             // dynamic_listeners[].name === 'outbound:<outbound>'
-            return arr.filter(item => prop(item, 'name') && item.name === `outbound:${outbound}`)
+            return arr.filter(item => prop(item, 'name') && (item.name === `outbound:${outbound}` || item.name === outbound))
           case 'dynamic_active_clusters':
             // dynamic_active_clusters[].cluster.name === outbound
             return arr.filter(item => prop(item, 'cluster') && prop(item.cluster, 'name') && item.cluster?.name === outbound)
@@ -237,10 +237,10 @@ export const sources = (api: KumaApi) => {
         switch (key) {
           case 'dynamic_listeners':
             // dynamic_listeners[].name === 'inbound:<ignored>:0000'
-            return arr.filter((item = {}) => prop(item, 'name') && typeof item.name === 'string' && item.name.startsWith('inbound:') && item.name?.endsWith(`:${inbound}`))
+            return arr.filter((item = {}) => prop(item, 'name') && typeof item.name === 'string' && ((item.name.startsWith('inbound:') && item.name?.endsWith(`:${inbound}`) || item.name === inbound )))
           case 'dynamic_active_clusters':
             // dynamic_active_clusters[].cluster.name === '<ignored>:0000'
-            return arr.filter(item => prop(item, 'cluster') && prop(item.cluster, 'name') && typeof item.cluster.name === 'string' && item.cluster?.name?.endsWith(`:${inbound}`))
+            return arr.filter(item => prop(item, 'cluster') && prop(item.cluster, 'name') && ((typeof item.cluster.name === 'string' && item.cluster?.name?.endsWith(`:${inbound}`) || item.cluster.name === inbound)))
         }
         return []
       })
