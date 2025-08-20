@@ -25,7 +25,7 @@ jobs:
     timeout-minutes: 30
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
       - uses: zgosalvez/github-actions-ensure-sha-pinned-actions@fc87bb5b5a97953d987372e74478de634726b3e5 # v3.0.25
 
   install-dependencies:
@@ -40,7 +40,7 @@ jobs:
       preview: ${{ steps.meta.outputs.preview }}
       e2e: ${{ steps.meta.outputs.e2e }}
     steps:
-      - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
       - uses: ./.github/actions/bootstrap/
         with:
           install-cmd: |
@@ -81,7 +81,7 @@ jobs:
     name: |
       Linting ${{ matrix.package.name }}
     steps:
-      - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
       - uses: ./.github/actions/bootstrap/
       - run: |
           make -C ${{ matrix.package.path }} lint
@@ -97,7 +97,7 @@ jobs:
     name: |
       Unit tests: ${{ matrix.package.name }}
     steps:
-      - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
       - uses: ./.github/actions/bootstrap/
       - run: |
           make -C ${{ matrix.package.path }} test/unit
@@ -115,7 +115,7 @@ jobs:
     name: |
       Browser tests: ${{ matrix.package.name }}
     steps:
-      - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
       - uses: ./.github/actions/bootstrap/
       - run: |
           make -C ${{ matrix.package.path }} run/e2e &
