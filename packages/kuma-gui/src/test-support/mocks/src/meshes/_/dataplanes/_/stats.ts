@@ -1,9 +1,10 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
 export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => {
-  const { name } = req.params
+  const { name, mesh } = req.params
 
   // use seed to sync the ports in stats.ts with the ports in _overview.ts
   fake.kuma.seed(name as string)
+  const isUnifiedResourceNamingEnabled = env('KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED', '') === 'true'
   const inboundCount = parseInt(env('KUMA_DATAPLANEINBOUND_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
   const ports = Array.from({ length: inboundCount }).map(() => ({
     port: fake.number.int({ min: 1, max: 65535 }),
@@ -13,7 +14,9 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
 
   const serviceCount = parseInt(env('KUMA_SERVICE_COUNT', `${fake.number.int({ min: 7, max: 50 })}`))
   const services = Array.from({ length: serviceCount }).map(() => {
-    if (fake.datatype.boolean()) {
+    if(isUnifiedResourceNamingEnabled) {
+      return fake.kuma.kri({ shortName: fake.helpers.arrayElement(['msvc', 'mzsvc', 'extsvc']), name: name as string, mesh: mesh as string })
+    } else if (fake.datatype.boolean()) {
       return `${fake.word.noun()}_${fake.word.noun()}_${fake.word.noun()}_${fake.word.noun()}_${fake.helpers.arrayElement(['msvc', 'mzsvc', 'extsvc'])}_${fake.number.int({ min: 1, max: 65535 })}`
     } else {
       return `${fake.word.noun()}_svc_${fake.number.int({ min: 1, max: 65535 })}`
@@ -32,7 +35,7 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
   const inbounds = ports.map(item => {
     const port = item.port
     const direction = 'downstream'
-    const service = `localhost_${port}`
+    const service = isUnifiedResourceNamingEnabled ? `self_inbound_${fake.helpers.arrayElement(['http', 'grpc', 'tcp', item.port])}` : `localhost_${port}`
     const _minMax = fake.datatype.boolean() ? minMax : { min: 0, max: 0 }
     switch (true) {
       case ['http', 'grpc'].includes(item.protocol): {

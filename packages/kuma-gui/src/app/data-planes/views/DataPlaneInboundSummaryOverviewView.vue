@@ -10,29 +10,86 @@
   >
     <AppView>
       <XLayout type="stack">
-        <div
-          class="stack-with-borders"
+        <template
+          v-for="inbound in [props.dataPlaneOverview.dataplane.networking.inbounds.find((item) => item.portName === ContextualKri.fromString(route.params.connection).sectionName && item.port === props.data.port)]"
+          :key="typeof inbound"
         >
-          <DefinitionCard layout="horizontal">
-            <template #title>
-              Protocol
-            </template>
+          <div
+            v-if="inbound"
+            class="stack-with-borders"
+          >
+            <DefinitionCard layout="horizontal">
+              <template #title>
+                Tags
+              </template>
 
-            <template #body>
-              <XBadge
-                appearance="info"
-              >
-                {{ t(`http.api.value.${props.data.protocol}`) }}
-              </XBadge>
-            </template>
-          </DefinitionCard>
-        </div>
+              <template #body>
+                <TagList
+                  :tags="inbound.tags"
+                  alignment="right"
+                />
+              </template>
+            </DefinitionCard>
+            <DefinitionCard layout="horizontal">
+              <template #title>
+                Protocol
+              </template>
+
+              <template #body>
+                <XBadge
+                  appearance="info"
+                >
+                  {{ t(`http.api.value.${inbound.protocol}`) }}
+                </XBadge>
+              </template>
+            </DefinitionCard>
+            <DefinitionCard layout="horizontal">
+              <template #title>
+                Address
+              </template>
+
+              <template #body>
+                <XCopyButton
+                  :text="`${inbound.addressPort}`"
+                />
+              </template>
+            </DefinitionCard>
+            <DefinitionCard
+              v-if="inbound.serviceAddressPort.length > 0"
+              layout="horizontal"
+            >
+              <template #title>
+                Service address
+              </template>
+
+              <template #body>
+                <XCopyButton
+                  :text="`${inbound.serviceAddressPort}`"
+                />
+              </template>
+            </DefinitionCard>
+            <DefinitionCard
+              v-if="inbound.portName.length > 0"
+              layout="horizontal"
+            >
+              <template #title>
+                Name
+              </template>
+
+              <template #body>
+                <XCopyButton
+                  :text="`${inbound.portName}`"
+                />
+              </template>
+            </DefinitionCard>
+          </div>
+        </template>
         <XLayout
           v-if="props.data"
           type="stack"
           size="small"
         >
-          <h3>Rules</h3>
+          <h3>Policies</h3>
           <DataSource
             :src="uri(policySources, '/policy-types', {})"
             v-slot="{ data: policyTypesData, error: policyTypesError }"
@@ -41,7 +98,7 @@
               :src="uri(policySources, '/meshes/:mesh/dataplanes/:name/policies/for/inbound/:kri', {
                 mesh: route.params.mesh,
                 name: route.params.proxy,
-                kri: route.params.connection,
+                kri: props.data.kri,
               })"
               v-slot="{ data: policiesData, error: policiesError }"
             >
@@ -153,17 +210,19 @@
 </template>
 
 <script lang="ts" setup>
-import { DataplaneNetworkingLayout } from '../data'
+import { DataplaneNetworkingLayout, DataplaneOverview } from '../data'
 import { YAML } from '@/app/application'
 import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import PolicyTypeTag from '@/app/common/PolicyTypeTag.vue'
-import { Kri } from '@/app/kuma/kri'
+import TagList from '@/app/common/TagList.vue'
+import { ContextualKri, Kri } from '@/app/kuma/kri'
 import { sources as policySources } from '@/app/policies/sources'
 
 const props = defineProps<{
   data: DataplaneNetworkingLayout['inbounds'][number]
+  dataPlaneOverview: DataplaneOverview
   routeName: string
 }>()
 </script>

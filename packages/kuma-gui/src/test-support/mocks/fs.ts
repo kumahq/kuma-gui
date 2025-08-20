@@ -62,6 +62,8 @@ import _134 from './src/meshes/_/meshgateways/test-meshgateway/_'
 import _135 from './src/meshes/_/meshgateways/test-meshgateway/_rules'
 import _132 from './src/meshes/_/meshhttproutes'
 import _133 from './src/meshes/_/meshhttproutes/_'
+import _241 from './src/meshes/_/meshidentities/_'
+import _242 from './src/meshes/_/meshidentities/_/_.ts'
 import _140 from './src/meshes/_/meshmultizoneservices'
 import _141 from './src/meshes/_/meshmultizoneservices/_'
 import _171 from './src/meshes/_/meshmultizoneservices/_/_hostnames'
@@ -187,6 +189,8 @@ export const fs: FS = {
   '/meshes/:mesh/dataplanes/:name/_policies': _233,
   // resources
   '/_resources': _3,
+  '/meshes/:mesh/meshidentities': _241,
+  '/meshes/:mesh/meshidentities/:name': _242,
   // legacy mesh
   '/meshes/:mesh/service-insights': _25,
   '/meshes/:mesh/service-insights/:name': _26,

@@ -30,18 +30,24 @@
           :items="stats.raw.split('\n')"
           :predicate="item => {
             return [
-              `listener.${props.data.listenerAddress.length > 0 ? props.data.listenerAddress : route.params.connection}`,
-              `cluster.${props.data.name}.`,
-              `cluster.${props.data.clusterName}.`,
-              `http.${props.data.name}.`,
-              `http.${props.data.clusterName}.`,
-              `tcp.${props.data.name}.`,
-            ].some(prefix => item.startsWith(prefix)) && (!item.includes('.rds.') || item.includes(`_${props.data.port}`) || item.includes(`${props.data.servicePort}`))}"
+              `listener.${data.listenerAddress?.length > 0 ? data.listenerAddress : route.params.connection}`,
+              `cluster.${data.name}.`,
+              `cluster.${data.clusterName}.`,
+              `http.${data.name}.`,
+              `http.${data.clusterName}.`,
+              `tcp.${data.name}.`,
+              `cluster.${data.proxyResourceName}.`,
+              `listener.${data.proxyResourceName}`,
+              `cluster.${data.proxyResourceName}.`,
+              `http.${data.proxyResourceName}.`,
+              `http.${data.proxyResourceName}.`,
+              `tcp.${data.proxyResourceName}.`,
+            ].some(prefix => item.startsWith(prefix)) && (!item.includes('.rds.') || item.includes(`_${data.port}`) || item.includes(`${data.servicePort}`))}"
           v-slot="{ items: lines }"
         >
           <XCodeBlock
             language="json"
-            :code="lines.map(item => item.replace(`${props.data.listenerAddress.length > 0 ? props.data.listenerAddress : route.params.connection}.`, '').replace(`${props.data.name}.`, '').replace(`${props.data.clusterName}.`, '')).join('\n')"
+            :code="lines.map(item => item.replace(`${data.listenerAddress?.length > 0 ? data.listenerAddress : data.proxyResourceName.length ? data.proxyResourceName : route.params.connection}.`, '').replace( data.name.length ? `${data.name}.` : '', '').replace(data.clusterName.length ? `${data.clusterName}.` : '', '')).join('\n')"
             is-searchable
             :query="route.params.codeSearch"
             :is-filter-mode="route.params.codeFilter"
@@ -66,15 +72,29 @@
   </RouteView>
 </template>
 <script lang="ts" setup>
+import { computed } from 'vue'
+
 import { sources } from '../sources'
+import type { DataplaneNetworkingLayout } from '@/app/data-planes/data'
+import { ContextualKri } from '@/app/kuma/kri'
 import type { DataplaneInbound, DataplaneNetworking } from '@/app/legacy-data-planes/data/'
 import type { ZoneEgress } from '@/app/zone-egresses/data/'
 import type { ZoneIngress } from '@/app/zone-ingresses/data/'
 
 
 const props = defineProps<{
-  data: DataplaneInbound
+  data: DataplaneInbound | DataplaneNetworkingLayout['inbounds'][number]
   networking: DataplaneNetworking | ZoneIngress['networking'] | ZoneEgress['networking']
   routeName: string
 }>()
+
+const data = computed(() => ({
+  ...props.data,
+  proxyResourceName: 'proxyResourceName' in props.data ? ContextualKri.toString({...ContextualKri.fromString(props.data.proxyResourceName), sectionName: props.data.port.toString() }) : '',
+  listenerAddress: 'listenerAddress' in props.data ? props.data.listenerAddress : '',
+  clusterName: 'clusterName' in props.data ? props.data.clusterName : '',
+  port: 'port' in props.data ? props.data.port.toString() : '',
+  servicePort: 'servicePort' in props.data ? props.data.servicePort : '',
+  name: 'name' in props.data ? props.data.name : '',
+}))
 </script>

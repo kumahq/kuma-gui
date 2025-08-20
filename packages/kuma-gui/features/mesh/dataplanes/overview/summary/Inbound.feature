@@ -18,12 +18,12 @@ Feature: mesh / dataplanes / overview / summary / Inbound
       """
       body:
         inbounds:
-          - kri: kri_dp_default_numeric_kuma-system_service-less_httpport
+          - kri: kri_dp_default_numeric_kuma-system_service-less_http
             port: 12345
             protocol: http
-            proxyResourceName: self_inbound_httpport
+            proxyResourceName: self_inbound_http
       """
-    And the URL "/meshes/default/dataplanes/service-less/_inbounds/self_inbound_httpport/_policies" responds with
+    And the URL "/meshes/default/dataplanes/service-less/_inbounds/kri_dp_default_numeric_kuma-system_service-less_http/_policies" responds with
       """
       body:
         policies:
@@ -36,9 +36,20 @@ Feature: mesh / dataplanes / overview / summary / Inbound
             origins:
               - kri: kri_policy_default_pigsty_jury_innovation_appliance
       """
-    When I visit the "/meshes/default/data-planes/service-less/overview/inbound/self_inbound_httpport/overview" URL
+    And the URL "/meshes/default/dataplanes/service-less/_overview" responds with
+      """
+      body:
+        dataplane:
+          networking:
+            inbound:
+              - name: http
+                port: 12345
+                tags:
+                  kuma.io/protocol: http
+      """
+    When I visit the "/meshes/default/data-planes/service-less/overview/inbound/self_inbound_http/overview" URL
     And the "$summary" element exists
-    And the "$summary" element contains "Inbound: self_inbound_httpport"
+    And the "$summary" element contains "Inbound: self_inbound_http"
     And the "$summary" element contains "HTTP"
     And the "$inbound-policies-rule" element contains "FaultInjection"
     And the "$inbound-policies-rule" element contains "kri_policy_default_pigsty_jury_innovation_appliance"
@@ -53,12 +64,12 @@ Feature: mesh / dataplanes / overview / summary / Inbound
       """
       body:
         inbounds:
-          - kri: kri_dp_default_numeric_kuma-system_service-less_httpport
+          - kri: kri_dp_default_numeric_kuma-system_service-less_http
             port: 12345
             protocol: http
-            proxyResourceName: self_inbound_httpport
+            proxyResourceName: self_inbound_http
       """
-    And the URL "/meshes/default/dataplanes/service-less/_inbounds/self_inbound_httpport/_policies" responds with
+    And the URL "/meshes/default/dataplanes/service-less/_inbounds/kri_dp_default_numeric_kuma-system_service-less_http/_policies" responds with
       """
       body:
         policies:
@@ -66,6 +77,17 @@ Feature: mesh / dataplanes / overview / summary / Inbound
             origins:
               - kri: kri_policy_default_pigsty_jury_the-policy-name_appliance
       """
-    When I visit the "/meshes/default/data-planes/service-less/overview/inbound/self_inbound_httpport/overview" URL
+    And the URL "/meshes/default/dataplanes/service-less/_overview" responds with
+      """
+      body:
+        dataplane:
+          networking:
+            inbound:
+              - name: http
+                port: 12345
+                tags:
+                  kuma.io/protocol: http
+      """
+    When I visit the "/meshes/default/data-planes/service-less/overview/inbound/self_inbound_http/overview" URL
     Then I click on the "$inbound-policies-rule ul:first-of-type li:first-of-type a:first-of-type" element
     Then the URL contains "/gui/meshes/default/policies/circuit-breakers/the-policy-name/overview/overview"
