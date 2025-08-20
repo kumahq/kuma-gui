@@ -7,10 +7,7 @@ export const features = (env: Env['var']): Features => {
     },
     'create zones': () => {
       return false
-    },
-    'view growth-new-empty-states': () => {
-      return false
-    },
+    }
   }
 }
     
