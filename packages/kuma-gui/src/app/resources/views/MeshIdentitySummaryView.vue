@@ -8,63 +8,65 @@
     }"
     v-slot="{ route, t, uri }"
   >
-    <DataCollection
-      :items="props.meshIdentities"
-      :predicate="item => item.name.toLocaleLowerCase() === route.params.name"
-      v-slot="{ items }"
-    >
-      <AppView>
-        <template #title>
-          <h2>{{ items[0].name }}</h2>
-        </template>
-        <XLayout
-          type="separated"
-          justify="end"
-        >
-          <div
-            v-for="options in [['universal', 'k8s']]"
-            :key="typeof options"
+    <AppView>
+      <template #title>
+        <h2>{{ route.params.name }}</h2>
+      </template>
+      <DataCollection
+        :items="props.meshIdentities"
+        :predicate="item => item.name.toLocaleLowerCase() === route.params.name"
+        v-slot="{ items }"
+      >
+        <XLayout>
+          <XLayout
+            type="separated"
+            justify="end"
           >
-            <XSelect
-              :label="t('gateways.routes.item.format')"
-              :selected="route.params.environment"
-              @change="(value) => {
-                route.update({ environment: value })
-              }"
-              @vue:before-mount="$event?.props?.selected && options.includes($event.props.selected) && $event.props.selected !== route.params.environment && route.update({ environment: $event.props.selected })"
+            <div
+              v-for="options in [['universal', 'k8s']]"
+              :key="typeof options"
             >
-              <template
-                v-for="value in options"
-                :key="value"
-                #[`${value}-option`]
+              <XSelect
+                :label="t('gateways.routes.item.format')"
+                :selected="route.params.environment"
+                @change="(value) => {
+                  route.update({ environment: value })
+                }"
+                @vue:before-mount="$event?.props?.selected && options.includes($event.props.selected) && $event.props.selected !== route.params.environment && route.update({ environment: $event.props.selected })"
               >
-                {{ t(`gateways.routes.item.formats.${value}`) }}
-              </template>
-            </XSelect>
-          </div>
-        </XLayout>
-        <template v-if="route.params.environment === 'universal'">
-          <XCodeBlock
-            language="yaml"
-            :code="YAML.stringify(items[0])"
-          />
-        </template>
-        <template v-else>
-          <DataLoader
-            :src="uri(sources, '/meshes/:mesh/meshidentities/:name/as/kubernetes', {
-              mesh: route.params.mesh,
-              name: route.params.name,
-            })"
-            v-slot="{ data: k8sYaml }"
-          >
+                <template
+                  v-for="value in options"
+                  :key="value"
+                  #[`${value}-option`]
+                >
+                  {{ t(`gateways.routes.item.formats.${value}`) }}
+                </template>
+              </XSelect>
+            </div>
+          </XLayout>
+          <template v-if="route.params.environment === 'universal'">
             <XCodeBlock
               language="yaml"
-              :code="YAML.stringify(k8sYaml)"
+              :code="YAML.stringify(items[0])"
             />
-          </DataLoader>
-        </template>
-      </AppView>
-    </DataCollection>
+          </template>
+          <template v-else>
+            <DataLoader
+              :src="uri(sources, '/meshes/:mesh/meshidentities/:name/as/kubernetes', {
+                mesh: route.params.mesh,
+                name: route.params.name,
+              })"
+              v-slot="{ data: k8sYaml }"
+            >
+              <XCodeBlock
+                language="yaml"
+                :code="YAML.stringify(k8sYaml)"
+              />
+            </DataLoader>
+          </template>
+        </XLayout>
+      </DataCollection>
+    </AppView>
   </RouteView>
 </template>
 

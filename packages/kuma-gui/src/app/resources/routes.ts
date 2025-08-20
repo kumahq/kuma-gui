@@ -9,3 +9,13 @@ export const meshIdentityRoutes = (): RouteRecordRaw[] => {
     },
   ]
 }
+
+export const meshTrustRoutes = (): RouteRecordRaw[] => {
+  return [
+    {
+      path: 'meshtrust/:name',
+      name: 'mesh-trust-summary-view',
+      component: () => import('@/app/resources/views/MeshTrustSummaryView.vue'),
+    },
+  ]
+}
