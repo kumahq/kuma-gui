@@ -6,7 +6,7 @@
       subscription: '',
       proxy: '',
     }"
-    v-slot="{ t, route, me, uri }"
+    v-slot="{ t, route, me, uri, can }"
   >
     <AppView>
       <XLayout type="stack">
@@ -64,7 +64,7 @@
           :src="uri(sources, '/connections/stats/for/:proxyType/:name/:mesh/:socketAddress', {
             name: route.params.proxy,
             mesh: '*',
-            socketAddress: props.data.zoneEgress.socketAddress,
+            socketAddress: can('use zone-egress-unified-resource-naming', props.data) ? 'self_inbound' : props.data.zoneEgress.socketAddress,
             proxyType: 'zone-egress',
           })"
           v-slot="{ data: traffic, refresh }"

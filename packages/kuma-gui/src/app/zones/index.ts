@@ -7,7 +7,9 @@ import locales from './locales/en-us/index.yaml'
 import { routes } from './routes'
 import { sources } from './sources'
 import { services as subscriptions } from '@/app/subscriptions'
+import { services as zoneEgresses } from '@/app/zone-egresses'
 import egressLocales from '@/app/zone-egresses/locales/en-us/index.yaml'
+import { services as zoneIngresses } from '@/app/zone-ingresses'
 import ingressLocales from '@/app/zone-ingresses/locales/en-us/index.yaml'
 import type { ServiceDefinition } from '@kumahq/container'
 import type { RouteRecordRaw } from 'vue-router'
@@ -81,6 +83,8 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       ],
     }],
     ...subscriptions(app),
+    ...zoneEgresses(app),
+    ...zoneIngresses(app),
   ]
 }
 export const TOKENS = $

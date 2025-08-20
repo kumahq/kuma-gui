@@ -1,10 +1,33 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
-export default (_deps: EndpointDependencies): MockResponder => (_req) => {
+export default (deps: EndpointDependencies): MockResponder => (_req) => {
   return {
     headers: {
     },
-    body: `${stats()}`,
+    body: `
+${stats()}
+${statsWithContextualKri(deps)}
+`,
   }
+}
+
+function statsWithContextualKri({ fake }: EndpointDependencies) {
+  const kri = fake.kuma.contextualKri({ context: 'inbound_ze', name: fake.word.noun() })
+  return `
+listener.${kri}.downstream_cx_active: 0
+listener.${kri}.downstream_cx_destroy: 0
+listener.${kri}.downstream_cx_overflow: 0
+listener.${kri}.downstream_cx_overload_reject: 0
+listener.${kri}.downstream_cx_total: ${fake.number.int({ min: 1, max: 100 })}
+listener.${kri}.downstream_cx_transport_socket_connect_timeout: 0
+listener.${kri}.downstream_global_cx_overflow: 0
+listener.${kri}.downstream_listener_filter_error: 0
+listener.${kri}.downstream_listener_filter_remote_close: 0
+listener.${kri}.downstream_pre_cx_active: 0
+listener.${kri}.downstream_pre_cx_timeout: 0
+listener.${kri}.extension_config_missing: 0
+listener.${kri}.network_extension_config_missing: 0
+listener.${kri}.no_filter_chain_match: 0
+`
 }
 
 function stats() {
