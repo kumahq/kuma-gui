@@ -43,7 +43,7 @@
           type="stack"
           size="small"
         >
-          <h3>Rules</h3>
+          <h3>Policies</h3>
           <DataSource
             :src="uri(policySources, '/policy-types', {})"
             v-slot="{ data: policyTypesData, error: policyTypesError }"
@@ -52,7 +52,7 @@
               :src="uri(policySources, '/meshes/:mesh/dataplanes/:name/policies/for/outbound/:kri', {
                 mesh: route.params.mesh,
                 name: route.params.proxy,
-                kri: route.params.connection,
+                kri: props.data.kri,
               })"
               v-slot="{ data: policiesData, error: policiesError }"
             >
