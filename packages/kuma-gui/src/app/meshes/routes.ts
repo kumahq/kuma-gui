@@ -1,4 +1,4 @@
-import { meshIdentityRoutes } from '../resources/routes'
+import { meshIdentityRoutes, meshTrustRoutes } from '../resources/routes'
 import type { RouteRecordRaw } from 'vue-router'
 
 export type SplitRouteRecordRaw = {
@@ -40,7 +40,10 @@ export const routes = (
                   path: 'overview',
                   name: 'mesh-detail-view',
                   component: () => import('@/app/meshes/views/MeshDetailView.vue'),
-                  children: [...meshIdentityRoutes()],
+                  children: [
+                    ...meshIdentityRoutes(),
+                    ...meshTrustRoutes(),
+                  ],
                 },
                 ...services.items(),
                 ...gateways.items(),
