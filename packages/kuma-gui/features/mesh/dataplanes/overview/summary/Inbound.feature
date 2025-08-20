@@ -23,7 +23,7 @@ Feature: mesh / dataplanes / overview / summary / Inbound
             protocol: http
             proxyResourceName: self_inbound_http
       """
-    And the URL "/meshes/default/dataplanes/service-less/_inbounds/self_inbound_http/_policies" responds with
+    And the URL "/meshes/default/dataplanes/service-less/_inbounds/kri_dp_default_numeric_kuma-system_service-less_http/_policies" responds with
       """
       body:
         policies:
@@ -69,7 +69,7 @@ Feature: mesh / dataplanes / overview / summary / Inbound
             protocol: http
             proxyResourceName: self_inbound_http
       """
-    And the URL "/meshes/default/dataplanes/service-less/_inbounds/self_inbound_http/_policies" responds with
+    And the URL "/meshes/default/dataplanes/service-less/_inbounds/kri_dp_default_numeric_kuma-system_service-less_http/_policies" responds with
       """
       body:
         policies:
