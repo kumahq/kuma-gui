@@ -7,7 +7,7 @@
       :key="prefix"
     >
       <template
-        v-for="{title, body, href, actionLabel, actionType} in [
+        v-for="{title, body} in [
           {
             title: t(`${prefix}x-empty-state.title`, undefined, { defaultMessage: t('components.x-empty-state.title') }),
             body: t(`${prefix}x-empty-state.body`, undefined, { defaultMessage: t('components.x-empty-state.body') }),
@@ -19,7 +19,6 @@
         :key="title"
       >
         <EntityEmptyState
-          v-if="can('view growth-new-empty-states')"
           :title="title"
           appearance="secondary"
           data-testid="empty-block"
@@ -93,68 +92,6 @@
             </slot>
           </template>
         </EntityEmptyState>
-        <KEmptyState
-          v-else
-          class="x-empty-state"
-          data-testid="empty-block"
-        >
-          <template
-            #icon
-          >
-            <slot name="icon" />
-          </template>
-          <template
-            #title
-          >
-            <slot
-              name="title"
-            >
-              <template
-                v-if="title.length > 0"
-              >
-                <header>
-                  <h2>
-                    <XI18n
-                      :path="`${prefix}x-empty-state.title`"
-                      default-path="components.x-empty-state.title"
-                    />
-                  </h2>
-                </header>
-              </template>
-            </slot>
-          </template>
-
-          <template
-            v-if="slots.default"
-          >
-            <slot name="default" />
-          </template>
-          <template
-            v-else-if="body.length > 0"
-          >
-            <XI18n
-              :path="`${prefix}x-empty-state.body`"
-              default-path="components.x-empty-state.body"
-            />
-          </template>
-
-          <template
-            #action
-          >
-            <slot name="action">
-              <XTeleportSlot
-                :name="`${props.type}-x-empty-state-actions`"
-              />
-              <XAction
-                v-if="href.length > 0"
-                :action="(['docs', 'create'] as const).find((item) => item === actionType)"
-                :href="href"
-              >
-                {{ actionLabel }}
-              </XAction>
-            </slot>
-          </template>
-        </KEmptyState>
       </template>
     </template>
   </XI18n>
@@ -163,10 +100,7 @@
 <script lang="ts" setup>
 import { KUI_COLOR_TEXT_DECORATIVE_AQUA, KUI_ICON_SIZE_40, KUI_ICON_SIZE_50 } from '@kong/design-tokens'
 import { LocationIcon, AnalyticsIcon, MeshIcon } from '@kong/icons'
-import { KEmptyState } from '@kong/kongponents'
 import { EntityEmptyState } from '@kong-ui-public/entities-shared'
-
-import { useCan } from '@/app/application'
 
 const props = withDefaults(defineProps<{
   type?: string
@@ -174,7 +108,6 @@ const props = withDefaults(defineProps<{
   type: '',
 })
 const slots = defineSlots()
-const can = useCan()
 
 const iconMapping: Record<string, unknown> = {
   'zone-cps': LocationIcon,

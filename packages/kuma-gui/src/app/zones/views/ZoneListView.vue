@@ -7,7 +7,7 @@
       zone: '',
       s: '',
     }"
-    v-slot="{ route, t, can, uri, me }"
+    v-slot="{ route, t, uri, me }"
   >
     <DataSource
       :src="uri(zoneSources, '/zone-cps', {}, {
@@ -37,7 +37,7 @@
           @change="getEgresses"
         />
         <XI18n
-          v-if="!can('view growth-new-empty-states') || data?.items.length"
+          v-if="data?.items.length"
           path="zone-cps.routes.items.intro"
           default-path="common.i18n.ignore-error"
         />
