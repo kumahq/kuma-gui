@@ -28,6 +28,7 @@ export const MeshService = {
               dataplaneTags: Object.keys(item.dataplaneTags ?? {}).length > 0 ? item.dataplaneTags! : {},
             }
           })(item.selector),
+          identities: Array.isArray(item.identities) ? item.identities : [],
         }
       })(item.spec),
       status: ((item = {}) => {
