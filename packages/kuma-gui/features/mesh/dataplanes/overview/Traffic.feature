@@ -32,8 +32,8 @@ Feature: mesh / dataplanes / connections / Traffic
     When I visit the "/meshes/default/data-planes/service-less/overview" URL
     And the "$traffic" element exists
     And the "$inbound" element exists 1 times
-    And the "$inbound" element contains "12345"
+    And the "$inbound" element contains "httpport"
     And the "$inbound" element contains "self_inbound_httpport"
     And the "$outbound" element exists 1 times
-    And the "$outbound" element contains "54321"
+    And the "$outbound" element contains "ipv6"
     And the "$outbound" element contains "kri_dp_default_scenario_kuma-system_service-less_ipv6"
