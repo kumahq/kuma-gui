@@ -36,7 +36,7 @@
               // 'self_inbound' can be used as socket address to filter the stats as the contextual kri of an inbound always starts with 'self_inbound'
               socketAddress: 'self_inbound',
             })"
-            v-slot="{ data: traffic, refresh: refreshTraffic }"
+            v-slot="{ data: traffic, error: trafficError, refresh: refreshTraffic }"
           >
             <DataLoader
               :data="[dataplaneLayout, dataplanePolicies, policyTypesData, traffic]"
@@ -592,8 +592,18 @@
                         <!-- we don't want to show an error here -->
                         <!-- instead we show a No Data EmptyState -->
                         <template
-                          v-if="typeof error === 'undefined' && dataplaneLayout?.outbounds.length"
+                          v-if="typeof error === 'undefined' && typeof trafficError === 'undefined' && dataplaneLayout?.outbounds.length"
                         >
+                          <ConnectionGroup
+                            type="passthrough"
+                          >
+                            <ConnectionCard
+                              :protocol="`passthrough`"
+                              :traffic="traffic?.passthrough"
+                            >
+                              Non mesh traffic
+                            </ConnectionCard>
+                          </ConnectionGroup>
                           <DataCollection
                             type="outbounds"
                             :items="dataplaneLayout?.outbounds"

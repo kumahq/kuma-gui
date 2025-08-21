@@ -1,6 +1,7 @@
 import createClient from 'openapi-fetch'
 
 import { MeshIdentity } from './data/MeshIdentity'
+import { MeshTrust } from './data/MeshTrust'
 import { defineSources } from '@/app/application'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import type { paths } from '@kumahq/kuma-http-api'
@@ -57,6 +58,54 @@ export const sources = (api: KumaApi) => {
       })
   
       return MeshIdentity.fromObject(res.data!)
+    },
+
+    '/meshes/:mesh/meshtrusts': async (params) => {
+      const { mesh } = params
+  
+      const res = await http.GET('/meshes/{mesh}/meshtrusts', {
+        params: {
+          path: {
+            mesh,
+          },
+        },
+      })
+  
+      return MeshTrust.fromCollection(res.data!)
+    },
+
+    '/meshes/:mesh/meshtrusts/:name': async (params) => {
+      const { mesh, name } = params
+  
+      const res = await http.GET('/meshes/{mesh}/meshtrusts/{name}', {
+        params: {
+          path: {
+            mesh,
+            name,
+          },
+        },
+      })
+  
+      return MeshTrust.fromObject(res.data!)
+    },
+
+    '/meshes/:mesh/meshtrusts/:name/as/kubernetes': async (params) => {
+      const { mesh, name } = params
+  
+      const res = await http.GET('/meshes/{mesh}/meshtrusts/{name}', {
+        params: {
+          path: {
+            mesh,
+            name,
+          },
+          // @ts-ignore
+          query: {
+            format: 'kubernetes',
+          },
+        },
+      })
+  
+      return MeshTrust.fromObject(res.data!)
     },
   })
 }
