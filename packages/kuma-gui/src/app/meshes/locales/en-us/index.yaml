@@ -72,6 +72,11 @@ meshes:
         universal: Universal
         k8s: Kubernetes
         structured: Structured
+      mesh-trusts:
+        title: MeshTrusts
+        name: Name
+        trust-domain: TrustDomain
+        origin: Origin
     items:
       title: Meshes
       breadcrumbs: Meshes

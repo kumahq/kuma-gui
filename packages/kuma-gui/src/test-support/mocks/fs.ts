@@ -70,6 +70,8 @@ import _171 from './src/meshes/_/meshmultizoneservices/_/_hostnames'
 import _136 from './src/meshes/_/meshservices'
 import _137 from './src/meshes/_/meshservices/_'
 import _170 from './src/meshes/_/meshservices/_/_hostnames'
+import _243 from './src/meshes/_/meshtrusts/_'
+import _244 from './src/meshes/_/meshtrusts/_/_.ts'
 import _35 from './src/meshes/_/proxytemplates'
 import _36 from './src/meshes/_/proxytemplates/_'
 import _37 from './src/meshes/_/rate-limits'
@@ -191,6 +193,8 @@ export const fs: FS = {
   '/_resources': _3,
   '/meshes/:mesh/meshidentities': _241,
   '/meshes/:mesh/meshidentities/:name': _242,
+  '/meshes/:mesh/meshtrusts': _243,
+  '/meshes/:mesh/meshtrusts/:name': _244,
   // legacy mesh
   '/meshes/:mesh/service-insights': _25,
   '/meshes/:mesh/service-insights/:name': _26,
