@@ -259,7 +259,10 @@
                     :key="mTLS"
                   >
                     <XLayout type="separated">
-                      <DefinitionCard layout="horizontal">
+                      <DefinitionCard
+                        v-if="mTLS.lastCertificateRegeneration"
+                        layout="horizontal"
+                      >
                         <template #title>
                           <XI18n
                             path="data-planes.routes.item.mtls.generation_time.title"
@@ -272,7 +275,10 @@
                           </XBadge>
                         </template>
                       </DefinitionCard>
-                      <DefinitionCard layout="horizontal">
+                      <DefinitionCard
+                        v-if="mTLS.certificateExpirationTime"
+                        layout="horizontal"
+                      >
                         <template #title>
                           <XI18n
                             path="data-planes.routes.item.mtls.expiration_time.title"

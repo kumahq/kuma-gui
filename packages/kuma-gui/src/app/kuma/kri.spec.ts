@@ -77,6 +77,20 @@ describe('kri', () => {
       }),
       'self_transparentproxy_passthrough_inbound_ipv6',
     ],
+
+    // isKri
+    [
+      Kri.isKri('kri_policy_mesh_zone_namespace_name_section'),
+      true,
+    ],
+    [
+      Kri.isKri('not_a_kri'),
+      false,
+    ],
+    [
+      Kri.isKri('kri_not_a_kri'),
+      false,
+    ],
   ])('Kri methods produce expected output', (input, output) => {
     expect(input).toEqual(output)
   })

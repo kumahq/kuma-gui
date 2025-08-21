@@ -18,6 +18,7 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
   const isMtlsEnabledOverride = env('KUMA_MTLS_ENABLED', '')
   const defaultType = env('KUMA_DATAPLANE_TYPE', '')
   const unifiedResourceNaming = env('KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED', '')
+  const isTlsIssuedMeshIdentity = env('KUMA_DATAPLANE_TLS_ISSUED_MESHIDENTITY', `${fake.datatype.boolean()}`) === 'true'
   const isUnifiedResourceNamingEnabled = unifiedResourceNaming.length ? unifiedResourceNaming === 'true' : fake.datatype.boolean()
 
   const outboundCount = parseInt(env('KUMA_DATAPLANEOUTBOUND_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
@@ -37,7 +38,7 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
   })()
 
   const isMultizone = fake.datatype.boolean()
-  const isMtlsEnabled = isMtlsEnabledOverride !== '' ? isMtlsEnabledOverride === 'true' : fake.datatype.boolean()
+  const isMtlsEnabled = isTlsIssuedMeshIdentity || (isMtlsEnabledOverride !== '' ? isMtlsEnabledOverride === 'true' : fake.datatype.boolean())
 
   const service = fake.word.noun()
 
@@ -113,7 +114,11 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
         }
         : {}),
       dataplaneInsight: {
-        ...(isMtlsEnabled ? { mTLS: fake.kuma.dataplaneMtls() } : {}),
+        ...(isMtlsEnabled ? { 
+          mTLS: isTlsIssuedMeshIdentity ? {
+            issuedBackend: fake.kuma.kri({ shortName: 'mid', mesh: mesh as string, sectionName: '' }),
+          } : fake.kuma.dataplaneMtls(),
+        } : {}),
         subscriptions: Array.from({ length: subscriptionCount }).map((item, i, arr) => {
           return {
             id: fake.string.uuid(),

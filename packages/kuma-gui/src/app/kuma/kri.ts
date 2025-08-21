@@ -19,6 +19,10 @@ export class Kri {
     const { shortName = '', mesh = '', zone = '', namespace = '', name = '', sectionName = '' } = kri
     return `kri_${shortName}_${mesh}_${zone}_${namespace}_${name}_${sectionName}`
   }
+
+  static isKri(kri: string) {
+    return kri.startsWith('kri_') && kri.split('_').length === 7
+  }
 }
 
 export class ContextualKri {
