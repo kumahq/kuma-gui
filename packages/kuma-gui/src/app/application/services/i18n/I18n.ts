@@ -3,12 +3,7 @@ import { semver } from '@kumahq/config/utils'
 
 import { get } from '@/app/application'
 import type { Env } from '@kumahq/settings/env'
-
-declare module 'intl-messageformat' {
-  interface Options {
-    defaultMessage: string
-  }
-}
+import './i18n.d'
 
 interface I18nRecord {
   [key: string]: I18nRecord | string
