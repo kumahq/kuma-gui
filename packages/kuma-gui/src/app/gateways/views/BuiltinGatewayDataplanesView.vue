@@ -218,7 +218,7 @@ import type { MeshGateway } from '../data'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
-import { sources as dataplaneSources } from '@/app/legacy-data-planes/sources'
+import { sources as dataplaneSources } from '@/app/data-planes/sources'
 const props = defineProps<{
   gateway: MeshGateway
 }>()

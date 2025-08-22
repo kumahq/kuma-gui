@@ -2,9 +2,9 @@ Feature: mesh / dataplanes / overview / TLS
 
   Background:
     Given the CSS selectors
-      | Alias    | Selector                           |
-      | tls-section                   | [data-testid="dataplane-mtls"]        |
-      | summary                   | [data-testid="slideout-container"]        |
+      | Alias       | Selector                           |
+      | tls-section | [data-testid="dataplane-mtls"]     |
+      | summary     | [data-testid="slideout-container"] |
     And the environment
       """
       KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: true

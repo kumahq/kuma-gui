@@ -753,7 +753,6 @@
 </template>
 
 <script lang="ts" setup>
-import type { DataplaneOverview, DataplaneInbound } from '../data'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
@@ -762,6 +761,7 @@ import ConnectionCard from '@/app/connections/components/connection-traffic/Conn
 import ConnectionGroup from '@/app/connections/components/connection-traffic/ConnectionGroup.vue'
 import ConnectionTraffic from '@/app/connections/components/connection-traffic/ConnectionTraffic.vue'
 import { sources } from '@/app/connections/sources'
+import type { DataplaneOverview, DataplaneInbound } from '@/app/data-planes/data'
 import { Kri } from '@/app/kuma/kri'
 import type { Mesh } from '@/app/meshes/data'
 import { useRoute } from '@/app/vue'

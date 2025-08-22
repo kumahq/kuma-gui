@@ -8,7 +8,7 @@ export const legacyDataplaneRoutes = (): RouteRecordRaw[] => {
     {
       path: 'data-planes/:proxy',
       name: 'data-plane-detail-tabs-view',
-      component: () => import('@/app/legacy-data-planes/views/DataPlaneDetailTabsView.vue'),
+      component: () => import('@/app/data-planes/views/DataPlaneDetailTabsView.vue'),
       children: [
         {
           path: 'overview',
@@ -61,12 +61,12 @@ export const legacyDataplaneRoutes = (): RouteRecordRaw[] => {
         {
           path: 'policies',
           name: 'data-plane-policies-view',
-          component: () => import('@/app/legacy-data-planes/views/DataPlanePoliciesView.vue'),
+          component: () => import('@/app/data-planes/views/DataPlanePoliciesView.vue'),
           children: [
             {
               path: ':policyPath/:policy',
               name: 'data-plane-policy-summary-view',
-              component: () => import('@/app/legacy-data-planes/views/DataPlanePolicySummaryView.vue'),
+              component: () => import('@/app/data-planes/views/DataPlanePolicySummaryView.vue'),
             },
           ],
         },
@@ -74,7 +74,7 @@ export const legacyDataplaneRoutes = (): RouteRecordRaw[] => {
         {
           path: 'config',
           name: 'data-plane-config-view',
-          component: () => import('@/app/legacy-data-planes/views/DataPlaneConfigView.vue'),
+          component: () => import('@/app/data-planes/views/DataPlaneConfigView.vue'),
         },
       ],
     },
@@ -98,7 +98,7 @@ export const routes = () => {
       {
         path: ':proxy',
         name: `${fullPrefix}data-plane-summary-view`,
-        component: () => import('@/app/legacy-data-planes/views/DataPlaneSummaryView.vue'),
+        component: () => import('@/app/data-planes/views/DataPlaneSummaryView.vue'),
       },
     ]
   }
@@ -109,7 +109,7 @@ export const routes = () => {
         {
           path: 'data-planes',
           name: 'data-plane-list-view',
-          component: () => import('@/app/legacy-data-planes/views/DataPlaneListView.vue'),
+          component: () => import('@/app/data-planes/views/DataPlaneListView.vue'),
           children: summary(),
         },
       ]

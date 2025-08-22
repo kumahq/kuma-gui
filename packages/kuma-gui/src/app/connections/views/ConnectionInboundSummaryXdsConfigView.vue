@@ -53,9 +53,8 @@
 </template>
 <script lang="ts" setup>
 import { sources } from '../sources'
-import type { DataplaneNetworkingLayout } from '@/app/data-planes/data'
+import type { DataplaneNetworkingLayout , DataplaneInbound } from '@/app/data-planes/data'
 import { ContextualKri } from '@/app/kuma/kri'
-import type { DataplaneInbound } from '@/app/legacy-data-planes/data/'
 
 const props = defineProps<{
   data: DataplaneInbound | DataplaneNetworkingLayout['inbounds'][number]

@@ -30,8 +30,8 @@
 </template>
 
 <script setup lang="ts">
-import { sources } from '../sources'
 import DataPlaneRouteGuard from './DataPlaneRouteGuard.vue'
+import { sources } from '@/app/data-planes/sources'
 import type { Mesh } from '@/app/meshes/data'
 const props = defineProps<{
   mesh: Mesh

@@ -75,9 +75,8 @@
 import { computed } from 'vue'
 
 import { sources } from '../sources'
-import type { DataplaneNetworkingLayout } from '@/app/data-planes/data'
+import type { DataplaneNetworkingLayout , DataplaneInbound, DataplaneNetworking } from '@/app/data-planes/data'
 import { ContextualKri } from '@/app/kuma/kri'
-import type { DataplaneInbound, DataplaneNetworking } from '@/app/legacy-data-planes/data/'
 import type { ZoneEgress } from '@/app/zone-egresses/data/'
 import type { ZoneIngress } from '@/app/zone-ingresses/data/'
 
