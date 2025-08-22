@@ -112,11 +112,11 @@ function getTags({ gateway, inbounds }: DataplaneNetworking): LabelValue[] {
 }
 
 function getIsCertExpired({ mTLS }: DataplaneInsight): boolean {
-  return mTLS ? Date.now() > new Date(mTLS.certificateExpirationTime).getTime() : false
+  return mTLS?.certificateExpirationTime ? Date.now() > new Date(mTLS.certificateExpirationTime).getTime() : false
 }
 
 function getIsCertExpiresSoon({ mTLS }: DataplaneInsight): boolean {
-  if(!mTLS) return false
+  if(!mTLS?.certificateExpirationTime) return false
   const expiryTime = new Date(mTLS.certificateExpirationTime).getTime()
   const weekBefore = expiryTime - 3_600_000 * 24 * 7
   return Date.now() > weekBefore && Date.now() < expiryTime

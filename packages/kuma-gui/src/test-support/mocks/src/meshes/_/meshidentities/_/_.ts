@@ -13,7 +13,7 @@ export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
       ...(k8s ? { kind: 'MeshIdentity' } : { type: 'MeshIdentity' }),
       ...((() => {
         const metadata = {
-          name: fake.word.noun(),
+          name: params.name as string,
           labels: {
             'kuma.io/mesh': mesh,
             'kuma.io/zone': fake.word.noun(),

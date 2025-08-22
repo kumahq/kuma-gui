@@ -1,10 +1,10 @@
 import type { RouteRecordRaw } from 'vue-router'
 
-export const meshIdentityRoutes = (): RouteRecordRaw[] => {
+export const meshIdentityRoutes = (prefix?: string): RouteRecordRaw[] => {
   return [
     {
       path: 'meshidentity/:name',
-      name: 'mesh-identity-summary-view',
+      name: `${prefix ? `${prefix}-` : ''}mesh-identity-summary-view`,
       component: () => import('@/app/resources/views/MeshIdentitySummaryView.vue'),
     },
   ]

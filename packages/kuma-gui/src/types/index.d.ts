@@ -268,13 +268,13 @@ export type DiscoverySubscription = {
 } & Subscription
 
 export interface DataPlaneInsight {
-  mTLS?: {
+  mTLS?: Partial<{
     certificateExpirationTime: string
     lastCertificateRegeneration: string
     certificateRegenerations: number
     issuedBackend: string
     supportedBackends: string[]
-  }
+  }>
   subscriptions: DiscoverySubscription[]
 }
 
