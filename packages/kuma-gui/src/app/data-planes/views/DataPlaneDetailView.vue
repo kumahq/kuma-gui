@@ -572,7 +572,7 @@
                                     <ConnectionCard
                                       data-testid="dataplane-inbound"
                                       :protocol="item.protocol"
-                                      :port-name="item.port.toString()"
+                                      :port-name="ContextualKri.fromString(item.proxyResourceName).sectionName"
                                       :traffic="traffic?.inbounds[ContextualKri.toString({ ...ContextualKri.fromString(item.proxyResourceName), sectionName: item.port.toString() })]"
                                     >
                                       <XAction
@@ -656,7 +656,7 @@
                                   <ConnectionCard
                                     data-testid="dataplane-outbound"
                                     :protocol="outbound.protocol"
-                                    :port-name="outbound.port.toString()"
+                                    :port-name="Kri.fromString(outbound.proxyResourceName).sectionName"
                                     :traffic="traffic?.outbounds[outbound.proxyResourceName]"
                                   >
                                     <XAction
