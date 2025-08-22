@@ -259,41 +259,45 @@
                     :key="mTLS"
                   >
                     <XLayout type="separated">
-                      <DefinitionCard
-                        v-if="mTLS.lastCertificateRegeneration"
-                        layout="horizontal"
-                      >
-                        <template #title>
-                          <XI18n
-                            path="data-planes.routes.item.mtls.generation_time.title"
-                          />
-                        </template>
+                      <template v-if="typeof mTLS.lastCertificateRegeneration !== 'undefined' && typeof mTLS.certificateExpirationTime !== 'undefined' && typeof mTLS.issuedBackend !== 'undefined'">
+                        <DefinitionCard layout="horizontal">
+                          <template #title>
+                            <XI18n
+                              path="data-planes.routes.item.mtls.generation_time.title"
+                            />
+                          </template>
 
-                        <template #body>
-                          <XBadge appearance="neutral">
-                            {{ t('common.formats.datetime', { value: Date.parse(mTLS.lastCertificateRegeneration) }) }}
-                          </XBadge>
-                        </template>
-                      </DefinitionCard>
-                      <DefinitionCard
-                        v-if="mTLS.certificateExpirationTime"
-                        layout="horizontal"
-                      >
-                        <template #title>
-                          <XI18n
-                            path="data-planes.routes.item.mtls.expiration_time.title"
-                          />
-                        </template>
+                          <template #body>
+                            <XBadge appearance="neutral">
+                              {{ t('common.formats.datetime', { value: Date.parse(mTLS.lastCertificateRegeneration) }) }}
+                            </XBadge>
+                          </template>
+                        </DefinitionCard>
+                        <DefinitionCard layout="horizontal">
+                          <template #title>
+                            <XI18n
+                              path="data-planes.routes.item.mtls.expiration_time.title"
+                            />
+                          </template>
 
-                        <template #body>
-                          <XBadge appearance="neutral">
-                            {{ t('common.formats.datetime', { value: Date.parse(mTLS.certificateExpirationTime) }) }}
-                          </XBadge>
-                        </template>
-                      </DefinitionCard>
+                          <template #body>
+                            <XBadge appearance="neutral">
+                              {{ t('common.formats.datetime', { value: Date.parse(mTLS.certificateExpirationTime) }) }}
+                            </XBadge>
+                          </template>
+                        </DefinitionCard>
+                      </template>
+                      <template v-else>
+                        <XI18n
+                          path="data-planes.routes.item.mtls.managed_externally"
+                        />
+                      </template>
                     </XLayout>
                     <XLayout type="separated">
-                      <DefinitionCard layout="horizontal">
+                      <DefinitionCard
+                        v-if="typeof mTLS.certificateRegenerations !== 'undefined'"
+                        layout="horizontal"
+                      >
                         <template
                           #title
                         >
@@ -309,7 +313,10 @@
                         </template>
                       </DefinitionCard>
 
-                      <DefinitionCard layout="horizontal">
+                      <DefinitionCard
+                        v-if="mTLS.issuedBackend"
+                        layout="horizontal"
+                      >
                         <template
                           #title
                         >
@@ -319,13 +326,32 @@
                         <template
                           #body
                         >
-                          <XBadge appearance="decorative">
-                            {{ mTLS.issuedBackend }}
-                          </XBadge>
+                          <template v-if="Kri.isKri(mTLS.issuedBackend)">
+                            <XAction
+                              :to="{
+                                name: 'data-plane-mesh-identity-summary-view',
+                                params: {
+                                  ...Kri.fromString(mTLS.issuedBackend),
+                                },
+                              }"
+                            >
+                              <XBadge appearance="decorative">
+                                {{ mTLS.issuedBackend }}
+                              </XBadge>
+                            </XAction>
+                          </template>
+                          <template v-else>
+                            <XBadge appearance="decorative">
+                              {{ mTLS.issuedBackend }}
+                            </XBadge>
+                          </template>
                         </template>
                       </DefinitionCard>
 
-                      <DefinitionCard layout="horizontal">
+                      <DefinitionCard
+                        v-if="typeof mTLS.supportedBackends !== 'undefined'"
+                        layout="horizontal"
+                      >
                         <template
                           #title
                         >
@@ -736,6 +762,7 @@ import ConnectionCard from '@/app/connections/components/connection-traffic/Conn
 import ConnectionGroup from '@/app/connections/components/connection-traffic/ConnectionGroup.vue'
 import ConnectionTraffic from '@/app/connections/components/connection-traffic/ConnectionTraffic.vue'
 import { sources } from '@/app/connections/sources'
+import { Kri } from '@/app/kuma/kri'
 import type { Mesh } from '@/app/meshes/data'
 import { useRoute } from '@/app/vue'
 

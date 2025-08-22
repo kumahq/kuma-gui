@@ -123,6 +123,7 @@ data-planes:
           title: Certificate issued by
         supported_backends:
           title: Supported CAs
+        managed_externally: The certificate is managed externally
       subscriptions:
         title: XDS connections
         description: !!text/markdown |
