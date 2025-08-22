@@ -10,6 +10,7 @@ export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
 
   const parts = String(name).split('.')
   const k8s = parts.length > 1
+  const namespace = parts.pop()
 
   const proxies = fake.number.int({ min: 1, max: 120 })
 
@@ -28,7 +29,7 @@ export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
         ? {
           labels: {
             'kuma.io/display-name': parts.slice(0, -1).join('.'),
-            'k8s.kuma.io/namespace': parts.pop()!,
+            'k8s.kuma.io/namespace': namespace!,
             'kuma.io/origin': 'zone',
             'kuma.io/zone': fake.word.noun(),
           },
@@ -47,6 +48,13 @@ export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
           dataplaneTags: fake.kuma.tags({}),
         },
         state: fake.helpers.arrayElement(['Available', 'Unavailable']),
+        identities: Array.from({ length: fake.number.int({ min: 1, max: 5 }) }).map((_, index) => {
+          const type = fake.helpers.arrayElement(['ServiceTag', 'SpiffeID'])
+          return {
+            type,
+            value: type === 'ServiceTag' ? `${fake.word.noun()}-${index + 1}` : fake.kuma.spiffeId({ mesh, namespace, sa: name }),
+          }
+        }),
       },
       status: {
         addresses: Array.from({ length: fake.number.int({ min: 1, max: 5 }) }).map(_ => ({

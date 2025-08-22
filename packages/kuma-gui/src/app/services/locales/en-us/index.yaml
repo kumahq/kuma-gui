@@ -62,6 +62,10 @@ services:
       title: Hostnames
       hostname: Hostname
       zone: Zone
+    identities:
+      title: Identities
+      identity: Identity
+      type: Type
   href:
     docs: '{KUMA_DOCS_URL}/introduction/architecture/?{KUMA_UTM_QUERY_PARAMS}#services-and-pods'
   internal-service:

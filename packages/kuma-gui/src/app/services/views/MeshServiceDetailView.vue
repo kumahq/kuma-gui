@@ -193,6 +193,41 @@
           </DataLoader>
         </XCard>
 
+        <XCard
+          v-if="props.data.spec.identities.length"
+          data-testid="mesh-service-identities"
+        >
+          <template #title>
+            {{ t('services.detail.identities.title') }}
+          </template>
+          <AppCollection
+            type="mesh-identities-collection"
+            :items="props.data.spec.identities"
+            :headers="[
+              { ...me.get('headers.identity'), label: t('services.detail.identities.identity'), key: 'identity' },
+              { ...me.get('headers.type'), label: t('services.detail.identities.type'), key: 'type' },
+            ]"
+            @resize="me.set"
+          >
+            <template #identity="{ row: item }">
+              <b>
+                <XCopyButton
+                  :text="item.value"
+                />
+              </b>
+            </template>
+            <template #type="{ row: item }">
+              <XLayout type="separated">
+                <XBadge
+                  appearance="decorative"
+                >
+                  {{ item.type }}
+                </XBadge>
+              </XLayout>
+            </template>
+          </AppCollection>
+        </XCard>
+
         <XCard>
           <template #title>
             {{ t('services.detail.dpp-status.title') }}
