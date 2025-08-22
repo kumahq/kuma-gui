@@ -12,6 +12,7 @@ Feature: mesh / dataplanes / warnings
     And the environment
       """
       KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: true
+      KUMA_MESHSERVICE_MODE: Exclusive
       """
 
   Scenario: With a certificate expires soon (at least 1 week before) a cert warning is shown

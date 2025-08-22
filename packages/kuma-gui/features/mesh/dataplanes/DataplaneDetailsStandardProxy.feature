@@ -12,6 +12,7 @@ Feature: Dataplane details for standard Data Plane Proxy
     And the environment
       """
       KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: true
+      KUMA_MESHSERVICE_MODE: Exclusive
       """
 
   Scenario: Overview tab has expected content

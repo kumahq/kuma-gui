@@ -16,6 +16,7 @@
     >
       <DataPlaneRouteGuard
         :data="data"
+        :mesh="props.mesh"
       >
         <RouterView v-slot="{ Component }">
           <component

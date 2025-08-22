@@ -7,6 +7,7 @@ Feature: mesh / dataplanes / connections / Traffic
     And the environment
       """
       KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: true
+      KUMA_MESHSERVICE_MODE: Exclusive
       """
 
   Scenario: The dataplane about section contains expected content
