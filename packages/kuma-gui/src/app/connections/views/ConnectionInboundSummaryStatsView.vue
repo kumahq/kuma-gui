@@ -76,7 +76,7 @@ import { computed } from 'vue'
 
 import { sources } from '../sources'
 import type { DataplaneNetworkingLayout } from '@/app/data-planes/data'
-import { ContextualKri } from '@/app/kuma/kri'
+import { Kri } from '@/app/kuma/kri'
 import type { DataplaneInbound, DataplaneNetworking } from '@/app/legacy-data-planes/data/'
 import type { ZoneEgress } from '@/app/zone-egresses/data/'
 import type { ZoneIngress } from '@/app/zone-ingresses/data/'
@@ -90,7 +90,7 @@ const props = defineProps<{
 
 const data = computed(() => ({
   ...props.data,
-  proxyResourceName: 'proxyResourceName' in props.data ? ContextualKri.toString({...ContextualKri.fromString(props.data.proxyResourceName), sectionName: props.data.port.toString() }) : '',
+  proxyResourceName: 'proxyResourceName' in props.data ? Kri.toString({...Kri.fromString(props.data.proxyResourceName), sectionName: props.data.port.toString() }) : '',
   listenerAddress: 'listenerAddress' in props.data ? props.data.listenerAddress : '',
   clusterName: 'clusterName' in props.data ? props.data.clusterName : '',
   port: 'port' in props.data ? props.data.port.toString() : '',

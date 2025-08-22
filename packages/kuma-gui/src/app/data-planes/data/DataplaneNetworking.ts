@@ -1,5 +1,6 @@
 import { components } from '@kumahq/kuma-http-api'
 
+import type { ContextualKriString, FullKriString } from '@/app/kuma/kri'
 import type {
   DataplaneGateway as PartialDataplaneGateway,
   DataplaneInbound as PartialDataplaneInbound,
@@ -31,6 +32,21 @@ export const DataplaneNetworkingLayout =  {
   fromObject(dataplaneNetworkingLayout: PartialDataplaneNetworkingLayout) {
     return {
       ...dataplaneNetworkingLayout,
+      kri: dataplaneNetworkingLayout.kri as FullKriString,
+      inbounds: dataplaneNetworkingLayout.inbounds.map((item) => {
+        return {
+          ...item,
+          kri: item.kri as FullKriString,
+          proxyResourceName: item.proxyResourceName as ContextualKriString,
+        }
+      }),
+      outbounds: dataplaneNetworkingLayout.outbounds.map((item) => {
+        return {
+          ...item,
+          kri: item.kri as FullKriString,
+          proxyResourceName: item.proxyResourceName as FullKriString,
+        }
+      }),
     } satisfies PartialDataplaneNetworkingLayout
   },
 }

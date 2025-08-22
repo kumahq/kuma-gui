@@ -341,7 +341,7 @@
                                 <template
                                   #body
                                 >
-                                  <template v-if="Kri.isKri(mTLS.issuedBackend)">
+                                  <template v-if="Kri.isKriString(mTLS.issuedBackend)">
                                     <XAction
                                       :to="{
                                         name: 'data-plane-mesh-identity-summary-view',
@@ -572,8 +572,8 @@
                                     <ConnectionCard
                                       data-testid="dataplane-inbound"
                                       :protocol="item.protocol"
-                                      :port-name="ContextualKri.fromString(item.proxyResourceName).sectionName"
-                                      :traffic="traffic?.inbounds[ContextualKri.toString({ ...ContextualKri.fromString(item.proxyResourceName), sectionName: item.port.toString() })]"
+                                      :port-name="Kri.fromString(item.proxyResourceName).sectionName"
+                                      :traffic="traffic?.inbounds[Kri.toString({ ...Kri.fromString(item.proxyResourceName), sectionName: item.port.toString() })]"
                                     >
                                       <XAction
                                         data-action
@@ -741,7 +741,7 @@ import ConnectionCard from '@/app/connections/components/connection-traffic/Conn
 import ConnectionGroup from '@/app/connections/components/connection-traffic/ConnectionGroup.vue'
 import ConnectionTraffic from '@/app/connections/components/connection-traffic/ConnectionTraffic.vue'
 import { sources as connectionSources } from '@/app/connections/sources'
-import { ContextualKri, Kri } from '@/app/kuma/kri'
+import { Kri } from '@/app/kuma/kri'
 import type { DataplaneOverview } from '@/app/legacy-data-planes/data'
 import type { Mesh } from '@/app/meshes/data'
 import { sources as policySources } from '@/app/policies/sources'

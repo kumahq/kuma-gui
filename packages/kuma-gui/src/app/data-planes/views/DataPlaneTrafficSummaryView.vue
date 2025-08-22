@@ -9,7 +9,7 @@
     v-slot="{ route, t }"
   >
     <DataCollection
-      :items="props.data"
+      :items="[...props.data]"
       :predicate="(item) => `${item.proxyResourceName}` === route.params.connection"
       :find="true"
       v-slot="{ items }"
