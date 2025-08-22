@@ -12,6 +12,7 @@ Feature: dataplanes / subscriptions
     And the environment
       """
       KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: true
+      KUMA_MESHSERVICE_MODE: Exclusive
       KUMA_SUBSCRIPTION_COUNT: 1
       KUMA_DATAPLANEINBOUND_COUNT: 1
       """

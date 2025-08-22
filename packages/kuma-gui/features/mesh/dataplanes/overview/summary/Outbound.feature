@@ -9,6 +9,7 @@ Feature: mesh / dataplanes / overview / summary / Outbound
     And the environment
       """
       KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: true
+      KUMA_MESHSERVICE_MODE: Exclusive
       KUMA_DATAPLANE_TYPE: standard
       """
 
