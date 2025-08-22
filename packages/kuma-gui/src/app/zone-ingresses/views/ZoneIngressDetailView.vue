@@ -6,7 +6,7 @@
       proxy: '',
       inactive: Boolean,
     }"
-    v-slot="{ t, me, route, uri }"
+    v-slot="{ t, me, route, uri, can }"
   >
     <AppView>
       <XAboutCard
@@ -89,7 +89,7 @@
         :src="uri(sources, '/connections/stats/for/:proxyType/:name/:mesh/:socketAddress', {
           name: route.params.proxy,
           mesh: '*',
-          socketAddress: props.data.zoneIngress.socketAddress,
+          socketAddress: can('use zone-ingress-unified-resource-naming', props.data) ? 'self_inbound' : props.data.zoneIngress.socketAddress,
           proxyType: 'zone-ingress',
         })"
         v-slot="{ data: traffic, refresh }"
@@ -247,7 +247,7 @@
           >
             <component
               :is="child.Component"
-              :data="route.params.subscription.length > 0 ? props.data.zoneIngressInsight.subscriptions : (child.route.name as string).includes('-inbound-') ? [props.data.zoneIngress] : traffic?.outbounds || {}"
+              :data="route.params.subscription.length > 0 ? props.data.zoneIngressInsight.subscriptions : (child.route.name as string).includes('-inbound-') ? can('use zone-ingress-unified-resource-naming', props.data) ? [traffic.inbounds] : [props.data.zoneIngress] : traffic?.outbounds || {}"
               :networking="props.data.zoneIngress.networking"
             />
           </SummaryView>

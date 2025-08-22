@@ -16,6 +16,7 @@ export default ({ fake, env }: EndpointDependencies): MockResponder => (req) => 
 
   const subscriptionCount = parseInt(env('KUMA_SUBSCRIPTION_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
   const serviceCount = parseInt(env('KUMA_SERVICE_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
+  const isUnifiedResourceNamingEnabled = env('KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED', '') === 'true'
   return {
     headers: {},
     body: {
@@ -115,6 +116,11 @@ export default ({ fake, env }: EndpointDependencies): MockResponder => (req) => 
             }),
           }
           : {}),
+        metadata: {
+          features: [
+            ...isUnifiedResourceNamingEnabled ? ['feature-unified-resource-naming'] : [],
+          ],
+        },
       },
     },
   }

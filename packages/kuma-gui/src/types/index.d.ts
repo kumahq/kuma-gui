@@ -640,8 +640,12 @@ export interface ZoneIngress extends MeshEntity {
   availableServices?: AvailableService[]
 }
 
+export interface ZoneIngressInsightMetadata {
+  features?: string[]
+}
 export interface ZoneIngressInsight {
   subscriptions: DiscoverySubscription[]
+  metadata?: ZoneIngressInsightMetadata
 }
 
 export interface ZoneIngressOverview extends MeshEntity {
@@ -668,8 +672,14 @@ export interface ZoneEgress extends MeshEntity {
   zone?: string
   networking?: ZoneEgressNetworking
 }
+
+export interface ZoneEgressInsightMetadata {
+  features?: string[]
+}
+
 export interface ZoneEgressInsight {
   subscriptions: DiscoverySubscription[]
+  metadata?: ZoneEgressInsightMetadata
 }
 
 export interface ZoneEgressOverview extends MeshEntity {

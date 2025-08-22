@@ -29,6 +29,10 @@ export const ZoneEgressInsight = {
     return {
       ...item,
       ...DiscoverySubscriptionCollection.fromArray(item?.subscriptions),
+      metadata: {
+        ...item?.metadata,
+        features: item?.metadata?.features ?? [],
+      },
     }
   },
 }
