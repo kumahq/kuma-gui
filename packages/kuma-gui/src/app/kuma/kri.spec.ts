@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest'
 
-import { Kri, ContextualKri } from './kri'
+import { Kri } from './kri'
 
 describe('kri', () => {
   test.each([
@@ -28,6 +28,17 @@ describe('kri', () => {
       },
     ],
     [
+      Kri.fromString(''),
+      {
+        shortName: '',
+        mesh: '',
+        zone: '',
+        namespace: '',
+        name: '',
+        sectionName: '',
+      },
+    ],
+    [
       Kri.toString({
         shortName: 'policy',
         mesh: 'mesh',
@@ -47,31 +58,35 @@ describe('kri', () => {
       }),
       'kri_policy__zone__name_section',
     ],
+    [
+      Kri.toString({}),
+      'kri______',
+    ],
 
     // ContextualKri
     [
-      ContextualKri.fromString('self_inbound_httpport'),
+      Kri.fromString('self_inbound_httpport'),
       {
         context: 'inbound',
         sectionName: 'httpport',
       },
     ],
     [
-      ContextualKri.fromString('self_transparentproxy_passthrough_inbound_ipv4'),
+      Kri.fromString('self_transparentproxy_passthrough_inbound_ipv4'),
       {
         context: 'transparentproxy_passthrough_inbound',
         sectionName: 'ipv4',
       },
     ],
     [
-      ContextualKri.toString({
+      Kri.toString({
         context: 'inbound',
         sectionName: '8080',
       }),
       'self_inbound_8080',
     ],
     [
-      ContextualKri.toString({
+      Kri.toString({
         context: 'transparentproxy_passthrough_inbound',
         sectionName: 'ipv6',
       }),
@@ -80,15 +95,15 @@ describe('kri', () => {
 
     // isKri
     [
-      Kri.isKri('kri_policy_mesh_zone_namespace_name_section'),
+      Kri.isKriString('kri_policy_mesh_zone_namespace_name_section'),
       true,
     ],
     [
-      Kri.isKri('not_a_kri'),
+      Kri.isKriString('not_a_kri'),
       false,
     ],
     [
-      Kri.isKri('kri_not_a_kri'),
+      Kri.isKriString('kri_not_a_kri'),
       false,
     ],
   ])('Kri methods produce expected output', (input, output) => {

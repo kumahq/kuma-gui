@@ -21,7 +21,7 @@
         :src="uri(sources, '/connections/xds/for/:proxyType/:name/:mesh/inbound/:inbound', {
           mesh: route.params.mesh || '*',
           name: route.params.proxy,
-          inbound: 'proxyResourceName' in props.data ? ContextualKri.toString({ ...ContextualKri.fromString(props.data.proxyResourceName), sectionName: props.data.port.toString() }) : `${props.data.port}`,
+          inbound: 'proxyResourceName' in props.data ? Kri.toString({ ...Kri.fromString(props.data.proxyResourceName), sectionName: props.data.port.toString() }) : `${props.data.port}`,
           proxyType: ({ ingresses: 'zone-ingress', egresses: 'zone-egress'})[route.params.proxyType] ?? 'dataplane',
         })"
         v-slot="{ data: raw, refresh }"
@@ -53,8 +53,8 @@
 </template>
 <script lang="ts" setup>
 import { sources } from '../sources'
-import type { DataplaneNetworkingLayout , DataplaneInbound } from '@/app/data-planes/data'
-import { ContextualKri } from '@/app/kuma/kri'
+import type { DataplaneNetworkingLayout, DataplaneInbound } from '@/app/data-planes/data'
+import { Kri } from '@/app/kuma/kri'
 
 const props = defineProps<{
   data: DataplaneInbound | DataplaneNetworkingLayout['inbounds'][number]

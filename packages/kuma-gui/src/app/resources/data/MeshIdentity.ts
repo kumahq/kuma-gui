@@ -7,8 +7,8 @@ type PartialMeshIdentity = components['schemas']['MeshIdentityItem']
 export const MeshIdentity = {
   fromObject: (item: PartialMeshIdentity) => {
     return {
-      ...item,
       kri: Kri.toString({ shortName: 'mid', mesh: item.mesh, name: item.name}),
+      ...item,
       raw: item,
     }
   },

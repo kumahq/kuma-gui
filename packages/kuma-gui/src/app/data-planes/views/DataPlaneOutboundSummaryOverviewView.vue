@@ -95,17 +95,17 @@
                                       :key="origin.kri"
                                     >
                                       <template
-                                        v-for="{ mesh, name } in [Kri.fromString(origin.kri)]"
-                                        :key="`${mesh}-${name}`"
+                                        v-for="kri in [Kri.fromString(origin.kri)]"
+                                        :key="typeof kri"
                                       >
                                         <XAction
-                                          v-if="policyTypes[kind]"
+                                          v-if="policyTypes[kind] && 'mesh' in kri && 'name' in kri"
                                           :to="{
                                             name: 'policy-detail-view',
                                             params: {
-                                              mesh: mesh,
+                                              mesh: kri.mesh,
                                               policyPath: policyTypes[kind]![0].path,
-                                              policy: name,
+                                              policy: kri.name,
                                             },
                                           }"
                                         >

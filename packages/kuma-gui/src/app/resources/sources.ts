@@ -29,7 +29,8 @@ export const sources = (api: KumaApi) => {
 
     '/meshidentities/:mid': async (params) => {
       const { mid } = params
-      const { mesh, name } = Kri.fromString(mid)
+      const kri = Kri.fromString(mid)
+      const { mesh = '', name = '' } = 'mesh' in kri && 'name' in kri ? kri : {}
   
       const res = await http.GET('/meshes/{mesh}/meshidentities/{name}', {
         params: {
@@ -45,7 +46,8 @@ export const sources = (api: KumaApi) => {
 
     '/meshidentities/:mid/as/kubernetes': async (params) => {
       const { mid } = params
-      const { mesh, name } = Kri.fromString(mid)
+      const kri = Kri.fromString(mid)
+      const { mesh = '', name = '' } = 'mesh' in kri && 'name' in kri ? kri : {}
   
       const res = await http.GET('/meshes/{mesh}/meshidentities/{name}', {
         params: {
@@ -79,7 +81,8 @@ export const sources = (api: KumaApi) => {
 
     '/meshtrusts/:mtrust': async (params) => {
       const { mtrust } = params
-      const { mesh, name } = Kri.fromString(mtrust)
+      const kri = Kri.fromString(mtrust)
+      const { mesh = '', name = '' } = 'mesh' in kri && 'name' in kri ? kri : {}
   
       const res = await http.GET('/meshes/{mesh}/meshtrusts/{name}', {
         params: {
@@ -95,7 +98,8 @@ export const sources = (api: KumaApi) => {
 
     '/meshtrusts/:mtrust/as/kubernetes': async (params) => {
       const { mtrust } = params
-      const { mesh, name } = Kri.fromString(mtrust)
+      const kri = Kri.fromString(mtrust)
+      const { mesh = '', name = '' } = 'mesh' in kri && 'name' in kri ? kri : {}
   
       const res = await http.GET('/meshes/{mesh}/meshtrusts/{name}', {
         params: {
