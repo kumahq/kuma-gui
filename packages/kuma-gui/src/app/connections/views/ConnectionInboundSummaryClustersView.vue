@@ -26,7 +26,7 @@
         v-slot="{ data: connections, refresh }"
       >
         <template
-          v-for="prefix in ['proxyResourceName' in props.data ? ContextualKri.toString({ ...ContextualKri.fromString(props.data.proxyResourceName), sectionName: props.data.port.toString() }) : ('clusterName' in props.data ? props.data.clusterName : route.params.connection).replace('_', ':')]"
+          v-for="prefix in ['proxyResourceName' in props.data ? Kri.toString({ ...Kri.fromString(props.data.proxyResourceName), sectionName: props.data.port.toString() }) : ('clusterName' in props.data ? props.data.clusterName : route.params.connection).replace('_', ':')]"
           :key="typeof prefix"
         >
           <DataCollection
@@ -64,7 +64,7 @@
 <script lang="ts" setup>
 import { sources } from '../sources'
 import { DataplaneNetworkingLayout } from '@/app/data-planes/data'
-import { ContextualKri } from '@/app/kuma/kri'
+import { Kri } from '@/app/kuma/kri'
 import type { DataplaneInbound } from '@/app/legacy-data-planes/data'
 const props = defineProps<{
   routeName: string

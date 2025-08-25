@@ -65,5 +65,5 @@ Feature: mesh / mesh-services / item
     Then the "$identities" element exists
     And the "$identities" element contains "firewall-1-tag"
     And the "$identities" element contains "ServiceTag"
-    And the "$identities" element contains "spiffe://kuma.io/ns/firewall-app/sa/firewall-1" 
+    And the "$identities" element contains "spiffe://kuma.io/ns/firewall-app/sa/firewall-1"
     And the "$identities" element contains "SpiffeID"
