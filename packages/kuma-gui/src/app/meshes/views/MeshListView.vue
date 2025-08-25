@@ -65,6 +65,12 @@
                 :total="data?.total"
                 @change="route.update"
               >
+                <template #empty>
+                  <XEmptyState
+                    type="meshes"
+                    icon-background
+                  />
+                </template>
                 <AppCollection
                   class="mesh-collection"
                   data-testid="mesh-collection"
