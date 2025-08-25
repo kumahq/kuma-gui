@@ -6,6 +6,12 @@
       :items="props.items"
       :type="can('create zones') ? `zones-crud` : `zone-cps`"
     >
+      <template #empty>
+        <XEmptyState
+          :type="can('create zones') ? `zones-crud` : `zone-cps`"
+          icon-background
+        />
+      </template>
       <AppCollection
         :headers="[
           { ...storage.get('zone.headers.type'), label: '&nbsp;', key: 'type' },

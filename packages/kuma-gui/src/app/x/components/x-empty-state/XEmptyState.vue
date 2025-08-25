@@ -18,12 +18,13 @@
         ]"
         :key="title"
       >
-        <EntityEmptyState
+        <KEmptyState
+          :icon-background="props.iconBackground"
           :title="title"
           appearance="secondary"
           data-testid="empty-block"
         >
-          <template #image>
+          <template #icon>
             <slot
               v-if="slots.icon"
               name="icon"
@@ -70,7 +71,7 @@
             </template>
           </template>
           <template
-            #actions
+            #action
           >
             <slot name="action">
               <XTeleportSlot
@@ -91,7 +92,7 @@
               </XAction>
             </slot>
           </template>
-        </EntityEmptyState>
+        </KEmptyState>
       </template>
     </template>
   </XI18n>
@@ -100,12 +101,13 @@
 <script lang="ts" setup>
 import { KUI_COLOR_TEXT_DECORATIVE_AQUA, KUI_ICON_SIZE_40, KUI_ICON_SIZE_50 } from '@kong/design-tokens'
 import { LocationIcon, AnalyticsIcon, MeshIcon } from '@kong/icons'
-import { EntityEmptyState } from '@kong-ui-public/entities-shared'
 
 const props = withDefaults(defineProps<{
   type?: string
+  iconBackground?: boolean
 }>(), {
   type: '',
+  iconBackground: false,
 })
 const slots = defineSlots()
 
@@ -116,13 +118,7 @@ const iconMapping: Record<string, unknown> = {
 }
 </script>
 <style lang="scss" scoped>
-.empty-state-icon {
-  background-color: $kui-method-color-background-patch;
-  border-radius: $kui-border-radius-20;
-  padding: $kui-space-40;
-}
-
-.x-empty-state-title{
+.x-empty-state-title {
   font-size: $kui-font-size-50;
 }
 </style>

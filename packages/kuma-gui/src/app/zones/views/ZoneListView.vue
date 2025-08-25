@@ -72,6 +72,12 @@
                 :total="data?.total"
                 @change="route.update"
               >
+                <template #empty>
+                  <XEmptyState
+                    type="zone-cps"
+                    icon-background
+                  />
+                </template>
                 <AppCollection
                   class="zone-cp-collection"
                   data-testid="zone-cp-collection"
