@@ -60,7 +60,7 @@
 </template>
 <script lang="ts" setup>
 import { sources } from '../sources'
-import type { DataplaneNetworking } from '@/app/legacy-data-planes/data/'
+import type { DataplaneNetworking } from '@/app/data-planes/data/'
 const props = defineProps<{
   networking: DataplaneNetworking
   routeName: string
