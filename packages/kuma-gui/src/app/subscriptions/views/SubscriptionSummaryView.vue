@@ -32,26 +32,21 @@
                 type="separated"
                 justify="end"
               >
-                <template
-                  v-for="options in [['structured', 'yaml']]"
-                  :key="typeof options"
+                <XSelect
+                  :label="t('subscriptions.routes.item.format')"
+                  :selected="route.params.output"
+                  @change="(value) => {
+                    route.update({ output: value })
+                  }"
                 >
-                  <XSelect
-                    :label="t('subscriptions.routes.item.format')"
-                    :selected="route.params.output"
-                    @change="(value) => {
-                      route.update({ output: value })
-                    }"
+                  <template
+                    v-for="value in ['structured', 'yaml']"
+                    :key="value"
+                    #[`${value}-option`]
                   >
-                    <template
-                      v-for="value in options"
-                      :key="value"
-                      #[`${value}-option`]
-                    >
-                      {{ t(`subscriptions.routes.item.formats.${value}`) }}
-                    </template>
-                  </XSelect>
-                </template>
+                    {{ t(`subscriptions.routes.item.formats.${value}`) }}
+                  </template>
+                </XSelect>
               </XLayout>
             </header>
 
@@ -60,96 +55,52 @@
                 type="stack"
                 data-testid="structured-view"
               >
-                <div
-                  class="stack-with-borders"
+                <XTable
+                  variant="kv"
                 >
-                  <DefinitionCard
-                    layout="horizontal"
-                  >
-                    <template #title>
-                      {{ t('http.api.property.version') }}
-                    </template>
-
-                    <template #body>
-                      <template
-                        v-for="version in [item.version?.kumaCp?.version]"
-                      >
-                        {{ version ?? '-' }}
-                      </template>
-                    </template>
-                  </DefinitionCard>
-                  <DefinitionCard
-                    layout="horizontal"
-                  >
-                    <template #title>
-                      {{ t('http.api.property.connectTime') }}
-                    </template>
-
-                    <template #body>
-                      {{ t('common.formats.datetime', { value: Date.parse(item.connectTime ?? '') }) }}
-                    </template>
-                  </DefinitionCard>
-                  <DefinitionCard
-                    v-if="item.disconnectTime"
-                    layout="horizontal"
-                  >
-                    <template #title>
-                      {{ t('http.api.property.disconnectTime') }}
-                    </template>
-
-                    <template #body>
-                      {{ t('common.formats.datetime', { value: Date.parse(item.disconnectTime) }) }}
-                    </template>
-                  </DefinitionCard>
-                  <DefinitionCard
-                    layout="horizontal"
-                  >
-                    <template #title>
-                      {{ t('subscriptions.routes.item.headers.responses') }}
-                    </template>
-
-                    <template #body>
-                      <template
-                        v-for="responses in [item.status?.total ?? {}]"
-                      >
-                        {{ responses.responsesSent }}/{{ responses.responsesAcknowledged }}
-                      </template>
-                    </template>
-                  </DefinitionCard>
-                  <template
-                    v-for="prop in (['zoneInstanceId', 'globalInstanceId', 'controlPlaneInstanceId'] as const)"
-                    :key="typeof prop"
-                  >
-                    <DefinitionCard
-                      v-if="item[prop]"
-                      layout="horizontal"
+                  <tbody>
+                    <tr
+                      v-for="[key, value] in [
+                        [t('http.api.property.version'), item.version?.kumaCp?.version ?? '-'],
+                        [t('http.api.property.connectTime'), t('common.formats.datetime', { value: Date.parse(item.connectTime ?? '') })],
+                        ...(item.disconnectTime ? [[t('http.api.property.disconnectTime'), t('common.formats.datetime', { value: Date.parse(item.disconnectTime) })]] : []),
+                        [t('subscriptions.routes.item.headers.responses'), `${item.status.total.responsesSent}/${item.status.total.responsesAcknowledged}`],
+                      ].concat(
+                        (['zoneInstanceId', 'globalInstanceId', 'controlPlaneInstanceId'] as const).reduce((prev, prop) => {
+                          if(item[prop]) {
+                            prev.push([t(`http.api.property.${prop}`), item[prop]])
+                          }
+                          return prev
+                        }, ([] as [string, string][])),
+                      ).concat([
+                        [t('http.api.property.id'), item.id],
+                      ])"
+                      :key="key"
                     >
-                      <template #title>
-                        {{ t(`http.api.property.${prop}`) }}
-                      </template>
-
-                      <template #body>
-                        {{ item[prop] }}
-                      </template>
-                    </DefinitionCard>
-                  </template>
-                  <DefinitionCard
-                    layout="horizontal"
-                  >
-                    <template #title>
-                      {{ t('http.api.property.id') }}
-                    </template>
-
-                    <template #body>
-                      {{ item.id }}
-                    </template>
-                  </DefinitionCard>
-                </div>
-
+                      <th
+                        scope="row"
+                      >
+                        {{ key }}
+                      </th>
+                      <td>
+                        {{ value }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </XTable>
 
                 <DataCollection
                   :items="Object.entries(item.status.acknowledgements ?? {})"
                 >
+                  <template
+                    #empty
+                  >
+                    <XAlert
+                      variant="info"
+                    >
+                      {{ t('common.detail.subscriptions.no_stats', { id: item.id }) }}
+                    </XAlert>
+                  </template>
                   <template
                     #default="{ items }"
                   >
@@ -171,89 +122,69 @@
                               path="subscriptions.notifications.with-nacks"
                             />
                           </XAlert>
-                          <div
-                            class="stack-with-borders"
+
+                          <XTable
+                            variant="kv"
                           >
-                            <DefinitionCard
-                              layout="horizontal"
-                            >
-                              <template #title>
-                                <strong>
+                            <thead>
+                              <tr>
+                                <th>
                                   {{ t('subscriptions.routes.item.headers.type') }}
-                                </strong>
-                              </template>
-
-                              <template #body>
-                                {{ t('subscriptions.routes.item.headers.nacked') }}
-                              </template>
-                            </DefinitionCard>
-                            <template
-                              v-for="[key, _item] in rejected"
-                              :key="key"
-                            >
-                              <DefinitionCard
-                                layout="horizontal"
+                                </th>
+                                <th>
+                                  {{ t('subscriptions.routes.item.headers.stat') }}
+                                </th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr
+                                v-for="[key, value] in rejected"
+                                :key="key"
                               >
-                                <template #title>
+                                <th
+                                  scope="row"
+                                >
                                   {{ t(`http.api.property.${key}`) }}
-                                </template>
+                                </th>
+                                <td>
+                                  {{ value.responsesRejected }}
+                                </td>
+                              </tr>
+                            </tbody>
+                          </XTable>
 
-                                <template #body>
-                                  {{ _item.responsesRejected }}
-                                </template>
-                              </DefinitionCard>
-                            </template>
-                          </div>
+                          <XTable
+                            variant="kv"
+                          >
+                            <thead>
+                              <tr>
+                                <th>
+                                  {{ t('subscriptions.routes.item.headers.type') }}
+                                </th>
+                                <th>
+                                  {{ t('subscriptions.routes.item.headers.stat') }}
+                                </th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr
+                                v-for="[key, value] in items"
+                                :key="key"
+                              >
+                                <th
+                                  scope="row"
+                                >
+                                  {{ t(`http.api.property.${key}`) }}
+                                </th>
+                                <td>
+                                  {{ value.responsesSent }}/{{ value.responsesAcknowledged }}
+                                </td>
+                              </tr>
+                            </tbody>
+                          </XTable>
                         </template>
-
-                        <div
-                          class="stack-with-borders"
-                        >
-                          <DefinitionCard
-                            layout="horizontal"
-                          >
-                            <template #title>
-                              <strong>
-                                {{ t('subscriptions.routes.item.headers.type') }}
-                              </strong>
-                            </template>
-
-                            <template #body>
-                              {{ t('subscriptions.routes.item.headers.stat') }}
-                            </template>
-                          </DefinitionCard>
-                          <template
-                            v-for="[key, _item] in items"
-                            :key="key"
-                          >
-                            <DefinitionCard
-                              layout="horizontal"
-                            >
-                              <template #title>
-                                {{ t(`http.api.property.${key}`) }}
-                              </template>
-
-                              <template #body>
-                                {{ _item.responsesSent }}/{{ _item.responsesAcknowledged }}
-                              </template>
-                            </DefinitionCard>
-                          </template>
-                        </div>
                       </template>
                     </XLayout>
-                  </template>
-                  <template
-                    #empty
-                  >
-                    <XAlert
-                      variant="info"
-                    >
-                      <template #icon>
-                        <PortalIcon />
-                      </template>
-
-                      {{ t('common.detail.subscriptions.no_stats', { id: item.id }) }}
-                    </XAlert>
                   </template>
                 </DataCollection>
               </XLayout>
@@ -280,11 +211,8 @@
 </template>
 
 <script lang="ts" setup>
-import { PortalIcon } from '@kong/icons'
-
 import type { Subscription } from '../data/'
 import { YAML } from '@/app/application'
-import DefinitionCard from '@/app/common/DefinitionCard.vue'
 
 const props = defineProps<{
   data: Subscription[]
