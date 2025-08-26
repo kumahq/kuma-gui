@@ -153,7 +153,7 @@ data-planes:
   href:
     docs:
       data_plane_proxy: '{KUMA_DOCS_URL}/production/dp-config/dpp?{KUMA_UTM_QUERY_PARAMS}'
-      gateway: '{KUMA_DOCS_URL}/explore/gateway?{KUMA_UTM_QUERY_PARAMS}'
+      gateway: '{KUMA_DOCS_URL}/using-mesh/managing-ingress-traffic/overview/?{KUMA_UTM_QUERY_PARAMS}'
   type:
     all: 'All'
     standard: 'Proxy'
