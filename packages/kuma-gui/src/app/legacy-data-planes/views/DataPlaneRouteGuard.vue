@@ -11,16 +11,16 @@ import { ref, watch } from 'vue'
 import { RouteRecordRaw, useRouter } from 'vue-router'
 
 import { useCan } from '@/app/application'
+import { DataplaneOverview } from '@/app/data-planes/data'
 import { dataplaneRoutes } from '@/app/data-planes/routes'
 import { legacyDataplaneRoutes } from '@/app/legacy-data-planes/routes'
 import type { Mesh } from '@/app/meshes/data'
-import { DataPlaneOverview } from '@/types'
 
 const router = useRouter()
 const can = useCan()
 
 const props = defineProps<{
-  data: DataPlaneOverview
+  data: DataplaneOverview
   mesh: Mesh
 }>()
 
@@ -61,7 +61,7 @@ const addRouteName = (item: RouteRecordRaw) => {
 
 router.beforeResolve(async (to, _from, next) => {
   if(
-    !can('use unified-resource-naming', { dataPlaneOverview: props.data, mesh: props.mesh }) &&
+    !can('use unified-resource-naming', { dataplaneOverview: props.data, mesh: props.mesh }) &&
     ['data-plane-policy-config-summary-view'].includes(to.name as string)
   ) {
     next({ name: 'app-not-found-view' })
@@ -76,7 +76,7 @@ watch(() => router.currentRoute.value.name, async (val) => {
     router.removeRoute('data-plane-detail-tabs-view')
     const _routes = walkRoutes(
       addRouteName,
-      can('use unified-resource-naming', { dataPlaneOverview: props.data, mesh: props.mesh }) ? dataplaneRoutes() : legacyDataplaneRoutes(),
+      can('use unified-resource-naming', { dataplaneOverview: props.data, mesh: props.mesh }) ? dataplaneRoutes() : legacyDataplaneRoutes(),
     )
     router.addRoute('data-plane-root-view', _routes[0])
     await router.replace(router.currentRoute.value.fullPath)
