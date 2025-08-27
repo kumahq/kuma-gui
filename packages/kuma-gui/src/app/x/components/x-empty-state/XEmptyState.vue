@@ -19,11 +19,19 @@
         :key="title"
       >
         <KEmptyState
-          :icon-background="['meshes', 'zone-cps', 'zone-crud'].includes(props.type)"
-          :title="title"
-          appearance="secondary"
+          :icon-background="['meshes', 'zone-cps', 'zone-crud'].includes(props.type) || iconBackground"
           data-testid="empty-block"
+          v-bind="bindingProps"
         >
+          <template
+            v-for="(_, key) in slots"
+            :key="key"
+            #[`${key}`]
+          >
+            <slot
+              :name="key"
+            />
+          </template>
           <template #icon>
             <slot
               v-if="slots.icon"
@@ -101,12 +109,21 @@
 <script lang="ts" setup>
 import { KUI_COLOR_TEXT_DECORATIVE_AQUA, KUI_ICON_SIZE_40, KUI_ICON_SIZE_50 } from '@kong/design-tokens'
 import { LocationIcon, AnalyticsIcon, MeshIcon } from '@kong/icons'
+import { KEmptyState } from '@kong/kongponents'
+
+import type { EmptyStateProps } from '@kong/kongponents'
 
 const props = withDefaults(defineProps<{
   type?: string
-}>(), {
+} & EmptyStateProps>(), {
   type: '',
+  iconBackground: false,
 })
+const {
+  iconBackground,
+  ...bindingProps
+} = props
+
 const slots = defineSlots()
 
 const iconMapping: Record<string, unknown> = {
