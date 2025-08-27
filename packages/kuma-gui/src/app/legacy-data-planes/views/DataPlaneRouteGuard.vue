@@ -11,7 +11,7 @@ import { ref, watch } from 'vue'
 import { RouteRecordRaw, useRouter } from 'vue-router'
 
 import { useCan } from '@/app/application'
-import { DataplaneOverview } from '@/app/data-planes/data'
+import type { DataplaneOverview } from '@/app/data-planes/data'
 import { dataplaneRoutes } from '@/app/data-planes/routes'
 import { legacyDataplaneRoutes } from '@/app/legacy-data-planes/routes'
 import type { Mesh } from '@/app/meshes/data'
