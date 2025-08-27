@@ -1,6 +1,5 @@
 import { token } from '@kumahq/container'
 
-import { features } from './features'
 import locales from './locales/en-us/index.yaml'
 import { sources } from './sources'
 import type { ServiceDefinition } from '@kumahq/container'
@@ -16,15 +15,6 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       ],
       labels: [
         app.sources,
-      ],
-    }],
-    [token('external-services.features'), {
-      service: features,
-      arguments: [
-        app.env,
-      ],
-      labels: [
-        app.features,
       ],
     }],
     [token('external-services.locales'), {

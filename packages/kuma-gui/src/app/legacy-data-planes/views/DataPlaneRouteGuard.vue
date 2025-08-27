@@ -61,6 +61,7 @@ const addRouteName = (item: RouteRecordRaw) => {
 
 router.beforeResolve(async (to, _from, next) => {
   if(
+    // @ts-expect-error -- allow via TS to pass extra arguments
     !can('use unified-resource-naming', { dataplaneOverview: props.data, mesh: props.mesh }) &&
     ['data-plane-policy-config-summary-view'].includes(to.name as string)
   ) {
@@ -76,6 +77,7 @@ watch(() => router.currentRoute.value.name, async (val) => {
     router.removeRoute('data-plane-detail-tabs-view')
     const _routes = walkRoutes(
       addRouteName,
+      // @ts-expect-error -- allow via TS to pass extra arguments
       can('use unified-resource-naming', { dataplaneOverview: props.data, mesh: props.mesh }) ? dataplaneRoutes() : legacyDataplaneRoutes(),
     )
     router.addRoute('data-plane-root-view', _routes[0])
