@@ -65,16 +65,14 @@
                         [t('http.api.property.connectTime'), t('common.formats.datetime', { value: Date.parse(item.connectTime ?? '') })],
                         ...(item.disconnectTime ? [[t('http.api.property.disconnectTime'), t('common.formats.datetime', { value: Date.parse(item.disconnectTime) })]] : []),
                         [t('subscriptions.routes.item.headers.responses'), `${item.status.total.responsesSent}/${item.status.total.responsesAcknowledged}`],
-                      ].concat(
-                        (['zoneInstanceId', 'globalInstanceId', 'controlPlaneInstanceId'] as const).reduce((prev, prop) => {
+                        ...(['zoneInstanceId', 'globalInstanceId', 'controlPlaneInstanceId'] as const).reduce((prev, prop) => {
                           if(item[prop]) {
                             prev.push([t(`http.api.property.${prop}`), item[prop]])
                           }
                           return prev
                         }, ([] as [string, string][])),
-                      ).concat([
                         [t('http.api.property.id'), item.id],
-                      ])"
+                      ]"
                       :key="key"
                     >
                       <th
