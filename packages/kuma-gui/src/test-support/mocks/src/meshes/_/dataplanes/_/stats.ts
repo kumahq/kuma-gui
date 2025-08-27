@@ -1,27 +1,29 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
 export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => {
   const { name, mesh } = req.params
+  const parts = String(name).split('.')
+  const displayName = parts.slice(0, -1).join('.')
+  const nspace = parts.pop()
 
+  const isUnifiedResourceNamingEnabled = env('KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED', '') === 'true'
   // use seed to sync the ports in stats.ts with the ports in _overview.ts
   fake.kuma.seed(name as string)
-  const isUnifiedResourceNamingEnabled = env('KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED', '') === 'true'
   const inboundCount = parseInt(env('KUMA_DATAPLANEINBOUND_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
   const ports = Array.from({ length: inboundCount }).map(() => ({
     port: fake.number.int({ min: 1, max: 65535 }),
     protocol: fake.kuma.protocol(),
   }))
-  const address = fake.internet.ip()
-
   const serviceCount = parseInt(env('KUMA_SERVICE_COUNT', `${fake.number.int({ min: 7, max: 50 })}`))
   const services = Array.from({ length: serviceCount }).map(() => {
     if(isUnifiedResourceNamingEnabled) {
-      return fake.kuma.kri({ shortName: fake.helpers.arrayElement(['msvc', 'mzsvc', 'extsvc']), name: name as string, mesh: mesh as string })
+      return fake.kuma.kri({ shortName: fake.helpers.arrayElement(['msvc', 'mzsvc', 'extsvc']), namespace: nspace, name: displayName, mesh: mesh as string, sectionName: fake.number.int({ min: 1, max: 65535 }).toString() })
     } else if (fake.datatype.boolean()) {
       return `${fake.word.noun()}_${fake.word.noun()}_${fake.word.noun()}_${fake.word.noun()}_${fake.helpers.arrayElement(['msvc', 'mzsvc', 'extsvc'])}_${fake.number.int({ min: 1, max: 65535 })}`
     } else {
       return `${fake.word.noun()}_svc_${fake.number.int({ min: 1, max: 65535 })}`
     }
   })
+  const address = fake.internet.ip()
   fake.kuma.seed()
   if (env('KUMA_CLUSTER_NAME', '').length > 0) {
     services[0] = env('KUMA_CLUSTER_NAME', '')
@@ -35,7 +37,7 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
   const inbounds = ports.map(item => {
     const port = item.port
     const direction = 'downstream'
-    const service = isUnifiedResourceNamingEnabled ? `self_inbound_${fake.helpers.arrayElement(['http', 'grpc', 'tcp', item.port])}` : `localhost_${port}`
+    const service = isUnifiedResourceNamingEnabled ? fake.kuma.contextualKri({ context: fake.helpers.arrayElement(['inbound', 'inbound_dp']), name: port.toString() }) : `localhost_${port}`
     const _minMax = fake.datatype.boolean() ? minMax : { min: 0, max: 0 }
     switch (true) {
       case ['http', 'grpc'].includes(item.protocol): {
@@ -64,12 +66,19 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
           failure: Number,
         }, totalRequests)
 
+        // ${foo({ service })}
         return `listener.${address}_${port}.${prefix}_rq_1xx: ${req._1xx}
 listener.${address}_${port}.${prefix}_rq_2xx: ${req._2xx}
 listener.${address}_${port}.${prefix}_rq_3xx: ${req._3xx}
 listener.${address}_${port}.${prefix}_rq_4xx: ${req._4xx}
 listener.${address}_${port}.${prefix}_rq_5xx: ${req._5xx}
 listener.${address}_${port}.${prefix}_rq_completed: ${totalRequests}
+listener.${service}.${prefix}_rq_1xx: ${req._1xx}
+listener.${service}.${prefix}_rq_2xx: ${req._2xx}
+listener.${service}.${prefix}_rq_3xx: ${req._3xx}
+listener.${service}.${prefix}_rq_4xx: ${req._4xx}
+listener.${service}.${prefix}_rq_5xx: ${req._5xx}
+listener.${service}.${prefix}_rq_completed: ${totalRequests}
 cluster.${service}.assignment_stale: 0
 cluster.${service}.assignment_timeout_received: 0
 cluster.${service}.assignment_use_cached: 0

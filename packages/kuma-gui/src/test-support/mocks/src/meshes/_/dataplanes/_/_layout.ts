@@ -8,13 +8,31 @@ type DataplaneOutbound = components['schemas']['DataplaneOutbound']
 export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => {
   const mesh = req.params.mesh as string
   const name = req.params.name as string
-  const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
-  const inboundCount = parseInt(env('KUMA_DATAPLANEINBOUND_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
-  const outboundCount = parseInt(env('KUMA_DATAPLANEOUTBOUND_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
 
   const parts = String(name).split('.')
   const displayName = parts.slice(0, -1).join('.')
   const nspace = parts.pop()
+
+  const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
+  // use seed to sync the ports in stats.ts with the ports in _overview.ts
+  fake.kuma.seed(name as string)
+  const inboundCount = parseInt(env('KUMA_DATAPLANEINBOUND_COUNT', `${fake.number.int({ min: 7, max: 50 })}`))
+  const inbounds = Array.from({ length: inboundCount }).map(() => ({
+    port: fake.number.int({ min: 1, max: 65535 }),
+    protocol: fake.kuma.protocol(),
+  }))
+  const outboundCount = parseInt(env('KUMA_SERVICE_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
+  const outbounds = Array.from({ length: outboundCount }).map(() => ({
+    port: fake.number.int({ min: 1, max: 65535 }),
+    protocol: fake.kuma.protocol(),
+    kri: fake.kuma.kri({
+      shortName: fake.helpers.arrayElement(['msvc', 'mzsvc', 'extsvc']),
+      mesh,
+      namespace: nspace,
+      name: displayName,
+      sectionName: fake.number.int({ min: 1, max: 65535 }).toString(),
+    }),
+  }))
 
   return {
     headers: {},
@@ -23,7 +41,7 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
         shortName: 'dp',
         mesh,
         namespace: nspace,
-        name,
+        name: displayName,
         sectionName: 'default',
       }),
       labels: {
@@ -37,37 +55,26 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
           }
           : {}),
       },
-      inbounds: Array.from({ length: inboundCount }).map((_, i) => {
-        const port = fake.number.int({ min: 1, max: 65535 })
-        const context = fake.helpers.arrayElement(['inbound', 'transparentproxy_passthrough_inbound'])
+      inbounds: inbounds.map(({ port, protocol }, i) => {
         const sectionName = fake.helpers.arrayElement(['default', 'httpport', port.toString(), 'ipv4', 'ipv6' ])
         return {
           kri: fake.kuma.kri({
             shortName: 'dp',
             mesh,
             namespace: nspace,
-            name,
+            name: displayName,
             sectionName,
           }),
           port,
-          protocol: fake.helpers.arrayElement(['http', 'tcp', 'tls', 'grpc']),
-          proxyResourceName: fake.kuma.contextualKri({ context, name: sectionName }),
+          protocol,
+          proxyResourceName: fake.kuma.contextualKri({ context: fake.helpers.arrayElement(['inbound', 'inbound_dp']), name: sectionName }),
         } satisfies DataplaneInbound
       }),
-      outbounds: Array.from({ length: outboundCount }).map((_, i) => {
-        const port = fake.number.int({ min: 1, max: 65535 })
-        const sectionName = fake.helpers.arrayElement(['default', 'httpport', port.toString(), 'ipv4', 'ipv6' ])
-        const kri = fake.kuma.kri({
-          shortName: 'dp',
-          mesh,
-          namespace: nspace,
-          name,
-          sectionName,
-        })
+      outbounds: outbounds.map(({ port, protocol, kri }, i) => {
         return {
           kri,
           port,
-          protocol: fake.helpers.arrayElement(['http', 'tcp', 'tls', 'grpc']),
+          protocol,
           proxyResourceName: kri,
         } satisfies DataplaneOutbound
       }),
