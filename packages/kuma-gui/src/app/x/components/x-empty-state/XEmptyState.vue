@@ -19,7 +19,7 @@
         :key="title"
       >
         <KEmptyState
-          :icon-background="props.iconBackground"
+          :icon-background="['meshes', 'zone-cps', 'zone-crud'].includes(props.type)"
           :title="title"
           appearance="secondary"
           data-testid="empty-block"
@@ -104,10 +104,8 @@ import { LocationIcon, AnalyticsIcon, MeshIcon } from '@kong/icons'
 
 const props = withDefaults(defineProps<{
   type?: string
-  iconBackground?: boolean
 }>(), {
   type: '',
-  iconBackground: false,
 })
 const slots = defineSlots()
 

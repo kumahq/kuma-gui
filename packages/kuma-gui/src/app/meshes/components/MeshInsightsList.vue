@@ -4,12 +4,6 @@
       :items="props.items"
       type="meshes"
     >
-      <template #empty>
-        <XEmptyState
-          type="meshes"
-          icon-background
-        />
-      </template>
       <AppCollection
         :headers="[
           { ...storage.get('mesh.headers.name') ,label: t('meshes.components.mesh-insights-list.name'), key: 'name'},
