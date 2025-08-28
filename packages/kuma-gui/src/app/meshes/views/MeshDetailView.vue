@@ -209,21 +209,26 @@
                         </XBadge>
                       </template>
                       <template #origin="{ row: item }">
-                        <XAction
-                          :to="{
-                            name: 'mesh-identity-summary-view',
-                            params: {
-                              name: Kri.fromString(item.spec.origin.kri).name,
-                            },
-                          }"
-                          data-action
-                        >
-                          <XBadge
-                            appearance="decorative"
+                        <template v-if="Kri.isKriString(item.spec.origin.kri)">
+                          <XAction
+                            :to="{
+                              name: 'mesh-identity-summary-view',
+                              params: {
+                                name: Kri.fromString(item.spec.origin.kri).name,
+                              },
+                            }"
+                            data-action
                           >
-                            {{ item.spec.origin.kri }}
-                          </XBadge>
-                        </XAction>
+                            <XBadge
+                              appearance="decorative"
+                            >
+                              {{ item.spec.origin.kri }}
+                            </XBadge>
+                          </XAction>
+                        </template>
+                        <template v-else>
+                          {{ item.spec.origin.kri }}
+                        </template>
                       </template>
                     </AppCollection>
                   </DataCollection>
