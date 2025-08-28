@@ -20,7 +20,6 @@ import storage from './services/storage'
 import { create, destroy, DataSourcePool } from '@/app/application/services/data-source'
 import { services as kuma } from '@/app/kuma'
 import type { ServiceDefinition } from '@kumahq/container'
-import type { Can } from '@kumahq/settings/can'
 import type { EnvVars } from '@kumahq/settings/env'
 import type { Component } from 'vue'
 import type { RouteRecordRaw } from 'vue-router'
@@ -63,6 +62,8 @@ declare module 'vue' {
     $routeName?: string
   }
 }
+export interface Abilities {}
+export type Can = Abilities['can']
 
 const $ = {
   Env: token<Env>('application.Env'),
