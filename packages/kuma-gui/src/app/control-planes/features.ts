@@ -1,12 +1,17 @@
-import type { Can, Features } from '@kumahq/settings/can'
+import type { Features } from '@kumahq/settings/can'
 import type { Env } from '@kumahq/settings/env'
-export const features = (env: Env['var']): Features => {
+export const features = (env: Env['var']) => {
   return {
-    'use kubernetes': (_can: Can) => {
+    'use kubernetes': () => {
       return env('KUMA_ENVIRONMENT') === 'kubernetes'
     },
-    'use state': (_can: Can) => {
+    'use state': () => {
       return env('KUMA_STORE_TYPE') !== 'memory'
     },
+  }
+}
+declare module '@/app/application' {
+  export interface Abilities {
+    can(...args: Features<ReturnType<typeof features>>): boolean
   }
 }

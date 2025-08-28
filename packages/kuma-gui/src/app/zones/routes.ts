@@ -1,7 +1,7 @@
+import type { Can } from '@/app/application'
 import { routes as subscriptions } from '@/app/subscriptions/routes'
 import { routes as egresses } from '@/app/zone-egresses/routes'
 import { routes as ingresses } from '@/app/zone-ingresses/routes'
-import type { Can } from '@kumahq/settings/can'
 import type { RouteRecordRaw } from 'vue-router'
 
 export const routes = (

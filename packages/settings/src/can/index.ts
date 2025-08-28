@@ -1,10 +1,35 @@
-export type Can = (str: string, obj?: any) => boolean
-export type Features = Record<string, (can: Can, obj?: any) => boolean>
-export default (features: Features) => {
-  const can: Can = (str, obj) => {
+
+type EnsureFunction<T> = T extends (...args: any[]) => any ? T : never
+type ParamsExceptFirst<T extends any[]> = T extends [any, ...infer Rest] ? Rest : []
+
+export type Features<T extends Record<string, unknown>> = {
+  [K in keyof T & string]: ParamsExceptFirst<Parameters<EnsureFunction<T[K]>>> extends [] ? [K] : [K, ...ParamsExceptFirst<Parameters<EnsureFunction<T[K]>>>]
+}[keyof T & string]
+
+export type FeatureSpec<T extends Record<string, unknown>> = {
+  [K in keyof T & string]: (
+    can: (...args: Features<T>) => boolean,
+    //
+    ...rest: [] | [...ParamsExceptFirst<Parameters<EnsureFunction<T[K]>>>]
+    ///
+  ) => any
+}
+// export type FeatureSpec<T extends Record<string, unknown>> = {
+//   [K in keyof T & string]: EnsureFunction<T[K]>
+// }
+
+
+export default <T extends Record<string, unknown>>(features: FeatureSpec<T>) => {
+  const can = (...args: Features<T>) => {
+    const [str, ...rest] = args
     const feature = features[str]
     if (typeof feature !== 'undefined') {
-      return features[str](can, obj)
+      const res = features[str](can, ...rest)
+      if (typeof res === 'string') {
+        return !!JSON.parse(res)
+      } else {
+        return !!res
+      }
     }
     return false
   }
