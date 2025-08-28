@@ -15,7 +15,7 @@ export const features = (_env: Env['var']) => {
     },
   }
 }
-declare module '@kumahq/settings/can' {
+declare module '@/app/application' {
   export interface Abilities {
     can(...args: Features<ReturnType<typeof features>>): boolean
   }

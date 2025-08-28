@@ -1,19 +1,35 @@
-export interface Abilities {}
-// @ts-ignore
-export type Can = Abilities['can']
 
+type EnsureFunction<T> = T extends (...args: any[]) => any ? T : never
 type ParamsExceptFirst<T extends any[]> = T extends [any, ...infer Rest] ? Rest : []
 
-export type Features<T extends Record<string, (...args: any[]) => boolean>> = {
-  [K in keyof T]: ParamsExceptFirst<Parameters<T[K]>> extends [] ? [K] : [K, ...ParamsExceptFirst<Parameters<T[K]>>]
-}[keyof T]
+export type Features<T extends Record<string, unknown>> = {
+  [K in keyof T & string]: ParamsExceptFirst<Parameters<EnsureFunction<T[K]>>> extends [] ? [K] : [K, ...ParamsExceptFirst<Parameters<EnsureFunction<T[K]>>>]
+}[keyof T & string]
 
-type Feature = (can: Can, obj?: any) => boolean
-export default (features: Record<string, Feature>) => {
-  const can: Can = (str: string, obj?: unknown) => {
+export type FeatureSpec<T extends Record<string, unknown>> = {
+  [K in keyof T & string]: (
+    can: (...args: Features<T>) => boolean,
+    //
+    ...rest: [] | [...ParamsExceptFirst<Parameters<EnsureFunction<T[K]>>>]
+    ///
+  ) => any
+}
+// export type FeatureSpec<T extends Record<string, unknown>> = {
+//   [K in keyof T & string]: EnsureFunction<T[K]>
+// }
+
+
+export default <T extends Record<string, unknown>>(features: FeatureSpec<T>) => {
+  const can = (...args: Features<T>) => {
+    const [str, ...rest] = args
     const feature = features[str]
     if (typeof feature !== 'undefined') {
-      return !!features[str](can, obj)
+      const res = features[str](can, ...rest)
+      if (typeof res === 'string') {
+        return !!JSON.parse(res)
+      } else {
+        return !!res
+      }
     }
     return false
   }
