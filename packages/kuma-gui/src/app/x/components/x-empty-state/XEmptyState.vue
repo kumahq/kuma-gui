@@ -19,7 +19,7 @@
         :key="title"
       >
         <KEmptyState
-          :icon-background="['meshes', 'zone-cps', 'zone-crud'].includes(props.type) || iconBackground"
+          :icon-background="['control-planes', 'meshes', 'zone-cps', 'zone-crud'].includes(props.type)"
           data-testid="empty-block"
           v-bind="bindingProps"
         >
@@ -117,7 +117,6 @@ const props = withDefaults(defineProps<{
   type?: string
 } & EmptyStateProps>(), {
   type: '',
-  iconBackground: false,
 })
 const {
   iconBackground,
