@@ -37,7 +37,7 @@
     "@stylistic/eslint-plugin": "^5.2.3",
     "@stylistic/stylelint-plugin": "^4.0.0",
     "@vue/eslint-config-typescript": "^14.6.0",
-    "cypress": "^14.5.4",
+    "cypress": "^15.0.0",
     "cypress-fail-fast": "^7.1.1",
     "cypress-fail-on-console-error": "^5.1.1",
     "cypress-terminal-report": "^7.2.1",
