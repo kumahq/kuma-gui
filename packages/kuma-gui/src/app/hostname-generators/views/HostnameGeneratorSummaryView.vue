@@ -70,40 +70,27 @@
                 </div>
               </XLayout>
             </header>
-            
+
             <template v-if="route.params.format === 'structured'">
-              <div
-                class="stack-with-borders"
+              <XTable
+                variant="kv"
                 data-testid="structured-view"
               >
-                <DefinitionCard
+                <tr
                   v-if="item.namespace.length > 0"
-                  layout="horizontal"
                 >
-                  <template
-                    #title
-                  >
+                  <th scope="row">
                     {{ t('hostname-generators.common.namespace') }}
-                  </template>
-
-                  <template
-                    #body
-                  >
-                    {{ item.namespace }}
-                  </template>
-                </DefinitionCard>
-                <DefinitionCard
+                  </th>
+                  <td>{{ item.namespace }}</td>
+                </tr>
+                <tr
                   v-if="can('use zones') && item.zone"
-                  layout="horizontal"
                 >
-                  <template
-                    #title
-                  >
+                  <th scope="row">
                     {{ t('hostname-generators.common.zone') }}
-                  </template>
-                  <template
-                    #body
-                  >
+                  </th>
+                  <td>
                     <XAction
                       :to="{
                         name: 'zone-cp-detail-view',
@@ -114,24 +101,17 @@
                     >
                       {{ item.zone }}
                     </XAction>
-                  </template>
-                </DefinitionCard>
-                <DefinitionCard
+                  </td>
+                </tr>
+                <tr
                   v-if="item.spec.template"
-                  layout="horizontal"
                 >
-                  <template
-                    #title
-                  >
+                  <th scope="row">
                     {{ t('hostname-generators.common.template') }}
-                  </template>
-                  <template
-                    #body
-                  >
-                    {{ item.spec.template }}
-                  </template>
-                </DefinitionCard>
-              </div>
+                  </th>
+                  <td>{{ item.spec.template }}</td>
+                </tr>
+              </XTable>
             </template>
 
             <template v-else-if="route.params.format === 'universal'">
@@ -182,7 +162,6 @@
 <script lang="ts" setup>
 import { sources } from '../sources'
 import { YAML } from '@/app/application'
-import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import type { HostnameGenerator } from '@/app/hostname-generators/data'
 const props = defineProps<{
   items: HostnameGenerator[]

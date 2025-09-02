@@ -10,34 +10,30 @@
   >
     <AppView>
       <XLayout type="stack">
-        <div
-          class="stack-with-borders"
+        <XTable
+          variant="kv"
         >
-          <DefinitionCard layout="horizontal">
-            <template #title>
+          <tr>
+            <th scope="row">
               Protocol
-            </template>
-
-            <template #body>
+            </th>
+            <td>
               <XBadge
                 appearance="info"
               >
                 {{ t(`http.api.value.${props.data.protocol}`) }}
               </XBadge>
-            </template>
-          </DefinitionCard>
-          <DefinitionCard
-            layout="horizontal"
-          >
-            <template #title>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">
               Port
-            </template>
-
-            <template #body>
+            </th>
+            <td>
               {{ props.data.port }}
-            </template>
-          </DefinitionCard>
-        </div>
+            </td>
+          </tr>
+        </XTable>
         <XLayout
           v-if="props.data"
           type="stack"
@@ -84,18 +80,15 @@
                             </PolicyTypeTag>
                           </template>
                           <template #accordion-content>
-                            <div
-                              class="stack-with-borders"
+                            <XTable
+                              v-if="origins.length > 0"
+                              variant="kv"
                             >
-                              <DefinitionCard
-                                v-if="origins.length > 0"
-                                layout="horizontal"
-                              >
-                                <template #title>
+                              <tr>
+                                <th scope="row">
                                   Origin policies
-                                </template>
-
-                                <template #body>
+                                </th>
+                                <td>
                                   <ul>
                                     <li
                                       v-for="origin in origins"
@@ -126,23 +119,24 @@
                                       </template>
                                     </li>
                                   </ul>
-                                </template>
-                              </DefinitionCard>
-                              <div>
-                                <dt>
-                                  Config
-                                </dt>
-                                <dd class="mt-2">
-                                  <div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td colspan="2">
+                                  <XLayout
+                                    type="stack"
+                                    size="small"
+                                  >
+                                    <span>Config</span>
                                     <XCodeBlock
                                       :code="YAML.stringify(conf)"
                                       language="yaml"
                                       :show-copy-button="false"
                                     />
-                                  </div>
-                                </dd>
-                              </div>
-                            </div>
+                                  </XLayout>
+                                </td>
+                              </tr>
+                            </XTable>
                           </template>
                         </AccordionItem>
                       </XCard>
@@ -163,7 +157,6 @@ import { DataplaneNetworkingLayout } from '../data'
 import { YAML } from '@/app/application'
 import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
-import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import PolicyTypeTag from '@/app/common/PolicyTypeTag.vue'
 import { Kri } from '@/app/kuma/kri'
 import { sources as policySources } from '@/app/policies/sources'

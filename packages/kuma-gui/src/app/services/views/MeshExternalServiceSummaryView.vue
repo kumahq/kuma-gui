@@ -73,38 +73,25 @@
               </XLayout>
             </header>
             <template v-if="route.params.format === 'structured'">
-              <div
-                class="stack-with-borders"
+              <XTable
                 data-testid="structured-view"
+                variant="kv"
               >
-                <DefinitionCard
+                <tr
                   v-if="item.namespace.length > 0"
-                  layout="horizontal"
                 >
-                  <template
-                    #title
-                  >
+                  <th scope="row">
                     Namespace
-                  </template>
-
-                  <template
-                    #body
-                  >
-                    {{ item.namespace }}
-                  </template>
-                </DefinitionCard>
-                <DefinitionCard
+                  </th>
+                  <td>{{ item.namespace }}</td>
+                </tr>
+                <tr
                   v-if="can('use zones') && item.zone"
-                  layout="horizontal"
                 >
-                  <template
-                    #title
-                  >
+                  <th scope="row">
                     Zone
-                  </template>
-                  <template
-                    #body
-                  >
+                  </th>
+                  <td>
                     <XAction
                       :to="{
                         name: 'zone-cp-detail-view',
@@ -115,38 +102,33 @@
                     >
                       {{ item.zone }}
                     </XAction>
-                  </template>
-                </DefinitionCard>
-                <DefinitionCard
+                  </td>
+                </tr>
+                <tr
                   v-if="item.spec.match"
-                  layout="horizontal"
                 >
-                  <template #title>
+                  <th scope="row">
                     Port
-                  </template>
-                  <template #body>
+                  </th>
+                  <td>
                     <KumaPort
                       :port="item.spec.match"
                     />
-                  </template>
-                </DefinitionCard>
-                <DefinitionCard layout="horizontal">
-                  <template
-                    #title
-                  >
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">
                     TLS
-                  </template>
-                  <template
-                    #body
-                  >
+                  </th>
+                  <td>
                     <XBadge
                       appearance="neutral"
                     >
                       {{ item.spec.tls?.enabled ? 'Enabled' : 'Disabled' }}
                     </XBadge>
-                  </template>
-                </DefinitionCard>
-              </div>
+                  </td>
+                </tr>
+              </XTable>
             </template>
 
             <template v-else-if="route.params.format === 'universal'">
@@ -198,7 +180,6 @@
 <script lang="ts" setup>
 import { sources } from '../sources'
 import { YAML } from '@/app/application'
-import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import type { MeshExternalService } from '@/app/services/data'
 const props = defineProps<{
   items: MeshExternalService[]

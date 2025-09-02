@@ -82,51 +82,33 @@
               </XLayout>
             </header>
             <template v-if="route.params.format === 'structured'">
-              <div
-                class="stack-with-borders"
+              <XTable
                 data-testid="structured-view"
+                variant="kv"
               >
-                <DefinitionCard
-                  layout="horizontal"
-                >
-                  <template
-                    #title
-                  >
+                <tr>
+                  <th scope="row">
                     Data plane proxies
-                  </template>
-                  <template
-                    #body
-                  >
+                  </th>
+                  <td>
                     {{ item.status.dataplaneProxies?.connected }} connected, {{ item.status.dataplaneProxies?.healthy }} healthy ({{ item.status.dataplaneProxies?.total }} total)
-                  </template>
-                </DefinitionCard>
-                <DefinitionCard
+                  </td>
+                </tr>
+                <tr
                   v-if="item.namespace"
-                  layout="horizontal"
                 >
-                  <template
-                    #title
-                  >
+                  <th scope="row">
                     Namespace
-                  </template>
-                  <template
-                    #body
-                  >
-                    {{ item.namespace }}
-                  </template>
-                </DefinitionCard>
-                <DefinitionCard
+                  </th>
+                  <td>{{ item.namespace }}</td>
+                </tr>
+                <tr
                   v-if="can('use zones') && item.zone"
-                  layout="horizontal"
                 >
-                  <template
-                    #title
-                  >
+                  <th scope="row">
                     Zone
-                  </template>
-                  <template
-                    #body
-                  >
+                  </th>
+                  <td>
                     <XAction
                       :to="{
                         name: 'zone-cp-detail-view',
@@ -137,19 +119,13 @@
                     >
                       {{ item.zone }}
                     </XAction>
-                  </template>
-                </DefinitionCard>
-                <DefinitionCard
-                  layout="horizontal"
-                >
-                  <template
-                    #title
-                  >
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">
                     Ports
-                  </template>
-                  <template
-                    #body
-                  >
+                  </th>
+                  <td>
                     <XLayout
                       type="separated"
                       truncate
@@ -163,17 +139,13 @@
                         }"
                       />
                     </XLayout>
-                  </template>
-                </DefinitionCard>
-                <DefinitionCard layout="horizontal">
-                  <template
-                    #title
-                  >
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">
                     Selector
-                  </template>
-                  <template
-                    #body
-                  >
+                  </th>
+                  <td>
                     <XLayout
                       type="separated"
                       truncate
@@ -186,11 +158,11 @@
                         {{ key }}:{{ value }}
                       </XBadge>
                     </XLayout>
-                  </template>
-                </DefinitionCard>
-              </div>
+                  </td>
+                </tr>
+              </XTable>
             </template>
-            
+
             <template v-else-if="route.params.format === 'universal'">
               <XCodeBlock
                 data-testid="codeblock-yaml-universal"
@@ -240,7 +212,6 @@
 <script lang="ts" setup>
 import { sources } from '../sources'
 import { YAML } from '@/app/application'
-import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import type { MeshService } from '@/app/services/data'
 const props = defineProps<{
   items: MeshService[]

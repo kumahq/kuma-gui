@@ -73,21 +73,15 @@
               </XLayout>
             </header>
             <template v-if="route.params.format === 'structured'">
-              <div
-                class="stack-with-borders"
+              <XTable
                 data-testid="structured-view"
+                variant="kv"
               >
-                <DefinitionCard
-                  layout="horizontal"
-                >
-                  <template
-                    #title
-                  >
+                <tr>
+                  <th scope="row">
                     Ports
-                  </template>
-                  <template
-                    #body
-                  >
+                  </th>
+                  <td>
                     <XLayout
                       type="separated"
                       truncate
@@ -101,19 +95,13 @@
                         }"
                       />
                     </XLayout>
-                  </template>
-                </DefinitionCard>
-                <DefinitionCard
-                  layout="horizontal"
-                >
-                  <template
-                    #title
-                  >
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">
                     Selector
-                  </template>
-                  <template
-                    #body
-                  >
+                  </th>
+                  <td>
                     <XLayout
                       type="separated"
                       truncate
@@ -126,9 +114,9 @@
                         {{ key }}:{{ value }}
                       </XBadge>
                     </XLayout>
-                  </template>
-                </DefinitionCard>
-              </div>
+                  </td>
+                </tr>
+              </XTable>
             </template>
 
             <template v-else-if="route.params.format === 'universal'">
@@ -180,7 +168,6 @@
 <script lang="ts" setup>
 import { sources } from '../sources'
 import { YAML } from '@/app/application'
-import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import type { MeshMultiZoneService } from '@/app/services/data'
 const props = defineProps<{
   items: MeshMultiZoneService[]

@@ -4,35 +4,30 @@
   >
     <slot name="header" />
     <template v-if="props.format === 'structured'">
-      <div
-        class="mt-4 stack-with-borders"
+      <XTable
         data-testid="structured-view"
+        variant="kv"
       >
-        <DefinitionCard
-          layout="horizontal"
-        >
-          <template #title>
+        <tr>
+          <th scope="row">
             {{ t('http.api.property.type') }}
-          </template>
-
-          <template #body>
+          </th>
+          <td>
             <XBadge
               v-if="props.policy.type"
               appearance="neutral"
             >
               {{ props.policy.type }}
             </XBadge>
-          </template>
-        </DefinitionCard>
-        <DefinitionCard
+          </td>
+        </tr>
+        <tr
           v-if="!props.legacy"
-          layout="horizontal"
         >
-          <template #title>
+          <th scope="row">
             {{ t('http.api.property.targetRef') }}
-          </template>
-
-          <template #body>
+          </th>
+          <td>
             <XBadge
               v-if="props.policy.spec?.targetRef"
               appearance="neutral"
@@ -45,32 +40,23 @@
             >
               Mesh
             </XBadge>
-          </template>
-        </DefinitionCard>
-        <DefinitionCard
+          </td>
+        </tr>
+        <tr
           v-if="props.policy.namespace.length > 0"
-          layout="horizontal"
         >
-          <template #title>
+          <th scope="row">
             {{ t('data-planes.routes.item.namespace') }}
-          </template>
-
-          <template #body>
-            {{ props.policy.namespace }}
-          </template>
-        </DefinitionCard>
-        <DefinitionCard
+          </th>
+          <td>{{ props.policy.namespace }}</td>
+        </tr>
+        <tr
           v-if="can('use zones') && props.policy.zone"
-          layout="horizontal"
         >
-          <template
-            #title
-          >
+          <th scope="row">
             Zone
-          </template>
-          <template
-            #body
-          >
+          </th>
+          <td>
             <XAction
               :to="{
                 name: 'zone-cp-detail-view',
@@ -81,10 +67,9 @@
             >
               {{ props.policy.zone }}
             </XAction>
-          </template>
-        </DefinitionCard>
-      </div>
-
+          </td>
+        </tr>
+      </XTable>
       <XCodeBlock
         language="yaml"
         :code="YAML.stringify(policy.spec ?
@@ -117,7 +102,6 @@
 
 import type { Policy } from '../data'
 import { useI18n, useCan, YAML } from '@/app/application'
-import DefinitionCard from '@/app/common/DefinitionCard.vue'
 
 const { t } = useI18n()
 const can = useCan()

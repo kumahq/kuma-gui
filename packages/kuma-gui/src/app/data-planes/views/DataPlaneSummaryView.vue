@@ -101,46 +101,34 @@
                 size="large"
                 data-testid="structured-view"
               >
-                <div
-                  class="stack-with-borders"
+                <XTable
+                  variant="kv"
                 >
-                  <DefinitionCard
-                    layout="horizontal"
-                  >
-                    <template #title>
+                  <tr>
+                    <th scope="row">
                       Type
-                    </template>
-
-                    <template #body>
+                    </th>
+                    <td>
                       {{ t(`data-planes.type.${item.dataplaneType}`) }}
-                    </template>
-                  </DefinitionCard>
-
-                  <DefinitionCard
+                    </td>
+                  </tr>
+                  <tr
                     v-if="item.namespace.length > 0"
-                    layout="horizontal"
                   >
-                    <template #title>
+                    <th scope="row">
                       {{ t('data-planes.routes.item.namespace') }}
-                    </template>
-
-                    <template #body>
+                    </th>
+                    <td>
                       {{ item.namespace }}
-                    </template>
-                  </DefinitionCard>
-
-                  <DefinitionCard
+                    </td>
+                  </tr>
+                  <tr
                     v-if="can('use zones') && item.zone"
-                    layout="horizontal"
                   >
-                    <template
-                      #title
-                    >
+                    <th scope="row">
                       Zone
-                    </template>
-                    <template
-                      #body
-                    >
+                    </th>
+                    <td>
                       <XAction
                         :to="{
                           name: 'zone-cp-detail-view',
@@ -151,20 +139,17 @@
                       >
                         {{ item.zone }}
                       </XAction>
-                    </template>
-                  </DefinitionCard>
-                  <DefinitionCard
-                    layout="horizontal"
-                  >
-                    <template #title>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
                       {{ t('http.api.property.modificationTime') }}
-                    </template>
-
-                    <template #body>
+                    </th>
+                    <td>
                       {{ t('common.formats.datetime', { value: Date.parse(item.modificationTime) }) }}
-                    </template>
-                  </DefinitionCard>
-                </div>
+                    </td>
+                  </tr>
+                </XTable>
 
                 <XLayout
                   v-if="item.dataplane.networking.gateway"
@@ -172,38 +157,31 @@
                 >
                   <h3>{{ t('data-planes.routes.item.gateway') }}</h3>
 
-                  <div
-                    class="stack-with-borders"
+                  <XTable
+                    variant="kv"
                   >
-                    <DefinitionCard
-                      layout="horizontal"
-                    >
-                      <template #title>
+                    <tr>
+                      <th scope="row">
                         {{ t('http.api.property.tags') }}
-                      </template>
-
-                      <template #body>
+                      </th>
+                      <td>
                         <TagList
                           alignment="right"
                           :tags="item.dataplane.networking.gateway.tags"
                         />
-                      </template>
-                    </DefinitionCard>
-
-                    <DefinitionCard
-                      layout="horizontal"
-                    >
-                      <template #title>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th scope="row">
                         {{ t('http.api.property.address') }}
-                      </template>
-
-                      <template #body>
+                      </th>
+                      <td>
                         <XCopyButton
                           :text="`${item.dataplane.networking.address}`"
                         />
-                      </template>
-                    </DefinitionCard>
-                  </div>
+                      </td>
+                    </tr>
+                  </XTable>
                 </XLayout>
 
                 <DataCollection
@@ -229,18 +207,14 @@
                         </XCopyButton>
                       </h4>
 
-                      <XLayout
-                        class="stack-with-borders"
-                        size="small"
+                      <XTable
+                        variant="kv"
                       >
-                        <DefinitionCard
-                          layout="horizontal"
-                        >
-                          <template #title>
+                        <tr>
+                          <th scope="row">
                             {{ t('http.api.property.state') }}
-                          </template>
-
-                          <template #body>
+                          </th>
+                          <td>
                             <XBadge
                               v-if="inbound.state === 'Ready'"
                               appearance="success"
@@ -254,36 +228,28 @@
                             >
                               {{ t(`http.api.value.${inbound.state}`) }}
                             </XBadge>
-                          </template>
-                        </DefinitionCard>
-
-                        <DefinitionCard
-                          layout="horizontal"
-                        >
-                          <template #title>
+                          </td>
+                        </tr>
+                        <tr>
+                          <th scope="row">
                             {{ t('http.api.property.tags') }}
-                          </template>
-
-                          <template #body>
+                          </th>
+                          <td>
                             <TagList
                               alignment="right"
                               :tags="inbound.tags"
                             />
-                          </template>
-                        </DefinitionCard>
-
-                        <DefinitionCard
-                          layout="horizontal"
-                        >
-                          <template #title>
+                          </td>
+                        </tr>
+                        <tr>
+                          <th scope="row">
                             {{ t('http.api.property.address') }}
-                          </template>
-
-                          <template #body>
+                          </th>
+                          <td>
                             <XCopyButton :text="inbound.addressPort" />
-                          </template>
-                        </DefinitionCard>
-                      </XLayout>
+                          </td>
+                        </tr>
+                      </XTable>
                     </XLayout>
                   </XLayout>
                 </DataCollection>
@@ -311,38 +277,31 @@
                         </XCopyButton>
                       </h4>
 
-                      <XLayout
-                        class="stack-with-borders"
-                        size="small"
+                      <XTable
+                        variant="kv"
                       >
-                        <DefinitionCard
+                        <tr
                           v-if="Object.keys(outbound.tags).length"
-                          layout="horizontal"
                         >
-                          <template #title>
+                          <th scope="row">
                             {{ t('http.api.property.tags') }}
-                          </template>
-
-                          <template #body>
+                          </th>
+                          <td>
                             <TagList
                               alignment="right"
                               :tags="outbound.tags"
                             />
-                          </template>
-                        </DefinitionCard>
-
-                        <DefinitionCard
-                          layout="horizontal"
-                        >
-                          <template #title>
+                          </td>
+                        </tr>
+                        <tr>
+                          <th scope="row">
                             {{ t('http.api.property.address') }}
-                          </template>
-
-                          <template #body>
+                          </th>
+                          <td>
                             <XCopyButton :text="outbound.addressPort" />
-                          </template>
-                        </DefinitionCard>
-                      </XLayout>
+                          </td>
+                        </tr>
+                      </XTable>
                     </XLayout>
                   </XLayout>
                 </DataCollection>
@@ -399,7 +358,6 @@
 import { DataplaneOverview } from '../data'
 import { sources } from '../sources'
 import { YAML } from '@/app/application'
-import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import TagList from '@/app/common/TagList.vue'
 
 const props = defineProps<{

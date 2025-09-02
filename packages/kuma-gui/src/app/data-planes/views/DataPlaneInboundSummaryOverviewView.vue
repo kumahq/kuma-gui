@@ -14,75 +14,68 @@
           v-for="inbound in [props.dataPlaneOverview.dataplane.networking.inbounds.find((item) => item.portName === ContextualKri.fromString(route.params.connection).sectionName && item.port === props.data.port)]"
           :key="typeof inbound"
         >
-          <div
+          <XTable
             v-if="inbound"
-            class="stack-with-borders"
+            variant="kv"
           >
-            <DefinitionCard layout="horizontal">
-              <template #title>
+            <tr>
+              <th scope="row">
                 Tags
-              </template>
-
-              <template #body>
+              </th>
+              <td>
                 <TagList
                   :tags="inbound.tags"
                   alignment="right"
                 />
-              </template>
-            </DefinitionCard>
-            <DefinitionCard layout="horizontal">
-              <template #title>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">
                 Protocol
-              </template>
-
-              <template #body>
+              </th>
+              <td>
                 <XBadge
                   appearance="info"
                 >
                   {{ t(`http.api.value.${inbound.protocol}`) }}
                 </XBadge>
-              </template>
-            </DefinitionCard>
-            <DefinitionCard layout="horizontal">
-              <template #title>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">
                 Address
-              </template>
-
-              <template #body>
+              </th>
+              <td>
                 <XCopyButton
                   :text="`${inbound.addressPort}`"
                 />
-              </template>
-            </DefinitionCard>
-            <DefinitionCard
+              </td>
+            </tr>
+            <tr
               v-if="inbound.serviceAddressPort.length > 0"
-              layout="horizontal"
             >
-              <template #title>
+              <th scope="row">
                 Service address
-              </template>
-
-              <template #body>
+              </th>
+              <td>
                 <XCopyButton
                   :text="`${inbound.serviceAddressPort}`"
                 />
-              </template>
-            </DefinitionCard>
-            <DefinitionCard
+              </td>
+            </tr>
+            <tr
               v-if="inbound.portName.length > 0"
-              layout="horizontal"
             >
-              <template #title>
+              <th scope="row">
                 Name
-              </template>
-
-              <template #body>
+              </th>
+              <td>
                 <XCopyButton
                   :text="`${inbound.portName}`"
                 />
-              </template>
-            </DefinitionCard>
-          </div>
+              </td>
+            </tr>
+          </XTable>
         </template>
         <XLayout
           v-if="props.data"
@@ -130,70 +123,71 @@
                             </PolicyTypeTag>
                           </template>
                           <template #accordion-content>
-                            <div
-                              class="stack-with-borders"
+                            <XTable
+                              variant="kv"
                             >
                               <template
                                 v-for="item in rules"
                                 :key="item"
                               >
-                                <DefinitionCard
+                                <template
                                   v-if="origins.length > 0"
-                                  layout="horizontal"
                                 >
-                                  <template #title>
-                                    Origin policies
-                                  </template>
-
-                                  <template #body>
-                                    <ul>
-                                      <li
-                                        v-for="origin in origins"
-                                        :key="origin.kri"
-                                      >
-                                        <template
-                                          v-for="{ mesh, name } in [Kri.fromString(origin.kri)]"
-                                          :key="`${mesh}-${name}`"
+                                  <tr>
+                                    <th scope="row">
+                                      Origin policies
+                                    </th>
+                                    <td>
+                                      <ul>
+                                        <li
+                                          v-for="origin in origins"
+                                          :key="origin.kri"
                                         >
-                                          <XAction
-                                            v-if="policyTypes[kind]"
-                                            :to="{
-                                              name: 'policy-detail-view',
-                                              params: {
-                                                mesh: mesh,
-                                                policyPath: policyTypes[kind]![0].path,
-                                                policy: name,
-                                              },
-                                            }"
-                                          >
-                                            {{ origin.kri }}
-                                          </XAction>
                                           <template
-                                            v-else
+                                            v-for="{ mesh, name } in [Kri.fromString(origin.kri)]"
+                                            :key="`${mesh}-${name}`"
                                           >
-                                            {{ origin.kri }}
+                                            <XAction
+                                              v-if="policyTypes[kind]"
+                                              :to="{
+                                                name: 'policy-detail-view',
+                                                params: {
+                                                  mesh: mesh,
+                                                  policyPath: policyTypes[kind]![0].path,
+                                                  policy: name,
+                                                },
+                                              }"
+                                            >
+                                              {{ origin.kri }}
+                                            </XAction>
+                                            <template
+                                              v-else
+                                            >
+                                              {{ origin.kri }}
+                                            </template>
                                           </template>
-                                        </template>
-                                      </li>
-                                    </ul>
-                                  </template>
-                                </DefinitionCard>
-                                <div>
-                                  <dt>
-                                    Config
-                                  </dt>
-                                  <dd class="mt-2">
-                                    <div>
-                                      <XCodeBlock
-                                        :code="YAML.stringify(item.conf)"
-                                        language="yaml"
-                                        :show-copy-button="false"
-                                      />
-                                    </div>
-                                  </dd>
-                                </div>
+                                        </li>
+                                      </ul>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td colspan="2">
+                                      <XLayout
+                                        type="stack"
+                                        size="small"
+                                      >
+                                        <span>Config</span>
+                                        <XCodeBlock
+                                          :code="YAML.stringify(item.conf)"
+                                          language="yaml"
+                                          :show-copy-button="false"
+                                        />
+                                      </XLayout>
+                                    </td>
+                                  </tr>
+                                </template>
                               </template>
-                            </div>
+                            </XTable>
                           </template>
                         </AccordionItem>
                       </XCard>
@@ -214,7 +208,6 @@ import { DataplaneNetworkingLayout, DataplaneOverview } from '../data'
 import { YAML } from '@/app/application'
 import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
-import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import PolicyTypeTag from '@/app/common/PolicyTypeTag.vue'
 import TagList from '@/app/common/TagList.vue'
 import { ContextualKri, Kri } from '@/app/kuma/kri'

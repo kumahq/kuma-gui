@@ -98,32 +98,23 @@
               </header>
 
               <template v-if="route.params.format === 'structured'">
-                <XLayout
-                  type="stack"
-                  class="stack-with-borders"
+                <XTable
                   data-testid="structured-view"
+                  variant="kv"
                 >
-                  <DefinitionCard
+                  <tr
                     v-if="item.namespace.length > 0"
-                    layout="horizontal"
                   >
-                    <template #title>
+                    <th scope="row">
                       {{ t('data-planes.routes.item.namespace') }}
-                    </template>
-
-                    <template #body>
-                      {{ item.namespace }}
-                    </template>
-                  </DefinitionCard>
-
-                  <DefinitionCard
-                    layout="horizontal"
-                  >
-                    <template #title>
+                    </th>
+                    <td>{{ item.namespace }}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
                       {{ t('http.api.property.address') }}
-                    </template>
-
-                    <template #body>
+                    </th>
+                    <td>
                       <template
                         v-if="item.zoneEgress.socketAddress.length > 0"
                       >
@@ -135,9 +126,9 @@
                       <template v-else>
                         {{ t('common.detail.none') }}
                       </template>
-                    </template>
-                  </DefinitionCard>
-                </XLayout>
+                    </td>
+                  </tr>
+                </XTable>
               </template>
 
               <template v-else-if="route.params.format === 'universal'">
@@ -190,7 +181,6 @@
 import type { ZoneEgressOverview } from '../data'
 import { sources } from '../sources'
 import { YAML } from '@/app/application'
-import DefinitionCard from '@/app/common/DefinitionCard.vue'
 
 const props = defineProps<{
   items: ZoneEgressOverview[]
