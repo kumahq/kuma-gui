@@ -37,4 +37,4 @@ Feature: mesh / dataplanes / overview / TLS
     Then the "$tls-section" element exists
     And I wait for 500 ms
     Then I click the "$tls-section a" element
-    Then the URL contains "/meshes/default/data-planes/backend/overview/meshidentity/identity-1"
+    Then the URL contains "/meshes/default/data-planes/backend/overview/meshidentity/kri_mid_default_east_kuma-demo_identity-1_"
