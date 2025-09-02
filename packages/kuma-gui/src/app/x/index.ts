@@ -26,6 +26,7 @@ import XPrompt from './components/x-prompt/XPrompt.vue'
 import XProvider from './components/x-provider/XProvider.vue'
 import XSearch from './components/x-search/XSearch.vue'
 import XSelect from './components/x-select/XSelect.vue'
+import XTable from './components/x-table/XTable.vue'
 import XTabs from './components/x-tabs/XTabs.vue'
 import XTeleportSlot from './components/x-teleport/XTeleportSlot.vue'
 import XTeleportTemplate from './components/x-teleport/XTeleportTemplate.vue'
@@ -62,6 +63,7 @@ const components = [
   ['XProgress', XProgress],
   ['XSelect', XSelect],
   ['XTabs', XTabs],
+  ['XTable', XTable],
   ['XTeleportTemplate', XTeleportTemplate],
   ['XTeleportSlot', XTeleportSlot],
   ['XTooltip', XTooltip],
@@ -106,6 +108,7 @@ declare module 'vue' {
     XProgress: typeof XProgress
     XSelect: typeof XSelect
     XTabs: typeof XTabs
+    XTable: typeof XTable
     XTeleportTemplate: typeof XTeleportTemplate
     XTeleportSlot: typeof XTeleportSlot
     XTooltip: typeof XTooltip
