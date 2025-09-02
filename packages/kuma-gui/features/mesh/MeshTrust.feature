@@ -34,7 +34,7 @@ Feature: mesh / mesh-identity
       """
     When I visit the "/meshes/default" URL
     Then I click the "$meshtrusts-listing a:first" element
-    Then the URL contains "/meshes/default/overview/meshtrust/kri_mtrust_default___trust-1_
+    Then the URL contains "/meshes/default/overview/meshtrust/kri_mtrust_default___trust-1_"
     And the "$summary" element exists
     And the "$summary" element contains "trust-1"
     And the "$summary [data-testid='k-code-block']" element exists

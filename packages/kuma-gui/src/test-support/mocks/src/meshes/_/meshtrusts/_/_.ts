@@ -5,6 +5,7 @@ import type { EndpointDependencies, MockResponder } from '@/test-support'
 export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
   const params = req.params
   const mesh = params.mesh as string
+  const name = params.name as string
   const k8s = req.url.searchParams.get('format') === 'kubernetes'
   const namespace = fake.word.noun()
   const zone = fake.word.noun()
@@ -16,7 +17,7 @@ export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
       ...((() => {
         const metadata = {
           mesh,
-          name: fake.word.noun(),
+          name,
           labels: {
             'k8s.kuma.io/namespace': fake.word.noun(),
             'kuma.io/env': k8s ? 'kubernetes' : 'universal',
