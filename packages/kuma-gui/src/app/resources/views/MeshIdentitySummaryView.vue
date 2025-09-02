@@ -3,22 +3,21 @@
     :name="props.routeName"
     :params="{
       mesh: '',
-      name: '',
+      mid: '',
       environment: String,
     }"
     v-slot="{ route, t, uri }"
   >
-    <AppView>
-      <template #title>
-        <h2>{{ route.params.name }}</h2>
-      </template>
-      <DataLoader
-        :src="uri(sources, '/meshes/:mesh/meshidentities/:name', {
-          mesh: route.params.mesh,
-          name: route.params.name,
-        })"
-        v-slot="{ data }"
-      >
+    <DataLoader
+      :src="uri(sources, '/meshidentities/:mid', {
+        mid: route.params.mid,
+      })"
+      v-slot="{ data }"
+    >
+      <AppView>
+        <template #title>
+          <h2>{{ data.name }}</h2>
+        </template>
         <XLayout
           type="separated"
           justify="end"
@@ -48,14 +47,13 @@
         <template v-if="route.params.environment === 'universal'">
           <XCodeBlock
             language="yaml"
-            :code="YAML.stringify(data)"
+            :code="YAML.stringify(data.raw)"
           />
         </template>
         <template v-else>
           <DataLoader
-            :src="uri(sources, '/meshes/:mesh/meshidentities/:name/as/kubernetes', {
-              mesh: route.params.mesh,
-              name: route.params.name,
+            :src="uri(sources, '/meshidentities/:mid/as/kubernetes', {
+              mid: route.params.mid,
             })"
             v-slot="{ data: k8sYaml }"
           >
@@ -65,8 +63,8 @@
             />
           </DataLoader>
         </template>
-      </DataLoader>
-    </AppView>
+      </AppView>
+    </DataLoader>
   </RouteView>
 </template>
 

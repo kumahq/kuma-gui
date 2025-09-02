@@ -1,3 +1,4 @@
+import { Kri } from '@/app/kuma/kri'
 import type { components } from '@kumahq/kuma-http-api'
 
 type PartialMeshTrustList = components['responses']['MeshTrustList']['content']['application/json']
@@ -7,6 +8,7 @@ export const MeshTrust = {
   fromObject: (item: PartialMeshTrust) => {
     return {
       ...item,
+      kri: Kri.toString({ shortName: 'mtrust', mesh: item.mesh, name: item.name }),
       spec: {
         ...item.spec,
         origin: {
@@ -14,6 +16,7 @@ export const MeshTrust = {
           kri: item.spec?.origin?.kri ?? '',
         },
       },
+      raw: item,
     }
   },
   

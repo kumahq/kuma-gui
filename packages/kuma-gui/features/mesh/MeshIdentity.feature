@@ -28,10 +28,11 @@ Feature: mesh / mesh-identity
       body:
         items:
           - name: identity-1
+            mesh: default
       """
     When I visit the "/meshes/default" URL
     Then I click the "$mesh-mtls a:first" element
-    Then the URL contains "/meshes/default/overview/meshidentity/identity-1"
+    Then the URL contains "/meshes/default/overview/meshidentity/kri_mid_default___identity-1_"
     And the "$summary" element exists
     And the "$summary" element contains "identity-1"
     And the "$summary [data-testid='k-code-block']" element exists
