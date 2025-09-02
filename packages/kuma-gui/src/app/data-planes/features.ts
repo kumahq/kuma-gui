@@ -10,8 +10,8 @@ export const features = (_env: Env['var']): Features => {
       return ('transparentProxying' in dataplaneOverview.dataplane.networking) ||
         new Set(dataplaneOverview.dataplaneInsight.metadata.features).intersection(new Set(['feature-transparent-proxy-in-dataplane-metadata', 'bind-outbounds'])).size > 0
     },
-    'use unified-resource-naming': (_can, { dataPlaneOverview, mesh }: { dataPlaneOverview: DataplaneOverview, mesh: Mesh }) => {
-      return mesh.meshServices.mode === 'Exclusive' && dataPlaneOverview.dataplaneType === 'standard' && dataPlaneOverview.dataplaneInsight.metadata.features.includes('feature-unified-resource-naming')
+    'use unified-resource-naming': (_can, { dataplaneOverview, mesh }: { dataplaneOverview: DataplaneOverview, mesh: Mesh }) => {
+      return mesh.meshServices.mode === 'Exclusive' && dataplaneOverview.dataplaneType === 'standard' && dataplaneOverview.dataplaneInsight.metadata.features.includes('feature-unified-resource-naming')
     },
   }
 }
