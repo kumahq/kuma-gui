@@ -26,6 +26,10 @@
   "postUpdateOptions": [
     "npmDedupe"
   ],
+  "osvVulnerabilityAlerts": true,
+  "vulnerabilityAlerts": {
+    "enabled": true
+  },
   "packageRules": [
     {
       "matchUpdateTypes": [
