@@ -73,6 +73,7 @@ export type MockEnvKeys = keyof {
   KUMA_ACTIVE_RESOURCE_COUNT: string
   KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: string
   KUMA_DATAPLANE_TLS_ISSUED_MESHIDENTITY: string
+  KUMA_MESHIDENTITY_COUNT: string
 }
 export type EndpointDependencies = {
   fake: FakeKuma

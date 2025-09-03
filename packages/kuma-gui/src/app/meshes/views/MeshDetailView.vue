@@ -38,7 +38,7 @@
               :data="[meshIdentities, meshTrusts]"
             >
               <XNotification
-                :notify="!props.mesh.mtlsBackend"
+                :notify="!props.mesh.mtlsBackend && meshIdentities!.items.length === 0"
                 :uri="`meshes.notifications.mtls-warning:${props.mesh.id}`"
               >
                 <XI18n

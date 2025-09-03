@@ -2,12 +2,13 @@ Feature: mesh / item
 
   Background:
     Given the CSS selectors
-      | Alias              | Selector                                 |
-      | error              | [data-testid="error-state"]              |
-      | service-count      | [data-testid="services-status"]          |
-      | config-universal   | [data-testid='codeblock-yaml-universal'] |
-      | config-k8s         | [data-testid='codeblock-yaml-k8s']       |
-      | select-environment | [data-testid='select-input']             |
+      | Alias              | Selector                                                        |
+      | error              | [data-testid="error-state"]                                     |
+      | service-count      | [data-testid="services-status"]                                 |
+      | config-universal   | [data-testid='codeblock-yaml-universal']                        |
+      | config-k8s         | [data-testid='codeblock-yaml-k8s']                              |
+      | select-environment | [data-testid='select-input']                                    |
+      | mtls-warning       | [data-testid^='notification-meshes.notifications.mtls-warning'] |
 
   Scenario: /mesh-insights/* isn't a 404
     Given the URL "/mesh-insights/default" responds with
@@ -37,3 +38,22 @@ Feature: mesh / item
     When I click the "[data-testid='select-item-k8s'] button" element
     Then the "$config-k8s" element exists
     And the URL contains "?environment=k8s"
+
+  Scenario Outline: With <Scenario> the mTLS warning <Exists>
+    Given the environment
+      """
+      KUMA_MESHIDENTITY_COUNT: <midCount>
+      """
+    And the URL "/meshes/default" responds with
+      """
+      body:
+        mtls: <mtls>
+      """
+    When I visit the "/meshes/default/overview" URL
+    Then the "$mtls-warning" element <Exists>
+
+    Examples:
+      | Scenario                    | Exists        | midCount | mtls           |
+      | no MeshIdentity and no mtls | exists        |        0 | !!js/undefined |
+      | a MeshIdentity and no mtls  | doesn't exist |        1 | !!js/undefined |
+      | no MeshIdentity but mtls    | doesn't exist |        0 |                |
