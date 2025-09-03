@@ -11,7 +11,7 @@
     <AppView>
       <XLayout type="stack">
         <template
-          v-for="inbound in [props.dataPlaneOverview.dataplane.networking.inbounds.find((item) => item.portName === ContextualKri.fromString(route.params.connection).sectionName && item.port === props.data.port)]"
+          v-for="inbound in [props.dataPlaneOverview.dataplane.networking.inbounds.find((item) => item.portName === Kri.fromString(route.params.connection).sectionName && item.port === props.data.port)]"
           :key="typeof inbound"
         >
           <div
@@ -217,7 +217,7 @@ import AccordionList from '@/app/common/AccordionList.vue'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import PolicyTypeTag from '@/app/common/PolicyTypeTag.vue'
 import TagList from '@/app/common/TagList.vue'
-import { ContextualKri, Kri } from '@/app/kuma/kri'
+import { Kri } from '@/app/kuma/kri'
 import { sources as policySources } from '@/app/policies/sources'
 
 const props = defineProps<{

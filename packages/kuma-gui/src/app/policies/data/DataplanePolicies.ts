@@ -1,5 +1,7 @@
 import { components } from '@kumahq/kuma-http-api'
 
+import { FullKriString } from '@/app/kuma/kri'
+
 type PoliciesList = components['schemas']['PoliciesList']
 type PolicyConf = components['schemas']['PolicyConf']
 
@@ -7,6 +9,12 @@ export const DataplanePolicies = {
   fromObject: (item: PolicyConf) => {
     return {
       ...item,
+      origins: item.origins.map((origin) => {
+        return {
+          ...origin,
+          kri: origin.kri as FullKriString,
+        }
+      }),
     }
   },
 
