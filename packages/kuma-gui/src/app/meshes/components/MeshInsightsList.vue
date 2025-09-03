@@ -21,6 +21,7 @@
           #name="{ row: item }"
         >
           <XAction
+            data-action
             :to="{
               name: 'mesh-detail-view',
               params: {

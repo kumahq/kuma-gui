@@ -137,7 +137,7 @@ onMounted(rewrite)
 .app-collection {
   isolation: isolate;
 }
-.app-collection :deep(td:first-child a) {
+.app-collection :deep(td a[data-action]) {
   color: inherit;
   font-weight: $kui-font-weight-semibold;
   text-decoration: none;
