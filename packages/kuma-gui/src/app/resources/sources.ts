@@ -3,6 +3,7 @@ import createClient from 'openapi-fetch'
 import { MeshIdentity } from './data/MeshIdentity'
 import { MeshTrust } from './data/MeshTrust'
 import { defineSources } from '@/app/application'
+import { Kri } from '@/app/kuma/kri'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import type { paths } from '@kumahq/kuma-http-api'
 
@@ -26,8 +27,9 @@ export const sources = (api: KumaApi) => {
       return MeshIdentity.fromCollection(res.data!)
     },
 
-    '/meshes/:mesh/meshidentities/:name': async (params) => {
-      const { mesh, name } = params
+    '/meshidentities/:mid': async (params) => {
+      const { mid } = params
+      const { mesh, name } = Kri.fromString(mid)
   
       const res = await http.GET('/meshes/{mesh}/meshidentities/{name}', {
         params: {
@@ -41,8 +43,9 @@ export const sources = (api: KumaApi) => {
       return MeshIdentity.fromObject(res.data!)
     },
 
-    '/meshes/:mesh/meshidentities/:name/as/kubernetes': async (params) => {
-      const { mesh, name } = params
+    '/meshidentities/:mid/as/kubernetes': async (params) => {
+      const { mid } = params
+      const { mesh, name } = Kri.fromString(mid)
   
       const res = await http.GET('/meshes/{mesh}/meshidentities/{name}', {
         params: {
@@ -57,7 +60,7 @@ export const sources = (api: KumaApi) => {
         },
       })
   
-      return MeshIdentity.fromObject(res.data!)
+      return res.data
     },
 
     '/meshes/:mesh/meshtrusts': async (params) => {
@@ -74,8 +77,9 @@ export const sources = (api: KumaApi) => {
       return MeshTrust.fromCollection(res.data!)
     },
 
-    '/meshes/:mesh/meshtrusts/:name': async (params) => {
-      const { mesh, name } = params
+    '/meshtrusts/:mtrust': async (params) => {
+      const { mtrust } = params
+      const { mesh, name } = Kri.fromString(mtrust)
   
       const res = await http.GET('/meshes/{mesh}/meshtrusts/{name}', {
         params: {
@@ -89,8 +93,9 @@ export const sources = (api: KumaApi) => {
       return MeshTrust.fromObject(res.data!)
     },
 
-    '/meshes/:mesh/meshtrusts/:name/as/kubernetes': async (params) => {
-      const { mesh, name } = params
+    '/meshtrusts/:mtrust/as/kubernetes': async (params) => {
+      const { mtrust } = params
+      const { mesh, name } = Kri.fromString(mtrust)
   
       const res = await http.GET('/meshes/{mesh}/meshtrusts/{name}', {
         params: {
@@ -105,7 +110,7 @@ export const sources = (api: KumaApi) => {
         },
       })
   
-      return MeshTrust.fromObject(res.data!)
+      return res.data
     },
   })
 }
