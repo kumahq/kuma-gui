@@ -15,7 +15,7 @@
     "before 4am on monday"
   ],
   "prHourlyLimit": 0,
-  "baseBranches": [
+  "baseBranchPatterns": [
     "master"
   ],
   "lockFileMaintenance": {
@@ -58,13 +58,21 @@
     },
     {
       "groupName": "@kong patches",
-      "matchPackageNames": ["@kong**/**"],
-      "matchUpdateTypes": ["patch"]
+      "matchPackageNames": [
+        "@kong**/**"
+      ],
+      "matchUpdateTypes": [
+        "patch"
+      ]
     },
     {
       "groupName": "@kong minors",
-      "matchPackageNames": ["@kong**/**"],
-      "matchUpdateTypes": ["minor"]
+      "matchPackageNames": [
+        "@kong**/**"
+      ],
+      "matchUpdateTypes": [
+        "minor"
+      ]
     },
     {
       "matchPackageNames": [
