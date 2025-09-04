@@ -55,8 +55,8 @@ import {
 } from '@kong/icons'
 import { useSlots, useAttrs, useId } from 'vue'
 
-import XAnonymous from '@/app/x/components/x-anonymous/XAnonymous.vue'
-import XTooltip from '@/app/x/components/x-tooltip/XTooltip.vue'
+import XAnonymous from '../x-anonymous/XAnonymous.vue'
+import XTooltip from '../x-tooltip/XTooltip.vue'
 
 defineOptions({
   inheritAttrs: false,
