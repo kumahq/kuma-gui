@@ -1,19 +1,27 @@
 import { token, get } from '@kumahq/container'
-import { cookied } from '@kumahq/settings/env'
 
 import debugI18n from './services/i18n/DebugI18n'
+import type { Env } from '@/app/application'
 import type { ServiceDefinition, Token } from '@kumahq/container'
-import type { Env } from '@kumahq/settings/env'
 
 type I18n = ReturnType<typeof debugI18n>
 
-export const services = (app: Record<string, Token>): ServiceDefinition[] => [
+const prefixedWith = (prefix = '') => (str: string) => {
+  return Object.fromEntries(str.split(';')
+    .map((item) => item.trim())
+    .filter((item) => item !== '')
+    .map((item) => {
+      const [key, ...value] = item.split('=')
+      return [key, value.join('=')] as [string, string]
+    })
+    .filter(([key, _value]) => key.startsWith(prefix)))
+}
+export const services = (app: Record<string, Token>, prefix = 'KUMA'): ServiceDefinition[] => [
   [token('i18n.debug'), {
     service: (i18n: () => I18n) => {
-      const env = get(app.env)
-      // @ts-ignore We don't want TS to show this elsewhere in the application
-      // and this is the most straight-forwards way to achieve that right now
-      if (env('KUMA_I18N_DEBUG_ENABLED', '').length > 0) {
+      const env = get(app.env) as Env
+      // @ts-expect-error PREFIX_I18N_DEBUG_ENABLED is debug only
+      if (env(`${prefix}_I18N_DEBUG_ENABLED`).length > 0) {
         return debugI18n(i18n())
       }
       return i18n()
@@ -21,8 +29,12 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => [
     decorates: app.i18n,
   }],
   [token('env.debug'), {
-    service: (env: () => Env['var']) => {
-      return cookied(env())
+    service: (getEnv: () => Env) => {
+      const env = getEnv()
+      return (...[ key, ...rest ]: Parameters<Env>) => {
+        // make sure you can't read/replace anything but PREFIX_*
+        return prefixedWith(`${prefix}_`)(document.cookie)[key] ?? env(key, ...rest)
+      }
     },
     decorates: app.env,
   }],
