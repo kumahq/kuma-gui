@@ -100,62 +100,54 @@
                   class="stack-with-borders"
                   data-testid="structured-view"
                 >
-                  <DefinitionCard
-                    v-if="item.namespace.length > 0"
-                    layout="horizontal"
+                  <XTable
+                    variant="kv"
                   >
-                    <template #title>
-                      {{ t('data-planes.routes.item.namespace') }}
-                    </template>
+                    <tr
+                      v-if="item.namespace.length > 0"
+                    >
+                      <th scope="row">
+                        {{ t('data-planes.routes.item.namespace') }}
+                      </th>
+                      <td>{{ item.namespace }}</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">
+                        {{ t('http.api.property.address') }}
+                      </th>
+                      <td>
+                        <template
+                          v-if="item.zoneIngress.socketAddress.length > 0"
+                        >
+                          <XCopyButton
+                            :text="item.zoneIngress.socketAddress"
+                          />
+                        </template>
 
-                    <template #body>
-                      {{ item.namespace }}
-                    </template>
-                  </DefinitionCard>
+                        <template v-else>
+                          {{ t('common.detail.none') }}
+                        </template>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th scope="row">
+                        {{ t('http.api.property.advertisedAddress') }}
+                      </th>
+                      <td>
+                        <template
+                          v-if="item.zoneIngress.advertisedSocketAddress.length > 0"
+                        >
+                          <XCopyButton
+                            :text="item.zoneIngress.advertisedSocketAddress"
+                          />
+                        </template>
 
-                  <DefinitionCard
-                    layout="horizontal"
-                  >
-                    <template #title>
-                      {{ t('http.api.property.address') }}
-                    </template>
-
-                    <template #body>
-                      <template
-                        v-if="item.zoneIngress.socketAddress.length > 0"
-                      >
-                        <XCopyButton
-                          :text="item.zoneIngress.socketAddress"
-                        />
-                      </template>
-
-                      <template v-else>
-                        {{ t('common.detail.none') }}
-                      </template>
-                    </template>
-                  </DefinitionCard>
-
-                  <DefinitionCard
-                    layout="horizontal"
-                  >
-                    <template #title>
-                      {{ t('http.api.property.advertisedAddress') }}
-                    </template>
-
-                    <template #body>
-                      <template
-                        v-if="item.zoneIngress.advertisedSocketAddress.length > 0"
-                      >
-                        <XCopyButton
-                          :text="item.zoneIngress.advertisedSocketAddress"
-                        />
-                      </template>
-
-                      <template v-else>
-                        {{ t('common.detail.none') }}
-                      </template>
-                    </template>
-                  </DefinitionCard>
+                        <template v-else>
+                          {{ t('common.detail.none') }}
+                        </template>
+                      </td>
+                    </tr>
+                  </XTable>
                 </div>
               </template>
 
@@ -209,7 +201,6 @@
 import type { ZoneIngressOverview } from '../data'
 import { sources } from '../sources'
 import { YAML } from '@/app/application'
-import DefinitionCard from '@/app/common/DefinitionCard.vue'
 
 const props = defineProps<{
   items: ZoneIngressOverview[]

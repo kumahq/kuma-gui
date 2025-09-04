@@ -58,33 +58,31 @@
                 <XTable
                   variant="kv"
                 >
-                  <tbody>
-                    <tr
-                      v-for="[key, value] in [
-                        [t('http.api.property.version'), item.version?.kumaCp?.version ?? '-'],
-                        [t('http.api.property.connectTime'), t('common.formats.datetime', { value: Date.parse(item.connectTime ?? '') })],
-                        ...(item.disconnectTime ? [[t('http.api.property.disconnectTime'), t('common.formats.datetime', { value: Date.parse(item.disconnectTime) })]] : []),
-                        [t('subscriptions.routes.item.headers.responses'), `${item.status.total.responsesSent}/${item.status.total.responsesAcknowledged}`],
-                        ...(['zoneInstanceId', 'globalInstanceId', 'controlPlaneInstanceId'] as const).reduce((prev, prop) => {
-                          if(item[prop]) {
-                            prev.push([t(`http.api.property.${prop}`), item[prop]])
-                          }
-                          return prev
-                        }, ([] as [string, string][])),
-                        [t('http.api.property.id'), item.id],
-                      ]"
-                      :key="key"
+                  <tr
+                    v-for="[key, value] in [
+                      [t('http.api.property.version'), item.version?.kumaCp?.version ?? '-'],
+                      [t('http.api.property.connectTime'), t('common.formats.datetime', { value: Date.parse(item.connectTime ?? '') })],
+                      ...(item.disconnectTime ? [[t('http.api.property.disconnectTime'), t('common.formats.datetime', { value: Date.parse(item.disconnectTime) })]] : []),
+                      [t('subscriptions.routes.item.headers.responses'), `${item.status.total.responsesSent}/${item.status.total.responsesAcknowledged}`],
+                      ...(['zoneInstanceId', 'globalInstanceId', 'controlPlaneInstanceId'] as const).reduce((prev, prop) => {
+                        if(item[prop]) {
+                          prev.push([t(`http.api.property.${prop}`), item[prop]])
+                        }
+                        return prev
+                      }, ([] as [string, string][])),
+                      [t('http.api.property.id'), item.id],
+                    ]"
+                    :key="key"
+                  >
+                    <th
+                      scope="row"
                     >
-                      <th
-                        scope="row"
-                      >
-                        {{ key }}
-                      </th>
-                      <td>
-                        {{ value }}
-                      </td>
-                    </tr>
-                  </tbody>
+                      {{ key }}
+                    </th>
+                    <td>
+                      {{ value }}
+                    </td>
+                  </tr>
                 </XTable>
 
                 <DataCollection

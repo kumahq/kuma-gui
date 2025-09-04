@@ -34,18 +34,15 @@
             v-for="policyTypes in [Object.groupBy((policyTypesData?.policyTypes ?? []), ({ name }) => name)]"
             :key="`${typeof policyTypes}`"
           >
-            <div
-              class="stack-with-borders"
+            <XTable
+              v-if="origins.length > 0"
+              variant="kv"
             >
-              <DefinitionCard
-                v-if="origins.length > 0"
-                layout="horizontal"
-              >
-                <template #title>
+              <tr>
+                <th scope="row">
                   Origin policies
-                </template>
-
-                <template #body>
+                </th>
+                <td>
                   <ul>
                     <li
                       v-for="origin in origins"
@@ -76,23 +73,24 @@
                       </template>
                     </li>
                   </ul>
-                </template>
-              </DefinitionCard>
-              <div>
-                <dt>
-                  Config
-                </dt>
-                <dd class="mt-2">
-                  <div>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2">
+                  <XLayout
+                    type="stack"
+                    size="small"
+                  >
+                    <span>Config</span>
                     <XCodeBlock
                       :code="YAML.stringify(conf)"
                       language="yaml"
                       :show-copy-button="false"
                     />
-                  </div>
-                </dd>
-              </div>
-            </div>
+                  </XLayout>
+                </td>
+              </tr>
+            </XTable>
           </template>
         </AppView>
       </template>
@@ -102,7 +100,6 @@
 
 <script lang="ts" setup>
 import { YAML } from '@/app/application'
-import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import PolicyTypeTag from '@/app/common/PolicyTypeTag.vue'
 import { Kri } from '@/app/kuma/kri'
 import { ResourceCollection } from '@/app/policies/data'

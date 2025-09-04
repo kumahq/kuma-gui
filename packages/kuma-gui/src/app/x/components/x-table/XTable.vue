@@ -20,6 +20,7 @@ table {
 }
 :deep(th) {
   text-align: left;
+  vertical-align: top;
 }
 :deep(thead tr) {
   th {
@@ -28,15 +29,16 @@ table {
 }
 :deep(tr) {
   th, td {
-    margin-block-start: $kui-space-40;
     padding-block-start: $kui-space-40;
     padding-block-end: $kui-space-40;
   }
 }
-:deep(tbody tr) {
-  &:not(:first-child) {
-    th, td {
-      border-block-start: $kui-border-width-10 solid $kui-color-border;
+table:not(.variant-kv) {
+  :deep(tbody tr), table :deep(> tr) {
+    &:not(:first-child) {
+      th, td {
+        border-block-start: $kui-border-width-10 solid $kui-color-border;
+      }
     }
   }
 }
@@ -48,14 +50,21 @@ table.variant-kv {
       text-align: right;
     }
   }
-  :deep(tbody tr) {
+  :deep(tbody tr), :deep(> tr) {
+    display: flex;
+    justify-content: space-between;
+    &:not(:first-child) {
+      border-block-start: $kui-border-width-10 solid $kui-color-border;
+    }
+    td:only-child {
+      width: 100%;
+    }
     th[scope="row"] {
       & {
         font-weight: $kui-font-weight-regular;
       }
       + td {
         font-weight: $kui-font-weight-bold;
-        text-align: right;
       }
     }
   }

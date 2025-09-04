@@ -13,27 +13,27 @@
         v-for="service in [route.params.connection.replace(/-([a-f0-9]){16}$/, '')]"
         :key="service"
       >
-        <div
-          class="stack-with-borders"
+        <XLayout
+          type="stack"
         >
-          <DefinitionCard
-            layout="horizontal"
+          <XTable
+            variant="kv"
           >
-            <template #title>
-              Protocol
-            </template>
-
-            <template #body>
-              <XBadge
-                appearance="info"
-              >
-                {{ t(`http.api.value.${['grpc', 'http', 'tcp'].find(protocol => typeof props.data[protocol] !== 'undefined')}`) }}
-              </XBadge>
-            </template>
-          </DefinitionCard>
+            <tr>
+              <th scope="row">
+                Protocol
+              </th>
+              <td>
+                <XBadge
+                  appearance="info"
+                >
+                  {{ t(`http.api.value.${['grpc', 'http', 'tcp'].find(protocol => typeof props.data[protocol] !== 'undefined')}`) }}
+                </XBadge>
+              </td>
+            </tr>
+          </XTable>
           <div
             v-if="props.data"
-            class="rules"
           >
             <h3>Rules</h3>
 
@@ -75,63 +75,68 @@
                             >
                               {{ key }}
                             </PolicyTypeTag>
-                            <div
-                              class="stack-with-borders mt-4"
+                            <XTable
+                              variant="kv"
                             >
                               <template
                                 v-for="item in rules!.length > 1 ? rules!.filter(item => ruleForCluster(props.data, item)) : rules"
                                 :key="item"
                               >
-                                <div>
-                                  <DefinitionCard
-                                    v-if="item.origins.length > 0"
-                                    layout="horizontal"
-                                  >
-                                    <template #title>
-                                      Origin policies
-                                    </template>
-
-                                    <template #body>
-                                      <DataCollection
-                                        :predicate="(item) => {
-                                          return typeof item.resourceMeta !== 'undefined'
-                                        }"
-                                        :items="item.origins"
-                                        :empty="false"
-                                        v-slot="{ items: origins }"
-                                      >
-                                        <ul>
-                                          <li
-                                            v-for="origin in origins"
-                                            :key="JSON.stringify(origin)"
+                                <tr
+                                  v-if="item.origins.length > 0"
+                                >
+                                  <th scope="row">
+                                    Origin policies
+                                  </th>
+                                  <td>
+                                    <DataCollection
+                                      :predicate="(item) => {
+                                        return typeof item.resourceMeta !== 'undefined'
+                                      }"
+                                      :items="item.origins"
+                                      :empty="false"
+                                      v-slot="{ items: origins }"
+                                    >
+                                      <ul>
+                                        <li
+                                          v-for="origin in origins"
+                                          :key="JSON.stringify(origin)"
+                                        >
+                                          <XAction
+                                            v-if="Object.keys(types).length > 0"
+                                            :to="{
+                                              name: 'policy-detail-view',
+                                              params: {
+                                                policyPath: types[key]![0].path,
+                                                mesh: origin.resourceMeta!.mesh,
+                                                policy: origin.resourceMeta!.name,
+                                              },
+                                            }"
                                           >
-                                            <XAction
-                                              v-if="Object.keys(types).length > 0"
-                                              :to="{
-                                                name: 'policy-detail-view',
-                                                params: {
-                                                  policyPath: types[key]![0].path,
-                                                  mesh: origin.resourceMeta!.mesh,
-                                                  policy: origin.resourceMeta!.name,
-                                                },
-                                              }"
-                                            >
-                                              {{ origin.resourceMeta!.name }}
-                                            </XAction>
-                                          </li>
-                                        </ul>
-                                      </DataCollection>
-                                    </template>
-                                  </DefinitionCard>
-                                  <XCodeBlock
-                                    class="mt-2"
-                                    :code="YAML.stringify(item.raw)"
-                                    language="yaml"
-                                    :show-copy-button="false"
-                                  />
-                                </div>
+                                            {{ origin.resourceMeta!.name }}
+                                          </XAction>
+                                        </li>
+                                      </ul>
+                                    </DataCollection>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td colspan="2">
+                                    <XLayout
+                                      type="stack"
+                                      size="small"
+                                    >
+                                      <span>Config</span>
+                                      <XCodeBlock
+                                        :code="YAML.stringify(item.raw)"
+                                        language="yaml"
+                                        :show-copy-button="false"
+                                      />
+                                    </XLayout>
+                                  </td>
+                                </tr>
                               </template>
-                            </div>
+                            </XTable>
                           </div>
                         </template>
                       </div>
@@ -172,34 +177,30 @@
                                   </PolicyTypeTag>
                                 </template>
                                 <template #accordion-content>
-                                  <div
-                                    class="stack-with-borders"
+                                  <XTable
+                                    variant="kv"
                                   >
                                     <template
                                       v-for="item in rules"
                                       :key="item"
                                     >
-                                      <DefinitionCard
+                                      <tr
                                         v-if="item.matchers.length > 0"
-                                        layout="horizontal"
                                       >
-                                        <template #title>
+                                        <th scope="row">
                                           From
-                                        </template>
-
-                                        <template #body>
+                                        </th>
+                                        <td>
                                           <p><RuleMatchers :items="item.matchers" /></p>
-                                        </template>
-                                      </DefinitionCard>
-                                      <DefinitionCard
+                                        </td>
+                                      </tr>
+                                      <tr
                                         v-if="item.origins.length > 0"
-                                        layout="horizontal"
                                       >
-                                        <template #title>
+                                        <th scope="row">
                                           Origin policies
-                                        </template>
-
-                                        <template #body>
+                                        </th>
+                                        <td>
                                           <ul>
                                             <li
                                               v-for="origin in item.origins"
@@ -225,24 +226,25 @@
                                               </template>
                                             </li>
                                           </ul>
-                                        </template>
-                                      </DefinitionCard>
-                                      <div>
-                                        <dt>
-                                          Config
-                                        </dt>
-                                        <dd class="mt-2">
-                                          <div>
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                        <td colspan="2">
+                                          <XLayout
+                                            type="stack"
+                                            size="small"
+                                          >
+                                            <span>Config</span>
                                             <XCodeBlock
                                               :code="YAML.stringify(item.raw)"
                                               language="yaml"
                                               :show-copy-button="false"
                                             />
-                                          </div>
-                                        </dd>
-                                      </div>
+                                          </XLayout>
+                                        </td>
+                                      </tr>
                                     </template>
-                                  </div>
+                                  </XTable>
                                 </template>
                               </AccordionItem>
                             </XCard>
@@ -255,7 +257,7 @@
               </template>
             </DataSource>
           </div>
-        </div>
+        </XLayout>
       </template>
     </AppView>
   </RouteView>
@@ -264,7 +266,6 @@
 import { YAML } from '@/app/application'
 import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
-import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import PolicyTypeTag from '@/app/common/PolicyTypeTag.vue'
 import { sources as policySources } from '@/app/policies/sources'
 import RuleMatchers from '@/app/rules/components/RuleMatchers.vue'
@@ -283,8 +284,3 @@ const ruleForCluster = (cluster: any, rule: ResourceRule) => {
   (rule.resourceSectionName === '' || cluster.$resourceMeta.port === rule.port)
 }
 </script>
-<style lang="scss" scoped>
-.rules {
-  padding-top: $kui-space-60;
-}
-</style>

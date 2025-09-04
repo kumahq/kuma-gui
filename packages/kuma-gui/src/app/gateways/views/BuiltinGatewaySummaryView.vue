@@ -87,90 +87,65 @@
               </header>
 
               <template v-if="route.params.format === 'structured'">
-                <div
-                  class="stack-with-borders"
+                <XTable
                   data-testid="structured-view"
+                  variant="kv"
                 >
-                  <DefinitionCard
+                  <tr
                     v-if="item.type.length > 0"
-                    layout="horizontal"
                   >
-                    <template #title>
+                    <th scope="row">
                       {{ t('gateways.routes.item.type') }}
-                    </template>
-
-                    <template #body>
-                      {{ item.type }}
-                    </template>
-                  </DefinitionCard>
-                  <DefinitionCard
+                    </th>
+                    <td>{{ item.type }}</td>
+                  </tr>
+                  <tr
                     v-if="item.namespace.length > 0"
-                    layout="horizontal"
                   >
-                    <template #title>
+                    <th scope="row">
                       {{ t('gateways.routes.item.namespace') }}
-                    </template>
-
-                    <template #body>
-                      {{ item.namespace }}
-                    </template>
-                  </DefinitionCard>
-                  <DefinitionCard
+                    </th>
+                    <td>{{ item.namespace }}</td>
+                  </tr>
+                  <tr
                     v-if="item.mesh.length > 0"
-                    layout="horizontal"
                   >
-                    <template #title>
+                    <th scope="row">
                       {{ t('gateways.routes.item.mesh') }}
-                    </template>
-
-                    <template #body>
-                      {{ item.mesh }}
-                    </template>
-                  </DefinitionCard>
-                  <DefinitionCard
+                    </th>
+                    <td>{{ item.mesh }}</td>
+                  </tr>
+                  <tr
                     v-if="item.zone.length > 0"
-                    layout="horizontal"
                   >
-                    <template #title>
+                    <th scope="row">
                       {{ t('gateways.routes.item.zone') }}
-                    </template>
-
-                    <template #body>
-                      {{ item.zone }}
-                    </template>
-                  </DefinitionCard>
-                  <DefinitionCard
+                    </th>
+                    <td>{{ item.zone }}</td>
+                  </tr>
+                  <tr
                     v-if="item.creationTime.length > 0"
-                    layout="horizontal"
                   >
-                    <template #title>
+                    <th scope="row">
                       {{ t('gateways.routes.item.created') }}
-                    </template>
-
-                    <template #body>
-                      {{ t('common.formats.datetime', { value: Date.parse(item.creationTime) }) }}
-                    </template>
-                  </DefinitionCard>
-                  <DefinitionCard
+                    </th>
+                    <td>{{ t('common.formats.datetime', { value: Date.parse(item.creationTime) }) }}</td>
+                  </tr>
+                  <tr
                     v-if="item.modificationTime.length > 0"
-                    layout="horizontal"
                   >
-                    <template #title>
+                    <th scope="row">
                       {{ t('gateways.routes.item.modified') }}
-                    </template>
-
-                    <template #body>
-                      {{ t('common.formats.datetime', { value: Date.parse(item.modificationTime) }) }}
-                    </template>
-                  </DefinitionCard>
-                  <DefinitionCard
+                    </th>
+                    <td>{{ t('common.formats.datetime', { value: Date.parse(item.modificationTime) }) }}</td>
+                  </tr>
+                  <tr
                     v-if="Object.keys(item.labels).length > 0"
-                    layout="horizontal"
                   >
-                    <template #title>
+                    <th scope="row">
                       {{ t('gateways.routes.item.labels') }}
-                    </template>
-                    <template #body>
+                    </th>
+                    <td>
                       <XLayout
                         type="separated"
                         justify="end"
@@ -201,16 +176,15 @@
                           </XBadge>
                         </template>
                       </XLayout>
-                    </template>
-                  </DefinitionCard>
-                  <DefinitionCard
+                    </td>
+                  </tr>
+                  <tr
                     v-if="item.selectors.length > 0"
-                    layout="horizontal"
                   >
-                    <template #title>
+                    <th scope="row">
                       {{ t('gateways.routes.item.selectors') }}
-                    </template>
-                    <template #body>
+                    </th>
+                    <td>
                       <XLayout
                         type="separated"
                         justify="end"
@@ -223,10 +197,9 @@
                           {{ key }}:{{ value }}
                         </XBadge>
                       </XLayout>
-                    </template>
-                  </DefinitionCard>
-                </div>
-
+                    </td>
+                  </tr>
+                </XTable>
                 <XCodeBlock
                   data-testid="codeblock-yaml-structured-conf"
                   language="yaml"
@@ -287,7 +260,6 @@ import type { MeshGateway } from '../data'
 import { sources } from '../sources'
 import { YAML } from '@/app/application'
 import DataCollection from '@/app/application/components/data-collection/DataCollection.vue'
-import DefinitionCard from '@/app/common/DefinitionCard.vue'
 
 const props = defineProps<{
   items: MeshGateway[]
