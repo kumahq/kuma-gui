@@ -19,9 +19,9 @@
 
 <script lang="ts" setup>
 
+import { XAnonymous, XTooltip } from '@kumahq/x'
+
 import { useI18n } from '@/app/application'
-import XAnonymous from '@/app/x/components/x-anonymous/XAnonymous.vue'
-import XTooltip from '@/app/x/components/x-tooltip/XTooltip.vue'
 import { StatusKeyword } from '@/types/index.d'
 import type { BadgeAppearance } from '@kong/kongponents'
 

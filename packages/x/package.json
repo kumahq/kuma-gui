@@ -1,0 +1,31 @@
+{
+  "name": "@kumahq/x",
+  "version": "0.1.0",
+  "description": "A mostly generic set of resuable components",
+  "private": true,
+  "author": "Kong",
+  "type": "module",
+  "main": "src/index.ts",
+  "module": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "help": "make help"
+  },
+  "dependencies": {
+    "@kong-ui-public/app-layout": "^4.6.5",
+    "@kong/kongponents": "^9.38.8",
+    "@kong/icons": "^1.34.0",
+    "shiki": "^3.12.2",
+    "@vueuse/core": "^13.9.0",
+    "@vue/shared": "^3.5.21",
+    "vue-global-events": "^3.0.1",
+    "vue-router": "^4.5.1"
+  },
+  "devDependencies": {
+    "@kumahq/config": "*",
+    "@kong/design-tokens": "^1.18.0"
+  },
+  "peerDependencies": {
+    "vue": "*"
+  }
+}
