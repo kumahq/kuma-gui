@@ -13,10 +13,15 @@ import { services as kuma } from '@/app/kuma/debug'
     ...FAKE_FS,
   }
   const get = build(
+    // mocks
     fakeFs($),
-    e2e($),
-    application($),
     kuma($),
+    application($),
+    //
+
+    // cypress
+    e2e($),
+    //
   )
 
   setupSteps({
