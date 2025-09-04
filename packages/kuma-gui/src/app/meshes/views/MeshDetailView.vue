@@ -109,7 +109,10 @@
                         </template>
                       </template>
 
-                      <DefinitionCard layout="horizontal">
+                      <DefinitionCard
+                        layout="horizontal"
+                        data-testid="mesh-mtls"
+                      >
                         <template #title>
                           {{ t('http.api.property.mtls') }}
                         </template>
