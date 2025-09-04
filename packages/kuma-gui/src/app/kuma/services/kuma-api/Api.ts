@@ -1,10 +1,10 @@
 import { RestClient } from './RestClient'
-import type { Env } from '@kumahq/settings/env'
+import type { Env } from '@/app/application'
 
 export class Api {
   constructor(
     public client: RestClient,
-    protected env: Env['var'],
+    protected env: Env,
   ) { }
 
   get baseUrl() {

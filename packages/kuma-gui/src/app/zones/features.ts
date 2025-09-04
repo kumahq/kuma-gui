@@ -1,6 +1,6 @@
+import type { Env } from '@/app/application'
 import type { Features } from '@kumahq/settings/can'
-import type { Env } from '@kumahq/settings/env'
-export const features = (env: Env['var']): Features => {
+export const features = (env: Env): Features => {
   return {
     'use zones': () => {
       return env('KUMA_MODE') === 'global'
@@ -10,4 +10,4 @@ export const features = (env: Env['var']): Features => {
     },
   }
 }
-    
+

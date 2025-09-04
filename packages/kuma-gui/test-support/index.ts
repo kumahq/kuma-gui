@@ -1,5 +1,7 @@
+import { defaultKumaHtmlVars as htmlVars } from '@kumahq/config/vite'
 import { ServiceConfigurator } from '@kumahq/container'
-import { CliEnv } from '@kumahq/settings/cli-env'
+// This file should not be part of the barrel file as it depends on node
+// utilities via import '@kumahq/config/vite' defaultKumaHtmlVars
 import { config } from '@vue/test-utils'
 
 import type { PluginDefinition, ComponentDefinition } from '@/app/vue'
@@ -28,11 +30,7 @@ export const services: ServiceConfigurator = (app) => [
       app.plugins,
     ],
   }],
-
-  [app.Env, {
-    service: CliEnv,
-    arguments: [
-      app.EnvVars,
-    ],
+  [app.htmlVars, {
+    service: () => htmlVars,
   }],
 ]
