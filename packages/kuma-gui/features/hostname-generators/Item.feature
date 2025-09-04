@@ -9,22 +9,18 @@ Feature: hostname-generators / item
       | config-k8s         | [data-testid='codeblock-yaml-k8s']             |
       | select-environment | [data-testid='select-input']                   |
 
-  Scenario: Visiting the detail view of HostnameGenerator <HostnameGenerator>
-    Given the URL "/hostnamegenerators/<HostnameGenerator>" responds with
+  Scenario: Visiting the detail view of HostnameGenerator
+    Given the URL "/hostnamegenerators/local-mesh-external-service" responds with
       """
       body:
-        name: <HostnameGenerator>
+        name: local-mesh-external-service
       """
-    When I visit the "/hostname-generators/<HostnameGenerator>/overview" URL
+    When I visit the "/hostname-generators/local-mesh-external-service/overview" URL
     Then the "$detail-view" element exists
-    And the "<Selector>" element contains "<HostnameGenerator>"
-
-    Examples:
-      | HostnameGenerator           | Selector   |
-      | local-mesh-external-service | $title-bar |
+    And the "$title-bar" element contains "local-mesh-external-service"
 
   Scenario: Shows config with format based on environment
-    When I visit the "/hostname-generators/<HostnameGenerator>/overview" URL
+    When I visit the "/hostname-generators/local-mesh-external-service/overview" URL
     Then the "$config-universal" element exists
     And the URL contains "?environment=universal"
     When I click the "$select-environment" element
