@@ -309,11 +309,6 @@ search form {
   padding-right: 0 !important;
   width: 16px !important;
 }
-.app-collection :deep(td:nth-child(2) a) {
-  color: inherit;
-  font-weight: $kui-font-weight-semibold;
-  text-decoration: none;
-}
 .search-field {
   flex: 1;
 }

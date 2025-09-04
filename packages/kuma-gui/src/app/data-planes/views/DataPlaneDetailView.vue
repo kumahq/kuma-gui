@@ -420,7 +420,7 @@
                                     path="data-planes.routes.item.xds.connected"
                                   />
                                 </template>
-    
+
                                 <template #body>
                                   <XBadge appearance="neutral">
                                     {{ t('common.formats.datetime', { value: Date.parse(subscription.connectTime) }) }}
@@ -433,7 +433,7 @@
                                     path="data-planes.routes.item.xds.instance"
                                   />
                                 </template>
-    
+
                                 <template #body>
                                   <XBadge appearance="info">
                                     {{ subscription.controlPlaneInstanceId }}
@@ -446,7 +446,7 @@
                                     path="data-planes.routes.item.xds.version"
                                   />
                                 </template>
-    
+
                                 <template #body>
                                   <XBadge appearance="info">
                                     {{ subscription.version?.kumaDp?.version ?? t('common.unknown') }}
@@ -581,7 +581,7 @@
                           </ConnectionGroup>
                         </template>
                       </ConnectionTraffic>
-              
+
                       <ConnectionTraffic>
                         <template
                           #actions
@@ -763,11 +763,6 @@ provide('data-plane-overview', props.data)
   margin-left: auto;
 }
 
-:deep(td:nth-child(2) a) {
-  color: inherit;
-  font-weight: $kui-font-weight-semibold;
-  text-decoration: none;
-}
 
 @container traffic (max-width: 40.95rem) {
   .traffic .columns {

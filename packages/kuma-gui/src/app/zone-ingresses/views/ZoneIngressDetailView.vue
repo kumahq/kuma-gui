@@ -260,7 +260,7 @@
         <template #title>
           <h2>{{ t('zone-ingresses.routes.item.subscriptions.title') }}</h2>
         </template>
-        
+
         <XLayout>
           <XI18n path="zone-ingresses.routes.item.subscriptions.description" />
           <AppCollection
@@ -358,11 +358,5 @@ const _route = useRoute()
 <style lang="scss" scoped>
 .service-traffic-card {
   cursor: pointer;
-}
-
-:deep(td:nth-child(2) a) {
-  color: inherit;
-  font-weight: $kui-font-weight-semibold;
-  text-decoration: none;
 }
 </style>

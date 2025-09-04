@@ -281,10 +281,3 @@ const props = defineProps<{
   data: ZoneOverview
 }>()
 </script>
-<style lang="scss" scoped>
-:deep(td:nth-child(2) a) {
-  color: inherit;
-  font-weight: $kui-font-weight-semibold;
-  text-decoration: none;
-}
-</style>
