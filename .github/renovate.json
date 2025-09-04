@@ -41,16 +41,11 @@
       "enabled": false
     },
     {
-      "groupName": "patch",
-      "matchUpdateTypes": [
-        "patch"
-      ]
-    },
-    {
-      "groupName": "minor",
-      "matchUpdateTypes": [
-        "minor"
-      ]
+      "groupName": "node",
+      "matchPackageNames": [
+        "node"
+      ],
+      "dependencyDashboardApproval": true
     },
     {
       "groupName": "@kong patches",
@@ -63,13 +58,16 @@
       "matchUpdateTypes": ["minor"]
     },
     {
-      "matchPackageNames": [
-        "node"
-      ],
+      "groupName": "patch",
       "matchUpdateTypes": [
-        "major"
-      ],
-      "dependencyDashboardApproval": true
+        "patch"
+      ]
+    },
+    {
+      "groupName": "minor",
+      "matchUpdateTypes": [
+        "minor"
+      ]
     }
   ]
 }
