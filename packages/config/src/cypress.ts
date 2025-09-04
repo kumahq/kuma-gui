@@ -1,6 +1,7 @@
 import { addCucumberPreprocessorPlugin } from '@badeball/cypress-cucumber-preprocessor'
 import { createEsbuildPlugin } from '@badeball/cypress-cucumber-preprocessor/esbuild'
 import createBundler from '@bahmutov/cypress-esbuild-preprocessor'
+import { defineConfig } from 'cypress'
 import cypressFailFast from 'cypress-fail-fast/plugin'
 import installLogsPrinter from 'cypress-terminal-report/src/installLogsPrinter'
 import esbuild from 'esbuild'
@@ -22,9 +23,10 @@ function createVuePlugin(
 }
 
 export const cypress = (env: Record<string, string>) => {
-  return {
+  return defineConfig({
     viewportWidth: 1366,
     viewportHeight: 768,
+    experimentalMemoryManagement: true,
     e2e: {
       baseUrl: env.KUMA_BASE_URL,
       specPattern: '**/*.feature',
@@ -92,5 +94,5 @@ export const cypress = (env: Record<string, string>) => {
       },
     },
 
-  }
+  })
 }
