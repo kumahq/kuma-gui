@@ -9,6 +9,7 @@ Feature: mesh / item
       | config-k8s         | [data-testid='codeblock-yaml-k8s']                              |
       | select-environment | [data-testid='select-input']                                    |
       | mtls-warning       | [data-testid^='notification-meshes.notifications.mtls-warning'] |
+      | mtrust-section     | [data-testid='mesh-trusts-listing']                             |
 
   Scenario: /mesh-insights/* isn't a 404
     Given the URL "/mesh-insights/default" responds with
@@ -57,3 +58,16 @@ Feature: mesh / item
       | no MeshIdentity and no mtls | exists        |        0 | !!js/undefined |
       | a MeshIdentity and no mtls  | doesn't exist |        1 | !!js/undefined |
       | no MeshIdentity but mtls    | doesn't exist |        0 |                |
+
+  Scenario Outline: With <Scenario> the MeshTrust section <Exists>
+    Given the environment
+      """
+      KUMA_MESHTRUST_COUNT: <mtrustCount>
+      """
+    When I visit the "/meshes/default/overview" URL
+    Then the "$mtrust-section" element <Exists>
+
+    Examples:
+      | Scenario               | Exists        | mtrustCount |
+      | no MeshTrust           | doesn't exist |           0 |
+      | at least one MeshTrust | exists        |           1 |
