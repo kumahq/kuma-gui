@@ -100,7 +100,7 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 import AppNavigator from '@/app/application/components/app-navigator/AppNavigator.vue'
-import { ControlPlaneAddressesSource } from '@/app/control-planes/sources'
+import type { ControlPlaneAddressesSource } from '@/app/control-planes/sources'
 import ApplicationShell from '@/app/kuma/components/ApplicationShell.vue'
 import type { RouteRecordRaw } from 'vue-router'
 

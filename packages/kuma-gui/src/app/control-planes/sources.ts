@@ -1,10 +1,10 @@
-import { paths } from '@kumahq/kuma-http-api'
 import createClient from 'openapi-fetch'
 
 import { GlobalInsight } from './data'
 import { defineSources } from '../application/services/data-source'
 import type { DataSourceResponse } from '@/app/application'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
+import type { paths } from '@kumahq/kuma-http-api'
 import type { Env } from '@kumahq/settings/env'
 
 export type ControlPlaneAddresses = {

@@ -8,13 +8,14 @@
 
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-import { RouteRecordRaw, useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
 
 import { useCan } from '@/app/application'
 import type { DataplaneOverview } from '@/app/data-planes/data'
 import { dataplaneRoutes } from '@/app/data-planes/routes'
 import { legacyDataplaneRoutes } from '@/app/legacy-data-planes/routes'
 import type { Mesh } from '@/app/meshes/data'
+import type { RouteRecordRaw } from 'vue-router'
 
 const router = useRouter()
 const can = useCan()

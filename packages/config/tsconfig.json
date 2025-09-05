@@ -6,6 +6,7 @@
     "module": "preserve",
     "target": "esnext",
     "skipLibCheck": true,
+    "verbatimModuleSyntax": true,
     "noEmit": true,
     "types": [
       "node",

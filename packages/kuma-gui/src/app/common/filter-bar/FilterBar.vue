@@ -115,7 +115,8 @@ import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { ChevronRightIcon, FilterIcon } from '@kong/icons'
 import { computed, onBeforeUnmount, onMounted, watch, ref } from 'vue'
 
-import { Command, ShortcutManager } from './ShortcutManager'
+import { ShortcutManager } from './ShortcutManager'
+import type { Command } from './ShortcutManager'
 import { uniqueId } from '@/app/application'
 
 type FilterFieldDefinition = {

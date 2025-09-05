@@ -1,6 +1,6 @@
-import { components } from '@kumahq/kuma-http-api'
-
 import type { EndpointDependencies, MockResponder } from '@/test-support'
+import type { components } from '@kumahq/kuma-http-api'
+
 
 export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
   const params = req.params

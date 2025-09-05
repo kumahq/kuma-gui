@@ -1,4 +1,4 @@
-import { components } from '@kumahq/kuma-http-api'
+import type { components } from '@kumahq/kuma-http-api'
 
 type ResourceRuleOrigin = components['schemas']['ResourceRuleOrigin']
 type ResourceMeta = components['schemas']['Meta']

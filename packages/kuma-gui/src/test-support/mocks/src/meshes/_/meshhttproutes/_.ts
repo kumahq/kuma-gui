@@ -1,5 +1,5 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
-import { MeshHTTPRoute } from '@/types'
+import type { MeshHTTPRoute } from '@/types'
 
 export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => {
   const name = req.params.name as string
