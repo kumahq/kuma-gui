@@ -3,8 +3,13 @@ Feature: mesh / mesh-identity
   Background:
     Given the CSS selectors
       | Alias                     | Selector                                  |
-      | meshidentities-collection | [data-testid="meshidentities-collection"] |
+      | mesh-mtls                 | [data-testid="mesh-mtls"]                 |
       | summary                   | [data-testid="slideout-container"]        |
+    And the environment
+      """
+      KUMA_MTLS_ENABLED: false
+      KUMA_MESHIDENTITY_COUNT: 1
+      """
 
   Scenario: MeshIdentities are listed in mesh about section
     Given the URL "/meshes/default/meshidentities" responds with
@@ -14,8 +19,8 @@ Feature: mesh / mesh-identity
           - name: identity-1
       """
     When I visit the "/meshes/default" URL
-    Then the "$meshidentities-collection" element exists
-    And the "$meshidentities-collection" element contains "identity-1"
+    Then the "$mesh-mtls" element exists
+    And the "$mesh-mtls" element contains "MeshIdentity / identity-1"
 
   Scenario: Clicking on mesh identity opens summary view
     Given the URL "/meshes/default/meshidentities" responds with
@@ -25,7 +30,7 @@ Feature: mesh / mesh-identity
           - name: identity-1
       """
     When I visit the "/meshes/default" URL
-    Then I click the "$meshidentities-collection a:first" element
+    Then I click the "$mesh-mtls a:first" element
     Then the URL contains "/meshes/default/overview/meshidentity/identity-1"
     And the "$summary" element exists
     And the "$summary" element contains "identity-1"
