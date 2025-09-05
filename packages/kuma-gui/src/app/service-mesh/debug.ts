@@ -1,6 +1,6 @@
 import { token } from '@kumahq/container'
+import { XCopyButtonDebug } from '@kumahq/x'
 
-import { XCopyButtonDebug } from '@/app/x'
 import type { ServiceDefinition, Token } from '@kumahq/container'
 
 export const services = (app: Record<string, Token>): ServiceDefinition[] => [
