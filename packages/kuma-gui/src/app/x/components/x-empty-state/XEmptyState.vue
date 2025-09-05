@@ -19,7 +19,7 @@
         :key="title"
       >
         <KEmptyState
-          :icon-background="['control-planes', 'meshes', 'zone-cps', 'zone-crud'].includes(props.type)"
+          :icon-background="['control-planes', 'meshes', 'zone-cps', 'zones-crud'].includes(props.type)"
           data-testid="empty-block"
           v-bind="bindingProps"
         >
@@ -49,16 +49,17 @@
             </div>
             <AnalyticsIcon v-else />
           </template>
-          <template
-            v-if="title.length"
-            #title
-          >
+          <template #title>
             <header>
               <h2 class="x-empty-state-title">
-                <XI18n
-                  :path="`${prefix}x-growth-empty-state.title`"
-                  default-path="components.x-empty-state.title"
-                />
+                <template
+                  v-if="title.length && !slots.title"
+                >
+                  {{ title }}
+                </template>
+                <template v-else>
+                  <slot name="title" />
+                </template>
               </h2>
             </header>
           </template>
@@ -73,7 +74,7 @@
               v-else-if="body.length > 0"
             >
               <XI18n
-                :path="`${prefix}x-growth-empty-state.body`"
+                :path="`${prefix}x-empty-state.body`"
                 default-path="components.x-empty-state.body"
               />
             </template>
@@ -86,17 +87,17 @@
                 :name="`${props.type}-x-empty-state-actions`"
               />
               <XAction
-                v-if="t(`${prefix}x-growth-empty-state.action.href`, undefined, { defaultMessage: '' }).length > 0"
-                :action="(['docs', 'create'] as const).find((item) => item === t(`${prefix}x-growth-empty-state.action.type`, undefined, { defaultMessage: '' }))"
-                :href="t(`${prefix}x-growth-empty-state.action.href`, undefined, { defaultMessage: '' })"
-                :appearance="t(`${prefix}x-growth-empty-state.action.type`, undefined, { defaultMessage: '' }) === 'docs' ? 'secondary': undefined"
+                v-if="t(`${prefix}x-empty-state.action.href`, undefined, { defaultMessage: '' }).length > 0"
+                :action="(['docs', 'create'] as const).find((item) => item === t(`${prefix}x-empty-state.action.type`, undefined, { defaultMessage: '' }))"
+                :href="t(`${prefix}x-empty-state.action.href`, undefined, { defaultMessage: '' })"
+                :appearance="t(`${prefix}x-empty-state.action.type`, undefined, { defaultMessage: '' }) === 'docs' ? 'secondary': undefined"
               >
                 <XIcon
-                  v-if="t(`${prefix}x-growth-empty-state.action.type`, undefined, { defaultMessage: '' }) === 'docs'"
+                  v-if="t(`${prefix}x-empty-state.action.type`, undefined, { defaultMessage: '' }) === 'docs'"
                   name="docs"
                   :size="KUI_ICON_SIZE_40"
                 />
-                {{ t(`${prefix}x-growth-empty-state.action.label`, undefined, { defaultMessage: '' }) }}
+                {{ t(`${prefix}x-empty-state.action.label`, undefined, { defaultMessage: '' }) }}
               </XAction>
             </slot>
           </template>
