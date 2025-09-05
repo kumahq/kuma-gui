@@ -1,4 +1,3 @@
-import { paths } from '@kumahq/kuma-http-api'
 import createClient from 'openapi-fetch'
 
 import { Policy, PolicyDataplane, PolicyResourceType } from './data'
@@ -8,6 +7,7 @@ import { defineSources } from '../application/services/data-source'
 import type { DataSourceResponse } from '@/app/application'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
+import type { paths } from '@kumahq/kuma-http-api'
 
 export type PolicyCollection = CollectionResponse<Policy>
 export type PolicySource = DataSourceResponse<Policy>

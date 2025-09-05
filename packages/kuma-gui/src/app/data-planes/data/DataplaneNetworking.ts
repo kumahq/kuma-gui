@@ -1,10 +1,10 @@
-import { components } from '@kumahq/kuma-http-api'
-
 import type {
   DataplaneGateway as PartialDataplaneGateway,
   DataplaneInbound as PartialDataplaneInbound,
   DataplaneNetworking as PartialDataplaneNetworking,
 } from '@/types/index.d'
+import type { components } from '@kumahq/kuma-http-api'
+
 
 type Connection = {
   name: string
