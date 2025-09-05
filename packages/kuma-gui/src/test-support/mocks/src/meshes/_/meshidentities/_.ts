@@ -2,10 +2,10 @@ import { components } from '@kumahq/kuma-http-api'
 
 import type { EndpointDependencies, MockResponder } from '@/test-support'
 
-export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
+export default ({ fake, env }: EndpointDependencies): MockResponder => (req) => {
   const params = req.params
   const mesh = params.mesh as string
-  const itemsCount = fake.number.int({ min: 1, max: 3 })
+  const itemsCount = parseInt(env('KUMA_MESHIDENTITY_COUNT', `${fake.number.int({ min: 1, max: 3 })}`))
   return {
     headers: {},
     body: {

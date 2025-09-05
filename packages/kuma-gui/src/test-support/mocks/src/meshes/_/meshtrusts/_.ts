@@ -6,7 +6,7 @@ export default ({ fake, env }: EndpointDependencies): MockResponder => (req) => 
   const params = req.params
   const mesh = params.mesh as string
   const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
-  const itemsCount = fake.number.int({ min: 1, max: 3 })
+  const itemsCount = parseInt(env('KUMA_MESHTRUST_COUNT', `${fake.number.int({ min: 1, max: 3 })}`))
   const namespace = fake.word.noun()
   const zone = fake.word.noun()
   return {

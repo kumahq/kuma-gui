@@ -38,7 +38,7 @@
               :data="[meshIdentities, meshTrusts]"
             >
               <XNotification
-                :notify="!props.mesh.mtlsBackend"
+                :notify="!props.mesh.mtlsBackend && meshIdentities!.items.length === 0"
                 :uri="`meshes.notifications.mtls-warning:${props.mesh.id}`"
               >
                 <XI18n
@@ -109,60 +109,54 @@
                         </template>
                       </template>
 
-                      <DefinitionCard layout="horizontal">
+                      <DefinitionCard
+                        layout="horizontal"
+                        data-testid="mesh-mtls"
+                      >
                         <template #title>
                           {{ t('http.api.property.mtls') }}
                         </template>
 
                         <template #body>
-                          <XBadge
-                            v-if="!props.mesh.mtlsBackend"
-                            appearance="neutral"
-                          >
-                            {{ t('meshes.detail.disabled') }}
-                          </XBadge>
-
-                          <template v-else>
-                            <XBadge appearance="info">
+                          <XLayout type="separated">
+                            <XBadge
+                              v-if="props.mesh.mtlsBackend"
+                              appearance="info"
+                            >
                               {{ props.mesh.mtlsBackend.type }} / {{ props.mesh.mtlsBackend.name }}
                             </XBadge>
-                          </template>
+                            <template
+                              v-for="identity in meshIdentities?.items"
+                              :key="identity.name"
+                            >
+                              <XAction
+                                :to="{
+                                  name: 'mesh-identity-summary-view',
+                                  params: {
+                                    name: identity.name.toLocaleLowerCase(),
+                                  },
+                                }"
+                              >
+                                <XBadge appearance="info">
+                                  MeshIdentity / {{ identity.name }}
+                                </XBadge>
+                              </XAction>
+                            </template>
+                            <XBadge
+                              v-if="!props.mesh.mtlsBackend && !meshIdentities?.items?.length"
+                              appearance="neutral"
+                            >
+                              {{ t('meshes.detail.disabled') }}
+                            </XBadge>
+                          </XLayout>
                         </template>
                       </DefinitionCard>
-                    </XLayout>
-
-                    <XLayout
-                      v-if="meshIdentities?.items?.length"
-                      data-testid="meshidentities-collection"
-                      class="about-subsection"
-                    >
-                      <h3>MeshIdentities</h3>
-                      <XLayout size="small">
-                        <XLayout type="separated">
-                          <template
-                            v-for="identity in meshIdentities.items"
-                            :key="identity.name"
-                          >
-                            <XAction
-                              :to="{
-                                name: 'mesh-identity-summary-view',
-                                params: {
-                                  name: identity.name.toLocaleLowerCase(),
-                                },
-                              }"
-                            >
-                              <XBadge appearance="info">
-                                {{ identity.name }}
-                              </XBadge>
-                            </XAction>
-                          </template>
-                        </XLayout>
-                      </XLayout>
                     </XLayout>
                   </XLayout>
                 </XAboutCard>
 
                 <XCard
+                  v-if="meshTrusts?.items?.length"
                   data-testid="mesh-trusts-listing"
                 >
                   <template #title>
@@ -170,11 +164,11 @@
                   </template>
                   <DataCollection
                     type="mesh-trusts"
-                    :items="meshTrusts?.items ?? []"
+                    :items="meshTrusts?.items"
                   >
                     <AppCollection
                       type="mesh-trusts-collection"
-                      :items="meshTrusts?.items ?? []"
+                      :items="meshTrusts?.items"
                       :headers="[
                         { ...me.get('headers.identity'), label: t('meshes.routes.item.mesh-trusts.name'), key: 'name' },
                         { ...me.get('headers.type'), label: t('meshes.routes.item.mesh-trusts.trust-domain'), key: 'trustDomain' },
