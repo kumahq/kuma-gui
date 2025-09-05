@@ -1,4 +1,3 @@
-import { paths } from '@kumahq/kuma-http-api'
 
 import { Resource } from '@/app/resources/data/Resource'
 import type { PaginatedApiListResponse } from '@/types/api.d'
@@ -6,6 +5,7 @@ import type {
   PolicyDataplane as PartialPolicyDataplane,
   PolicyEntity as PartialPolicy,
 } from '@/types/index.d'
+import type { paths } from '@kumahq/kuma-http-api'
 
 type PartialResourceTypes = paths['/_resources']['get']['responses']['200']['content']['application/json']
 type PartialResourceType = PartialResourceTypes['resources'][number]

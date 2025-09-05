@@ -102,8 +102,8 @@
 import { YAML } from '@/app/application'
 import PolicyTypeTag from '@/app/common/PolicyTypeTag.vue'
 import { Kri } from '@/app/kuma/kri'
-import { ResourceCollection } from '@/app/policies/data'
-import { DataplanePolicies } from '@/app/policies/data/DataplanePolicies'
+import type { ResourceCollection } from '@/app/policies/data'
+import type { DataplanePolicies } from '@/app/policies/data/DataplanePolicies'
 
 const props = defineProps<{
   policies: DataplanePolicies['policies']

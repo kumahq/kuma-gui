@@ -1,4 +1,4 @@
-import { components } from '@kumahq/kuma-http-api'
+import type { components } from '@kumahq/kuma-http-api'
 
 type PoliciesList = components['schemas']['PoliciesList']
 type PolicyConf = components['schemas']['PolicyConf']

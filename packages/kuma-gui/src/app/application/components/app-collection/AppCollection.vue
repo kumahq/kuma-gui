@@ -44,10 +44,12 @@
 
 <script lang="ts" setup generic="Row extends {}">
 import { KTableView } from '@kong/kongponents'
-import { ref, onMounted, ComponentPublicInstance } from 'vue'
-
+import { ref, onMounted } from 'vue'
 
 import type { TableViewHeader as KTableViewHeader, TablePreferences } from '@kong/kongponents'
+import type { ComponentPublicInstance } from 'vue'
+
+
 type ResizeValue = {
   headers: Record<string, { width: number }>
 }

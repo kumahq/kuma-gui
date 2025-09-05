@@ -1,4 +1,5 @@
-import { defineConfig, DefaultTheme } from 'vitepress'
+import { defineConfig } from 'vitepress'
+import type { DefaultTheme } from 'vitepress'
 import matter from 'gray-matter'
 import path from 'node:path'
 // @ts-ignore TS comes with a Object.groupBy declaration but not a polyfill
