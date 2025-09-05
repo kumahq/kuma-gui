@@ -38,6 +38,18 @@
       "dependencyDashboardApproval": true
     },
     {
+      "groupName": "patch",
+      "matchUpdateTypes": [
+        "patch"
+      ]
+    },
+    {
+      "groupName": "minor",
+      "matchUpdateTypes": [
+        "minor"
+      ]
+    },
+    {
       "matchPackageNames": [
         "npm",
         "escape-string-regexp"
@@ -65,18 +77,6 @@
       "matchPackageNames": [
         "@kong**/**"
       ],
-      "matchUpdateTypes": [
-        "minor"
-      ]
-    },
-    {
-      "groupName": "patch",
-      "matchUpdateTypes": [
-        "patch"
-      ]
-    },
-    {
-      "groupName": "minor",
       "matchUpdateTypes": [
         "minor"
       ]
