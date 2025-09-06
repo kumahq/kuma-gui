@@ -24,10 +24,10 @@
     }
   },
   "dependencies": {
-    "path-to-regexp": "^8.2.0",
+    "path-to-regexp": "^8.3.0",
     "urlpattern-polyfill": "^10.1.0",
     "deepmerge": "^4.3.1",
-    "msw": "^2.10.5"
+    "msw": "^2.11.1"
   },
   "devDependencies": {
     "@kumahq/config": "*",
