@@ -6,7 +6,7 @@ Feature: mesh / mesh-identity
       | meshtrusts-listing | [data-testid="mesh-trusts-listing"] |
       | summary            | [data-testid="slideout-container"]  |
 
-  Scenario: MeshIdentities are listed in mesh about section
+  Scenario: MeshTrusts are listed in mesh overview
     Given the URL "/meshes/default/meshtrusts" responds with
       """
       body:

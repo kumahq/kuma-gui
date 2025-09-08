@@ -133,7 +133,7 @@
                                 :to="{
                                   name: 'mesh-identity-summary-view',
                                   params: {
-                                    name: identity.name.toLocaleLowerCase(),
+                                    mid: identity.kri,
                                   },
                                 }"
                               >
