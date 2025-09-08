@@ -1,40 +1,51 @@
-import { KCard, KPop, KRadio, KLabel } from '@kong/kongponents'
+import {
+  KCard,
+  KPop,
+  KRadio,
+  KLabel,
+} from '@kong/kongponents'
 
-import XAboutCard from './components/x-about-card/XAboutCard.vue'
-import XAction from './components/x-action/XAction.vue'
-import XActionGroup from './components/x-action-group/XActionGroup.vue'
-import XAlert from './components/x-alert/XAlert.vue'
-import XAnonymous from './components/x-anonymous/XAnonymous.vue'
-import XBadge from './components/x-badge/XBadge.vue'
-import XBreadcrumbs from './components/x-breadcrumbs/XBreadcrumbs.vue'
-import XCheckBox from './components/x-checkbox/XCheckbox.vue'
-import XCodeBlock from './components/x-code-block/XCodeBlock.vue'
-import XCopyButton from './components/x-copy-button/XCopyButton.vue'
-import XDisclosure from './components/x-disclosure/XDisclosure.vue'
-import XDownload from './components/x-download/XDownload.vue'
-import XEmptyState from './components/x-empty-state/XEmptyState.vue'
-import XI18n from './components/x-i18n/XI18n.vue'
-import XIcon from './components/x-icon/XIcon.vue'
-import XInput from './components/x-input/XInput.vue'
-import XInputSwitch from './components/x-input-switch/XInputSwitch.vue'
-import XLayout from './components/x-layout/XLayout.vue'
-import XModal from './components/x-modal/XModal.vue'
-import XNotification from './components/x-notification/XNotification.vue'
-import XNotificationHub from './components/x-notification/XNotificationHub.vue'
-import XProgress from './components/x-progress/XProgress.vue'
-import XPrompt from './components/x-prompt/XPrompt.vue'
-import XProvider from './components/x-provider/XProvider.vue'
-import XSearch from './components/x-search/XSearch.vue'
-import XSelect from './components/x-select/XSelect.vue'
-import XTable from './components/x-table/XTable.vue'
-import XTabs from './components/x-tabs/XTabs.vue'
-import XTeleportSlot from './components/x-teleport/XTeleportSlot.vue'
-import XTeleportTemplate from './components/x-teleport/XTeleportTemplate.vue'
-import XTooltip from './components/x-tooltip/XTooltip.vue'
-import XWindow from './components/x-window/XWindow.vue'
+import {
+  XAboutCard,
+  XAction,
+  XActionGroup,
+  XAlert,
+  XAnonymous,
+  XBadge,
+  XBreadcrumbs,
+  XCheckBox,
+  XCodeBlock,
+  XCopyButton,
+  // we specifically don't globally register this
+  // XCopyDebug,
+  //
+  XDisclosure,
+  XDownload,
+  XEmptyState,
+  XI18n,
+  XIcon,
+  XInput,
+  XInputSwitch,
+  XLayout,
+  XModal,
+  XNotification,
+  XNotificationHub,
+  XProgress,
+  XPrompt,
+  XProvider,
+  XSearch,
+  XSelect,
+  XTable,
+  XTabs,
+  XTeleportSlot,
+  XTeleportTemplate,
+  XTooltip,
+  XWindow,
+} from './components'
 import vStyle from './directives/style'
 import type { Plugin } from 'vue'
-export { default as XCopyButtonDebug } from './components/x-copy-button/XCopyButtonDebug.vue'
+
+export * from './components'
 
 const components = [
   ['XAlert', XAlert],
@@ -129,7 +140,7 @@ const deps = {
 }
 const plugin: Plugin = {
   install: (app, options: Partial<typeof deps> = {}) => {
-    if(typeof options.i18n !== 'undefined') {
+    if (typeof options.i18n !== 'undefined') {
       deps.i18n = options.i18n
     }
     components.forEach(([name, item]) => {

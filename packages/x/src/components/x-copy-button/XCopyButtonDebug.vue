@@ -16,7 +16,7 @@
   </CopyButton>
 </template>
 <script lang="ts" setup>
-import CopyButton from '@/app/x/components/x-copy-button/XCopyButton.vue'
+import CopyButton from './XCopyButton.vue'
 const props = withDefaults(defineProps<{
   text?: ''
 }>(), {
