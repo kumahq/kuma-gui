@@ -12,9 +12,9 @@
     "help": "make help"
   },
   "dependencies": {
-    "@kong-ui-public/app-layout": "^4.6.5",
-    "@kong/kongponents": "^9.38.8",
-    "@kong/icons": "^1.34.0",
+    "@kong-ui-public/app-layout": "^4.7.0",
+    "@kong/kongponents": "^9.40.1",
+    "@kong/icons": "^1.37.0",
     "shiki": "^3.12.2",
     "@vueuse/core": "^13.9.0",
     "@vue/shared": "^3.5.21",
