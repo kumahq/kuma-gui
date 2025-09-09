@@ -238,7 +238,7 @@
                   v-if="route.params.policy"
                   v-slot="{ Component }"
                 >
-                  <SummaryView
+                  <XDrawer
                     @close="route.replace({
                       name: 'policy-list-view',
                       params: {
@@ -258,7 +258,7 @@
                       :items="data.items"
                       :policy-type="type"
                     />
-                  </SummaryView>
+                  </XDrawer>
                 </RouterView>
               </DataLoader>
             </XCard>
@@ -274,7 +274,6 @@ import type { PolicyResourceType } from '../data'
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import PolicyTypeTag from '@/app/common/PolicyTypeTag.vue'
-import SummaryView from '@/app/common/SummaryView.vue'
 const props = defineProps<{
   policyTypes?: PolicyResourceType[]
 }>()

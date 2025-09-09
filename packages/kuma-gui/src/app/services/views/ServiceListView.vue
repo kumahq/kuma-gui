@@ -132,7 +132,7 @@
                 v-if="route.params.service"
                 v-slot="child"
               >
-                <SummaryView
+                <XDrawer
                   @close="route.replace({
                     name: 'service-list-view',
                     params: {
@@ -149,7 +149,7 @@
                     :name="route.params.service"
                     :service="data.items.find((item) => item.name === route.params.service)"
                   />
-                </SummaryView>
+                </XDrawer>
               </RouterView>
             </DataCollection>
           </DataLoader>
@@ -163,7 +163,6 @@
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
-import SummaryView from '@/app/common/SummaryView.vue'
 </script>
 <style lang="scss" scoped>
 .search-field {
