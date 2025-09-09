@@ -240,7 +240,7 @@
             <RouterView
               v-slot="{ Component }"
             >
-              <SummaryView
+              <XDrawer
                 v-if="route.child()"
                 width="670px"
                 @close="function () {
@@ -260,7 +260,7 @@
                     path="zone-cps.routes.item.subscription_intro"
                   />
                 </component>
-              </SummaryView>
+              </XDrawer>
             </RouterView>
           </XCard>
         </XLayout>
@@ -274,7 +274,6 @@ import type { ZoneOverview } from '../data'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
-import SummaryView from '@/app/common/SummaryView.vue'
 import { sources } from '@/app/control-planes/sources'
 
 const props = defineProps<{

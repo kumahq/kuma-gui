@@ -168,7 +168,7 @@
                   v-if="data.items && route.params.service"
                   v-slot="child"
                 >
-                  <SummaryView
+                  <XDrawer
                     @close="route.replace({
                       name: 'mesh-external-service-list-view',
                       params: {
@@ -185,7 +185,7 @@
                       :is="child.Component"
                       :items="data.items"
                     />
-                  </SummaryView>
+                  </XDrawer>
                 </RouterView>
               </DataCollection>
             </DataLoader>
@@ -199,7 +199,6 @@
 <script lang="ts" setup>
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
-import SummaryView from '@/app/common/SummaryView.vue'
 import type { Mesh } from '@/app/meshes/data'
 import { sources as egressSources } from '@/app/zone-egresses/sources'
 
