@@ -133,7 +133,7 @@
                                 :to="{
                                   name: 'mesh-identity-summary-view',
                                   params: {
-                                    name: identity.name.toLocaleLowerCase(),
+                                    mid: identity.kri,
                                   },
                                 }"
                               >
@@ -184,7 +184,7 @@
                           :to="{
                             name: 'mesh-trust-summary-view',
                             params: {
-                              name: item.name.toLocaleLowerCase(),
+                              mtrust: item.kri,
                             },
                             query: {
                               environment: route.params.environment,
@@ -207,7 +207,7 @@
                           :to="{
                             name: 'mesh-identity-summary-view',
                             params: {
-                              name: Kri.fromString(item.spec.origin.kri).name,
+                              mid: item.spec.origin.kri,
                             },
                           }"
                           data-action
@@ -363,7 +363,6 @@ import AppCollection from '@/app/application/components/app-collection/AppCollec
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import ResourceStatus from '@/app/common/ResourceStatus.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
-import { Kri } from '@/app/kuma/kri'
 import { sources as policySources } from '@/app/policies/sources'
 import { sources as resourceSources } from '@/app/resources/sources'
 

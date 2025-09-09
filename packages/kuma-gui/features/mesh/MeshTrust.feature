@@ -6,7 +6,7 @@ Feature: mesh / mesh-identity
       | meshtrusts-listing | [data-testid="mesh-trusts-listing"] |
       | summary            | [data-testid="slideout-container"]  |
 
-  Scenario: MeshIdentities are listed in mesh about section
+  Scenario: MeshTrusts are listed in mesh overview
     Given the URL "/meshes/default/meshtrusts" responds with
       """
       body:
@@ -27,13 +27,14 @@ Feature: mesh / mesh-identity
       body:
         items:
           - name: trust-1
+            mesh: default
             spec:
               origin:
                 kri: kri_mid_default_default_foo_bar_baz
       """
     When I visit the "/meshes/default" URL
     Then I click the "$meshtrusts-listing a:first" element
-    Then the URL contains "/meshes/default/overview/meshtrust/trust-1"
+    Then the URL contains "/meshes/default/overview/meshtrust/kri_mtrust_default___trust-1_"
     And the "$summary" element exists
     And the "$summary" element contains "trust-1"
     And the "$summary [data-testid='k-code-block']" element exists
@@ -59,7 +60,7 @@ Feature: mesh / mesh-identity
       """
     When I visit the "/meshes/default" URL
     Then I click the "$meshtrusts-listing tbody tr:first-child td:nth-child(3) a" element
-    Then the URL contains "/meshes/default/overview/meshidentity/bar"
+    Then the URL contains "/meshes/default/overview/meshidentity/kri_mid_default_default_foo_bar_baz"
     And the "$summary" element exists
     And the "$summary" element contains "bar"
     And the "$summary [data-testid='k-code-block']" element exists

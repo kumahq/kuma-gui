@@ -331,7 +331,7 @@
                               :to="{
                                 name: 'data-plane-mesh-identity-summary-view',
                                 params: {
-                                  ...Kri.fromString(mTLS.issuedBackend),
+                                  mid: mTLS.issuedBackend,
                                 },
                               }"
                             >
