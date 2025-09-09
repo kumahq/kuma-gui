@@ -36,18 +36,8 @@ const attrs = useAttrs()
 
 <style lang="scss" scoped>
 :deep(.about-section-content) {
-  .definition-card {
-    align-self: center;
-
-    &-title {
-      font-size: $kui-font-size-20;
-    }
-
-    &-container {
-      gap: $kui-space-20;
-      font-size: $kui-font-size-20;
-      font-weight: normal;
-    }
+  * {
+    font-size: $kui-font-size-20;
   }
 }
 </style>
