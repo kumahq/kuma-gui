@@ -241,7 +241,7 @@
               <RouterView
                 v-slot="{ Component }"
               >
-                <SummaryView
+                <XDrawer
                   v-if="route.child()"
                   @close="route.replace({
                     name: route.name,
@@ -260,7 +260,7 @@
                     v-if="typeof data !== 'undefined'"
                     :items="data.items"
                   />
-                </SummaryView>
+                </XDrawer>
               </RouterView>
             </DataCollection>
           </DataLoader>
@@ -276,7 +276,6 @@ import AppCollection from '@/app/application/components/app-collection/AppCollec
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import ResourceStatus from '@/app/common/ResourceStatus.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
-import SummaryView from '@/app/common/SummaryView.vue'
 import { sources as dataplaneSources } from '@/app/data-planes/sources'
 </script>
 

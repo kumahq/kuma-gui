@@ -232,7 +232,7 @@
                 v-if="route.params.proxy"
                 v-slot="child"
               >
-                <SummaryView
+                <XDrawer
                   @close="route.replace({
                     name: route.name,
                     params: {
@@ -249,7 +249,7 @@
                     :is="child.Component"
                     :items="dataplanesData.items"
                   />
-                </SummaryView>
+                </XDrawer>
               </RouterView>
             </DataCollection>
           </DataLoader>
@@ -264,7 +264,6 @@ import AppCollection from '@/app/application/components/app-collection/AppCollec
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import ResourceStatus from '@/app/common/ResourceStatus.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
-import SummaryView from '@/app/common/SummaryView.vue'
 import { sources } from '@/app/data-planes/sources'
 import type { ServiceInsightSource } from '@/app/services/sources'
 </script>

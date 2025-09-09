@@ -137,7 +137,7 @@
                 v-if="route.child()"
                 v-slot="{ Component }"
               >
-                <SummaryView
+                <XDrawer
                   @close="route.replace({
                     name: 'zone-ingress-list-view',
                     params: {
@@ -154,7 +154,7 @@
                     :is="Component"
                     :items="data.items"
                   />
-                </SummaryView>
+                </XDrawer>
               </RouterView>
             </DataCollection>
           </DataLoader>
@@ -168,7 +168,6 @@
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
-import SummaryView from '@/app/common/SummaryView.vue'
 </script>
 <style lang="scss" scoped>
 .search-field {

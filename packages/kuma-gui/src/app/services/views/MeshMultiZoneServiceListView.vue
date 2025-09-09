@@ -137,7 +137,7 @@
                 v-if="data.items && route.params.service"
                 v-slot="child"
               >
-                <SummaryView
+                <XDrawer
                   @close="route.replace({
                     name: 'mesh-multi-zone-service-list-view',
                     params: {
@@ -154,7 +154,7 @@
                     :is="child.Component"
                     :items="data.items"
                   />
-                </SummaryView>
+                </XDrawer>
               </RouterView>
             </DataCollection>
           </DataLoader>
@@ -167,7 +167,6 @@
 <script lang="ts" setup>
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
-import SummaryView from '@/app/common/SummaryView.vue'
 </script>
 <style lang="scss" scoped>
 .search-field {

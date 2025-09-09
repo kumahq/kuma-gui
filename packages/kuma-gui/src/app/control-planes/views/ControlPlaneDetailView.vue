@@ -116,7 +116,7 @@
     <RouterView
       v-slot="{ Component }"
     >
-      <SummaryView
+      <XDrawer
         v-if="route.child()"
         @close="route.replace({
           name: route.name,
@@ -125,7 +125,7 @@
         <component
           :is="Component"
         />
-      </SummaryView>
+      </XDrawer>
     </RouterView>
   </RouteView>
 </template>
@@ -134,7 +134,6 @@
 import { defineProps } from 'vue'
 
 import { sources as ControlPlaneSources } from '../sources'
-import SummaryView from '@/app/common/SummaryView.vue'
 import { useControlPlaneStatus, useControlPlaneActionGroup } from '@/app/control-planes'
 import { useMeshInsightsList } from '@/app/meshes'
 import { sources as MeshSources } from '@/app/meshes/sources'

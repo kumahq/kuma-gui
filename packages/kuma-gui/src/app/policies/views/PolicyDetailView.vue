@@ -190,7 +190,7 @@
             <RouterView
               v-slot="{ Component }"
             >
-              <SummaryView
+              <XDrawer
                 v-if="route.child()"
                 @close="route.replace({
                   params: {
@@ -208,7 +208,7 @@
                   v-if="typeof dataplanes !== 'undefined'"
                   :items="dataplanes.items"
                 />
-              </SummaryView>
+              </XDrawer>
             </RouterView>
           </DataCollection>
         </DataLoader>
@@ -222,7 +222,6 @@ import type { Policy } from '../data'
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
-import SummaryView from '@/app/common/SummaryView.vue'
 
 const props = defineProps<{
   data: Policy

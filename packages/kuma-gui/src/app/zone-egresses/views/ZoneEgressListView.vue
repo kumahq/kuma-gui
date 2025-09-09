@@ -47,7 +47,7 @@
               />
             </form>
           </search>
-        
+
           <DataLoader
             :src="uri(sources, `/zone-cps/:name/egresses`, {
               name: route.params.zone || '*',
@@ -135,7 +135,7 @@
               <RouterView
                 v-slot="{ Component }"
               >
-                <SummaryView
+                <XDrawer
                   v-if="route.child()"
                   @close="route.replace({
                     name: 'zone-egress-list-view',
@@ -154,7 +154,7 @@
                     :is="Component"
                     :items="data.items"
                   />
-                </SummaryView>
+                </XDrawer>
               </RouterView>
             </DataCollection>
           </DataLoader>
@@ -168,7 +168,6 @@
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
-import SummaryView from '@/app/common/SummaryView.vue'
 </script>
 <style lang="scss" scoped>
 .search-field {
