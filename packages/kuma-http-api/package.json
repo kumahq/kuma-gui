@@ -3,7 +3,14 @@
   "version": "2.12.0",
   "private": true,
   "description": "Kuma OpenAPI to typescript converter and generated typescript types",
+  "type": "module",
   "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./index.d.ts",
+      "types": "./index.d.ts"
+    }
+  },
   "scripts": {
     "help": "make help"
   },
