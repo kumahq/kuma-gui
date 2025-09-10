@@ -12,7 +12,7 @@ export type FeatureSpec<T extends Record<string, Fn>> = {
   ) => any
 }
 
-export default <T extends Record<string, Fn>>(features: FeatureSpec<T>) => {
+const features = <T extends Record<string, Fn>>(features: FeatureSpec<T>) => {
   const can = (...args: Features<T>) => {
     const [str, ...rest] = args
     const feature = features[str]
@@ -28,3 +28,5 @@ export default <T extends Record<string, Fn>>(features: FeatureSpec<T>) => {
   }
   return can
 }
+
+export default features
