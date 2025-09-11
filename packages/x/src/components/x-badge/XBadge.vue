@@ -1,12 +1,15 @@
 <template>
   <KBadge
     :max-width="props.maxWidth"
+    :icon-before="false"
   >
     <slot name="default" />
-    <XIcon
-      v-if="xAction"
-      name="link"
-    />
+    <template #icon>
+      <XIcon
+        v-if="xAction"
+        name="link"
+      />
+    </template>
   </KBadge>
 </template>
 
@@ -20,11 +23,3 @@ const props = withDefaults(defineProps<{
 })
 const xAction = inject<{} | undefined>('x-action', undefined)
 </script>
-<style scoped>
-/* ideally we wouldn't use this, but its works to centralize the icon correctly */
-/* feel free to change if you find something else*/
-:deep(.x-icon-icon) {
-  position: relative;
-  top: -1px;
-}
-</style>
