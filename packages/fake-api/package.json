@@ -31,6 +31,6 @@
   },
   "devDependencies": {
     "@kumahq/config": "*",
-    "vite": "^6.3.5"
+    "vite": "^6.3.6"
   }
 }
