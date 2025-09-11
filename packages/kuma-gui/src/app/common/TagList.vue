@@ -7,20 +7,23 @@
       'tag-list--align-right': props.alignment === 'right',
     }"
   >
-    <XBadge
+    <template
       v-for="(tag, index) in tagList"
       :key="index"
-      class="tag kv"
-      :data-kv-key="tag.label"
-      :data-kv-owner="tag.label.split('/')[0]"
     >
       <component
         :is="tag.route ? 'XAction' : 'span'"
         :to="tag.route"
       >
-        <span class="label">{{ tag.label }}</span>:<span class="value">{{ tag.value }}</span>
+        <XBadge
+          class="tag kv"
+          :data-kv-key="tag.label"
+          :data-kv-owner="tag.label.split('/')[0]"
+        >
+          <span class="label">{{ tag.label }}</span>:<span class="value">{{ tag.value }}</span>
+        </XBadge>
       </component>
-    </XBadge>
+    </template>
   </component>
 </template>
 
@@ -96,7 +99,6 @@ function getRoute(tag: LabelValue): RouteLocationNamedRaw | undefined {
 }
 </script>
 <style lang="scss" scoped>
-
 .kv:not(:where(
   [data-kv-owner$='.kuma.io'],
   [data-kv-owner^='kuma.io']

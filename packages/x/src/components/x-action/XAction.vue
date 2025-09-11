@@ -172,7 +172,7 @@
 <script lang="ts" setup>
 import { KUI_ICON_SIZE_40 } from '@kong/design-tokens'
 import { KDropdownItem, KButton } from '@kong/kongponents'
-import { computed, watch, inject } from 'vue'
+import { computed, watch, inject, provide } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
 
 import type { ButtonAppearance } from '@kong/kongponents'
@@ -201,6 +201,7 @@ const props = withDefaults(defineProps<{
   for: '',
 })
 
+provide('x-action', {})
 const group = inject<{
   expanded: boolean
 } | undefined>('x-action-group', undefined)
