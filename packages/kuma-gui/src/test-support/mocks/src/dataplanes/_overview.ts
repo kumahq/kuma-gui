@@ -1,4 +1,7 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
+import type { paths } from '@kumahq/kuma-http-api'
+type DataplaneOverviewListResponse = paths['/meshes/{mesh}/dataplanes/_overview']['get']['responses']['200']['content']['application/json']
+
 
 export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (req) => {
   const query = req.url.searchParams
@@ -120,16 +123,36 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
               }
             })(),
           },
-          ...(k8s
-            ? {
-              labels: {
-                'kuma.io/display-name': displayName,
+          labels: {
+            'kuma.io/display-name': displayName,
+            ...(k8s
+              ? {
                 'k8s.kuma.io/namespace': nspace,
-              },
-            }
-            : {}),
+              }
+              : {}),
+          } as { [key: string]: string },
           dataplaneInsight: {
-            ...(isMtlsEnabled ? { mTLS: fake.kuma.dataplaneMtls() } : {}),
+
+            ...(isMtlsEnabled ? {
+              mTLS: {
+
+                // fake.kuma.regeneratedCertificate()?
+                ...((lastCertificateRegeneration) => ({
+                  lastCertificateRegeneration,
+                  certificateExpirationTime: fake.kuma.date({ refDate: lastCertificateRegeneration }),
+                }))(fake.kuma.date()),
+                certificateRegenerations: fake.number.int(),
+                //
+
+                // fake.kuma.mTLSBackendCollection()?
+                ...((issuedBackend) => ({
+                  issuedBackend,
+                  supportedBackends: [issuedBackend].concat(fake.helpers.multiple(() => fake.word.noun())),
+                }))(fake.word.noun()),
+                //
+
+              }} : {}),
+
             subscriptions: Array.from({ length: subscriptionCount }).map((item, i, arr) => {
               return {
                 id: '118b4d6f-7a98-4172-96d9-85ffb8b20b16',
@@ -138,22 +161,25 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
                 status: {
                   lastUpdateTime: '2021-02-17T10:48:03.638434Z',
                   total: {
-                    responsesSent: '5',
-                    responsesAcknowledged: '5',
+                    responsesSent: 5,
+                    responsesAcknowledged: 5,
                   },
                   cds: {
-                    responsesSent: '1',
-                    responsesAcknowledged: '1',
+                    responsesSent: 1,
+                    responsesAcknowledged: 1,
                   },
                   eds: {
-                    responsesSent: '2',
-                    responsesAcknowledged: '2',
+                    responsesSent: 2,
+                    responsesAcknowledged: 2,
                   },
                   lds: {
-                    responsesSent: '2',
-                    responsesAcknowledged: '2',
+                    responsesSent: 2,
+                    responsesAcknowledged: 2,
                   },
-                  rds: {},
+                  rds: {
+                    responsesSent: 2,
+                    responsesAcknowledged: 2,
+                  },
                 },
                 version: {
                   kumaDp: {
@@ -178,6 +204,6 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
         }
       }),
       next,
-    },
+    } satisfies DataplaneOverviewListResponse,
   }
 }
