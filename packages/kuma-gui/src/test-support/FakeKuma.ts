@@ -291,7 +291,7 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
       ...additionalTags,
     }
   }
-
+  // @deprecated we should avoid these resource specific "import-like" helpers
   dataplaneMtls() {
     const issuedBackend = this.faker.word.noun()
     const supportedBackends = [issuedBackend].concat(this.faker.helpers.multiple(() => this.faker.word.noun()))
@@ -556,7 +556,7 @@ function subscriptionConfig({ faker }: { faker: Faker }) {
                 },
               },
             },
-            
+
           },
           {
             zoneProxy: {
