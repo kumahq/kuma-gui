@@ -31,7 +31,9 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, inject, Ref, ref } from 'vue'
+import { computed, inject, ref } from 'vue'
+
+import type { Ref } from 'vue'
 
 const parentAccordion = inject<{
   multipleOpen: boolean

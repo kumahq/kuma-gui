@@ -2,6 +2,7 @@
   "compilerOptions": {
     "esModuleInterop": true,
     "noErrorTruncation": true,
+    "verbatimModuleSyntax": true,
     "baseUrl": ".",
     "module": "preserve",
     "target": "esnext",

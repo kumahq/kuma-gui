@@ -22,7 +22,7 @@
 import { XAnonymous, XTooltip } from '@kumahq/x'
 
 import { useI18n } from '@/app/application'
-import { StatusKeyword } from '@/types/index.d'
+import type { StatusKeyword } from '@/types/index.d'
 import type { BadgeAppearance } from '@kong/kongponents'
 
 
