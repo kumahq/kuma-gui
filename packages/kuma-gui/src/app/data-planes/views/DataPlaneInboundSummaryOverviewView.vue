@@ -11,7 +11,7 @@
     <AppView>
       <XLayout type="stack">
         <template
-          v-for="inbound in [props.dataPlaneOverview.dataplane.networking.inbounds.find((item) => item.portName === Kri.fromString(route.params.connection).sectionName && item.port === props.data.port)]"
+          v-for="inbound in [props.dataPlaneOverview.dataplane.networking.inbounds.find((item) => item.port === props.data.port)]"
           :key="typeof inbound"
         >
           <XTable
