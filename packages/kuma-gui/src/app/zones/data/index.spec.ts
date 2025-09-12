@@ -1,8 +1,10 @@
+import { fs } from '@kumahq/kuma-http-api/mocks'
 import { describe, expect, test as _test } from 'vitest'
 
 import { ZoneOverview } from './'
 import { plugin, server } from '@/test-support/data'
-import mock from '@/test-support/mocks/src/zones/_/_overview'
+
+const mock = fs['/zones/:name/_overview']
 
 describe('ZoneOverview', () => {
   const test = _test.extend(plugin<typeof ZoneOverview>(

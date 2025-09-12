@@ -1,8 +1,9 @@
+import { fs } from '@kumahq/kuma-http-api/mocks'
 import { describe, expect, test as _test } from 'vitest'
 
 import { ZoneEgressOverview } from './'
 import { plugin, server } from '@/test-support/data'
-import mock from '@/test-support/mocks/src/zoneegresses/_/_overview'
+const mock = fs['/zoneegresses/:name/_overview']
 
 // zoneEgress tests are very similar to zoneIngress tests
 // so anything you amend here you should consider also amending in
