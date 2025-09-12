@@ -11,7 +11,7 @@
     <AppView>
       <XLayout type="stack">
         <template
-          v-for="inbound in [props.dataPlaneOverview.dataplane.networking.inbounds.find((item) => item.portName === ContextualKri.fromString(route.params.connection).sectionName && item.port === props.data.port)]"
+          v-for="inbound in [props.dataPlaneOverview.dataplane.networking.inbounds.find((item) => item.port === props.data.port)]"
           :key="typeof inbound"
         >
           <XTable
@@ -144,17 +144,17 @@
                                           :key="origin.kri"
                                         >
                                           <template
-                                            v-for="{ mesh, name } in [Kri.fromString(origin.kri)]"
-                                            :key="`${mesh}-${name}`"
+                                            v-for="kri in [Kri.fromString(origin.kri)]"
+                                            :key="typeof kri"
                                           >
                                             <XAction
                                               v-if="policyTypes[kind]"
                                               :to="{
                                                 name: 'policy-detail-view',
                                                 params: {
-                                                  mesh: mesh,
+                                                  mesh: kri.mesh,
                                                   policyPath: policyTypes[kind]![0].path,
-                                                  policy: name,
+                                                  policy: kri.name,
                                                 },
                                               }"
                                             >
@@ -210,7 +210,7 @@ import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
 import PolicyTypeTag from '@/app/common/PolicyTypeTag.vue'
 import TagList from '@/app/common/TagList.vue'
-import { ContextualKri, Kri } from '@/app/kuma/kri'
+import { Kri } from '@/app/kuma/kri'
 import { sources as policySources } from '@/app/policies/sources'
 
 const props = defineProps<{
