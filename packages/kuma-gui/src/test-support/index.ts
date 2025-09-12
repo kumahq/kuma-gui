@@ -64,6 +64,7 @@ export type MockEnv = {
   KUMA_SUBSCRIPTION_COUNT: string
   KUMA_GLOBALSECRET_COUNT: string
   KUMA_MODE: string
+  KUMA_ENVIRONMENT: string
   KUMA_MTLS_ENABLED: string
   KUMA_STORE_TYPE: string
   KUMA_LATENCY: string

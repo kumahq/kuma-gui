@@ -66,11 +66,12 @@ export type Can = Abilities['can']
 
 export interface Environment { }
 export type Env = Environment['env']
-// we don't want people using env defaults in the application, whereas they are needed in mocks
-type EnvKeys = Parameters<Env> extends [infer Key, any?] ? Key : never
+
+// @TODO ideally we don't want people using env defaults in the application, whereas they are needed in mocks
+// type EnvKeys = Parameters<Env> extends [infer Key, any?] ? Key : never
 
 const $ = {
-  env: token<(key: EnvKeys) => string>('application.env'),
+  env: token<Env>('application.env'),
   vars: token('application.env.vars'),
 
   fetch: token<typeof fetch>('application.fetch'),
