@@ -6283,10 +6283,10 @@ export interface components {
                     default: {
                         /** @description Allow definees a list of matches for which access will be allowed */
                         allow?: {
-                            /** @description SpiffeId defines a matcher configuration for SpiffeId matching */
-                            spiffeId?: {
+                            /** @description SpiffeID defines a matcher configuration for SpiffeID matching */
+                            spiffeID?: {
                                 /**
-                                 * @description Type defines how to match incoming traffic by SpiffeId. `Exact` or `Prefix` are allowed.
+                                 * @description Type defines how to match incoming traffic by SpiffeID. `Exact` or `Prefix` are allowed.
                                  * @enum {string}
                                  */
                                 type: "Exact" | "Prefix";
@@ -6297,10 +6297,10 @@ export interface components {
                         /** @description AllowWithShadowDeny defines a list of matches for which access will be allowed but emits logs as if
                          *     requests are denied */
                         allowWithShadowDeny?: {
-                            /** @description SpiffeId defines a matcher configuration for SpiffeId matching */
-                            spiffeId?: {
+                            /** @description SpiffeID defines a matcher configuration for SpiffeID matching */
+                            spiffeID?: {
                                 /**
-                                 * @description Type defines how to match incoming traffic by SpiffeId. `Exact` or `Prefix` are allowed.
+                                 * @description Type defines how to match incoming traffic by SpiffeID. `Exact` or `Prefix` are allowed.
                                  * @enum {string}
                                  */
                                 type: "Exact" | "Prefix";
@@ -6310,10 +6310,10 @@ export interface components {
                         }[];
                         /** @description Deny defines a list of matches for which access will be denied */
                         deny?: {
-                            /** @description SpiffeId defines a matcher configuration for SpiffeId matching */
-                            spiffeId?: {
+                            /** @description SpiffeID defines a matcher configuration for SpiffeID matching */
+                            spiffeID?: {
                                 /**
-                                 * @description Type defines how to match incoming traffic by SpiffeId. `Exact` or `Prefix` are allowed.
+                                 * @description Type defines how to match incoming traffic by SpiffeID. `Exact` or `Prefix` are allowed.
                                  * @enum {string}
                                  */
                                 type: "Exact" | "Prefix";
@@ -6603,23 +6603,28 @@ export interface components {
                     reachableBackends?: {
                         refs?: {
                             /** @description Type of the backend: MeshService or MeshExternalService
-                             *      +required */
+                             *
+                             *     	+required */
                             kind?: string;
                             /** @description Labels used to select backends
-                             *      +optional */
+                             *
+                             *     	+optional */
                             labels?: {
                                 [key: string]: string;
                             };
                             /** @description Name of the backend.
-                             *      +optional */
+                             *
+                             *     	+optional */
                             name?: string;
                             /** @description Namespace of the backend. Might be empty
-                             *      +optional */
+                             *
+                             *     	+optional */
                             namespace?: string;
                             /**
                              * Format: uint32
                              * @description Port of the backend.
-                             *      +optional
+                             *
+                             *     	+optional
                              */
                             port?: number;
                         }[];
@@ -6922,23 +6927,28 @@ export interface components {
                         reachableBackends?: {
                             refs?: {
                                 /** @description Type of the backend: MeshService or MeshExternalService
-                                 *      +required */
+                                 *
+                                 *     	+required */
                                 kind?: string;
                                 /** @description Labels used to select backends
-                                 *      +optional */
+                                 *
+                                 *     	+optional */
                                 labels?: {
                                     [key: string]: string;
                                 };
                                 /** @description Name of the backend.
-                                 *      +optional */
+                                 *
+                                 *     	+optional */
                                 name?: string;
                                 /** @description Namespace of the backend. Might be empty
-                                 *      +optional */
+                                 *
+                                 *     	+optional */
                                 namespace?: string;
                                 /**
                                  * Format: uint32
                                  * @description Port of the backend.
-                                 *      +optional
+                                 *
+                                 *     	+optional
                                  */
                                 port?: number;
                             }[];
@@ -6986,19 +6996,13 @@ export interface components {
                 mTLS?: {
                     /** @description Expiration time of the last certificate that was generated for a
                      *     Dataplane. */
-                    certificateExpirationTime?: {
-                        nanos?: number;
-                        seconds?: number;
-                    };
+                    certificateExpirationTime?: string;
                     /** @description Number of certificate regenerations for a Dataplane. */
                     certificateRegenerations?: number;
                     /** @description Backend that was used to generate current certificate */
                     issuedBackend?: string;
                     /** @description Time on which the last certificate was generated. */
-                    lastCertificateRegeneration?: {
-                        nanos?: number;
-                        seconds?: number;
-                    };
+                    lastCertificateRegeneration?: string;
                     /** @description Supported backends (CA). */
                     supportedBackends?: string[];
                 };
@@ -7006,17 +7010,11 @@ export interface components {
                 /** @description List of ADS subscriptions created by a given Dataplane. */
                 subscriptions?: {
                     /** @description Time when a given Dataplane connected to the Control Plane. */
-                    connectTime?: {
-                        nanos?: number;
-                        seconds?: number;
-                    };
+                    connectTime?: string;
                     /** @description Control Plane instance that handled given subscription. */
                     controlPlaneInstanceId?: string;
                     /** @description Time when a given Dataplane disconnected from the Control Plane. */
-                    disconnectTime?: {
-                        nanos?: number;
-                        seconds?: number;
-                    };
+                    disconnectTime?: string;
                     /** @description Generation is an integer number which is periodically increased by the
                      *     status sink */
                     generation?: number;
@@ -7043,10 +7041,7 @@ export interface components {
                             responsesSent?: number;
                         };
                         /** @description Time when status of a given ADS subscription was most recently updated. */
-                        lastUpdateTime?: {
-                            nanos?: number;
-                            seconds?: number;
-                        };
+                        lastUpdateTime?: string;
                         /** @description LDS defines all LDS stats. */
                         lds?: {
                             /** @description Number of xDS responses ACKed by the Dataplane. */
@@ -7284,7 +7279,8 @@ export interface components {
         };
         ProvidedCertificateAuthorityConfig: {
             cert?: {
-                /** @description Types that are assignable to Type:
+                /** @description Types that are valid to be assigned to Type:
+                 *
                  *     	*DataSource_Secret
                  *     	*DataSource_File
                  *     	*DataSource_Inline
@@ -7292,7 +7288,8 @@ export interface components {
                 Type: unknown;
             };
             key?: {
-                /** @description Types that are assignable to Type:
+                /** @description Types that are valid to be assigned to Type:
+                 *
                  *     	*DataSource_Secret
                  *     	*DataSource_File
                  *     	*DataSource_Inline
@@ -7363,7 +7360,8 @@ export interface components {
                          *     should contain an RSA key and certificate, and the other an
                          *     ECDSA key and certificate. */
                         certificates?: {
-                            /** @description Types that are assignable to Type:
+                            /** @description Types that are valid to be assigned to Type:
+                             *
                              *     	*DataSource_Secret
                              *     	*DataSource_File
                              *     	*DataSource_Inline

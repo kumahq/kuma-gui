@@ -1,6 +1,6 @@
-import { components } from '@kumahq/kuma-http-api'
-
 import { Origin } from './Origin'
+import type { components } from '@kumahq/kuma-http-api'
+
 
 type PartialInboundRule = components['schemas']['InboundRule'] & { type: string, inbound: components['schemas']['Inbound'] }
 type Matcher = components['schemas']['RuleMatcher']

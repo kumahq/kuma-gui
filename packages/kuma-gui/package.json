@@ -53,7 +53,7 @@
     "markdown-it": "^14.1.0",
     "msw": "^2.11.1",
     "sass": "^1.92.1",
-    "vite": "^6.3.5",
+    "vite": "^6.3.6",
     "vite-svg-loader": "^5.1.0",
     "vitepress": "^2.0.0-alpha.12",
     "vitest": "^3.2.4"

@@ -27,6 +27,7 @@
           >
             <template #name="{ row: item }">
               <XAction
+                data-action
                 :to="{
                   name: 'service-detail-view',
                   params: {

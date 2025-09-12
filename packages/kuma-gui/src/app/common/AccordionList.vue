@@ -5,7 +5,9 @@
 </template>
 
 <script lang="ts" setup>
-import { PropType, provide, ref } from 'vue'
+import { provide, ref } from 'vue'
+
+import type { PropType } from 'vue'
 
 const props = defineProps({
   initiallyOpen: {

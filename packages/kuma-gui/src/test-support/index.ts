@@ -8,7 +8,7 @@ export type { MockResponder }
 export type FS = FakeFS<EndpointDependencies>
 
 type Pager = (total: string | number, req: RestRequest, self: string) => {
-  next: string | null
+  next: string | undefined
   pageTotal: number
   total: number
   offset: number
@@ -23,7 +23,7 @@ const pager: Pager = (_total: string | number, req: RestRequest, self) => {
 
   const remaining = total - offset
   const pageTotal = Math.min(size, remaining)
-  const next = remaining <= size ? null : `${baseUrl}${self}?size=${size}offset=${offset + size}`
+  const next = remaining <= size ? undefined : `${baseUrl}${self}?size=${size}offset=${offset + size}`
   return {
     next,
     pageTotal,

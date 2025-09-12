@@ -1,7 +1,6 @@
-import { components } from '@kumahq/kuma-http-api'
-
 import { DiscoverySubscriptionCollection } from '@/app/subscriptions/data'
-import { DataPlaneInsight } from '@/types'
+import type { DataPlaneInsight } from '@/types'
+import type { components } from '@kumahq/kuma-http-api'
 
 // TODO: revisit when fixed: `dataplaneInsight.subscriptions` and `dataplaneInsight.mTLS` from OAS are slightly incorrect, therefore omitting for the moment and keep using custom types
 type OasDataplaneInsight = NonNullable<NonNullable<components['responses']['GetDataplaneOverviewResponse']['content']['application/json']>['dataplaneInsight']>

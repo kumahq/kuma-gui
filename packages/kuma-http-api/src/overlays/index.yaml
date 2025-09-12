@@ -3,6 +3,39 @@ info:
   title: Overlay to customise API for Kuma
   version: 0.1.0
 actions:
+
+  - target: '$..[?(@.creationTime)]'
+    update:
+      creationTime:
+        type: string
+  - target: '$..[?(@.modificationTime)]'
+    update:
+      modificationTime:
+        type: string
+
+  - target: '$..[?(@.connectTime)]'
+    update:
+      connectTime:
+        type: string
+  - target: '$..[?(@.disconnectTime)]'
+    update:
+      disconnectTime:
+        type: string
+
+  - target: '$..[?(@.lastUpdateTime)]'
+    update:
+      lastUpdateTime:
+        type: string
+
+  - target: '$..[?(@.certificateExpirationTime)]'
+    update:
+      certificateExpirationTime:
+        type: string
+  - target: '$..[?(@.lastCertificateRegeneration)]'
+    update:
+      lastCertificateRegeneration:
+        type: string
+
   - target: '$.components.schemas.MeshItem.properties'
     update:
       creationTime:

@@ -66,6 +66,7 @@ tags:
     x-displayName: other
 paths:
   /:
+    servers: []
     get:
       summary: The index endpoint
       operationId: index
@@ -84,6 +85,7 @@ paths:
         - BearerAuth: []
         - {}
   /_resources:
+    servers: []
     get:
       summary: A list of all resources that exist
       operationId: get-resource-type-description
@@ -102,6 +104,7 @@ paths:
         - BearerAuth: []
         - {}
   /global-insight:
+    servers: []
     get:
       summary: Get Global Insight
       operationId: get-global-insight
@@ -120,6 +123,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/{resourceType}/{resourceName}/_rules':
+    servers: []
     get:
       summary: Returns rules matching this dataplane
       operationId: inspect-dataplanes-rules
@@ -163,6 +167,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/dataplanes/{name}/_config':
+    servers: []
     get:
       summary: >-
         Get a proxy XDS config on a CP, this endpoint is only available on zone
@@ -221,6 +226,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/dataplanes/{name}/_layout':
+    servers: []
     get:
       summary: Get networking layout for this dataplane
       operationId: get-dataplanes-layout
@@ -254,6 +260,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/dataplanes/{name}/_policies':
+    servers: []
     get:
       summary: Get proxy policies for this dataplane
       operationId: get-proxy-policy-conf
@@ -287,6 +294,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/dataplanes/{name}/_inbounds/{inbound-kri}/_policies':
+    servers: []
     get:
       summary: Get policies for this inbound
       operationId: get-inbound-policy-conf
@@ -326,6 +334,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/dataplanes/{name}/_outbounds/{kri}/_policies':
+    servers: []
     get:
       summary: Get policies for this outbound
       operationId: get-outbound-policy-conf
@@ -365,6 +374,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/dataplanes/{name}/_outbounds/{kri}/_routes':
+    servers: []
     get:
       summary: Get routes configuration for this outbound
       operationId: get-outbound-routes
@@ -404,6 +414,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/dataplanes/{name}/_outbounds/{outbound-kri}/_routes/{route-kri}/_policies':
+    servers: []
     get:
       summary: Get policies for this route
       operationId: get-route-policy-conf
@@ -449,6 +460,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/{policyType}/{policyName}/_resources/dataplanes':
+    servers: []
     get:
       summary: Returns resources matched by this policy
       operationId: inspect-resources
@@ -509,6 +521,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/{serviceType}/{serviceName}/_hostnames':
+    servers: []
     get:
       summary: Returns hostnames for service
       operationId: inspect-hostnames
@@ -555,6 +568,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/meshaccesslogs/{name}':
+    servers: []
     get:
       summary: Returns MeshAccessLog entity
       operationId: getMeshAccessLog
@@ -658,6 +672,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/meshaccesslogs':
+    servers: []
     get:
       summary: Returns a list of MeshAccessLog in the mesh.
       operationId: getMeshAccessLogList
@@ -707,6 +722,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/meshcircuitbreakers/{name}':
+    servers: []
     get:
       summary: Returns MeshCircuitBreaker entity
       operationId: getMeshCircuitBreaker
@@ -810,6 +826,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/meshcircuitbreakers':
+    servers: []
     get:
       summary: Returns a list of MeshCircuitBreaker in the mesh.
       operationId: getMeshCircuitBreakerList
@@ -859,6 +876,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/meshfaultinjections/{name}':
+    servers: []
     get:
       summary: Returns MeshFaultInjection entity
       operationId: getMeshFaultInjection
@@ -962,6 +980,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/meshfaultinjections':
+    servers: []
     get:
       summary: Returns a list of MeshFaultInjection in the mesh.
       operationId: getMeshFaultInjectionList
@@ -1011,6 +1030,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/meshhealthchecks/{name}':
+    servers: []
     get:
       summary: Returns MeshHealthCheck entity
       operationId: getMeshHealthCheck
@@ -1114,6 +1134,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/meshhealthchecks':
+    servers: []
     get:
       summary: Returns a list of MeshHealthCheck in the mesh.
       operationId: getMeshHealthCheckList
@@ -1163,6 +1184,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/meshhttproutes/{name}':
+    servers: []
     get:
       summary: Returns MeshHTTPRoute entity
       operationId: getMeshHTTPRoute
@@ -1266,6 +1288,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/meshhttproutes':
+    servers: []
     get:
       summary: Returns a list of MeshHTTPRoute in the mesh.
       operationId: getMeshHTTPRouteList
@@ -1315,6 +1338,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/meshloadbalancingstrategies/{name}':
+    servers: []
     get:
       summary: Returns MeshLoadBalancingStrategy entity
       operationId: getMeshLoadBalancingStrategy
@@ -1419,6 +1443,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/meshloadbalancingstrategies':
+    servers: []
     get:
       summary: Returns a list of MeshLoadBalancingStrategy in the mesh.
       operationId: getMeshLoadBalancingStrategyList
@@ -1468,6 +1493,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/meshmetrics/{name}':
+    servers: []
     get:
       summary: Returns MeshMetric entity
       operationId: getMeshMetric
@@ -1569,6 +1595,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/meshmetrics':
+    servers: []
     get:
       summary: Returns a list of MeshMetric in the mesh.
       operationId: getMeshMetricList
@@ -1618,6 +1645,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/meshpassthroughs/{name}':
+    servers: []
     get:
       summary: Returns MeshPassthrough entity
       operationId: getMeshPassthrough
@@ -1721,6 +1749,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/meshpassthroughs':
+    servers: []
     get:
       summary: Returns a list of MeshPassthrough in the mesh.
       operationId: getMeshPassthroughList
@@ -1770,6 +1799,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/meshproxypatches/{name}':
+    servers: []
     get:
       summary: Returns MeshProxyPatch entity
       operationId: getMeshProxyPatch
@@ -1873,6 +1903,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/meshproxypatches':
+    servers: []
     get:
       summary: Returns a list of MeshProxyPatch in the mesh.
       operationId: getMeshProxyPatchList
@@ -1922,6 +1953,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/meshratelimits/{name}':
+    servers: []
     get:
       summary: Returns MeshRateLimit entity
       operationId: getMeshRateLimit
@@ -2025,6 +2057,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/meshratelimits':
+    servers: []
     get:
       summary: Returns a list of MeshRateLimit in the mesh.
       operationId: getMeshRateLimitList
@@ -2074,6 +2107,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/meshretries/{name}':
+    servers: []
     get:
       summary: Returns MeshRetry entity
       operationId: getMeshRetry
@@ -2175,6 +2209,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/meshretries':
+    servers: []
     get:
       summary: Returns a list of MeshRetry in the mesh.
       operationId: getMeshRetryList
@@ -2224,6 +2259,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/meshtcproutes/{name}':
+    servers: []
     get:
       summary: Returns MeshTCPRoute entity
       operationId: getMeshTCPRoute
@@ -2325,6 +2361,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/meshtcproutes':
+    servers: []
     get:
       summary: Returns a list of MeshTCPRoute in the mesh.
       operationId: getMeshTCPRouteList
@@ -2374,6 +2411,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/meshtimeouts/{name}':
+    servers: []
     get:
       summary: Returns MeshTimeout entity
       operationId: getMeshTimeout
@@ -2475,6 +2513,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/meshtimeouts':
+    servers: []
     get:
       summary: Returns a list of MeshTimeout in the mesh.
       operationId: getMeshTimeoutList
@@ -2524,6 +2563,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/meshtlses/{name}':
+    servers: []
     get:
       summary: Returns MeshTLS entity
       operationId: getMeshTLS
@@ -2625,6 +2665,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/meshtlses':
+    servers: []
     get:
       summary: Returns a list of MeshTLS in the mesh.
       operationId: getMeshTLSList
@@ -2674,6 +2715,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/meshtraces/{name}':
+    servers: []
     get:
       summary: Returns MeshTrace entity
       operationId: getMeshTrace
@@ -2775,6 +2817,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/meshtraces':
+    servers: []
     get:
       summary: Returns a list of MeshTrace in the mesh.
       operationId: getMeshTraceList
@@ -2824,6 +2867,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/meshtrafficpermissions/{name}':
+    servers: []
     get:
       summary: Returns MeshTrafficPermission entity
       operationId: getMeshTrafficPermission
@@ -2928,6 +2972,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/meshtrafficpermissions':
+    servers: []
     get:
       summary: Returns a list of MeshTrafficPermission in the mesh.
       operationId: getMeshTrafficPermissionList
@@ -2977,6 +3022,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/dataplanes/{name}':
+    servers: []
     get:
       summary: Returns Dataplane entity
       operationId: getDataplane
@@ -3078,6 +3124,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/dataplanes':
+    servers: []
     get:
       summary: Returns a list of Dataplane in the mesh.
       operationId: getDataplaneList
@@ -3127,6 +3174,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/dataplanes/{name}/_overview':
+    servers: []
     get:
       operationId: getDataplaneOverview
       tags:
@@ -3156,6 +3204,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/dataplanes/_overview':
+    servers: []
     get:
       operationId: getDataplaneOverviewList
       tags:
@@ -3179,6 +3228,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{name}':
+    servers: []
     get:
       summary: Returns Mesh entity
       operationId: getMesh
@@ -3262,6 +3312,7 @@ paths:
         - BearerAuth: []
         - {}
   /meshes:
+    servers: []
     get:
       summary: Returns a list of Mesh in the mesh.
       operationId: getMeshList
@@ -3305,6 +3356,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/meshgateways/{name}':
+    servers: []
     get:
       summary: Returns MeshGateway entity
       operationId: getMeshGateway
@@ -3406,6 +3458,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/meshgateways':
+    servers: []
     get:
       summary: Returns a list of MeshGateway in the mesh.
       operationId: getMeshGatewayList
@@ -3455,6 +3508,7 @@ paths:
         - BearerAuth: []
         - {}
   '/hostnamegenerators/{name}':
+    servers: []
     get:
       summary: Returns HostnameGenerator entity
       operationId: getHostnameGenerator
@@ -3540,6 +3594,7 @@ paths:
         - BearerAuth: []
         - {}
   /hostnamegenerators:
+    servers: []
     get:
       summary: Returns a list of HostnameGenerator in the mesh.
       operationId: getHostnameGeneratorList
@@ -3583,6 +3638,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/meshexternalservices/{name}':
+    servers: []
     get:
       summary: Returns MeshExternalService entity
       operationId: getMeshExternalService
@@ -3686,6 +3742,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/meshexternalservices':
+    servers: []
     get:
       summary: Returns a list of MeshExternalService in the mesh.
       operationId: getMeshExternalServiceList
@@ -3735,6 +3792,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/meshidentities/{name}':
+    servers: []
     get:
       summary: Returns MeshIdentity entity
       operationId: getMeshIdentity
@@ -3836,6 +3894,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/meshidentities':
+    servers: []
     get:
       summary: Returns a list of MeshIdentity in the mesh.
       operationId: getMeshIdentityList
@@ -3885,6 +3944,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/meshmultizoneservices/{name}':
+    servers: []
     get:
       summary: Returns MeshMultiZoneService entity
       operationId: getMeshMultiZoneService
@@ -3988,6 +4048,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/meshmultizoneservices':
+    servers: []
     get:
       summary: Returns a list of MeshMultiZoneService in the mesh.
       operationId: getMeshMultiZoneServiceList
@@ -4037,6 +4098,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/meshservices/{name}':
+    servers: []
     get:
       summary: Returns MeshService entity
       operationId: getMeshService
@@ -4138,6 +4200,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/meshservices':
+    servers: []
     get:
       summary: Returns a list of MeshService in the mesh.
       operationId: getMeshServiceList
@@ -4187,6 +4250,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/meshtrusts/{name}':
+    servers: []
     get:
       summary: Returns MeshTrust entity
       operationId: getMeshTrust
@@ -4288,6 +4352,7 @@ paths:
         - BearerAuth: []
         - {}
   '/meshes/{mesh}/meshtrusts':
+    servers: []
     get:
       summary: Returns a list of MeshTrust in the mesh.
       operationId: getMeshTrustList
@@ -4337,6 +4402,7 @@ paths:
         - BearerAuth: []
         - {}
   /config:
+    servers: []
     get:
       tags:
         - index_other
@@ -4348,6 +4414,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ControlPlaneConfig'
   /mesh-insights:
+    servers: []
     get:
       tags:
         - index_other
@@ -4364,6 +4431,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/MeshInsightCollection'
   '/mesh-insights/{name}':
+    servers: []
     get:
       tags:
         - index_other
@@ -15147,15 +15215,15 @@ components:
                           be allowed
                         items:
                           properties:
-                            spiffeId:
+                            spiffeID:
                               description: >-
-                                SpiffeId defines a matcher configuration for
-                                SpiffeId matching
+                                SpiffeID defines a matcher configuration for
+                                SpiffeID matching
                               properties:
                                 type:
                                   description: >-
                                     Type defines how to match incoming traffic
-                                    by SpiffeId. `Exact` or `Prefix` are
+                                    by SpiffeID. `Exact` or `Prefix` are
                                     allowed.
                                   enum:
                                     - Exact
@@ -15180,15 +15248,15 @@ components:
                           requests are denied
                         items:
                           properties:
-                            spiffeId:
+                            spiffeID:
                               description: >-
-                                SpiffeId defines a matcher configuration for
-                                SpiffeId matching
+                                SpiffeID defines a matcher configuration for
+                                SpiffeID matching
                               properties:
                                 type:
                                   description: >-
                                     Type defines how to match incoming traffic
-                                    by SpiffeId. `Exact` or `Prefix` are
+                                    by SpiffeID. `Exact` or `Prefix` are
                                     allowed.
                                   enum:
                                     - Exact
@@ -15211,15 +15279,15 @@ components:
                           be denied
                         items:
                           properties:
-                            spiffeId:
+                            spiffeID:
                               description: >-
-                                SpiffeId defines a matcher configuration for
-                                SpiffeId matching
+                                SpiffeID defines a matcher configuration for
+                                SpiffeID matching
                               properties:
                                 type:
                                   description: >-
                                     Type defines how to match incoming traffic
-                                    by SpiffeId. `Exact` or `Prefix` are
+                                    by SpiffeID. `Exact` or `Prefix` are
                                     allowed.
                                   enum:
                                     - Exact
@@ -15837,32 +15905,21 @@ components:
                       items:
                         properties:
                           kind:
-                            description: >-
-                              Type of the backend: MeshService or
-                              MeshExternalService
-                               +required
+                            description: "Type of the backend: MeshService or MeshExternalService\n\n\t+required"
                             type: string
                           labels:
                             additionalProperties:
                               type: string
-                            description: |-
-                              Labels used to select backends
-                               +optional
+                            description: "Labels used to select backends\n\n\t+optional"
                             type: object
                           name:
-                            description: |-
-                              Name of the backend.
-                               +optional
+                            description: "Name of the backend.\n\n\t+optional"
                             type: string
                           namespace:
-                            description: |-
-                              Namespace of the backend. Might be empty
-                               +optional
+                            description: "Namespace of the backend. Might be empty\n\n\t+optional"
                             type: string
                           port:
-                            description: |-
-                              Port of the backend.
-                               +optional
+                            description: "Port of the backend.\n\n\t+optional"
                             format: uint32
                             type: integer
                         type: object
@@ -16544,32 +16601,21 @@ components:
                           items:
                             properties:
                               kind:
-                                description: >-
-                                  Type of the backend: MeshService or
-                                  MeshExternalService
-                                   +required
+                                description: "Type of the backend: MeshService or MeshExternalService\n\n\t+required"
                                 type: string
                               labels:
                                 additionalProperties:
                                   type: string
-                                description: |-
-                                  Labels used to select backends
-                                   +optional
+                                description: "Labels used to select backends\n\n\t+optional"
                                 type: object
                               name:
-                                description: |-
-                                  Name of the backend.
-                                   +optional
+                                description: "Name of the backend.\n\n\t+optional"
                                 type: string
                               namespace:
-                                description: |-
-                                  Namespace of the backend. Might be empty
-                                   +optional
+                                description: "Namespace of the backend. Might be empty\n\n\t+optional"
                                 type: string
                               port:
-                                description: |-
-                                  Port of the backend.
-                                   +optional
+                                description: "Port of the backend.\n\n\t+optional"
                                 format: uint32
                                 type: integer
                             type: object
@@ -16677,7 +16723,7 @@ components:
                       type: integer
                     seconds:
                       type: integer
-                  type: object
+                  type: string
                 certificateRegenerations:
                   description: Number of certificate regenerations for a Dataplane.
                   type: integer
@@ -16691,7 +16737,7 @@ components:
                       type: integer
                     seconds:
                       type: integer
-                  type: object
+                  type: string
                 supportedBackends:
                   description: Supported backends (CA).
                   items:
@@ -16717,7 +16763,7 @@ components:
                         type: integer
                       seconds:
                         type: integer
-                    type: object
+                    type: string
                   controlPlaneInstanceId:
                     description: Control Plane instance that handled given subscription.
                     type: string
@@ -16730,7 +16776,7 @@ components:
                         type: integer
                       seconds:
                         type: integer
-                    type: object
+                    type: string
                   generation:
                     description: >-
                       Generation is an integer number which is periodically
@@ -16779,7 +16825,7 @@ components:
                             type: integer
                           seconds:
                             type: integer
-                        type: object
+                        type: string
                       lds:
                         description: LDS defines all LDS stats.
                         properties:
@@ -17238,14 +17284,14 @@ components:
         cert:
           properties:
             Type:
-              description: "Types that are assignable to Type:\n\t*DataSource_Secret\n\t*DataSource_File\n\t*DataSource_Inline\n\t*DataSource_InlineString"
+              description: "Types that are valid to be assigned to Type:\n\n\t*DataSource_Secret\n\t*DataSource_File\n\t*DataSource_Inline\n\t*DataSource_InlineString"
           required:
             - Type
           type: object
         key:
           properties:
             Type:
-              description: "Types that are assignable to Type:\n\t*DataSource_Secret\n\t*DataSource_File\n\t*DataSource_Inline\n\t*DataSource_InlineString"
+              description: "Types that are valid to be assigned to Type:\n\n\t*DataSource_Secret\n\t*DataSource_File\n\t*DataSource_Inline\n\t*DataSource_InlineString"
           required:
             - Type
           type: object
@@ -17391,7 +17437,7 @@ components:
                           description: DataSource defines the source of bytes to use.
                           properties:
                             Type:
-                              description: "Types that are assignable to Type:\n\t*DataSource_Secret\n\t*DataSource_File\n\t*DataSource_Inline\n\t*DataSource_InlineString"
+                              description: "Types that are valid to be assigned to Type:\n\n\t*DataSource_Secret\n\t*DataSource_File\n\t*DataSource_Inline\n\t*DataSource_InlineString"
                           required:
                             - Type
                           type: object

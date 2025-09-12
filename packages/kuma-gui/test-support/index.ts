@@ -1,8 +1,8 @@
-import { ServiceConfigurator } from '@kumahq/container'
 import { CliEnv } from '@kumahq/settings/cli-env'
 import { config } from '@vue/test-utils'
 
 import type { PluginDefinition, ComponentDefinition } from '@/app/vue'
+import type { ServiceConfigurator } from '@kumahq/container'
 import type { Component } from 'vue'
 
 export const services: ServiceConfigurator = (app) => [
