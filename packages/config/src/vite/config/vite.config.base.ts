@@ -24,7 +24,6 @@ export const defineConfig: UserConfigFn = () => ({
         additionalData: hoistUseStatements(`
             @use "@kong/design-tokens/tokens/scss/variables" as *;
           `),
-        api: 'modern-compiler',
       },
     },
   },
