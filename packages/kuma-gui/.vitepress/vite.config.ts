@@ -1,8 +1,8 @@
 import { defineConfig } from "vite"
 import markdown from 'markdown-it'
 import yamlLoader from '@modyfi/vite-plugin-yaml'
-import { whyframe } from '@whyframe/core'
-import { whyframeVue } from '@whyframe/vue'
+// import { whyframe } from '@whyframe/core'
+// import { whyframeVue } from '@whyframe/vue'
 import { DEFAULT_SCHEMA, Type } from 'js-yaml'
 import { fileURLToPath, URL } from 'node:url'
 import { kumaIndexHtmlVars, hoistUseStatements } from "@kumahq/config/vite" 
@@ -19,13 +19,13 @@ export default defineConfig({
       },
     },
     kumaIndexHtmlVars(),
-    whyframe({
-      defaultSrc: '/.vitepress/theme/main',
-      components: [{ name: 'Story', showSource: true }],
-    }),
-    whyframeVue({
-      include: /\.(?:vue|md)$/,
-    }),
+    // whyframe({
+    //   defaultSrc: '/.vitepress/theme/main',
+    //   components: [{ name: 'Story', showSource: true }],
+    // }),
+    // whyframeVue({
+    //   include: /\.(?:vue|md)$/,
+    // }),
     yamlLoader(
       {
         schema: DEFAULT_SCHEMA.extend(

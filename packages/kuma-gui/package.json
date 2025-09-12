@@ -45,8 +45,6 @@
     "@types/semver": "^7.7.1",
     "@vitejs/plugin-vue": "^6.0.1",
     "@vue/test-utils": "^2.4.6",
-    "@whyframe/core": "^0.1.13",
-    "@whyframe/vue": "^0.1.8",
     "cypress": "^14.5.4",
     "dotenv": "^17.2.2",
     "glob": "^11.0.3",
