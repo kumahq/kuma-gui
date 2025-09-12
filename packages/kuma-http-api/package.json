@@ -2,17 +2,26 @@
   "name": "@kumahq/kuma-http-api",
   "version": "2.12.0",
   "private": true,
-  "description": "Kuma OpenAPI to typescript converter and generated typescript types",
+  "description": "Kuma OpenAPI to typescript converter, generated typescript types and mocks",
   "type": "module",
-  "types": "index.d.ts",
+  "imports": {
+    "#mocks": "./mocks/index.ts"
+  },
   "exports": {
     ".": {
       "import": "./index.d.ts",
       "types": "./index.d.ts"
+    },
+    "./mocks": {
+      "import": "./mocks/index.ts"
     }
   },
   "scripts": {
     "help": "make help"
+  },
+  "optionalDependencies": {
+    "@faker-js/faker": "^10.0.0",
+    "deepmerge": "^4.3.1"
   },
   "devDependencies": {
     "@kumahq/config": "*",

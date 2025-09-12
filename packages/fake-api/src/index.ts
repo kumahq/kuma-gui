@@ -12,7 +12,7 @@ export type MockResponse = {
   body: string | Record<string, unknown>
 } | undefined
 
-export type MockResponder = (req: RestRequest) => MockResponse
+export type ResponseHandler = (req: RestRequest) => MockResponse
 
 export type Middleware = (request: RestRequest, response: MockResponse) => MockResponse
 export type Options = Record<string, string>
@@ -22,7 +22,7 @@ export type Dependencies<TDependencies extends object = {}, TFake extends object
   env: <T extends string>(key: T, d?: string) => string
   fake: { seed: (s: number) => void } & TFake
 } & TDependencies
-export type MockEndpoint<TDependencies extends object = {}> = <TArgs extends Dependencies<TDependencies>>(args: TArgs) => MockResponder
+export type MockEndpoint<TDependencies extends object = {}> = <TArgs extends Dependencies<TDependencies>>(args: TArgs) => ResponseHandler
 export type FS<TDependencies extends object = {}> = Record<string, MockEndpoint<TDependencies>>
 
 export function escapeRoute(route: string): string {

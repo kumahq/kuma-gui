@@ -1,6 +1,6 @@
 import { token } from '@kumahq/container'
+import { fs } from '@kumahq/kuma-http-api/mocks'
 
-import { fs } from '@/test-support/mocks/fs'
 import type { ServiceDefinition, Token } from '@kumahq/container'
 import type { Env } from '@kumahq/settings/env'
 

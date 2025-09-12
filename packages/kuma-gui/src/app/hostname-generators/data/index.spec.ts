@@ -1,8 +1,10 @@
+import { fs } from '@kumahq/kuma-http-api/mocks'
 import { describe, expect, test as _test } from 'vitest'
 
 import { HostnameGenerator } from './HostnameGenerator'
 import { plugin, server } from '@/test-support/data'
-import mock from '@/test-support/mocks/src/hostname-generators/_/_overview'
+
+const mock = fs['/hostnamegenerators/:name']
 
 describe('HostnameGenerator', () => {
   const test = _test.extend(plugin<typeof HostnameGenerator>(
