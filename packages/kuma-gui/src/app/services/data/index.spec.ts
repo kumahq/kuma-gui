@@ -1,9 +1,11 @@
+import { fs } from '@kumahq/kuma-http-api/mocks'
 import { describe, expect, test as _test } from 'vitest'
 
 import { ExternalService, ServiceInsight } from './'
 import { plugin, server } from '@/test-support/data'
-import externalMock from '@/test-support/mocks/src/meshes/_/external-services'
-import insightMock from '@/test-support/mocks/src/meshes/_/service-insights'
+
+const externalMock = fs['/meshes/:mesh/external-services']
+const insightMock = fs['/meshes/:mesh/service-insights']
 
 describe('ExternalService', () => {
   const test = _test.extend(plugin<typeof ExternalService>(

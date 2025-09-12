@@ -1,8 +1,6 @@
 import { token, createInjections } from '@kumahq/container'
 import { mocker } from '@kumahq/fake-api/cypress'
 
-import type { EndpointDependencies } from '@/test-support'
-import { dependencies } from '@/test-support'
 import getClient from '@/test-support/client'
 import type { ServiceDefinition } from '@kumahq/container'
 import type { Middleware, Options } from '@kumahq/fake-api'
@@ -25,7 +23,6 @@ const $ = {
   mock: token<Mocker>('mocker'),
   Env: token('Env'),
   client: token<ReturnType<typeof getClient>>('client'),
-  dependencies: token<EndpointDependencies>('dependencies'),
 }
 type Token = ReturnType<typeof token>
 export const services = <T extends Record<string, Token>>(app: T): ServiceDefinition[] => [
@@ -38,25 +35,13 @@ export const services = <T extends Record<string, Token>>(app: T): ServiceDefini
     },
   }],
 
-  [$.dependencies, {
-    service: (env) => {
-      return {
-        ...dependencies,
-        env,
-      }
-    },
-    arguments: [
-      app.env,
-    ],
-  }],
-
   [$.client, {
     service: getClient,
   }],
   [app.mock, {
     service: mocker,
     arguments: [
-      $.dependencies,
+      app.dependencies,
       app.fakeFS,
     ],
   }],

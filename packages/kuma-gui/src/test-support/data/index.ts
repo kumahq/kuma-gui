@@ -1,10 +1,12 @@
 import { server as fakeApi } from '@kumahq/fake-api/msw'
+import { dependencies } from '@kumahq/kuma-http-api/mocks'
 import { test as _test } from 'vitest'
 
-import { dependencies } from '../'
 
 type FakeApiParameters = Parameters<typeof fakeApi<typeof dependencies>>
-export const server = (mock: FakeApiParameters[0], options: FakeApiParameters[1]) => fakeApi(mock, options, dependencies)
+export const server = (mock: FakeApiParameters[0], options: FakeApiParameters[1]) => {
+  return fakeApi(mock, options, dependencies)
+}
 
 type Writeable<T> = { -readonly [P in keyof T]: Writeable<T[P]> }
 

@@ -1,12 +1,11 @@
 import { replicateKumaServer, defineConfig as defineBaseConfig, yamlLoaderPluginConfig, vuePluginConfig } from '@kumahq/config/vite'
 import fakeApi from '@kumahq/fake-api/vite'
+import { fs, dependencies } from '@kumahq/kuma-http-api/mocks'
 import yamlLoader from '@modyfi/vite-plugin-yaml'
 import vue from '@vitejs/plugin-vue'
 import { defineConfig, mergeConfig } from 'vite'
 import svgLoader from 'vite-svg-loader'
 
-import { dependencies } from './src/test-support'
-import { fs } from './src/test-support/mocks/fs'
 import type { UserConfig, UserConfigFn } from 'vite'
 // https://vitejs.dev/config/
 
