@@ -2,7 +2,7 @@ import { createI18n } from '@kong-ui-public/i18n'
 import { semver } from '@kumahq/config/utils'
 
 import { get } from '@/app/application'
-import type { Env } from '@kumahq/settings/env'
+import type { Env } from '@/app/application'
 import './i18n.d'
 
 interface I18nRecord {
@@ -23,7 +23,7 @@ const camelCaseToWords = (str: string): string => {
   return words.charAt(0).toUpperCase() + words.substring(1)
 }
 
-export default <T extends I18nRecord>(strs: T, env: Env['var']) => {
+export default <T extends I18nRecord>(strs: T, env: Env) => {
   const i18n = createI18n<typeof strs>('en-us', strs, {
     isGlobal: true,
     onError: (e) => {

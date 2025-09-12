@@ -1,4 +1,4 @@
-import { CliEnv } from '@kumahq/settings/cli-env'
+import { defaultKumaHtmlVars as htmlVars } from '@kumahq/config/vite'
 import { config } from '@vue/test-utils'
 
 import type { PluginDefinition, ComponentDefinition } from '@/app/vue'
@@ -28,11 +28,7 @@ export const services: ServiceConfigurator = (app) => [
       app.plugins,
     ],
   }],
-
-  [app.Env, {
-    service: CliEnv,
-    arguments: [
-      app.EnvVars,
-    ],
+  [app.htmlVars, {
+    service: () => htmlVars,
   }],
 ]

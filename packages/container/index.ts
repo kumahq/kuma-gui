@@ -93,7 +93,14 @@ const decorate = (entries: ServiceDefinition[]) => {
   })
   return [...map.entries()]
 }
-export const get = <T extends TokenValue>(token: T): TokenType<T> => container.get(token)
+export const get = <T extends TokenValue>(token: T): TokenType<T> => {
+  try {
+    return container.get(token)
+  } catch (e) {
+    console.error(`error resolving ${token.__d}`)
+    throw e
+  }
+}
 export const build = (...entries: Array<ServiceDefinition[]>): typeof get => {
   const merged = decorate(merge(...entries))
   merged.forEach(item => service(...item))

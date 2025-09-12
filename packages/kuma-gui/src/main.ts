@@ -60,7 +60,8 @@ async function mountVueApplication() {
       })()
       : [],
   )
-  if (import.meta.env.MODE !== 'production' && get($.env)('KUMA_MOCK_API_ENABLED', 'true') === 'true') {
+  // @ts-ignore KUMA_MOCK_API_ENABLED non-prod only
+  if (import.meta.env.MODE !== 'production' && get($.env)('KUMA_MOCK_API_ENABLED') === 'true') {
     const msw = await import('@/app/msw')
     await get(msw.TOKENS.msw)
   }

@@ -55,14 +55,17 @@ export class Router<T> {
     throw new Error(`Matching route for '${path}' not found`)
   }
 }
-const strToEnv = (str: string): [string, string][] => {
-  return str.split(';')
-    .map((item) => item.trim())
-    .filter((item) => item !== '')
-    .map((item) => {
-      const [key, ...value] = item.split('=')
-      return [key, value.join('=')] as [string, string]
-    })
+export const Cookie = {
+  parse: (str: string, { prefix = '' } = { prefix: '' }) => {
+    return Object.fromEntries(str.split(';')
+      .map((item) => item.trim())
+      .filter((item) => item !== '')
+      .map((item) => {
+        const [key, ...value] = item.split('=')
+        return [key, value.join('=')] as [string, string]
+      })
+      .filter(([key, _value]) => key.startsWith(prefix)))
+  },
 }
 export const createFetchSync = <T extends object = {}>({ dependencies, fs }: { dependencies: Dependencies<T>, fs: FS }) => {
   const router = new Router(fs)
@@ -71,10 +74,7 @@ export const createFetchSync = <T extends object = {}>({ dependencies, fs }: { d
     const _url = new URL(url)
     const { route, params } = router.match(_url.toString())
 
-    const cookies = strToEnv(String(options.headers?.cookie ?? '')).reduce((prev, [key, value]) => {
-      prev[key] = value
-      return prev
-    }, {} as Record<string, string>)
+    const cookies = Cookie.parse(String(options.headers?.cookie ?? ''))
     const env = <T extends Parameters<typeof dependencies['env']>[0]>(key: T, d = '') => dependencies.env(key, cookies[key] ?? d)
 
     const request = route({

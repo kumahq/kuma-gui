@@ -1,8 +1,8 @@
 import { token } from '@kumahq/container'
 
+import type { Env } from '@/app/application'
 import { fs } from '@/test-support/mocks/fs'
 import type { ServiceDefinition, Token } from '@kumahq/container'
-import type { Env } from '@kumahq/settings/env'
 
 
 const $ = {
@@ -10,8 +10,18 @@ const $ = {
 }
 
 export const services = (app: Record<string, Token>): ServiceDefinition[] => [
+  [token('kuma.env.vars'), {
+    service: () => {
+      return {
+        KUMA_MOCK_API_ENABLED: () => 'true',
+      }
+    },
+    labels: [
+      app.vars,
+    ],
+  }],
   [$.kumaFS, {
-    service: (env: Env['var']) => {
+    service: (env: Env) => {
       // return fs
       const baseURL = env('KUMA_API_URL')
       return Object.fromEntries(Object.entries(fs).map(([route, response]) => {

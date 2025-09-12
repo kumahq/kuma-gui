@@ -2,10 +2,9 @@ import createClient from 'openapi-fetch'
 
 import { GlobalInsight } from './data'
 import { defineSources } from '../application/services/data-source'
-import type { DataSourceResponse } from '@/app/application'
+import type { DataSourceResponse, Env } from '@/app/application'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import type { paths } from '@kumahq/kuma-http-api'
-import type { Env } from '@kumahq/settings/env'
 
 export type ControlPlaneAddresses = {
   http: string
@@ -25,7 +24,7 @@ export const compare = (a: string, b: string) => {
   }
   return 0
 }
-export const sources = (env: Env['var'], api: KumaApi) => {
+export const sources = (env: Env, api: KumaApi) => {
   const http = createClient<paths>({
     baseUrl: '',
     fetch: api.client.fetch,

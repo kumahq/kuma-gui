@@ -1,5 +1,5 @@
 import { makeRequest } from './makeRequest'
-import type { Env } from '@kumahq/settings/env'
+import type { Env } from '@/app/application'
 
 export const createFetch = (client: RestClient) => {
   return async (r: Request | string) => {
@@ -22,7 +22,7 @@ export const createFetch = (client: RestClient) => {
 }
 export class RestClient {
   constructor(
-    protected env: Env['var'],
+    protected env: Env,
   ) { }
 
   get fetch() {
