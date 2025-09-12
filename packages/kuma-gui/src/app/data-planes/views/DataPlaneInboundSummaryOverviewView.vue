@@ -148,7 +148,7 @@
                                             :key="typeof kri"
                                           >
                                             <XAction
-                                              v-if="policyTypes[kind] && 'mesh' in kri && 'name' in kri"
+                                              v-if="policyTypes[kind]"
                                               :to="{
                                                 name: 'policy-detail-view',
                                                 params: {

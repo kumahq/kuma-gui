@@ -557,7 +557,7 @@
                                       data-testid="dataplane-inbound"
                                       :protocol="item.protocol"
                                       :port-name="Kri.fromString(item.proxyResourceName).sectionName"
-                                      :traffic="traffic?.inbounds[Kri.toString({ ...Kri.fromString(item.proxyResourceName), sectionName: item.port.toString() })]"
+                                      :traffic="traffic?.inbounds[item.proxyResourcePortName]"
                                     >
                                       <XAction
                                         data-action

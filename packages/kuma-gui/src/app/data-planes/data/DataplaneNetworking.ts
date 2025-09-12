@@ -31,6 +31,11 @@ export const DataplaneNetworkingLayout =  {
   fromObject(dataplaneNetworkingLayout: PartialDataplaneNetworkingLayout) {
     return {
       ...dataplaneNetworkingLayout,
+      inbounds: dataplaneNetworkingLayout.inbounds.map((inbound) => ({
+        ...inbound,
+        // proxyResourcePortName is the proxyResourceName with the port as sectionName
+        proxyResourcePortName: `${inbound.proxyResourceName.slice(0, inbound.proxyResourceName.lastIndexOf('_'))}_${inbound.port}`,
+      })),
     } satisfies PartialDataplaneNetworkingLayout
   },
 }

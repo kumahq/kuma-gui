@@ -63,36 +63,6 @@ describe('kri', () => {
       'kri______',
     ],
 
-    // ContextualKri
-    [
-      Kri.fromString('self_inbound_httpport'),
-      {
-        context: 'inbound',
-        sectionName: 'httpport',
-      },
-    ],
-    [
-      Kri.fromString('self_transparentproxy_passthrough_inbound_ipv4'),
-      {
-        context: 'transparentproxy_passthrough_inbound',
-        sectionName: 'ipv4',
-      },
-    ],
-    [
-      Kri.toString({
-        context: 'inbound',
-        sectionName: '8080',
-      }),
-      'self_inbound_8080',
-    ],
-    [
-      Kri.toString({
-        context: 'transparentproxy_passthrough_inbound',
-        sectionName: 'ipv6',
-      }),
-      'self_transparentproxy_passthrough_inbound_ipv6',
-    ],
-
     // isKri
     [
       Kri.isKriString('kri_policy_mesh_zone_namespace_name_section'),
