@@ -20,6 +20,7 @@ import {
   // XCopyDebug,
   //
   XDisclosure,
+  XDl,
   XDownload,
   XEmptyState,
   XI18n,
@@ -61,6 +62,7 @@ const components = [
   ['XBreadcrumbs', XBreadcrumbs],
   ['XCopyButton', XCopyButton],
   ['XCodeBlock', XCodeBlock],
+  ['XDl', XDl],
   ['XEmptyState', XEmptyState],
   ['XIcon', XIcon],
   ['XI18n', XI18n],
@@ -108,6 +110,7 @@ declare module 'vue' {
     XBadge: typeof XBadge
     XCopyButton: typeof XCopyButton
     XCodeBlock: typeof XCodeBlock
+    XDl: typeof XDl
     XBreadcrumbs: typeof XBreadcrumbs
     XEmptyState: typeof XEmptyState
     XLayout: typeof XLayout
