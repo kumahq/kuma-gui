@@ -6,6 +6,17 @@ type KriString = `kri_${string}_${string}_${string}_${string}_${string}_${string
 
 export class Kri {
   static fromString(kri: string) {
+    if(!Kri.isKriString(kri)) {
+      return {
+        shortName: '',
+        mesh: '',
+        zone: '',
+        namespace: '',
+        name: '',
+        sectionName: '',
+      }
+    }
+
     const [
       shortName = '',
       mesh = '',

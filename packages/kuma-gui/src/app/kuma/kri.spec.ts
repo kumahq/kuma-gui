@@ -39,6 +39,17 @@ describe('kri', () => {
       },
     ],
     [
+      Kri.fromString('not-kri_foo_bar_baz_qux_quux_corge'),
+      {
+        shortName: '',
+        mesh: '',
+        zone: '',
+        namespace: '',
+        name: '',
+        sectionName: '',
+      },
+    ],
+    [
       Kri.toString({
         shortName: 'policy',
         mesh: 'mesh',
