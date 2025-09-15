@@ -1,8 +1,8 @@
 import { base, en } from '@faker-js/faker'
 
 import FakeKuma from './FakeKuma'
+import type { Env } from '@/app/application'
 import type { RestRequest, MockResponder, FS as FakeFS } from '@kumahq/fake-api'
-import type { Env } from '@kumahq/settings/env'
 
 export type { MockResponder }
 export type FS = FakeFS<EndpointDependencies>
@@ -32,8 +32,7 @@ const pager: Pager = (_total: string | number, req: RestRequest, self) => {
     size,
   }
 }
-
-export type MockEnvKeys = keyof {
+export type MockEnv = {
   FAKE_SEED: string
   KUMA_RULE_MATCHER_COUNT: string
   KUMA_DATAPLANE_COUNT: string
@@ -65,6 +64,7 @@ export type MockEnvKeys = keyof {
   KUMA_SUBSCRIPTION_COUNT: string
   KUMA_GLOBALSECRET_COUNT: string
   KUMA_MODE: string
+  KUMA_ENVIRONMENT: string
   KUMA_MTLS_ENABLED: string
   KUMA_STORE_TYPE: string
   KUMA_LATENCY: string
@@ -76,13 +76,17 @@ export type MockEnvKeys = keyof {
   KUMA_MESHIDENTITY_COUNT: string
   KUMA_MESHTRUST_COUNT: string
 }
+
+type AppEnv = Parameters<Env>[0]
+type EnvKeys = keyof MockEnv | AppEnv
+
 export type EndpointDependencies = {
   fake: FakeKuma
   pager: Pager
-  env: (key: Parameters<Env['var']>[0] | MockEnvKeys, d: string) => string
+  env: (key: EnvKeys, d?: string) => string
 }
 export const dependencies = {
   fake: new FakeKuma({ locale: [base, en] }),
   pager,
-  env: <T extends string = Parameters<Env['var']>[0] | MockEnvKeys>(_key: T, d = '') => d,
+  env: <T extends string = EnvKeys>(_key: T, d = '') => d,
 }

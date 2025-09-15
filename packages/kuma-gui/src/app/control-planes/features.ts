@@ -1,6 +1,6 @@
+import type { Env } from '@/app/application'
 import type { Features } from '@kumahq/settings/can'
-import type { Env } from '@kumahq/settings/env'
-export const features = (env: Env['var']) => {
+export const features = (env: Env) => {
   return {
     'use kubernetes': () => {
       return env('KUMA_ENVIRONMENT') === 'kubernetes'

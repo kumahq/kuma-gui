@@ -1,6 +1,6 @@
 import { token, createInjections } from '@kumahq/container'
 import can from '@kumahq/settings/can'
-import { Env } from '@kumahq/settings/env'
+import env from '@kumahq/settings/env'
 // @ts-ignore TS comes with a Object.groupBy declaration but not a polyfill
 import groupBy from 'object.groupby'
 // @ts-ignore TS comes with a set.prototype.difference declaration but not a polyfill
@@ -20,7 +20,6 @@ import storage from './services/storage'
 import { create, destroy, DataSourcePool } from '@/app/application/services/data-source'
 import { services as kuma } from '@/app/kuma'
 import type { ServiceDefinition } from '@kumahq/container'
-import type { EnvVars } from '@kumahq/settings/env'
 import type { Component } from 'vue'
 import type { RouteRecordRaw } from 'vue-router'
 
@@ -62,13 +61,18 @@ declare module 'vue' {
     $routeName?: string
   }
 }
-export interface Abilities {}
+export interface Abilities { }
 export type Can = Abilities['can']
 
+export interface Environment { }
+export type Env = Environment['env']
+
+// @TODO ideally we don't want people using env defaults in the application, whereas they are needed in mocks
+// type EnvKeys = Parameters<Env> extends [infer Key, any?] ? Key : never
+
 const $ = {
-  Env: token<Env>('application.Env'),
-  env: token<Env['var']>('application.env'),
-  EnvVars: token<EnvVars>('EnvVars'),
+  env: token<Env>('application.env'),
+  vars: token('application.env.vars'),
 
   fetch: token<typeof fetch>('application.fetch'),
   can: token<Can>('application.can'),
@@ -202,19 +206,10 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
         $.features,
       ],
     }],
-    [$.Env, {
-      service: Env,
-      arguments: [
-        app.EnvVars,
-      ],
-    }],
-
     [$.env, {
-      service: (env: Env): Env['var'] => {
-        return (...rest) => env.var(...rest)
-      },
+      service: env,
       arguments: [
-        $.Env,
+        $.vars,
       ],
     }],
 

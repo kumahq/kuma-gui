@@ -1,8 +1,7 @@
 import type { DataplaneOverview } from '@/app/data-planes/data'
 import type { Mesh } from '@/app/meshes/data'
 import type { Features } from '@kumahq/settings/can'
-import type { Env } from '@kumahq/settings/env'
-export const features = (_env: Env['var']) => {
+export const features = () => {
   return {
     'use transparent-proxying': (_can: unknown, dataplaneOverview: DataplaneOverview) => {
       // TODO: the feature `bind-outbounds` is not implemented yet and the name might change, double check again when implemented
