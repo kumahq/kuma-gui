@@ -47,7 +47,6 @@
     "@vue/test-utils": "^2.4.6",
     "cypress": "^14.5.4",
     "dotenv": "^17.2.2",
-    "glob": "^11.0.3",
     "gray-matter": "^4.0.3",
     "jsdom": "^27.0.0",
     "markdown-it": "^14.1.0",
