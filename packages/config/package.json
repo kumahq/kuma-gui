@@ -31,7 +31,7 @@
   },
   "dependencies": {
     "@bahmutov/cypress-esbuild-preprocessor": "^2.2.5",
-    "@badeball/cypress-cucumber-preprocessor": "^23.0.0",
+    "@badeball/cypress-cucumber-preprocessor": "^23.1.0",
     "@cucumber/gherkin-utils": "^10.0.0",
     "@eslint/js": "^9.35.0",
     "@stylistic/eslint-plugin": "^5.3.1",
@@ -51,7 +51,7 @@
     "eslint-plugin-no-unsanitized": "^4.1.4",
     "eslint-plugin-vue": "^10.4.0",
     "glob": "^11.0.3",
-    "globals": "^16.3.0",
+    "globals": "^16.4.0",
     "lockfile-lint": "^4.14.1",
     "stylelint-config-html": "^1.1.0",
     "stylelint-config-recommended-scss": "^16.0.0",
