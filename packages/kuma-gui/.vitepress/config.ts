@@ -4,7 +4,6 @@ import matter from 'gray-matter'
 import path from 'node:path'
 // @ts-ignore TS comes with a Object.groupBy declaration but not a polyfill
 import groupBy from 'object.groupby'
-import { sync as globSync } from 'glob'
 import fs from 'node:fs'
 import { fileURLToPath } from 'node:url'
 
@@ -16,7 +15,7 @@ groupBy.shim()
 const h1re = /#+\s+.+/
 
 const get = (path: string) => {
-  const items = globSync(path)
+  const items = fs.globSync(path)
     .map((path) => ({ path, content: fs.readFileSync(path).toString() }))
     .map(({ path, content }) => ({ path, ...matter(content) }))
     .map(item => {
