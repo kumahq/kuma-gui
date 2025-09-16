@@ -5,12 +5,10 @@
   "description": "Shared dependencies and configuration for kuma-gui",
   "author": "Kong",
   "type": "module",
-  "main": "./src/index.cjs",
   "module": "./src/index.ts",
   "types": "./src/index.ts",
   "exports": {
     ".": {
-      "require": "./src/index.cjs",
       "import": "./src/index.ts"
     },
     "./cypress/e2e": {

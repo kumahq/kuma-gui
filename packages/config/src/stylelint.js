@@ -1,5 +1,5 @@
 /** @returns {import('stylelint').Config} */
-function createStylelintConfig() {
+export function createStylelintConfig() {
   return {
     extends: [
       'stylelint-config-html',
@@ -26,8 +26,4 @@ function createStylelintConfig() {
       'no-duplicate-selectors': [null],
     },
   }
-}
-
-module.exports = {
-  createStylelintConfig,
 }

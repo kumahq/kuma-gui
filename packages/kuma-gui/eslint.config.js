@@ -1,6 +1,6 @@
 /** @typedef {import('eslint').Linter.Config[]} Config */
 
-const { eslint } = require('@kumahq/config')
+import { eslint } from '@kumahq/config'
 
 const config = [
   // if necessary, how to allow an exact pin for a package
@@ -22,4 +22,4 @@ const config = [
   },
 ]
 
-module.exports = config
+export default config

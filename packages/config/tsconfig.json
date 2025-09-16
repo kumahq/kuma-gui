@@ -5,6 +5,7 @@
     "baseUrl": ".",
     "module": "preserve",
     "target": "esnext",
+    "allowImportingTsExtensions": true,
     "skipLibCheck": true,
     "verbatimModuleSyntax": true,
     "noEmit": true,
