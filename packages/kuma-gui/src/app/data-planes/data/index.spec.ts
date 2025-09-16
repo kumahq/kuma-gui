@@ -1,9 +1,11 @@
+import { fs } from '@kumahq/kuma-http-api/mocks'
 import { describe, expect, test as _test } from 'vitest'
 
 import { Dataplane, DataplaneOverview } from './'
 import { plugin, server } from '@/test-support/data'
-import dataplaneMock from '@/test-support/mocks/src/meshes/_/dataplanes/_'
-import mock from '@/test-support/mocks/src/meshes/_/dataplanes/_/_overview'
+
+const dataplaneMock = fs['/meshes/:mesh/dataplanes/:name']
+const mock = fs['/meshes/:mesh/dataplanes/:name/_overview']
 
 describe('Dataplane', () => {
   const test = _test.extend(plugin<typeof Dataplane>(
@@ -63,8 +65,6 @@ describe('Dataplane', () => {
           return item
         })
         expect(actual.networking.outbounds).toBeDefined()
-      }, {
-
       },
     )
   })
