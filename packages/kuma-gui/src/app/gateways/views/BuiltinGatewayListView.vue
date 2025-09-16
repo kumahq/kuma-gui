@@ -122,7 +122,7 @@
               v-if="route.child()"
               v-slot="{ Component }"
             >
-              <SummaryView
+              <XDrawer
                 @close="route.replace({
                   name: 'builtin-gateway-list-view',
                   params: {
@@ -140,7 +140,7 @@
                   v-if="typeof data !== 'undefined'"
                   :items="data.items"
                 />
-              </SummaryView>
+              </XDrawer>
             </RouterView>
           </DataLoader>
         </XLayout>
@@ -152,7 +152,6 @@
 <script lang="ts" setup>
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
-import SummaryView from '@/app/common/SummaryView.vue'
 </script>
 <style lang="scss" scoped>
 .search-field {

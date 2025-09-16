@@ -1,4 +1,4 @@
-const { sync: globSync } = require('glob')
+const fs = require('node:fs')
 
 /**
  * @param {number} length
@@ -6,7 +6,7 @@ const { sync: globSync } = require('glob')
  * @returns {string[]}
  */
 function getPartitionedTestFiles(length, prefix = '') {
-  const files = globSync(`${prefix}features/**/*.feature`)
+  const files = fs.globSync(`${prefix}features/**/*.feature`)
 
   shuffleArray(files)
 

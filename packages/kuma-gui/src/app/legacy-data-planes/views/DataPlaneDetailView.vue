@@ -721,7 +721,7 @@
           <RouterView
             v-slot="child"
           >
-            <SummaryView
+            <XDrawer
               v-if="child.route.name !== route.name"
               :width="child.route.name === 'data-plane-subscriptions-summary-view' ? '900px' : '670px'"
               @close="function () {
@@ -744,7 +744,7 @@
                 :networking="props.data.dataplane.networking"
                 :subscriptions="props.data.dataplaneInsight.subscriptions"
               />
-            </SummaryView>
+            </XDrawer>
           </RouterView>
         </XLayout>
       </AppView>
@@ -755,7 +755,6 @@
 <script lang="ts" setup>
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
-import SummaryView from '@/app/common/SummaryView.vue'
 import TagList from '@/app/common/TagList.vue'
 import ConnectionCard from '@/app/connections/components/connection-traffic/ConnectionCard.vue'
 import ConnectionGroup from '@/app/connections/components/connection-traffic/ConnectionGroup.vue'

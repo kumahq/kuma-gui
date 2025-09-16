@@ -19,10 +19,9 @@
 
 <script lang="ts" setup>
 import { onClickOutside, useThrottleFn } from '@vueuse/core'
-import { ref, provide } from 'vue'
+import { ref, provide, useId } from 'vue'
 
-import { uniqueId } from '@/app/application'
-const id = uniqueId('summary-view-title')
+const id = useId()
 provide('app-summary-view', id)
 
 // recreates KSlideOuts close on blur, but ignores clicks on any anchors

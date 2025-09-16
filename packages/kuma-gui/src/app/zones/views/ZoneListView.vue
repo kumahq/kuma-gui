@@ -213,7 +213,7 @@
           v-if="route.params.zone"
           v-slot="child"
         >
-          <SummaryView
+          <XDrawer
             @close="route.replace({
               name: 'zone-cp-list-view',
               query: {
@@ -228,7 +228,7 @@
               :name="route.params.zone"
               :zone-overview="data?.items.find((item) => item.name === route.params.zone)"
             />
-          </SummaryView>
+          </XDrawer>
         </RouterView>
       </AppView>
     </DataSource>
@@ -243,7 +243,6 @@ import { sources as zoneSources } from '../sources'
 import { get } from '@/app/application'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
-import SummaryView from '@/app/common/SummaryView.vue'
 import type { ZoneEgressOverview } from '@/app/zone-egresses/data'
 import type { ZoneIngressOverview } from '@/app/zone-ingresses/data'
 

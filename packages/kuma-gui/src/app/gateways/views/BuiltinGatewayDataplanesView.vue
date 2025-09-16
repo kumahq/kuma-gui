@@ -185,7 +185,7 @@
                 v-if="route.params.proxy"
                 v-slot="child"
               >
-                <SummaryView
+                <XDrawer
                   @close="route.replace({
                     name: route.name,
                     params: {
@@ -203,7 +203,7 @@
                     v-if="typeof dataplanesData !== 'undefined'"
                     :items="dataplanesData.items"
                   />
-                </SummaryView>
+                </XDrawer>
               </RouterView>
             </DataCollection>
           </DataLoader>
@@ -217,7 +217,6 @@
 import type { MeshGateway } from '../data'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
-import SummaryView from '@/app/common/SummaryView.vue'
 import { sources as dataplaneSources } from '@/app/data-planes/sources'
 const props = defineProps<{
   gateway: MeshGateway

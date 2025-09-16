@@ -328,7 +328,7 @@
               <RouterView
                 v-slot="child"
               >
-                <SummaryView
+                <XDrawer
                   v-if="child.route.name !== route.name"
                   @close="route.replace({
                     name: 'mesh-detail-view',
@@ -345,7 +345,7 @@
                     :mesh-identities="meshIdentities?.items"
                     :mesh-trusts="meshTrusts?.items"
                   />
-                </SummaryView>
+                </XDrawer>
               </RouterView>
             </DataLoader>
           </AppView>
@@ -362,7 +362,6 @@ import { YAML } from '@/app/application'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import ResourceStatus from '@/app/common/ResourceStatus.vue'
-import SummaryView from '@/app/common/SummaryView.vue'
 import { sources as policySources } from '@/app/policies/sources'
 import { sources as resourceSources } from '@/app/resources/sources'
 

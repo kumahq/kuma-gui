@@ -273,7 +273,7 @@
             <RouterView
               v-slot="{ Component }"
             >
-              <SummaryView
+              <XDrawer
                 v-if="route.child()"
                 @close="route.replace({
                   name: route.name,
@@ -292,7 +292,7 @@
                   v-if="typeof data !== 'undefined'"
                   :items="data.items"
                 />
-              </SummaryView>
+              </XDrawer>
             </RouterView>
           </DataCollection>
         </DataLoader>
@@ -307,7 +307,6 @@ import { KUI_ICON_SIZE_40 } from '@kong/design-tokens'
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
-import SummaryView from '@/app/common/SummaryView.vue'
 import type { Mesh } from '@/app/meshes/data'
 const props = defineProps<{
   mesh: Mesh
