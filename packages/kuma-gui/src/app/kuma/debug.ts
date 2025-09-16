@@ -10,6 +10,22 @@ const $ = {
 }
 
 export const services = (app: Record<string, Token>): ServiceDefinition[] => [
+  [token('kuma.locales.debug'), {
+    service: () => {
+      return {
+        common: {
+          product: {
+            docs: 'https://kuma.io/docs/dev',
+          },
+        },
+      }
+    },
+    labels: [
+      // in Cypress this token doesn't exist
+      app.enUs ?? token(''),
+    ],
+  }],
+
   [token('kuma.env.vars'), {
     service: () => {
       return {
