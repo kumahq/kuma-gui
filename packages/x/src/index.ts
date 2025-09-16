@@ -21,6 +21,7 @@ import {
   //
   XDisclosure,
   XDownload,
+  XDrawer,
   XEmptyState,
   XI18n,
   XIcon,
@@ -80,6 +81,7 @@ const components = [
   ['XTooltip', XTooltip],
   ['XDisclosure', XDisclosure],
   ['XDownload', XDownload],
+  ['XDrawer', XDrawer],
   ['XAboutCard', XAboutCard],
   ['XInputSwitch', XInputSwitch],
   ['XCheckbox', XCheckBox],

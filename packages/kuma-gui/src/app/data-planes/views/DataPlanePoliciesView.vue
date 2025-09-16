@@ -197,7 +197,7 @@
         <RouterView
           v-slot="{ Component }"
         >
-          <SummaryView
+          <XDrawer
             v-if="route.child() && policyTypesData"
             @close="route.replace({
               name: 'data-plane-policies-view',
@@ -211,7 +211,7 @@
               :is="Component"
               :policy-types="policyTypesData.policyTypes"
             />
-          </SummaryView>
+          </XDrawer>
         </RouterView>
       </DataSource>
     </AppView>
@@ -221,7 +221,6 @@
 import BuiltinGatewayPolicies from '../components/BuiltinGatewayPolicies.vue'
 import type { DataplaneOverview } from '../data'
 import type { MeshGatewayDataplaneSource, SidecarDataplaneCollectionSource } from '../sources'
-import SummaryView from '@/app/common/SummaryView.vue'
 import PolicyTypeEntryList from '@/app/policies/components/PolicyTypeEntryList.vue'
 import type { PolicyResourceType } from '@/app/policies/data'
 import { sources as policySources } from '@/app/policies/sources'

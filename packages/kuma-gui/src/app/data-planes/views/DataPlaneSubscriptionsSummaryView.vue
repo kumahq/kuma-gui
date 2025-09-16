@@ -96,7 +96,7 @@
     <RouterView
       v-slot="child"
     >
-      <SummaryView
+      <XDrawer
         v-if="child.route.name !== route.name"
         width="670px"
         @close="function () {
@@ -117,7 +117,7 @@
           :is="child.Component"
           :data="props.subscriptions"
         />
-      </SummaryView>
+      </XDrawer>
     </RouterView>
   </RouteView>
 </template>
@@ -125,7 +125,6 @@
 <script lang="ts" setup>
 import type { DataplaneOverview } from '../data'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
-import SummaryView from '@/app/common/SummaryView.vue'
 const props = defineProps<{
   subscriptions: DataplaneOverview['dataplaneInsight']['subscriptions']
 }>()

@@ -202,7 +202,7 @@
           <RouterView
             v-slot="child"
           >
-            <SummaryView
+            <XDrawer
               v-if="child.route.name !== route.name"
               width="670px"
               @close="function () {
@@ -220,7 +220,7 @@
                 :data="route.params.subscription.length > 0 ? props.data.zoneEgressInsight.subscriptions : (child.route.name as string).includes('-inbound-') ? [props.data.zoneEgress] : traffic?.outbounds || {}"
                 :networking="props.data.zoneEgress.networking"
               />
-            </SummaryView>
+            </XDrawer>
           </RouterView>
         </DataLoader>
         <XCard
@@ -313,7 +313,6 @@ import type { ZoneEgressOverview } from '../data'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
-import SummaryView from '@/app/common/SummaryView.vue'
 import ConnectionCard from '@/app/connections/components/connection-traffic/ConnectionCard.vue'
 import ConnectionGroup from '@/app/connections/components/connection-traffic/ConnectionGroup.vue'
 import ConnectionTraffic from '@/app/connections/components/connection-traffic/ConnectionTraffic.vue'
