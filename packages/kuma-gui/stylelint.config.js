@@ -1,9 +1,9 @@
 /** @typedef {import('stylelint').Config} Config */
 
-const { stylelint } = require('@kumahq/config')
+import { stylelint } from '@kumahq/config'
 
 /** @type {Config} */ const config = {
   ...stylelint({}),
 }
 
-module.exports = config
+export default config

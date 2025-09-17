@@ -1,16 +1,18 @@
-const { resolve, dirname } = require('node:path')
-const { readFileSync: read } = require('node:fs')
-const vuePlugin = require('eslint-plugin-vue')
-const { defineConfig, createConfig: vueTsEslintConfig } = require('@vue/eslint-config-typescript')
-const importPlugin = require('eslint-plugin-import')
-const stylistic = require('@stylistic/eslint-plugin')
-const eslint = require('@eslint/js')
-const nounsanitized = require('eslint-plugin-no-unsanitized')
-const jsonSchemaValidatorPlugin = require('eslint-plugin-json-schema-validator')
-const globals = require('globals')
-const escape = require('escape-string-regexp')
-const { execSync } = require('node:child_process')
-const $config = dirname(require.resolve('@kumahq/config'))
+import eslint from '@eslint/js'
+import stylistic from '@stylistic/eslint-plugin'
+import { defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript'
+import escape from 'escape-string-regexp'
+import importPlugin from 'eslint-plugin-import'
+import jsonSchemaValidatorPlugin from 'eslint-plugin-json-schema-validator'
+import nounsanitized from 'eslint-plugin-no-unsanitized'
+import vuePlugin from 'eslint-plugin-vue'
+import globals from 'globals'
+import { execSync } from 'node:child_process'
+import { readFileSync as read } from 'node:fs'
+import { resolve, dirname } from 'node:path'
+import { fileURLToPath } from 'node:url'
+
+const $config = dirname(fileURLToPath(import.meta.resolve('@kumahq/config')))
 
 const workspace = JSON.parse(
   execSync('npm query :root').toString(),
@@ -70,7 +72,7 @@ const INLINE_NON_VOID_ELEMENTS = [
  * @param {{ tsConfigPath?: string, componentIgnorePatterns?: string[], versionIgnorePatterns: Record<string, unknown> }} [options]
  * @returns {import('eslint').Linter.Config[]}
  */
-function createEslintConfig(
+export function createEslintConfig(
   {
     tsConfigPath = 'tsconfig.json',
     componentIgnorePatterns = [],
@@ -108,9 +110,9 @@ function createEslintConfig(
     }
   })(packageSchema)
 
-  const vueTsConfig = defineConfig(
+  const vueTsConfig = defineConfigWithVueTs(
     ...vuePlugin.configs['flat/recommended'],
-    vueTsEslintConfig(),
+    vueTsConfigs.recommended,
   )
 
   const importConfig = [
@@ -375,8 +377,4 @@ function createEslintConfig(
       ],
     },
   ]
-}
-
-module.exports = {
-  createEslintConfig,
 }

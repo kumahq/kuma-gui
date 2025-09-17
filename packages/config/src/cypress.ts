@@ -2,8 +2,8 @@ import { addCucumberPreprocessorPlugin } from '@badeball/cypress-cucumber-prepro
 import { createEsbuildPlugin } from '@badeball/cypress-cucumber-preprocessor/esbuild'
 import createBundler from '@bahmutov/cypress-esbuild-preprocessor'
 import { defineConfig } from 'cypress'
-import cypressFailFast from 'cypress-fail-fast/plugin'
-import installLogsPrinter from 'cypress-terminal-report/src/installLogsPrinter'
+import cypressFailFast from 'cypress-fail-fast/plugin.js'
+import installLogsPrinter from 'cypress-terminal-report/src/installLogsPrinter.js'
 import esbuild from 'esbuild'
 import fs from 'node:fs'
 
