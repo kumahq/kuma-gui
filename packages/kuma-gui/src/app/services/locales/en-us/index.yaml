@@ -1,4 +1,8 @@
 services:
+  kri:
+    msvc: MeshService
+    mzsvc: MeshMultiZoneService
+    extsvc: MeshExternalService
   x-empty-state:
     title: There are no services present
   routes:

@@ -9,6 +9,7 @@ import KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import { RestClient } from '@/app/kuma/services/kuma-api/RestClient'
 import type { ServiceDefinition } from '@kumahq/container'
 export * from './utils'
+export { Kri } from './kri'
 
 type Token = ReturnType<typeof token>
 

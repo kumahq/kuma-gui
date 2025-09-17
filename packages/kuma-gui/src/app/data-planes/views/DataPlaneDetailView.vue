@@ -637,27 +637,43 @@
                                   v-for="outbound in outbounds"
                                   :key="outbound.kri"
                                 >
-                                  <ConnectionCard
-                                    data-testid="dataplane-outbound"
-                                    :protocol="outbound.protocol"
-                                    :port-name="Kri.fromString(outbound.proxyResourceName).sectionName"
-                                    :traffic="traffic?.outbounds[outbound.proxyResourceName]"
+                                  <template
+                                    v-for="kri in [Kri.fromString(outbound.kri)]"
+                                    :key="kri && outbound.kri"
                                   >
-                                    <XAction
-                                      data-action
-                                      :to="{
-                                        name: ((name) => name.includes('bound') ? name.replace('-inbound-', '-outbound-') : 'data-plane-connection-outbound-summary-overview-view')(String(_route.name)),
-                                        params: {
-                                          connection: outbound.proxyResourceName,
-                                        },
-                                        query: {
-                                          inactive: route.params.inactive,
-                                        },
-                                      }"
+                                    <ConnectionCard
+                                      data-testid="dataplane-outbound"
+                                      :protocol="outbound.protocol"
+                                      :service="`${kri.kind}:${kri.name}`"
+                                      :port-name="Kri.fromString(outbound.proxyResourceName).sectionName"
+                                      :traffic="traffic?.outbounds[outbound.proxyResourceName]"
+                                      data-actionable
                                     >
-                                      {{ outbound.proxyResourceName }}
-                                    </XAction>
-                                  </ConnectionCard>
+                                      <template #aside>
+                                        <XAction
+                                          :href="`kri://${outbound.kri}`"
+                                        >
+                                          <XBadge>
+                                            {{ t(`services.kri.${kri.kind}`) }}:{{ kri.name }}
+                                          </XBadge>
+                                        </XAction>
+                                      </template>
+                                      <XAction
+                                        data-action
+                                        :to="{
+                                          name: ((name) => name.includes('bound') ? name.replace('-inbound-', '-outbound-') : 'data-plane-connection-outbound-summary-overview-view')(String(_route.name)),
+                                          params: {
+                                            connection: outbound.proxyResourceName,
+                                          },
+                                          query: {
+                                            inactive: route.params.inactive,
+                                          },
+                                        }"
+                                      >
+                                        {{ outbound.proxyResourceName }}
+                                      </XAction>
+                                    </ConnectionCard>
+                                  </template>
                                 </template>
                               </XLayout>
                             </ConnectionGroup>
@@ -725,7 +741,7 @@ import ConnectionGroup from '@/app/connections/components/connection-traffic/Con
 import ConnectionTraffic from '@/app/connections/components/connection-traffic/ConnectionTraffic.vue'
 import { sources as connectionSources } from '@/app/connections/sources'
 import type { DataplaneOverview } from '@/app/data-planes/data'
-import { Kri } from '@/app/kuma/kri'
+import { Kri } from '@/app/kuma'
 import type { Mesh } from '@/app/meshes/data'
 import { sources as policySources } from '@/app/policies/sources'
 import { useRoute } from '@/app/vue'

@@ -7,12 +7,12 @@ type PartialMeshIdentity = components['schemas']['MeshIdentityItem']
 export const MeshIdentity = {
   fromObject: (item: PartialMeshIdentity) => {
     return {
-      kri: Kri.toString({ shortName: 'mid', mesh: item.mesh, name: item.name}),
+      kri: Kri.toString({ kind: 'mid', mesh: item.mesh, name: item.name}),
       ...item,
       raw: item,
     }
   },
-  
+
   fromCollection: (collection: PartialMeshIdentityList) => {
     return {
       ...collection,
