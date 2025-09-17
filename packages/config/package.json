@@ -9,7 +9,7 @@
   "types": "./src/index.ts",
   "exports": {
     ".": {
-      "import": "./src/index.ts"
+      "default": "./src/index.ts"
     },
     "./cypress/e2e": {
       "import": "./src/cypress/e2e.ts"
