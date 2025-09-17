@@ -326,7 +326,7 @@
                         <template
                           #body
                         >
-                          <template v-if="Kri.isKri(mTLS.issuedBackend)">
+                          <template v-if="Kri.isKriString(mTLS.issuedBackend)">
                             <XAction
                               :to="{
                                 name: 'data-plane-mesh-identity-summary-view',

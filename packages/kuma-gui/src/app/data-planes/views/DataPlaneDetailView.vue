@@ -556,8 +556,8 @@
                                     <ConnectionCard
                                       data-testid="dataplane-inbound"
                                       :protocol="item.protocol"
-                                      :port-name="ContextualKri.fromString(item.proxyResourceName).sectionName"
-                                      :traffic="traffic?.inbounds[ContextualKri.toString({ ...ContextualKri.fromString(item.proxyResourceName), sectionName: item.port.toString() })]"
+                                      :port-name="Kri.fromString(item.proxyResourceName).sectionName"
+                                      :traffic="traffic?.inbounds[item.proxyResourcePortName]"
                                     >
                                       <XAction
                                         data-action
@@ -725,7 +725,7 @@ import ConnectionGroup from '@/app/connections/components/connection-traffic/Con
 import ConnectionTraffic from '@/app/connections/components/connection-traffic/ConnectionTraffic.vue'
 import { sources as connectionSources } from '@/app/connections/sources'
 import type { DataplaneOverview } from '@/app/data-planes/data'
-import { ContextualKri, Kri } from '@/app/kuma/kri'
+import { Kri } from '@/app/kuma/kri'
 import type { Mesh } from '@/app/meshes/data'
 import { sources as policySources } from '@/app/policies/sources'
 import { useRoute } from '@/app/vue'
