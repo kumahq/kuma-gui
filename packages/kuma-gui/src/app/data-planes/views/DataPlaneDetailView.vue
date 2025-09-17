@@ -637,43 +637,28 @@
                                   v-for="outbound in outbounds"
                                   :key="outbound.kri"
                                 >
-                                  <template
-                                    v-for="kri in [Kri.fromString(outbound.kri)]"
-                                    :key="kri && outbound.kri"
+                                  <ConnectionCard
+                                    data-testid="dataplane-outbound"
+                                    :protocol="outbound.protocol"
+                                    :port-name="Kri.fromString(outbound.proxyResourceName).sectionName"
+                                    :traffic="traffic?.outbounds[outbound.proxyResourceName]"
+                                    data-actionable
                                   >
-                                    <ConnectionCard
-                                      data-testid="dataplane-outbound"
-                                      :protocol="outbound.protocol"
-                                      :service="`${kri.kind}:${kri.name}`"
-                                      :port-name="Kri.fromString(outbound.proxyResourceName).sectionName"
-                                      :traffic="traffic?.outbounds[outbound.proxyResourceName]"
-                                      data-actionable
+                                    <XAction
+                                      data-action
+                                      :to="{
+                                        name: ((name) => name.includes('bound') ? name.replace('-inbound-', '-outbound-') : 'data-plane-connection-outbound-summary-overview-view')(String(_route.name)),
+                                        params: {
+                                          connection: outbound.proxyResourceName,
+                                        },
+                                        query: {
+                                          inactive: route.params.inactive,
+                                        },
+                                      }"
                                     >
-                                      <template #aside>
-                                        <XAction
-                                          :href="`kri://${outbound.kri}`"
-                                        >
-                                          <XBadge>
-                                            {{ t(`services.kri.${kri.kind}`) }}:{{ kri.name }}
-                                          </XBadge>
-                                        </XAction>
-                                      </template>
-                                      <XAction
-                                        data-action
-                                        :to="{
-                                          name: ((name) => name.includes('bound') ? name.replace('-inbound-', '-outbound-') : 'data-plane-connection-outbound-summary-overview-view')(String(_route.name)),
-                                          params: {
-                                            connection: outbound.proxyResourceName,
-                                          },
-                                          query: {
-                                            inactive: route.params.inactive,
-                                          },
-                                        }"
-                                      >
-                                        {{ outbound.proxyResourceName }}
-                                      </XAction>
-                                    </ConnectionCard>
-                                  </template>
+                                      {{ outbound.proxyResourceName }}
+                                    </XAction>
+                                  </ConnectionCard>
                                 </template>
                               </XLayout>
                             </ConnectionGroup>
