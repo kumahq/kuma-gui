@@ -1,0 +1,17 @@
+{
+  "$schema": "https://schemastore.org/tsconfig.json",
+  "extends": "@vue/tsconfig/tsconfig.dom.json",
+  "compilerOptions": {
+    // strictness options - temporarily disabled for easier migration
+    "noUncheckedIndexedAccess": false,
+    "noImplicitOverride": false,
+
+    "allowImportingTsExtensions": true,
+    "allowJs": true,
+    "lib": ["esnext", "dom", "dom.iterable"],
+    "types": [
+      "vite/client",
+      "cypress"
+    ]
+  }
+}

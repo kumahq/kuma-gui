@@ -1,20 +1,9 @@
 {
+  "$schema": "https://schemastore.org/tsconfig.json",
+  "extends": "./tsconfig/tsconfig.node.json",
   "compilerOptions": {
-    "esModuleInterop": true,
-    "noErrorTruncation": true,
-    "baseUrl": ".",
-    "module": "preserve",
-    "target": "esnext",
-    "allowImportingTsExtensions": true,
-    "skipLibCheck": true,
-    "verbatimModuleSyntax": true,
-    "noEmit": true,
-    "types": [
-      "node",
-      "cypress"
-    ],
+    "lib": ["esnext", "dom"]
   },
-  "include": [
-    "**/*.ts"
-  ]
+  "include": ["**/*.ts"],
+  "exclude": ["node_modules"]
 }

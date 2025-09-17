@@ -1,36 +1,13 @@
 {
+  "$schema": "https://schemastore.org/tsconfig.json",
+  "extends": "@kumahq/config/tsconfig/tsconfig.app",
   "compilerOptions": {
-    "target": "esnext",
-    "module": "esnext",
-    "strict": true,
-    "importHelpers": true,
-    "moduleResolution": "bundler",
-    "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "allowUnreachableCode": false,
-    "allowImportingTsExtensions": true,
-    "verbatimModuleSyntax": true,
-    "noEmit": true,
-    "sourceMap": true,
-    "types": [
-      "vite/client"
-    ],
-    "noErrorTruncation": true,
     "baseUrl": ".",
     "paths": {
       "@/*": [
         "src/*"
       ]
-    },
-    "lib": [
-      "esnext",
-      "dom",
-      "dom.iterable"
-    ],
-    "resolveJsonModule": true,
-    "jsx": "preserve"
+    }
   },
   "include": [
     "**/*.ts",
@@ -38,6 +15,7 @@
     ".**/*.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "dist"
   ]
 }

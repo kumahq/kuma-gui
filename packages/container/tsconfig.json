@@ -1,17 +1,10 @@
 {
-  "compilerOptions": {
-    "esModuleInterop": true,
-    "noErrorTruncation": true,
-    "baseUrl": ".",
-    "module": "preserve",
-    "target": "esnext",
-    "skipLibCheck": true,
-    "verbatimModuleSyntax": true,
-    "types": [
-      "node"
-    ],
-  },
+  "$schema": "https://schemastore.org/tsconfig.json",
+  "extends": "@kumahq/config/tsconfig/tsconfig.node",
   "include": [
     "**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
   ]
 }
