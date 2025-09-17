@@ -558,6 +558,7 @@
                                       :protocol="item.protocol"
                                       :port-name="Kri.fromString(item.proxyResourceName).sectionName"
                                       :traffic="traffic?.inbounds[item.proxyResourcePortName]"
+                                      data-actionable
                                     >
                                       <XAction
                                         data-action
