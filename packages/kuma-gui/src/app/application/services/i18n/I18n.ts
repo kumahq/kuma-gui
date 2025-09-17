@@ -1,8 +1,9 @@
 import { createI18n } from '@kong-ui-public/i18n'
-import { semver } from '@kumahq/config/utils'
+
 
 import { get } from '@/app/application'
 import type { Env } from '@/app/application'
+import { semver } from '@/app/kuma'
 import './i18n.d'
 
 interface I18nRecord {
