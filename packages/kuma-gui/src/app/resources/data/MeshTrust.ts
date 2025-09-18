@@ -7,7 +7,7 @@ type PartialMeshTrust = components['schemas']['MeshTrustItem']
 export const MeshTrust = {
   fromObject: (item: PartialMeshTrust) => {
     return {
-      kri: Kri.toString({ kind: 'mtrust', mesh: item.mesh, name: item.name }),
+      kri: Kri.toString({ shortName: 'mtrust', mesh: item.mesh, name: item.name }),
       ...item,
       spec: {
         ...item.spec,

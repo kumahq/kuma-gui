@@ -53,39 +53,42 @@ const protocolHandler = (router: Router, doc = document) => {
     const kriProto = 'kri://'
     switch (true) {
       case href.startsWith(kriProto): {
-        const kri = Kri.fromString(href.substring(kriProto.length))
+        const { mesh, zone, name, namespace, shortName } = Kri.fromString(href.substring(kriProto.length))
+        const id = `${name}${namespace !== '' ? `.${namespace}`: '' }`
+        if(zone !== '') {
+          return ''
+        }
 
-        const to = ((kri) => {
+        const to = (() => {
           switch (true) {
-            case kri.kind === 'msvc':
+            case shortName === 'msvc':
               return {
                 name: 'mesh-service-detail-view',
                 params: {
-                  mesh: kri.mesh,
-                  service: kri.id,
+                  mesh,
+                  service: id,
                 },
               }
-            case kri.kind === 'mzsvc':
+            case shortName === 'mzsvc':
               return {
                 name: 'mesh-multi-zone-service-detail-view',
                 params: {
-                  mesh: kri.mesh,
-                  service: kri.id,
+                  mesh: mesh,
+                  service: id,
                 },
               }
-            case kri.kind === 'extsvc':
+            case shortName === 'extsvc':
               return {
                 name: 'mesh-external-service-detail-view',
                 params: {
-                  mesh: kri.mesh,
-                  service: kri.id,
+                  mesh: mesh,
+                  service: id,
                 },
               }
             default:
               return
           }
-        })(kri)
-
+        })()
         if (to) {
           const link = useLink({ to })
           return link.href.value

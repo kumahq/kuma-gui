@@ -8,8 +8,7 @@ describe('kri', () => {
     [
       Kri.fromString('kri_policy_mesh_zone_namespace_name_section'),
       {
-        id: 'name.namespace',
-        kind: 'policy',
+        shortName: 'policy',
         mesh: 'mesh',
         zone: 'zone',
         namespace: 'namespace',
@@ -20,8 +19,7 @@ describe('kri', () => {
     [
       Kri.fromString('kri_policy__zone__name_section'),
       {
-        id: 'name',
-        kind: 'policy',
+        shortName: 'policy',
         mesh: '',
         zone: 'zone',
         namespace: '',
@@ -32,8 +30,7 @@ describe('kri', () => {
     [
       Kri.fromString(''),
       {
-        id: '',
-        kind: '',
+        shortName: '',
         mesh: '',
         zone: '',
         namespace: '',
@@ -44,8 +41,7 @@ describe('kri', () => {
     [
       Kri.fromString('not-kri_foo_bar_baz_qux_quux_corge'),
       {
-        id: '',
-        kind: '',
+        shortName: '',
         mesh: '',
         zone: '',
         namespace: '',
@@ -55,7 +51,7 @@ describe('kri', () => {
     ],
     [
       Kri.toString({
-        kind: 'policy',
+        shortName: 'policy',
         mesh: 'mesh',
         zone: 'zone',
         namespace: 'namespace',
@@ -66,7 +62,7 @@ describe('kri', () => {
     ],
     [
       Kri.toString({
-        kind: 'policy',
+        shortName: 'policy',
         zone: 'zone',
         name: 'name',
         sectionName: 'section',

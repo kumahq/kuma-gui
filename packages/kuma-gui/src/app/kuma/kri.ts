@@ -8,8 +8,7 @@ export class Kri {
   static fromString(kri: string) {
     if(!Kri.isKriString(kri)) {
       return {
-        id: '',
-        kind: '',
+        shortName: '',
         mesh: '',
         zone: '',
         namespace: '',
@@ -17,18 +16,24 @@ export class Kri {
         sectionName: '',
       }
     }
-    const [_kriProtocol, kind, mesh, zone, namespace, name, sectionName] = kri.split('_')
+
+    const [
+      shortName = '',
+      mesh = '',
+      zone = '',
+      namespace = '',
+      name = '',
+      sectionName = '',
+    ] = kri.split('_').slice(1)
 
     return {
-      id: `${name}${namespace !== '' ? `.${namespace}`: '' }`,
-      kind,
+      shortName,
       mesh,
       zone,
       namespace,
       name,
       sectionName,
     }
-
   }
 
   static isKriString(kri: string): kri is KriString {
@@ -36,7 +41,7 @@ export class Kri {
   }
 
   static toString(kri: Partial<ReturnType<typeof Kri.fromString>>) {
-    const { kind = '', mesh = '', zone = '', namespace = '', name = '', sectionName = '' } = kri
-    return `kri_${kind}_${mesh}_${zone}_${namespace}_${name}_${sectionName}` satisfies KriString
+    const { shortName = '', mesh = '', zone = '', namespace = '', name = '', sectionName = '' } = kri
+    return `kri_${shortName}_${mesh}_${zone}_${namespace}_${name}_${sectionName}` satisfies KriString
   }
 }

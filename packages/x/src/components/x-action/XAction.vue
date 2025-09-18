@@ -153,7 +153,7 @@
     </KButton>
 
     <button
-      v-else
+      v-else-if="typeof attrs.onClick === 'function'"
       :class="`x-action-appearance-${props.appearance}`"
       data-testid="x-action"
       v-bind="$attrs"
@@ -169,12 +169,20 @@
       </template>
       <span><slot name="default" /></span>
     </button>
+    <template
+      v-else
+    >
+      <slot
+        name="default"
+        :inactive="true"
+      />
+    </template>
   </template>
 </template>
 <script lang="ts" setup>
 import { KUI_ICON_SIZE_40 } from '@kong/design-tokens'
 import { KDropdownItem, KButton } from '@kong/kongponents'
-import { computed, watch, inject, provide } from 'vue'
+import { computed, watch, inject, provide, useAttrs } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
 
 import { useProtocolHandler } from '../../'
@@ -188,6 +196,12 @@ type RouteLocationRawWithBooleanQuery = Omit<RouteLocationNamedRaw, 'query'> & {
 }
 const emit = defineEmits<{
   (event: 'click'): Event
+}>()
+
+defineSlots<{
+  default(props: {
+    inactive?: boolean
+  }): any
 }>()
 const props = withDefaults(defineProps<{
   action?: 'default' | 'docs' | 'create' | 'copy' | 'action' | 'expand' | 'refresh' | 'progress'
@@ -205,7 +219,8 @@ const props = withDefaults(defineProps<{
   for: '',
 })
 
-provide('x-action', {})
+const attrs = useAttrs()
+
 const group = inject<{
   expanded: boolean
 } | undefined>('x-action-group', undefined)
@@ -216,6 +231,10 @@ const protocolHandler = useProtocolHandler()
 const href = computed(() => props.href.includes('://') ? protocolHandler(props.href) : props.href)
 const target = computed(() => props.href.length > 0 && props.href === href.value ? '_blank' : undefined)
 const rel = computed(() => target.value === '_blank' ? 'noopener noreferrer' : href.value.length > 0 && props.href === href.value ? undefined : 'x-internal')
+
+if(href.value.length > 0 || typeof attrs.onClick === 'function' || props.for) {
+  provide('x-action', {})
+}
 
 const query = computed(() => {
   return Object.entries(props.to.query ?? {}).reduce<Record<string, string | number | null | undefined>>((prev, [key, value]) => {
