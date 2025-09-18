@@ -23,6 +23,10 @@ install: .install ## Dev: Install all dependencies
 .PHONY: lint
 lint: .lint/js .lint/lock ## Dev: Run lint checks on the workspace root only. Note: individual sub projects have their own `make lint`
 
+.PHONY: bump
+bump:
+	touch ./a-file-for-testing.txt
+
 .PHONY: meta/workspaces
 meta/workspaces: .meta/workspaces
 
