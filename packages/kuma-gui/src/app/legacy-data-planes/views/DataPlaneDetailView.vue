@@ -129,7 +129,7 @@
                               v-for="inbound in unhealthyInbounds"
                               :key="`${inbound.service}:${inbound.port}`"
                             >
-                              {{ t('data-planes.routes.item.unhealthy_inbound', { service: inbound.service, port: inbound.port }) }}
+                              {{ t('data-planes.routes.item.unhealthy_inbound', { port: inbound.port }) }}
                             </li>
                           </ul>
                         </XIcon>
@@ -563,6 +563,16 @@
                                 "
                                 data-actionable
                               >
+                                <template #state>
+                                  <XIcon
+                                    v-if="item.state !== 'Ready'"
+                                    name="danger"
+                                    :size="KUI_ICON_SIZE_40"
+                                    placement="right"
+                                  >
+                                    {{ t('data-planes.routes.item.unhealthy_inbound', { port: item.port }) }}
+                                  </XIcon>
+                                </template>
                                 <XAction
                                   data-action
                                   :to="{
@@ -755,6 +765,8 @@
 </template>
 
 <script lang="ts" setup>
+import { KUI_ICON_SIZE_40 } from '@kong/design-tokens'
+
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import TagList from '@/app/common/TagList.vue'
@@ -781,6 +793,7 @@ const props = defineProps<{
 }
 
 .traffic {
+  contain: content;
   padding: 0;
   container-type: inline-size;
   container-name: traffic;

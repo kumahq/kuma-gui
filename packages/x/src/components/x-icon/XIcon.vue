@@ -1,6 +1,7 @@
 <template>
   <component
     :is="slots.default ? XTooltip : XAnonymous"
+    :placement="slots.default ? props.placement : undefined"
   >
     <!-- we hardcode decorative to false for the moment due to an issue with kong/icons -->
     <component
@@ -39,6 +40,7 @@ import {
   FilterIcon,
   CopyIcon,
   RuntimeKicIcon,
+  DangerIcon,
   DeployIcon,
   MoreIcon,
   ChevronDownIcon,
@@ -58,6 +60,7 @@ import { useSlots, useAttrs, useId } from 'vue'
 
 import XAnonymous from '../x-anonymous/XAnonymous.vue'
 import XTooltip from '../x-tooltip/XTooltip.vue'
+import type { TooltipProps } from '@kong/kongponents'
 
 defineOptions({
   inheritAttrs: false,
@@ -83,6 +86,7 @@ const icons = {
   expand: ChevronDownIcon,
   kubernetes: RuntimeKicIcon,
   universal: DeployIcon,
+  danger: DangerIcon,
   settings: CogIcon,
   help: HelpIcon,
   create: AddCircleIcon,
@@ -102,6 +106,7 @@ const props = withDefaults(defineProps<{
   name: keyof typeof icons // @TODO(jc) :variant
   color?: string
   size?: string
+  placement?: TooltipProps['placement']
 }>(), {
   placement: 'auto',
   color: undefined,
@@ -114,6 +119,9 @@ const props = withDefaults(defineProps<{
 }
 .x-icon-icon {
   --warningIconColor: #ffa600;
+}
+.x-icon-icon {
+  --dangerIconColor: #{$kui-color-text-danger};
 }
 .x-icon-standard-icon {
   --icon-before: url('@/assets/images/east-west.svg');

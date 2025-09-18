@@ -21,6 +21,7 @@
         <RouterView v-slot="{ Component }">
           <component
             :is="Component"
+            :data="data"
             :mesh="props.mesh"
           />
         </RouterView>
