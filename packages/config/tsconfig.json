@@ -1,6 +1,6 @@
 {
   "$schema": "https://schemastore.org/tsconfig.json",
-  "extends": "./tsconfig/tsconfig.node.json",
+  "extends": "./tsconfig/node.json",
   "compilerOptions": {
     "lib": ["esnext", "dom"]
   },
