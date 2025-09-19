@@ -1,5 +1,4 @@
-import { semver } from '@kumahq/config/utils'
-
+import { semver } from './utils'
 import type { Variables } from '@kumahq/settings/env'
 
 type HtmlVars = {
