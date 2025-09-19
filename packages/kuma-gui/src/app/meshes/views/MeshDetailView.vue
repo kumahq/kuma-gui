@@ -63,96 +63,90 @@
                   :modified="props.mesh.modificationTime"
                   class="about-section"
                 >
-                  <XLayout>
-                    <XLayout type="separated">
+                  <XDl
+                    variant="x-stack"
+                  >
+                    <template
+                      v-for="policy in ['MeshTrafficPermission', 'MeshMetric', 'MeshAccessLog', 'MeshTrace']"
+                      :key="policy"
+                    >
                       <template
-                        v-for="policy in ['MeshTrafficPermission', 'MeshMetric', 'MeshAccessLog', 'MeshTrace']"
-                        :key="policy"
+                        v-for="stats in [data?.policies?.[policy] ?? { total: 0 }]"
+                        :key="typeof stats"
                       >
-                        <template
-                          v-for="stats in [data?.policies?.[policy] ?? { total: 0 }]"
-                          :key="typeof stats"
+                        <XNotification
+                          :notify="policy === 'MeshTrafficPermission' && props.mesh.mtlsBackend && stats.total === 0"
+                          :uri="`meshes.notifications.mtp-warning:${props.mesh.id}`"
                         >
-                          <XNotification
-                            :notify="policy === 'MeshTrafficPermission' && props.mesh.mtlsBackend && stats.total === 0"
-                            :uri="`meshes.notifications.mtp-warning:${props.mesh.id}`"
-                          >
-                            <XI18n
-                              path="meshes.notifications.mtp-warning"
-                            />
-                          </XNotification>
-                          <DefinitionCard
-                            layout="horizontal"
-                          >
-                            <template #title>
-                              <XAction
-                                :to="{
-                                  name: 'policy-list-view',
-                                  params: {
-                                    mesh: route.params.mesh,
-                                    policyPath: `${policy.toLowerCase()}s`,
-                                  },
-                                }"
-                              >
-                                {{ policy }}
-                              </XAction>
-                            </template>
-
-                            <template #body>
-                              <XBadge
-                                :appearance="stats.total > 0 ? 'success' : 'neutral'"
-                              >
-                                {{ stats.total > 0 ? t('meshes.detail.enabled') : t('meshes.detail.disabled') }}
-                              </XBadge>
-                            </template>
-                          </DefinitionCard>
-                        </template>
+                          <XI18n
+                            path="meshes.notifications.mtp-warning"
+                          />
+                        </XNotification>
+                        <div>
+                          <dt>
+                            <XAction
+                              :to="{
+                                name: 'policy-list-view',
+                                params: {
+                                  mesh: route.params.mesh,
+                                  policyPath: `${policy.toLowerCase()}s`,
+                                },
+                              }"
+                            >
+                              {{ policy }}
+                            </XAction>
+                          </dt>
+                          <dd>
+                            <XBadge
+                              :appearance="stats.total > 0 ? 'success' : 'neutral'"
+                            >
+                              {{ stats.total > 0 ? t('meshes.detail.enabled') : t('meshes.detail.disabled') }}
+                            </XBadge>
+                          </dd>
+                        </div>
                       </template>
-
-                      <DefinitionCard
-                        layout="horizontal"
-                        data-testid="mesh-mtls"
-                      >
-                        <template #title>
-                          {{ t('http.api.property.mtls') }}
-                        </template>
-
-                        <template #body>
-                          <XLayout type="separated">
-                            <XBadge
-                              v-if="props.mesh.mtlsBackend"
-                              appearance="info"
+                    </template>
+                    <div
+                      data-testid="mesh-mtls"
+                    >
+                      <dt>
+                        {{ t('http.api.property.mtls') }}
+                      </dt>
+                      <dd>
+                        <XLayout type="separated">
+                          <XBadge
+                            v-if="props.mesh.mtlsBackend"
+                            appearance="info"
+                          >
+                            {{ props.mesh.mtlsBackend.type }} / {{ props.mesh.mtlsBackend.name }}
+                          </XBadge>
+                          <template
+                            v-for="identity in meshIdentities?.items"
+                            :key="identity.name"
+                          >
+                            <XAction
+                              :to="{
+                                name: 'mesh-identity-summary-view',
+                                params: {
+                                  mid: identity.kri,
+                                },
+                              }"
                             >
-                              {{ props.mesh.mtlsBackend.type }} / {{ props.mesh.mtlsBackend.name }}
-                            </XBadge>
-                            <template
-                              v-for="identity in meshIdentities?.items"
-                              :key="identity.name"
-                            >
-                              <XAction
-                                :to="{
-                                  name: 'mesh-identity-summary-view',
-                                  params: {
-                                    mid: identity.kri,
-                                  },
-                                }"
-                              >
-                                <XBadge appearance="info">
-                                  MeshIdentity / {{ identity.name }}
-                                </XBadge>
-                              </XAction>
-                            </template>
-                            <XBadge
-                              v-if="!props.mesh.mtlsBackend && !meshIdentities?.items?.length"
-                              appearance="neutral"
-                            >
-                              {{ t('meshes.detail.disabled') }}
-                            </XBadge>
-                          </XLayout>
-                        </template>
-                      </DefinitionCard>
-                    </XLayout>
-                  </XLayout>
+                              <XBadge appearance="info">
+                                MeshIdentity / {{ identity.name }}
+                              </XBadge>
+                            </XAction>
+                          </template>
+                          <XBadge
+                            v-if="!props.mesh.mtlsBackend && !meshIdentities?.items?.length"
+                            appearance="neutral"
+                          >
+                            {{ t('meshes.detail.disabled') }}
+                          </XBadge>
+                        </XLayout>
+                      </dd>
+                    </div>
+                  </XDl>
                 </XAboutCard>
 
                 <XCard
@@ -360,7 +354,6 @@ import type { Mesh } from '../data'
 import { sources } from '../sources'
 import { YAML } from '@/app/application'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
-import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import ResourceStatus from '@/app/common/ResourceStatus.vue'
 import { sources as policySources } from '@/app/policies/sources'
 import { sources as resourceSources } from '@/app/resources/sources'
