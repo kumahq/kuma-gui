@@ -311,8 +311,7 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
     return this.faker.helpers.arrayElements([
       'feature-tcp-accesslog-via-named-pipe',
       'feature-transparent-proxy-in-dataplane-metadata',
-      // TODO: not implemented yet, uncomment when implemented
-      // 'bind-outbounds',
+      'feature-bind-outbounds',
     ])
   }
 
