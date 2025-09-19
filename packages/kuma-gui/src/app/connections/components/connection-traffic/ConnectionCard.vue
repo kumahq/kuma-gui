@@ -1,13 +1,18 @@
 <template>
   <DataCard
     class="service-traffic-card"
-    @click="click"
   >
     <template #title>
-      <TagList
-        v-if="props.service.length > 0"
-        :tags="[{label: 'kuma.io/service', value: props.service}]"
-      />
+      <div
+        class="aside"
+      >
+        <slot name="aside">
+          <TagList
+            v-if="props.service.length > 0"
+            :tags="[{label: 'kuma.io/service', value: props.service}]"
+          />
+        </slot>
+      </div>
       <div class="title">
         <XBadge
           v-if="props.protocol !== ''"
@@ -175,22 +180,10 @@ const props = withDefaults(defineProps<{
   direction: 'downstream',
   portName: undefined,
 })
-const click = (e: MouseEvent) => {
-  const $target = e.target as HTMLElement
-  if (e.isTrusted && $target.nodeName.toLowerCase() !== 'a') {
-    const $el = $target.closest('.service-traffic-card, a')
-    if ($el) {
-      const $a = $el.nodeName.toLowerCase() === 'a' ? $el : $el.querySelector('[data-action]')
-      if ($a !== null && 'click' in $a && typeof $a.click === 'function') {
-        $a.click()
-      }
-    }
-  }
-}
 
 </script>
 <style lang="scss" scoped>
-.tag-list {
+.aside {
   float: right;
   margin-bottom: $kui-space-40;
   margin-left: $kui-space-40;

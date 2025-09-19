@@ -19,7 +19,7 @@ export const MeshTrust = {
       raw: item,
     }
   },
-  
+
   fromCollection: (collection: PartialMeshTrustList) => {
     return {
       ...collection,

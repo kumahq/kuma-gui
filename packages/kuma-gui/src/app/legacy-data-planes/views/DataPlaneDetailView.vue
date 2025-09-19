@@ -561,6 +561,7 @@
                                     port: `${item.port}`,
                                   }
                                 "
+                                data-actionable
                               >
                                 <XAction
                                   data-action
@@ -685,6 +686,7 @@
                                   :traffic="outbound"
                                   :service="outbound.$resourceMeta.type === '' ? name.replace(hash, '') : undefined"
                                   :direction="direction"
+                                  data-actionable
                                 >
                                   <XAction
                                     data-action

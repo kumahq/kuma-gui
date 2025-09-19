@@ -101,7 +101,7 @@
 <script lang="ts" setup>
 import { YAML } from '@/app/application'
 import PolicyTypeTag from '@/app/common/PolicyTypeTag.vue'
-import { Kri } from '@/app/kuma/kri'
+import { Kri } from '@/app/kuma'
 import type { ResourceCollection } from '@/app/policies/data'
 import type { DataplanePolicies } from '@/app/policies/data/DataplanePolicies'
 

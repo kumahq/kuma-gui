@@ -158,7 +158,7 @@ import { YAML } from '@/app/application'
 import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
 import PolicyTypeTag from '@/app/common/PolicyTypeTag.vue'
-import { Kri } from '@/app/kuma/kri'
+import { Kri } from '@/app/kuma'
 import { sources as policySources } from '@/app/policies/sources'
 
 const props = defineProps<{

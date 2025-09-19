@@ -5,10 +5,11 @@
     <KDropdownItem
       data-testid="x-action"
       v-bind="$attrs"
-      :target="props.href.length > 0 ? '_blank' : undefined"
+      :target="target"
+      :rel="rel"
       :item="{
         label: '',
-        to: props.href.length > 0 ? props.href : {
+        to: href.length > 0 ? href : {
           ...props.to,
           query,
         },
@@ -66,7 +67,7 @@
   </template>
 
   <template
-    v-else-if="props.href.length > 0"
+    v-else-if="href.length > 0"
   >
     <KButton
       v-if="['primary', 'secondary', 'tertiary', 'danger'].includes(props.appearance)"
@@ -74,8 +75,9 @@
       v-bind="$attrs"
       :appearance="props.appearance as ButtonAppearance"
       :size="props.size"
-      :to="props.href"
-      target="_blank"
+      :to="href"
+      :target="target"
+      :rel="rel"
     >
       <slot
         name="default"
@@ -85,13 +87,13 @@
       v-else
       data-testid="x-action"
       v-bind="$attrs"
-      :href="props.href"
+      :href="href"
       :class="{
         'x-action-appearance-anchor': true,
         'action-docs': props.action === 'docs',
       }"
-      target="_blank"
-      :rel="props.action !== 'docs' ? `noopener noreferrer` : ``"
+      :target="target"
+      :rel="rel"
     >
       <template
         v-if="props.action === 'docs'"
@@ -151,7 +153,7 @@
     </KButton>
 
     <button
-      v-else
+      v-else-if="typeof attrs.onClick === 'function'"
       :class="`x-action-appearance-${props.appearance}`"
       data-testid="x-action"
       v-bind="$attrs"
@@ -167,16 +169,26 @@
       </template>
       <span><slot name="default" /></span>
     </button>
+    <template
+      v-else
+    >
+      <slot
+        name="default"
+        :inactive="true"
+      />
+    </template>
   </template>
 </template>
 <script lang="ts" setup>
 import { KUI_ICON_SIZE_40 } from '@kong/design-tokens'
 import { KDropdownItem, KButton } from '@kong/kongponents'
-import { computed, watch, inject, provide } from 'vue'
+import { computed, watch, inject, provide, useAttrs } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
 
+import { useProtocolHandler } from '../../'
 import type { ButtonAppearance } from '@kong/kongponents'
 import type { RouteLocationNamedRaw } from 'vue-router'
+
 type BooleanLocationQueryValue = string | number | undefined | boolean
 type BooleanLocationQueryRaw = Record<string | number, BooleanLocationQueryValue | BooleanLocationQueryValue[]>
 type RouteLocationRawWithBooleanQuery = Omit<RouteLocationNamedRaw, 'query'> & {
@@ -184,6 +196,12 @@ type RouteLocationRawWithBooleanQuery = Omit<RouteLocationNamedRaw, 'query'> & {
 }
 const emit = defineEmits<{
   (event: 'click'): Event
+}>()
+
+defineSlots<{
+  default(props: {
+    inactive?: boolean
+  }): any
 }>()
 const props = withDefaults(defineProps<{
   action?: 'default' | 'docs' | 'create' | 'copy' | 'action' | 'expand' | 'refresh' | 'progress'
@@ -201,12 +219,23 @@ const props = withDefaults(defineProps<{
   for: '',
 })
 
-provide('x-action', {})
+const attrs = useAttrs()
+
 const group = inject<{
   expanded: boolean
 } | undefined>('x-action-group', undefined)
 
 const router = useRouter()
+
+const protocolHandler = useProtocolHandler()
+const href = computed(() => props.href.includes('://') ? protocolHandler(props.href) : props.href)
+const target = computed(() => props.href.length > 0 && props.href === href.value ? '_blank' : undefined)
+const rel = computed(() => target.value === '_blank' ? 'noopener noreferrer' : href.value.length > 0 && props.href === href.value ? undefined : 'x-internal')
+
+if(href.value.length > 0 || typeof attrs.onClick === 'function' || props.for || props.to) {
+  provide('x-action', {})
+}
+
 const query = computed(() => {
   return Object.entries(props.to.query ?? {}).reduce<Record<string, string | number | null | undefined>>((prev, [key, value]) => {
     switch (true) {

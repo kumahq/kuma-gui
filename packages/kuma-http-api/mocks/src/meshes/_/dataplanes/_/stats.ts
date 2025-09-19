@@ -15,7 +15,8 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
   }))
   const serviceCount = parseInt(env('KUMA_SERVICE_COUNT', `${fake.number.int({ min: 7, max: 50 })}`))
   const services = Array.from({ length: serviceCount }).map(() => {
-    if(isUnifiedResourceNamingEnabled) {
+    // even if KRIs are on, we don't currently use them for gateways
+    if(isUnifiedResourceNamingEnabled && !name.includes('-gateway_')) {
       return fake.kuma.kri({ shortName: fake.helpers.arrayElement(['msvc', 'mzsvc', 'extsvc']), namespace: nspace, name: displayName, mesh: mesh as string, sectionName: fake.number.int({ min: 1, max: 65535 }).toString() })
     } else if (fake.datatype.boolean()) {
       return `${fake.word.noun()}_${fake.word.noun()}_${fake.word.noun()}_${fake.word.noun()}_${fake.helpers.arrayElement(['msvc', 'mzsvc', 'extsvc'])}_${fake.number.int({ min: 1, max: 65535 })}`

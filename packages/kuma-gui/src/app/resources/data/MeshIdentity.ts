@@ -12,7 +12,7 @@ export const MeshIdentity = {
       raw: item,
     }
   },
-  
+
   fromCollection: (collection: PartialMeshIdentityList) => {
     return {
       ...collection,
