@@ -14,15 +14,22 @@ import type { ServiceDefinition, Token } from '@kumahq/container'
 import type { Router } from 'vue-router'
 
 const findAnchor = (target: HTMLElement) => {
+  // we look for anchors, or any other element that has [data-actionable]
   const $el = target.tagName.toLowerCase() === 'a' ? target : target.closest('a,[data-actionable]')
   if($el) {
     switch(true) {
+      // if its a data-action element we "bubble down" to find a child [data-action]
       case $el.hasAttribute('data-actionable'):
         return $el.querySelector('[data-action]')
+      // otherwise we check for rel="x-internal"
+      // which allows us to use vue-router links in our i18n locales files via
+      // <a href="http-link" rel="x-internal" />
+      // and helps us support custom protocols
       case ($el.getAttribute('rel') ?? '').includes('x-internal'):
         return $el
     }
   }
+  // anything else we do nothing special
   return null
 }
 const protocolHandler = (router: Router, doc = document) => {

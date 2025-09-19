@@ -232,7 +232,7 @@ const href = computed(() => props.href.includes('://') ? protocolHandler(props.h
 const target = computed(() => props.href.length > 0 && props.href === href.value ? '_blank' : undefined)
 const rel = computed(() => target.value === '_blank' ? 'noopener noreferrer' : href.value.length > 0 && props.href === href.value ? undefined : 'x-internal')
 
-if(href.value.length > 0 || typeof attrs.onClick === 'function' || props.for) {
+if(href.value.length > 0 || typeof attrs.onClick === 'function' || props.for || props.to) {
   provide('x-action', {})
 }
 
