@@ -25,7 +25,14 @@ lint: .lint/js .lint/lock ## Dev: Run lint checks on the workspace root only. No
 
 .PHONY: bump
 bump:
-	touch ./a-file-for-testing.txt
+	@$(MAKE) active-branches.json
+
+.PHONY: active-branches.json
+active-branches.json:
+	@curl -s --fail \
+		https://raw.githubusercontent.com/kumahq/kuma/refs/heads/master/active-branches.json \
+		> active-branches.json
+
 
 .PHONY: meta/workspaces
 meta/workspaces: .meta/workspaces

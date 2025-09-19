@@ -38,3 +38,4 @@ jobs:
           git ls-files --exclude-standard --modified --deleted --others -t
           echo 'chore(deps): bump @kumahq/kuma-gui-monorepo'
           echo '=========='
+          ls -al ./active-branches.json
