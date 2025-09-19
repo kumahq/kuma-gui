@@ -1,0 +1,14 @@
+{
+  "$schema": "https://schemastore.org/tsconfig.json",
+  "extends": "@vue/tsconfig/tsconfig.json",
+  "compilerOptions": {
+    // strictness options - temporarily disabled for easier migration
+    "noUncheckedIndexedAccess": false,
+    "noImplicitOverride": false,
+
+    "module": "preserve",
+    "allowJs": true,
+    "lib": ["esnext"],
+    "types": ["node"]
+  }
+}

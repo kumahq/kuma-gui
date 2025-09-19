@@ -1,17 +1,12 @@
 {
+  "$schema": "https://schemastore.org/tsconfig.json",
+  "extends": "@kumahq/config/tsconfig/node",
   "compilerOptions": {
-    "esModuleInterop": true,
-    "noErrorTruncation": true,
-    "verbatimModuleSyntax": true,
-    "baseUrl": ".",
-    "module": "preserve",
-    "target": "esnext",
-    "skipLibCheck": true,
-    "types": [
-      "node"
-    ],
+    "lib": ["esnext", "dom", "dom.iterable"],
   },
   "include": [
-    "**/*.ts"
-  ]
+    "**/*.ts",
+    "**/*.vue",
+  ],
+  "exclude": ["node_modules"]
 }
