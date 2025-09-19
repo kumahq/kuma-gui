@@ -9,6 +9,8 @@
         :tags="[{label: 'kuma.io/service', value: props.service}]"
       />
       <div class="title">
+        <slot name="state" />
+
         <XBadge
           v-if="props.protocol !== ''"
           class="protocol"
@@ -199,6 +201,7 @@ const click = (e: MouseEvent) => {
   float: left;
   font-size: $kui-font-size-40;
   display: flex;
+  align-items: center;
   flex: 1 1 auto;
   gap: $kui-space-40;
 }

@@ -110,7 +110,7 @@ data-planes:
       health:
         ready: 'Healthy'
         not_ready: 'Unhealthy'
-      unhealthy_inbound: 'Inbound on port {port} is not ready (kuma.io/service: {service})'
+      unhealthy_inbound: 'Inbound on port {port} is not ready'
       mtls:
         title: 'TLS'
         expiration_time:
