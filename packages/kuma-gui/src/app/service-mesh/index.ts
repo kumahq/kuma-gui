@@ -30,6 +30,12 @@ const protocolHandler = (router: Router, doc = document) => {
   const base = router.options.history.base
 
   const listener = (e: Event) => {
+    // if its not a user generated event return
+    // if we ever need this listener to also fire on non-user generated events
+    // we'll have to refine findAnchor and remove this
+    if(!e.isTrusted) {
+      return
+    }
     const $a = findAnchor(e.target as HTMLElement)
     if($a) {
       // anything with x-internal is something for whatever reason we can't/don't want to use RouterLink
@@ -53,11 +59,8 @@ const protocolHandler = (router: Router, doc = document) => {
     const kriProto = 'kri://'
     switch (true) {
       case href.startsWith(kriProto): {
-        const { mesh, zone, name, namespace, shortName } = Kri.fromString(href.substring(kriProto.length))
+        const { mesh, name, namespace, shortName } = Kri.fromString(href.substring(kriProto.length))
         const id = `${name}${namespace !== '' ? `.${namespace}`: '' }`
-        if(zone !== '') {
-          return ''
-        }
 
         const to = (() => {
           switch (true) {
