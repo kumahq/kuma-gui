@@ -1,6 +1,6 @@
 {
   "$schema": "https://schemastore.org/tsconfig.json",
-  "extends": "@kumahq/config/tsconfig/tsconfig.app",
+  "extends": "@kumahq/config/tsconfig/app",
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {

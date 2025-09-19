@@ -25,8 +25,8 @@
     "./utils": {
       "import": "./src/utils/index.ts"
     },
-    "./tsconfig/tsconfig.app": "./tsconfig/tsconfig.app.json",
-    "./tsconfig/tsconfig.node": "./tsconfig/tsconfig.node.json"
+    "./tsconfig/app": "./tsconfig/tsconfig.app.json",
+    "./tsconfig/node": "./tsconfig/tsconfig.node.json"
   },
   "dependencies": {
     "@badeball/cypress-cucumber-preprocessor": "^23.1.0",

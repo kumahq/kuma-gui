@@ -1,6 +1,6 @@
 {
   "$schema": "https://schemastore.org/tsconfig.json",
-  "extends": "@kumahq/config/tsconfig/tsconfig.node",
+  "extends": "@kumahq/config/tsconfig/node",
   "compilerOptions": {
     "types": [
       "node",
