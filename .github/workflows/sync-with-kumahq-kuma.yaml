@@ -63,5 +63,9 @@ jobs:
           body: |
             Sync `kumahq/kuma-gui` with `kumahq/kuma`
 
+            Please ensure you also do the following manual tasks:
+
+            - [ ] Perform any post-release renovate tasks such as lock file maintenance, major node upgrades via the [Dependency Dashboard](https://github.com/kumahq/kuma-gui/issues/3921)
+
             Triggered by [action](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}).
           draft: false
