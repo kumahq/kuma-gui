@@ -25,7 +25,7 @@
   },
   "devDependencies": {
     "@kumahq/config": "*",
-    "@redocly/cli": "^2.1.4",
+    "@redocly/cli": "^2.1.5",
     "openapi-overlays-js": "^0.2.0",
     "openapi-typescript": "^7.9.1"
   }
