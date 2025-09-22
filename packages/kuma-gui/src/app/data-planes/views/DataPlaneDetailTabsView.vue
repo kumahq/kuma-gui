@@ -194,6 +194,7 @@
           :data="props.data"
           :networking="props.data.dataplane.networking"
           :mesh="props.mesh"
+          :subscriptions="props.data.dataplaneInsight.subscriptions"
         />
       </RouterView>
     </AppView>

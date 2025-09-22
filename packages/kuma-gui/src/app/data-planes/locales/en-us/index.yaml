@@ -55,6 +55,7 @@ data-planes:
         data-plane-detail-view: 'Overview'
         data-plane-policies-view: 'Policies'
         data-plane-xds-config-view: 'XDS configuration'
+        data-plane-subscriptions-list-view: 'XDS connections'
         data-plane-stats-view: 'Stats'
         data-plane-clusters-view: 'Clusters'
         data-plane-config-view: 'YAML'

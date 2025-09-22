@@ -50,23 +50,27 @@ export const dataplaneRoutes = (): RouteRecordRaw[] => {
               return item
             }),
             {
-              path: 'subscriptions',
-              name: 'data-plane-subscriptions-summary-view',
-              component: () => import('@/app/data-planes/views/DataPlaneSubscriptionsSummaryView.vue'),
-              children: [...subscriptions('data-plane')],
-            },
-            {
               path: 'policy/:policy',
               name: 'data-plane-policy-config-summary-view',
               component: () => import('@/app/data-planes/views/DataplanePolicyConfigSummaryView.vue'),
             },
           ],
         },
-        ...networking('data-plane'),
         {
           path: 'config',
           name: 'data-plane-config-view',
           component: () => import('@/app/data-planes/views/DataPlaneConfigView.vue'),
+        },
+        ...networking('data-plane'),
+        {
+          path: 'subscriptions',
+          name: 'data-plane-subscriptions-list-view',
+          props: {
+            routePrefix: 'data-plane',
+            i18nPrefix: 'data-planes',
+          },
+          component: () => import('@/app/subscriptions/views/SubscriptionsListView.vue'),
+          children: [...subscriptions('data-plane')],
         },
       ],
     },

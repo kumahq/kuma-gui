@@ -36,12 +36,6 @@ export const legacyDataplaneRoutes = (): RouteRecordRaw[] => {
               }
               return item
             }),
-            {
-              path: 'subscriptions',
-              name: 'data-plane-subscriptions-summary-view',
-              component: () => import('@/app/data-planes/views/DataPlaneSubscriptionsSummaryView.vue'),
-              children: [...subscriptions('data-plane')],
-            },
 
             /**
              * The legacy data planes are not using the policy config summary view, but the router requires
@@ -70,11 +64,21 @@ export const legacyDataplaneRoutes = (): RouteRecordRaw[] => {
             },
           ],
         },
-        ...networking('data-plane'),
         {
           path: 'config',
           name: 'data-plane-config-view',
           component: () => import('@/app/data-planes/views/DataPlaneConfigView.vue'),
+        },
+        ...networking('data-plane'),
+        {
+          path: 'subscriptions',
+          name: 'data-plane-subscriptions-list-view',
+          props: {
+            routePrefix: 'data-plane',
+            i18nPrefix: 'data-planes',
+          },
+          component: () => import('@/app/subscriptions/views/SubscriptionsListView.vue'),
+          children: [...subscriptions('data-plane')],
         },
       ],
     },
