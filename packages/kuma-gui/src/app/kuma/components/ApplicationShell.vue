@@ -191,6 +191,7 @@ html.no-navigation {
 
 .app-main-content {
   padding: var(--AppContentPadding);
+  min-height: calc(100vh - var(--AppHeaderHeight));
 }
 
 header {
