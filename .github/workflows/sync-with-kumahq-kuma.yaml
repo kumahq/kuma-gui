@@ -7,11 +7,11 @@ concurrency:
 
 on:
   # Uncomment the following pull_request event to test this workflow in a PR
-  pull_request:
-    types:
-      - opened
-      - reopened
-      - synchronize
+  # pull_request:
+  #   types:
+  #     - opened
+  #     - reopened
+  #     - synchronize
 
   workflow_dispatch: {}
 
