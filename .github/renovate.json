@@ -41,13 +41,21 @@
       "groupName": "patch",
       "matchUpdateTypes": [
         "patch"
-      ]
+      ],
+      "minimumReleaseAge": "3 days"
     },
     {
       "groupName": "minor",
       "matchUpdateTypes": [
         "minor"
-      ]
+      ],
+      "minimumReleaseAge": "3 days"
+    },
+    {
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "minimumReleaseAge": "3 days"
     },
     {
       "matchPackageNames": [
