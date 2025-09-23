@@ -144,7 +144,7 @@
                                       v-for="inbound in unhealthyInbounds"
                                       :key="`${inbound.service}:${inbound.port}`"
                                     >
-                                      {{ t('data-planes.routes.item.unhealthy_inbound', { service: inbound.service, port: inbound.port }) }}
+                                      {{ t('data-planes.routes.item.unhealthy_inbound', { port: inbound.port }) }}
                                     </li>
                                   </ul>
                                 </XIcon>
@@ -497,180 +497,202 @@
                     </XLayout>
                   </XAboutCard>
 
-                  <XCard
-                    class="traffic"
-                    data-testid="dataplane-traffic"
+                  <template
+                    v-for="(inboundsByPort, port) in [Object.groupBy(props.data.dataplane.networking.inbounds, (item) => item.port)]"
+                    :key="port"
                   >
-                    <XLayout
-                      type="columns"
+                    <XCard
+                      class="traffic"
+                      data-testid="dataplane-traffic"
                     >
-                      <ConnectionTraffic>
-                        <template
-                          #title
-                        >
-                          <XLayout
-                            type="separated"
+                      <XLayout
+                        type="columns"
+                      >
+                        <ConnectionTraffic>
+                          <template
+                            #title
                           >
-                            <XIcon
-                              name="inbound"
-                            />
-                            <span>Inbounds</span>
-                          </XLayout>
-                        </template>
-                        <template
-                          v-for="inbounds in [dataplaneLayout?.inbounds ?? []]"
-                          :key="typeof inbounds"
-                        >
-                          <ConnectionGroup
-                            type="inbound"
-                            data-testid="dataplane-inbounds"
-                          >
-                            <!-- don't show a card for anything on port 49151 as those are service-less inbounds -->
-                            <DataCollection
-                              type="inbounds"
-                              :items="inbounds"
-                              :predicate="(item) => item.port !== 49151"
+                            <XLayout
+                              type="separated"
                             >
-                              <template
-                                v-if="props.data.dataplaneType === 'delegated'"
-                                #empty
+                              <XIcon
+                                name="inbound"
+                              />
+                              <span>Inbounds</span>
+                            </XLayout>
+                          </template>
+                          <template
+                            v-for="inbounds in [dataplaneLayout?.inbounds ?? []]"
+                            :key="typeof inbounds"
+                          >
+                            <ConnectionGroup
+                              type="inbound"
+                              data-testid="dataplane-inbounds"
+                            >
+                              <!-- don't show a card for anything on port 49151 as those are service-less inbounds -->
+                              <DataCollection
+                                type="inbounds"
+                                :items="inbounds"
+                                :predicate="(item) => item.port !== 49151"
                               >
-                                <XEmptyState>
-                                  <p>
-                                    This proxy is a delegated gateway therefore {{ t('common.product.name') }} does not have any
-                                    visibility into inbounds for this gateway.
-                                  </p>
-                                </XEmptyState>
-                              </template>
-                              <template
-                                #default="{ items: _inbounds }"
+                                <template
+                                  v-if="props.data.dataplaneType === 'delegated'"
+                                  #empty
+                                >
+                                  <XEmptyState>
+                                    <p>
+                                      This proxy is a delegated gateway therefore {{ t('common.product.name') }} does not have any
+                                      visibility into inbounds for this gateway.
+                                    </p>
+                                  </XEmptyState>
+                                </template>
+                                <template
+                                  #default="{ items: _inbounds }"
+                                >
+                                  <XLayout
+                                    type="stack"
+                                    size="small"
+                                  >
+                                    <template
+                                      v-for="item in _inbounds"
+                                      :key="`${item.kri}`"
+                                    >
+                                      <template
+                                        v-for="inbound in [inboundsByPort[item.port]?.[0]]"
+                                        :key="inbound?.port"
+                                      >
+                                        <ConnectionCard
+                                          data-testid="dataplane-inbound"
+                                          :protocol="item.protocol"
+                                          :port-name="inbound?.portName"
+                                          :traffic="traffic?.inbounds[item.proxyResourcePortName]"
+                                          data-actionable
+                                        >
+                                          <template #state>
+                                            <XIcon
+                                              v-if="inbound?.state !== 'Ready'"
+                                              name="danger"
+                                              :size="KUI_ICON_SIZE_40"
+                                              placement="right"
+                                            >
+                                              {{ t('data-planes.routes.item.unhealthy_inbound', { port: inbound?.port }) }}
+                                            </XIcon>
+                                          </template>
+                                          <XAction
+                                            data-action
+                                            :to="{
+                                              name: ((name) => name.includes('bound') ? name.replace('-outbound-', '-inbound-') : 'data-plane-connection-inbound-summary-overview-view')(String(_route.name)),
+                                              params: {
+                                                connection: item.proxyResourceName,
+                                              },
+                                              query: {
+                                                inactive: route.params.inactive,
+                                              },
+                                            }"
+                                          >
+                                            {{ item.proxyResourceName }}
+                                          </XAction>
+                                        </ConnectionCard>
+                                      </template>
+                                    </template>
+                                  </XLayout>
+                                </template>
+                              </DataCollection>
+                            </ConnectionGroup>
+                          </template>
+                        </ConnectionTraffic>
+
+                        <ConnectionTraffic>
+                          <template
+                            #actions
+                          >
+                            <XAction
+                              action="refresh"
+                              appearance="primary"
+                              @click="() => {
+                                refresh()
+                                refreshTraffic()
+                              }"
+                            >
+                              Refresh
+                            </XAction>
+                          </template>
+                          <template
+                            #title
+                          >
+                            <XLayout type="separated">
+                              <XIcon name="outbound" />
+                              <span>Outbounds</span>
+                            </XLayout>
+                          </template>
+                          <!-- we don't want to show an error here -->
+                          <!-- instead we show a No Data EmptyState -->
+                          <template
+                            v-if="typeof error === 'undefined' && typeof trafficError === 'undefined' && dataplaneLayout?.outbounds.length"
+                          >
+                            <ConnectionGroup
+                              type="passthrough"
+                            >
+                              <ConnectionCard
+                                :protocol="`passthrough`"
+                                :traffic="traffic?.passthrough"
+                              >
+                                Non mesh traffic
+                              </ConnectionCard>
+                            </ConnectionGroup>
+                            <DataCollection
+                              type="outbounds"
+                              :items="dataplaneLayout?.outbounds"
+                              v-slot="{ items: outbounds }"
+                            >
+                              <ConnectionGroup
+                                type="outbound"
+                                data-testid="dataplane-outbounds"
                               >
                                 <XLayout
                                   type="stack"
                                   size="small"
                                 >
                                   <template
-                                    v-for="item in _inbounds"
-                                    :key="`${item.kri}`"
+                                    v-for="outbound in outbounds"
+                                    :key="outbound.kri"
                                   >
                                     <ConnectionCard
-                                      data-testid="dataplane-inbound"
-                                      :protocol="item.protocol"
-                                      :port-name="Kri.fromString(item.proxyResourceName).sectionName"
-                                      :traffic="traffic?.inbounds[item.proxyResourcePortName]"
+                                      data-testid="dataplane-outbound"
+                                      :protocol="outbound.protocol"
+                                      :port-name="Kri.fromString(outbound.proxyResourceName).sectionName"
+                                      :traffic="traffic?.outbounds[outbound.proxyResourceName]"
+                                      data-actionable
                                     >
                                       <XAction
                                         data-action
                                         :to="{
-                                          name: ((name) => name.includes('bound') ? name.replace('-outbound-', '-inbound-') : 'data-plane-connection-inbound-summary-overview-view')(String(_route.name)),
+                                          name: ((name) => name.includes('bound') ? name.replace('-inbound-', '-outbound-') : 'data-plane-connection-outbound-summary-overview-view')(String(_route.name)),
                                           params: {
-                                            connection: item.proxyResourceName,
+                                            connection: outbound.proxyResourceName,
                                           },
                                           query: {
                                             inactive: route.params.inactive,
                                           },
                                         }"
                                       >
-                                        {{ item.proxyResourceName }}
+                                        {{ outbound.proxyResourceName }}
                                       </XAction>
                                     </ConnectionCard>
                                   </template>
                                 </XLayout>
-                              </template>
+                              </ConnectionGroup>
                             </DataCollection>
-                          </ConnectionGroup>
-                        </template>
-                      </ConnectionTraffic>
-
-                      <ConnectionTraffic>
-                        <template
-                          #actions
-                        >
-                          <XAction
-                            action="refresh"
-                            appearance="primary"
-                            @click="() => {
-                              refresh()
-                              refreshTraffic()
-                            }"
+                          </template>
+                          <template
+                            v-else
                           >
-                            Refresh
-                          </XAction>
-                        </template>
-                        <template
-                          #title
-                        >
-                          <XLayout type="separated">
-                            <XIcon name="outbound" />
-                            <span>Outbounds</span>
-                          </XLayout>
-                        </template>
-                        <!-- we don't want to show an error here -->
-                        <!-- instead we show a No Data EmptyState -->
-                        <template
-                          v-if="typeof error === 'undefined' && typeof trafficError === 'undefined' && dataplaneLayout?.outbounds.length"
-                        >
-                          <ConnectionGroup
-                            type="passthrough"
-                          >
-                            <ConnectionCard
-                              :protocol="`passthrough`"
-                              :traffic="traffic?.passthrough"
-                            >
-                              Non mesh traffic
-                            </ConnectionCard>
-                          </ConnectionGroup>
-                          <DataCollection
-                            type="outbounds"
-                            :items="dataplaneLayout?.outbounds"
-                            v-slot="{ items: outbounds }"
-                          >
-                            <ConnectionGroup
-                              type="outbound"
-                              data-testid="dataplane-outbounds"
-                            >
-                              <XLayout
-                                type="stack"
-                                size="small"
-                              >
-                                <template
-                                  v-for="outbound in outbounds"
-                                  :key="outbound.kri"
-                                >
-                                  <ConnectionCard
-                                    data-testid="dataplane-outbound"
-                                    :protocol="outbound.protocol"
-                                    :port-name="Kri.fromString(outbound.proxyResourceName).sectionName"
-                                    :traffic="traffic?.outbounds[outbound.proxyResourceName]"
-                                  >
-                                    <XAction
-                                      data-action
-                                      :to="{
-                                        name: ((name) => name.includes('bound') ? name.replace('-inbound-', '-outbound-') : 'data-plane-connection-outbound-summary-overview-view')(String(_route.name)),
-                                        params: {
-                                          connection: outbound.proxyResourceName,
-                                        },
-                                        query: {
-                                          inactive: route.params.inactive,
-                                        },
-                                      }"
-                                    >
-                                      {{ outbound.proxyResourceName }}
-                                    </XAction>
-                                  </ConnectionCard>
-                                </template>
-                              </XLayout>
-                            </ConnectionGroup>
-                          </DataCollection>
-                        </template>
-                        <template
-                          v-else
-                        >
-                          <XEmptyState />
-                        </template>
-                      </ConnectionTraffic>
-                    </XLayout>
-                  </XCard>
+                            <XEmptyState />
+                          </template>
+                        </ConnectionTraffic>
+                      </XLayout>
+                    </XCard>
+                  </template>
 
                   <RouterView
                     v-slot="child"
@@ -714,6 +736,7 @@
 </template>
 
 <script lang="ts" setup>
+import { KUI_ICON_SIZE_40 } from '@kong/design-tokens'
 import { provide } from 'vue'
 
 import { sources } from '../sources'
@@ -725,7 +748,7 @@ import ConnectionGroup from '@/app/connections/components/connection-traffic/Con
 import ConnectionTraffic from '@/app/connections/components/connection-traffic/ConnectionTraffic.vue'
 import { sources as connectionSources } from '@/app/connections/sources'
 import type { DataplaneOverview } from '@/app/data-planes/data'
-import { Kri } from '@/app/kuma/kri'
+import { Kri } from '@/app/kuma'
 import type { Mesh } from '@/app/meshes/data'
 import { sources as policySources } from '@/app/policies/sources'
 import { useRoute } from '@/app/vue'
@@ -746,6 +769,7 @@ provide('data-plane-overview', props.data)
 
 .traffic {
   padding: 0;
+  contain: content;
   container-type: inline-size;
   container-name: traffic;
 
