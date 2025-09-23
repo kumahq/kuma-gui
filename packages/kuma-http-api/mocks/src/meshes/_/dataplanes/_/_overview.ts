@@ -187,7 +187,7 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
             ...(isTransparentProxyingEnabled ? ['feature-transparent-proxy-in-dataplane-metadata'] : []),
             ...(isUnifiedResourceNamingEnabled ? ['feature-unified-resource-naming'] : []),
             ...(isBindOutboundsEnabled ? ['feature-bind-outbounds'] : []),
-          ]
+          ],
         },
       },
     },
