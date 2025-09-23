@@ -558,6 +558,7 @@
                                       :protocol="item.protocol"
                                       :port-name="Kri.fromString(item.proxyResourceName).sectionName"
                                       :traffic="traffic?.inbounds[item.proxyResourcePortName]"
+                                      data-actionable
                                     >
                                       <XAction
                                         data-action
@@ -642,6 +643,7 @@
                                     :protocol="outbound.protocol"
                                     :port-name="Kri.fromString(outbound.proxyResourceName).sectionName"
                                     :traffic="traffic?.outbounds[outbound.proxyResourceName]"
+                                    data-actionable
                                   >
                                     <XAction
                                       data-action
@@ -725,7 +727,7 @@ import ConnectionGroup from '@/app/connections/components/connection-traffic/Con
 import ConnectionTraffic from '@/app/connections/components/connection-traffic/ConnectionTraffic.vue'
 import { sources as connectionSources } from '@/app/connections/sources'
 import type { DataplaneOverview } from '@/app/data-planes/data'
-import { Kri } from '@/app/kuma/kri'
+import { Kri } from '@/app/kuma'
 import type { Mesh } from '@/app/meshes/data'
 import { sources as policySources } from '@/app/policies/sources'
 import { useRoute } from '@/app/vue'

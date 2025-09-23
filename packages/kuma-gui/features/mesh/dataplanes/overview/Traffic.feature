@@ -25,10 +25,10 @@ Feature: mesh / dataplanes / connections / Traffic
             protocol: http
             proxyResourceName: self_inbound_httpport
         outbounds:
-          - kri: kri_dp_default_scenario_kuma-system_service-less_ipv6
+          - kri: kri_msvc_default_scenario_kuma-system_service-less_ipv6
             port: 54321
             protocol: tcp
-            proxyResourceName: kri_dp_default_scenario_kuma-system_service-less_ipv6
+            proxyResourceName: kri_msvc_default_scenario_kuma-system_service-less_ipv6
       """
     When I visit the "/meshes/default/data-planes/service-less/overview" URL
     And the "$traffic" element exists
@@ -37,4 +37,4 @@ Feature: mesh / dataplanes / connections / Traffic
     And the "$inbound" element contains "self_inbound_httpport"
     And the "$outbound" element exists 1 times
     And the "$outbound" element contains "ipv6"
-    And the "$outbound" element contains "kri_dp_default_scenario_kuma-system_service-less_ipv6"
+    And the "$outbound" element contains "kri_msvc_default_scenario_kuma-system_service-less_ipv6"
