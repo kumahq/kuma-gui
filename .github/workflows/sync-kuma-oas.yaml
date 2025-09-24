@@ -7,6 +7,12 @@ on:
         required: true
         type: string
         description: The base branch for which to create a PR
+  # Uncomment the following pull_request event to test this workflow in a PR
+  # pull_request:
+  #   types:
+  #     - opened
+  #     - reopened
+  #     - synchronize
   # repository_dispatch:
   #   types:
   #     - SYNC_KUMA_OAS
@@ -19,7 +25,7 @@ env:
   BRANCH: ${{ github.event.client_payload.branch || inputs.branch || github.base_ref }}
 
 jobs:
-  install-dependencies:
+  sync:
     timeout-minutes: 10
     runs-on: ubuntu-latest
     steps:
@@ -28,26 +34,25 @@ jobs:
         with:
           install-cmd: |
             make install
-
-  sync:
-    timeout-minutes: 10
-    runs-on: ubuntu-latest
-    needs:
-      - install-dependencies
-    steps:
-      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-      - uses: ./.github/actions/bootstrap/
       - run: |
           make -C packages/kuma-http-api types/fetch
           make -C packages/kuma-http-api build
           echo KUMA_HEAD="$(git -C packages/kuma-http-api/kuma rev-parse HEAD)" >> "$GITHUB_ENV"
+      - if: ${{ github.event_name == 'pull_request' }}
+        run: |
+          echo 'chore(kuma-http-api): bump kuma OAS based types - ${{ env.KUMA_HEAD }}'
+          echo '=========='
+          git ls-files --exclude-standard --modified --deleted --others -t
+          git -C packages/kuma-http-api --no-pager diff --unified=0
       - uses: actions/create-github-app-token@67018539274d69449ef7c02e8e71183d1719ab42 # v2.1.4
+        if: ${{ github.event_name != 'pull_request' }}
         id: github-app-token
         with:
           # no owner and no repositories as we only want access to this repository
           app-id: ${{ secrets.APP_ID }}
           private-key: ${{ secrets.APP_PRIVATE_KEY }}
       - uses: peter-evans/create-pull-request@271a8d0340265f705b14b6d32b9829c1cb33d45e # v7.0.8
+        if: ${{ github.event_name != 'pull_request' }}
         with:
           token: ${{ steps.github-app-token.outputs.token }}
           base: ${{ env.BRANCH }}

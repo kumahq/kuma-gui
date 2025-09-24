@@ -1592,6 +1592,8 @@ export interface components {
             path: string;
             singularDisplayName: string;
             pluralDisplayName: string;
+            /** @description the short name of the resource type used in KRIs and kubectl */
+            shortName: string;
             /** @description description resources of this type should be included in federetion-with-policies export profile (especially useful for moving from non-federated to federated or migrating to a new global). */
             includeInFederation: boolean;
             policy?: components["schemas"]["PolicyDescription"];

@@ -4903,6 +4903,7 @@ components:
         - singularDisplayName
         - pluralDisplayName
         - includeInFederation
+        - shortName
       properties:
         name:
           description: the name of the resource type
@@ -4922,6 +4923,9 @@ components:
         singularDisplayName:
           type: string
         pluralDisplayName:
+          type: string
+        shortName:
+          description: the short name of the resource type used in KRIs and kubectl
           type: string
         includeInFederation:
           description: >-
