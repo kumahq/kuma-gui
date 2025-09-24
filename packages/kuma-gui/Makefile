@@ -56,8 +56,11 @@ test/unit/watch: .test/unit/watch ## Dev: run unit tests but watch for changes
 .PHONY: test/e2e
 test/e2e: .test/e2e ## Run browser-based e2e tests against a running GUI, you may want to set KUMA_BASE_URL=http://localhost:8080/gui and KUMA_TEST_BROWSER=chrome
 
-.PHONY: build ## Dev: build a production artifact in `./dist`
-build: .build
+.PHONY: build
+build: .build ## Dev: build a production artifact in `./dist`
+
+.PHONY: post-upgrade
+post-upgrade: .post-upgrade/msw ## Dev: perform any post npm upgrade actions
 
 # Called via netlify.toml
 .PHONY: deploy/preview
@@ -74,5 +77,3 @@ release: KUMAHQ_KUMA_GUI=$(NPM_WORKSPACE_ROOT)/$(shell cat $(NPM_WORKSPACE_ROOT)
 release: SRC?=$(KUMAHQ_KUMA_GUI)/dist
 release: .release ## CI: 'releases' a built artifact, depends on the build artifact from 'make build'
 
-.PHONY: post-upgrade/msw
-post-upgrade/msw: .post-upgrade/msw
