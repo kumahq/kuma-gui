@@ -7,94 +7,99 @@
       connection: '',
       policy: '',
     }"
-    v-slot="{ route }"
+    v-slot="{ route, uri }"
   >
-    <DataCollection
-      :items="props.policies"
-      :predicate="item => item.kind.toLocaleLowerCase() === route.params.policy"
-      v-slot="{ items }"
+    <DataLoader
+      :src="uri(policySources, '/policy-types', {})"
+      v-slot="{ data: policyTypesData }"
     >
-      <template
-        v-for="{ kind, conf, origins } of items"
-        :key="kind"
+      <DataCollection
+        :items="props.policies"
+        :predicate="item => item.kind.toLocaleLowerCase() === route.params.policy"
+        v-slot="{ items }"
       >
-        <AppView>
-          <template #title>
-            <XLayout size="small">
-              <h2>
-                <PolicyTypeTag
-                  :policy-type="kind"
-                >
-                  {{ kind }}
-                </PolicyTypeTag>
-              </h2>
-            </XLayout>
-          </template>
-          <template
-            v-for="policyTypes in [Object.groupBy((policyTypesData?.policyTypes ?? []), ({ name }) => name)]"
-            :key="`${typeof policyTypes}`"
-          >
-            <XTable
-              v-if="origins.length > 0"
-              variant="kv"
-            >
-              <tr>
-                <th scope="row">
-                  Origin policies
-                </th>
-                <td>
-                  <ul>
-                    <li
-                      v-for="origin in origins"
-                      :key="origin.kri"
-                    >
-                      <template
-                        v-for="kri in [Kri.fromString(origin.kri)]"
-                        :key="typeof kri"
-                      >
-                        <XAction
-                          v-if="policyTypes[kind]"
-                          :to="{
-                            name: 'policy-detail-view',
-                            params: {
-                              mesh: kri.mesh,
-                              policyPath: policyTypes[kind]![0].path,
-                              policy: kri.name,
-                            },
-                          }"
-                        >
-                          {{ origin.kri }}
-                        </XAction>
-                        <template
-                          v-else
-                        >
-                          {{ origin.kri }}
-                        </template>
-                      </template>
-                    </li>
-                  </ul>
-                </td>
-              </tr>
-              <tr>
-                <td colspan="2">
-                  <XLayout
-                    type="stack"
-                    size="small"
+        <template
+          v-for="{ kind, conf, origins } of items"
+          :key="kind"
+        >
+          <AppView>
+            <template #title>
+              <XLayout size="small">
+                <h2>
+                  <PolicyTypeTag
+                    :policy-type="kind"
                   >
-                    <span>Config</span>
-                    <XCodeBlock
-                      :code="YAML.stringify(conf)"
-                      language="yaml"
-                      :show-copy-button="false"
-                    />
-                  </XLayout>
-                </td>
-              </tr>
-            </XTable>
-          </template>
-        </AppView>
-      </template>
-    </DataCollection>
+                    {{ kind }}
+                  </PolicyTypeTag>
+                </h2>
+              </XLayout>
+            </template>
+            <template
+              v-for="policyTypes in [Object.groupBy((policyTypesData?.policyTypes ?? []), ({ name }) => name)]"
+              :key="`${typeof policyTypes}`"
+            >
+              <XTable
+                v-if="origins.length > 0"
+                variant="kv"
+              >
+                <tr>
+                  <th scope="row">
+                    Origin policies
+                  </th>
+                  <td>
+                    <ul>
+                      <li
+                        v-for="origin in origins"
+                        :key="origin.kri"
+                      >
+                        <template
+                          v-for="kri in [Kri.fromString(origin.kri)]"
+                          :key="typeof kri"
+                        >
+                          <XAction
+                            v-if="policyTypes[kind]"
+                            :to="{
+                              name: 'policy-detail-view',
+                              params: {
+                                mesh: kri.mesh,
+                                policyPath: policyTypes[kind]![0].path,
+                                policy: kri.name,
+                              },
+                            }"
+                          >
+                            {{ origin.kri }}
+                          </XAction>
+                          <template
+                            v-else
+                          >
+                            {{ origin.kri }}
+                          </template>
+                        </template>
+                      </li>
+                    </ul>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="2">
+                    <XLayout
+                      type="stack"
+                      size="small"
+                    >
+                      <span>Config</span>
+                      <XCodeBlock
+                        :code="YAML.stringify(conf)"
+                        language="yaml"
+                        :show-copy-button="false"
+                      />
+                    </XLayout>
+                  </td>
+                </tr>
+              </XTable>
+            </template>
+          </AppView>
+        </template>
+      </DataCollection>
+    </DataLoader>
   </RouteView>
 </template>
 
@@ -102,12 +107,11 @@
 import { YAML } from '@/app/application'
 import PolicyTypeTag from '@/app/common/PolicyTypeTag.vue'
 import { Kri } from '@/app/kuma'
-import type { ResourceCollection } from '@/app/policies/data'
 import type { DataplanePolicies } from '@/app/policies/data/DataplanePolicies'
+import { sources as policySources } from '@/app/policies/sources'
 
 const props = defineProps<{
   policies: DataplanePolicies['policies']
-  policyTypesData: ResourceCollection
 }>()
 </script>
 <style scoped>
