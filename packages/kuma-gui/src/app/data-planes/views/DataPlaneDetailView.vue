@@ -606,7 +606,7 @@
               v-slot="child"
             >
               <XDrawer
-                v-if="child.route.name !== route.name && dataplaneLayout"
+                v-if="child.route.name !== route.name"
                 width="670px"
                 @close="() => {
                   route.replace({
@@ -628,7 +628,7 @@
                   :data-plane-overview="props.data"
                   :networking="props.data.dataplane.networking"
                   :subscriptions="props.data.dataplaneInsight.subscriptions"
-                  :policies="resources?.policies ?? []"
+                  :policies="resources?.policies"
                 />
               </XDrawer>
             </RouterView>
