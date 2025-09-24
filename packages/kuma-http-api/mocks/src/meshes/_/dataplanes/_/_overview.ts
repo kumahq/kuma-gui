@@ -20,6 +20,9 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
   const unifiedResourceNaming = env('KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED', '')
   const isTlsIssuedMeshIdentity = env('KUMA_DATAPLANE_TLS_ISSUED_MESHIDENTITY', `${fake.datatype.boolean()}`) === 'true'
   const isUnifiedResourceNamingEnabled = unifiedResourceNaming.length ? unifiedResourceNaming === 'true' : fake.datatype.boolean()
+  const isTransparentProxyingEnabled = env('KUMA_DATAPLANE_TRANSPARENT_PROXY', `${fake.datatype.boolean()}`) === 'true'
+  const isBindOutboundsEnabled = env('KUMA_DATAPLANE_BIND_OUTBOUNDS', `${fake.datatype.boolean()}`) === 'true'
+  const isTcpAccesslogViaNamedPipeEnabled = env('KUMA_DATAPLANE_TCP_ACCESSLOG_VIA_NAMED_PIPE', `${fake.datatype.boolean()}`) === 'true'
 
   const outboundCount = parseInt(env('KUMA_DATAPLANEOUTBOUND_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
   const subscriptionCount = parseInt(env('KUMA_SUBSCRIPTION_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
@@ -180,8 +183,10 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
         }),
         metadata: {
           features: [
-            ...fake.kuma.dataplaneFeatures(),
+            ...(isTcpAccesslogViaNamedPipeEnabled ? ['feature-tcp-accesslog-via-named-pipe'] : []),
+            ...(isTransparentProxyingEnabled ? ['feature-transparent-proxy-in-dataplane-metadata'] : []),
             ...(isUnifiedResourceNamingEnabled ? ['feature-unified-resource-naming'] : []),
+            ...(isBindOutboundsEnabled ? ['feature-bind-outbounds'] : []),
           ],
         },
       },
