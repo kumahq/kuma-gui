@@ -606,7 +606,7 @@
               v-slot="child"
             >
               <XDrawer
-                v-if="child.route.name !== route.name"
+                v-if="child.route.name !== route.name && dataplaneLayout"
                 width="670px"
                 @close="() => {
                   route.replace({
