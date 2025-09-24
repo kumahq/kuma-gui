@@ -53,6 +53,7 @@ table.variant-kv {
   :deep(tbody tr), :deep(> tr) {
     display: flex;
     justify-content: space-between;
+    align-items: baseline;
     &:not(:first-child) {
       border-block-start: $kui-border-width-10 solid $kui-color-border;
     }
