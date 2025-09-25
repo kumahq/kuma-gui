@@ -131,8 +131,6 @@
 </template>
 
 <script lang="ts" setup>
-import { defineProps } from 'vue'
-
 import { sources as ControlPlaneSources } from '../sources'
 import { useControlPlaneStatus, useControlPlaneActionGroup } from '@/app/control-planes'
 import { useMeshInsightsList } from '@/app/meshes'
