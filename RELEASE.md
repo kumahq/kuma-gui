@@ -11,8 +11,11 @@ for the release(s) of Kuma on version 2.1).
 
 Whenever a new release branch is created in
 [kumahq/kuma](https://github.com/kumahq/kuma), a new release branch of the
-_exact_ same name should be created in Kuma GUI. New pull requests in Kuma GUI
-are opened against this branch during the stabilization phase.
+_exact_ same name should be created in Kuma GUI.
+
+Any fixes/amends that need to land in the release should PR against newly
+created release branch and then a PR created to merge the same fix/amend to
+master, i.e. "fix it where it broke and port it forwards."
 
 This release branch will include changes for version 2.1.0 but also possibly
 for patch releases for that minor version (e.g. 2.1.1, 2.1.2, but not 2.2.0 or
@@ -20,6 +23,7 @@ for patch releases for that minor version (e.g. 2.1.1, 2.1.2, but not 2.2.0 or
 
 Automation ensures that new work on the GUI release branch is synced to
 upstream kuma, similar to what happens normally for the `master` branch.
+
 
 ### Bumping package versions on master
 
