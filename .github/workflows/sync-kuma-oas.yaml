@@ -8,11 +8,11 @@ on:
         type: string
         description: The base branch for which to create a PR
   # Uncomment the following pull_request event to test this workflow in a PR
-  # pull_request:
-  #   types:
-  #     - opened
-  #     - reopened
-  #     - synchronize
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
   # repository_dispatch:
   #   types:
   #     - SYNC_KUMA_OAS
@@ -37,7 +37,7 @@ jobs:
       - run: |
           make -C packages/kuma-http-api types/fetch
           make -C packages/kuma-http-api build
-          echo KUMA_HEAD="$(git -C packages/kuma-http-api/kuma rev-parse HEAD)" >> "$GITHUB_ENV"
+          echo KUMA_HEAD="$(git -C packages/kuma-http-api/kuma rev-parse --short=12 HEAD)" >> "$GITHUB_ENV"
       - if: ${{ github.event_name == 'pull_request' }}
         run: |
           echo 'chore(kuma-http-api): bump kuma OAS based types - ${{ env.KUMA_HEAD }}'
