@@ -1,6 +1,17 @@
 name: Sync Kuma OAS
 
+# Ensures that only one workflow is run per branch at a time.
+concurrency:
+  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
+
 on:
+  # Uncomment the following pull_request event to test this workflow in a PR
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
   workflow_dispatch:
     inputs:
       branch:
@@ -10,20 +21,10 @@ on:
   repository_dispatch:
     types:
       - SYNC_KUMA_OAS
-  # Uncomment the following pull_request event to test this workflow in a PR
-  # pull_request:
-  #   types:
-  #     - opened
-  #     - reopened
-  #     - synchronize
-
-concurrency:
-  cancel-in-progress: true
-  group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
 
 permissions:
-  contents: read
-  pull-requests: write
+  contents: read # for checking out the repository (e.g. actions/checkout)
+  pull-requests: write # for reading, and creating pull requests (via peter-evans/create-pull-request)
 
 env:
   BRANCH: ${{ github.event.client_payload.branch || inputs.branch || github.base_ref }}
