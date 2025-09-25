@@ -42,7 +42,7 @@ jobs:
       - run: |
           make -C packages/kuma-http-api types/fetch
           make -C packages/kuma-http-api build
-          echo KUMA_HEAD="$(git -C packages/kuma-http-api/kuma rev-parse --short=12 HEAD)" >> "$GITHUB_ENV"
+          echo KUMA_HEAD="$(git -C packages/kuma-http-api/kuma rev-parse --short HEAD)" >> "$GITHUB_ENV"
       - if: ${{ github.event_name == 'pull_request' }}
         run: |
           echo 'chore(kuma-http-api): bump kuma OAS based types - ${{ env.KUMA_HEAD }}'
