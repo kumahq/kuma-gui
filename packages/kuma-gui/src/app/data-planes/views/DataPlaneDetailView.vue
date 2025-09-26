@@ -94,7 +94,6 @@
                   >
                     <StatusBadge :status="props.data.status" />
                     <DataCollection
-                      v-if="props.data.dataplaneType === 'standard'"
                       :items="props.data.dataplane.networking.inbounds"
                       :predicate="item => item.state !== 'Ready'"
                       :empty="false"
@@ -430,82 +429,60 @@
                       :key="port"
                     >
                       <template
-                        v-for="inbounds in [dataplaneLayout?.inbounds ?? []]"
+                        v-for="inbounds in [dataplaneLayout!.inbounds]"
                         :key="typeof inbounds"
                       >
                         <ConnectionGroup
                           type="inbound"
                           data-testid="dataplane-inbounds"
                         >
-                          <!-- don't show a card for anything on port 49151 as those are service-less inbounds -->
-                          <DataCollection
-                            type="inbounds"
-                            :items="inbounds"
-                            :predicate="(item) => item.port !== 49151"
+                          <XLayout
+                            type="stack"
+                            size="small"
                           >
                             <template
-                              v-if="props.data.dataplaneType === 'delegated'"
-                              #empty
+                              v-for="item in inbounds"
+                              :key="`${item.kri}`"
                             >
-                              <XEmptyState>
-                                <p>
-                                  This proxy is a delegated gateway therefore {{ t('common.product.name') }} does not have any
-                                  visibility into inbounds for this gateway.
-                                </p>
-                              </XEmptyState>
-                            </template>
-                            <template
-                              #default="{ items: _inbounds }"
-                            >
-                              <XLayout
-                                type="stack"
-                                size="small"
+                              <template
+                                v-for="inbound in [inboundsByPort[item.port]?.[0]]"
+                                :key="inbound?.port"
                               >
-                                <template
-                                  v-for="item in _inbounds"
-                                  :key="`${item.kri}`"
+                                <ConnectionCard
+                                  data-testid="dataplane-inbound"
+                                  :protocol="item.protocol"
+                                  :port-name="inbound?.portName"
+                                  :traffic="traffic?.inbounds[item.stat_prefix]"
+                                  data-actionable
                                 >
-                                  <template
-                                    v-for="inbound in [inboundsByPort[item.port]?.[0]]"
-                                    :key="inbound?.port"
-                                  >
-                                    <ConnectionCard
-                                      data-testid="dataplane-inbound"
-                                      :protocol="item.protocol"
-                                      :port-name="inbound?.portName"
-                                      :traffic="traffic?.inbounds[item.proxyResourcePortName]"
-                                      data-actionable
+                                  <template #state>
+                                    <XIcon
+                                      v-if="inbound?.state !== 'Ready'"
+                                      name="danger"
+                                      :size="KUI_ICON_SIZE_40"
+                                      placement="right"
                                     >
-                                      <template #state>
-                                        <XIcon
-                                          v-if="inbound?.state !== 'Ready'"
-                                          name="danger"
-                                          :size="KUI_ICON_SIZE_40"
-                                          placement="right"
-                                        >
-                                          {{ t('data-planes.routes.item.unhealthy_inbound', { port: inbound?.port }) }}
-                                        </XIcon>
-                                      </template>
-                                      <XAction
-                                        data-action
-                                        :to="{
-                                          name: ((name) => name.includes('bound') ? name.replace('-outbound-', '-inbound-') : 'data-plane-connection-inbound-summary-overview-view')(String(_route.name)),
-                                          params: {
-                                            connection: item.proxyResourceName,
-                                          },
-                                          query: {
-                                            inactive: route.params.inactive,
-                                          },
-                                        }"
-                                      >
-                                        {{ item.proxyResourceName }}
-                                      </XAction>
-                                    </ConnectionCard>
+                                      {{ t('data-planes.routes.item.unhealthy_inbound', { port: inbound?.port }) }}
+                                    </XIcon>
                                   </template>
-                                </template>
-                              </XLayout>
+                                  <XAction
+                                    data-action
+                                    :to="{
+                                      name: ((name) => name.includes('bound') ? name.replace('-outbound-', '-inbound-') : 'data-plane-connection-inbound-summary-overview-view')(String(_route.name)),
+                                      params: {
+                                        connection: item.proxyResourceName,
+                                      },
+                                      query: {
+                                        inactive: route.params.inactive,
+                                      },
+                                    }"
+                                  >
+                                    {{ item.proxyResourceName }}
+                                  </XAction>
+                                </ConnectionCard>
+                              </template>
                             </template>
-                          </DataCollection>
+                          </XLayout>
                         </ConnectionGroup>
                       </template>
                     </template>
@@ -569,8 +546,7 @@
                               <ConnectionCard
                                 data-testid="dataplane-outbound"
                                 :protocol="outbound.protocol"
-                                :port-name="Kri.fromString(outbound.proxyResourceName).sectionName"
-                                :traffic="traffic?.outbounds[outbound.proxyResourceName]"
+                                :traffic="traffic?.outbounds[outbound.kri]"
                                 data-actionable
                               >
                                 <XAction
@@ -651,7 +627,6 @@ import ConnectionGroup from '@/app/connections/components/connection-traffic/Con
 import ConnectionTraffic from '@/app/connections/components/connection-traffic/ConnectionTraffic.vue'
 import { sources as connectionSources } from '@/app/connections/sources'
 import type { DataplaneOverview } from '@/app/data-planes/data'
-import { Kri } from '@/app/kuma'
 import type { Mesh } from '@/app/meshes/data'
 import type { DataplanePolicies } from '@/app/policies/data/DataplanePolicies'
 import { sources as policySources } from '@/app/policies/sources'

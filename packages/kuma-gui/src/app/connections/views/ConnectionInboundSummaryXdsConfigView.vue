@@ -21,7 +21,7 @@
         :src="uri(sources, '/connections/xds/for/:proxyType/:name/:mesh/inbound/:inbound', {
           mesh: route.params.mesh || '*',
           name: route.params.proxy,
-          inbound: 'proxyResourcePortName' in props.data ? props.data.proxyResourcePortName : `${props.data.port}`,
+          inbound: 'stat_prefix' in props.data ? props.data.stat_prefix : `${props.data.port}`,
           proxyType: ({ ingresses: 'zone-ingress', egresses: 'zone-egress'})[route.params.proxyType] ?? 'dataplane',
         })"
         v-slot="{ data: raw, refresh }"

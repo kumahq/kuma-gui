@@ -68,12 +68,11 @@
   </RouteView>
 </template>
 
-<script lang="ts" setup>
-import { DataplaneNetworkingLayout } from '../data'
+<script lang="ts" generic="T extends { proxyResourceName: string }" setup>
 import type { DataplaneNetworking, DataplaneOverview } from '@/app/data-planes/data/'
 
 const props = defineProps<{
-  data?: DataplaneNetworkingLayout['inbounds'] | DataplaneNetworkingLayout['outbounds']
+  data?: T[]
   networking: DataplaneNetworking
   routeName: string
   dataPlaneOverview: DataplaneOverview
