@@ -37,7 +37,9 @@
           <AppView>
             <template #title>
               <XLayout size="small">
-                <h2>
+                <h2
+                  v-icon-start="`zone`"
+                >
                   <XAction
                     :to="{
                       name: 'zone-ingress-detail-view',
@@ -206,8 +208,3 @@ const props = defineProps<{
   items: ZoneIngressOverview[]
 }>()
 </script>
-<style scoped>
-h2 {
-  --icon-before: url('@/assets/images/zone.svg?inline') !important;
-}
-</style>

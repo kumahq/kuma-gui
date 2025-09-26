@@ -28,12 +28,10 @@
             <AppView>
               <template #title>
                 <XLayout size="small">
-                  <h2>
-                    <PolicyTypeTag
-                      :policy-type="kind"
-                    >
-                      {{ kind }}
-                    </PolicyTypeTag>
+                  <h2
+                    v-icon-start="{name: kind, size: '60', default: 'policy'}"
+                  >
+                    {{ kind }}
                   </h2>
                 </XLayout>
               </template>
@@ -109,7 +107,6 @@
 
 <script lang="ts" setup>
 import { YAML } from '@/app/application'
-import PolicyTypeTag from '@/app/common/PolicyTypeTag.vue'
 import { Kri } from '@/app/kuma'
 import type { DataplanePolicies } from '@/app/policies/data/DataplanePolicies'
 import { sources as policySources } from '@/app/policies/sources'

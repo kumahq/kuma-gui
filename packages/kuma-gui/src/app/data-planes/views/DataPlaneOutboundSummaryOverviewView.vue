@@ -73,11 +73,11 @@
                       <XCard>
                         <AccordionItem>
                           <template #accordion-header>
-                            <PolicyTypeTag
-                              :policy-type="kind"
+                            <span
+                              v-icon-start="{name: kind, size: '60', default: 'policy'}"
                             >
                               {{ kind }}
-                            </PolicyTypeTag>
+                            </span>
                           </template>
                           <template #accordion-content>
                             <XTable
@@ -157,7 +157,6 @@ import { DataplaneNetworkingLayout } from '../data'
 import { YAML } from '@/app/application'
 import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
-import PolicyTypeTag from '@/app/common/PolicyTypeTag.vue'
 import { Kri } from '@/app/kuma'
 import { sources as policySources } from '@/app/policies/sources'
 
