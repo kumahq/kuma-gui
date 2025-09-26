@@ -11,7 +11,9 @@
   >
     <AppView>
       <template #title>
-        <h2>
+        <h2
+          v-icon-start="`subscription`"
+        >
           <RouteTitle
             :title="t('data-planes.routes.item.subscriptions.title')"
           />
@@ -129,9 +131,3 @@ const props = defineProps<{
   subscriptions: DataplaneOverview['dataplaneInsight']['subscriptions']
 }>()
 </script>
-
-<style scoped>
-h2 {
-  --icon-before: url('@/assets/images/subscriptions.svg?inline') !important;
-}
-</style>
