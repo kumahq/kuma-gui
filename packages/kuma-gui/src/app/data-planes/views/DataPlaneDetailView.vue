@@ -365,7 +365,7 @@
                   >
                     <XAction
                       :to="{
-                        name: 'data-plane-policy-config-summary-view',
+                        name: 'data-plane-subscriptions-list-view',
                         params: {
                           mesh: route.params.mesh,
                           proxy: route.params.proxy,
