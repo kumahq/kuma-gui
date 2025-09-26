@@ -3,7 +3,7 @@
   "extends": [
     "config:recommended",
     ":semanticCommits",
-    "Kong/public-shared-renovate:github-actions"
+    "Kong/public-shared-renovate//base/github-actions"
   ],
   "dependencyDashboard": true,
   "rangeStrategy": "bump",
