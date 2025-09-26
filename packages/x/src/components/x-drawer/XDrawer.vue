@@ -46,7 +46,6 @@ const emit = defineEmits<{
   (event: 'close'): void
 }>()
 </script>
-
 <style lang="scss" scoped>
 .summary-slideout {
   --app-view-content-top: 0;
@@ -56,24 +55,11 @@ const emit = defineEmits<{
     font-size: $kui-font-size-70;
   }
   h1, h2 {
-    --icon-before: url('@/assets/images/icon-wifi-tethering.svg');
+    --icon-name-start: var(--icon-wifi-tethering);
+    --icon-color: #{$kui-color-text-neutral};
     &::before {
-      color: $kui-color-text-neutral;
-      mask-repeat: no-repeat;
-      -webkit-mask-repeat: no-repeat;
-      mask-position: center;
-      -webkit-mask-position: center;
+      margin-right: var(--icon-space-after);
       content: '';
-      display: inline-flex;
-      background-color: var(--icon-before-color, currentColor);
-
-      mask-image: var(--icon-before);
-      -webkit-mask-image: var(--icon-before);
-      mask-size: 100%;
-      -webkit-mask-size: 100%;
-      width: 16px;
-      height: 16px;
-      margin-right: $kui-space-30;
     }
   }
   button.slideout-close-icon {
