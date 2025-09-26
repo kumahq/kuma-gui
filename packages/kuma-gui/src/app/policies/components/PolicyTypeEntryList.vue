@@ -8,10 +8,11 @@
       :key="index"
     >
       <template #accordion-header>
-        <h3 class="policy-type-heading">
-          <PolicyTypeTag :policy-type="policyTypeEntry.type">
-            {{ policyTypeEntry.type }} ({{ policyTypeEntry.connections.length }})
-          </PolicyTypeTag>
+        <h3
+          v-icon-start="{name: policyTypeEntry.type, size: '60', default: 'policy'}"
+          class="policy-type-heading"
+        >
+          {{ policyTypeEntry.type }} ({{ policyTypeEntry.connections.length }})
         </h3>
       </template>
 
@@ -121,7 +122,6 @@ import type { PolicyResourceType } from '../data'
 import { YAML } from '@/app/application'
 import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
-import PolicyTypeTag from '@/app/common/PolicyTypeTag.vue'
 import TagList from '@/app/common/TagList.vue'
 import type { PolicyTypeEntry, PolicyTypeEntryConnection } from '@/types/index.d'
 
