@@ -123,6 +123,7 @@ import type { Subscription } from '../data'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 const props = defineProps<{
   routeName: string
+  // TODO: temporary until we can infer it from the meta.module
   routePrefix: string
   i18nPrefix: string
   subscriptions: Subscription[]
