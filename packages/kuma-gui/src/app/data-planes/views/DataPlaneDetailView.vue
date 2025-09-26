@@ -390,7 +390,7 @@
                             data-action
                             appearance="anchor"
                             :to="{
-                              name: 'data-plane-subscriptions-summary-view',
+                              name: 'data-plane-subscriptions-list-view',
                               params: {
                                 mesh: route.params.mesh,
                                 proxy: route.params.proxy,
@@ -699,7 +699,7 @@
                   >
                     <XDrawer
                       v-if="child.route.name !== route.name"
-                      :width="child.route.name === 'data-plane-subscriptions-summary-view' ? '900px' : '670px'"
+                      width="670px"
                       @close="function () {
                         route.replace({
                           name: 'data-plane-detail-view',
@@ -719,7 +719,6 @@
                         :data="route.params.subscription.length > 0 ? props.data.dataplaneInsight.subscriptions : (child.route.name as string).includes('-inbound-') ? dataplaneLayout?.inbounds : dataplaneLayout?.outbounds"
                         :data-plane-overview="props.data"
                         :networking="props.data.dataplane.networking"
-                        :subscriptions="props.data.dataplaneInsight.subscriptions"
                         :policies="dataplanePolicies?.policies ?? []"
                         :policy-types-data="policyTypesData"
                       />
