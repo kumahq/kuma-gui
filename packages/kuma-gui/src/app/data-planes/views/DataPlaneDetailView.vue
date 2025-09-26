@@ -342,6 +342,7 @@
             </XLayout>
 
             <DataSource
+              v-if="can('use unified-resource-naming', { mesh: props.mesh, dataplaneOverview: props.data })"
               :src="uri(policySources, '/meshes/:mesh/dataplanes/:name/policies/for/proxy', {
                 mesh: route.params.mesh,
                 name: route.params.proxy,
@@ -400,6 +401,18 @@
             })"
             v-slot="{ data: traffic, error: trafficError, refresh: refreshTraffic }"
           >
+            <XNotification
+              :notify="!!trafficError"
+              :data-testid="`warning-stats-not-enhanced`"
+              :uri="`data-planes.notifications.stats-not-enhanced.${props.data.id}`"
+            >
+              <XI18n
+                :path="`data-planes.notifications.stats-not-enhanced`"
+                :params="{
+                  error: trafficError?.toString() ?? '',
+                }"
+              />
+            </XNotification>
             <XCard
               class="traffic"
               data-testid="dataplane-traffic"
