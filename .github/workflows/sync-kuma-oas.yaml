@@ -1,25 +1,30 @@
 name: Sync Kuma OAS
 
+# Ensures that only one workflow is run per branch at a time.
+concurrency:
+  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
+
 on:
-  workflow_dispatch:
-    inputs:
-      branch:
-        required: true
-        type: string
-        description: The base branch for which to create a PR
   # Uncomment the following pull_request event to test this workflow in a PR
   # pull_request:
   #   types:
   #     - opened
   #     - reopened
   #     - synchronize
-  # repository_dispatch:
-  #   types:
-  #     - SYNC_KUMA_OAS
+  workflow_dispatch:
+    inputs:
+      branch:
+        required: true
+        type: string
+        description: The base branch for which to create a PR
+  repository_dispatch:
+    types:
+      - SYNC_KUMA_OAS
 
 permissions:
-  contents: read
-  pull-requests: write
+  contents: read # for checking out the repository (e.g. actions/checkout)
+  pull-requests: write # for reading, and creating pull requests (via peter-evans/create-pull-request)
 
 env:
   BRANCH: ${{ github.event.client_payload.branch || inputs.branch || github.base_ref }}
@@ -37,12 +42,15 @@ jobs:
       - run: |
           make -C packages/kuma-http-api types/fetch
           make -C packages/kuma-http-api build
-          echo KUMA_HEAD="$(git -C packages/kuma-http-api/kuma rev-parse HEAD)" >> "$GITHUB_ENV"
+          echo KUMA_HEAD="$(git -C packages/kuma-http-api/kuma rev-parse --short HEAD)" >> "$GITHUB_ENV"
       - if: ${{ github.event_name == 'pull_request' }}
         run: |
           echo 'chore(kuma-http-api): bump kuma OAS based types - ${{ env.KUMA_HEAD }}'
           echo '=========='
+          echo 'Files changed:'
           git ls-files --exclude-standard --modified --deleted --others -t
+          echo '=========='
+          echo 'Diff:'
           git -C packages/kuma-http-api --no-pager diff --unified=0
       - uses: actions/create-github-app-token@67018539274d69449ef7c02e8e71183d1719ab42 # v2.1.4
         if: ${{ github.event_name != 'pull_request' }}
@@ -66,7 +74,7 @@ jobs:
           signoff: true
           branch: chore/update-kuma-http-api-types-in-${{ env.BRANCH }}
           delete-branch: true
-          title: 'chore(kuma-http-api): bump kuma OAS based types'
+          title: 'chore(kuma-http-api): bump kuma OAS based types - ${{ env.KUMA_HEAD }}'
           body: |
             Generates the OAS based types from the latest kuma OAS.
 
