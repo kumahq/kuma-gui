@@ -26,7 +26,7 @@
         v-slot="{ data: connections, refresh }"
       >
         <template
-          v-for="prefix in ['proxyResourcePortName' in props.data ? props.data.proxyResourcePortName : ('clusterName' in props.data ? props.data.clusterName : route.params.connection).replace('_', ':')]"
+          v-for="prefix in ['stat_prefix' in props.data ? props.data.stat_prefix : ('clusterName' in props.data ? props.data.clusterName : route.params.connection).replace('_', ':')]"
           :key="typeof prefix"
         >
           <DataCollection

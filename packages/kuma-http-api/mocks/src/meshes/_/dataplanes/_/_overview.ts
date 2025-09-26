@@ -117,7 +117,7 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
         }
         : {}),
       dataplaneInsight: {
-        ...(isMtlsEnabled ? { 
+        ...(isMtlsEnabled ? {
           mTLS: isTlsIssuedMeshIdentity ? {
             issuedBackend: fake.kuma.kri({ shortName: 'mid', mesh: mesh as string, sectionName: '' }),
           } : fake.kuma.dataplaneMtls(),

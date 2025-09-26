@@ -88,7 +88,7 @@ const props = defineProps<{
 
 const data = computed(() => ({
   ...props.data,
-  proxyResourceName: 'proxyResourcePortName' in props.data ? props.data.proxyResourcePortName : '',
+  proxyResourceName: 'stat_prefix' in props.data ? props.data.stat_prefix : '',
   listenerAddress: 'listenerAddress' in props.data ? props.data.listenerAddress : '',
   clusterName: 'clusterName' in props.data ? props.data.clusterName : '',
   port: 'port' in props.data ? props.data.port.toString() : '',

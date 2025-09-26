@@ -22,17 +22,20 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
     protocol: fake.kuma.protocol(),
   }))
   const outboundCount = parseInt(env('KUMA_SERVICE_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
-  const outbounds = Array.from({ length: outboundCount }).map(() => ({
-    port: fake.number.int({ min: 1, max: 65535 }),
-    protocol: fake.kuma.protocol(),
-    kri: fake.kuma.kri({
-      shortName: fake.helpers.arrayElement(['msvc', 'mzsvc', 'extsvc']),
-      mesh,
-      namespace: nspace,
-      name: displayName,
-      sectionName: fake.number.int({ min: 1, max: 65535 }).toString(),
-    }),
-  }))
+  const outbounds = Array.from({ length: outboundCount }).map(() => {
+    const port = fake.number.int({ min: 1, max: 65535 })
+    return {
+      port,
+      protocol: fake.kuma.protocol(),
+      kri: fake.kuma.kri({
+        shortName: fake.helpers.arrayElement(['msvc', 'mzsvc', 'extsvc']),
+        mesh,
+        namespace: nspace,
+        name: displayName,
+        sectionName: fake.helpers.arrayElement([String(port), undefined]),
+      }),
+    }
+  })
 
   return {
     headers: {},
@@ -56,7 +59,7 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
           : {}),
       },
       inbounds: inbounds.map(({ port, protocol }, i) => {
-        const sectionName = fake.helpers.arrayElement(['default', 'httpport', port.toString(), 'ipv4', 'ipv6' ])
+        const sectionName = fake.helpers.arrayElement(['default', 'httpport', port.toString(), 'ipv4', 'ipv6'])
         return {
           kri: fake.kuma.kri({
             shortName: 'dp',
