@@ -23,9 +23,13 @@ describe('can', () => {
     const can = features({
       'use enabled-feature': () => 1,
       'use disabled-feature': () => 0,
+      // @ts-expect-error -- not defined as a function
+      'use not-a-func': 0,
     })
     expect(can('use enabled-feature')).toBe(true)
     expect(can('use disabled-feature')).toBe(false)
+    // @ts-expect-error -- use disabled things is not defined
+    expect(can('use disabled-thing')).toBe(false)
   })
   test('first argument is can which can be called correctly', () => {
     const can = features({
