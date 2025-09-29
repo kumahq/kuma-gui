@@ -30,6 +30,7 @@ dl.variant-x-stack {
     column-gap: $kui-space-70;
   }
   :deep(dt) {
+    display: inline-flex;
     gap: unset;
     &::after {
       content: ": ";

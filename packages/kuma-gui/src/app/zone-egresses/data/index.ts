@@ -1,5 +1,5 @@
 import { Resource } from '@/app/resources/data/Resource'
-import { DiscoverySubscriptionCollection } from '@/app/subscriptions/data'
+import { DiscoverySubscriptionCollection, Subscription } from '@/app/subscriptions/data'
 import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
 import type {
   ZoneEgressOverview as PartialZoneEgressOverview,
@@ -25,10 +25,18 @@ export const ZoneEgress = {
   },
 }
 export const ZoneEgressInsight = {
-  fromObject: (item: PartialZoneEgressInsight | undefined): ZoneEgressInsight => {
+  fromObject: (item: PartialZoneEgressInsight | undefined) => {
+    const collection = DiscoverySubscriptionCollection.fromArray(item?.subscriptions)
     return {
       ...item,
-      ...DiscoverySubscriptionCollection.fromArray(item?.subscriptions),
+      ...collection,
+      subscriptions: collection.subscriptions.map((sub) => {
+        return {
+          ...sub,
+          instanceId: sub.controlPlaneInstanceId,
+          instanceVersion: sub.version?.kumaDp?.version,
+        } satisfies Subscription
+      }),
     }
   },
 }

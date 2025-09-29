@@ -26,6 +26,16 @@ export const routes = (prefix = 'egresses') => {
             name: 'zone-egress-config-view',
             component: () => import('@/app/zone-egresses/views/ZoneEgressConfigView.vue'),
           },
+          {
+            path: 'subscriptions',
+            name: 'zone-egress-subscriptions-list-view',
+            props: {
+              i18nPrefix: 'zone-egresses',
+              routePrefix: 'zone-egress',
+            },
+            component: () => import('@/app/subscriptions/views/SubscriptionsListView.vue'),
+            children: [...subscriptions('zone-egress')],
+          },
         ],
       },
     ]

@@ -44,6 +44,16 @@ export const routes = (
                     },
                     ...ingresses().items(),
                     ...egresses().items(),
+                    {
+                      path: 'subscriptions',
+                      name: 'zone-cp-subscriptions-list-view',
+                      props: {
+                        i18nPrefix: 'zone-cps',
+                        routePrefix: 'zone-cp',
+                      },
+                      component: () => import('@/app/subscriptions/views/SubscriptionsListView.vue'),
+                      children: [...subscriptions('zone-cp')],
+                    },
                   ],
                 },
                 ...ingresses().item(),

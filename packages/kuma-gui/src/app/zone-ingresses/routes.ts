@@ -25,11 +25,21 @@ export const routes = (prefix = 'ingresses') => {
             name: 'zone-ingress-services-view',
             component: () => import('@/app/zone-ingresses/views/ZoneIngressServicesView.vue'),
           },
-          ...networking('zone-ingress'),
           {
             path: 'config',
             name: 'zone-ingress-config-view',
             component: () => import('@/app/zone-ingresses/views/ZoneIngressConfigView.vue'),
+          },
+          ...networking('zone-ingress'),
+          {
+            path: 'subscriptions',
+            name: 'zone-ingress-subscriptions-list-view',
+            props: {
+              i18nPrefix: 'zone-ingresses',
+              routePrefix: 'zone-ingress',
+            },
+            component: () => import('@/app/subscriptions/views/SubscriptionsListView.vue'),
+            children: [...subscriptions('zone-ingress')],
           },
         ],
       },
