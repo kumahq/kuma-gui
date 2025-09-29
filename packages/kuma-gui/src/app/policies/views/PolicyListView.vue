@@ -85,7 +85,7 @@
                   search: route.params.s,
                 })"
                 variant="list"
-                v-slot="{ data }"
+                v-slot="{ data, refresh }"
               >
                 <DataCollection
                   :items="data.items"
@@ -216,7 +216,11 @@
                       </template>
 
                       <template #actions="{ row: item }">
-                        <XActionGroup>
+                        <PolicyActionGroup
+                          :item="item"
+                          :type="type"
+                          @change="refresh"
+                        >
                           <XAction
                             :to="{
                               name: 'policy-detail-view',
@@ -229,7 +233,7 @@
                           >
                             {{ t('common.collection.actions.view') }}
                           </XAction>
-                        </XActionGroup>
+                        </PolicyActionGroup>
                       </template>
                     </AppCollection>
                   </template>
@@ -270,6 +274,7 @@
 </template>
 
 <script lang="ts" setup>
+import { usePolicyActionGroup } from '../'
 import type { PolicyResourceType } from '../data'
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
@@ -277,6 +282,7 @@ import PolicyTypeTag from '@/app/common/PolicyTypeTag.vue'
 const props = defineProps<{
   policyTypes?: PolicyResourceType[]
 }>()
+const PolicyActionGroup = usePolicyActionGroup()
 </script>
 <style lang="scss" scoped>
 header {
