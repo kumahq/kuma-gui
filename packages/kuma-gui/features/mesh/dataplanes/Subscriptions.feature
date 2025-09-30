@@ -44,6 +44,7 @@ Feature: dataplanes / subscriptions
     Then I click the "$about-dp-subscriptions a" element
     Then the URL contains "/meshes/default/data-planes/backend/subscriptions"
     And the "$dp-subscriptions" element exists
+    And I wait for 500 ms
     Then I click the "$dp-subscriptions table tbody tr a" element
     Then the URL contains "/meshes/default/data-planes/backend/subscriptions/subscription/bar"
     And the "$dp-subscription-summary" element exists
