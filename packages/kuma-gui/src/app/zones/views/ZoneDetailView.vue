@@ -88,7 +88,13 @@
                     </dd>
                   </div>
                 </XDl>
-                <XDl variant="x-stack">
+                <XDl
+                  variant="x-stack"
+                  :class="{
+                    version: true,
+                    outdated: version?.outdated,
+                  }"
+                >
                   <div>
                     <dt>
                       {{ t('zone-cps.routes.item.version') }}
