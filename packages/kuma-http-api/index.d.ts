@@ -1592,6 +1592,8 @@ export interface components {
             path: string;
             singularDisplayName: string;
             pluralDisplayName: string;
+            /** @description the short name of the resource type used in KRIs and kubectl */
+            shortName: string;
             /** @description description resources of this type should be included in federetion-with-policies export profile (especially useful for moving from non-federated to federated or migrating to a new global). */
             includeInFederation: boolean;
             policy?: components["schemas"]["PolicyDescription"];
@@ -3179,6 +3181,59 @@ export interface components {
                             [key: string]: string;
                         };
                     };
+                }[];
+                /** @description Rules defines inbound fault injection configuration */
+                rules?: {
+                    /** @description Default defines fault configuration */
+                    default: {
+                        /** @description Http allows to define list of Http faults between dataplanes. */
+                        http?: {
+                            /** @description Abort defines a configuration of not delivering requests to destination
+                             *     service and replacing the responses from destination dataplane by
+                             *     predefined status code */
+                            abort?: {
+                                /**
+                                 * Format: int32
+                                 * @description HTTP status code which will be returned to source side
+                                 */
+                                httpStatus: number;
+                                /** @description Percentage of requests on which abort will be injected, has to be
+                                 *     either int or decimal represented as string. */
+                                percentage: number | string;
+                            };
+                            /** @description Delay defines configuration of delaying a response from a destination */
+                            delay?: {
+                                /** @description Percentage of requests on which delay will be injected, has to be
+                                 *     either int or decimal represented as string. */
+                                percentage: number | string;
+                                /** @description The duration during which the response will be delayed */
+                                value: string;
+                            };
+                            /** @description ResponseBandwidth defines a configuration to limit the speed of
+                             *     responding to the requests */
+                            responseBandwidth?: {
+                                /** @description Limit is represented by value measure in Gbps, Mbps, kbps, e.g.
+                                 *     10kbps */
+                                limit: string;
+                                /** @description Percentage of requests on which response bandwidth limit will be
+                                 *     either int or decimal represented as string. */
+                                percentage: number | string;
+                            };
+                        }[];
+                    };
+                    /** @description Matches defines list of matches for which fault injection will be applied */
+                    matches?: {
+                        /** @description SpiffeID defines a matcher configuration for SpiffeID matching */
+                        spiffeID?: {
+                            /**
+                             * @description Type defines how to match incoming traffic by SpiffeID. `Exact` or `Prefix` are allowed.
+                             * @enum {string}
+                             */
+                            type: "Exact" | "Prefix";
+                            /** @description Value is SpiffeId of a client that needs to match for the configuration to be applied */
+                            value: string;
+                        };
+                    }[];
                 }[];
                 /** @description TargetRef is a reference to the resource the policy takes an effect on.
                  *     The resource could be either a real store object or virtual resource
