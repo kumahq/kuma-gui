@@ -31,8 +31,10 @@ const KDSSubscriptionCollection = {
     const subscriptions = collection.subscriptions.map((sub) => {
       return {
         ...sub,
-        instanceId: sub.zoneInstanceId,
-        instanceVersion: sub.version?.kumaCp?.version,
+        instance: {
+          id: sub.zoneInstanceId ?? '',
+          version: sub.version?.kumaCp?.version ?? '',
+        },
       } satisfies Subscription
     })
     // find the first subscription in the list for a config

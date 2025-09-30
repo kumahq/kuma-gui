@@ -33,8 +33,10 @@ export const ZoneEgressInsight = {
       subscriptions: collection.subscriptions.map((sub) => {
         return {
           ...sub,
-          instanceId: sub.controlPlaneInstanceId,
-          instanceVersion: sub.version?.kumaDp?.version,
+          instance: {
+            id: sub.controlPlaneInstanceId,
+            version: sub.version?.kumaDp?.version ?? '',
+          },
         } satisfies Subscription
       }),
     }

@@ -59,13 +59,13 @@
                     },
                   }"
                 >
-                  {{ item.instanceId }}
+                  {{ item.instance.id || '-' }}
                 </XAction>
               </template>
               <template
                 #version="{ row: item }"
               >
-                {{ item.instanceVersion ?? '-' }}
+                {{ item.instance.version || '-' }}
               </template>
               <template
                 #connected="{ row: item }"
