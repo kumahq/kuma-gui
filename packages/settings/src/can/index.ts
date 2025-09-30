@@ -1,19 +1,20 @@
-type Fn = (...args: any[]) => any
-type RestParams<T extends Fn> = Parameters<T> extends [any, ...infer Rest] ? Rest : []
+type EnsureFunction<T> = T extends (...args: any[]) => any ? T : never
+type ParamsExceptFirst<T extends any[]> = T extends [any, ...infer Rest] ? Rest : []
 
-export type Features<T extends Record<string, Fn>> = {
-  [K in keyof T]: [K, ...RestParams<T[K]>]
+export type Features<T extends Record<string, unknown>> = {
+  [K in keyof T]: ParamsExceptFirst<Parameters<EnsureFunction<T[K]>>> extends [] ? [K] : [K, ...ParamsExceptFirst<Parameters<EnsureFunction<T[K]>>>]
 }[keyof T]
 
-export type FeatureSpec<T extends Record<string, Fn>> = {
+export type FeatureSpec<T extends Record<string, unknown>> = {
   [K in keyof T]: (
     can: (...args: Features<T>) => boolean,
-    ...rest: RestParams<T[K]>
+    //
+    ...rest: [] | [...ParamsExceptFirst<Parameters<EnsureFunction<T[K]>>>]
+    ///
   ) => any
 }
-
-const features = <T extends Record<string, Fn>>(features: FeatureSpec<T>) => {
-  const can = (...args: Features<T>) => {
+const features = <T extends Record<string, unknown>>(features: FeatureSpec<T>) => {
+  const can = (...args: Features<T>): boolean => {
     const [str, ...rest] = args
     const feature = features[str]
     if (typeof feature !== 'undefined') {
