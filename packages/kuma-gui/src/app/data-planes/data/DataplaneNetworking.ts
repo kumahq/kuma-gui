@@ -1,3 +1,4 @@
+import { Kri } from '@/app/kuma'
 import type {
   DataplaneGateway as PartialDataplaneGateway,
   DataplaneInbound as PartialDataplaneInbound,
@@ -27,15 +28,33 @@ export type DataplaneGateway = PartialDataplaneGateway & {}
 
 type PartialDataplaneNetworkingLayout = components['schemas']['DataplaneNetworkingLayout']
 
-export const DataplaneNetworkingLayout =  {
+export const DataplaneNetworkingLayout = {
   fromObject(dataplaneNetworkingLayout: PartialDataplaneNetworkingLayout) {
+    // `stat_prefix` corresponds to the stat_prefix used in the Envoy stats.
+    // proxyResourceName.sectionName can either be a portName or port, so we
+    // make sure its always the port as this is what the Envoy stat_prefix
+    // uses. Once the following issue is resolved we won't have to do this
+    // https://github.com/kumahq/kuma/issues/14469
     return {
       ...dataplaneNetworkingLayout,
-      inbounds: dataplaneNetworkingLayout.inbounds.map((inbound) => ({
-        ...inbound,
-        // proxyResourcePortName is the proxyResourceName with the port as sectionName
-        proxyResourcePortName: `${inbound.proxyResourceName.slice(0, inbound.proxyResourceName.lastIndexOf('_'))}_${inbound.port}`,
-      })),
+      // don't show a card for anything on port 49151 as those are service-less inbounds
+      // we currently only do this on the layout endpoint
+      inbounds: dataplaneNetworkingLayout.inbounds.filter(item => item.port !== 49151).map(item => {
+        const kri = Kri.fromString(item.kri)
+        return {
+          ...item,
+          stat_prefix: `${item.proxyResourceName.slice(0, item.proxyResourceName.lastIndexOf('_'))}_${item.port}`,
+          portName: kri.sectionName !== String(item.port) ? kri.sectionName : undefined,
+        }
+      }),
+      outbounds: dataplaneNetworkingLayout.outbounds.map(item => {
+        const kri = Kri.fromString(item.kri)
+        return {
+          ...item,
+          stat_prefix: `${item.proxyResourceName.slice(0, item.proxyResourceName.lastIndexOf('_'))}_${item.port}`,
+          portName: kri.sectionName !== String(item.port) ? kri.sectionName : undefined,
+        }
+      }),
     } satisfies PartialDataplaneNetworkingLayout
   },
 }
