@@ -86,9 +86,7 @@
                   <XDl variant="x-stack">
                     <div>
                       <dt>
-                        <XI18n
-                          path="zone-egresses.routes.item.subscriptions.connected"
-                        />
+                        {{ t('zone-egresses.routes.item.subscriptions.connected') }}
                       </dt>
                       <dd>
                         <XBadge appearance="neutral">
@@ -98,9 +96,7 @@
                     </div>
                     <div>
                       <dt>
-                        <XI18n
-                          path="zone-egresses.routes.item.subscriptions.instance"
-                        />
+                        {{ t('zone-egresses.routes.item.subscriptions.instance') }}
                       </dt>
                       <dd>
                         <XBadge appearance="info">
@@ -110,9 +106,7 @@
                     </div>
                     <div>
                       <dt>
-                        <XI18n
-                          path="zone-egresses.routes.item.subscriptions.version"
-                        />
+                        {{ t('zone-egresses.routes.item.subscriptions.version') }}
                       </dt>
                       <dd>
                         <XBadge appearance="info">

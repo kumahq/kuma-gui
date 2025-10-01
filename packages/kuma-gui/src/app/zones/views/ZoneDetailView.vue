@@ -163,9 +163,7 @@
                     <XDl variant="x-stack">
                       <div>
                         <dt>
-                          <XI18n
-                            path="zone-cps.routes.item.subscriptions.connected"
-                          />
+                          {{ t('zone-cps.routes.item.subscriptions.connected') }}
                         </dt>
                         <dd>
                           <XBadge appearance="neutral">
@@ -175,9 +173,7 @@
                       </div>
                       <div>
                         <dt>
-                          <XI18n
-                            path="zone-cps.routes.item.subscriptions.instanceId"
-                          />
+                          {{ t('zone-cps.routes.item.subscriptions.instanceId') }}
                         </dt>
                         <dd>
                           <XBadge appearance="info">
@@ -187,9 +183,7 @@
                       </div>
                       <div>
                         <dt>
-                          <XI18n
-                            path="zone-cps.routes.item.subscriptions.version"
-                          />
+                          {{ t('zone-cps.routes.item.subscriptions.version') }}
                         </dt>
                         <dd>
                           <XBadge appearance="info">
