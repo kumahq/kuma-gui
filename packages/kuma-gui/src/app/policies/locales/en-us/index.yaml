@@ -41,3 +41,5 @@ policies:
   type:
     # CircuitBreaker:
     #   description: 'About CircuitBreaker ...'
+  action_group:
+    toggle_button: 'Actions'

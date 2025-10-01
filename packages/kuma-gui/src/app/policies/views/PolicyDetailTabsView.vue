@@ -52,6 +52,34 @@
             </XCopyButton>
           </h1>
         </template>
+        <template
+          #actions
+        >
+          <PolicyActionGroup
+            :item="data"
+            :type="{ path: route.params.policyPath }"
+            @change="() => route.replace(
+              {
+                name: 'policy-list-view',
+                params: {
+                  mesh: route.params.mesh,
+                  policyPath: route.params.policyPath,
+                },
+              },
+            )"
+          >
+            <template
+              #control
+            >
+              <XAction
+                action="expand"
+                appearance="primary"
+              >
+                {{ t('policies.action_group.toggle_button') }}
+              </XAction>
+            </template>
+          </PolicyActionGroup>
+        </template>
 
         <DataLoader
           :data="[data]"
@@ -88,5 +116,7 @@
 </template>
 
 <script lang="ts" setup>
+import { usePolicyActionGroup } from '../'
 import { sources } from '../sources'
+const PolicyActionGroup = usePolicyActionGroup()
 </script>
