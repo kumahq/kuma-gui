@@ -16,79 +16,68 @@
         class="about-section"
       >
         <XLayout>
-          <XLayout type="separated">
-            <XDl variant="x-stack">
-              <div>
-                <dt>
-                  {{ t('http.api.property.status') }}
-                </dt>
-                <dd>
-                  <StatusBadge
-                    :status="props.data.state"
+          <XDl variant="x-stack">
+            <div>
+              <dt>
+                {{ t('http.api.property.status') }}
+              </dt>
+              <dd>
+                <StatusBadge
+                  :status="props.data.state"
+                />
+              </dd>
+            </div>
+            <div v-if="props.data.namespace.length > 0">
+              <dt>
+                {{ t('http.api.property.namespace') }}
+              </dt>
+              <dd>
+                <XBadge appearance="decorative">
+                  {{ props.data.namespace }}
+                </XBadge>
+              </dd>
+            </div>
+            <div>
+              <dt>
+                {{ t('http.api.property.address') }}
+              </dt>
+              <dd>
+                <template
+                  v-if="props.data.zoneIngress.socketAddress.length > 0"
+                >
+                  <XCopyButton
+                    variant="badge"
+                    format="default"
+                    :text="props.data.zoneIngress.socketAddress"
                   />
-                </dd>
-              </div>
-            </XDl>
-            <XDl
-              v-if="props.data.namespace.length > 0"
-              variant="x-stack"
-            >
-              <div>
-                <dt>
-                  {{ t('http.api.property.namespace') }}
-                </dt>
-                <dd>
+                </template>
+
+                <template v-else>
+                  {{ t('common.detail.none') }}
+                </template>
+              </dd>
+            </div>
+            <div>
+              <dt>
+                {{ t('http.api.property.advertisedAddress') }}
+              </dt>
+              <dd>
+                <template
+                  v-if="props.data.zoneIngress.advertisedSocketAddress.length > 0"
+                >
                   <XBadge appearance="decorative">
-                    {{ props.data.namespace }}
-                  </XBadge>
-                </dd>
-              </div>
-            </XDl>
-            <XDl variant="x-stack">
-              <div>
-                <dt>
-                  {{ t('http.api.property.address') }}
-                </dt>
-                <dd>
-                  <template
-                    v-if="props.data.zoneIngress.socketAddress.length > 0"
-                  >
                     <XCopyButton
-                      variant="badge"
-                      format="default"
-                      :text="props.data.zoneIngress.socketAddress"
+                      :text="props.data.zoneIngress.advertisedSocketAddress"
                     />
-                  </template>
+                  </XBadge>
+                </template>
 
-                  <template v-else>
-                    {{ t('common.detail.none') }}
-                  </template>
-                </dd>
-              </div>
-            </XDl>
-            <XDl variant="x-stack">
-              <div>
-                <dt>
-                  {{ t('http.api.property.advertisedAddress') }}
-                </dt>
-                <dd>
-                  <template
-                    v-if="props.data.zoneIngress.advertisedSocketAddress.length > 0"
-                  >
-                    <XBadge appearance="decorative">
-                      <XCopyButton
-                        :text="props.data.zoneIngress.advertisedSocketAddress"
-                      />
-                    </XBadge>
-                  </template>
-
-                  <template v-else>
-                    {{ t('common.detail.none') }}
-                  </template>
-                </dd>
-              </div>
-            </XDl>
-          </XLayout>
+                <template v-else>
+                  {{ t('common.detail.none') }}
+                </template>
+              </dd>
+            </div>
+          </XDl>
 
 
           <XLayout
@@ -114,10 +103,9 @@
                 ({{ t('zone-ingresses.routes.item.subscriptions.show-details') }})
               </XAction>
             </XLayout>
-            <XLayout
+            <template
               v-for="subscription in [props.data.zoneIngressInsight.connectedSubscription]"
               :key="typeof subscription"
-              type="separated"
             >
               <template v-if="!subscription?.disconnectTime && subscription?.connectTime">
                 <XDl variant="x-stack">
@@ -133,8 +121,6 @@
                       </XBadge>
                     </dd>
                   </div>
-                </XDl>
-                <XDl variant="x-stack">
                   <div>
                     <dt>
                       <XI18n
@@ -147,8 +133,6 @@
                       </XBadge>
                     </dd>
                   </div>
-                </XDl>
-                <XDl variant="x-stack">
                   <div>
                     <dt>
                       <XI18n
@@ -166,7 +150,7 @@
               <template v-else>
                 <XI18n path="zone-ingresses.routes.item.subscriptions.disconnected" />
               </template>
-            </XLayout>
+            </template>
           </XLayout>
         </XLayout>
       </XAboutCard>

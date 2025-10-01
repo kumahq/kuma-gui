@@ -77,75 +77,66 @@
             class="about-section"
           >
             <XLayout>
-              <XLayout type="separated">
-                <XDl variant="x-stack">
-                  <div>
-                    <dt>
-                      {{ t('http.api.property.status') }}
-                    </dt>
-                    <dd>
-                      <StatusBadge :status="props.data.state" />
-                    </dd>
-                  </div>
-                </XDl>
-                <XDl
-                  variant="x-stack"
+              <XDl variant="x-stack">
+                <div>
+                  <dt>
+                    {{ t('http.api.property.status') }}
+                  </dt>
+                  <dd>
+                    <StatusBadge :status="props.data.state" />
+                  </dd>
+                </div>
+                <div
                   :class="{
                     version: true,
                     outdated: version?.outdated,
                   }"
                 >
-                  <div>
-                    <dt>
-                      {{ t('zone-cps.routes.item.version') }}
-                    </dt>
-                    <dd>
-                      <XLayout type="separated">
-                        <XBadge
-                          :appearance="version?.outdated === true ? 'warning' : 'decorative'"
-                        >
-                          {{ props.data.zoneInsight.version?.kumaCp?.version ?? '—' }}
-                        </XBadge>
-                        <template
-                          v-if="version?.outdated === true"
-                        >
-                          <XIcon
-                            name="info"
-                          >
-                            <XI18n
-                              path="zone-cps.routes.item.version_warning"
-                            />
-                          </XIcon>
-                        </template>
-                      </XLayout>
-                    </dd>
-                  </div>
-                </XDl>
-                <XDl variant="x-stack">
-                  <div>
-                    <dt>
-                      {{ t('http.api.property.type') }}
-                    </dt>
-                    <dd>
-                      <XBadge appearance="decorative">
-                        {{ t(`common.product.environment.${props.data.zoneInsight.environment || 'unknown'}`) }}
+                  <dt>
+                    {{ t('zone-cps.routes.item.version') }}
+                  </dt>
+                  <dd>
+                    <XLayout type="separated">
+                      <XBadge
+                        :appearance="version?.outdated === true ? 'warning' : 'decorative'"
+                      >
+                        {{ props.data.zoneInsight.version?.kumaCp?.version ?? '—' }}
                       </XBadge>
-                    </dd>
-                  </div>
-                </XDl>
-                <XDl variant="x-stack">
-                  <div>
-                    <dt>
-                      {{ t('zone-cps.routes.item.authentication_type') }}
-                    </dt>
-                    <dd>
-                      <XBadge appearance="decorative">
-                        {{ props.data.zoneInsight.authenticationType || t('common.not_applicable') }}
-                      </XBadge>
-                    </dd>
-                  </div>
-                </XDl>
-              </XLayout>
+                      <template
+                        v-if="version?.outdated === true"
+                      >
+                        <XIcon
+                          name="info"
+                        >
+                          <XI18n
+                            path="zone-cps.routes.item.version_warning"
+                          />
+                        </XIcon>
+                      </template>
+                    </XLayout>
+                  </dd>
+                </div>
+                <div>
+                  <dt>
+                    {{ t('http.api.property.type') }}
+                  </dt>
+                  <dd>
+                    <XBadge appearance="decorative">
+                      {{ t(`common.product.environment.${props.data.zoneInsight.environment || 'unknown'}`) }}
+                    </XBadge>
+                  </dd>
+                </div>
+                <div>
+                  <dt>
+                    {{ t('zone-cps.routes.item.authentication_type') }}
+                  </dt>
+                  <dd>
+                    <XBadge appearance="decorative">
+                      {{ props.data.zoneInsight.authenticationType || t('common.not_applicable') }}
+                    </XBadge>
+                  </dd>
+                </div>
+              </XDl>
 
               <XLayout
                 v-if="props.data.zoneInsight.subscriptions.length > 0"
@@ -164,10 +155,9 @@
                     ({{ t('zone-cps.routes.item.subscriptions.show-details') }})
                   </XAction>
                 </XLayout>
-                <XLayout
+                <template
                   v-for="subscription in [props.data.zoneInsight.connectedSubscription]"
                   :key="typeof subscription"
-                  type="separated"
                 >
                   <template v-if="!subscription?.disconnectTime && subscription?.connectTime">
                     <XDl variant="x-stack">
@@ -183,8 +173,6 @@
                           </XBadge>
                         </dd>
                       </div>
-                    </XDl>
-                    <XDl variant="x-stack">
                       <div>
                         <dt>
                           <XI18n
@@ -197,8 +185,6 @@
                           </XBadge>
                         </dd>
                       </div>
-                    </XDl>
-                    <XDl variant="x-stack">
                       <div>
                         <dt>
                           <XI18n
@@ -216,7 +202,7 @@
                   <template v-else>
                     <XI18n path="zone-cps.routes.item.subscriptions.disconnected" />
                   </template>
-                </XLayout>
+                </template>
               </XLayout>
             </XLayout>
           </XAboutCard>

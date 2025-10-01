@@ -17,52 +17,43 @@
           class="about-section"
         >
           <XLayout>
-            <XLayout type="separated">
-              <XDl variant="x-stack">
-                <div>
-                  <dt>
-                    {{ t('http.api.property.status') }}
-                  </dt>
-                  <dd>
-                    <StatusBadge :status="props.data.state" />
-                  </dd>
-                </div>
-              </XDl>
-              <XDl
-                v-if="props.data.namespace.length > 0"
-                variant="x-stack"
-              >
-                <div>
-                  <dt>
-                    {{ t('http.api.property.namespace') }}
-                  </dt>
-                  <dd>
-                    <XBadge appearance="decorative">
-                      {{ props.data.namespace }}
-                    </XBadge>
-                  </dd>
-                </div>
-              </XDl>
-              <XDl variant="x-stack">
-                <div>
-                  <dt>
-                    {{ t('http.api.property.address') }}
-                  </dt>
-                  <dd>
-                    <XCopyButton
-                      v-if="props.data.zoneEgress.socketAddress.length > 0"
-                      variant="badge"
-                      format="default"
-                      :text="props.data.zoneEgress.socketAddress"
-                    />
+            <XDl variant="x-stack">
+              <div>
+                <dt>
+                  {{ t('http.api.property.status') }}
+                </dt>
+                <dd>
+                  <StatusBadge :status="props.data.state" />
+                </dd>
+              </div>
+              <div v-if="props.data.namespace.length > 0">
+                <dt>
+                  {{ t('http.api.property.namespace') }}
+                </dt>
+                <dd>
+                  <XBadge appearance="decorative">
+                    {{ props.data.namespace }}
+                  </XBadge>
+                </dd>
+              </div>
+              <div>
+                <dt>
+                  {{ t('http.api.property.address') }}
+                </dt>
+                <dd>
+                  <XCopyButton
+                    v-if="props.data.zoneEgress.socketAddress.length > 0"
+                    variant="badge"
+                    format="default"
+                    :text="props.data.zoneEgress.socketAddress"
+                  />
 
-                    <template v-else>
-                      {{ t('common.detail.none') }}
-                    </template>
-                  </dd>
-                </div>
-              </XDl>
-            </XLayout>
+                  <template v-else>
+                    {{ t('common.detail.none') }}
+                  </template>
+                </dd>
+              </div>
+            </XDl>
 
             <XLayout
               v-if="props.data.zoneEgressInsight.subscriptions.length > 0"
@@ -87,10 +78,9 @@
                   ({{ t('zone-egresses.routes.item.subscriptions.show-details') }})
                 </XAction>
               </XLayout>
-              <XLayout
+              <template
                 v-for="subscription in [props.data.zoneEgressInsight.connectedSubscription]"
                 :key="typeof subscription"
-                type="separated"
               >
                 <template v-if="!subscription?.disconnectTime && subscription?.connectTime">
                   <XDl variant="x-stack">
@@ -106,8 +96,6 @@
                         </XBadge>
                       </dd>
                     </div>
-                  </XDl>
-                  <XDl variant="x-stack">
                     <div>
                       <dt>
                         <XI18n
@@ -120,8 +108,6 @@
                         </XBadge>
                       </dd>
                     </div>
-                  </XDl>
-                  <XDl variant="x-stack">
                     <div>
                       <dt>
                         <XI18n
@@ -139,7 +125,7 @@
                 <template v-else>
                   <XI18n path="zone-egresses.routes.item.subscriptions.disconnected" />
                 </template>
-              </XLayout>
+              </template>
             </XLayout>
           </XLayout>
         </XAboutCard>
