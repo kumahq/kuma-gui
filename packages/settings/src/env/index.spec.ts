@@ -6,8 +6,12 @@ describe('env', () => {
   test('works', () => {
     const env = vars({
       'ENV_VAR': () => 'http://kumahq.io',
+      // @ts-expect-error -- not defined as a function
+      '_ENV_VAR': 0,
     })
     expect(env('ENV_VAR')).toBe('http://kumahq.io')
+    // @ts-expect-error -- NOT_ENV_VAR is not defined
+    expect(env('NOT_ENV_VAR')).toBe('')
   })
   test('converts string returns correctly', () => {
     const env = vars({
