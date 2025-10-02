@@ -14,7 +14,7 @@
         :error="allErrors[0]"
         :refresh="props.src !== '' ? refresh : () => {}"
       >
-        <ErrorBlock
+        <XErrorState
           v-bind="$attrs"
           :error="allErrors[0]"
         />
@@ -63,7 +63,6 @@
 import { computed, ref, provide } from 'vue'
 
 import type { TypeOf } from '@/app/application'
-import ErrorBlock from '@/app/common/ErrorBlock.vue'
 const props = withDefaults(defineProps<{
   data?: unknown[]
   errors?: (Error | undefined)[]

@@ -10,7 +10,8 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
   const namespace = fake.word.noun()
   const zone = fake.word.noun()
   return {
-    headers: {},
+    headers: {
+    },
     body: {
       items: Array.from({ length: itemsCount }, () => ({
         type: 'MeshTrust',
