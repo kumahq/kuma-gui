@@ -93,6 +93,7 @@
           <component
             :is="child.Component"
             :data="data"
+            :subscriptions="data.zoneInsight.subscriptions"
           />
         </RouterView>
       </AppView>

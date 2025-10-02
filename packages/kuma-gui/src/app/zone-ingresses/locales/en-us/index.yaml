@@ -14,6 +14,7 @@ zone-ingresses:
         zone-ingress-stats-view: 'Stats'
         zone-ingress-clusters-view: 'Clusters'
         zone-ingress-config-view: 'YAML'
+        zone-ingress-subscriptions-list-view: 'XDS connections'
       download:
         title: Download bundle
         description: !!text/markdown |
@@ -33,6 +34,11 @@ zone-ingresses:
         title: 'XDS connections'
         description: !!text/markdown |
           Communication channels used by the control plane to dynamically configure and manage data plane proxies.
+        show-details: Show details
+        connected: Connected since
+        instance: Control plane instance
+        version: Version
+        disconnected: There are no active connections to a control plane instance. Check the details for more information.
       about:
         title: About this ZoneIngress
     items:

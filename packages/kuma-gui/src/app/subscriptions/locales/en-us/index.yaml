@@ -23,5 +23,5 @@ subscriptions:
         config: Config
         responses: Total responses (sent/ack'ed)
         type: Type
-        stat: Responses sent/ack'ed
+        stat: Responses (sent/ack'ed)
         nacked: Responses rejected / NACK'ed

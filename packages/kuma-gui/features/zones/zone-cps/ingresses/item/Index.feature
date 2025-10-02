@@ -7,8 +7,6 @@ Feature: zones / ingresses / item
       | header             | $page .app-view-title-bar                      |
       | overview-view      | [data-testid='zone-ingress-detail-view']       |
       | config-view        | [data-testid='zone-ingress-config-view']       |
-      | subscriptions      | [data-testid='app-collection'] tbody tr        |
-      | subscription       | $subscriptions:nth-child(1)                    |
       | navigation         | [data-testid='zone-ingress-tabs'] ul           |
       | config-tab         | [data-testid='zone-ingress-config-view-tab'] a |
       | config-universal   | [data-testid='codeblock-yaml-universal']       |
@@ -39,17 +37,10 @@ Feature: zones / ingresses / item
             address: '166.197.238.26'
             advertisedAddress: !!js/undefined
             port: 20555
-        zoneIngressInsight:
-          subscriptions:
-            - connectTime: 2019-07-28T16:18:09.743141Z
-              disconnectTime: 2019-07-28T16:18:09.743141Z
-            - connectTime: 2020-07-28T16:18:09.743141Z
-              disconnectTime: !!js/undefined
       """
     When I visit the "/zones/zone-cp-1/ingresses/item-1/overview" URL
     Then the "$header" element contains "item-1"
     Then the "$overview-view" element contains "166.197.238.26:20555"
-    Then the "$subscription" element contains "Jul 28, 2020, 4:18 PM"
     When I click the "$config-tab" element
     Then the "$config-view" element contains "type: ZoneIngress"
 

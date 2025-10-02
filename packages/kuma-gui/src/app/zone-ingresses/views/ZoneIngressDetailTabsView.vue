@@ -210,6 +210,7 @@
               :is="child.Component"
               :networking="data?.zoneIngress.networking"
               :data="data"
+              :subscriptions="data?.zoneIngressInsight?.subscriptions"
             />
           </RouterView>
         </DataLoader>

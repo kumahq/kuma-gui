@@ -25,11 +25,11 @@
             <AppCollection
               :headers="[
                 { ...me.get('headers.connection'), label: '&nbsp;', key: 'connection' },
-                { ...me.get('headers.instanceId'), label: t('http.api.property.instanceId'), key: 'instanceId' },
+                { ...me.get('headers.instanceId'), label: t('.routes.item.subscriptions.instanceId', null, { defaultMessage: t('http.api.property.instanceId') }), key: 'instanceId' },
                 { ...me.get('headers.version'), label: t('http.api.property.version'), key: 'version' },
                 { ...me.get('headers.connected'), label: t('http.api.property.connected'), key: 'connected' },
                 { ...me.get('headers.disconnected'), label: t('http.api.property.disconnected'), key: 'disconnected' },
-                { ...me.get('headers.responses'), label: t('http.api.property.responses'), key: 'responses' },
+                { ...me.get('headers.responses'), label: t('subscriptions.routes.item.headers.stat'), key: 'responses' },
               ]"
               :is-selected-row="item => item.id === route.params.subscription"
               :items="[...props.subscriptions].reverse()"
@@ -59,13 +59,13 @@
                     },
                   }"
                 >
-                  {{ item.controlPlaneInstanceId }}
+                  {{ item.instance.id || '-' }}
                 </XAction>
               </template>
               <template
                 #version="{ row: item }"
               >
-                {{ item.version?.kumaDp?.version ?? '-' }}
+                {{ item.instance.version || '-' }}
               </template>
               <template
                 #connected="{ row: item }"

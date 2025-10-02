@@ -1,6 +1,6 @@
 import { get } from '@/app/application'
 import { Resource } from '@/app/resources/data/Resource'
-import { SubscriptionCollection } from '@/app/subscriptions/data'
+import { Subscription, SubscriptionCollection } from '@/app/subscriptions/data'
 import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
 import type {
   ZoneOverview as PartialZoneOverview,
@@ -28,6 +28,15 @@ export type Zone = ReturnType<typeof Zone.fromObject>
 const KDSSubscriptionCollection = {
   fromArray: (items?: KDSSubscription[]) => {
     const collection = SubscriptionCollection.fromArray(items)
+    const subscriptions = collection.subscriptions.map((sub) => {
+      return {
+        ...sub,
+        instance: {
+          id: sub.zoneInstanceId ?? '',
+          version: sub.version?.kumaCp?.version ?? '',
+        },
+      } satisfies Subscription
+    })
     // find the first subscription in the list for a config
     // if its valid JSON and is not null, turn it into an object
     const config: Record<string, unknown> = (() => {
@@ -45,6 +54,7 @@ const KDSSubscriptionCollection = {
     })()
     return {
       ...collection,
+      subscriptions,
       config,
     }
   },

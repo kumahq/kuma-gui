@@ -1,4 +1,4 @@
-import { DiscoverySubscriptionCollection } from '@/app/subscriptions/data'
+import { DiscoverySubscriptionCollection, Subscription } from '@/app/subscriptions/data'
 import type { DataPlaneInsight } from '@/types'
 import type { components } from '@kumahq/kuma-http-api'
 
@@ -12,9 +12,20 @@ type PartialDataPlaneInsight = Omit<OasDataplaneInsight, 'subscriptions' | 'mTLS
 
 export const DataplaneInsight = {
   fromObject(item?: PartialDataPlaneInsight) {
+    const collection = DiscoverySubscriptionCollection.fromArray(item?.subscriptions)
     return {
       ...(item ?? {}),
-      ...DiscoverySubscriptionCollection.fromArray(item?.subscriptions),
+      ...collection,
+      subscriptions: collection?.subscriptions?.map((sub) => {
+        return {
+          ...sub,
+          instance: {
+            id: sub.controlPlaneInstanceId,
+            version: sub.version?.kumaDp?.version ?? '',
+          },
+        } satisfies Subscription
+      }) ?? [],
+      // ensure features is always an array
       metadata: {
         ...item?.metadata,
         features: item?.metadata?.features ?? [],

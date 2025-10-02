@@ -7,8 +7,6 @@ Feature: zones / egresses / item
       | header             | $page .app-view-title-bar                     |
       | overview-view      | [data-testid='zone-egress-detail-view']       |
       | config-view        | [data-testid='zone-egress-config-view']       |
-      | subscriptions      | [data-testid='app-collection'] tbody tr       |
-      | subscription       | $subscriptions:nth-child(1)                   |
       | config-tab         | [data-testid='zone-egress-config-view-tab'] a |
       | config-universal   | [data-testid='codeblock-yaml-universal']      |
       | config-k8s         | [data-testid='codeblock-yaml-k8s']            |
@@ -39,7 +37,6 @@ Feature: zones / egresses / item
     Then the page title contains "item-1"
     Then the "$header" element contains "item-1"
     Then the "$overview-view" element contains "166.197.238.26:20555"
-    Then the "$subscription" element contains "Jul 28, 2020, 4:18 PM"
     When I click the "$config-tab" element
     Then the "$config-view" element contains "type: ZoneEgress"
 

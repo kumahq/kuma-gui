@@ -40,6 +40,7 @@ zone-cps:
       navigation:
         zone-cp-detail-view: Overview
         zone-cp-config-view: Config
+        zone-cp-subscriptions-list-view: KDS connections
         zone-ingress-list-view: Ingresses
         zone-egress-list-view: Egresses
       authentication_type: Dataplane authentication type
@@ -49,6 +50,15 @@ zone-cps:
         This zone control plane is using an older version than the global control plane, please consider upgrading your zone CP.
       subscription_intro: !!text/markdown |
         Statistics indicate requests and responses between global and zone only
+      subscriptions:
+        title: KDS connections
+        description: !!text/markdown |
+          Communication channels used to synchronize configuration and policies between the global and zone control planes.
+        instanceId: Zone leader instance ID
+        show-details: Show details
+        connected: Connected since
+        version: Version
+        disconnected: There are no active connections to a control plane instance. Check the details for more information.
     items:
       title: Zone control planes
       breadcrumbs: Zone control planes

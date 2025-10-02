@@ -62,7 +62,8 @@ Feature: zones / item
       body:
         zoneInsight:
           subscriptions:
-            - version:
+            - disconnectTime: !!js/undefined
+              version:
                 kumaCp:
                   version: 0.0.0
       """

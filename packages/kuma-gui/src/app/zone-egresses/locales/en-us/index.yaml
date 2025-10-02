@@ -13,6 +13,7 @@ zone-egresses:
         zone-egress-stats-view: 'Stats'
         zone-egress-clusters-view: 'Clusters'
         zone-egress-config-view: 'YAML'
+        zone-egress-subscriptions-list-view: 'XDS connections'
       download:
         title: Download bundle
         description: !!text/markdown |
@@ -32,6 +33,11 @@ zone-egresses:
         title: 'XDS connections'
         description: !!text/markdown |
           Communication channels used by the control plane to dynamically configure and manage data plane proxies.
+        show-details: Show details
+        connected: Connected since
+        instance: Control plane instance
+        version: Version
+        disconnected: There are no active connections to a control plane instance. Check the details for more information.
       about:
         title: About this ZoneEgress
     items:

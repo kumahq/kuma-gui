@@ -62,6 +62,10 @@ export type Subscription = ReturnType<typeof Subscription.fromObject> & {
   zoneInstanceId?: string
   globalInstanceId?: string
   controlPlaneInstanceId?: string
+  instance: {
+    id: string
+    version: string
+  }
 }
 export const DiscoverySubscriptionCollection = {
   fromArray: (items?: DiscoverySubscription[]) => {
