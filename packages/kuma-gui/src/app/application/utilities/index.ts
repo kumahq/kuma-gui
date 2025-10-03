@@ -21,6 +21,10 @@ export const YAML = {
       // Removes the trailing new line js-yaml is outputting.
       .replace(/\n$/, '')
   },
+  parse: (str: string) => {
+    return jsYaml
+      .load(str)
+  },
 }
 
 export function get(obj: any, path: string, defaultValue: any = undefined): any {
