@@ -9,7 +9,7 @@
   "devDependencies": {
     "@kumahq/config": "*",
     "husky": "^9.1.7",
-    "lint-staged": "^16.2.2"
+    "lint-staged": "^16.2.3"
   },
   "engines": {
     "node": ">=22.19.0",

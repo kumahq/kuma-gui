@@ -24,7 +24,7 @@
           <XDl variant="x-stack">
             <div>
               <dt>{{ t('http.api.property.error') }}</dt>
-              <dd>{{ props.error.detail || t('common.error_state.message') }}</dd>
+              <dd>{{ props.error.detail || t('common.error_state.detail') }}</dd>
             </div>
           </XDl>
         
