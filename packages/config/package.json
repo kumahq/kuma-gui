@@ -54,7 +54,7 @@
     "globals": "^16.4.0",
     "js-yaml": "^4.1.0",
     "lockfile-lint": "^4.14.1",
-    "stylelint": "^16.24.0",
+    "stylelint": "^16.25.0",
     "stylelint-config-html": "^1.1.0",
     "stylelint-config-recommended-scss": "^16.0.2",
     "stylelint-config-recommended-vue": "^1.6.1",
@@ -62,6 +62,6 @@
     "vite": "^7.1.9",
     "vitepress": "^2.0.0-alpha.12",
     "vitest": "^3.2.4",
-    "vue-tsc": "^3.0.8"
+    "vue-tsc": "^3.1.0"
   }
 }
