@@ -464,6 +464,7 @@
                                   data-testid="dataplane-inbound"
                                   :protocol="item.protocol"
                                   :port-name="inbound?.portName"
+                                  :port="inbound?.port"
                                   :traffic="traffic?.inbounds[item.stat_prefix]"
                                   data-actionable
                                 >
@@ -558,6 +559,8 @@
                               <ConnectionCard
                                 data-testid="dataplane-outbound"
                                 :protocol="outbound.protocol"
+                                :port-name="outbound?.portName"
+                                :port="outbound?.port"
                                 :traffic="traffic?.outbounds[outbound.kri]"
                                 data-actionable
                               >

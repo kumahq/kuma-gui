@@ -32,8 +32,8 @@ Feature: mesh / dataplanes / connections / clusters
     And the URL "/meshes/mesh-name/dataplanes/service-64cbb7b8b5-6g94n.namespace/clusters" responds with
       """
       body: |
-        self_inbound_dp_9090::observability_name::self_inbound_dp_9090
-        self_inbound_dp_9090::default_priority::max_connections::1024
+        self_inbound_dp_http::observability_name::self_inbound_dp_9090
+        self_inbound_dp_http::default_priority::max_connections::1024
         inbound:passthrough:ipv6::priority::connections::1024
         system_envoy_admin::default_priority::max_connections::1025
         kri_msvc_default_default_kuma-demo_demo-app-v2_5050:ipv4::added_via_api::true

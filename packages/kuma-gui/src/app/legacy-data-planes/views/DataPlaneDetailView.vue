@@ -452,6 +452,7 @@
                               <ConnectionCard
                                 data-testid="dataplane-inbound"
                                 :protocol="item.protocol"
+                                :port="item.port"
                                 :port-name="item.portName"
                                 :service="can('use service-insights', props.mesh) ? item.tags['kuma.io/service'] : ''"
                                 :traffic="typeof error === 'undefined' ?
