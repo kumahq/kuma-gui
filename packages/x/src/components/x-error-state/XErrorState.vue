@@ -1,7 +1,6 @@
 <template>
   <div
-    data-testid="error-block"
-    class="error-block"
+    data-testid="x-error-state"
   >
     <KEmptyState
       v-if="!prompt && !modal"
@@ -64,7 +63,7 @@
         variant="danger"
       >
         <div
-          class="error-block-message"
+          class="alert-message"
         >
           <slot>
             <p>
@@ -112,7 +111,7 @@ const modal = inject('x-modal', undefined)
   flex-flow: column;
   align-items: center;
 }
-.error-block-message {
+.alert-message {
   text-align: left;
 }
 </style>
