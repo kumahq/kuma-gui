@@ -20,12 +20,7 @@
 
       <XLayout class="detail">
         <slot name="message">
-          <XDl variant="x-stack">
-            <div>
-              <dt>{{ t('http.api.property.error') }}</dt>
-              <dd>{{ props.error.detail || t('common.error_state.detail') }}</dd>
-            </div>
-          </XDl>
+          <p>{{ props.error.detail || t('common.error_state.detail') }}</p>
         
           <XDl variant="x-stack">
             <div v-if="props.error.status">
