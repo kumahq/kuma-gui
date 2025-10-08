@@ -6730,6 +6730,7 @@ export interface components {
             readonly warnings?: string[];
         };
         DataplaneDeleteSuccessResponse: Record<string, never>;
+        /** @description PrometheusMetricsBackendConfig defines configuration of Prometheus backend */
         PrometheusMetricsBackendConfig: {
             /** @description Map with the configuration of applications which metrics are going to be
              *     scrapped by kuma-dp. */
@@ -6780,6 +6781,7 @@ export interface components {
             };
         };
         DataplaneOverviewWithMeta: components["schemas"]["Meta"] & components["schemas"]["DataplaneOverview"];
+        /** @description DataplaneOverview defines the projected state of a Dataplane. */
         DataplaneOverview: {
             dataplane?: {
                 /** @description Configuration for metrics that should be collected and exposed by the
@@ -7157,6 +7159,36 @@ export interface components {
                 }[];
             };
         };
+        DataSource: {
+            /** @description Types that are valid to be assigned to Type:
+             *
+             *     	*DataSource_Secret
+             *     	*DataSource_File
+             *     	*DataSource_Inline
+             *     	*DataSource_InlineString */
+            Type?: unknown;
+        };
+        DataSource_File: {
+            /** @description Data source is a path to a file.
+             *     Deprecated, use other sources of a data. */
+            file?: string;
+        };
+        DataSource_Inline: {
+            /**
+             * Format: byte
+             * @description Data source is inline bytes.
+             */
+            inline?: string;
+        };
+        DataSource_InlineString: {
+            /** @description Data source is inline string */
+            inlineString?: string;
+        };
+        DataSource_Secret: {
+            /** @description Data source is a secret with given Secret key. */
+            secret?: string;
+        };
+        /** @description FileLoggingBackendConfig defines configuration for file based access logs */
         FileLoggingBackendConfig: {
             /** @description Path to a file that logs will be written to */
             path?: string;
@@ -7328,29 +7360,14 @@ export interface components {
             readonly warnings?: string[];
         };
         MeshDeleteSuccessResponse: Record<string, never>;
+        /** @description TcpLoggingBackendConfig defines configuration for TCP based access logs */
         TcpLoggingBackendConfig: {
             /** @description Address to TCP service that will receive logs */
             address?: string;
         };
         ProvidedCertificateAuthorityConfig: {
-            cert?: {
-                /** @description Types that are valid to be assigned to Type:
-                 *
-                 *     	*DataSource_Secret
-                 *     	*DataSource_File
-                 *     	*DataSource_Inline
-                 *     	*DataSource_InlineString */
-                Type: unknown;
-            };
-            key?: {
-                /** @description Types that are valid to be assigned to Type:
-                 *
-                 *     	*DataSource_Secret
-                 *     	*DataSource_File
-                 *     	*DataSource_Inline
-                 *     	*DataSource_InlineString */
-                Type: unknown;
-            };
+            cert?: components["schemas"]["DataSource_File"] | components["schemas"]["DataSource_Inline"] | components["schemas"]["DataSource_InlineString"] | components["schemas"]["DataSource_Secret"];
+            key?: components["schemas"]["DataSource_File"] | components["schemas"]["DataSource_Inline"] | components["schemas"]["DataSource_InlineString"] | components["schemas"]["DataSource_Secret"];
         };
         ZipkinTracingBackendConfig: {
             /** @description Version of the API. values: httpJson, httpJsonV1, httpProto. Default:
@@ -7414,15 +7431,7 @@ export interface components {
                          *     different key types. In practice, this means that one datasource
                          *     should contain an RSA key and certificate, and the other an
                          *     ECDSA key and certificate. */
-                        certificates?: {
-                            /** @description Types that are valid to be assigned to Type:
-                             *
-                             *     	*DataSource_Secret
-                             *     	*DataSource_File
-                             *     	*DataSource_Inline
-                             *     	*DataSource_InlineString */
-                            Type: unknown;
-                        }[];
+                        certificates?: (components["schemas"]["DataSource_File"] | components["schemas"]["DataSource_Inline"] | components["schemas"]["DataSource_InlineString"] | components["schemas"]["DataSource_Secret"])[];
                         /** @description Mode defines the TLS behavior for the TLS session initiated
                          *     by the client. */
                         mode?: string | number;
@@ -7462,6 +7471,7 @@ export interface components {
             readonly warnings?: string[];
         };
         MeshGatewayDeleteSuccessResponse: Record<string, never>;
+        /** @description Zone defines the Zone configuration used at the Global Control Plane within a distributed deployment */
         Zone: {
             /** @description enable allows to turn the zone on/off and exclude the whole zone from
              *     balancing traffic on it */
