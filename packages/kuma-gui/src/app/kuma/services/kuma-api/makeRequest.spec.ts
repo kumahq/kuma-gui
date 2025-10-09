@@ -88,7 +88,7 @@ describe('makeRequest', () => {
     [
       'minimal error response format',
       function () {
-        const response = new Response('{"type":"great_misfortune","detail":"A most terrible error"}', {
+        const response = new Response('{"type":"great_misfortune","detail":"A most terrible error","instance":"kuma:trace:unknown"}', {
           status: 400,
           statusText: 'Oh no!',
           headers: {
@@ -101,14 +101,15 @@ describe('makeRequest', () => {
       new ApiError({
         type: 'great_misfortune',
         status: 400,
-        title: 'An error has occurred while trying to load this data.',
+        title: '',
         detail: 'A most terrible error',
+        instance: 'kuma:trace:unknown',
       }),
     ],
     [
       'complete error response format',
       function () {
-        const response = new Response('{"type":"great_misfortune","title":"Validation error","detail":"A most terrible error"}', {
+        const response = new Response('{"type":"great_misfortune","title":"Validation error","detail":"A most terrible error","instance":"kuma:trace:unknown"}', {
           status: 400,
           statusText: 'Oh no!',
           headers: {
@@ -123,6 +124,7 @@ describe('makeRequest', () => {
         status: 400,
         title: 'Validation error',
         detail: 'A most terrible error',
+        instance: 'kuma:trace:unknown',
       }),
     ],
     [
@@ -134,6 +136,7 @@ describe('makeRequest', () => {
               "type": "great_misfortune",
               "title": "Validation error",
               "detail": "A most terrible error",
+              "instance": "kuma:trace:unknown",
               "invalid_parameters": [
                 {
                   "field": "id",
@@ -159,7 +162,8 @@ describe('makeRequest', () => {
         status: 400,
         title: 'Validation error',
         detail: 'A most terrible error',
-        invalidParameters: [
+        instance: 'kuma:trace:unknown',
+        invalid_parameters: [
           {
             field: 'id',
             rule: 'required',
@@ -182,7 +186,9 @@ describe('makeRequest', () => {
       },
       new ApiError({
         status: 400,
-        title: 'An error has occurred while trying to load this data.',
+        title: '',
+        detail: '',
+        instance: '',
       }),
     ],
     [
@@ -195,6 +201,7 @@ describe('makeRequest', () => {
       new ApiError({
         status: 404,
         title: 'Not found!',
+        instance: '',
       }),
     ],
   ])('works for requests that succeed but return a failure statuses (%s)', async (title, fetchMock, expectedError) => {

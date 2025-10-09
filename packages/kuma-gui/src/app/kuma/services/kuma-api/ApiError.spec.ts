@@ -8,14 +8,15 @@ describe('ApiError', () => {
       new ApiError({
         status: 200,
         title: 'Error message',
+        instance: 'kuma:trace:123',
       }),
       {
         status: 200,
-        type: null,
+        type: '',
         title: 'Error message',
-        detail: null,
-        instance: null,
-        invalidParameters: [],
+        detail: '',
+        instance: 'kuma:trace:123',
+        invalid_parameters: [],
       },
     ],
     [
@@ -25,7 +26,7 @@ describe('ApiError', () => {
         title: 'Invalid Request',
         detail: 'Some of the fields provided were invalid',
         instance: 'kong:trace:6c1ef33ae5bce33634d7d7d695c7f203',
-        invalidParameters: [
+        invalid_parameters: [
           {
             field: 'name',
             reason: 'is a required field',
@@ -38,7 +39,7 @@ describe('ApiError', () => {
         title: 'Invalid Request',
         detail: 'Some of the fields provided were invalid',
         instance: 'kong:trace:6c1ef33ae5bce33634d7d7d695c7f203',
-        invalidParameters: [
+        invalid_parameters: [
           {
             field: 'name',
             reason: 'is a required field',

@@ -6,7 +6,7 @@ Feature: mesh / policies / data
       | items         | [data-testid='app-collection'] |
       | item          | $items tbody tr                |
       | state-empty   | [data-testid='empty-block']    |
-      | state-error   | [data-testid='error-block']    |
+      | state-error   | [data-testid='x-error-state']  |
       | state-loading | [data-testid='loading-block']  |
     And the URL "/mesh-insights/default" responds with
       """

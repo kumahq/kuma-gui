@@ -43,6 +43,7 @@ import {
   XTeleportTemplate,
   XTooltip,
   XWindow,
+  XErrorState,
 } from './components'
 import vStyle from './directives/style'
 import type { Plugin } from 'vue'
@@ -89,6 +90,7 @@ const components = [
   ['XCheckbox', XCheckBox],
   ['XWindow', XWindow],
   ['XSearch', XSearch],
+  ['XErrorState', XErrorState],
 ] as const
 
 const directives = [
