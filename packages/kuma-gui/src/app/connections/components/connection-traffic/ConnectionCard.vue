@@ -33,20 +33,15 @@
       </div>
     </template>
 
-    <template v-if="props.port">
-      <XDl variant="x-stack">
+    <template v-if="props.portName">
+      <dl>
         <div>
-          <dt>{{ t('http.api.property.port') }}</dt>
+          <dt>Name</dt>
           <dd>
-            <KumaPort
-              :port="{
-                port: props.port,
-                name: props.portName,
-              }"
-            />
+            {{ props.portName }}
           </dd>
         </div>
-      </XDl>
+      </dl>
     </template>
 
     <template
@@ -181,13 +176,11 @@ const props = withDefaults(defineProps<{
   traffic?: Record<string, any>
   direction?: 'upstream' | 'downstream'
   portName?: string
-  port?: number
 }>(), {
   service: '',
   traffic: undefined,
   direction: 'downstream',
   portName: undefined,
-  port: undefined,
 })
 
 </script>
