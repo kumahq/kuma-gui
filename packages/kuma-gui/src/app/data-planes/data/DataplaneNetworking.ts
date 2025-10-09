@@ -43,7 +43,7 @@ export const DataplaneNetworkingLayout = {
         const kri = Kri.fromString(item.kri)
         return {
           ...item,
-          stat_prefix: `${item.proxyResourceName.slice(0, item.proxyResourceName.lastIndexOf('_'))}_${item.port}`,
+          stat_prefix: item.proxyResourceName,
           portName: kri.sectionName !== String(item.port) ? kri.sectionName : undefined,
         }
       }),
@@ -51,7 +51,7 @@ export const DataplaneNetworkingLayout = {
         const kri = Kri.fromString(item.kri)
         return {
           ...item,
-          stat_prefix: `${item.proxyResourceName.slice(0, item.proxyResourceName.lastIndexOf('_'))}_${item.port}`,
+          stat_prefix: item.proxyResourceName,
           portName: kri.sectionName !== String(item.port) ? kri.sectionName : undefined,
         }
       }),
