@@ -46,54 +46,7 @@ export async function makeRequest(url: string, options: RequestInit & { params?:
   if (response.ok) {
     return { response, data }
   } else {
-    throw createApiError(response, data)
+    const error = typeof data === 'object' ? { ...data, status: data.status ?? response.status } : { title: data, status: response.status }
+    throw new ApiError(error)
   }
-}
-
-function createApiError(response: Response, data: unknown): ApiError {
-  const status = response.status
-  let type
-  let title = ''
-  let detail = ''
-  let instance = ''
-  let invalid_parameters
-
-  if (typeof data === 'string' && data.length > 0) {
-    title = data
-  } else if (data !== null && typeof data === 'object') {
-    if ('type' in data && typeof data.type === 'string') {
-      type = data.type
-    }
-
-    if ('title' in data && typeof data.title === 'string') {
-      title = data.title
-    }
-
-    if ('detail' in data && typeof data.detail === 'string') {
-      detail = data.detail
-    }
-
-    if ('instance' in data && typeof data.instance === 'string') {
-      instance = data.instance
-    }
-
-    if ('invalid_parameters' in data && Array.isArray(data.invalid_parameters)) {
-      invalid_parameters = data.invalid_parameters
-    }
-  }
-
-  // TODO: Sets the error message for 403 errors until we implement better errors in the backend.
-  if (status === 403) {
-    detail = 'You currently don’t have access to this data.'
-  }
-
-  if (detail === undefined) {
-    detail = 'An error has occurred while trying to load this data.'
-  }
-
-  if (title === undefined) {
-    title = 'Unknown error'
-  }
-
-  return new ApiError({ status, type, title, detail, instance, invalid_parameters })
 }
