@@ -14,22 +14,10 @@
         :error="allErrors[0]"
         :refresh="props.src !== '' ? refresh : () => {}"
       >
-        <template
-          v-for="_error in [allErrors[0]]"
-          :key="typeof _error"
-        >
-          <XErrorState
-            v-bind="$attrs"
-            :error="{
-              title: 'title' in _error ? _error.title as string : _error.message,
-              status: 'status' in _error ? _error.status as number : 0,
-              type: 'type' in _error ? _error.type as string : 'Error',
-              detail: 'detail' in _error ? _error.detail as string : '',
-              instance: 'instance' in _error ? _error.instance as string : '',
-              ..._error,
-            }"
-          />
-        </template>
+        <XErrorState
+          v-bind="$attrs"
+          :error="allErrors[0]"
+        />
       </slot>
     </template>
     <template
