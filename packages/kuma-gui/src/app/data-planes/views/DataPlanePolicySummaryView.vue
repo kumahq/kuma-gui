@@ -83,7 +83,7 @@
               <XCodeBlock
                 data-testid="codeblock-yaml-universal"
                 language="yaml"
-                :code="YAML.stringify(data.config)"
+                :code="data.yaml"
                 is-searchable
                 :show-k8s-copy-button="false"
                 :query="route.params.codeSearch"
@@ -102,12 +102,12 @@
                   path: route.params.policyPath,
                   name: route.params.policy,
                 })"
-                v-slot="{ data: k8sConfig }"
+                v-slot="{ data: yaml }"
               >
                 <XCodeBlock
                   data-testid="codeblock-yaml-k8s"
                   language="yaml"
-                  :code="YAML.stringify(k8sConfig)"
+                  :code="yaml"
                   :show-k8s-copy-button="false"
                   is-searchable
                   :query="route.params.codeSearch"
@@ -127,7 +127,6 @@
 </template>
 
 <script lang="ts" setup>
-import { YAML } from '@/app/application'
 import PolicySummary from '@/app/policies/components/PolicySummary.vue'
 import type { PolicyResourceType } from '@/app/policies/data'
 import { type PolicySource , sources } from '@/app/policies/sources'

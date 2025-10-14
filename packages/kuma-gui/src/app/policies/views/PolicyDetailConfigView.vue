@@ -46,7 +46,7 @@
             <XCodeBlock
               data-testid="codeblock-yaml-universal"
               language="yaml"
-              :code="YAML.stringify(props.data.config)"
+              :code="props.data.yaml"
               :show-k8s-copy-button="false"
               is-searchable
               :query="route.params.codeSearch"
@@ -65,12 +65,12 @@
                 path: route.params.policyPath,
                 name: route.params.policy,
               })"
-              v-slot="{ data: k8sConfig }"
+              v-slot="{ data: yaml }"
             >
               <XCodeBlock
                 data-testid="codeblock-yaml-k8s"
                 language="yaml"
-                :code="YAML.stringify(k8sConfig)"
+                :code="yaml"
                 :show-k8s-copy-button="false"
                 is-searchable
                 :query="route.params.codeSearch"
@@ -91,7 +91,6 @@
 <script lang="ts" setup>
 import type { Policy } from '../data'
 import { sources } from '../sources'
-import { YAML } from '@/app/application'
 const props = defineProps<{
   data: Policy
 }>()
