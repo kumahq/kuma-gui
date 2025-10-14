@@ -1,4 +1,5 @@
 import { http, HttpResponse, passthrough } from 'msw'
+// import { URLPattern } from 'urlpattern-polyfill'
 
 import { createFetch } from './index'
 import type { Dependencies, FS, MockEndpoint } from './index'
@@ -50,7 +51,21 @@ export const mswHandlers = <TDependencies extends object = {}>(fs: FS, dependenc
         }
         return prev
       }, {} as Record<string, string>)
-      const response = await fetch(`${req.url ?? ''}`, {
+
+      // manipulate KRI paths to match our fs structure
+      // from: /_kri/kri_:shortName_:mesh_:zone_:namespace_:name_:sectionName
+      // to:   /_kri/kri/:shortName/:mesh/:zone/:namespace/:name/:sectionName
+      // e.g.  /_kri/kri_msvc_mymesh_myzone_myns_myservice_section
+      // to   /_kri/kri/msvc/mymesh/myzone/myns/myservice/section
+      // const kriPattern = new URLPattern({ pathname: '/_kri/:kri' })
+      const url = req.url
+      // if(kriPattern.test(req.url)) {
+      //   const { pathname, hostname, protocol, port } = new URLPattern(req.url)
+      //   const [, kri] = pathname.split('/_kri/')
+      //   url = `${protocol}://${hostname}:${port}/_kri/${kri.replaceAll('_', '/')}`
+      // }
+
+      const response = await fetch(`${url ?? ''}`, {
         method: req.method,
         headers,
         body: req.body ? JSON.parse(await new Response(req.body).text() || '{}') : {},

@@ -4683,6 +4683,30 @@ paths:
           content:
             application/json:
               schema:
+                discriminator:
+                  propertyName: foo
+                  mapping:
+                    Dataplane: '#/components/schemas/DataplaneItem'
+                    Mesh: '#/components/schemas/MeshItem'
+                    MeshAccessLog: '#/components/schemas/MeshAccessLogItem'
+                    MeshCircuitBreaker: '#/components/schemas/MeshCircuitBreakerItem'
+                    MeshFaultInjection: '#/components/schemas/MeshFaultInjectionItem'
+                    MeshGateway: '#/components/schemas/MeshGatewayItem'
+                    MeshHTTPRoute: '#/components/schemas/MeshHTTPRouteItem'
+                    MeshHealthCheck: '#/components/schemas/MeshHealthCheckItem'
+                    MeshLoadBalancingStrategy: '#/components/schemas/MeshLoadBalancingStrategyItem'
+                    MeshMetric: '#/components/schemas/MeshMetricItem'
+                    MeshPassthrough: '#/components/schemas/MeshPassthroughItem'
+                    MeshProxyPatch: '#/components/schemas/MeshProxyPatchItem'
+                    MeshRateLimit: '#/components/schemas/MeshRateLimitItem'
+                    MeshRetry: '#/components/schemas/MeshRetryItem'
+                    MeshTCPRoute: '#/components/schemas/MeshTCPRouteItem'
+                    MeshTLS: '#/components/schemas/MeshTLSItem'
+                    MeshTimeout: '#/components/schemas/MeshTimeoutItem'
+                    MeshTrace: '#/components/schemas/MeshTraceItem'
+                    MeshTrafficPermission: '#/components/schemas/MeshTrafficPermissionItem'
+                    ZoneEgress: '#/components/schemas/ZoneEgressItem'
+                    ZoneIngress: '#/components/schemas/ZoneIngressItem'
                 oneOf:
                   - $ref: '#/components/schemas/DataplaneItem'
                   - $ref: '#/components/schemas/MeshItem'

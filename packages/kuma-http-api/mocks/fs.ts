@@ -104,6 +104,7 @@ import _8 from './src/zones'
 import _50 from './src/zones/_'
 import _12 from './src/zones/_/_overview'
 import _11 from './src/zones/_overview'
+import _999 from './src/_kri/_'
 
 export const fs = {
   // static/testing
@@ -182,7 +183,7 @@ export const fs = {
   '/meshes/:mesh/meshmultizoneservices/:serviceName/_hostnames': _171,
   '/meshes/:mesh/meshexternalservices/:serviceName/_hostnames': _172,
   // policies
-  '/meshes/:mesh/meshfaultinjections': _52,
+  '/meshes/:mesh/meshultinjections': _52,
   '/meshes/:mesh/meshfaultinjections/:name': _53,
   '/meshes/:mesh/meshfaultinjections/:name/_resources/dataplanes': _54,
   '/meshes/:mesh/dataplanes/:name/_inbounds/:kri/_policies': _231,
@@ -223,4 +224,63 @@ export const fs = {
   // hostnamegenerators
   '/hostnamegenerators': _200,
   '/hostnamegenerators/:name': _201,
+  /**
+   * KRI
+   * Rewires semi-generic KRI paths to respective handlers,
+   * path manipulation happens in fake-api:
+   * - kri_:shortName_:mesh_:zone_:namespace_:name_:sectionName -> kri/:shortName/:mesh/:zone/:namespace/:name/:sectionName
+   */
+  // semi-generic kri
+  // Mesh
+  '/_kri/kri_m_:kri': _16,
+  // MeshService
+  '/_kri/kri_msvc_:kri': _137,
+  // Dataplane
+  '/_kri/kri_dp_:kri': _22,
+  // MeshExternalService
+  '/_kri/kri_extsvc_:kri': _139,
+  // MeshFaultInjection
+  '/_kri/kri_mfi_:kri': _53,
+  // MeshGateway
+  '/_kri/kri_mgw_:kri': _34,
+  // MeshHTTPRoute
+  '/_kri/kri_mhttpr_:kri': _133,
+  // MeshIdentity
+  '/_kri/kri_mid_:kri': _242,
+  // MeshMultiZoneService
+  '/_kri/kri_mzsvc_:kri': _141,
+  // MeshTrust
+  '/_kri/kri_mtrust_:kri': _244,
+  // ZoneEgress
+  '/_kri/kri_ze_:kri': _127,
+  // ZoneIngress
+  '/_kri/kri_zi_:kri': _126,
+  // generic kri - required for msw to match the path before path manipulation above
+  '/_kri/:kri': _999
+
+  // SRATCH DIDN'T WORK
+  // Mesh
+  // '/_kri/kri/m/:mesh/:zone/:namespace/:name/:sectionName': _16,
+  // // MeshService
+  // '/_kri/kri/msvc/:mesh/:zone/:namespace/:name/:sectionName': _137,
+  // // // Dataplane
+  // '/_kri/kri/dp/:mesh/:zone/:namespace/:name/:sectionName': _22,
+  // // // MeshExternalService
+  // '/_kri/kri/extsvc/:mesh/:zone/:namespace/:name/:sectionName': _139,
+  // // // MeshFaultInjection
+  // '/_kri/kri/mfi/:mesh/:zone/:namespace/:name/:sectionName': _53,
+  // // // MeshGateway
+  // '/_kri/kri/mgw/:mesh/:zone/:namespace/:name/:sectionName': _34,
+  // // // MeshHTTPRoute
+  // '/_kri/kri/mhttpr/:mesh/:zone/:namespace/:name/:sectionName': _133,
+  // // // MeshIdentity
+  // '/_kri/kri/mid/:mesh/:zone/:namespace/:name/:sectionName': _242,
+  // // // MeshMultiZoneService
+  // '/_kri/kri/mzsvc/:mesh/:zone/:namespace/:name/:sectionName': _141,
+  // // // MeshTrust
+  // '/_kri/kri/mtrust/:mesh/:zone/:namespace/:name/:sectionName': _244,
+  // // // ZoneEgress
+  // '/_kri/kri/ze/:mesh/:zone/:namespace/:name/:sectionName': _127,
+  // // // ZoneIngress
+  // '/_kri/kri/zi/:mesh/:zone/:namespace/:name/:sectionName': _126,
 }

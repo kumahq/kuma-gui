@@ -1,8 +1,13 @@
 import type { Dependencies, ResponseHandler } from '#mocks'
 
 export default ({ fake }: Dependencies): ResponseHandler => (req) => {
-  const { name } = req.params
-  const zoneName = fake.word.noun()
+  const kri = req.params.kri as string | undefined
+  const [
+    _mesh,
+    zone = req.params.zone as string | undefined,
+    _namespace,
+    name = req.params.name as string
+  ] = kri?.split('_') ?? ''
 
   return {
     headers: {},
@@ -14,7 +19,7 @@ export default ({ fake }: Dependencies): ResponseHandler => (req) => {
       name,
       creationTime: '2021-07-13T08:40:59Z',
       modificationTime: '2021-07-13T08:40:59Z',
-      zone: zoneName,
+      zone: zone ?? fake.word.noun(),
       networking: {
         address: fake.internet.ip(),
         port: fake.internet.port(),

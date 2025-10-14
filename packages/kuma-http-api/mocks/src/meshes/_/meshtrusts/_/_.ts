@@ -3,9 +3,13 @@ import type { components } from '@kumahq/kuma-http-api'
 
 
 export default ({ fake }: Dependencies): ResponseHandler => (req) => {
-  const params = req.params
-  const mesh = params.mesh as string
-  const name = params.name as string
+  const kri = req.params.kri as string | undefined
+  const [
+    mesh = req.params.mesh as string,
+    _zone,
+    _namespace,
+    name = req.params.name as string
+  ] = kri?.split('_') ?? ''
   const k8s = req.url.searchParams.get('format') === 'kubernetes'
   const namespace = fake.word.noun()
   const zone = fake.word.noun()

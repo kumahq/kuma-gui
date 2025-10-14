@@ -2,9 +2,13 @@ import type { Dependencies, ResponseHandler } from '#mocks'
 import type { MeshGateway } from '@/types/index.d'
 
 export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
-  const mesh = req.params.mesh as string
-  const name = req.params.name as string
-
+  const kri = req.params.kri as string | undefined
+  const [
+    mesh = req.params.mesh as string,
+    _zone,
+    _namespace,
+    name = req.params.name as string
+  ] = kri?.split('_') ?? ''
   const listenerCount = parseInt(env('KUMA_LISTENER_COUNT', `${fake.number.int({ min: 1, max: 3 })}`))
 
   const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'

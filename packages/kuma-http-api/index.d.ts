@@ -2385,6 +2385,11 @@ export interface components {
              * @example 0001-01-01T00:00:00Z
              */
             readonly modificationTime?: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            foo: "MeshAccessLog";
         };
         MeshAccessLogCreateOrUpdateSuccessResponse: {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
@@ -3172,6 +3177,11 @@ export interface components {
              * @example 0001-01-01T00:00:00Z
              */
             readonly modificationTime?: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            foo: "MeshCircuitBreaker";
         };
         MeshCircuitBreakerCreateOrUpdateSuccessResponse: {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
@@ -3448,6 +3458,11 @@ export interface components {
              * @example 0001-01-01T00:00:00Z
              */
             readonly modificationTime?: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            foo: "MeshFaultInjection";
         };
         MeshFaultInjectionCreateOrUpdateSuccessResponse: {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
@@ -3674,6 +3689,11 @@ export interface components {
              * @example 0001-01-01T00:00:00Z
              */
             readonly modificationTime?: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            foo: "MeshHealthCheck";
         };
         MeshHealthCheckCreateOrUpdateSuccessResponse: {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
@@ -3994,6 +4014,11 @@ export interface components {
              * @example 0001-01-01T00:00:00Z
              */
             readonly modificationTime?: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            foo: "MeshHTTPRoute";
         };
         MeshHTTPRouteCreateOrUpdateSuccessResponse: {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
@@ -4353,6 +4378,11 @@ export interface components {
              * @example 0001-01-01T00:00:00Z
              */
             readonly modificationTime?: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            foo: "MeshLoadBalancingStrategy";
         };
         MeshLoadBalancingStrategyCreateOrUpdateSuccessResponse: {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
@@ -4529,6 +4559,11 @@ export interface components {
              * @example 0001-01-01T00:00:00Z
              */
             readonly modificationTime?: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            foo: "MeshMetric";
         };
         MeshMetricCreateOrUpdateSuccessResponse: {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
@@ -4635,6 +4670,11 @@ export interface components {
              * @example 0001-01-01T00:00:00Z
              */
             readonly modificationTime?: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            foo: "MeshPassthrough";
         };
         MeshPassthroughCreateOrUpdateSuccessResponse: {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
@@ -4962,6 +5002,11 @@ export interface components {
              * @example 0001-01-01T00:00:00Z
              */
             readonly modificationTime?: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            foo: "MeshProxyPatch";
         };
         MeshProxyPatchCreateOrUpdateSuccessResponse: {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
@@ -5295,6 +5340,11 @@ export interface components {
              * @example 0001-01-01T00:00:00Z
              */
             readonly modificationTime?: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            foo: "MeshRateLimit";
         };
         MeshRateLimitCreateOrUpdateSuccessResponse: {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
@@ -5609,6 +5659,11 @@ export interface components {
              * @example 0001-01-01T00:00:00Z
              */
             readonly modificationTime?: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            foo: "MeshRetry";
         };
         MeshRetryCreateOrUpdateSuccessResponse: {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
@@ -5767,6 +5822,11 @@ export interface components {
              * @example 0001-01-01T00:00:00Z
              */
             readonly modificationTime?: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            foo: "MeshTCPRoute";
         };
         MeshTCPRouteCreateOrUpdateSuccessResponse: {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
@@ -6019,6 +6079,11 @@ export interface components {
              * @example 0001-01-01T00:00:00Z
              */
             readonly modificationTime?: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            foo: "MeshTimeout";
         };
         MeshTimeoutCreateOrUpdateSuccessResponse: {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
@@ -6185,6 +6250,11 @@ export interface components {
              * @example 0001-01-01T00:00:00Z
              */
             readonly modificationTime?: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            foo: "MeshTLS";
         };
         MeshTLSCreateOrUpdateSuccessResponse: {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
@@ -6365,6 +6435,11 @@ export interface components {
              * @example 0001-01-01T00:00:00Z
              */
             readonly modificationTime?: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            foo: "MeshTrace";
         };
         MeshTraceCreateOrUpdateSuccessResponse: {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
@@ -6530,6 +6605,11 @@ export interface components {
              * @example 0001-01-01T00:00:00Z
              */
             readonly modificationTime?: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            foo: "MeshTrafficPermission";
         };
         MeshTrafficPermissionCreateOrUpdateSuccessResponse: {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
@@ -6828,6 +6908,11 @@ export interface components {
                 port?: number;
             };
             type: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            foo: "Dataplane";
         };
         DataplaneCreateOrUpdateSuccessResponse: {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
@@ -7459,6 +7544,11 @@ export interface components {
             type: string;
             creationTime?: string;
             modificationTime?: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            foo: "Mesh";
         };
         MeshCreateOrUpdateSuccessResponse: {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
@@ -7571,6 +7661,11 @@ export interface components {
                 [key: string]: string;
             };
             type: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            foo: "MeshGateway";
         };
         MeshGatewayCreateOrUpdateSuccessResponse: {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
@@ -7607,6 +7702,11 @@ export interface components {
             /** @description Zone field contains Zone name where egress is serving, field will be
              *     automatically set by Global Kuma CP */
             zone?: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            foo: "ZoneEgress";
         };
         ZoneEgressCreateOrUpdateSuccessResponse: {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
@@ -7658,6 +7758,11 @@ export interface components {
             /** @description Zone field contains Zone name where ingress is serving, field will be
              *     automatically set by Global Kuma CP */
             zone?: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            foo: "ZoneIngress";
         };
         ZoneIngressCreateOrUpdateSuccessResponse: {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.

@@ -9,10 +9,11 @@
     v-slot="{ route, t, uri }"
   >
     <DataSource
-      :src="uri(sources, '/meshes/:mesh/policy-path/:path/policy/:name', {
+      :src="uri(sources, Kri.isKriString(route.params.policy) ? '/kri/policy/:kri' : '/meshes/:mesh/policy-path/:path/policy/:name', {
         mesh: route.params.mesh,
         path: route.params.policyPath,
         name: route.params.policy,
+        kri: route.params.policy,
       })"
       v-slot="{ data, error }"
     >
@@ -118,5 +119,6 @@
 <script lang="ts" setup>
 import { usePolicyActionGroup } from '../'
 import { sources } from '../sources'
+import { Kri } from '@/app/kuma'
 const PolicyActionGroup = usePolicyActionGroup()
 </script>

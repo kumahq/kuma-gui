@@ -3,8 +3,13 @@ import type { components } from '@kumahq/kuma-http-api'
 
 
 export default ({ fake }: Dependencies): ResponseHandler => (req) => {
-  const params = req.params
-  const mesh = params.mesh as string
+  const kri = req.params.kri as string | undefined
+  const [
+    mesh = req.params.mesh as string,
+    _zone,
+    _namespace,
+    name = req.params.name as string
+  ] = kri?.split('_') ?? ''
   const k8s = req.url.searchParams.get('format') === 'kubernetes'
   return {
     headers: {},
@@ -13,7 +18,7 @@ export default ({ fake }: Dependencies): ResponseHandler => (req) => {
       ...(k8s ? { kind: 'MeshIdentity' } : { type: 'MeshIdentity' }),
       ...((() => {
         const metadata = {
-          name: params.name as string,
+          name,
           labels: {
             'kuma.io/mesh': mesh,
             'kuma.io/zone': fake.word.noun(),

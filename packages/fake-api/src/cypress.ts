@@ -1,4 +1,5 @@
 import { pathToRegexp } from 'path-to-regexp'
+import { URLPattern } from 'urlpattern-polyfill'
 
 import { createFetchSync } from './index'
 import type { Middleware, Dependencies, FS, Mocker } from './index'
@@ -46,8 +47,21 @@ export const mocker = <T extends object = {}>(
               }
               return prev
             }, {} as Record<string, string>)
+            
+            // manipulate KRI paths to match our fs structure
+            // from: /_kri/kri_:shortName_:mesh_:zone_:namespace_:name_:sectionName
+            // to:   /_kri/kri/:shortName/:mesh/:zone/:namespace/:name/:sectionName
+            // e.g.  /_kri/kri_msvc_mymesh_myzone_myns_myservice_section
+            // to   /_kri/kri/msvc/mymesh/myzone/myns/myservice/section
+            const kriPattern = new URLPattern({ pathname: '/_kri/:kri' })
+            let url = req.url
+            if(kriPattern.test(req.url)) {
+              const { pathname, hostname, protocol, port } = new URLPattern(req.url)
+              const [, kri] = pathname.split('/_kri/')
+              url = `${protocol}://${hostname}:${port}/_kri/${kri.replaceAll('_', '/')}`
+            }
 
-            const resp = fetch(req.url, {
+            const resp = fetch(url, {
               method: req.method,
               headers,
               body: req.body,

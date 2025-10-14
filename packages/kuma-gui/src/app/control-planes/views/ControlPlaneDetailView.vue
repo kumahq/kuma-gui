@@ -36,6 +36,13 @@
         <XLayout
           type="columns"
         >
+          <DataLoader
+            :src="uri(PolicySources, '/kri/policy/:kri', { kri: 'kri_asd__my-zone_my-ns_fooo_bla' })"
+            v-slot="{ data }"
+          >
+            {{ data }}
+            <!-- {{ console.log(data) }} -->
+          </DataLoader>
           <XCard
             v-if="can('use zones')"
           >

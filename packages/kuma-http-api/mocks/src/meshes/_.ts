@@ -1,6 +1,12 @@
 import type { Dependencies, ResponseHandler } from '#mocks'
 export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
-  const name = req.params.mesh
+  const kri = req.params.kri as string | undefined
+  const [
+    _mesh,
+    _zone,
+    _namespace,
+    name = req.params.name as string
+  ] = kri?.split('_') ?? ''
 
   const isMtlsEnabledOverride = env('KUMA_MTLS_ENABLED', '')
   const isMtlsEnabled = isMtlsEnabledOverride !== '' ? isMtlsEnabledOverride === 'true' : fake.datatype.boolean()

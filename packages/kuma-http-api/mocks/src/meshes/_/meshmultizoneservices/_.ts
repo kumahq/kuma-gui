@@ -4,9 +4,14 @@ type Entity = components['schemas']['MeshMultiZoneServiceItem']
 
 export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
   const query = req.url.searchParams
-
-  const mesh = req.params.mesh as string
-  const name = req.params.name as string
+  
+  const kri = req.params.kri as string | undefined
+  const [
+    mesh = req.params.mesh as string,
+    _zone,
+    _namespace,
+    name = req.params.name as string
+  ] = kri?.split('_') ?? ''
 
   const parts = String(name).split('.')
   const k8s = parts.length > 1
