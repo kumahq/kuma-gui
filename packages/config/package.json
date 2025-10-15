@@ -28,7 +28,7 @@
     "./tsconfig/node": "./tsconfig/node.json"
   },
   "dependencies": {
-    "@badeball/cypress-cucumber-preprocessor": "^23.2.0",
+    "@badeball/cypress-cucumber-preprocessor": "^23.2.1",
     "@bahmutov/cypress-esbuild-preprocessor": "^2.2.6",
     "@cucumber/gherkin-utils": "^10.0.0",
     "@eslint/js": "^9.37.0",
@@ -62,6 +62,6 @@
     "vite": "^7.1.9",
     "vitepress": "^2.0.0-alpha.12",
     "vitest": "^3.2.4",
-    "vue-tsc": "^3.1.0"
+    "vue-tsc": "^3.1.1"
   }
 }
