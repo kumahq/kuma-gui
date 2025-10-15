@@ -6,7 +6,7 @@ export default ({ fake }: Dependencies): ResponseHandler => (req) => {
     _mesh,
     zone = req.params.zone as string | undefined,
     _namespace,
-    name = req.params.name as string
+    name = req.params.name as string,
   ] = kri?.split('_') ?? ''
 
   return {

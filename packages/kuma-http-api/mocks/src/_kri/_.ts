@@ -21,8 +21,8 @@ export default (_dependencies: Dependencies): ResponseHandler => (request) => {
         {
           field: 'kri',
           reason: `The provided KRI includes a [shortName] ([resourceType]) that is not supported in the mock API. Given [${shortName}] is not supported yet.`,
-        }        
-      ]
-    } satisfies components['schemas']['Error']
+        },        
+      ],
+    } satisfies components['schemas']['Error'],
   }
 }

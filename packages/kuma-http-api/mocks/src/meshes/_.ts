@@ -5,7 +5,7 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
     _mesh,
     _zone,
     _namespace,
-    name = req.params.name as string
+    name = req.params.name as string,
   ] = kri?.split('_') ?? ''
 
   const isMtlsEnabledOverride = env('KUMA_MTLS_ENABLED', '')

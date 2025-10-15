@@ -5,7 +5,7 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
     mesh = req.params.mesh as string,
     _zone,
     _namespace,
-    name = req.params.name as string
+    name = req.params.name as string,
   ] = kri?.split('_') ?? ''
 
   // use a seed based on the name to keep ports and ip address the same across

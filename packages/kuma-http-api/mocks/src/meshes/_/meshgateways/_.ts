@@ -7,7 +7,7 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
     mesh = req.params.mesh as string,
     _zone,
     _namespace,
-    name = req.params.name as string
+    name = req.params.name as string,
   ] = kri?.split('_') ?? ''
   const listenerCount = parseInt(env('KUMA_LISTENER_COUNT', `${fake.number.int({ min: 1, max: 3 })}`))
 

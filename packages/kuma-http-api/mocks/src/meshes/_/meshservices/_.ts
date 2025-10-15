@@ -9,7 +9,7 @@ export default ({ fake }: Dependencies): ResponseHandler => (req) => {
     mesh = req.params.mesh as string,
     zone,
     ns,
-    name = req.params.name as string
+    name = req.params.name as string,
   ] = kri?.split('_') ?? ''
 
   const parts = String(name).split('.')

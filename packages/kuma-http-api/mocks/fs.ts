@@ -1,4 +1,5 @@
 import _124 from './kuma.io/latest_version'
+import _999 from './src/_kri/_'
 import _3 from './src/_resources'
 import _1 from './src/config'
 import _4 from './src/dataplanes/_overview'
@@ -104,7 +105,6 @@ import _8 from './src/zones'
 import _50 from './src/zones/_'
 import _12 from './src/zones/_/_overview'
 import _11 from './src/zones/_overview'
-import _999 from './src/_kri/_'
 
 export const fs = {
   // static/testing
@@ -254,5 +254,5 @@ export const fs = {
   // ZoneIngress
   '/_kri/kri_zi_:kri': _126,
   // generic kri
-  '/_kri/:kri': _999
+  '/_kri/:kri': _999,
 }
