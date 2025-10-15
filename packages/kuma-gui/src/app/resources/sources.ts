@@ -112,27 +112,5 @@ export const sources = (api: KumaApi) => {
   
       return res.data
     },
-
-    // '/kri/:kri': async (params) => {
-    //   const { kri } = params
-    //   const res = await http.GET('/_kri/{kri}', {
-    //     params: {
-    //       path: {
-    //         kri,
-    //       },
-    //     },
-    //   })
-
-    //   switch(true) {
-    //     case res.data!.type === 'Mesh': {
-    //       return Mesh.fromObject(res.data)
-    //     }
-    //     case res.data!.type === 'Dataplane': {
-    //       return Dataplane.fromObject(res.data as Dataplane)
-    //     }
-    //     default:
-    //       return res.data!
-    //   }
-    // }
   })
 }

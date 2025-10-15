@@ -183,7 +183,7 @@ export const fs = {
   '/meshes/:mesh/meshmultizoneservices/:serviceName/_hostnames': _171,
   '/meshes/:mesh/meshexternalservices/:serviceName/_hostnames': _172,
   // policies
-  '/meshes/:mesh/meshultinjections': _52,
+  '/meshes/:mesh/meshfaultinjections': _52,
   '/meshes/:mesh/meshfaultinjections/:name': _53,
   '/meshes/:mesh/meshfaultinjections/:name/_resources/dataplanes': _54,
   '/meshes/:mesh/dataplanes/:name/_inbounds/:kri/_policies': _231,
@@ -226,9 +226,7 @@ export const fs = {
   '/hostnamegenerators/:name': _201,
   /**
    * KRI
-   * Rewires semi-generic KRI paths to respective handlers,
-   * path manipulation happens in fake-api:
-   * - kri_:shortName_:mesh_:zone_:namespace_:name_:sectionName -> kri/:shortName/:mesh/:zone/:namespace/:name/:sectionName
+   * On top of a fully generic KRI handler below we rewire semi-generic KRI paths to respective handlers
    */
   // semi-generic kri
   // Mesh
@@ -255,32 +253,6 @@ export const fs = {
   '/_kri/kri_ze_:kri': _127,
   // ZoneIngress
   '/_kri/kri_zi_:kri': _126,
-  // generic kri - required for msw to match the path before path manipulation above
+  // generic kri
   '/_kri/:kri': _999
-
-  // SRATCH DIDN'T WORK
-  // Mesh
-  // '/_kri/kri/m/:mesh/:zone/:namespace/:name/:sectionName': _16,
-  // // MeshService
-  // '/_kri/kri/msvc/:mesh/:zone/:namespace/:name/:sectionName': _137,
-  // // // Dataplane
-  // '/_kri/kri/dp/:mesh/:zone/:namespace/:name/:sectionName': _22,
-  // // // MeshExternalService
-  // '/_kri/kri/extsvc/:mesh/:zone/:namespace/:name/:sectionName': _139,
-  // // // MeshFaultInjection
-  // '/_kri/kri/mfi/:mesh/:zone/:namespace/:name/:sectionName': _53,
-  // // // MeshGateway
-  // '/_kri/kri/mgw/:mesh/:zone/:namespace/:name/:sectionName': _34,
-  // // // MeshHTTPRoute
-  // '/_kri/kri/mhttpr/:mesh/:zone/:namespace/:name/:sectionName': _133,
-  // // // MeshIdentity
-  // '/_kri/kri/mid/:mesh/:zone/:namespace/:name/:sectionName': _242,
-  // // // MeshMultiZoneService
-  // '/_kri/kri/mzsvc/:mesh/:zone/:namespace/:name/:sectionName': _141,
-  // // // MeshTrust
-  // '/_kri/kri/mtrust/:mesh/:zone/:namespace/:name/:sectionName': _244,
-  // // // ZoneEgress
-  // '/_kri/kri/ze/:mesh/:zone/:namespace/:name/:sectionName': _127,
-  // // // ZoneIngress
-  // '/_kri/kri/zi/:mesh/:zone/:namespace/:name/:sectionName': _126,
 }
