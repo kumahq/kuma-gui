@@ -9,7 +9,7 @@
       </XLayout>
     </template>
     <component
-      :is="props.editable ? ReadWrite : ReadOnly"
+      :is="props.editable ? 'x-read-write-code-block' : 'x-read-only-code-block'"
       :id="id"
       :max-height="props.maxHeight"
       :code="props.code"
@@ -42,8 +42,6 @@ import { ref, useId } from 'vue'
 
 import {
   useSyntaxHighlighter,
-  useReadOnlyCodeBlock,
-  useReadWriteCodeBlock,
 } from '@kumahq/x'
 
 const props = withDefaults(defineProps<{
@@ -77,8 +75,6 @@ const emit = defineEmits<{
 }>()
 
 const syntax = useSyntaxHighlighter()
-const ReadOnly = useReadOnlyCodeBlock()
-const ReadWrite = useReadWriteCodeBlock()
 
 const processing = ref(false)
 

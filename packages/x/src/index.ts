@@ -67,6 +67,10 @@ const components = [
   ['XBreadcrumbs', XBreadcrumbs],
   ['XCopyButton', XCopyButton],
   ['XCodeBlock', XCodeBlock],
+  // temporarily global, these will be moved to become internal
+  ['XReadOnlyCodeBlock', KCodeBlock],
+  ['XReadWriteCodeBlock', KCodeBlock],
+  //
   ['XDl', XDl],
   ['XEmptyState', XEmptyState],
   ['XIcon', XIcon],
@@ -117,6 +121,10 @@ declare module 'vue' {
     XBadge: typeof XBadge
     XCopyButton: typeof XCopyButton
     XCodeBlock: typeof XCodeBlock
+    // temporarily global, these will be moved to become internal
+    XReadOnlyCodeBlock: typeof KCodeBlock
+    XReadWriteCodeBlock: typeof KCodeBlock
+    //
     XDl: typeof XDl
     XBreadcrumbs: typeof XBreadcrumbs
     XEmptyState: typeof XEmptyState
@@ -165,8 +173,6 @@ const deps = {
       engine: createJavaScriptRegexEngine(),
     })
   },
-  readOnlyCodeBlock: KCodeBlock,
-  readWriteCodeBlock: KCodeBlock,
 }
 const plugin: Plugin = {
   install: (app, options: Partial<typeof deps> = {}) => {
@@ -183,5 +189,3 @@ export default plugin
 export const useI18n = () => deps.i18n
 export const useProtocolHandler = () => deps.protocolHandler
 export const useSyntaxHighlighter = () => deps.syntaxHighlighter
-export const useReadOnlyCodeBlock = () => deps.readOnlyCodeBlock
-export const useReadWriteCodeBlock = () => deps.readWriteCodeBlock
