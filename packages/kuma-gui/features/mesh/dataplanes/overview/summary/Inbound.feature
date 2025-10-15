@@ -28,14 +28,14 @@ Feature: mesh / dataplanes / overview / summary / Inbound
       """
       body:
         policies:
-          - kind: FaultInjection
+          - kind: MeshFaultInjection
             rules:
               - conf:
                   delay: 
                     percentage: 10
                     fixedDelay: 100ms
             origins:
-              - kri: kri_policy_default_pigsty_jury_innovation_appliance
+              - kri: kri_mfi_default_pigsty_jury_innovation_appliance
       """
     And the URL "/meshes/default/dataplanes/service-less/_overview" responds with
       """
@@ -52,8 +52,8 @@ Feature: mesh / dataplanes / overview / summary / Inbound
     And the "$summary" element exists
     And the "$summary" element contains "Inbound: self_inbound_http"
     And the "$summary" element contains "HTTP"
-    And the "$inbound-policies-rule" element contains "FaultInjection"
-    And the "$inbound-policies-rule" element contains "kri_policy_default_pigsty_jury_innovation_appliance"
+    And the "$inbound-policies-rule" element contains "MeshFaultInjection"
+    And the "$inbound-policies-rule" element contains "kri_mfi_default_pigsty_jury_innovation_appliance"
     And the "$inbound-policies-rule [data-testid='k-code-block']" element exists
 
   Scenario: Clicking on origin leads to policy detail view
@@ -74,9 +74,9 @@ Feature: mesh / dataplanes / overview / summary / Inbound
       """
       body:
         policies:
-          - kind: CircuitBreaker
+          - kind: MeshFaultInjection
             origins:
-              - kri: kri_policy_default_pigsty_jury_the-policy-name_appliance
+              - kri: kri_mfi_default_pigsty_jury_the-policy-name_appliance
       """
     And the URL "/meshes/default/dataplanes/service-less/_overview" responds with
       """
@@ -91,4 +91,4 @@ Feature: mesh / dataplanes / overview / summary / Inbound
       """
     When I visit the "/meshes/default/data-planes/service-less/overview/inbound/self_inbound_http/overview" URL
     Then I click on the "$inbound-policies-rule ul:first-of-type li:first-of-type a:first-of-type" element
-    Then the URL contains "/gui/meshes/default/policies/circuit-breakers/the-policy-name/overview/overview"
+    Then the URL contains "/gui/meshes/default/policies/meshfaultinjections/kri_mfi_default_pigsty_jury_the-policy-name_appliance/overview/overview"
