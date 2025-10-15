@@ -3,7 +3,10 @@ import {
   KPop,
   KRadio,
   KLabel,
+  KCodeBlock,
 } from '@kong/kongponents'
+import { createHighlighterCore } from 'shiki/core'
+import { createJavaScriptRegexEngine } from 'shiki/engine/javascript'
 
 import {
   XAboutCard,
@@ -146,15 +149,28 @@ const deps = {
     locale: 'en-us',
   },
   protocolHandler: (href: string) => href,
+  syntaxHighlighter: async () => {
+    return createHighlighterCore({
+      langs: [
+        import('shiki/langs/json.mjs'),
+        import('shiki/langs/yaml.mjs'),
+        import('shiki/langs/bash.mjs'),
+      ],
+      themes: [
+        {
+          name: 'catppuccin-mocha',
+          default: (await import('shiki/themes/catppuccin-mocha.mjs')).default,
+        },
+      ],
+      engine: createJavaScriptRegexEngine(),
+    })
+  },
+  readOnlyCodeBlock: KCodeBlock,
+  readWriteCodeBlock: KCodeBlock,
 }
 const plugin: Plugin = {
   install: (app, options: Partial<typeof deps> = {}) => {
-    if (typeof options.i18n !== 'undefined') {
-      deps.i18n = options.i18n
-    }
-    if (typeof options.protocolHandler !== 'undefined') {
-      deps.protocolHandler = options.protocolHandler
-    }
+    Object.assign(deps, options)
     components.forEach(([name, item]) => {
       app.component(name, item)
     })
@@ -166,3 +182,6 @@ const plugin: Plugin = {
 export default plugin
 export const useI18n = () => deps.i18n
 export const useProtocolHandler = () => deps.protocolHandler
+export const useSyntaxHighlighter = () => deps.syntaxHighlighter
+export const useReadOnlyCodeBlock = () => deps.readOnlyCodeBlock
+export const useReadWriteCodeBlock = () => deps.readWriteCodeBlock
