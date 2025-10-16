@@ -1,9 +1,11 @@
 import createClient from 'openapi-fetch'
 
+
 import { Policy, PolicyDataplane, PolicyResourceType } from './data'
 import { DataplanePolicies } from './data/DataplanePolicies'
 import { DataplaneInboundPolicies, DataplaneOutboundPolicies } from './data/DataplaneTrafficPolicies'
 import { defineSources } from '../application/services/data-source'
+import { YAML } from '@/app/application'
 import type { DataSourceResponse } from '@/app/application'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
@@ -31,7 +33,7 @@ export const sources = (api: KumaApi) => {
 
       return PolicyResourceType.fromCollection(res.data!)
     },
-    
+
     '/meshes/:mesh/policy-path/:path': async (params) => {
       const { mesh, path, size } = params
       const offset = params.size * (params.page - 1)
@@ -43,8 +45,8 @@ export const sources = (api: KumaApi) => {
 
     '/meshes/:mesh/policy-path/:path/policy/:name': async (params) => {
       const { mesh, path, name } = params
-
-      return Policy.fromObject(await api.getSinglePolicyEntity({ mesh, path, name }))
+      const res = await api.getSinglePolicyEntity({ mesh, path, name })
+      return Policy.fromObject(res)
     },
 
     '/meshes/:mesh/policy-path/:path/policy/:name/dataplanes': async (params) => {
@@ -53,12 +55,12 @@ export const sources = (api: KumaApi) => {
       return PolicyDataplane.fromCollection(await api.getPolicyConnections({ mesh, path, name }, { offset, size }))
     },
 
-    '/meshes/:mesh/policy-path/:path/policy/:name/as/kubernetes': (params) => {
+    '/meshes/:mesh/policy-path/:path/policy/:name/as/kubernetes': async (params) => {
       const { mesh, path, name } = params
 
-      return api.getSinglePolicyEntity({ mesh, path, name }, { format: 'kubernetes' })
+      return YAML.stringify(await api.getSinglePolicyEntity({ mesh, path, name }, { format: 'kubernetes' }))
     },
-        
+
     '/meshes/:mesh/dataplanes/:name/policies/for/proxy': async (params) => {
       const { mesh, name } = params
       const res = await http.GET('/meshes/{mesh}/dataplanes/{name}/_policies', {
@@ -71,7 +73,7 @@ export const sources = (api: KumaApi) => {
       })
       return DataplanePolicies.fromCollection(res.data!)
     },
-        
+
     '/meshes/:mesh/dataplanes/:name/policies/for/inbound/:kri': async (params) => {
       const { mesh, name, kri } = params
       const res = await http.GET('/meshes/{mesh}/dataplanes/{name}/_inbounds/{inbound-kri}/_policies', {
@@ -85,7 +87,7 @@ export const sources = (api: KumaApi) => {
       })
       return DataplaneInboundPolicies.fromCollection(res.data!)
     },
-    
+
     '/meshes/:mesh/dataplanes/:name/policies/for/outbound/:kri': async (params) => {
       const { mesh, name, kri } = params
       const res = await http.GET('/meshes/{mesh}/dataplanes/{name}/_outbounds/{kri}/_policies', {

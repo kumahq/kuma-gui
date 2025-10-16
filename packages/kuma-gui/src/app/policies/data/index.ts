@@ -1,4 +1,4 @@
-
+import { YAML } from '@/app/application'
 import { Resource } from '@/app/resources/data/Resource'
 import type { PaginatedApiListResponse } from '@/types/api.d'
 import type {
@@ -57,6 +57,7 @@ export const Policy = {
       zone: labels['kuma.io/origin'] === 'zone' && labels['kuma.io/zone'] ? labels['kuma.io/zone'] : '',
       role: labels['kuma.io/policy-role'] ?? 'system',
       config: item,
+      yaml: YAML.stringify(item),
     }
   },
 
