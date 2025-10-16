@@ -1,4 +1,5 @@
 import _124 from './kuma.io/latest_version'
+import _999 from './src/_kri/_'
 import _3 from './src/_resources'
 import _1 from './src/config'
 import _4 from './src/dataplanes/_overview'
@@ -223,4 +224,35 @@ export const fs = {
   // hostnamegenerators
   '/hostnamegenerators': _200,
   '/hostnamegenerators/:name': _201,
+  /**
+   * KRI
+   * On top of a fully generic KRI handler below we rewire semi-generic KRI paths to respective handlers
+   */
+  // semi-generic kri
+  // Mesh
+  '/_kri/kri_m_:kri': _16,
+  // MeshService
+  '/_kri/kri_msvc_:kri': _137,
+  // Dataplane
+  '/_kri/kri_dp_:kri': _22,
+  // MeshExternalService
+  '/_kri/kri_extsvc_:kri': _139,
+  // MeshFaultInjection
+  '/_kri/kri_mfi_:kri': _53,
+  // MeshGateway
+  '/_kri/kri_mgw_:kri': _34,
+  // MeshHTTPRoute
+  '/_kri/kri_mhttpr_:kri': _133,
+  // MeshIdentity
+  '/_kri/kri_mid_:kri': _242,
+  // MeshMultiZoneService
+  '/_kri/kri_mzsvc_:kri': _141,
+  // MeshTrust
+  '/_kri/kri_mtrust_:kri': _244,
+  // ZoneEgress
+  '/_kri/kri_ze_:kri': _127,
+  // ZoneIngress
+  '/_kri/kri_zi_:kri': _126,
+  // generic kri
+  '/_kri/:kri': _999,
 }

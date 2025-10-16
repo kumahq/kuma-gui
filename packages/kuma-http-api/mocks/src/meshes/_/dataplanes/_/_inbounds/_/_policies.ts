@@ -101,7 +101,7 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
           }),
           origins: Array.from({ length: fake.number.int({ min: 1, max: 3 })}).map(() => {
             return {
-              kri: fake.kuma.kri({ shortName: 'policy', mesh }),
+              kri: fake.kuma.kri({ shortName: fake.helpers.arrayElement(['mfi', 'mhttpr']), mesh }),
             }
           }),
         }

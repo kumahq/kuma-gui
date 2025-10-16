@@ -109,7 +109,7 @@
           :src="uri(sources, '/meshes/:mesh/policy-path/:path/policy/:name/dataplanes', {
             mesh: route.params.mesh,
             path: route.params.policyPath,
-            name: route.params.policy,
+            name: props.data.id,
           },{
             page: route.params.page,
             size: route.params.size,

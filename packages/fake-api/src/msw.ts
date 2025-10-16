@@ -50,6 +50,7 @@ export const mswHandlers = <TDependencies extends object = {}>(fs: FS, dependenc
         }
         return prev
       }, {} as Record<string, string>)
+
       const response = await fetch(`${req.url ?? ''}`, {
         method: req.method,
         headers,

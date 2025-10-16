@@ -9,7 +9,7 @@ import { YAML } from '@/app/application'
 import type { DataSourceResponse } from '@/app/application'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
-import type { paths } from '@kumahq/kuma-http-api'
+import type { paths, operations } from '@kumahq/kuma-http-api'
 
 export type PolicyCollection = CollectionResponse<Policy>
 export type PolicySource = DataSourceResponse<Policy>
@@ -18,6 +18,8 @@ export type PolicyCollectionSource = DataSourceResponse<PolicyCollection>
 export type PolicyDataplaneCollection = CollectionResponse<PolicyDataplane>
 export type PolicyDataplaneSource = DataSourceResponse<PolicyDataplane>
 export type PolicyDataplaneCollectionSource = DataSourceResponse<PolicyDataplaneCollection>
+
+type GetByKriResponse = operations['getByKri']['responses']['200']['content']['application/json']
 
 export const sources = (api: KumaApi) => {
   const http = createClient<paths>({
@@ -98,6 +100,19 @@ export const sources = (api: KumaApi) => {
         },
       })
       return DataplaneOutboundPolicies.fromCollection(res.data!)
+    },
+
+    '/kri/policy/:kri': async (params) => {
+      const { kri } = params
+      const res = await http.GET('/_kri/{kri}', {
+        params: {
+          path: {
+            kri,
+          },
+        },
+      })
+
+      return Policy.fromObject(res.data as GetByKriResponse & { creationTime: string, modificationTime: string, mesh: string })
     },
   })
 }
