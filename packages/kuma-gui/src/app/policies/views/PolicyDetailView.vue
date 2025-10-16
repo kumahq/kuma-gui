@@ -109,7 +109,7 @@
           :src="uri(sources, '/meshes/:mesh/policy-path/:path/policy/:name/dataplanes', {
             mesh: route.params.mesh,
             path: route.params.policyPath,
-            name: Kri.isKriString(route.params.policy) ? Kri.fromString(route.params.policy).name : route.params.policy,
+            name: props.data.id,
           },{
             page: route.params.page,
             size: route.params.size,
@@ -222,7 +222,6 @@ import type { Policy } from '../data'
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
-import { Kri } from '@/app/kuma'
 
 const props = defineProps<{
   data: Policy
