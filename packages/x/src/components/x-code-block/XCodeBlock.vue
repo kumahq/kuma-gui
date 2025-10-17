@@ -56,7 +56,7 @@ const props = withDefaults(defineProps<{
   isFilterMode?: boolean
   isRegExpMode?: boolean
 }>(), {
-  editable: true,
+  editable: false,
   id: () => `x-code-block-${useId()}`,
   isSearchable: false,
   showCopyButton: true,
