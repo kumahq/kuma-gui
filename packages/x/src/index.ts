@@ -137,6 +137,7 @@ declare module 'vue' {
     XCheckbox: typeof XCheckBox
     XWindow: typeof XWindow
     XSearch: typeof XSearch
+    XErrorState: typeof XErrorState
   }
 }
 

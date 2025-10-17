@@ -63,7 +63,7 @@
           >
             <slot>
               <p>
-                {{ t('common.error_state.api_error', { status: props.error.status.toString(), title: props.error.detail }) }}
+                {{ t('common.error_state.api_error', { status: (props.error.status ?? 0).toString(), title: props.error.detail }) }}
               </p>
               <ul
                 v-if="props.error.invalid_parameters?.length"
@@ -84,7 +84,7 @@
   </XI18n>
 </template>
 
-<script lang="ts" setup generic="T extends { type: string, status: number, title: string, detail: string, instance: string, invalid_parameters?: { field: string, reason: string, source: 'body' | 'header', rule?: string }[] }">
+<script lang="ts" setup generic="T extends Error & Partial<{ type: string, status: number, title: string, detail: string, instance: string, invalid_parameters: { field: string, reason: string, source: 'body' | 'header', rule?: string }[] }>">
 import { KUI_COLOR_TEXT_DANGER } from '@kong/design-tokens'
 import { inject } from 'vue'
 
