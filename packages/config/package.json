@@ -28,23 +28,23 @@
     "./tsconfig/node": "./tsconfig/node.json"
   },
   "dependencies": {
-    "@badeball/cypress-cucumber-preprocessor": "^23.2.0",
+    "@badeball/cypress-cucumber-preprocessor": "^23.2.1",
     "@bahmutov/cypress-esbuild-preprocessor": "^2.2.6",
     "@cucumber/gherkin-utils": "^10.0.0",
-    "@eslint/js": "^9.36.0",
+    "@eslint/js": "^9.37.0",
     "@stylistic/eslint-plugin": "^5.4.0",
     "@stylistic/stylelint-plugin": "^4.0.0",
     "@types/markdown-it": "^14.1.2",
     "@vue/eslint-config-typescript": "^14.6.0",
     "@vue/tsconfig": "^0.8.1",
-    "cypress": "^15.3.0",
+    "cypress": "^15.4.0",
     "cypress-fail-fast": "^7.1.1",
     "cypress-fail-on-console-error": "^5.1.1",
-    "cypress-terminal-report": "^7.2.1",
+    "cypress-terminal-report": "^7.3.0",
     "deepmerge": "^4.3.1",
     "esbuild": "^0.25.10",
     "escape-string-regexp": "^4.0.0",
-    "eslint": "^9.36.0",
+    "eslint": "^9.37.0",
     "eslint-import-resolver-alias": "^1.1.2",
     "eslint-import-resolver-typescript": "^4.4.4",
     "eslint-plugin-import": "^2.32.0",
@@ -62,6 +62,6 @@
     "vite": "^7.1.9",
     "vitepress": "^2.0.0-alpha.12",
     "vitest": "^3.2.4",
-    "vue-tsc": "^3.1.0"
+    "vue-tsc": "^3.1.1"
   }
 }

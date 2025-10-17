@@ -980,6 +980,78 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/zoneegresses/{name}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Returns ZoneEgress entity */
+        get: operations["getZoneEgress"];
+        /** Creates or Updates ZoneEgress entity */
+        put: operations["putZoneEgress"];
+        post?: never;
+        /** Deletes ZoneEgress entity */
+        delete: operations["deleteZoneEgress"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/zoneegresses": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Returns a list of ZoneEgress in the mesh. */
+        get: operations["getZoneEgressList"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/zoneingresses/{name}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Returns ZoneIngress entity */
+        get: operations["getZoneIngress"];
+        /** Creates or Updates ZoneIngress entity */
+        put: operations["putZoneIngress"];
+        post?: never;
+        /** Deletes ZoneIngress entity */
+        delete: operations["deleteZoneIngress"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/zoneingresses": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Returns a list of ZoneIngress in the mesh. */
+        get: operations["getZoneIngressList"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/hostnamegenerators/{name}": {
         parameters: {
             query?: never;
@@ -1188,6 +1260,23 @@ export interface paths {
         };
         /** Returns a list of MeshTrust in the mesh. */
         get: operations["getMeshTrustList"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/_kri/{kri}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Returns a resource by KRI */
+        get: operations["getByKri"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1815,6 +1904,7 @@ export interface components {
             /** @example Not found */
             detail?: unknown;
         };
+        /** @description Successful response */
         MeshAccessLogItem: {
             /**
              * @description the type of the resource
@@ -2303,6 +2393,7 @@ export interface components {
             readonly warnings?: string[];
         };
         MeshAccessLogDeleteSuccessResponse: Record<string, never>;
+        /** @description Successful response */
         MeshCircuitBreakerItem: {
             /**
              * @description the type of the resource
@@ -3089,6 +3180,7 @@ export interface components {
             readonly warnings?: string[];
         };
         MeshCircuitBreakerDeleteSuccessResponse: Record<string, never>;
+        /** @description Successful response */
         MeshFaultInjectionItem: {
             /**
              * @description the type of the resource
@@ -3364,6 +3456,7 @@ export interface components {
             readonly warnings?: string[];
         };
         MeshFaultInjectionDeleteSuccessResponse: Record<string, never>;
+        /** @description Successful response */
         MeshHealthCheckItem: {
             /**
              * @description the type of the resource
@@ -3589,6 +3682,7 @@ export interface components {
             readonly warnings?: string[];
         };
         MeshHealthCheckDeleteSuccessResponse: Record<string, never>;
+        /** @description Successful response */
         MeshHTTPRouteItem: {
             /**
              * @description the type of the resource
@@ -3908,6 +4002,7 @@ export interface components {
             readonly warnings?: string[];
         };
         MeshHTTPRouteDeleteSuccessResponse: Record<string, never>;
+        /** @description Successful response */
         MeshLoadBalancingStrategyItem: {
             /**
              * @description the type of the resource
@@ -4266,6 +4361,7 @@ export interface components {
             readonly warnings?: string[];
         };
         MeshLoadBalancingStrategyDeleteSuccessResponse: Record<string, never>;
+        /** @description Successful response */
         MeshMetricItem: {
             /**
              * @description the type of the resource
@@ -4441,6 +4537,7 @@ export interface components {
             readonly warnings?: string[];
         };
         MeshMetricDeleteSuccessResponse: Record<string, never>;
+        /** @description Successful response */
         MeshPassthroughItem: {
             /**
              * @description the type of the resource
@@ -4546,6 +4643,7 @@ export interface components {
             readonly warnings?: string[];
         };
         MeshPassthroughDeleteSuccessResponse: Record<string, never>;
+        /** @description Successful response */
         MeshProxyPatchItem: {
             /**
              * @description the type of the resource
@@ -4872,6 +4970,7 @@ export interface components {
             readonly warnings?: string[];
         };
         MeshProxyPatchDeleteSuccessResponse: Record<string, never>;
+        /** @description Successful response */
         MeshRateLimitItem: {
             /**
              * @description the type of the resource
@@ -5204,6 +5303,7 @@ export interface components {
             readonly warnings?: string[];
         };
         MeshRateLimitDeleteSuccessResponse: Record<string, never>;
+        /** @description Successful response */
         MeshRetryItem: {
             /**
              * @description the type of the resource
@@ -5517,6 +5617,7 @@ export interface components {
             readonly warnings?: string[];
         };
         MeshRetryDeleteSuccessResponse: Record<string, never>;
+        /** @description Successful response */
         MeshTCPRouteItem: {
             /**
              * @description the type of the resource
@@ -5674,6 +5775,7 @@ export interface components {
             readonly warnings?: string[];
         };
         MeshTCPRouteDeleteSuccessResponse: Record<string, never>;
+        /** @description Successful response */
         MeshTimeoutItem: {
             /**
              * @description the type of the resource
@@ -5925,6 +6027,7 @@ export interface components {
             readonly warnings?: string[];
         };
         MeshTimeoutDeleteSuccessResponse: Record<string, never>;
+        /** @description Successful response */
         MeshTLSItem: {
             /**
              * @description the type of the resource
@@ -6090,6 +6193,7 @@ export interface components {
             readonly warnings?: string[];
         };
         MeshTLSDeleteSuccessResponse: Record<string, never>;
+        /** @description Successful response */
         MeshTraceItem: {
             /**
              * @description the type of the resource
@@ -6269,6 +6373,7 @@ export interface components {
             readonly warnings?: string[];
         };
         MeshTraceDeleteSuccessResponse: Record<string, never>;
+        /** @description Successful response */
         MeshTrafficPermissionItem: {
             /**
              * @description the type of the resource
@@ -6452,6 +6557,7 @@ export interface components {
              *     `backend_OUTBOUND_db2` in Datadog. Default: false */
             splitService?: boolean;
         };
+        /** @description Successful response */
         DataplaneItem: {
             labels?: {
                 [key: string]: string;
@@ -7193,6 +7299,7 @@ export interface components {
             /** @description Path to a file that logs will be written to */
             path?: string;
         };
+        /** @description Successful response */
         MeshItem: {
             /** @description Constraints that applies to the mesh and its entities */
             constraints?: {
@@ -7383,6 +7490,7 @@ export interface components {
             /** @description Address of Zipkin collector. */
             url?: string;
         };
+        /** @description Successful response */
         MeshGatewayItem: {
             /** @description The desired configuration of the MeshGateway. */
             conf?: {
@@ -7477,6 +7585,87 @@ export interface components {
              *     balancing traffic on it */
             enabled?: boolean;
         };
+        /** @description Successful response */
+        ZoneEgressItem: {
+            labels?: {
+                [key: string]: string;
+            };
+            name: string;
+            /** @description Networking defines the address and port of the Egress to listen on. */
+            networking?: {
+                /** @description Address on which inbound listener will be exposed */
+                address?: string;
+                /** @description Admin contains configuration related to Envoy Admin API */
+                admin?: {
+                    /** @description Port on which Envoy Admin API server will be listening */
+                    port?: number;
+                };
+                /** @description Port of the inbound interface that will forward requests to the service. */
+                port?: number;
+            };
+            type: string;
+            /** @description Zone field contains Zone name where egress is serving, field will be
+             *     automatically set by Global Kuma CP */
+            zone?: string;
+        };
+        ZoneEgressCreateOrUpdateSuccessResponse: {
+            /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
+             *     Warning messages describe a problem the client making the API request should correct or be aware of.
+             *      */
+            readonly warnings?: string[];
+        };
+        ZoneEgressDeleteSuccessResponse: Record<string, never>;
+        /** @description Successful response */
+        ZoneIngressItem: {
+            /** @description AvailableService contains tags that represent unique subset of
+             *     endpoints */
+            availableServices?: {
+                /** @description instance of external service available from the zone */
+                externalService?: boolean;
+                /** @description number of instances available for given tags */
+                instances?: number;
+                /** @description mesh of the instances available for given tags */
+                mesh?: string;
+                /** @description tags of the service */
+                tags?: {
+                    [key: string]: string;
+                };
+            }[];
+            labels?: {
+                [key: string]: string;
+            };
+            name: string;
+            /** @description Networking defines the address and port of the Ingress to listen on.
+             *     Additionally publicly advertised address and port could be specified. */
+            networking?: {
+                /** @description Address on which inbound listener will be exposed */
+                address?: string;
+                /** @description Admin contains configuration related to Envoy Admin API */
+                admin?: {
+                    /** @description Port on which Envoy Admin API server will be listening */
+                    port?: number;
+                };
+                /** @description AdvertisedAddress defines IP or DNS name on which ZoneIngress is
+                 *     accessible to other Kuma clusters. */
+                advertisedAddress?: string;
+                /** @description AdvertisedPort defines port on which ZoneIngress is accessible to other
+                 *     Kuma clusters. */
+                advertisedPort?: number;
+                /** @description Port of the inbound interface that will forward requests to the service. */
+                port?: number;
+            };
+            type: string;
+            /** @description Zone field contains Zone name where ingress is serving, field will be
+             *     automatically set by Global Kuma CP */
+            zone?: string;
+        };
+        ZoneIngressCreateOrUpdateSuccessResponse: {
+            /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
+             *     Warning messages describe a problem the client making the API request should correct or be aware of.
+             *      */
+            readonly warnings?: string[];
+        };
+        ZoneIngressDeleteSuccessResponse: Record<string, never>;
         HostnameGeneratorItem: {
             /**
              * @description the type of the resource
@@ -8865,6 +9054,54 @@ export interface components {
             content: {
                 "application/json": {
                     items?: components["schemas"]["MeshGatewayItem"][];
+                    /** @description The total number of entities */
+                    total?: number;
+                    /** @description URL to the next page */
+                    next?: string;
+                };
+            };
+        };
+        /** @description Successful response */
+        ZoneEgressItem: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["ZoneEgressItem"];
+            };
+        };
+        /** @description List */
+        ZoneEgressList: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    items?: components["schemas"]["ZoneEgressItem"][];
+                    /** @description The total number of entities */
+                    total?: number;
+                    /** @description URL to the next page */
+                    next?: string;
+                };
+            };
+        };
+        /** @description Successful response */
+        ZoneIngressItem: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["ZoneIngressItem"];
+            };
+        };
+        /** @description List */
+        ZoneIngressList: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    items?: components["schemas"]["ZoneIngressItem"][];
                     /** @description The total number of entities */
                     total?: number;
                     /** @description URL to the next page */
@@ -11555,6 +11792,220 @@ export interface operations {
             200: components["responses"]["MeshGatewayList"];
         };
     };
+    getZoneEgress: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the ZoneEgress */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["ZoneEgressItem"];
+            404: components["responses"]["NotFound"];
+        };
+    };
+    putZoneEgress: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the ZoneEgress */
+                name: string;
+            };
+            cookie?: never;
+        };
+        /** @description Put request */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ZoneEgressItem"];
+            };
+        };
+        responses: {
+            /** @description Updated */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ZoneEgressCreateOrUpdateSuccessResponse"];
+                };
+            };
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ZoneEgressCreateOrUpdateSuccessResponse"];
+                };
+            };
+        };
+    };
+    deleteZoneEgress: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the ZoneEgress */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ZoneEgressDeleteSuccessResponse"];
+                };
+            };
+            404: components["responses"]["NotFound"];
+        };
+    };
+    getZoneEgressList: {
+        parameters: {
+            query?: {
+                /**
+                 * @description offset in the list of entities
+                 * @example 0
+                 */
+                offset?: number;
+                /** @description the number of items per page */
+                size?: number;
+                /**
+                 * @description filter by labels when multiple filters are present, they are ANDed
+                 * @example {
+                 *       "label.k8s.kuma.io/namespace": "my-ns"
+                 *     }
+                 */
+                filter?: {
+                    key?: string;
+                    value?: string;
+                };
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["ZoneEgressList"];
+        };
+    };
+    getZoneIngress: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the ZoneIngress */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["ZoneIngressItem"];
+            404: components["responses"]["NotFound"];
+        };
+    };
+    putZoneIngress: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the ZoneIngress */
+                name: string;
+            };
+            cookie?: never;
+        };
+        /** @description Put request */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ZoneIngressItem"];
+            };
+        };
+        responses: {
+            /** @description Updated */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ZoneIngressCreateOrUpdateSuccessResponse"];
+                };
+            };
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ZoneIngressCreateOrUpdateSuccessResponse"];
+                };
+            };
+        };
+    };
+    deleteZoneIngress: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the ZoneIngress */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ZoneIngressDeleteSuccessResponse"];
+                };
+            };
+            404: components["responses"]["NotFound"];
+        };
+    };
+    getZoneIngressList: {
+        parameters: {
+            query?: {
+                /**
+                 * @description offset in the list of entities
+                 * @example 0
+                 */
+                offset?: number;
+                /** @description the number of items per page */
+                size?: number;
+                /**
+                 * @description filter by labels when multiple filters are present, they are ANDed
+                 * @example {
+                 *       "label.k8s.kuma.io/namespace": "my-ns"
+                 *     }
+                 */
+                filter?: {
+                    key?: string;
+                    value?: string;
+                };
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["ZoneIngressList"];
+        };
+    };
     getHostnameGenerator: {
         parameters: {
             query?: never;
@@ -12240,6 +12691,31 @@ export interface operations {
         requestBody?: never;
         responses: {
             200: components["responses"]["MeshTrustList"];
+        };
+    };
+    getByKri: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description KRI of the resource */
+                kri: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The resource */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DataplaneItem"] | components["schemas"]["MeshItem"] | components["schemas"]["MeshAccessLogItem"] | components["schemas"]["MeshCircuitBreakerItem"] | components["schemas"]["MeshFaultInjectionItem"] | components["schemas"]["MeshGatewayItem"] | components["schemas"]["MeshHTTPRouteItem"] | components["schemas"]["MeshHealthCheckItem"] | components["schemas"]["MeshLoadBalancingStrategyItem"] | components["schemas"]["MeshMetricItem"] | components["schemas"]["MeshPassthroughItem"] | components["schemas"]["MeshProxyPatchItem"] | components["schemas"]["MeshRateLimitItem"] | components["schemas"]["MeshRetryItem"] | components["schemas"]["MeshTCPRouteItem"] | components["schemas"]["MeshTLSItem"] | components["schemas"]["MeshTimeoutItem"] | components["schemas"]["MeshTraceItem"] | components["schemas"]["MeshTrafficPermissionItem"] | components["schemas"]["ZoneEgressItem"] | components["schemas"]["ZoneIngressItem"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            404: components["responses"]["NotFound"];
         };
     };
 }
