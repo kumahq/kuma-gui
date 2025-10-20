@@ -2,6 +2,7 @@ import createClient from 'openapi-fetch'
 
 
 import { Policy, PolicyDataplane, PolicyResourceType } from './data'
+import { Kri } from '../kuma'
 import { DataplanePolicies } from './data/DataplanePolicies'
 import { DataplaneInboundPolicies, DataplaneOutboundPolicies } from './data/DataplaneTrafficPolicies'
 import { defineSources } from '../application/services/data-source'
@@ -45,6 +46,20 @@ export const sources = (api: KumaApi) => {
 
     '/meshes/:mesh/policy-path/:path/policy/:name': async (params) => {
       const { mesh, path, name } = params
+
+      if(Kri.isKriString(name)) {
+        const { name } = params
+        const res = await http.GET('/_kri/{kri}', {
+          params: {
+            path: {
+              kri: name,
+            },
+          },
+        })
+
+        return Policy.fromObject(res.data as GetByKriResponse & { creationTime: string, modificationTime: string, mesh: string })
+      }
+
       const res = await api.getSinglePolicyEntity({ mesh, path, name })
       return Policy.fromObject(res)
     },
@@ -100,19 +115,6 @@ export const sources = (api: KumaApi) => {
         },
       })
       return DataplaneOutboundPolicies.fromCollection(res.data!)
-    },
-
-    '/kri/policy/:kri': async (params) => {
-      const { kri } = params
-      const res = await http.GET('/_kri/{kri}', {
-        params: {
-          path: {
-            kri,
-          },
-        },
-      })
-
-      return Policy.fromObject(res.data as GetByKriResponse & { creationTime: string, modificationTime: string, mesh: string })
     },
   })
 }
