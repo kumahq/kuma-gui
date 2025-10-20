@@ -151,6 +151,25 @@ declare module 'vue' {
   }
 }
 
+/* copy/pasta-ble containers */
+declare const typeSymbol: unique symbol
+type Uri<T = unknown> = { [typeSymbol]: T }
+type TypeOf<T> = T extends Uri<infer UriType> ? UriType : never
+//
+
+/* nano-container */
+const nano = (map = new Map<Uri, unknown>()) => {
+  type Service<T> = () => TypeOf<T>
+  const uri = <T>(str: string): Uri<T> => Symbol.for(str) as symbol & Uri<T>
+  const singleton = <T extends Uri>(uri: T, value: Service<T> | undefined) => () => {
+    if (typeof value !== 'undefined' && !map.has(uri)) {
+      map.set(uri, value())
+    }
+    return map.get(uri) as TypeOf<T>
+  }
+  return { singleton, uri }
+}
+/* */
 const deps = {
   i18n: {
     t: (str: string, _values?: Record<string, string>, _options?: Record<string, unknown>) => str,
@@ -174,6 +193,20 @@ const deps = {
     })
   },
 }
+const { singleton, uri } = nano()
+const tokens = {
+  i18n: uri<typeof deps.i18n>('x.i18n'),
+  protocolHandler: uri<typeof deps.protocolHandler>('x.action.protocolhandler'),
+  syntaxHighlighter: uri<typeof deps.syntaxHighlighter>('x.code-block.syntaxhighlighter'),
+}
+
+export const useI18n = singleton(tokens.i18n, () => deps.i18n)
+export const useProtocolHandler = singleton(tokens.protocolHandler, () => deps.protocolHandler)
+export const useSyntaxHighlighter = singleton(tokens.syntaxHighlighter, () => {
+  const syntax = deps.syntaxHighlighter()
+  return async () => syntax
+})
+
 const plugin: Plugin = {
   install: (app, options: Partial<typeof deps> = {}) => {
     Object.assign(deps, options)
@@ -186,6 +219,3 @@ const plugin: Plugin = {
   },
 }
 export default plugin
-export const useI18n = () => deps.i18n
-export const useProtocolHandler = () => deps.protocolHandler
-export const useSyntaxHighlighter = () => deps.syntaxHighlighter
