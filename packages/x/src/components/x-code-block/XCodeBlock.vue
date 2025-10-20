@@ -20,6 +20,7 @@
       :searchable="isSearchable"
       :show-copy-button="showCopyButton"
       :query="props.query"
+      :uri="props.uri"
       theme="dark"
       @code-block-render="handleCodeBlockRenderEvent"
       @query-change="emit('query-change', $event)"
@@ -46,6 +47,7 @@ import {
 
 const props = withDefaults(defineProps<{
   editable?: boolean
+  uri?: string
   id?: string
   code: string
   language: 'json' | 'yaml' | 'bash'
@@ -57,6 +59,7 @@ const props = withDefaults(defineProps<{
   isRegExpMode?: boolean
 }>(), {
   editable: false,
+  uri: '',
   id: () => `x-code-block-${useId()}`,
   isSearchable: false,
   showCopyButton: true,
