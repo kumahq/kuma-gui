@@ -1,10 +1,6 @@
 <template>
-  <XLayout
-    type="stack"
-  >
-    <template
-      v-if="slots['primary-actions']"
-    >
+  <XLayout type="stack">
+    <template v-if="slots['primary-actions']">
       <XLayout
         type="separated"
         justify="end"
@@ -12,22 +8,25 @@
         <slot name="primary-actions" />
       </XLayout>
     </template>
-    <KCodeBlock
+    <component
+      :is="props.editable ? 'x-read-write-code-block' : 'x-read-only-code-block'"
       :id="id"
       :max-height="props.maxHeight"
       :code="props.code"
-      :language="language"
+      :language="props.language"
       :initial-filter-mode="props.isFilterMode"
       :initial-reg-exp-mode="props.isRegExpMode"
       :processing="processing"
       :searchable="isSearchable"
       :show-copy-button="showCopyButton"
       :query="props.query"
+      :uri="props.uri"
       theme="dark"
       @code-block-render="handleCodeBlockRenderEvent"
       @query-change="emit('query-change', $event)"
       @filter-mode-change="emit('filter-mode-change', $event)"
       @reg-exp-mode-change="emit('reg-exp-mode-change', $event)"
+      @input="emit('input', $event)"
     >
       <template
         v-if="slots['secondary-actions']"
@@ -35,19 +34,20 @@
       >
         <slot name="secondary-actions" />
       </template>
-    </KCodeBlock>
+    </component>
   </XLayout>
 </template>
 
 <script lang="ts" setup>
-import { KCodeBlock } from '@kong/kongponents'
-import { createHighlighterCore } from 'shiki/core'
-import { createJavaScriptRegexEngine } from 'shiki/engine/javascript'
 import { ref, useId } from 'vue'
 
-import type { CodeBlockEventData } from '@kong/kongponents'
+import {
+  useSyntaxHighlighter,
+} from '@kumahq/x'
 
 const props = withDefaults(defineProps<{
+  editable?: boolean
+  uri?: string
   id?: string
   code: string
   language: 'json' | 'yaml' | 'bash'
@@ -58,6 +58,8 @@ const props = withDefaults(defineProps<{
   isFilterMode?: boolean
   isRegExpMode?: boolean
 }>(), {
+  editable: false,
+  uri: '',
   id: () => `x-code-block-${useId()}`,
   isSearchable: false,
   showCopyButton: true,
@@ -72,33 +74,21 @@ const emit = defineEmits<{
   (event: 'query-change', query: string): void
   (event: 'filter-mode-change', isFilterMode: boolean): void
   (event: 'reg-exp-mode-change', isRegExpMode: boolean): void
+  (event: 'input', content: string): void
 }>()
 
-const processing = ref(false)
-const codeHighlighter = new Promise<Awaited<ReturnType<typeof createHighlighterCore>>>((resolve) => {
-  createHighlighterCore({
-    langs: [
-      import('shiki/langs/json.mjs'),
-      import('shiki/langs/yaml.mjs'),
-      import('shiki/langs/bash.mjs'),
-    ],
-    themes: [
-      import('shiki/themes/catppuccin-latte.mjs'),
-      import('shiki/themes/catppuccin-mocha.mjs'),
-    ],
-    // TODO(@schogges): use createJavascriptRawEngine for further optimization of bundle size (requires pre-compiled langs)
-    engine: createJavaScriptRegexEngine(),
-  }).then(resolve)
-})
+const syntax = useSyntaxHighlighter()
 
-async function handleCodeBlockRenderEvent({ codeElement, language, code }: CodeBlockEventData): Promise<void> {
+const processing = ref(false)
+
+async function handleCodeBlockRenderEvent({ codeElement, code }: { codeElement: HTMLElement, code: string }): Promise<void> {
   processing.value = true
   // we can ignore eslint no-unsanitized/property as all code content is stringified and shiki adds safe HTML for highlighting.
   // eslint-disable-next-line no-unsanitized/property
-  codeElement.innerHTML = (await codeHighlighter).codeToHtml(code, {
-    lang: language,
+  codeElement.innerHTML = (await syntax()).codeToHtml(code, {
+    lang: props.language,
     themes: {
-      light: 'catppuccin-latte',
+      light: 'catppuccin-mocha', // both dark for now at least
       dark: 'catppuccin-mocha',
     },
   })
@@ -128,6 +118,7 @@ html.dark,
   top: var(--app-view-content-top, var(--AppHeaderHeight, 0));
   background-color: $kui-color-background-inverse;
 }
+
 :deep(.highlighted-code-block) {
   overflow: hidden !important;
 }

@@ -1704,6 +1704,11 @@ export interface components {
              */
             name: string;
             /**
+             * @description Kuma Resource Identifier (KRI) of the given resource
+             * @example kri_mtp_default_zone-east_kuma-demo_mypolicy1_
+             */
+            readonly kri?: string;
+            /**
              * @description the label of the resource
              * @example {
              *       "k8s.kuma.io/namespace": "kuma-system",
@@ -1916,6 +1921,11 @@ export interface components {
              * @default default
              */
             mesh: string;
+            /**
+             * @description A unique identifier for this resource instance used by internal tooling and integrations. Typically derived from resource attributes and may be used for cross-references or indexing
+             * @example kri_mal_default_zone-east_kuma-demo_mypolicy1_
+             */
+            readonly kri?: string;
             /** @description Name of the Kuma resource */
             name: string;
             /** @description The labels to help identity resources */
@@ -2386,13 +2396,6 @@ export interface components {
              */
             readonly modificationTime?: string;
         };
-        MeshAccessLogCreateOrUpdateSuccessResponse: {
-            /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
-             *     Warning messages describe a problem the client making the API request should correct or be aware of.
-             *      */
-            readonly warnings?: string[];
-        };
-        MeshAccessLogDeleteSuccessResponse: Record<string, never>;
         /** @description Successful response */
         MeshCircuitBreakerItem: {
             /**
@@ -2405,6 +2408,11 @@ export interface components {
              * @default default
              */
             mesh: string;
+            /**
+             * @description A unique identifier for this resource instance used by internal tooling and integrations. Typically derived from resource attributes and may be used for cross-references or indexing
+             * @example kri_mcb_default_zone-east_kuma-demo_mypolicy1_
+             */
+            readonly kri?: string;
             /** @description Name of the Kuma resource */
             name: string;
             /** @description The labels to help identity resources */
@@ -3173,13 +3181,6 @@ export interface components {
              */
             readonly modificationTime?: string;
         };
-        MeshCircuitBreakerCreateOrUpdateSuccessResponse: {
-            /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
-             *     Warning messages describe a problem the client making the API request should correct or be aware of.
-             *      */
-            readonly warnings?: string[];
-        };
-        MeshCircuitBreakerDeleteSuccessResponse: Record<string, never>;
         /** @description Successful response */
         MeshFaultInjectionItem: {
             /**
@@ -3192,6 +3193,11 @@ export interface components {
              * @default default
              */
             mesh: string;
+            /**
+             * @description A unique identifier for this resource instance used by internal tooling and integrations. Typically derived from resource attributes and may be used for cross-references or indexing
+             * @example kri_mfi_default_zone-east_kuma-demo_mypolicy1_
+             */
+            readonly kri?: string;
             /** @description Name of the Kuma resource */
             name: string;
             /** @description The labels to help identity resources */
@@ -3449,13 +3455,6 @@ export interface components {
              */
             readonly modificationTime?: string;
         };
-        MeshFaultInjectionCreateOrUpdateSuccessResponse: {
-            /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
-             *     Warning messages describe a problem the client making the API request should correct or be aware of.
-             *      */
-            readonly warnings?: string[];
-        };
-        MeshFaultInjectionDeleteSuccessResponse: Record<string, never>;
         /** @description Successful response */
         MeshHealthCheckItem: {
             /**
@@ -3468,6 +3467,11 @@ export interface components {
              * @default default
              */
             mesh: string;
+            /**
+             * @description A unique identifier for this resource instance used by internal tooling and integrations. Typically derived from resource attributes and may be used for cross-references or indexing
+             * @example kri_mhc_default_zone-east_kuma-demo_mypolicy1_
+             */
+            readonly kri?: string;
             /** @description Name of the Kuma resource */
             name: string;
             /** @description The labels to help identity resources */
@@ -3675,13 +3679,6 @@ export interface components {
              */
             readonly modificationTime?: string;
         };
-        MeshHealthCheckCreateOrUpdateSuccessResponse: {
-            /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
-             *     Warning messages describe a problem the client making the API request should correct or be aware of.
-             *      */
-            readonly warnings?: string[];
-        };
-        MeshHealthCheckDeleteSuccessResponse: Record<string, never>;
         /** @description Successful response */
         MeshHTTPRouteItem: {
             /**
@@ -3694,6 +3691,11 @@ export interface components {
              * @default default
              */
             mesh: string;
+            /**
+             * @description A unique identifier for this resource instance used by internal tooling and integrations. Typically derived from resource attributes and may be used for cross-references or indexing
+             * @example kri_mhttpr_default_zone-east_kuma-demo_mypolicy1_
+             */
+            readonly kri?: string;
             /** @description Name of the Kuma resource */
             name: string;
             /** @description The labels to help identity resources */
@@ -3995,13 +3997,6 @@ export interface components {
              */
             readonly modificationTime?: string;
         };
-        MeshHTTPRouteCreateOrUpdateSuccessResponse: {
-            /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
-             *     Warning messages describe a problem the client making the API request should correct or be aware of.
-             *      */
-            readonly warnings?: string[];
-        };
-        MeshHTTPRouteDeleteSuccessResponse: Record<string, never>;
         /** @description Successful response */
         MeshLoadBalancingStrategyItem: {
             /**
@@ -4014,6 +4009,11 @@ export interface components {
              * @default default
              */
             mesh: string;
+            /**
+             * @description A unique identifier for this resource instance used by internal tooling and integrations. Typically derived from resource attributes and may be used for cross-references or indexing
+             * @example kri_mlbs_default_zone-east_kuma-demo_mypolicy1_
+             */
+            readonly kri?: string;
             /** @description Name of the Kuma resource */
             name: string;
             /** @description The labels to help identity resources */
@@ -4354,13 +4354,6 @@ export interface components {
              */
             readonly modificationTime?: string;
         };
-        MeshLoadBalancingStrategyCreateOrUpdateSuccessResponse: {
-            /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
-             *     Warning messages describe a problem the client making the API request should correct or be aware of.
-             *      */
-            readonly warnings?: string[];
-        };
-        MeshLoadBalancingStrategyDeleteSuccessResponse: Record<string, never>;
         /** @description Successful response */
         MeshMetricItem: {
             /**
@@ -4373,6 +4366,11 @@ export interface components {
              * @default default
              */
             mesh: string;
+            /**
+             * @description A unique identifier for this resource instance used by internal tooling and integrations. Typically derived from resource attributes and may be used for cross-references or indexing
+             * @example kri_mm_default_zone-east_kuma-demo_mypolicy1_
+             */
+            readonly kri?: string;
             /** @description Name of the Kuma resource */
             name: string;
             /** @description The labels to help identity resources */
@@ -4530,13 +4528,6 @@ export interface components {
              */
             readonly modificationTime?: string;
         };
-        MeshMetricCreateOrUpdateSuccessResponse: {
-            /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
-             *     Warning messages describe a problem the client making the API request should correct or be aware of.
-             *      */
-            readonly warnings?: string[];
-        };
-        MeshMetricDeleteSuccessResponse: Record<string, never>;
         /** @description Successful response */
         MeshPassthroughItem: {
             /**
@@ -4549,6 +4540,11 @@ export interface components {
              * @default default
              */
             mesh: string;
+            /**
+             * @description A unique identifier for this resource instance used by internal tooling and integrations. Typically derived from resource attributes and may be used for cross-references or indexing
+             * @example kri_mp_default_zone-east_kuma-demo_mypolicy1_
+             */
+            readonly kri?: string;
             /** @description Name of the Kuma resource */
             name: string;
             /** @description The labels to help identity resources */
@@ -4636,13 +4632,6 @@ export interface components {
              */
             readonly modificationTime?: string;
         };
-        MeshPassthroughCreateOrUpdateSuccessResponse: {
-            /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
-             *     Warning messages describe a problem the client making the API request should correct or be aware of.
-             *      */
-            readonly warnings?: string[];
-        };
-        MeshPassthroughDeleteSuccessResponse: Record<string, never>;
         /** @description Successful response */
         MeshProxyPatchItem: {
             /**
@@ -4655,6 +4644,11 @@ export interface components {
              * @default default
              */
             mesh: string;
+            /**
+             * @description A unique identifier for this resource instance used by internal tooling and integrations. Typically derived from resource attributes and may be used for cross-references or indexing
+             * @example kri_mpp_default_zone-east_kuma-demo_mypolicy1_
+             */
+            readonly kri?: string;
             /** @description Name of the Kuma resource */
             name: string;
             /** @description The labels to help identity resources */
@@ -4963,13 +4957,6 @@ export interface components {
              */
             readonly modificationTime?: string;
         };
-        MeshProxyPatchCreateOrUpdateSuccessResponse: {
-            /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
-             *     Warning messages describe a problem the client making the API request should correct or be aware of.
-             *      */
-            readonly warnings?: string[];
-        };
-        MeshProxyPatchDeleteSuccessResponse: Record<string, never>;
         /** @description Successful response */
         MeshRateLimitItem: {
             /**
@@ -4982,6 +4969,11 @@ export interface components {
              * @default default
              */
             mesh: string;
+            /**
+             * @description A unique identifier for this resource instance used by internal tooling and integrations. Typically derived from resource attributes and may be used for cross-references or indexing
+             * @example kri_mrl_default_zone-east_kuma-demo_mypolicy1_
+             */
+            readonly kri?: string;
             /** @description Name of the Kuma resource */
             name: string;
             /** @description The labels to help identity resources */
@@ -5296,13 +5288,6 @@ export interface components {
              */
             readonly modificationTime?: string;
         };
-        MeshRateLimitCreateOrUpdateSuccessResponse: {
-            /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
-             *     Warning messages describe a problem the client making the API request should correct or be aware of.
-             *      */
-            readonly warnings?: string[];
-        };
-        MeshRateLimitDeleteSuccessResponse: Record<string, never>;
         /** @description Successful response */
         MeshRetryItem: {
             /**
@@ -5315,6 +5300,11 @@ export interface components {
              * @default default
              */
             mesh: string;
+            /**
+             * @description A unique identifier for this resource instance used by internal tooling and integrations. Typically derived from resource attributes and may be used for cross-references or indexing
+             * @example kri_mr_default_zone-east_kuma-demo_mypolicy1_
+             */
+            readonly kri?: string;
             /** @description Name of the Kuma resource */
             name: string;
             /** @description The labels to help identity resources */
@@ -5610,13 +5600,6 @@ export interface components {
              */
             readonly modificationTime?: string;
         };
-        MeshRetryCreateOrUpdateSuccessResponse: {
-            /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
-             *     Warning messages describe a problem the client making the API request should correct or be aware of.
-             *      */
-            readonly warnings?: string[];
-        };
-        MeshRetryDeleteSuccessResponse: Record<string, never>;
         /** @description Successful response */
         MeshTCPRouteItem: {
             /**
@@ -5629,6 +5612,11 @@ export interface components {
              * @default default
              */
             mesh: string;
+            /**
+             * @description A unique identifier for this resource instance used by internal tooling and integrations. Typically derived from resource attributes and may be used for cross-references or indexing
+             * @example kri_mtcpr_default_zone-east_kuma-demo_mypolicy1_
+             */
+            readonly kri?: string;
             /** @description Name of the Kuma resource */
             name: string;
             /** @description The labels to help identity resources */
@@ -5768,13 +5756,6 @@ export interface components {
              */
             readonly modificationTime?: string;
         };
-        MeshTCPRouteCreateOrUpdateSuccessResponse: {
-            /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
-             *     Warning messages describe a problem the client making the API request should correct or be aware of.
-             *      */
-            readonly warnings?: string[];
-        };
-        MeshTCPRouteDeleteSuccessResponse: Record<string, never>;
         /** @description Successful response */
         MeshTimeoutItem: {
             /**
@@ -5787,6 +5768,11 @@ export interface components {
              * @default default
              */
             mesh: string;
+            /**
+             * @description A unique identifier for this resource instance used by internal tooling and integrations. Typically derived from resource attributes and may be used for cross-references or indexing
+             * @example kri_mt_default_zone-east_kuma-demo_mypolicy1_
+             */
+            readonly kri?: string;
             /** @description Name of the Kuma resource */
             name: string;
             /** @description The labels to help identity resources */
@@ -6020,13 +6006,6 @@ export interface components {
              */
             readonly modificationTime?: string;
         };
-        MeshTimeoutCreateOrUpdateSuccessResponse: {
-            /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
-             *     Warning messages describe a problem the client making the API request should correct or be aware of.
-             *      */
-            readonly warnings?: string[];
-        };
-        MeshTimeoutDeleteSuccessResponse: Record<string, never>;
         /** @description Successful response */
         MeshTLSItem: {
             /**
@@ -6039,6 +6018,11 @@ export interface components {
              * @default default
              */
             mesh: string;
+            /**
+             * @description A unique identifier for this resource instance used by internal tooling and integrations. Typically derived from resource attributes and may be used for cross-references or indexing
+             * @example kri_mtls_default_zone-east_kuma-demo_mypolicy1_
+             */
+            readonly kri?: string;
             /** @description Name of the Kuma resource */
             name: string;
             /** @description The labels to help identity resources */
@@ -6186,13 +6170,6 @@ export interface components {
              */
             readonly modificationTime?: string;
         };
-        MeshTLSCreateOrUpdateSuccessResponse: {
-            /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
-             *     Warning messages describe a problem the client making the API request should correct or be aware of.
-             *      */
-            readonly warnings?: string[];
-        };
-        MeshTLSDeleteSuccessResponse: Record<string, never>;
         /** @description Successful response */
         MeshTraceItem: {
             /**
@@ -6205,6 +6182,11 @@ export interface components {
              * @default default
              */
             mesh: string;
+            /**
+             * @description A unique identifier for this resource instance used by internal tooling and integrations. Typically derived from resource attributes and may be used for cross-references or indexing
+             * @example kri_mtr_default_zone-east_kuma-demo_mypolicy1_
+             */
+            readonly kri?: string;
             /** @description Name of the Kuma resource */
             name: string;
             /** @description The labels to help identity resources */
@@ -6366,13 +6348,6 @@ export interface components {
              */
             readonly modificationTime?: string;
         };
-        MeshTraceCreateOrUpdateSuccessResponse: {
-            /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
-             *     Warning messages describe a problem the client making the API request should correct or be aware of.
-             *      */
-            readonly warnings?: string[];
-        };
-        MeshTraceDeleteSuccessResponse: Record<string, never>;
         /** @description Successful response */
         MeshTrafficPermissionItem: {
             /**
@@ -6385,6 +6360,11 @@ export interface components {
              * @default default
              */
             mesh: string;
+            /**
+             * @description A unique identifier for this resource instance used by internal tooling and integrations. Typically derived from resource attributes and may be used for cross-references or indexing
+             * @example kri_mtp_default_zone-east_kuma-demo_mypolicy1_
+             */
+            readonly kri?: string;
             /** @description Name of the Kuma resource */
             name: string;
             /** @description The labels to help identity resources */
@@ -6531,13 +6511,6 @@ export interface components {
              */
             readonly modificationTime?: string;
         };
-        MeshTrafficPermissionCreateOrUpdateSuccessResponse: {
-            /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
-             *     Warning messages describe a problem the client making the API request should correct or be aware of.
-             *      */
-            readonly warnings?: string[];
-        };
-        MeshTrafficPermissionDeleteSuccessResponse: Record<string, never>;
         BuiltinCertificateAuthorityConfig: {
             caCert?: {
                 expiration?: string;
@@ -6829,13 +6802,6 @@ export interface components {
             };
             type: string;
         };
-        DataplaneCreateOrUpdateSuccessResponse: {
-            /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
-             *     Warning messages describe a problem the client making the API request should correct or be aware of.
-             *      */
-            readonly warnings?: string[];
-        };
-        DataplaneDeleteSuccessResponse: Record<string, never>;
         /** @description PrometheusMetricsBackendConfig defines configuration of Prometheus backend */
         PrometheusMetricsBackendConfig: {
             /** @description Map with the configuration of applications which metrics are going to be
@@ -7460,13 +7426,6 @@ export interface components {
             creationTime?: string;
             modificationTime?: string;
         };
-        MeshCreateOrUpdateSuccessResponse: {
-            /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
-             *     Warning messages describe a problem the client making the API request should correct or be aware of.
-             *      */
-            readonly warnings?: string[];
-        };
-        MeshDeleteSuccessResponse: Record<string, never>;
         /** @description TcpLoggingBackendConfig defines configuration for TCP based access logs */
         TcpLoggingBackendConfig: {
             /** @description Address to TCP service that will receive logs */
@@ -7572,13 +7531,6 @@ export interface components {
             };
             type: string;
         };
-        MeshGatewayCreateOrUpdateSuccessResponse: {
-            /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
-             *     Warning messages describe a problem the client making the API request should correct or be aware of.
-             *      */
-            readonly warnings?: string[];
-        };
-        MeshGatewayDeleteSuccessResponse: Record<string, never>;
         /** @description Zone defines the Zone configuration used at the Global Control Plane within a distributed deployment */
         Zone: {
             /** @description enable allows to turn the zone on/off and exclude the whole zone from
@@ -7608,13 +7560,6 @@ export interface components {
              *     automatically set by Global Kuma CP */
             zone?: string;
         };
-        ZoneEgressCreateOrUpdateSuccessResponse: {
-            /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
-             *     Warning messages describe a problem the client making the API request should correct or be aware of.
-             *      */
-            readonly warnings?: string[];
-        };
-        ZoneEgressDeleteSuccessResponse: Record<string, never>;
         /** @description Successful response */
         ZoneIngressItem: {
             /** @description AvailableService contains tags that represent unique subset of
@@ -7659,19 +7604,17 @@ export interface components {
              *     automatically set by Global Kuma CP */
             zone?: string;
         };
-        ZoneIngressCreateOrUpdateSuccessResponse: {
-            /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
-             *     Warning messages describe a problem the client making the API request should correct or be aware of.
-             *      */
-            readonly warnings?: string[];
-        };
-        ZoneIngressDeleteSuccessResponse: Record<string, never>;
         HostnameGeneratorItem: {
             /**
              * @description the type of the resource
              * @enum {string}
              */
             type: "HostnameGenerator";
+            /**
+             * @description A unique identifier for this resource instance used by internal tooling and integrations. Typically derived from resource attributes and may be used for cross-references or indexing
+             * @example kri_hg___kuma-system_myresource1_
+             */
+            readonly kri?: string;
             /** @description Name of the Kuma resource */
             name: string;
             /** @description The labels to help identity resources */
@@ -7719,13 +7662,6 @@ export interface components {
              */
             readonly modificationTime?: string;
         };
-        HostnameGeneratorCreateOrUpdateSuccessResponse: {
-            /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
-             *     Warning messages describe a problem the client making the API request should correct or be aware of.
-             *      */
-            readonly warnings?: string[];
-        };
-        HostnameGeneratorDeleteSuccessResponse: Record<string, never>;
         MeshExternalServiceItem: {
             /**
              * @description the type of the resource
@@ -7737,6 +7673,11 @@ export interface components {
              * @default default
              */
             mesh: string;
+            /**
+             * @description A unique identifier for this resource instance used by internal tooling and integrations. Typically derived from resource attributes and may be used for cross-references or indexing
+             * @example kri_extsvc_default_zone-east_kuma-system_myresource1_
+             */
+            readonly kri?: string;
             /** @description Name of the Kuma resource */
             name: string;
             /** @description The labels to help identity resources */
@@ -7926,13 +7867,6 @@ export interface components {
                 };
             };
         };
-        MeshExternalServiceCreateOrUpdateSuccessResponse: {
-            /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
-             *     Warning messages describe a problem the client making the API request should correct or be aware of.
-             *      */
-            readonly warnings?: string[];
-        };
-        MeshExternalServiceDeleteSuccessResponse: Record<string, never>;
         MeshIdentityItem: {
             /**
              * @description the type of the resource
@@ -7944,6 +7878,11 @@ export interface components {
              * @default default
              */
             mesh: string;
+            /**
+             * @description A unique identifier for this resource instance used by internal tooling and integrations. Typically derived from resource attributes and may be used for cross-references or indexing
+             * @example kri_mid_default_zone-east_kuma-system_myresource1_
+             */
+            readonly kri?: string;
             /** @description Name of the Kuma resource */
             name: string;
             /** @description The labels to help identity resources */
@@ -8076,13 +8015,6 @@ export interface components {
                 }[];
             };
         };
-        MeshIdentityCreateOrUpdateSuccessResponse: {
-            /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
-             *     Warning messages describe a problem the client making the API request should correct or be aware of.
-             *      */
-            readonly warnings?: string[];
-        };
-        MeshIdentityDeleteSuccessResponse: Record<string, never>;
         MeshMultiZoneServiceItem: {
             /**
              * @description the type of the resource
@@ -8094,6 +8026,11 @@ export interface components {
              * @default default
              */
             mesh: string;
+            /**
+             * @description A unique identifier for this resource instance used by internal tooling and integrations. Typically derived from resource attributes and may be used for cross-references or indexing
+             * @example kri_mzsvc_default_zone-east_kuma-demo_myresource1_
+             */
+            readonly kri?: string;
             /** @description Name of the Kuma resource */
             name: string;
             /** @description The labels to help identity resources */
@@ -8184,13 +8121,6 @@ export interface components {
                 }[];
             };
         };
-        MeshMultiZoneServiceCreateOrUpdateSuccessResponse: {
-            /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
-             *     Warning messages describe a problem the client making the API request should correct or be aware of.
-             *      */
-            readonly warnings?: string[];
-        };
-        MeshMultiZoneServiceDeleteSuccessResponse: Record<string, never>;
         MeshServiceItem: {
             /**
              * @description the type of the resource
@@ -8202,6 +8132,11 @@ export interface components {
              * @default default
              */
             mesh: string;
+            /**
+             * @description A unique identifier for this resource instance used by internal tooling and integrations. Typically derived from resource attributes and may be used for cross-references or indexing
+             * @example kri_msvc_default_zone-east_kuma-demo_myresource1_
+             */
+            readonly kri?: string;
             /** @description Name of the Kuma resource */
             name: string;
             /** @description The labels to help identity resources */
@@ -8305,13 +8240,6 @@ export interface components {
                 }[];
             };
         };
-        MeshServiceCreateOrUpdateSuccessResponse: {
-            /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
-             *     Warning messages describe a problem the client making the API request should correct or be aware of.
-             *      */
-            readonly warnings?: string[];
-        };
-        MeshServiceDeleteSuccessResponse: Record<string, never>;
         MeshTrustItem: {
             /**
              * @description the type of the resource
@@ -8323,6 +8251,11 @@ export interface components {
              * @default default
              */
             mesh: string;
+            /**
+             * @description A unique identifier for this resource instance used by internal tooling and integrations. Typically derived from resource attributes and may be used for cross-references or indexing
+             * @example kri_mtrust_default_zone-east_kuma-system_myresource1_
+             */
+            readonly kri?: string;
             /** @description Name of the Kuma resource */
             name: string;
             /** @description The labels to help identity resources */
@@ -8366,13 +8299,6 @@ export interface components {
              */
             readonly modificationTime?: string;
         };
-        MeshTrustCreateOrUpdateSuccessResponse: {
-            /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
-             *     Warning messages describe a problem the client making the API request should correct or be aware of.
-             *      */
-            readonly warnings?: string[];
-        };
-        MeshTrustDeleteSuccessResponse: Record<string, never>;
         ControlPlaneConfig: unknown;
         MeshInsight: components["schemas"]["Entity"] & {
             /** @enum {string} */
@@ -8607,6 +8533,29 @@ export interface components {
             };
         };
         /** @description Successful response */
+        MeshAccessLogCreateOrUpdateSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
+                     *     Warning messages describe a problem the client making the API request should correct or be aware of.
+                     *      */
+                    readonly warnings?: string[];
+                };
+            };
+        };
+        /** @description Successful response */
+        MeshAccessLogDeleteSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": Record<string, never>;
+            };
+        };
+        /** @description Successful response */
         MeshCircuitBreakerItem: {
             headers: {
                 [name: string]: unknown;
@@ -8628,6 +8577,29 @@ export interface components {
                     /** @description URL to the next page */
                     next?: string;
                 };
+            };
+        };
+        /** @description Successful response */
+        MeshCircuitBreakerCreateOrUpdateSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
+                     *     Warning messages describe a problem the client making the API request should correct or be aware of.
+                     *      */
+                    readonly warnings?: string[];
+                };
+            };
+        };
+        /** @description Successful response */
+        MeshCircuitBreakerDeleteSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": Record<string, never>;
             };
         };
         /** @description Successful response */
@@ -8655,6 +8627,29 @@ export interface components {
             };
         };
         /** @description Successful response */
+        MeshFaultInjectionCreateOrUpdateSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
+                     *     Warning messages describe a problem the client making the API request should correct or be aware of.
+                     *      */
+                    readonly warnings?: string[];
+                };
+            };
+        };
+        /** @description Successful response */
+        MeshFaultInjectionDeleteSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": Record<string, never>;
+            };
+        };
+        /** @description Successful response */
         MeshHealthCheckItem: {
             headers: {
                 [name: string]: unknown;
@@ -8676,6 +8671,29 @@ export interface components {
                     /** @description URL to the next page */
                     next?: string;
                 };
+            };
+        };
+        /** @description Successful response */
+        MeshHealthCheckCreateOrUpdateSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
+                     *     Warning messages describe a problem the client making the API request should correct or be aware of.
+                     *      */
+                    readonly warnings?: string[];
+                };
+            };
+        };
+        /** @description Successful response */
+        MeshHealthCheckDeleteSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": Record<string, never>;
             };
         };
         /** @description Successful response */
@@ -8703,6 +8721,29 @@ export interface components {
             };
         };
         /** @description Successful response */
+        MeshHTTPRouteCreateOrUpdateSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
+                     *     Warning messages describe a problem the client making the API request should correct or be aware of.
+                     *      */
+                    readonly warnings?: string[];
+                };
+            };
+        };
+        /** @description Successful response */
+        MeshHTTPRouteDeleteSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": Record<string, never>;
+            };
+        };
+        /** @description Successful response */
         MeshLoadBalancingStrategyItem: {
             headers: {
                 [name: string]: unknown;
@@ -8724,6 +8765,29 @@ export interface components {
                     /** @description URL to the next page */
                     next?: string;
                 };
+            };
+        };
+        /** @description Successful response */
+        MeshLoadBalancingStrategyCreateOrUpdateSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
+                     *     Warning messages describe a problem the client making the API request should correct or be aware of.
+                     *      */
+                    readonly warnings?: string[];
+                };
+            };
+        };
+        /** @description Successful response */
+        MeshLoadBalancingStrategyDeleteSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": Record<string, never>;
             };
         };
         /** @description Successful response */
@@ -8751,6 +8815,29 @@ export interface components {
             };
         };
         /** @description Successful response */
+        MeshMetricCreateOrUpdateSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
+                     *     Warning messages describe a problem the client making the API request should correct or be aware of.
+                     *      */
+                    readonly warnings?: string[];
+                };
+            };
+        };
+        /** @description Successful response */
+        MeshMetricDeleteSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": Record<string, never>;
+            };
+        };
+        /** @description Successful response */
         MeshPassthroughItem: {
             headers: {
                 [name: string]: unknown;
@@ -8772,6 +8859,29 @@ export interface components {
                     /** @description URL to the next page */
                     next?: string;
                 };
+            };
+        };
+        /** @description Successful response */
+        MeshPassthroughCreateOrUpdateSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
+                     *     Warning messages describe a problem the client making the API request should correct or be aware of.
+                     *      */
+                    readonly warnings?: string[];
+                };
+            };
+        };
+        /** @description Successful response */
+        MeshPassthroughDeleteSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": Record<string, never>;
             };
         };
         /** @description Successful response */
@@ -8799,6 +8909,29 @@ export interface components {
             };
         };
         /** @description Successful response */
+        MeshProxyPatchCreateOrUpdateSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
+                     *     Warning messages describe a problem the client making the API request should correct or be aware of.
+                     *      */
+                    readonly warnings?: string[];
+                };
+            };
+        };
+        /** @description Successful response */
+        MeshProxyPatchDeleteSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": Record<string, never>;
+            };
+        };
+        /** @description Successful response */
         MeshRateLimitItem: {
             headers: {
                 [name: string]: unknown;
@@ -8820,6 +8953,29 @@ export interface components {
                     /** @description URL to the next page */
                     next?: string;
                 };
+            };
+        };
+        /** @description Successful response */
+        MeshRateLimitCreateOrUpdateSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
+                     *     Warning messages describe a problem the client making the API request should correct or be aware of.
+                     *      */
+                    readonly warnings?: string[];
+                };
+            };
+        };
+        /** @description Successful response */
+        MeshRateLimitDeleteSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": Record<string, never>;
             };
         };
         /** @description Successful response */
@@ -8847,6 +9003,29 @@ export interface components {
             };
         };
         /** @description Successful response */
+        MeshRetryCreateOrUpdateSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
+                     *     Warning messages describe a problem the client making the API request should correct or be aware of.
+                     *      */
+                    readonly warnings?: string[];
+                };
+            };
+        };
+        /** @description Successful response */
+        MeshRetryDeleteSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": Record<string, never>;
+            };
+        };
+        /** @description Successful response */
         MeshTCPRouteItem: {
             headers: {
                 [name: string]: unknown;
@@ -8868,6 +9047,29 @@ export interface components {
                     /** @description URL to the next page */
                     next?: string;
                 };
+            };
+        };
+        /** @description Successful response */
+        MeshTCPRouteCreateOrUpdateSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
+                     *     Warning messages describe a problem the client making the API request should correct or be aware of.
+                     *      */
+                    readonly warnings?: string[];
+                };
+            };
+        };
+        /** @description Successful response */
+        MeshTCPRouteDeleteSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": Record<string, never>;
             };
         };
         /** @description Successful response */
@@ -8895,6 +9097,29 @@ export interface components {
             };
         };
         /** @description Successful response */
+        MeshTimeoutCreateOrUpdateSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
+                     *     Warning messages describe a problem the client making the API request should correct or be aware of.
+                     *      */
+                    readonly warnings?: string[];
+                };
+            };
+        };
+        /** @description Successful response */
+        MeshTimeoutDeleteSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": Record<string, never>;
+            };
+        };
+        /** @description Successful response */
         MeshTLSItem: {
             headers: {
                 [name: string]: unknown;
@@ -8916,6 +9141,29 @@ export interface components {
                     /** @description URL to the next page */
                     next?: string;
                 };
+            };
+        };
+        /** @description Successful response */
+        MeshTLSCreateOrUpdateSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
+                     *     Warning messages describe a problem the client making the API request should correct or be aware of.
+                     *      */
+                    readonly warnings?: string[];
+                };
+            };
+        };
+        /** @description Successful response */
+        MeshTLSDeleteSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": Record<string, never>;
             };
         };
         /** @description Successful response */
@@ -8943,6 +9191,29 @@ export interface components {
             };
         };
         /** @description Successful response */
+        MeshTraceCreateOrUpdateSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
+                     *     Warning messages describe a problem the client making the API request should correct or be aware of.
+                     *      */
+                    readonly warnings?: string[];
+                };
+            };
+        };
+        /** @description Successful response */
+        MeshTraceDeleteSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": Record<string, never>;
+            };
+        };
+        /** @description Successful response */
         MeshTrafficPermissionItem: {
             headers: {
                 [name: string]: unknown;
@@ -8967,6 +9238,29 @@ export interface components {
             };
         };
         /** @description Successful response */
+        MeshTrafficPermissionCreateOrUpdateSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
+                     *     Warning messages describe a problem the client making the API request should correct or be aware of.
+                     *      */
+                    readonly warnings?: string[];
+                };
+            };
+        };
+        /** @description Successful response */
+        MeshTrafficPermissionDeleteSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": Record<string, never>;
+            };
+        };
+        /** @description Successful response */
         DataplaneItem: {
             headers: {
                 [name: string]: unknown;
@@ -8988,6 +9282,29 @@ export interface components {
                     /** @description URL to the next page */
                     next?: string;
                 };
+            };
+        };
+        /** @description Successful response */
+        DataplaneCreateOrUpdateSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
+                     *     Warning messages describe a problem the client making the API request should correct or be aware of.
+                     *      */
+                    readonly warnings?: string[];
+                };
+            };
+        };
+        /** @description Successful response */
+        DataplaneDeleteSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": Record<string, never>;
             };
         };
         /** @description A response containing the overview of a dataplane. */
@@ -9038,6 +9355,29 @@ export interface components {
             };
         };
         /** @description Successful response */
+        MeshCreateOrUpdateSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
+                     *     Warning messages describe a problem the client making the API request should correct or be aware of.
+                     *      */
+                    readonly warnings?: string[];
+                };
+            };
+        };
+        /** @description Successful response */
+        MeshDeleteSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": Record<string, never>;
+            };
+        };
+        /** @description Successful response */
         MeshGatewayItem: {
             headers: {
                 [name: string]: unknown;
@@ -9059,6 +9399,29 @@ export interface components {
                     /** @description URL to the next page */
                     next?: string;
                 };
+            };
+        };
+        /** @description Successful response */
+        MeshGatewayCreateOrUpdateSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
+                     *     Warning messages describe a problem the client making the API request should correct or be aware of.
+                     *      */
+                    readonly warnings?: string[];
+                };
+            };
+        };
+        /** @description Successful response */
+        MeshGatewayDeleteSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": Record<string, never>;
             };
         };
         /** @description Successful response */
@@ -9086,6 +9449,29 @@ export interface components {
             };
         };
         /** @description Successful response */
+        ZoneEgressCreateOrUpdateSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
+                     *     Warning messages describe a problem the client making the API request should correct or be aware of.
+                     *      */
+                    readonly warnings?: string[];
+                };
+            };
+        };
+        /** @description Successful response */
+        ZoneEgressDeleteSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": Record<string, never>;
+            };
+        };
+        /** @description Successful response */
         ZoneIngressItem: {
             headers: {
                 [name: string]: unknown;
@@ -9107,6 +9493,29 @@ export interface components {
                     /** @description URL to the next page */
                     next?: string;
                 };
+            };
+        };
+        /** @description Successful response */
+        ZoneIngressCreateOrUpdateSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
+                     *     Warning messages describe a problem the client making the API request should correct or be aware of.
+                     *      */
+                    readonly warnings?: string[];
+                };
+            };
+        };
+        /** @description Successful response */
+        ZoneIngressDeleteSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": Record<string, never>;
             };
         };
         /** @description Successful response */
@@ -9134,6 +9543,29 @@ export interface components {
             };
         };
         /** @description Successful response */
+        HostnameGeneratorCreateOrUpdateSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
+                     *     Warning messages describe a problem the client making the API request should correct or be aware of.
+                     *      */
+                    readonly warnings?: string[];
+                };
+            };
+        };
+        /** @description Successful response */
+        HostnameGeneratorDeleteSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": Record<string, never>;
+            };
+        };
+        /** @description Successful response */
         MeshExternalServiceItem: {
             headers: {
                 [name: string]: unknown;
@@ -9155,6 +9587,29 @@ export interface components {
                     /** @description URL to the next page */
                     next?: string;
                 };
+            };
+        };
+        /** @description Successful response */
+        MeshExternalServiceCreateOrUpdateSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
+                     *     Warning messages describe a problem the client making the API request should correct or be aware of.
+                     *      */
+                    readonly warnings?: string[];
+                };
+            };
+        };
+        /** @description Successful response */
+        MeshExternalServiceDeleteSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": Record<string, never>;
             };
         };
         /** @description Successful response */
@@ -9182,6 +9637,29 @@ export interface components {
             };
         };
         /** @description Successful response */
+        MeshIdentityCreateOrUpdateSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
+                     *     Warning messages describe a problem the client making the API request should correct or be aware of.
+                     *      */
+                    readonly warnings?: string[];
+                };
+            };
+        };
+        /** @description Successful response */
+        MeshIdentityDeleteSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": Record<string, never>;
+            };
+        };
+        /** @description Successful response */
         MeshMultiZoneServiceItem: {
             headers: {
                 [name: string]: unknown;
@@ -9203,6 +9681,29 @@ export interface components {
                     /** @description URL to the next page */
                     next?: string;
                 };
+            };
+        };
+        /** @description Successful response */
+        MeshMultiZoneServiceCreateOrUpdateSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
+                     *     Warning messages describe a problem the client making the API request should correct or be aware of.
+                     *      */
+                    readonly warnings?: string[];
+                };
+            };
+        };
+        /** @description Successful response */
+        MeshMultiZoneServiceDeleteSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": Record<string, never>;
             };
         };
         /** @description Successful response */
@@ -9230,6 +9731,29 @@ export interface components {
             };
         };
         /** @description Successful response */
+        MeshServiceCreateOrUpdateSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
+                     *     Warning messages describe a problem the client making the API request should correct or be aware of.
+                     *      */
+                    readonly warnings?: string[];
+                };
+            };
+        };
+        /** @description Successful response */
+        MeshServiceDeleteSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": Record<string, never>;
+            };
+        };
+        /** @description Successful response */
         MeshTrustItem: {
             headers: {
                 [name: string]: unknown;
@@ -9251,6 +9775,29 @@ export interface components {
                     /** @description URL to the next page */
                     next?: string;
                 };
+            };
+        };
+        /** @description Successful response */
+        MeshTrustCreateOrUpdateSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
+                     *     Warning messages describe a problem the client making the API request should correct or be aware of.
+                     *      */
+                    readonly warnings?: string[];
+                };
+            };
+        };
+        /** @description Successful response */
+        MeshTrustDeleteSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": Record<string, never>;
             };
         };
     };
@@ -9598,24 +10145,8 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Updated */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshAccessLogCreateOrUpdateSuccessResponse"];
-                };
-            };
-            /** @description Created */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshAccessLogCreateOrUpdateSuccessResponse"];
-                };
-            };
+            200: components["responses"]["MeshAccessLogCreateOrUpdateSuccessResponse"];
+            201: components["responses"]["MeshAccessLogCreateOrUpdateSuccessResponse"];
         };
     };
     deleteMeshAccessLog: {
@@ -9632,15 +10163,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshAccessLogDeleteSuccessResponse"];
-                };
-            };
+            200: components["responses"]["MeshAccessLogDeleteSuccessResponse"];
             404: components["responses"]["NotFound"];
         };
     };
@@ -9714,24 +10237,8 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Updated */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshCircuitBreakerCreateOrUpdateSuccessResponse"];
-                };
-            };
-            /** @description Created */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshCircuitBreakerCreateOrUpdateSuccessResponse"];
-                };
-            };
+            200: components["responses"]["MeshCircuitBreakerCreateOrUpdateSuccessResponse"];
+            201: components["responses"]["MeshCircuitBreakerCreateOrUpdateSuccessResponse"];
         };
     };
     deleteMeshCircuitBreaker: {
@@ -9748,15 +10255,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshCircuitBreakerDeleteSuccessResponse"];
-                };
-            };
+            200: components["responses"]["MeshCircuitBreakerDeleteSuccessResponse"];
             404: components["responses"]["NotFound"];
         };
     };
@@ -9830,24 +10329,8 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Updated */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshFaultInjectionCreateOrUpdateSuccessResponse"];
-                };
-            };
-            /** @description Created */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshFaultInjectionCreateOrUpdateSuccessResponse"];
-                };
-            };
+            200: components["responses"]["MeshFaultInjectionCreateOrUpdateSuccessResponse"];
+            201: components["responses"]["MeshFaultInjectionCreateOrUpdateSuccessResponse"];
         };
     };
     deleteMeshFaultInjection: {
@@ -9864,15 +10347,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshFaultInjectionDeleteSuccessResponse"];
-                };
-            };
+            200: components["responses"]["MeshFaultInjectionDeleteSuccessResponse"];
             404: components["responses"]["NotFound"];
         };
     };
@@ -9946,24 +10421,8 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Updated */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshHealthCheckCreateOrUpdateSuccessResponse"];
-                };
-            };
-            /** @description Created */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshHealthCheckCreateOrUpdateSuccessResponse"];
-                };
-            };
+            200: components["responses"]["MeshHealthCheckCreateOrUpdateSuccessResponse"];
+            201: components["responses"]["MeshHealthCheckCreateOrUpdateSuccessResponse"];
         };
     };
     deleteMeshHealthCheck: {
@@ -9980,15 +10439,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshHealthCheckDeleteSuccessResponse"];
-                };
-            };
+            200: components["responses"]["MeshHealthCheckDeleteSuccessResponse"];
             404: components["responses"]["NotFound"];
         };
     };
@@ -10062,24 +10513,8 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Updated */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshHTTPRouteCreateOrUpdateSuccessResponse"];
-                };
-            };
-            /** @description Created */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshHTTPRouteCreateOrUpdateSuccessResponse"];
-                };
-            };
+            200: components["responses"]["MeshHTTPRouteCreateOrUpdateSuccessResponse"];
+            201: components["responses"]["MeshHTTPRouteCreateOrUpdateSuccessResponse"];
         };
     };
     deleteMeshHTTPRoute: {
@@ -10096,15 +10531,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshHTTPRouteDeleteSuccessResponse"];
-                };
-            };
+            200: components["responses"]["MeshHTTPRouteDeleteSuccessResponse"];
             404: components["responses"]["NotFound"];
         };
     };
@@ -10178,24 +10605,8 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Updated */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshLoadBalancingStrategyCreateOrUpdateSuccessResponse"];
-                };
-            };
-            /** @description Created */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshLoadBalancingStrategyCreateOrUpdateSuccessResponse"];
-                };
-            };
+            200: components["responses"]["MeshLoadBalancingStrategyCreateOrUpdateSuccessResponse"];
+            201: components["responses"]["MeshLoadBalancingStrategyCreateOrUpdateSuccessResponse"];
         };
     };
     deleteMeshLoadBalancingStrategy: {
@@ -10212,15 +10623,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshLoadBalancingStrategyDeleteSuccessResponse"];
-                };
-            };
+            200: components["responses"]["MeshLoadBalancingStrategyDeleteSuccessResponse"];
             404: components["responses"]["NotFound"];
         };
     };
@@ -10294,24 +10697,8 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Updated */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshMetricCreateOrUpdateSuccessResponse"];
-                };
-            };
-            /** @description Created */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshMetricCreateOrUpdateSuccessResponse"];
-                };
-            };
+            200: components["responses"]["MeshMetricCreateOrUpdateSuccessResponse"];
+            201: components["responses"]["MeshMetricCreateOrUpdateSuccessResponse"];
         };
     };
     deleteMeshMetric: {
@@ -10328,15 +10715,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshMetricDeleteSuccessResponse"];
-                };
-            };
+            200: components["responses"]["MeshMetricDeleteSuccessResponse"];
             404: components["responses"]["NotFound"];
         };
     };
@@ -10410,24 +10789,8 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Updated */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshPassthroughCreateOrUpdateSuccessResponse"];
-                };
-            };
-            /** @description Created */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshPassthroughCreateOrUpdateSuccessResponse"];
-                };
-            };
+            200: components["responses"]["MeshPassthroughCreateOrUpdateSuccessResponse"];
+            201: components["responses"]["MeshPassthroughCreateOrUpdateSuccessResponse"];
         };
     };
     deleteMeshPassthrough: {
@@ -10444,15 +10807,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshPassthroughDeleteSuccessResponse"];
-                };
-            };
+            200: components["responses"]["MeshPassthroughDeleteSuccessResponse"];
             404: components["responses"]["NotFound"];
         };
     };
@@ -10526,24 +10881,8 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Updated */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshProxyPatchCreateOrUpdateSuccessResponse"];
-                };
-            };
-            /** @description Created */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshProxyPatchCreateOrUpdateSuccessResponse"];
-                };
-            };
+            200: components["responses"]["MeshProxyPatchCreateOrUpdateSuccessResponse"];
+            201: components["responses"]["MeshProxyPatchCreateOrUpdateSuccessResponse"];
         };
     };
     deleteMeshProxyPatch: {
@@ -10560,15 +10899,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshProxyPatchDeleteSuccessResponse"];
-                };
-            };
+            200: components["responses"]["MeshProxyPatchDeleteSuccessResponse"];
             404: components["responses"]["NotFound"];
         };
     };
@@ -10642,24 +10973,8 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Updated */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshRateLimitCreateOrUpdateSuccessResponse"];
-                };
-            };
-            /** @description Created */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshRateLimitCreateOrUpdateSuccessResponse"];
-                };
-            };
+            200: components["responses"]["MeshRateLimitCreateOrUpdateSuccessResponse"];
+            201: components["responses"]["MeshRateLimitCreateOrUpdateSuccessResponse"];
         };
     };
     deleteMeshRateLimit: {
@@ -10676,15 +10991,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshRateLimitDeleteSuccessResponse"];
-                };
-            };
+            200: components["responses"]["MeshRateLimitDeleteSuccessResponse"];
             404: components["responses"]["NotFound"];
         };
     };
@@ -10758,24 +11065,8 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Updated */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshRetryCreateOrUpdateSuccessResponse"];
-                };
-            };
-            /** @description Created */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshRetryCreateOrUpdateSuccessResponse"];
-                };
-            };
+            200: components["responses"]["MeshRetryCreateOrUpdateSuccessResponse"];
+            201: components["responses"]["MeshRetryCreateOrUpdateSuccessResponse"];
         };
     };
     deleteMeshRetry: {
@@ -10792,15 +11083,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshRetryDeleteSuccessResponse"];
-                };
-            };
+            200: components["responses"]["MeshRetryDeleteSuccessResponse"];
             404: components["responses"]["NotFound"];
         };
     };
@@ -10874,24 +11157,8 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Updated */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshTCPRouteCreateOrUpdateSuccessResponse"];
-                };
-            };
-            /** @description Created */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshTCPRouteCreateOrUpdateSuccessResponse"];
-                };
-            };
+            200: components["responses"]["MeshTCPRouteCreateOrUpdateSuccessResponse"];
+            201: components["responses"]["MeshTCPRouteCreateOrUpdateSuccessResponse"];
         };
     };
     deleteMeshTCPRoute: {
@@ -10908,15 +11175,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshTCPRouteDeleteSuccessResponse"];
-                };
-            };
+            200: components["responses"]["MeshTCPRouteDeleteSuccessResponse"];
             404: components["responses"]["NotFound"];
         };
     };
@@ -10990,24 +11249,8 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Updated */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshTimeoutCreateOrUpdateSuccessResponse"];
-                };
-            };
-            /** @description Created */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshTimeoutCreateOrUpdateSuccessResponse"];
-                };
-            };
+            200: components["responses"]["MeshTimeoutCreateOrUpdateSuccessResponse"];
+            201: components["responses"]["MeshTimeoutCreateOrUpdateSuccessResponse"];
         };
     };
     deleteMeshTimeout: {
@@ -11024,15 +11267,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshTimeoutDeleteSuccessResponse"];
-                };
-            };
+            200: components["responses"]["MeshTimeoutDeleteSuccessResponse"];
             404: components["responses"]["NotFound"];
         };
     };
@@ -11106,24 +11341,8 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Updated */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshTLSCreateOrUpdateSuccessResponse"];
-                };
-            };
-            /** @description Created */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshTLSCreateOrUpdateSuccessResponse"];
-                };
-            };
+            200: components["responses"]["MeshTLSCreateOrUpdateSuccessResponse"];
+            201: components["responses"]["MeshTLSCreateOrUpdateSuccessResponse"];
         };
     };
     deleteMeshTLS: {
@@ -11140,15 +11359,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshTLSDeleteSuccessResponse"];
-                };
-            };
+            200: components["responses"]["MeshTLSDeleteSuccessResponse"];
             404: components["responses"]["NotFound"];
         };
     };
@@ -11222,24 +11433,8 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Updated */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshTraceCreateOrUpdateSuccessResponse"];
-                };
-            };
-            /** @description Created */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshTraceCreateOrUpdateSuccessResponse"];
-                };
-            };
+            200: components["responses"]["MeshTraceCreateOrUpdateSuccessResponse"];
+            201: components["responses"]["MeshTraceCreateOrUpdateSuccessResponse"];
         };
     };
     deleteMeshTrace: {
@@ -11256,15 +11451,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshTraceDeleteSuccessResponse"];
-                };
-            };
+            200: components["responses"]["MeshTraceDeleteSuccessResponse"];
             404: components["responses"]["NotFound"];
         };
     };
@@ -11338,24 +11525,8 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Updated */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshTrafficPermissionCreateOrUpdateSuccessResponse"];
-                };
-            };
-            /** @description Created */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshTrafficPermissionCreateOrUpdateSuccessResponse"];
-                };
-            };
+            200: components["responses"]["MeshTrafficPermissionCreateOrUpdateSuccessResponse"];
+            201: components["responses"]["MeshTrafficPermissionCreateOrUpdateSuccessResponse"];
         };
     };
     deleteMeshTrafficPermission: {
@@ -11372,15 +11543,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshTrafficPermissionDeleteSuccessResponse"];
-                };
-            };
+            200: components["responses"]["MeshTrafficPermissionDeleteSuccessResponse"];
             404: components["responses"]["NotFound"];
         };
     };
@@ -11454,24 +11617,8 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Updated */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["DataplaneCreateOrUpdateSuccessResponse"];
-                };
-            };
-            /** @description Created */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["DataplaneCreateOrUpdateSuccessResponse"];
-                };
-            };
+            200: components["responses"]["DataplaneCreateOrUpdateSuccessResponse"];
+            201: components["responses"]["DataplaneCreateOrUpdateSuccessResponse"];
         };
     };
     deleteDataplane: {
@@ -11488,15 +11635,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["DataplaneDeleteSuccessResponse"];
-                };
-            };
+            200: components["responses"]["DataplaneDeleteSuccessResponse"];
             404: components["responses"]["NotFound"];
         };
     };
@@ -11602,24 +11741,8 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Updated */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshCreateOrUpdateSuccessResponse"];
-                };
-            };
-            /** @description Created */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshCreateOrUpdateSuccessResponse"];
-                };
-            };
+            200: components["responses"]["MeshCreateOrUpdateSuccessResponse"];
+            201: components["responses"]["MeshCreateOrUpdateSuccessResponse"];
         };
     };
     deleteMesh: {
@@ -11634,15 +11757,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshDeleteSuccessResponse"];
-                };
-            };
+            200: components["responses"]["MeshDeleteSuccessResponse"];
             404: components["responses"]["NotFound"];
         };
     };
@@ -11713,24 +11828,8 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Updated */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshGatewayCreateOrUpdateSuccessResponse"];
-                };
-            };
-            /** @description Created */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshGatewayCreateOrUpdateSuccessResponse"];
-                };
-            };
+            200: components["responses"]["MeshGatewayCreateOrUpdateSuccessResponse"];
+            201: components["responses"]["MeshGatewayCreateOrUpdateSuccessResponse"];
         };
     };
     deleteMeshGateway: {
@@ -11747,15 +11846,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshGatewayDeleteSuccessResponse"];
-                };
-            };
+            200: components["responses"]["MeshGatewayDeleteSuccessResponse"];
             404: components["responses"]["NotFound"];
         };
     };
@@ -11825,24 +11916,8 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Updated */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ZoneEgressCreateOrUpdateSuccessResponse"];
-                };
-            };
-            /** @description Created */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ZoneEgressCreateOrUpdateSuccessResponse"];
-                };
-            };
+            200: components["responses"]["ZoneEgressCreateOrUpdateSuccessResponse"];
+            201: components["responses"]["ZoneEgressCreateOrUpdateSuccessResponse"];
         };
     };
     deleteZoneEgress: {
@@ -11857,15 +11932,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ZoneEgressDeleteSuccessResponse"];
-                };
-            };
+            200: components["responses"]["ZoneEgressDeleteSuccessResponse"];
             404: components["responses"]["NotFound"];
         };
     };
@@ -11932,24 +11999,8 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Updated */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ZoneIngressCreateOrUpdateSuccessResponse"];
-                };
-            };
-            /** @description Created */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ZoneIngressCreateOrUpdateSuccessResponse"];
-                };
-            };
+            200: components["responses"]["ZoneIngressCreateOrUpdateSuccessResponse"];
+            201: components["responses"]["ZoneIngressCreateOrUpdateSuccessResponse"];
         };
     };
     deleteZoneIngress: {
@@ -11964,15 +12015,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ZoneIngressDeleteSuccessResponse"];
-                };
-            };
+            200: components["responses"]["ZoneIngressDeleteSuccessResponse"];
             404: components["responses"]["NotFound"];
         };
     };
@@ -12039,24 +12082,8 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Updated */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HostnameGeneratorCreateOrUpdateSuccessResponse"];
-                };
-            };
-            /** @description Created */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HostnameGeneratorCreateOrUpdateSuccessResponse"];
-                };
-            };
+            200: components["responses"]["HostnameGeneratorCreateOrUpdateSuccessResponse"];
+            201: components["responses"]["HostnameGeneratorCreateOrUpdateSuccessResponse"];
         };
     };
     deleteHostnameGenerator: {
@@ -12071,15 +12098,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HostnameGeneratorDeleteSuccessResponse"];
-                };
-            };
+            200: components["responses"]["HostnameGeneratorDeleteSuccessResponse"];
             404: components["responses"]["NotFound"];
         };
     };
@@ -12150,24 +12169,8 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Updated */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshExternalServiceCreateOrUpdateSuccessResponse"];
-                };
-            };
-            /** @description Created */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshExternalServiceCreateOrUpdateSuccessResponse"];
-                };
-            };
+            200: components["responses"]["MeshExternalServiceCreateOrUpdateSuccessResponse"];
+            201: components["responses"]["MeshExternalServiceCreateOrUpdateSuccessResponse"];
         };
     };
     deleteMeshExternalService: {
@@ -12184,15 +12187,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshExternalServiceDeleteSuccessResponse"];
-                };
-            };
+            200: components["responses"]["MeshExternalServiceDeleteSuccessResponse"];
             404: components["responses"]["NotFound"];
         };
     };
@@ -12266,24 +12261,8 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Updated */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshIdentityCreateOrUpdateSuccessResponse"];
-                };
-            };
-            /** @description Created */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshIdentityCreateOrUpdateSuccessResponse"];
-                };
-            };
+            200: components["responses"]["MeshIdentityCreateOrUpdateSuccessResponse"];
+            201: components["responses"]["MeshIdentityCreateOrUpdateSuccessResponse"];
         };
     };
     deleteMeshIdentity: {
@@ -12300,15 +12279,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshIdentityDeleteSuccessResponse"];
-                };
-            };
+            200: components["responses"]["MeshIdentityDeleteSuccessResponse"];
             404: components["responses"]["NotFound"];
         };
     };
@@ -12382,24 +12353,8 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Updated */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshMultiZoneServiceCreateOrUpdateSuccessResponse"];
-                };
-            };
-            /** @description Created */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshMultiZoneServiceCreateOrUpdateSuccessResponse"];
-                };
-            };
+            200: components["responses"]["MeshMultiZoneServiceCreateOrUpdateSuccessResponse"];
+            201: components["responses"]["MeshMultiZoneServiceCreateOrUpdateSuccessResponse"];
         };
     };
     deleteMeshMultiZoneService: {
@@ -12416,15 +12371,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshMultiZoneServiceDeleteSuccessResponse"];
-                };
-            };
+            200: components["responses"]["MeshMultiZoneServiceDeleteSuccessResponse"];
             404: components["responses"]["NotFound"];
         };
     };
@@ -12498,24 +12445,8 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Updated */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshServiceCreateOrUpdateSuccessResponse"];
-                };
-            };
-            /** @description Created */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshServiceCreateOrUpdateSuccessResponse"];
-                };
-            };
+            200: components["responses"]["MeshServiceCreateOrUpdateSuccessResponse"];
+            201: components["responses"]["MeshServiceCreateOrUpdateSuccessResponse"];
         };
     };
     deleteMeshService: {
@@ -12532,15 +12463,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshServiceDeleteSuccessResponse"];
-                };
-            };
+            200: components["responses"]["MeshServiceDeleteSuccessResponse"];
             404: components["responses"]["NotFound"];
         };
     };
@@ -12614,24 +12537,8 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Updated */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshTrustCreateOrUpdateSuccessResponse"];
-                };
-            };
-            /** @description Created */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshTrustCreateOrUpdateSuccessResponse"];
-                };
-            };
+            200: components["responses"]["MeshTrustCreateOrUpdateSuccessResponse"];
+            201: components["responses"]["MeshTrustCreateOrUpdateSuccessResponse"];
         };
     };
     deleteMeshTrust: {
@@ -12648,15 +12555,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MeshTrustDeleteSuccessResponse"];
-                };
-            };
+            200: components["responses"]["MeshTrustDeleteSuccessResponse"];
             404: components["responses"]["NotFound"];
         };
     };
