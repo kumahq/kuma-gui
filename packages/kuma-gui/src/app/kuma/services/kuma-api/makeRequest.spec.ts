@@ -101,7 +101,7 @@ describe('makeRequest', () => {
       new ApiError({
         type: 'great_misfortune',
         status: 400,
-        title: '',
+        title: 'Unknown error',
         detail: 'A most terrible error',
         instance: 'kuma:trace:unknown',
       }),
@@ -175,7 +175,7 @@ describe('makeRequest', () => {
     [
       'unknown error response format',
       function () {
-        const response = new Response('{"items":[]}', {
+        const response = new Response('{}', {
           status: 400,
           headers: {
             'Content-Type': 'application/json',
@@ -186,21 +186,22 @@ describe('makeRequest', () => {
       },
       new ApiError({
         status: 400,
-        title: '',
-        detail: '',
+        title: 'Unknown error',
+        detail: 'An error has occurred while trying to load this data.',
         instance: '',
       }),
     ],
     [
       'plain text response',
       function () {
-        const response = new Response('Not found!', { status: 404 })
+        const response = new Response('Not found', { status: 404 })
 
         return Promise.resolve(response)
       },
       new ApiError({
+        title: 'Not found',
         status: 404,
-        title: 'Not found!',
+        detail: 'An error has occurred while trying to load this data.',
         instance: '',
       }),
     ],
@@ -213,7 +214,7 @@ describe('makeRequest', () => {
     await expect(call).rejects.toThrowError(expectedError)
 
     const thrownError = await getThrownApiError(call)
-    expect(thrownError.toJSON()).toEqual(expectedError.toJSON())
+    expect(thrownError).toEqual(expectedError)
   })
 
   test.each([
