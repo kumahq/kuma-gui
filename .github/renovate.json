@@ -78,7 +78,8 @@
       ],
       "matchUpdateTypes": [
         "patch"
-      ]
+      ],
+      "minimumReleaseAge": "0"
     },
     {
       "groupName": "@kong minors",
@@ -87,7 +88,8 @@
       ],
       "matchUpdateTypes": [
         "minor"
-      ]
+      ],
+      "minimumReleaseAge": "0"
     }
   ]
 }
