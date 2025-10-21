@@ -14,7 +14,7 @@
     "@gera2ld/tarjs": "^0.3.1",
     "@kong-ui-public/i18n": "^2.4.4",
     "@kong/icons": "^1.39.0",
-    "@kong/kongponents": "^9.42.10",
+    "@kong/kongponents": "^9.42.11",
     "@kumahq/container": "*",
     "@kumahq/settings": "*",
     "@kumahq/x": "*",
@@ -34,7 +34,7 @@
   },
   "devDependencies": {
     "@badeball/cypress-cucumber-preprocessor": "^23.2.1",
-    "@kong/design-tokens": "^1.18.0",
+    "@kong/design-tokens": "^1.18.1",
     "@kumahq/config": "*",
     "@kumahq/fake-api": "*",
     "@kumahq/kuma-http-api": "*",

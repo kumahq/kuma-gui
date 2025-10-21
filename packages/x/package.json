@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@kong-ui-public/app-layout": "^4.10.0",
-    "@kong/kongponents": "^9.42.10",
+    "@kong/kongponents": "^9.42.11",
     "@kong/icons": "^1.39.0",
     "shiki": "^3.13.0",
     "@vueuse/core": "^13.9.0",
@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "@kumahq/config": "*",
-    "@kong/design-tokens": "^1.18.0"
+    "@kong/design-tokens": "^1.18.1"
   },
   "peerDependencies": {
     "vue": "*"
