@@ -4,13 +4,17 @@ type Entity = components['schemas']['MeshServiceItem']
 
 export default ({ fake }: Dependencies): ResponseHandler => (req) => {
   const query = req.url.searchParams
-
-  const mesh = req.params.mesh as string
-  const name = req.params.name as string
+  const kri = req.params.kri as string | undefined
+  const [
+    mesh = req.params.mesh as string,
+    zone,
+    ns,
+    name = req.params.name as string,
+  ] = kri?.split('_') ?? ''
 
   const parts = String(name).split('.')
   const k8s = parts.length > 1
-  const namespace = parts.pop()
+  const namespace = ns ?? parts.pop()
 
   const proxies = fake.number.int({ min: 1, max: 120 })
 
@@ -31,7 +35,7 @@ export default ({ fake }: Dependencies): ResponseHandler => (req) => {
             'kuma.io/display-name': parts.slice(0, -1).join('.'),
             'k8s.kuma.io/namespace': namespace!,
             'kuma.io/origin': 'zone',
-            'kuma.io/zone': fake.word.noun(),
+            'kuma.io/zone': zone ?? fake.word.noun(),
           },
         }
         : {}),

@@ -27,20 +27,20 @@ Feature: mesh / dataplanes / overview / summary / Outbound
       """
       body:
         policies:
-          - kind: FaultInjection
+          - kind: MeshFaultInjection
             conf:
               delay:
                 percentage: 10
                 fixedDelay: 100ms
             origins:
-              - kri: kri_policy_default_pigsty_jury_innovation_appliance
+              - kri: kri_mfi_default_pigsty_jury_innovation_appliance
       """
     When I visit the "/meshes/default/data-planes/service-less/overview/outbound/kri_dp_default_numeric_kuma-system_service-less_httpport/overview" URL
     And the "$summary" element exists
     And the "$summary" element contains "Outbound: kri_dp_default_numeric_kuma-system_service-less_httpport"
     And the "$summary" element contains "HTTP"
-    And the "$outbound-policies-rule" element contains "FaultInjection"
-    And the "$outbound-policies-rule" element contains "kri_policy_default_pigsty_jury_innovation_appliance"
+    And the "$outbound-policies-rule" element contains "MeshFaultInjection"
+    And the "$outbound-policies-rule" element contains "kri_mfi_default_pigsty_jury_innovation_appliance"
     And the "$outbound-policies-rule [data-testid='k-code-block']" element exists
 
   Scenario: Clicking on origin leads to policy detail view
@@ -61,10 +61,10 @@ Feature: mesh / dataplanes / overview / summary / Outbound
       """
       body:
         policies:
-          - kind: CircuitBreaker
+          - kind: MeshFaultInjection
             origins:
-              - kri: kri_policy_default_pigsty_jury_the-policy-name_appliance
+              - kri: kri_mfi_default_pigsty_jury_the-policy-name_appliance
       """
     When I visit the "/meshes/default/data-planes/service-less/overview/outbound/kri_dp_default_numeric_kuma-system_service-less_httpport/overview" URL
     Then I click on the "$outbound-policies-rule ul:first-of-type li:first-of-type a:first-of-type" element
-    Then the URL contains "/gui/meshes/default/policies/circuit-breakers/the-policy-name/overview/overview"
+    Then the URL contains "/gui/meshes/default/policies/meshfaultinjections/kri_mfi_default_pigsty_jury_the-policy-name_appliance/overview/overview"
