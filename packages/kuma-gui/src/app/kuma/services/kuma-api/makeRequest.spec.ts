@@ -141,7 +141,8 @@ describe('makeRequest', () => {
                 {
                   "field": "id",
                   "rule": "required",
-                  "reason": "is a required field"
+                  "reason": "is a required field",
+                  "source": "path"
                 }
               ]
             }
@@ -168,6 +169,7 @@ describe('makeRequest', () => {
             field: 'id',
             rule: 'required',
             reason: 'is a required field',
+            source: 'path',
           },
         ],
       }),
@@ -189,6 +191,7 @@ describe('makeRequest', () => {
         title: 'Unknown error',
         detail: 'An error has occurred while trying to load this data.',
         instance: '',
+        type: '',
       }),
     ],
     [
@@ -203,6 +206,7 @@ describe('makeRequest', () => {
         status: 404,
         detail: 'An error has occurred while trying to load this data.',
         instance: '',
+        type: '',
       }),
     ],
   ])('works for requests that succeed but return a failure statuses (%s)', async (title, fetchMock, expectedError) => {

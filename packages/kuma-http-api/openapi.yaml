@@ -50,6 +50,8 @@ tags:
     x-displayName: Mesh
   - name: MeshGateway
     x-displayName: MeshGateway
+  - name: Secret
+    x-displayName: Secret
   - name: ZoneEgress
     x-displayName: ZoneEgress
   - name: ZoneIngress
@@ -3272,6 +3274,146 @@ paths:
         - BasicAuth: []
         - BearerAuth: []
         - {}
+  '/meshes/{mesh}/secrets/{name}':
+    servers: []
+    get:
+      summary: Returns Secret entity
+      operationId: getSecret
+      tags:
+        - Secret
+      parameters:
+        - in: path
+          name: mesh
+          schema:
+            type: string
+          required: true
+          description: name of the mesh
+        - in: path
+          name: name
+          schema:
+            type: string
+          required: true
+          description: name of the Secret
+      responses:
+        '200':
+          $ref: '#/components/responses/SecretItem'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - BasicAuth: []
+        - BearerAuth: []
+        - {}
+    put:
+      summary: Creates or Updates Secret entity
+      operationId: putSecret
+      tags:
+        - Secret
+      parameters:
+        - in: path
+          name: mesh
+          schema:
+            type: string
+          required: true
+          description: name of the mesh
+        - in: path
+          name: name
+          schema:
+            type: string
+          required: true
+          description: name of the Secret
+      requestBody:
+        description: Put request
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SecretItem'
+      responses:
+        '200':
+          $ref: '#/components/responses/SecretCreateOrUpdateSuccessResponse'
+        '201':
+          $ref: '#/components/responses/SecretCreateOrUpdateSuccessResponse'
+      security:
+        - BasicAuth: []
+        - BearerAuth: []
+        - {}
+    delete:
+      summary: Deletes Secret entity
+      operationId: deleteSecret
+      tags:
+        - Secret
+      parameters:
+        - in: path
+          name: mesh
+          schema:
+            type: string
+          required: true
+          description: name of the mesh
+        - in: path
+          name: name
+          schema:
+            type: string
+          required: true
+          description: name of the Secret
+      responses:
+        '200':
+          $ref: '#/components/responses/SecretDeleteSuccessResponse'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - BasicAuth: []
+        - BearerAuth: []
+        - {}
+  '/meshes/{mesh}/secrets':
+    servers: []
+    get:
+      summary: Returns a list of Secret in the mesh.
+      operationId: getSecretList
+      tags:
+        - Secret
+      parameters:
+        - in: query
+          name: offset
+          description: offset in the list of entities
+          required: false
+          schema:
+            type: integer
+          example: 0
+        - in: query
+          name: size
+          description: the number of items per page
+          required: false
+          schema:
+            type: integer
+            default: 100
+            maximum: 1000
+            minimum: 1
+        - in: query
+          name: filter
+          description: 'filter by labels when multiple filters are present, they are ANDed'
+          required: false
+          schema:
+            type: object
+            properties:
+              key:
+                type: string
+              value:
+                type: string
+          example:
+            label.k8s.kuma.io/namespace: my-ns
+        - in: path
+          name: mesh
+          schema:
+            type: string
+          required: true
+          description: name of the mesh
+      responses:
+        '200':
+          $ref: '#/components/responses/SecretList'
+      security:
+        - BasicAuth: []
+        - BearerAuth: []
+        - {}
   '/zoneegresses/{name}':
     servers: []
     get:
@@ -4789,21 +4931,49 @@ components:
     InvalidParameters:
       type: object
       title: Invalid Parameters
+      required:
+        - field
+        - reason
+        - source
       properties:
         field:
           type: string
+          description: The name of the field that caused the error.
         reason:
           type: string
+          description: |
+            A short, human-readable description of the problem.
+            _Should_ be provided as "Sentence case" for direct use in a UI.
         rule:
           type: string
+          description: >
+            May be provided as a hint to the user to help understand the type of
+            failure.
+
+            Additional guidance may be provided in additional fields, i.e.
+            `choices`.
         choices:
           type: array
+          description: >
+            Optional field to provide a list of valid choices for the field that
+            caused the error.
           items:
             type: string
+        source:
+          type: string
+          description: |
+            The location of the field that caused the error.
+          enum:
+            - body
+            - query
+            - header
+            - path
     Error:
       type: object
       title: Error
-      description: standard error
+      description: >
+        Standard error. Follows the [AIP #193 -
+        Errors](https://kong-aip.netlify.app/aip/193/) specification.
       x-examples:
         Example 1:
           status: 404
@@ -4815,6 +4985,8 @@ components:
         - status
         - title
         - instance
+        - type
+        - detail
       properties:
         status:
           type: integer
@@ -4822,23 +4994,47 @@ components:
           example: 404
         title:
           type: string
-          description: The error response code.
+          description: >
+            A short, human-readable summary of the problem.
+
+            It **should not** change between occurrences of a problem, except
+            for localization.
+
+            Should be provided as "Sentence case" for potential direct use in a
+            UI
           example: Not Found
         type:
           type: string
-          description: The error type.
+          description: >
+            A unique identifier for this error. When dereferenced it must
+            provide human-readable documentation for the problem.
           example: Not Found
         instance:
           type: string
           example: 'portal:trace:2287285207635123011'
-          description: The portal traceback code
+          description: >
+            Used to return the correlation ID back to the user, in the format
+            `<app>:trace:<correlation_id>`.
         detail:
           type: string
           example: The requested team was not found
-          description: Details about the error.
+          description: >
+            A human readable explanation specific to this occurrence of the
+            problem.
+
+            This field may contain request/entity data to help the user
+            understand what went wrong.
+
+            Enclose variable values in square brackets.
+
+            _Should_ be provided as "Sentence case" for direct use in a UI
         invalid_parameters:
           type: array
-          description: TODO
+          description: >
+            All 400 errors **MUST** return an `invalid_parameters` key in the
+            response.
+
+            Used to indicate which fields have invalid values when validated.
           items:
             $ref: '#/components/schemas/InvalidParameters'
     PolicyDescription:
@@ -5398,15 +5594,21 @@ components:
         - type: object
           properties:
             status:
+              type: integer
+              enum:
+                - 404
               example: 404
+              description: |
+                The HTTP status code for NotFoundError MUST be 404.
             title:
+              type: string
               example: Not Found
             type:
+              type: string
               example: 'https://httpstatuses.com/404'
-            instance:
-              example: 'kong:trace:1234567890'
             detail:
-              example: Not found
+              type: string
+              example: The requested resource was not found
     MeshAccessLogItem:
       type: object
       required:
@@ -17580,6 +17782,27 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/MeshGatewayItem'
+    SecretItem:
+      properties:
+        data:
+          description: Value of the secret
+          format: byte
+          type: string
+        labels:
+          additionalProperties:
+            type: string
+          type: object
+        mesh:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+      required:
+        - type
+        - name
+        - mesh
+      type: object
     Zone:
       description: >-
         Zone defines the Zone configuration used at the Global Control Plane
@@ -20130,6 +20353,53 @@ components:
         application/json:
           schema:
             type: object
+    SecretItem:
+      description: Successful response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SecretItem'
+    SecretList:
+      description: List
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              items:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SecretItem'
+              total:
+                type: number
+                description: The total number of entities
+              next:
+                type: string
+                description: URL to the next page
+    SecretCreateOrUpdateSuccessResponse:
+      description: Successful response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              warnings:
+                type: array
+                readOnly: true
+                description: >
+                  warnings is a list of warning messages to return to the
+                  requesting Kuma API clients.
+
+                  Warning messages describe a problem the client making the API
+                  request should correct or be aware of.
+                items:
+                  type: string
+    SecretDeleteSuccessResponse:
+      description: Successful response
+      content:
+        application/json:
+          schema:
+            type: object
     ZoneEgressItem:
       description: Successful response
       content:
@@ -20655,6 +20925,7 @@ x-tagGroups:
       - Dataplane
       - Mesh
       - MeshGateway
+      - Secret
       - ZoneEgress
       - ZoneIngress
       - HostnameGenerator
