@@ -12,7 +12,7 @@
     "help": "make help"
   },
   "dependencies": {
-    "@kong-ui-public/app-layout": "^4.10.0",
+    "@kong-ui-public/app-layout": "^4.10.1",
     "@kong/kongponents": "^9.42.11",
     "@kong/icons": "^1.39.0",
     "shiki": "^3.13.0",
