@@ -48,12 +48,10 @@
                     <span class="visually-hidden">{{ t('common.documentation') }}</span>
                   </XAction>
                 </div>
-                <h3>
-                  <PolicyTypeTag
-                    :policy-type="type.name"
-                  >
-                    {{ t('policies.collection.title', { name: type.name }) }}
-                  </PolicyTypeTag>
+                <h3
+                  v-icon-start="{name: type.name, size: '60', default: 'policy'}"
+                >
+                  {{ t('policies.collection.title', { name: type.name }) }}
                 </h3>
               </header>
               <XI18n
@@ -278,7 +276,6 @@ import { usePolicyActionGroup } from '../'
 import type { PolicyResourceType } from '../data'
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
-import PolicyTypeTag from '@/app/common/PolicyTypeTag.vue'
 const props = defineProps<{
   policyTypes?: PolicyResourceType[]
 }>()
