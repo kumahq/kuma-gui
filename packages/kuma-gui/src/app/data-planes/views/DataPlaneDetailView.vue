@@ -413,6 +413,12 @@
                 }"
               />
             </XNotification>
+
+            <TrafficListing
+              :data="props.data"
+              :dataplane-overview="props.data"
+            />
+
             <XCard
               class="traffic"
               data-testid="dataplane-traffic"
@@ -630,6 +636,7 @@
 import { KUI_ICON_SIZE_40 } from '@kong/design-tokens'
 import { ref } from 'vue'
 
+import TrafficListing from '../components/TrafficListing.vue'
 import { sources } from '../sources'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import TagList from '@/app/common/TagList.vue'

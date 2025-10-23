@@ -1,7 +1,7 @@
 <template>
   <DataSource
-    :src="props.src as T"
-    @change="(data) => srcData = data"
+    :src="!srcData ? props.src as T : ''"
+    @change="onChange"
     @error="(e: Error) => srcError = e"
     v-slot="{ refresh }"
   >
@@ -60,9 +60,10 @@
   typeOf(): any
 }" setup
 >
-import { computed, ref, provide } from 'vue'
+import { computed, ref, provide, inject } from 'vue'
 
 import type { TypeOf } from '@/app/application'
+
 const props = withDefaults(defineProps<{
   data?: unknown[]
   errors?: (Error | undefined)[]
@@ -103,9 +104,12 @@ provide('data-loader', {
   props,
 })
 
-
-const srcData = ref<unknown>(undefined)
+const key = typeof props.src === 'string' ? props.src : props.src.toString()
+const d = key ? inject<any>(key, undefined) : undefined
+const srcData = ref<unknown>(d)
 const srcError = ref<Error | undefined>(undefined)
+
+provide<typeof srcData.value>(key, srcData)
 
 const allData = computed(() => {
   if (props.src !== '') {
@@ -118,5 +122,9 @@ const allErrors = computed(() => {
   const errors = typeof srcError.value === 'undefined' ? props.errors : ([srcError.value] as (Error | undefined)[]).concat(props.errors)
   return errors.filter(<T>(item: T): item is NonNullable<T> => Boolean(item))
 })
+
+const onChange = (data: unknown) => {
+  srcData.value = data
+}
 
 </script>
