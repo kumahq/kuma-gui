@@ -1,8 +1,8 @@
 import createClient from 'openapi-fetch'
 
-
 import { Policy, PolicyDataplane, PolicyResourceType } from './data'
 import { Kri } from '../kuma'
+import type { KumaPolicy, KumaPolicyCollection, KumaPolicyPath } from './data'
 import { DataplanePolicies } from './data/DataplanePolicies'
 import { DataplaneInboundPolicies, DataplaneOutboundPolicies } from './data/DataplaneTrafficPolicies'
 import { defineSources } from '../application/services/data-source'
@@ -10,7 +10,7 @@ import { YAML } from '@/app/application'
 import type { DataSourceResponse } from '@/app/application'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
-import type { paths, operations } from '@kumahq/kuma-http-api'
+import type { paths } from '@kumahq/kuma-http-api'
 
 export type PolicyCollection = CollectionResponse<Policy>
 export type PolicySource = DataSourceResponse<Policy>
@@ -19,8 +19,6 @@ export type PolicyCollectionSource = DataSourceResponse<PolicyCollection>
 export type PolicyDataplaneCollection = CollectionResponse<PolicyDataplane>
 export type PolicyDataplaneSource = DataSourceResponse<PolicyDataplane>
 export type PolicyDataplaneCollectionSource = DataSourceResponse<PolicyDataplaneCollection>
-
-type GetByKriResponse = operations['getByKri']['responses']['200']['content']['application/json']
 
 export const sources = (api: KumaApi) => {
   const http = createClient<paths>({
@@ -40,15 +38,25 @@ export const sources = (api: KumaApi) => {
       const offset = params.size * (params.page - 1)
 
       const search = Policy.search(params.search)
+      const res = await http.GET(`/meshes/{mesh}/${path as KumaPolicyPath}`, {
+        params: {
+          path: {
+            mesh,
+          },
+          query: {
+            size,
+            offset,
+            ...search,
+          },
+        },
+      })
 
-      return Policy.fromCollection(await api.getAllPolicyEntitiesFromMesh({ mesh, path }, { offset, size, ...search }))
+      return Policy.fromCollection(res.data as KumaPolicyCollection)
     },
 
     '/meshes/:mesh/policy-path/:path/policy/:name': async (params) => {
       const { mesh, path, name } = params
-
-      if(Kri.isKriString(name)) {
-        const { name } = params
+      if (Kri.isKriString(name)) {
         const res = await http.GET('/_kri/{kri}', {
           params: {
             path: {
@@ -56,12 +64,31 @@ export const sources = (api: KumaApi) => {
             },
           },
         })
-
-        return Policy.fromObject(res.data as GetByKriResponse & { creationTime: string, modificationTime: string, mesh: string })
+        return Policy.fromObject(res.data as KumaPolicy)
+      } else {
+        const res = await http.GET(`/meshes/{mesh}/${path as KumaPolicyPath}/{name}`, {
+          params: {
+            path: {
+              mesh,
+              name,
+            },
+          },
+        })
+        return Policy.fromObject(res.data as KumaPolicy)
       }
+    },
 
-      const res = await api.getSinglePolicyEntity({ mesh, path, name })
-      return Policy.fromObject(res)
+    '/meshes/:mesh/policy-path/:path/policy/:name/as/kubernetes': async (params) => {
+      const { mesh, path, name } = params
+      const res = await http.GET(`/meshes/{mesh}/${path as KumaPolicyPath}/{name}`, {
+        params: {
+          path: {
+            mesh,
+            name,
+          },
+        },
+      })
+      return YAML.stringify(res.data)
     },
 
     '/meshes/:mesh/policy-path/:path/policy/:name/dataplanes': async (params) => {
@@ -70,11 +97,6 @@ export const sources = (api: KumaApi) => {
       return PolicyDataplane.fromCollection(await api.getPolicyConnections({ mesh, path, name }, { offset, size }))
     },
 
-    '/meshes/:mesh/policy-path/:path/policy/:name/as/kubernetes': async (params) => {
-      const { mesh, path, name } = params
-
-      return YAML.stringify(await api.getSinglePolicyEntity({ mesh, path, name }, { format: 'kubernetes' }))
-    },
 
     '/meshes/:mesh/dataplanes/:name/policies/for/proxy': async (params) => {
       const { mesh, name } = params
