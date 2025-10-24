@@ -2,7 +2,7 @@ import { token, createInjections } from '@kumahq/container'
 
 import { vars } from './env'
 import locales from './locales/en-us/index.yaml'
-import { ValidationError } from '../application/services/data-source'
+import { ValidationError } from '@/app/application'
 import KumaPort from '@/app/kuma/components/kuma-port/KumaPort.vue'
 import { ApiError } from '@/app/kuma/services/kuma-api/ApiError'
 import KumaApi from '@/app/kuma/services/kuma-api/KumaApi'

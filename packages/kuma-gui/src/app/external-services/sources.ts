@@ -1,6 +1,6 @@
 import { ExternalService } from './data'
 import type { DataSourceResponse } from '@/app/application'
-import { defineSources } from '@/app/application/services/data-source'
+import { defineSources } from '@/app/application'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import type { PaginatedApiListResponse as CollectionResponse, ExternalServicesParameters } from '@/types/api.d'
 

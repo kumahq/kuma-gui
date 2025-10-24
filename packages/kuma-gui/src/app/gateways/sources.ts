@@ -2,7 +2,7 @@ import createClient from 'openapi-fetch'
 
 import { MeshGateway } from './data'
 import type { DataSourceResponse } from '@/app/application'
-import { defineSources } from '@/app/application/services/data-source'
+import { defineSources } from '@/app/application'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import { Rule } from '@/app/rules/data'
 import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'

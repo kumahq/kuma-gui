@@ -43,7 +43,7 @@
 >
 import { ref } from 'vue'
 
-import type { TypeOf } from '@/app/application'
+import type { TypeOf } from '../../../'
 
 const emit = defineEmits<{
   (e: 'change', value: TypeOf<T>): void

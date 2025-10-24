@@ -25,6 +25,7 @@
       "import": "./src/utils/index.ts"
     },
     "./tsconfig/app": "./tsconfig/app.json",
+    "./tsconfig/browser": "./tsconfig/browser.json",
     "./tsconfig/node": "./tsconfig/node.json"
   },
   "dependencies": {

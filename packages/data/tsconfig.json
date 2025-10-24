@@ -3,7 +3,9 @@
   "extends": "@kumahq/config/tsconfig/browser",
   "include": [
     "**/*.ts",
-    "**/*.vue",
+    "**/*.vue"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }
