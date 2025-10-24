@@ -7,12 +7,30 @@ type MeshAccessLog = paths['/meshes/{mesh}/meshaccesslogs/{name}']['get']['respo
 type MeshAccessLogCollection = paths['/meshes/{mesh}/meshaccesslogs']['get']['responses']['200']['content']['application/json']
 //
 
-export type KumaPolicy = Omit<MeshAccessLog, 'spec' | 'name'> & {
+export type KumaLegacyPolicy = {
+  type: string
   name: string
+  mesh: string
+  labels?: {
+    [key: string]: string
+  }
+  creationTime: string
+  modificationTime: string
+  // having an optional targetRef here is totally wrong but its what we've
+  // always had and legacy policies are being deleted soon so :shrug:
+  spec: unknown & {
+    targetRef?: MeshAccessLog['spec']['targetRef']
+  }
+}
+export type KumaPolicy = ({
+  // overwrite `MeshAccessLog` with string to cover all policies, including unknown ones
+  name: string
+  // overwrite spec to only include top-level targetRef
   spec: unknown & {
     targetRef: MeshAccessLog['spec']['targetRef']
   }
-}
+} & Omit<MeshAccessLog, 'spec' | 'name'>) | KumaLegacyPolicy
+
 export type KumaPolicyCollection = Omit<MeshAccessLogCollection, 'items'> & {
   items: KumaPolicy[]
 }
