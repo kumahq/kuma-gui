@@ -1,4 +1,6 @@
 import { token, createInjections } from '@kumahq/container'
+import { create, destroy, DataSourcePool } from '@kumahq/data'
+import Data, { DataLoader, DataSink, DataSource } from '@kumahq/data/vue'
 import can from '@kumahq/settings/can'
 import env from '@kumahq/settings/env'
 // @ts-ignore TS comes with a Object.groupBy declaration but not a polyfill
@@ -8,23 +10,21 @@ import difference from 'set.prototype.difference'
 
 import AppView from './components/app-view/AppView.vue'
 import DataCollection from './components/data-collection/DataCollection.vue'
-import DataLoader from './components/data-source/DataLoader.vue'
-import DataSink from './components/data-source/DataSink.vue'
-import DataSource from './components/data-source/DataSource.vue'
 import RouteTitle from './components/route-view/RouteTitle.vue'
 import RouteView from './components/route-view/RouteView.vue'
 import locales from './locales/en-us/index.yaml'
 import { routes } from './routes'
 import I18n from './services/i18n/I18n'
 import storage from './services/storage'
-import { create, destroy, DataSourcePool } from '@/app/application/services/data-source'
 import { services as kuma } from '@/app/kuma'
 import type { ServiceDefinition } from '@kumahq/container'
 import type { Component } from 'vue'
 import type { RouteRecordRaw } from 'vue-router'
 
 export { runInDebug } from './utilities'
-export { defineSources } from './services/data-source'
+export { defineSources, ValidationError, useUri } from '@kumahq/data'
+export { useDataSourcePool } from '@kumahq/data/vue'
+export type { DataSourceResponse, TypeOf } from '@kumahq/data'
 
 // temporary simple "JSON data only" structuredClone polyfill for cloning JSON
 // data
@@ -42,7 +42,6 @@ groupBy.shim()
 // TODO(jc): delete this once we get to 2026
 difference.shim()
 
-export type { DataSourceResponse, TypeOf } from './services/data-source'
 type Sources = ConstructorParameters<typeof DataSourcePool>[0]
 
 type Token = ReturnType<typeof token>
@@ -133,7 +132,19 @@ const addRouteName = (item: RouteRecordRaw) => {
 }
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   return [
-
+    [token('application.plugins'), {
+      service: (dataSourcePool) => {
+        return [
+          [Data, { dataSourcePool }],
+        ]
+      },
+      arguments: [
+        $.dataSourcePool,
+      ],
+      labels: [
+        app.plugins,
+      ],
+    }],
     [token('application.components'), {
       service: () => {
         return [
@@ -254,11 +265,9 @@ export const [
   useEnv,
   useCan,
   useI18n,
-  useDataSourcePool,
 ] = createInjections(
   $.env,
   $.can,
   $.i18n,
-  $.dataSourcePool,
 )
 export { uniqueId, YAML, get } from './utilities'

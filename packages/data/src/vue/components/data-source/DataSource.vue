@@ -14,8 +14,8 @@
 >
 import { watch, ref, onBeforeUnmount, useAttrs } from 'vue'
 
-import { useDataSourcePool } from '@/app/application'
-import type { TypeOf } from '@/app/application'
+import { useDataSourcePool } from '../../'
+import type { TypeOf } from '../../../'
 
 const attrs = useAttrs()
 const data = useDataSourcePool()
@@ -63,7 +63,7 @@ const open = (_src: T): Close => {
   // add events that will be aborted by the above controler
   source.addEventListener(
     'message',
-    (e) => {
+    (e: Event) => {
       message.value = (e as MessageEvent).data
       // if we got a message we are no longer erroneous
       error.value = undefined
@@ -74,7 +74,7 @@ const open = (_src: T): Close => {
   )
   source.addEventListener(
     'error',
-    (e) => {
+    (e: Event) => {
       error.value = (e as ErrorEvent).error as Error
       // this should emit proper events
       emit('error', error.value)

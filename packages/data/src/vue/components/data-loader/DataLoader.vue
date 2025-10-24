@@ -1,7 +1,7 @@
 <template>
   <DataSource
     :src="props.src as T"
-    @change="(data) => srcData = data"
+    @change="(data: TypeOf<T>) => srcData = data"
     @error="(e: Error) => srcError = e"
     v-slot="{ refresh }"
   >
@@ -62,7 +62,7 @@
 >
 import { computed, ref, provide } from 'vue'
 
-import type { TypeOf } from '@/app/application'
+import type { TypeOf } from '../../../'
 const props = withDefaults(defineProps<{
   data?: unknown[]
   errors?: (Error | undefined)[]
