@@ -9,7 +9,7 @@ import {
   Hostname,
 } from './data'
 import type { DataSourceResponse } from '@/app/application'
-import { defineSources } from '@/app/application/services/data-source'
+import { defineSources } from '@/app/application'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import type { PaginatedApiListResponse as CollectionResponse, ServiceInsightsParameters } from '@/types/api.d'
 import type { paths } from '@kumahq/kuma-http-api'

@@ -1,0 +1,12 @@
+{
+  "$schema": "https://schemastore.org/tsconfig.json",
+  "extends": "@vue/tsconfig/tsconfig.dom.json",
+  "compilerOptions": {
+    "noUncheckedIndexedAccess": false,
+    "noImplicitOverride": false,
+
+    "allowImportingTsExtensions": true,
+    "allowJs": true,
+    "lib": ["esnext", "dom", "dom.iterable"],
+  }
+}
