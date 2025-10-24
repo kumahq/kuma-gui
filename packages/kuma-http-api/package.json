@@ -14,7 +14,8 @@
     },
     "./mocks": {
       "import": "./mocks/index.ts"
-    }
+    },
+    "./openapi.yaml": "./openapi.yaml"
   },
   "scripts": {
     "help": "make help"
