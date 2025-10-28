@@ -44,11 +44,12 @@ import {
   XTabs,
   XTeleportSlot,
   XTeleportTemplate,
+  XTheme,
   XTooltip,
   XWindow,
   XErrorState,
 } from './components'
-import vStyle from './directives/style'
+import { vStyle, vIcon }  from './directives/'
 import type { Plugin } from 'vue'
 
 export * from './components'
@@ -88,6 +89,7 @@ const components = [
   ['XTable', XTable],
   ['XTeleportTemplate', XTeleportTemplate],
   ['XTeleportSlot', XTeleportSlot],
+  ['XTheme', XTheme],
   ['XTooltip', XTooltip],
   ['XDisclosure', XDisclosure],
   ['XDownload', XDownload],
@@ -102,6 +104,8 @@ const components = [
 
 const directives = [
   ['style', vStyle()],
+  ['icon-start', vIcon('start')],
+  ['icon-end', vIcon('end')],
 ] as const
 
 declare module 'vue' {
@@ -140,6 +144,7 @@ declare module 'vue' {
     XTable: typeof XTable
     XTeleportTemplate: typeof XTeleportTemplate
     XTeleportSlot: typeof XTeleportSlot
+    XTheme: typeof XTheme
     XTooltip: typeof XTooltip
     XDisclosure: typeof XDisclosure
     XDownload: typeof XDownload

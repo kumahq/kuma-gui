@@ -7,6 +7,7 @@
     <component
       v-bind="attrs"
       :is="icons[props.name]"
+      v-icon-start="icons[props.name] === 'span' ? { name: props.name } : undefined"
       :aria-described-by="slots.default ? id : undefined"
       :tabindex="slots.default ? 0 : undefined"
       :decorative="false"
@@ -122,27 +123,6 @@ const props = withDefaults(defineProps<{
 }
 .x-icon-icon {
   --dangerIconColor: #{$kui-color-text-danger};
-}
-.x-icon-standard-icon {
-  --icon-before: url('@/assets/images/east-west.svg');
-  &::before {
-    position: relative;
-    top: 3px;
-    mask-repeat: no-repeat;
-    -webkit-mask-repeat: no-repeat;
-    mask-position: center;
-    -webkit-mask-position: center;
-    content: '';
-    background-color: var(--icon-before-color, currentColor);
-    display: inline-flex;
-
-    mask-image: var(--icon-before);
-    -webkit-mask-image: var(--icon-before);
-    mask-size: 100%;
-    -webkit-mask-size: 100%;
-    width: v-bind('props.size');
-    height: v-bind('props.size');
-  }
 }
 .x-icon-policy-role-producer-icon,
 .x-icon-policy-role-consumer-icon,

@@ -38,7 +38,9 @@
         >
           <AppView>
             <template #title>
-              <h2>
+              <h2
+                v-icon-start="`policy`"
+              >
                 <XAction
                   :to="{
                     name: 'policy-detail-view',
@@ -153,8 +155,3 @@ const props = defineProps<{
   policyType: PolicyResourceType
 }>()
 </script>
-<style scoped>
-h2 {
-  --icon-before: url('@/assets/images/policy.svg?inline') !important;
-}
-</style>

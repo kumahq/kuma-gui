@@ -37,7 +37,9 @@
         >
           <AppView>
             <template #title>
-              <h2>
+              <h2
+                v-icon-start="`dataplane-builtin`"
+              >
                 <XAction
                   :to="{
                     name: 'builtin-gateway-detail-view',
@@ -266,11 +268,3 @@ const props = defineProps<{
   routeName: string
 }>()
 </script>
-<style scoped>
-h2 {
-  --icon-before: url('@/assets/images/gateway.svg?inline') !important;
-}
-.label :deep(a):hover {
-  text-decoration: underline;
-}
-</style>
