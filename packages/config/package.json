@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "@badeball/cypress-cucumber-preprocessor": "^23.2.1",
-    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.6",
+    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.7",
     "@cucumber/gherkin-utils": "^10.0.0",
     "@eslint/js": "^9.37.0",
     "@stylistic/eslint-plugin": "^5.4.0",
@@ -59,9 +59,9 @@
     "stylelint-config-recommended-scss": "^16.0.2",
     "stylelint-config-recommended-vue": "^1.6.1",
     "typescript": "^5.9.3",
-    "vite": "^7.1.11",
+    "vite": "^7.1.12",
     "vitepress": "^2.0.0-alpha.12",
     "vitest": "^3.2.4",
-    "vue-tsc": "^3.1.1"
+    "vue-tsc": "^3.1.2"
   }
 }
