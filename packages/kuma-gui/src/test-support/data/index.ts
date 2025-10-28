@@ -32,7 +32,7 @@ export const plugin = <T>(
   transformer: Transformer<T>,
   get: (
     env: Record<string, string>,
-    params: Record<string, string>
+    params: Record<string, string>,
   ) => Promise<unknown>,
 ) => {
   type K = ReturnType<typeof transformer['fromObject']>
