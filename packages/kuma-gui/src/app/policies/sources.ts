@@ -2,7 +2,7 @@ import createClient from 'openapi-fetch'
 
 import { Policy, PolicyDataplane, PolicyResourceType } from './data'
 import { Kri } from '../kuma'
-import type { KumaPolicy, KumaPolicyCollection, KumaPolicyPath } from './data'
+import type { KumaPolicy, KumaPolicyCollection, DynamicPath } from './data'
 import { DataplanePolicies } from './data/DataplanePolicies'
 import { DataplaneInboundPolicies, DataplaneOutboundPolicies } from './data/DataplaneTrafficPolicies'
 import { defineSources } from '../application/services/data-source'
@@ -38,7 +38,7 @@ export const sources = (api: KumaApi) => {
       const offset = params.size * (params.page - 1)
 
       const search = Policy.search(params.search)
-      const res = await http.GET(`/meshes/{mesh}/${path as KumaPolicyPath}`, {
+      const res = await http.GET(`/meshes/{mesh}/${path as DynamicPath}`, {
         params: {
           path: {
             mesh,
@@ -66,7 +66,7 @@ export const sources = (api: KumaApi) => {
         })
         return Policy.fromObject(res.data as KumaPolicy)
       } else {
-        const res = await http.GET(`/meshes/{mesh}/${path as KumaPolicyPath}/{name}`, {
+        const res = await http.GET(`/meshes/{mesh}/${path as DynamicPath}/{name}`, {
           params: {
             path: {
               mesh,
@@ -80,7 +80,7 @@ export const sources = (api: KumaApi) => {
 
     '/meshes/:mesh/policy-path/:path/policy/:name/as/kubernetes': async (params) => {
       const { mesh, path, name } = params
-      const res = await http.GET(`/meshes/{mesh}/${path as KumaPolicyPath}/{name}`, {
+      const res = await http.GET(`/meshes/{mesh}/${path as DynamicPath}/{name}`, {
         params: {
           path: {
             mesh,

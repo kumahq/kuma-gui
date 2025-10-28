@@ -1,40 +1,15 @@
 import { YAML } from '@/app/application'
 import { Resource } from '@/app/resources/data/Resource'
-import type { paths } from '@kumahq/kuma-http-api'
+import type { components } from '@kumahq/kuma-http-api'
 
-// we use MeshAccessLog as the basis for a "GenericPolicy"
-type MeshAccessLog = paths['/meshes/{mesh}/meshaccesslogs/{name}']['get']['responses']['200']['content']['application/json']
-type MeshAccessLogCollection = paths['/meshes/{mesh}/meshaccesslogs']['get']['responses']['200']['content']['application/json']
-//
+export type KumaPolicy = components['schemas']['Policy']
+export type KumaPolicyCollection =components['schemas']['PolicyCollection']
 
-export type KumaLegacyPolicy = {
-  type: string
-  name: string
-  mesh: string
-  labels?: {
-    [key: string]: string
-  }
-  creationTime: string
-  modificationTime: string
-  // having an optional targetRef here is totally wrong but its what we've
-  // always had and legacy policies are being deleted soon so :shrug:
-  spec: unknown & {
-    targetRef?: MeshAccessLog['spec']['targetRef']
-  }
-}
-export type KumaPolicy = ({
-  // overwrite `MeshAccessLog` with string to cover all policies, including unknown ones
-  name: string
-  // overwrite spec to only include top-level targetRef
-  spec: unknown & {
-    targetRef: MeshAccessLog['spec']['targetRef']
-  }
-} & Omit<MeshAccessLog, 'spec' | 'name'>) | KumaLegacyPolicy
-
-export type KumaPolicyCollection = Omit<MeshAccessLogCollection, 'items'> & {
-  items: KumaPolicy[]
-}
-export type KumaPolicyPath = 'meshaccesslogs'
+/**
+ * @description we use this to workaround the fact that sometimes we need to call URLs with
+ * a dynamic path
+ */
+export type DynamicPath = 'meshaccesslogs'
 
 export const Policy = {
   search(query: string) {
@@ -57,12 +32,12 @@ export const Policy = {
     }
   },
 
-  fromCollection(partialPolicies: KumaPolicyCollection) {
+  fromCollection(collection: KumaPolicyCollection) {
+    const items = Array.isArray(collection.items) ? collection.items.map(Policy.fromObject) : []
     return {
-      ...partialPolicies,
-      items: Array.isArray(partialPolicies.items)
-        ? partialPolicies.items.map((partialPolicy) => Policy.fromObject(partialPolicy))
-        : [],
+      ...collection,
+      items,
+      total: collection.total ?? items.length,
     }
   },
 }
