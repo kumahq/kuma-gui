@@ -34,6 +34,15 @@
             }"
           />
         </XNotification>
+        <XNotification
+          :notify="!!Object.keys(traffic?.warnings ?? {})?.length"
+          :data-testid="`warning-abnormal-traffic-stats`"
+          :uri="`data-planes.notifications.abnormal-traffic-stats.${props.data.id}`"
+        >
+          <XI18n
+            :path="`data-planes.notifications.abnormal-traffic-stats`"
+          />
+        </XNotification>
         <template
           v-for="{ bool, key, params, variant } in [
             {
@@ -473,6 +482,33 @@
                                   >
                                     {{ t('data-planes.routes.item.unhealthy_inbound', { port: item.port }) }}
                                   </XIcon>
+                                  <template
+                                    v-for="reports in [[...new Set(Object.entries(traffic?.warnings ?? {}).filter(([key]) => key.includes(item.clusterName)).map(([, report]) => report).flat())]]"
+                                    v-else
+                                    :key="typeof reports"
+                                  >
+                                    <XAction
+                                      v-if="reports.length"
+                                      data-action
+                                      :to="{
+                                        name: 'data-plane-connection-inbound-summary-stats-view',
+                                        params: {
+                                          connection: item.clusterName,
+                                        },
+                                        query: {
+                                          codeSearch: reports.join('|'),
+                                          codeFilter: true,
+                                          codeRegExp: true,
+                                        },
+                                      }"
+                                    >
+                                      <XIcon
+                                        name="warning"
+                                        :size="KUI_ICON_SIZE_40"
+                                        placement="right"
+                                      />
+                                    </XAction>
+                                  </template>
                                 </template>
                                 <XAction
                                   data-action
@@ -599,6 +635,34 @@
                                   :direction="direction"
                                   data-actionable
                                 >
+                                  <template #state>
+                                    <template
+                                      v-for="reports in [[...new Set(Object.entries(traffic?.warnings ?? {}).filter(([key]) => key.includes(name)).map(([, report]) => report).flat())]]"
+                                      :key="typeof reports"
+                                    >
+                                      <XAction
+                                        v-if="reports.length"
+                                        data-action
+                                        :to="{
+                                          name: 'data-plane-connection-outbound-summary-stats-view',
+                                          params: {
+                                            connection: name,
+                                          },
+                                          query: {
+                                            codeSearch: reports.join('|'),
+                                            codeFilter: true,
+                                            codeRegExp: true,
+                                          },
+                                        }"
+                                      >
+                                        <XIcon
+                                          name="warning"
+                                          :size="KUI_ICON_SIZE_40"
+                                          placement="right"
+                                        />
+                                      </XAction>
+                                    </template>
+                                  </template>
                                   <XAction
                                     data-action
                                     :to="{

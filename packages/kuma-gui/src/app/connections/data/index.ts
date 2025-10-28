@@ -5,6 +5,39 @@ const appProtocols = ['http', 'tcp', 'grpc'] as const
 const trailingPortRe = /_\d{1,5}\./
 const trailingPortRe2 = /_\d{1,5}/
 const meshServiceRe = /_(mz|m|ext){1}svc_\d{1,5}(-[a-z0-9]+)?$/
+const nonZeroRe = /[1-9]\d*/
+const monitoring = [
+  {
+    statRe: /cluster\..+\.circuit_breakers\..+\.cx_open/,
+    validateRe: nonZeroRe,
+    report: ['circuit_breakers', 'cx_open'],
+  },
+  {
+    statRe: /cluster\..+\.circuit_breakers\..+\.cx_pool_open/,
+    validateRe: nonZeroRe,
+    report: ['circuit_breakers', 'cx_pool_open'],
+  },
+  {
+    statRe: /cluster\..+\.circuit_breakers\..+\.rq_pending_open/,
+    validateRe: nonZeroRe,
+    report: ['circuit_breakers', 'rq_pending_open'],
+  },
+  {
+    statRe: /cluster\..+\.circuit_breakers\..+\.rq_open/,
+    validateRe: nonZeroRe,
+    report: ['circuit_breakers', 'rq_open'],
+  },
+  {
+    statRe: /cluster\..+\.circuit_breakers\..+\.rq_retry_open/,
+    validateRe: nonZeroRe,
+    report: ['circuit_breakers', 'rq_retry_open'],
+  },
+  {
+    statRe: /cluster\..+\.outlier_detection\..+\.ejections_active/,
+    validateRe: nonZeroRe,
+    report: ['outlier_detection', 'ejections_active'],
+  },
+]
 
 export const Stat = {
   fromCollection(items: string) {
@@ -13,6 +46,7 @@ export const Stat = {
 }
 export const ConnectionCollection = {
   fromObject(item: Record<string, any>) {
+    const warnings: Record<string, string[]> = typeof item.warnings !== 'undefined' ? item.warnings : {}
     // look in `listener.<inbound-address_port>.<potential-protocol>.<cluster-name>.<...stats>`
     // following this we will end up with `listener.<inbound-address_port>.<definite-protocol>.<...stats>`
     const listener = typeof item.listener !== 'undefined'
@@ -47,6 +81,7 @@ export const ConnectionCollection = {
           }),
       )
       : {}
+
     const cluster = typeof item.cluster !== 'undefined'
       ? Object.fromEntries(Object.entries<any>(item.cluster)
         .map(([cluster, value]) => {
@@ -99,6 +134,7 @@ export const ConnectionCollection = {
               }
             }
           })
+
           // if we don't find any appProtocols (e.g. http., tcp. or .grpc) at
           // root (which is always the case for a gateway) then sniff based on
           // a http non-zero value. If we find it then add the stats to http
@@ -136,6 +172,7 @@ export const ConnectionCollection = {
       'meshtrace_opentelemetry',
     ].some(item => key.startsWith(item))))
     return {
+      warnings,
       listener,
       cluster: withoutInternals,
     }
@@ -174,6 +211,16 @@ const parse = (lines: string): Record<string, any> => {
         return val
       }
     })(value.join(':').trim())
+    
+    for(const { statRe, validateRe, report } of monitoring) {
+      const found = key.match(statRe)
+      if(found && validateRe.test(String(val))) {
+        prev.warnings = {
+          ...prev.warnings,
+          [key]: report,
+        }
+      }
+    }
 
     // walk the path creating `json.objects: value`
     key.split('.').reduce<Record<string, any>>((prev, item, i, arr) => {
@@ -198,5 +245,5 @@ const parse = (lines: string): Record<string, any> => {
       }
     }, prev)
     return prev
-  }, {})
+  }, { warnings: {} as Record<string, string[]> } )
 }
