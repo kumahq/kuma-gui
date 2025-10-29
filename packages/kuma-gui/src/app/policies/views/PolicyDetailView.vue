@@ -84,18 +84,9 @@
           </template>
 
           <template #body>
-            <XBadge
-              v-if="props.data.spec.targetRef"
-              appearance="neutral"
-            >
-              {{ props.data.spec.targetRef.kind }}<span v-if="props.data.spec.targetRef.name">:<b>{{ props.data.spec.targetRef.name }}</b></span>
-            </XBadge>
-            <XBadge
-              v-else
-              appearance="neutral"
-            >
-              {{ t('http.api.property.mesh') }}
-            </XBadge>
+            <KumaTargetRef
+              :target-ref="props.data.spec?.targetRef"
+            />
           </template>
         </DefinitionCard>
       </XAboutCard>
