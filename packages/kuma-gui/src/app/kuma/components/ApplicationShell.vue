@@ -254,8 +254,7 @@ nav :deep(.app-navigator) + .app-navigator {
 }
 nav :deep(.app-navigator) > a {
   width: 100%;
-  display: flex;
-  align-items: center;
+  display: inline-block;
   padding: $kui-space-40 $kui-space-60 $kui-space-40 $kui-space-70;
   border-radius: 5px;
   text-decoration: none;
