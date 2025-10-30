@@ -99,6 +99,7 @@ export const sources = (api: KumaApi) => {
         passthrough,
         inbounds,
         outbounds,
+        warnings: connections.warnings,
         $raw: res,
         raw: res,
       }

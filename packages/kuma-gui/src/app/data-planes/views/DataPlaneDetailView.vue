@@ -413,6 +413,15 @@
                 }"
               />
             </XNotification>
+            <XNotification
+              :notify="!!Object.keys(traffic?.warnings ?? {})?.length"
+              :data-testid="`warning-abnormal-traffic-stats`"
+              :uri="`data-planes.notifications.abnormal-traffic-stats.${props.data.id}`"
+            >
+              <XI18n
+                :path="`data-planes.notifications.abnormal-traffic-stats`"
+              />
+            </XNotification>
             <XCard
               class="traffic"
               data-testid="dataplane-traffic"
@@ -476,6 +485,33 @@
                                     >
                                       {{ t('data-planes.routes.item.unhealthy_inbound', { port: inbound?.port }) }}
                                     </XIcon>
+                                    <template
+                                      v-for="reports in [[...new Set(Object.entries(traffic?.warnings ?? {}).filter(([key]) => key.includes(item.stat_prefix)).map(([, report]) => report).flat())]]"
+                                      v-else
+                                      :key="typeof reports"
+                                    >
+                                      <XAction
+                                        v-if="reports.length"
+                                        data-action
+                                        :to="{
+                                          name: 'data-plane-connection-inbound-summary-stats-view',
+                                          params: {
+                                            connection: item.stat_prefix,
+                                          },
+                                          query: {
+                                            codeSearch: reports.join('|'),
+                                            codeFilter: true,
+                                            codeRegExp: true,
+                                          },
+                                        }"
+                                      >
+                                        <XIcon
+                                          name="warning"
+                                          :size="KUI_ICON_SIZE_40"
+                                          placement="right"
+                                        />
+                                      </XAction>
+                                    </template>
                                   </template>
                                   <XAction
                                     data-action
@@ -561,6 +597,34 @@
                                 :traffic="traffic?.outbounds[outbound.kri]"
                                 data-actionable
                               >
+                                <template #state>
+                                  <template
+                                    v-for="reports in [[...new Set(Object.entries(traffic?.warnings ?? {}).filter(([key]) => key.includes(outbound.kri)).map(([, report]) => report).flat())]]"
+                                    :key="typeof reports"
+                                  >
+                                    <XAction
+                                      v-if="reports.length"
+                                      data-action
+                                      :to="{
+                                        name: 'data-plane-connection-outbound-summary-stats-view',
+                                        params: {
+                                          connection: outbound.proxyResourceName,
+                                        },
+                                        query: {
+                                          codeSearch: reports.join('|'),
+                                          codeFilter: true,
+                                          codeRegExp: true,
+                                        },
+                                      }"
+                                    >
+                                      <XIcon
+                                        name="warning"
+                                        :size="KUI_ICON_SIZE_40"
+                                        placement="right"
+                                      />
+                                    </XAction>
+                                  </template>
+                                </template>
                                 <XAction
                                   data-action
                                   :to="{
