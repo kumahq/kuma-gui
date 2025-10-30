@@ -5,8 +5,7 @@ import { Policy, PolicyDataplane, PolicyResourceType } from './data'
 import { Kri } from '../kuma'
 import { DataplanePolicies } from './data/DataplanePolicies'
 import { DataplaneInboundPolicies, DataplaneOutboundPolicies } from './data/DataplaneTrafficPolicies'
-import { defineSources } from '../application/services/data-source'
-import { YAML } from '@/app/application'
+import { defineSources, YAML } from '@/app/application'
 import type { DataSourceResponse } from '@/app/application'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
@@ -47,7 +46,7 @@ export const sources = (api: KumaApi) => {
     '/meshes/:mesh/policy-path/:path/policy/:name': async (params) => {
       const { mesh, path, name } = params
 
-      if(Kri.isKriString(name)) {
+      if (Kri.isKriString(name)) {
         const { name } = params
         const res = await http.GET('/_kri/{kri}', {
           params: {
