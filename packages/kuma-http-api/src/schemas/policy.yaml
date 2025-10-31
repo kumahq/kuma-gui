@@ -1,0 +1,67 @@
+# We use these to make a "generic" policy that covers any type of legacy
+# policy and any type of targetRef policy
+openapi: 3.1.0
+components:
+  schemas:
+    Policy:
+      type: object
+      oneOf:
+        - $ref: '#/components/schemas/TargetRefPolicy'
+        - $ref: '#/components/schemas/LegacyPolicy'
+    TargetRefPolicy:
+      allOf:
+        - $ref: 'entity.yaml#/components/schemas/Entity'
+        - type: object
+          required:
+            - type
+            - name
+            - spec
+            - creationTime
+            - modificationTime
+          oneOf:
+            - $ref: '../openapi.yaml#/components/schemas/MeshAccessLogItem'
+      properties:
+        type:
+          description: the type of the resource
+          type: string
+        spec:
+          description: Spec is the specification of the Kuma Policy resource.
+          properties:
+            targetRef:
+              $ref: '../openapi.yaml#/components/schemas/MeshAccessLogItem/properties/spec/properties/targetRef'
+    LegacyPolicy:
+      allOf:
+        - $ref: 'entity.yaml#/components/schemas/Entity'
+        - type: object
+          required:
+            - type
+            - name
+            - spec
+            - creationTime
+            - modificationTime
+          properties:
+            type:
+              description: the type of the resource
+              type: string
+            mesh:
+              description: >-
+                Mesh is the name of the Kuma mesh this resource belongs to. It may
+                be omitted for cluster-scoped resources.
+              type: string
+              default: default
+            name:
+              description: Name of the Kuma resource
+              type: string
+            labels:
+              additionalProperties:
+                type: string
+              description: The labels to help identity resources
+              type: object
+            # having an optional spec.targetRef here is totally wrong but its what we've
+            # always had and legacy policies are being deleted soon so :shrug:
+            spec:
+              description: Spec is the specification of the Kuma Policy resource.
+              properties:
+                targetRef:
+                  $ref: '../openapi.yaml#/components/schemas/MeshAccessLogItem/properties/spec/properties/targetRef'
+

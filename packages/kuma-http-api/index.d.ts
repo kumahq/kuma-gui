@@ -9615,6 +9615,10 @@ export interface components {
         MeshInsightCollection: components["schemas"]["PagedCollection"] & {
             items?: components["schemas"]["MeshInsight"][];
         };
+        Policy: components["schemas"]["TargetRefPolicy"] | components["schemas"]["LegacyPolicy"];
+        PolicyCollection: components["schemas"]["PagedCollection"] & {
+            items?: components["schemas"]["Policy"][];
+        };
         PagedCollection: {
             total: number;
             items: Record<string, never>[];
@@ -9630,6 +9634,81 @@ export interface components {
             online?: number;
             offline?: number;
             partiallyDegraded?: number;
+        };
+        /**
+         * @description TargetRef is a reference to the resource the policy takes an effect on.
+         *     The resource could be either a real store object or virtual resource
+         *     defined in-place.
+         */
+        targetRef: {
+            /**
+             * @description Kind of the referenced resource
+             * @enum {string}
+             */
+            kind: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
+            /**
+             * @description Labels are used to select group of MeshServices that match labels. Either Labels or
+             *     Name and Namespace can be used.
+             */
+            labels?: {
+                [key: string]: string;
+            };
+            /** @description Mesh is reserved for future use to identify cross mesh resources. */
+            mesh?: string;
+            /**
+             * @description Name of the referenced resource. Can only be used with kinds: `MeshService`,
+             *     `MeshServiceSubset` and `MeshGatewayRoute`
+             */
+            name?: string;
+            /**
+             * @description Namespace specifies the namespace of target resource. If empty only resources in policy namespace
+             *     will be targeted.
+             */
+            namespace?: string;
+            /**
+             * @description ProxyTypes specifies the data plane types that are subject to the policy. When not specified,
+             *     all data plane types are targeted by the policy.
+             */
+            proxyTypes?: ("Sidecar" | "Gateway")[];
+            /**
+             * @description SectionName is used to target specific section of resource.
+             *     For example, you can target port from MeshService.ports[] by its name. Only traffic to this port will be affected.
+             */
+            sectionName?: string;
+            /**
+             * @description Tags used to select a subset of proxies by tags. Can only be used with kinds
+             *     `MeshSubset` and `MeshServiceSubset`
+             */
+            tags?: {
+                [key: string]: string;
+            };
+        };
+        TargetRefPolicy: {
+            /** @description the type of the resource */
+            type?: string;
+            /** @description Spec is the specification of the Kuma Policy resource. */
+            spec?: {
+                targetRef?: components["schemas"]["targetRef"];
+            };
+        } & (components["schemas"]["Entity"] & components["schemas"]["MeshAccessLogItem"]);
+        LegacyPolicy: components["schemas"]["Entity"] & {
+            /** @description the type of the resource */
+            type: string;
+            /**
+             * @description Mesh is the name of the Kuma mesh this resource belongs to. It may be omitted for cluster-scoped resources.
+             * @default default
+             */
+            mesh: string;
+            /** @description Name of the Kuma resource */
+            name: string;
+            /** @description The labels to help identity resources */
+            labels?: {
+                [key: string]: string;
+            };
+            /** @description Spec is the specification of the Kuma Policy resource. */
+            spec: {
+                targetRef?: components["schemas"]["targetRef"];
+            };
         };
     };
     responses: {
