@@ -54,7 +54,7 @@
     "vite": "^7.1.12",
     "vite-svg-loader": "^5.1.0",
     "vitepress": "^2.0.0-alpha.12",
-    "vitest": "^4.0.3"
+    "vitest": "^4.0.5"
   },
   "browserslist": [
     "> 1%",
