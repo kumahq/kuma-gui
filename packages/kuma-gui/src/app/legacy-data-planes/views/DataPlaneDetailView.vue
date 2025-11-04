@@ -34,15 +34,6 @@
             }"
           />
         </XNotification>
-        <XNotification
-          :notify="!!Object.keys(traffic?.warnings ?? {})?.length"
-          :data-testid="`warning-abnormal-traffic-stats`"
-          :uri="`data-planes.notifications.abnormal-traffic-stats.${props.data.id}`"
-        >
-          <XI18n
-            :path="`data-planes.notifications.abnormal-traffic-stats`"
-          />
-        </XNotification>
         <template
           v-for="{ bool, key, params, variant } in [
             {
@@ -483,10 +474,19 @@
                                     {{ t('data-planes.routes.item.unhealthy_inbound', { port: item.port }) }}
                                   </XIcon>
                                   <template
-                                    v-for="reports in [[...new Set(Object.entries(traffic?.warnings ?? {}).filter(([key]) => key.includes(item.clusterName)).map(([, report]) => report).flat())]]"
+                                    v-for="reports in [traffic?.inbounds[item.clusterName]?.$meta.alerts.reports ?? []]"
                                     v-else
                                     :key="typeof reports"
                                   >
+                                    <XNotification
+                                      :notify="reports.length > 0"
+                                      :data-testid="`warning-abnormal-traffic-stats`"
+                                      :uri="`data-planes.notifications.abnormal-traffic-stats.${props.data.id}`"
+                                    >
+                                      <XI18n
+                                        :path="`data-planes.notifications.abnormal-traffic-stats`"
+                                      />
+                                    </XNotification>
                                     <XAction
                                       v-if="reports.length"
                                       data-action
@@ -637,9 +637,18 @@
                                 >
                                   <template #state>
                                     <template
-                                      v-for="reports in [[...new Set(Object.entries(traffic?.warnings ?? {}).filter(([key]) => key.includes(name)).map(([, report]) => report).flat())]]"
+                                      v-for="reports in [traffic?.inbounds[name]?.$meta.alerts.reports ?? []]"
                                       :key="typeof reports"
                                     >
+                                      <XNotification
+                                        :notify="reports.length > 0"
+                                        :data-testid="`warning-abnormal-traffic-stats`"
+                                        :uri="`data-planes.notifications.abnormal-traffic-stats.${props.data.id}`"
+                                      >
+                                        <XI18n
+                                          :path="`data-planes.notifications.abnormal-traffic-stats`"
+                                        />
+                                      </XNotification>
                                       <XAction
                                         v-if="reports.length"
                                         data-action

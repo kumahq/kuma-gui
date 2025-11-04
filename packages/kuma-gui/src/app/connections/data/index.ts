@@ -1,3 +1,5 @@
+import { get } from '@/app/application'
+
 const protocols = ['http', 'tcp'] as const
 const appProtocols = ['http', 'tcp', 'grpc'] as const
 
@@ -5,39 +7,55 @@ const appProtocols = ['http', 'tcp', 'grpc'] as const
 const trailingPortRe = /_\d{1,5}\./
 const trailingPortRe2 = /_\d{1,5}/
 const meshServiceRe = /_(mz|m|ext){1}svc_\d{1,5}(-[a-z0-9]+)?$/
-const nonZeroRe = /[1-9]\d*/
-const monitoring = [
-  {
-    statRe: /cluster\..+\.circuit_breakers\..+\.cx_open/,
-    validateRe: nonZeroRe,
-    report: ['circuit_breakers', 'cx_open'],
+
+const isNonZero = (val: unknown) => parseInt(String(val), 10) === 0
+
+const monitoring = {
+  cluster: {
+    '*': {
+      circuit_breakers: {
+        '*': {
+          cx_open: {
+            report: (path: string) => [...[path.match(/circuit_breakers\..+\.cx_open/)?.[0] ?? []], 'circuit_breakers', 'cx_open'],
+            if: isNonZero,
+          },
+          cx_pool_open: {
+            report: (path: string) => [...[path.match(/circuit_breakers\..+\.cx_pool_open/)?.[0] ?? []], 'circuit_breakers', 'cx_pool_open'],
+            if: isNonZero,
+          },
+          rq_pending_open: {
+            report: (path: string) => [...[path.match(/circuit_breakers\..+\.rq_pending_open/)?.[0] ?? []], 'circuit_breakers', 'rq_pending_open'],
+            if: isNonZero,
+          },
+          rq_open: {
+            report: (path: string) => [...[path.match(/circuit_breakers\..+\.rq_open/)?.[0] ?? []], 'circuit_breakers', 'rq_open'],
+            if: isNonZero,
+          },
+          rq_retry_open: {
+            report: (path: string) => [...[path.match(/circuit_breakers\..+\.rq_retry_open/)?.[0] ?? []], 'circuit_breakers', 'rq_retry_open'],
+            if: isNonZero,
+          },
+        },
+      },
+      outlier_detection: {
+        '*': {
+          ejections_active: {
+            report: (path: string) => [...[path.match(/outlier_detection\..+\.ejections_active/)?.[0] ?? []], 'outlier_detection', 'ejections_active'],
+            if: isNonZero,
+          },
+        },
+      },
+    },
   },
-  {
-    statRe: /cluster\..+\.circuit_breakers\..+\.cx_pool_open/,
-    validateRe: nonZeroRe,
-    report: ['circuit_breakers', 'cx_pool_open'],
-  },
-  {
-    statRe: /cluster\..+\.circuit_breakers\..+\.rq_pending_open/,
-    validateRe: nonZeroRe,
-    report: ['circuit_breakers', 'rq_pending_open'],
-  },
-  {
-    statRe: /cluster\..+\.circuit_breakers\..+\.rq_open/,
-    validateRe: nonZeroRe,
-    report: ['circuit_breakers', 'rq_open'],
-  },
-  {
-    statRe: /cluster\..+\.circuit_breakers\..+\.rq_retry_open/,
-    validateRe: nonZeroRe,
-    report: ['circuit_breakers', 'rq_retry_open'],
-  },
-  {
-    statRe: /cluster\..+\.outlier_detection\..+\.ejections_active/,
-    validateRe: nonZeroRe,
-    report: ['outlier_detection', 'ejections_active'],
-  },
-]
+}
+
+const isEvaluatable = (o: unknown): o is { if: (p: unknown) => boolean, report: (p: string) => string } => {
+  return typeof o === 'object' && o !== null && 'if' in o && 'report' in o && typeof (o as any).if === 'function' && typeof (o as any).report === 'function'
+}
+
+const isNonNullableObject = (o: unknown): o is NonNullable<Record<string, unknown>> => {
+  return typeof o === 'object' && o !== null && o !== undefined
+}
 
 export const Stat = {
   fromCollection(items: string) {
@@ -45,8 +63,25 @@ export const Stat = {
   },
 }
 export const ConnectionCollection = {
+  monitor(item: Record<string, any>, key: string, prefix: string = '') {
+    const result: { reports: string[] } = { reports: [] }
+
+    const traverse = (tree: Record<string, unknown>, comparator: Record<string, unknown>, path: string) => {
+      for (const key in tree) {
+        const _path = `${path}.${key}`
+        if (isNonNullableObject(tree[key]) && (isNonNullableObject(comparator[key]) || '*' in comparator)) {
+          traverse(tree[key], comparator['*' in comparator ? '*' : key] as Record<string, unknown>, _path)
+        } else if(isEvaluatable(comparator[key]) && comparator[key].if(tree[key])) {
+          result.reports = Array.from(new Set([...result.reports, ...comparator[key].report(_path)]))
+        }
+      }
+    }
+
+    traverse(item, get(monitoring, key), prefix)
+
+    return result
+  },
   fromObject(item: Record<string, any>) {
-    const warnings: Record<string, string[]> = typeof item.warnings !== 'undefined' ? item.warnings : {}
     // look in `listener.<inbound-address_port>.<potential-protocol>.<cluster-name>.<...stats>`
     // following this we will end up with `listener.<inbound-address_port>.<definite-protocol>.<...stats>`
     const listener = typeof item.listener !== 'undefined'
@@ -56,6 +91,9 @@ export const ConnectionCollection = {
             const { http, ...tcp } = value
             const stats = {
               tcp,
+              $meta: {
+                alerts: { reports: [] as string[] },
+              },
             }
             if (typeof http !== 'undefined') {
               // check http protocol for existence i.e. `listener.<inbound-socket-address | clustername>.http.<cluster-name>.<...stats>`
@@ -95,11 +133,15 @@ export const ConnectionCollection = {
               zone: '',
               port: '',
             },
+            $meta: {
+              alerts: ConnectionCollection.monitor(value, 'cluster.*', `cluster.${cluster}`),
+            },
             tcp,
             ...(typeof http !== 'undefined' ? { http } : {}),
             ...(typeof http2 !== 'undefined' ? { http2 } : {}),
             ...(typeof grpc !== 'undefined' ? { grpc } : {}),
           }
+
           // sniff the name to see if we are a new type of service
           const found = cluster.match(meshServiceRe)
           if (found) {
@@ -171,15 +213,32 @@ export const ConnectionCollection = {
       'meshtrace_zipkin',
       'meshtrace_opentelemetry',
     ].some(item => key.startsWith(item))))
+
     return {
-      warnings,
       listener,
       cluster: withoutInternals,
     }
   },
 }
 
-// just does the initial response to JSON parsing
+/**
+ * The parsing function has exactly one job: to convert the flat stats line by line into a nested JSON object.
+ * @param {string} lines - raw string lines from the stats endpoint, separated by new lines
+ * @returns {Record<string, any>}
+ * @example
+ * const raw = `
+ * listener.0.0.0.0_8080.http.downstream_rq_2xx: 15
+ * `
+ * // {
+ * //   listener: {
+ * //     '0.0.0.0_8080': {
+ * //       http: {
+ * //         downstream_rq_2xx: 15,
+ * //       }
+ * //     }
+ * //   },
+ * // }
+ */
 const parse = (lines: string): Record<string, any> => {
   // for each line
   return lines.trim().split('\n').filter((item) => {
@@ -211,16 +270,6 @@ const parse = (lines: string): Record<string, any> => {
         return val
       }
     })(value.join(':').trim())
-    
-    for(const { statRe, validateRe, report } of monitoring) {
-      const found = key.match(statRe)
-      if(found && validateRe.test(String(val))) {
-        prev.warnings = {
-          ...prev.warnings,
-          [key]: report,
-        }
-      }
-    }
 
     // walk the path creating `json.objects: value`
     key.split('.').reduce<Record<string, any>>((prev, item, i, arr) => {
@@ -245,5 +294,5 @@ const parse = (lines: string): Record<string, any> => {
       }
     }, prev)
     return prev
-  }, { warnings: {} as Record<string, string[]> } )
+  }, {} )
 }
