@@ -1,5 +1,5 @@
 import type { DataSourceResponse } from '@/app/application'
-import { defineSources } from '@/app/application/services/data-source'
+import { defineSources } from '@/app/application'
 import { Stat, ConnectionCollection } from '@/app/connections/data/'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 

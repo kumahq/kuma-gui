@@ -1,9 +1,8 @@
 import { TarWriter } from '@gera2ld/tarjs'
 
 import { ZoneEgressOverview, ZoneEgress } from './data'
-import { YAML } from '@/app/application'
 import type { DataSourceResponse } from '@/app/application'
-import { defineSources } from '@/app/application/services/data-source'
+import { YAML , defineSources } from '@/app/application'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
 

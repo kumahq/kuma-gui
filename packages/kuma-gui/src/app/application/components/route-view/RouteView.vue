@@ -56,11 +56,12 @@
   </div>
 </template>
 <script lang="ts" setup generic="T extends Record<string, string | number | boolean | typeof Number | typeof String | typeof Boolean> = {}">
+import { DataSink, DataSource } from '@kumahq/data/vue'
 import { computed, provide, inject, ref, watch, onBeforeUnmount, reactive, useAttrs } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 import { ROUTE_VIEW_PARENT, ROUTE_VIEW_ROOT } from '.'
-import { useCan, useI18n, uniqueId, useEnv, get } from '../../index'
+import { useCan, useI18n, uniqueId, useEnv, get , useUri } from '../../index'
 import {
   urlParam,
   normalizeUrlParam,
@@ -68,9 +69,6 @@ import {
   createAttrsSetter,
   createTitleSetter,
 } from '../../utilities'
-import DataSink from '../data-source/DataSink.vue'
-import DataSource from '../data-source/DataSource.vue'
-import { useUri } from '@/app/application/services/data-source'
 import { sources } from '@/app/me/sources'
 import type { Ref } from 'vue'
 import type { RouteRecordRaw, RouteLocationNormalizedLoaded } from 'vue-router'

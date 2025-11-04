@@ -1,6 +1,6 @@
 import merge from 'deepmerge'
 
-import { defineSources } from '../application/services/data-source'
+import { defineSources } from '@/app/application'
 
 type Notification = {
   timestamp: number

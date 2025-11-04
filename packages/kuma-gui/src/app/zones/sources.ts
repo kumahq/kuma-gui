@@ -1,6 +1,6 @@
 import { ZoneOverview } from './data'
 import type { DataSourceResponse } from '@/app/application'
-import { defineSources } from '@/app/application/services/data-source'
+import { defineSources } from '@/app/application'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import { sources as zoneEgresses } from '@/app/zone-egresses/sources'
 import { sources as zoneIngresses } from '@/app/zone-ingresses/sources'
