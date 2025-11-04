@@ -6,7 +6,7 @@
       v-if="slots.default"
     >
       <XTeleportTemplate
-        v-if="props.notify"
+        v-if="shouldRender"
         :to="{ name: `${provider.uri}-${props.uri}` }"
       >
         <slot name="default" />
@@ -19,15 +19,12 @@
   </template>
 </template>
 <script lang="ts" setup>
-import { inject, onBeforeUnmount, onMounted, watch } from 'vue'
+import { inject, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 
+import type { XNotificationHubInjectable } from './XNotificationHub.vue'
 import type { AlertAppearance } from '@kong/kongponents'
-const provider = inject<{
-  set(uri: string, obj: { variant: AlertAppearance } ): void
-  delete(uri: string): void
-  reset(uri: string): void
-  uri: string
-}>('x-notification-hub')
+
+const provider = inject<XNotificationHubInjectable>('x-notification-hub')
 
 const props = withDefaults(defineProps<{
   uri: string
@@ -38,11 +35,19 @@ const props = withDefaults(defineProps<{
   notify: false,
 })
 
+/**
+ * `props.notify` is the default condition to render the notification.
+ * Still we need to check if a notification uri is already registered in the hub, to prevent duplicates.
+ * This ref is the source of truth to actually render the notification.
+ */
+const shouldRender = ref<boolean>(props.notify)
+
 const slots = defineSlots()
 watch(() => {
   return !!(props.notify && slots.default)
 }, (bool) => {
   if(typeof provider !== 'undefined') {
+    shouldRender.value = !provider.has(props.variant, props.uri) && props.notify
     if(bool) {
       provider.set(props.uri, props)
     } else {
@@ -53,6 +58,7 @@ watch(() => {
 if(slots.default) {
   onMounted(() => {
     if(typeof provider !== 'undefined') {
+      shouldRender.value = !provider.has(props.variant, props.uri) && props.notify
       if(props.notify) {
         provider.set(props.uri, props)
       } else {
