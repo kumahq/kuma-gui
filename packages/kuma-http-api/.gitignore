@@ -1,5 +1,3 @@
 kuma
-
-# build artifact after joining kuma/docs/generated/openapi.yaml and
-# our custom schemas. No need to track this, we are only interested in the final artifacts
-src/openapi.yaml
+# build artifact after splitting kuma/docs/generated/openapi.yaml
+generated/

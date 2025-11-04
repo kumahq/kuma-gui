@@ -1,0 +1,14 @@
+get:
+  parameters:
+    - $ref: '../parameters.yaml#/name'
+    - $ref: '../parameters.yaml#/size'
+    - $ref: '../parameters.yaml#/offset'
+    - $ref: '../parameters.yaml#/filter'
+  responses:
+    200:
+      description: '200'
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/MeshInsightCollection.yaml'
+

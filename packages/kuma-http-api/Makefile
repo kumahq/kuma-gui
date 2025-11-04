@@ -26,41 +26,28 @@ lint: .lint/js ## Dev: Run lint checks
 
 ## When amending the specs also see `make generate/oas-for-ts` in the main kuma
 ## repository to regenerate the specs before running `make build`
-KUMAHQ_HTTP_API := $(NPM_WORKSPACE_ROOT)/$(shell cat $(NPM_WORKSPACE_ROOT)/package-lock.json | jq -r '.packages | to_entries[] | select(.value.name == "@kumahq/kuma-http-api") | .key')
 .PHONY: build
-build: REDOCLY ?= $(shell $(MAKE) resolve/bin BIN=redocly PACKAGE=@redocly/cli)
-build: OPENAPI_TS ?= $(shell $(MAKE) resolve/bin BIN=openapi-typescript)
-build: OPENAPI_OVERLAYS ?= $(shell $(MAKE) resolve/bin BIN=overlayjs PACKAGE=openapi-overlays-js)
 build: ## Regenerate the TS types from kumahq/kuma OpenAPI specs
-	@$(REDOCLY) join \
-		./kuma/docs/generated/openapi.yaml \
-		./src/schemas/index.yaml \
-			-o ./src/openapi.yaml
-
-	@$(OPENAPI_OVERLAYS) \
-		--openapi ./src/openapi.yaml \
-		--overlay ./src/overlays/index.yaml > openapi.yaml
-
-	@$(OPENAPI_TS) \
-		$(KUMAHQ_HTTP_API)/openapi.yaml \
-		-o $(KUMAHQ_HTTP_API)/index.d.ts
+	@$(MAKE) \
+		-f ../config/src/mk/openapi.mk \
+			./index.d.ts \
+				OPENAPI_SRC=./kuma/docs/generated/openapi.yaml
 
 types/fetch:
 	@echo "Fetching latest kumahq/kuma@master..."
-	@cd $(KUMAHQ_HTTP_API) \
-		&& \
-			if [ -d "./kuma/.git" ]; then \
-				cd ./kuma \
-					&& git pull; \
-			else \
-				git clone https://github.com/kumahq/kuma.git \
-					--single-branch --branch=master \
-					--depth 1; \
-			fi
+	@if [ -d "./kuma/.git" ]; then \
+		cd ./kuma \
+			&& git pull; \
+	else \
+		git clone https://github.com/kumahq/kuma.git \
+			--single-branch --branch=master \
+			--depth 1; \
+	fi
 
 types/clean:
-	@echo "Removing cloned kuma repository at..."
-	@echo "$(KUMAHQ_HTTP_API)/kuma..."
+	@echo "Removing build artifacts and cloned kuma repository at..."
+	@echo "./kuma..."
 	@if $(MAKE) -s confirm ; then \
-		rm -rf $(KUMAHQ_HTTP_API)/kuma; \
+		rm -rf ./kuma; \
+		rm -rf ./build ./dist ./generated openapi.yaml index.d.ts; \
 	fi

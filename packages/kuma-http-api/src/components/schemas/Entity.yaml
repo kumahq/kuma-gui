@@ -1,0 +1,14 @@
+type: object
+required:
+  - type
+  - name
+  - creationTime
+  - modificationTime
+properties:
+  name:
+    type: string
+  creationTime:
+    type: string
+  modificationTime:
+    type: string
+

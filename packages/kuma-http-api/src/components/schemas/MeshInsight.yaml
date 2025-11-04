@@ -1,0 +1,61 @@
+allOf:
+  - $ref: 'Entity.yaml'
+  - type: object
+    properties:
+      type:
+        type: string
+        enum: ['MeshInsight']
+      lastSync:
+        type: string
+      dataplanes:
+        $ref: 'MeshInsightDataplaneStatistics.yaml'
+      dataplanesByType:
+        type: object
+        properties:
+          standard:
+            $ref: 'MeshInsightDataplaneStatistics.yaml'
+          gateway:
+            $ref: 'MeshInsightDataplaneStatistics.yaml'
+          gatewayBuiltin:
+            $ref: 'MeshInsightDataplaneStatistics.yaml'
+          gatewayDelegated:
+            $ref: 'MeshInsightDataplaneStatistics.yaml'
+      policies:
+        additionalProperties:
+          type: object
+          properties:
+            total:
+              type: number
+      resources:
+        additionalProperties:
+          type: object
+          properties:
+            total:
+              type: number
+      dpVersions:
+        type: object
+        properties:
+          kumaDp:
+            additionalProperties:
+              $ref: 'MeshInsightDataplaneStatistics.yaml'
+          envoy:
+            additionalProperties:
+              $ref: 'MeshInsightDataplaneStatistics.yaml'
+      mTLS:
+        type: object
+        properties:
+          issuedBackends:
+            additionalProperties:
+              $ref: 'MeshInsightDataplaneStatistics.yaml'
+          supportedBackends:
+            additionalProperties:
+              $ref: 'MeshInsightDataplaneStatistics.yaml'
+      services:
+        type: object
+        properties:
+          total:
+            type: number
+          internal:
+            type: number
+          external:
+            type: number
