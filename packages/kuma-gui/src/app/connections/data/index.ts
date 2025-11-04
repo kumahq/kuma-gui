@@ -8,7 +8,7 @@ const trailingPortRe = /_\d{1,5}\./
 const trailingPortRe2 = /_\d{1,5}/
 const meshServiceRe = /_(mz|m|ext){1}svc_\d{1,5}(-[a-z0-9]+)?$/
 
-const isNonZero = (val: unknown) => parseInt(String(val), 10) === 0
+const isNonZero = (val: unknown) => parseInt(String(val), 10) > 0
 
 const monitoring = {
   cluster: {
@@ -63,6 +63,12 @@ export const Stat = {
   },
 }
 export const ConnectionCollection = {
+  /**
+   * Traverse a given stats JSON and compare against the monitoring config
+   * @param item - stats JSON object
+   * @param key - monitoring key e.g. 'cluster.*', used to give a starting point in the monitoring config
+   * @param prefix - prefix to add to the path, the path is being used to create a report
+   */
   monitor(item: Record<string, any>, key: string, prefix: string = '') {
     const result: { reports: string[] } = { reports: [] }
 

@@ -42,6 +42,11 @@ describe('ConnectionCollection', () => {
             http: {
               downstream_rq_1xx: 0,
             },
+            $meta: {
+              alerts: {
+                reports: [],
+              },
+            },
           },
         },
         cluster: {
@@ -62,6 +67,11 @@ describe('ConnectionCollection', () => {
               success: 12,
               total: 12,
             },
+            $meta: {
+              alerts: {
+                reports: [],
+              },
+            },
           },
           self_inbound_dp_http: {
             $resourceMeta: {
@@ -72,6 +82,11 @@ describe('ConnectionCollection', () => {
               type: '',
               zone: '',
             },
+            $meta: {
+              alerts: {
+                reports: ['circuit_breakers.default.cx_open', 'circuit_breakers', 'cx_open'],
+              },
+            },
             tcp: {
               circuit_breakers: {
                 default: {
@@ -80,9 +95,6 @@ describe('ConnectionCollection', () => {
               },
             },
           },
-        },
-        warnings: {
-          'cluster.self_inbound_dp_http.circuit_breakers.default.cx_open': ['circuit_breakers', 'cx_open'],
         },
       }
       const actual = ConnectionCollection.fromObject(statsAsJSON())
@@ -145,9 +157,6 @@ function statsAsJSON() {
           },
         },
       },
-    },
-    warnings: {
-      'cluster.self_inbound_dp_http.circuit_breakers.default.cx_open': ['circuit_breakers', 'cx_open'],
     },
   }
 }
