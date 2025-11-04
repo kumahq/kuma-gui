@@ -17,23 +17,23 @@ const monitoring = {
         '*': {
           cx_open: {
             report: (path: string) => [...[path.match(/circuit_breakers\..+\.cx_open/)?.[0] ?? []], 'circuit_breakers', 'cx_open'],
-            if: isNonZero,
+            check: isNonZero,
           },
           cx_pool_open: {
             report: (path: string) => [...[path.match(/circuit_breakers\..+\.cx_pool_open/)?.[0] ?? []], 'circuit_breakers', 'cx_pool_open'],
-            if: isNonZero,
+            check: isNonZero,
           },
           rq_pending_open: {
             report: (path: string) => [...[path.match(/circuit_breakers\..+\.rq_pending_open/)?.[0] ?? []], 'circuit_breakers', 'rq_pending_open'],
-            if: isNonZero,
+            check: isNonZero,
           },
           rq_open: {
             report: (path: string) => [...[path.match(/circuit_breakers\..+\.rq_open/)?.[0] ?? []], 'circuit_breakers', 'rq_open'],
-            if: isNonZero,
+            check: isNonZero,
           },
           rq_retry_open: {
             report: (path: string) => [...[path.match(/circuit_breakers\..+\.rq_retry_open/)?.[0] ?? []], 'circuit_breakers', 'rq_retry_open'],
-            if: isNonZero,
+            check: isNonZero,
           },
         },
       },
@@ -41,7 +41,7 @@ const monitoring = {
         '*': {
           ejections_active: {
             report: (path: string) => [...[path.match(/outlier_detection\..+\.ejections_active/)?.[0] ?? []], 'outlier_detection', 'ejections_active'],
-            if: isNonZero,
+            check: isNonZero,
           },
         },
       },
@@ -49,12 +49,12 @@ const monitoring = {
   },
 }
 
-const isEvaluatable = (o: unknown): o is { if: (p: unknown) => boolean, report: (p: string) => string } => {
-  return typeof o === 'object' && o !== null && 'if' in o && 'report' in o && typeof (o as any).if === 'function' && typeof (o as any).report === 'function'
-}
-
 const isNonNullableObject = (o: unknown): o is NonNullable<Record<string, unknown>> => {
   return typeof o === 'object' && o !== null && o !== undefined
+}
+
+const isEvaluatable = (o: unknown): o is { check: (p: unknown) => boolean, report: (p: string) => string } => {
+  return isNonNullableObject(o) && 'check' in o && 'report' in o && typeof o.check === 'function' && typeof o.report === 'function'
 }
 
 export const Stat = {
@@ -71,7 +71,7 @@ export const ConnectionCollection = {
         const _path = `${path}.${key}`
         if (isNonNullableObject(tree[key]) && (isNonNullableObject(comparator[key]) || '*' in comparator)) {
           traverse(tree[key], comparator['*' in comparator ? '*' : key] as Record<string, unknown>, _path)
-        } else if(isEvaluatable(comparator[key]) && comparator[key].if(tree[key])) {
+        } else if(isEvaluatable(comparator[key]) && comparator[key].check(tree[key])) {
           result.reports = Array.from(new Set([...result.reports, ...comparator[key].report(_path)]))
         }
       }
