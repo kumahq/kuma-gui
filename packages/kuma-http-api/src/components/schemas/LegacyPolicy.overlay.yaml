@@ -8,6 +8,7 @@ actions:
     remove: true
   - target: '$.properties.kri'
     remove: true
+  # This removes the `type: 'MeshAccessLog'`
   - target: '$.properties.type.enum'
     remove: true
   - target: '$.properties'

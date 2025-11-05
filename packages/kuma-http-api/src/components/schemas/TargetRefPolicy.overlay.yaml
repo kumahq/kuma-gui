@@ -6,6 +6,7 @@ extends: ../../../generated/components/schemas/MeshAccessLogItem.yaml
 actions:
   - target: '$.properties.spec'
     remove: true
+  # This removes the `type: 'MeshAccessLog'`
   - target: '$.properties.type.enum'
     remove: true
   - target: '$.properties'
