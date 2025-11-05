@@ -1,0 +1,267 @@
+description: Successful response
+type: object
+properties:
+  type:
+    description: the type of the resource
+    type: string
+    enum:
+      - MeshMetric
+  mesh:
+    description: Mesh is the name of the Kuma mesh this resource belongs to. It may be omitted for cluster-scoped resources.
+    type: string
+    default: default
+  kri:
+    description: A unique identifier for this resource instance used by internal tooling and integrations. Typically derived from resource attributes and may be used for cross-references or indexing
+    type: string
+    example: kri_mm_default_zone-east_kuma-demo_mypolicy1_
+    readOnly: true
+  name:
+    description: Name of the Kuma resource
+    type: string
+  labels:
+    description: The labels to help identity resources
+    type: object
+    additionalProperties:
+      type: string
+  spec:
+    description: Spec is the specification of the Kuma MeshMetric resource.
+    type: object
+    properties:
+      default:
+        description: MeshMetric configuration.
+        type: object
+        properties:
+          applications:
+            description: Applications is a list of application that Dataplane Proxy will scrape
+            type: array
+            items:
+              properties:
+                address:
+                  description: Address on which an application listens.
+                  type: string
+                name:
+                  description: Name of the application to scrape
+                  type: string
+                path:
+                  description: Path on which an application expose HTTP endpoint with metrics.
+                  type: string
+                  default: /metrics
+                port:
+                  description: Port on which an application expose HTTP endpoint with metrics.
+                  type: integer
+                  format: int32
+              required:
+                - port
+              type: object
+          backends:
+            description: Backends list that will be used to collect metrics.
+            type: array
+            items:
+              properties:
+                openTelemetry:
+                  description: OpenTelemetry backend configuration
+                  type: object
+                  properties:
+                    endpoint:
+                      description: Endpoint for OpenTelemetry collector
+                      type: string
+                    refreshInterval:
+                      description: RefreshInterval defines how frequent metrics should be pushed to collector
+                      type: string
+                  required:
+                    - endpoint
+                prometheus:
+                  description: Prometheus backend configuration.
+                  type: object
+                  properties:
+                    clientId:
+                      description: ClientId of the Prometheus backend. Needed when using MADS for DP discovery.
+                      type: string
+                    path:
+                      description: Path on which a dataplane should expose HTTP endpoint with Prometheus metrics.
+                      type: string
+                      default: /metrics
+                    port:
+                      description: Port on which a dataplane should expose HTTP endpoint with Prometheus metrics.
+                      type: integer
+                      format: int32
+                      default: 5670
+                    tls:
+                      description: Configuration of TLS for prometheus listener.
+                      type: object
+                      properties:
+                        mode:
+                          description: Configuration of TLS for Prometheus listener.
+                          type: string
+                          default: Disabled
+                          enum:
+                            - Disabled
+                            - ProvidedTLS
+                            - ActiveMTLSBackend
+                type:
+                  description: Type of the backend that will be used to collect metrics. At the moment only Prometheus backend is available.
+                  type: string
+                  enum:
+                    - Prometheus
+                    - OpenTelemetry
+              required:
+                - type
+              type: object
+          sidecar:
+            description: Sidecar metrics collection configuration
+            type: object
+            properties:
+              includeUnused:
+                description: |-
+                  IncludeUnused if false will scrape only metrics that has been by sidecar (counters incremented
+                  at least once, gauges changed at least once, and histograms added to at
+                  least once). If true will scrape all metrics (even the ones with zeros).
+                  If not specified then the default value is false.
+                type: boolean
+              profiles:
+                description: Profiles allows to customize which metrics are published.
+                type: object
+                properties:
+                  appendProfiles:
+                    description: AppendProfiles allows to combine the metrics from multiple predefined profiles.
+                    type: array
+                    items:
+                      properties:
+                        name:
+                          description: 'Name of the predefined profile, one of: all, basic, none'
+                          type: string
+                          enum:
+                            - All
+                            - Basic
+                            - None
+                      required:
+                        - name
+                      type: object
+                  exclude:
+                    description: |-
+                      Exclude makes it possible to exclude groups of metrics from a resulting profile.
+                      Exclude is subordinate to Include.
+                    type: array
+                    items:
+                      properties:
+                        match:
+                          description: Match is the value used to match using particular Type
+                          type: string
+                        type:
+                          description: 'Type defined the type of selector, one of: prefix, regex, exact'
+                          type: string
+                          enum:
+                            - Prefix
+                            - Regex
+                            - Exact
+                            - Contains
+                      required:
+                        - match
+                        - type
+                      type: object
+                  include:
+                    description: |-
+                      Include makes it possible to include additional metrics in a selected profiles.
+                      Include takes precedence over Exclude.
+                    type: array
+                    items:
+                      properties:
+                        match:
+                          description: Match is the value used to match using particular Type
+                          type: string
+                        type:
+                          description: 'Type defined the type of selector, one of: prefix, regex, exact'
+                          type: string
+                          enum:
+                            - Prefix
+                            - Regex
+                            - Exact
+                            - Contains
+                      required:
+                        - match
+                        - type
+                      type: object
+      targetRef:
+        description: |-
+          TargetRef is a reference to the resource the policy takes an effect on.
+          The resource could be either a real store object or virtual resource
+          defined in-place.
+        type: object
+        properties:
+          kind:
+            description: Kind of the referenced resource
+            type: string
+            enum:
+              - Mesh
+              - MeshSubset
+              - MeshGateway
+              - MeshService
+              - MeshExternalService
+              - MeshMultiZoneService
+              - MeshServiceSubset
+              - MeshHTTPRoute
+              - Dataplane
+          labels:
+            description: |-
+              Labels are used to select group of MeshServices that match labels. Either Labels or
+              Name and Namespace can be used.
+            type: object
+            additionalProperties:
+              type: string
+          mesh:
+            description: Mesh is reserved for future use to identify cross mesh resources.
+            type: string
+          name:
+            description: |-
+              Name of the referenced resource. Can only be used with kinds: `MeshService`,
+              `MeshServiceSubset` and `MeshGatewayRoute`
+            type: string
+          namespace:
+            description: |-
+              Namespace specifies the namespace of target resource. If empty only resources in policy namespace
+              will be targeted.
+            type: string
+          proxyTypes:
+            description: |-
+              ProxyTypes specifies the data plane types that are subject to the policy. When not specified,
+              all data plane types are targeted by the policy.
+            type: array
+            items:
+              enum:
+                - Sidecar
+                - Gateway
+              type: string
+          sectionName:
+            description: |-
+              SectionName is used to target specific section of resource.
+              For example, you can target port from MeshService.ports[] by its name. Only traffic to this port will be affected.
+            type: string
+          tags:
+            description: |-
+              Tags used to select a subset of proxies by tags. Can only be used with kinds
+              `MeshSubset` and `MeshServiceSubset`
+            type: object
+            additionalProperties:
+              type: string
+        required:
+          - kind
+  creationTime:
+    description: Time at which the resource was created
+    type: string
+    format: date-time
+    example: '0001-01-01T00:00:00Z'
+    readOnly: true
+  modificationTime:
+    description: Time at which the resource was updated
+    type: string
+    format: date-time
+    example: '0001-01-01T00:00:00Z'
+    readOnly: true
+content:
+  application/json:
+    schema:
+      $ref: "MeshMetricItem.yaml"
+required:
+  - type
+  - name
+  - spec

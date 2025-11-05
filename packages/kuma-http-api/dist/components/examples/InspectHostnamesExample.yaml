@@ -1,0 +1,7 @@
+value:
+  total: 100
+  items:
+    - hostname: redis.redis-system.svc.east.mesh.local
+      zones:
+        - name: east
+        - name: west

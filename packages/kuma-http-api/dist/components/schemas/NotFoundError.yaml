@@ -1,0 +1,20 @@
+allOf:
+  - $ref: "Error.yaml"
+  - type: object
+    properties:
+      status:
+        description: |
+          The HTTP status code for NotFoundError MUST be 404.
+        type: integer
+        example: 404
+        enum:
+          - 404
+      title:
+        type: string
+        example: Not Found
+      type:
+        type: string
+        example: 'https://httpstatuses.com/404'
+      detail:
+        type: string
+        example: The requested resource was not found

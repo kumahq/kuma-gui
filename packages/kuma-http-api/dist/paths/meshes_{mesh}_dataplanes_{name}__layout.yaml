@@ -1,0 +1,24 @@
+get:
+  operationId: get-dataplanes-layout
+  summary: Get networking layout for this dataplane
+  description: Returns detailed dataplane networking layout with most important information on dataplane and list of its inbounds and outbounds
+  parameters:
+    - name: mesh
+      in: path
+      description: The mesh of the DPP to get the layout for.
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: The name of the DPP within the mesh to get the layout for.
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: "../components/responses/DataplaneNetworkingLayoutResponse.yaml"
+    '400':
+      $ref: "../components/responses/BadRequest.yaml"
+    '500':
+      $ref: "../components/responses/Internal.yaml"

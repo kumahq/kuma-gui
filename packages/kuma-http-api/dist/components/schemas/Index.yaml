@@ -1,0 +1,31 @@
+description: Some metadata about the service
+type: object
+properties:
+  hostname:
+    type: string
+  product:
+    description: 'The product line (Kuma for OSS, different for other distributions)'
+    type: string
+  version:
+    description: The semantic version of the server running
+    type: string
+  instanceId:
+    description: A unique id to identify the instance requested
+    type: string
+  clusterId:
+    description: A unique id to identify the cluster being connected to
+    type: string
+  gui:
+    description: The path to the GUI
+    type: string
+  basedOnKuma:
+    description: In case of an alternative distribution of Kuma the Kuma version this release is based on
+    type: string
+required:
+  - hostname
+  - product
+  - version
+  - instanceId
+  - clusterId
+  - gui
+title: Index

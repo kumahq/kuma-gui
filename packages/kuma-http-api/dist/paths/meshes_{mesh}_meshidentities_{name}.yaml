@@ -1,0 +1,76 @@
+get:
+  operationId: getMeshIdentity
+  summary: Returns MeshIdentity entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshIdentity
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: "../components/responses/MeshIdentityItem.yaml"
+    '404':
+      $ref: "../components/responses/NotFound.yaml"
+  tags:
+    - MeshIdentity
+put:
+  operationId: putMeshIdentity
+  summary: Creates or Updates MeshIdentity entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshIdentity
+      required: true
+      schema:
+        type: string
+  requestBody:
+    description: Put request
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../components/schemas/MeshIdentityItem.yaml"
+  responses:
+    '200':
+      $ref: "../components/responses/MeshIdentityCreateOrUpdateSuccessResponse.yaml"
+    '201':
+      $ref: "../components/responses/MeshIdentityCreateOrUpdateSuccessResponse.yaml"
+  tags:
+    - MeshIdentity
+delete:
+  operationId: deleteMeshIdentity
+  summary: Deletes MeshIdentity entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshIdentity
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: "../components/responses/MeshIdentityDeleteSuccessResponse.yaml"
+    '404':
+      $ref: "../components/responses/NotFound.yaml"
+  tags:
+    - MeshIdentity

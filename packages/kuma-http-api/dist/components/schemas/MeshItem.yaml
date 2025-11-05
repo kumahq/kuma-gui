@@ -1,0 +1,276 @@
+description: Successful response
+type: object
+properties:
+  constraints:
+    description: Constraints that applies to the mesh and its entities
+    type: object
+    properties:
+      dataplaneProxy:
+        description: |-
+          DataplaneProxyMembership defines a set of requirements for data plane
+          proxies to be a member of the mesh.
+        type: object
+        properties:
+          requirements:
+            description: |-
+              Requirements defines a set of requirements that data plane proxies must
+              fulfill in order to join the mesh. A data plane proxy must fulfill at
+              least one requirement in order to join the mesh. Empty list of allowed
+              requirements means that any proxy that is not explicitly denied can join.
+            type: array
+            items:
+              description: Rules defines a set of rules for data plane proxies to be member of the mesh.
+              properties:
+                tags:
+                  description: |-
+                    Tags defines set of required tags. You can specify '*' in value to
+                    require non empty value of tag
+                  type: object
+                  additionalProperties:
+                    type: string
+              type: object
+          restrictions:
+            description: |-
+              Restrictions defines a set of restrictions that data plane proxies cannot
+              fulfill in order to join the mesh. A data plane proxy cannot fulfill any
+              requirement in order to join the mesh.
+              Restrictions takes precedence over requirements.
+            type: array
+            items:
+              description: Rules defines a set of rules for data plane proxies to be member of the mesh.
+              properties:
+                tags:
+                  description: |-
+                    Tags defines set of required tags. You can specify '*' in value to
+                    require non empty value of tag
+                  type: object
+                  additionalProperties:
+                    type: string
+              type: object
+  labels:
+    type: object
+    additionalProperties:
+      type: string
+  logging:
+    description: |-
+      Logging settings.
+      +optional
+    type: object
+    properties:
+      backends:
+        description: List of available logging backends
+        type: array
+        items:
+          description: LoggingBackend defines logging backend available to mesh.
+          properties:
+            conf:
+              type: object
+              oneOf:
+                - $ref: "FileLoggingBackendConfig.yaml"
+                - $ref: "TcpLoggingBackendConfig.yaml"
+            format:
+              description: |-
+                Format of access logs. Placeholders available on
+                https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log
+              type: string
+            name:
+              description: |-
+                Name of the backend, can be then used in Mesh.logging.defaultBackend or in
+                TrafficLogging
+              type: string
+            type:
+              description: Type of the backend (Kuma ships with 'tcp' and 'file')
+              type: string
+          type: object
+      defaultBackend:
+        description: Name of the default backend
+        type: string
+  meshServices:
+    type: object
+    properties:
+      mode:
+        oneOf:
+          - type: string
+          - type: integer
+  metrics:
+    description: |-
+      Configuration for metrics collected and exposed by dataplanes.
+
+      Settings defined here become defaults for every dataplane in a given Mesh.
+      Additionally, it is also possible to further customize this configuration
+      for each dataplane individually using Dataplane resource.
+      +optional
+    type: object
+    properties:
+      backends:
+        description: List of available Metrics backends
+        type: array
+        items:
+          description: MetricsBackend defines metric backends
+          properties:
+            conf:
+              type: object
+              oneOf:
+                - $ref: "PrometheusMetricsBackendConfig.yaml"
+            name:
+              description: 'Name of the backend, can be then used in Mesh.metrics.enabledBackend'
+              type: string
+            type:
+              description: Type of the backend (Kuma ships with 'prometheus')
+              type: string
+          type: object
+      enabledBackend:
+        description: Name of the enabled backend
+        type: string
+  mtls:
+    description: |-
+      mTLS settings.
+      +optional
+    type: object
+    properties:
+      backends:
+        description: List of available Certificate Authority backends
+        type: array
+        items:
+          description: CertificateAuthorityBackend defines Certificate Authority backend
+          properties:
+            conf:
+              type: object
+              oneOf:
+                - $ref: "ProvidedCertificateAuthorityConfig.yaml"
+                - $ref: "BuiltinCertificateAuthorityConfig.yaml"
+            dpCert:
+              description: Dataplane certificate settings
+              type: object
+              properties:
+                requestTimeout:
+                  description: Timeout on request to CA for DP certificate generation and retrieval
+                  type: object
+                  properties:
+                    nanos:
+                      type: integer
+                    seconds:
+                      type: integer
+                rotation:
+                  description: Rotation settings
+                  type: object
+                  properties:
+                    expiration:
+                      description: Time after which generated certificate for Dataplane will expire
+                      type: string
+            mode:
+              description: |-
+                Mode defines the behaviour of inbound listeners with regard to traffic
+                encryption
+              oneOf:
+                - type: string
+                - type: integer
+            name:
+              description: Name of the backend
+              type: string
+            rootChain:
+              type: object
+              properties:
+                requestTimeout:
+                  description: |-
+                    Timeout on request for to CA for root certificate chain.
+                    If not specified, defaults to 10s.
+                  type: object
+                  properties:
+                    nanos:
+                      type: integer
+                    seconds:
+                      type: integer
+            type:
+              description: |-
+                Type of the backend. Has to be one of the loaded plugins (Kuma ships with
+                builtin and provided)
+              type: string
+          type: object
+      enabledBackend:
+        description: Name of the enabled backend
+        type: string
+      skipValidation:
+        description: 'If enabled, skips CA validation.'
+        type: boolean
+  name:
+    type: string
+  networking:
+    description: Networking settings of the mesh
+    type: object
+    properties:
+      outbound:
+        description: Outbound settings
+        type: object
+        properties:
+          passthrough:
+            description: Control the passthrough cluster
+            type: boolean
+  routing:
+    description: Routing settings of the mesh
+    type: object
+    properties:
+      defaultForbidMeshExternalServiceAccess:
+        description: |-
+          If true, blocks traffic to MeshExternalServices.
+          Default: false
+        type: boolean
+      localityAwareLoadBalancing:
+        description: Enable the Locality Aware Load Balancing
+        type: boolean
+      zoneEgress:
+        description: |-
+          Enable routing traffic to services in other zone or external services
+          through ZoneEgress. Default: false
+        type: boolean
+  skipCreatingInitialPolicies:
+    description: |-
+      List of policies to skip creating by default when the mesh is created.
+      e.g. TrafficPermission, MeshRetry, etc. An '*' can be used to skip all
+      policies.
+    type: array
+    items:
+      type: string
+  tracing:
+    description: |-
+      Tracing settings.
+      +optional
+    type: object
+    properties:
+      backends:
+        description: List of available tracing backends
+        type: array
+        items:
+          description: TracingBackend defines tracing backend available to mesh.
+          properties:
+            conf:
+              type: object
+              oneOf:
+                - $ref: "DatadogTracingBackendConfig.yaml"
+                - $ref: "ZipkinTracingBackendConfig.yaml"
+            name:
+              description: |-
+                Name of the backend, can be then used in Mesh.tracing.defaultBackend or in
+                TrafficTrace
+              type: string
+            sampling:
+              description: |-
+                Percentage of traces that will be sent to the backend (range 0.0 - 100.0).
+                Empty value defaults to 100.0%
+              type: number
+            type:
+              description: Type of the backend (Kuma ships with 'zipkin')
+              type: string
+          type: object
+      defaultBackend:
+        description: Name of the default backend
+        type: string
+  type:
+    type: string
+content:
+  application/json:
+    schema:
+      $ref: "MeshItem.yaml"
+required:
+  - type
+  - name

@@ -1,0 +1,18 @@
+type: object
+properties:
+  kind:
+    type: string
+  rules:
+    description: Computed list of routing rules
+    type: array
+    items:
+      $ref: "RouteRules.yaml"
+  origins:
+    description: The list of policies KRI that contributed to the 'conf'. The order is important as it reflects in what order confs were merged to get the resulting 'conf'.
+    type: array
+    items:
+      $ref: "PolicyOrigin.yaml"
+required:
+  - kind
+  - rules
+  - origins

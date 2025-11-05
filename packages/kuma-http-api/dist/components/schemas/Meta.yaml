@@ -1,0 +1,35 @@
+type: object
+properties:
+  type:
+    description: the type of this resource
+    type: string
+    example: Dataplane
+  mesh:
+    description: the mesh this resource is part of
+    type: string
+    example: default
+  name:
+    description: the name of the resource
+    type: string
+    example: my-resource
+  kri:
+    description: Kuma Resource Identifier (KRI) of the given resource
+    type: string
+    example: kri_mtp_default_zone-east_kuma-demo_mypolicy1_
+    readOnly: true
+    x-go-name: KRI
+  labels:
+    description: the label of the resource
+    type: object
+    example:
+      k8s.kuma.io/namespace: kuma-system
+      kuma.io/display-name: mtp
+      kuma.io/mesh: default
+      kuma.io/origin: zone
+    additionalProperties:
+      type: string
+required:
+  - type
+  - mesh
+  - name
+  - labels

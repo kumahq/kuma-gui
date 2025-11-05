@@ -1,0 +1,8 @@
+description: A response containing global insight.
+content:
+  application/json:
+    schema:
+      $ref: "../schemas/GlobalInsight.yaml"
+    examples:
+      Single control plane response:
+        $ref: "../examples/GlobalInsightExample.yaml"

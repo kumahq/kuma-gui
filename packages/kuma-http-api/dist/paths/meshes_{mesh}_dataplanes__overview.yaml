@@ -1,0 +1,16 @@
+get:
+  operationId: getDataplaneOverviewList
+  parameters:
+    - name: mesh
+      in: path
+      description: The mesh of the DPP to get the diff for.
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: "../components/responses/GetDataplaneOverviewListResponse.yaml"
+    '400':
+      $ref: "../components/responses/BadRequest.yaml"
+    '500':
+      $ref: "../components/responses/Internal.yaml"

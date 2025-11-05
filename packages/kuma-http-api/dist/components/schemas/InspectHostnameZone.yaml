@@ -1,0 +1,9 @@
+description: A name of the zone in which the hostname is available
+type: object
+properties:
+  name:
+    type: string
+    example: east
+required:
+  - name
+title: InspectHostnameZone

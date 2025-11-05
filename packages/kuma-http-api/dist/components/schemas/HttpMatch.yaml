@@ -1,0 +1,10 @@
+type: object
+properties:
+  hash:
+    type: string
+  match:
+    type: object
+    x-go-type: 'interface{}'
+required:
+  - hash
+  - match

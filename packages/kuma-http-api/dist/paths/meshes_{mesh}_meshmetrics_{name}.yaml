@@ -1,0 +1,76 @@
+get:
+  operationId: getMeshMetric
+  summary: Returns MeshMetric entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshMetric
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: "../components/responses/MeshMetricItem.yaml"
+    '404':
+      $ref: "../components/responses/NotFound.yaml"
+  tags:
+    - MeshMetric
+put:
+  operationId: putMeshMetric
+  summary: Creates or Updates MeshMetric entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshMetric
+      required: true
+      schema:
+        type: string
+  requestBody:
+    description: Put request
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../components/schemas/MeshMetricItem.yaml"
+  responses:
+    '200':
+      $ref: "../components/responses/MeshMetricCreateOrUpdateSuccessResponse.yaml"
+    '201':
+      $ref: "../components/responses/MeshMetricCreateOrUpdateSuccessResponse.yaml"
+  tags:
+    - MeshMetric
+delete:
+  operationId: deleteMeshMetric
+  summary: Deletes MeshMetric entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshMetric
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: "../components/responses/MeshMetricDeleteSuccessResponse.yaml"
+    '404':
+      $ref: "../components/responses/NotFound.yaml"
+  tags:
+    - MeshMetric

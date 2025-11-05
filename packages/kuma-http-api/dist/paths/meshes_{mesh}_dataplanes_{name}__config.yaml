@@ -1,0 +1,42 @@
+get:
+  operationId: get-dataplanes-xds-config
+  summary: 'Get a proxy XDS config on a CP, this endpoint is only available on zone CPs.'
+  description: 'Returns the [xds](https://www.envoyproxy.io/docs/envoy/latest/api-docs/xds_protocol) configuration of the proxy.'
+  parameters:
+    - name: mesh
+      in: path
+      description: The mesh of the DPP to get the diff for.
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: The name of the DPP within the mesh to get the diff for.
+      required: true
+      schema:
+        type: string
+    - name: shadow
+      in: query
+      description: |
+        When computing XDS config the CP take into account policies with 'kuma.io/effect: shadow' label
+      schema:
+        type: boolean
+        default: false
+    - name: include
+      in: query
+      description: |
+        An array of extra fields to include in the response. When `include=diff` the server computes a diff in JSONPatch format
+        between the current proxy XDS config and the config returned in the 'xds' field.
+      schema:
+        type: array
+        items:
+          type: string
+          enum:
+            - diff
+  responses:
+    '200':
+      $ref: "../components/responses/GetDataplaneXDSConfigResponse.yaml"
+    '400':
+      $ref: "../components/responses/BadRequest.yaml"
+    '500':
+      $ref: "../components/responses/Internal.yaml"

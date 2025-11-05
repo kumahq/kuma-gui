@@ -1,0 +1,76 @@
+get:
+  operationId: getDataplane
+  summary: Returns Dataplane entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the Dataplane
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: "../components/responses/DataplaneItem.yaml"
+    '404':
+      $ref: "../components/responses/NotFound.yaml"
+  tags:
+    - Dataplane
+put:
+  operationId: putDataplane
+  summary: Creates or Updates Dataplane entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the Dataplane
+      required: true
+      schema:
+        type: string
+  requestBody:
+    description: Put request
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../components/schemas/DataplaneItem.yaml"
+  responses:
+    '200':
+      $ref: "../components/responses/DataplaneCreateOrUpdateSuccessResponse.yaml"
+    '201':
+      $ref: "../components/responses/DataplaneCreateOrUpdateSuccessResponse.yaml"
+  tags:
+    - Dataplane
+delete:
+  operationId: deleteDataplane
+  summary: Deletes Dataplane entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the Dataplane
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: "../components/responses/DataplaneDeleteSuccessResponse.yaml"
+    '404':
+      $ref: "../components/responses/NotFound.yaml"
+  tags:
+    - Dataplane

@@ -1,0 +1,76 @@
+get:
+  operationId: getMeshService
+  summary: Returns MeshService entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshService
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: "../components/responses/MeshServiceItem.yaml"
+    '404':
+      $ref: "../components/responses/NotFound.yaml"
+  tags:
+    - MeshService
+put:
+  operationId: putMeshService
+  summary: Creates or Updates MeshService entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshService
+      required: true
+      schema:
+        type: string
+  requestBody:
+    description: Put request
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../components/schemas/MeshServiceItem.yaml"
+  responses:
+    '200':
+      $ref: "../components/responses/MeshServiceCreateOrUpdateSuccessResponse.yaml"
+    '201':
+      $ref: "../components/responses/MeshServiceCreateOrUpdateSuccessResponse.yaml"
+  tags:
+    - MeshService
+delete:
+  operationId: deleteMeshService
+  summary: Deletes MeshService entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshService
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: "../components/responses/MeshServiceDeleteSuccessResponse.yaml"
+    '404':
+      $ref: "../components/responses/NotFound.yaml"
+  tags:
+    - MeshService

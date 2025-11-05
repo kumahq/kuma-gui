@@ -1,0 +1,40 @@
+description: Successful response
+type: object
+properties:
+  labels:
+    type: object
+    additionalProperties:
+      type: string
+  name:
+    type: string
+  networking:
+    description: Networking defines the address and port of the Egress to listen on.
+    type: object
+    properties:
+      address:
+        description: Address on which inbound listener will be exposed
+        type: string
+      admin:
+        description: Admin contains configuration related to Envoy Admin API
+        type: object
+        properties:
+          port:
+            description: Port on which Envoy Admin API server will be listening
+            type: integer
+      port:
+        description: Port of the inbound interface that will forward requests to the service.
+        type: integer
+  type:
+    type: string
+  zone:
+    description: |-
+      Zone field contains Zone name where egress is serving, field will be
+      automatically set by Global Kuma CP
+    type: string
+content:
+  application/json:
+    schema:
+      $ref: "ZoneEgressItem.yaml"
+required:
+  - type
+  - name

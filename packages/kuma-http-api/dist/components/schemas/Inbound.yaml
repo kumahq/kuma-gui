@@ -1,0 +1,14 @@
+type: object
+properties:
+  name:
+    type: string
+  tags:
+    type: object
+    additionalProperties:
+      type: string
+    x-go-type: 'map[string]string'
+  port:
+    type: integer
+required:
+  - tags
+  - port

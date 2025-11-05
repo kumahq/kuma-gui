@@ -1,0 +1,76 @@
+get:
+  operationId: getMeshProxyPatch
+  summary: Returns MeshProxyPatch entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshProxyPatch
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: "../components/responses/MeshProxyPatchItem.yaml"
+    '404':
+      $ref: "../components/responses/NotFound.yaml"
+  tags:
+    - MeshProxyPatch
+put:
+  operationId: putMeshProxyPatch
+  summary: Creates or Updates MeshProxyPatch entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshProxyPatch
+      required: true
+      schema:
+        type: string
+  requestBody:
+    description: Put request
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../components/schemas/MeshProxyPatchItem.yaml"
+  responses:
+    '200':
+      $ref: "../components/responses/MeshProxyPatchCreateOrUpdateSuccessResponse.yaml"
+    '201':
+      $ref: "../components/responses/MeshProxyPatchCreateOrUpdateSuccessResponse.yaml"
+  tags:
+    - MeshProxyPatch
+delete:
+  operationId: deleteMeshProxyPatch
+  summary: Deletes MeshProxyPatch entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshProxyPatch
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: "../components/responses/MeshProxyPatchDeleteSuccessResponse.yaml"
+    '404':
+      $ref: "../components/responses/NotFound.yaml"
+  tags:
+    - MeshProxyPatch

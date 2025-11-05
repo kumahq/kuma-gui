@@ -1,0 +1,76 @@
+get:
+  operationId: getMeshAccessLog
+  summary: Returns MeshAccessLog entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshAccessLog
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: "../components/responses/MeshAccessLogItem.yaml"
+    '404':
+      $ref: "../components/responses/NotFound.yaml"
+  tags:
+    - MeshAccessLog
+put:
+  operationId: putMeshAccessLog
+  summary: Creates or Updates MeshAccessLog entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshAccessLog
+      required: true
+      schema:
+        type: string
+  requestBody:
+    description: Put request
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../components/schemas/MeshAccessLogItem.yaml"
+  responses:
+    '200':
+      $ref: "../components/responses/MeshAccessLogCreateOrUpdateSuccessResponse.yaml"
+    '201':
+      $ref: "../components/responses/MeshAccessLogCreateOrUpdateSuccessResponse.yaml"
+  tags:
+    - MeshAccessLog
+delete:
+  operationId: deleteMeshAccessLog
+  summary: Deletes MeshAccessLog entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshAccessLog
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: "../components/responses/MeshAccessLogDeleteSuccessResponse.yaml"
+    '404':
+      $ref: "../components/responses/NotFound.yaml"
+  tags:
+    - MeshAccessLog

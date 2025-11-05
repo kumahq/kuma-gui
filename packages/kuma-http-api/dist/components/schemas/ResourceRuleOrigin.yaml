@@ -1,0 +1,7 @@
+type: object
+properties:
+  resourceMeta:
+    $ref: "Meta.yaml"
+  ruleIndex:
+    description: index of the to-item in the policy
+    type: integer

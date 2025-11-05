@@ -1,0 +1,76 @@
+get:
+  operationId: getMeshLoadBalancingStrategy
+  summary: Returns MeshLoadBalancingStrategy entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshLoadBalancingStrategy
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: "../components/responses/MeshLoadBalancingStrategyItem.yaml"
+    '404':
+      $ref: "../components/responses/NotFound.yaml"
+  tags:
+    - MeshLoadBalancingStrategy
+put:
+  operationId: putMeshLoadBalancingStrategy
+  summary: Creates or Updates MeshLoadBalancingStrategy entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshLoadBalancingStrategy
+      required: true
+      schema:
+        type: string
+  requestBody:
+    description: Put request
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../components/schemas/MeshLoadBalancingStrategyItem.yaml"
+  responses:
+    '200':
+      $ref: "../components/responses/MeshLoadBalancingStrategyCreateOrUpdateSuccessResponse.yaml"
+    '201':
+      $ref: "../components/responses/MeshLoadBalancingStrategyCreateOrUpdateSuccessResponse.yaml"
+  tags:
+    - MeshLoadBalancingStrategy
+delete:
+  operationId: deleteMeshLoadBalancingStrategy
+  summary: Deletes MeshLoadBalancingStrategy entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshLoadBalancingStrategy
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: "../components/responses/MeshLoadBalancingStrategyDeleteSuccessResponse.yaml"
+    '404':
+      $ref: "../components/responses/NotFound.yaml"
+  tags:
+    - MeshLoadBalancingStrategy

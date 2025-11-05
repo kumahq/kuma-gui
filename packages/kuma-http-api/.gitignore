@@ -1,3 +1,4 @@
 kuma
 # build artifact after splitting kuma/docs/generated/openapi.yaml
 generated/
+!dist/

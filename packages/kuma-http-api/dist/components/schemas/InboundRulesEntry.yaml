@@ -1,0 +1,12 @@
+type: object
+properties:
+  inbound:
+    $ref: "Inbound.yaml"
+  rules:
+    description: 'The ''rules'' field is an array to allow for future expansion when ''matches'' conditions are added. Currently, it contains a single item.'
+    type: array
+    items:
+      $ref: "InboundRule.yaml"
+required:
+  - inbound
+  - rules

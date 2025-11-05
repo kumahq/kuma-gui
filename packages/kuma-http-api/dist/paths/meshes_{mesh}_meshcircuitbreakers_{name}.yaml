@@ -1,0 +1,76 @@
+get:
+  operationId: getMeshCircuitBreaker
+  summary: Returns MeshCircuitBreaker entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshCircuitBreaker
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: "../components/responses/MeshCircuitBreakerItem.yaml"
+    '404':
+      $ref: "../components/responses/NotFound.yaml"
+  tags:
+    - MeshCircuitBreaker
+put:
+  operationId: putMeshCircuitBreaker
+  summary: Creates or Updates MeshCircuitBreaker entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshCircuitBreaker
+      required: true
+      schema:
+        type: string
+  requestBody:
+    description: Put request
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../components/schemas/MeshCircuitBreakerItem.yaml"
+  responses:
+    '200':
+      $ref: "../components/responses/MeshCircuitBreakerCreateOrUpdateSuccessResponse.yaml"
+    '201':
+      $ref: "../components/responses/MeshCircuitBreakerCreateOrUpdateSuccessResponse.yaml"
+  tags:
+    - MeshCircuitBreaker
+delete:
+  operationId: deleteMeshCircuitBreaker
+  summary: Deletes MeshCircuitBreaker entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshCircuitBreaker
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: "../components/responses/MeshCircuitBreakerDeleteSuccessResponse.yaml"
+    '404':
+      $ref: "../components/responses/NotFound.yaml"
+  tags:
+    - MeshCircuitBreaker

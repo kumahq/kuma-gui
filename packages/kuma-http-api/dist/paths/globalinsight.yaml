@@ -1,0 +1,13 @@
+get:
+  operationId: get-global-insight
+  summary: Get Global Insight
+  description: Returns a Global Insight object
+  responses:
+    '200':
+      $ref: "../components/responses/GlobalInsightResponse.yaml"
+    '400':
+      $ref: "../components/responses/BadRequest.yaml"
+    '500':
+      $ref: "../components/responses/Internal.yaml"
+  tags:
+    - GlobalInsight

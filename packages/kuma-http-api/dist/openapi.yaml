@@ -1,0 +1,625 @@
+openapi: 3.1.0
+info:
+  title: Kuma API
+  description: Kuma API
+  version: v1alpha1
+paths:
+  /:
+    $ref: "paths/.yaml"
+  /_resources:
+    $ref: "paths/_resources.yaml"
+  /global-insight:
+    $ref: "paths/globalinsight.yaml"
+  '/meshes/{mesh}/{resourceType}/{resourceName}/_rules':
+    $ref: 'paths/meshes_{mesh}_{resourceType}_{resourceName}__rules.yaml'
+  '/meshes/{mesh}/dataplanes/{name}/_config':
+    $ref: 'paths/meshes_{mesh}_dataplanes_{name}__config.yaml'
+  '/meshes/{mesh}/dataplanes/{name}/_layout':
+    $ref: 'paths/meshes_{mesh}_dataplanes_{name}__layout.yaml'
+  '/meshes/{mesh}/dataplanes/{name}/_policies':
+    $ref: 'paths/meshes_{mesh}_dataplanes_{name}__policies.yaml'
+  '/meshes/{mesh}/dataplanes/{name}/_inbounds/{inbound-kri}/_policies':
+    $ref: 'paths/meshes_{mesh}_dataplanes_{name}__inbounds_{inboundkri}__policies.yaml'
+  '/meshes/{mesh}/dataplanes/{name}/_outbounds/{kri}/_policies':
+    $ref: 'paths/meshes_{mesh}_dataplanes_{name}__outbounds_{kri}__policies.yaml'
+  '/meshes/{mesh}/dataplanes/{name}/_outbounds/{kri}/_routes':
+    $ref: 'paths/meshes_{mesh}_dataplanes_{name}__outbounds_{kri}__routes.yaml'
+  '/meshes/{mesh}/dataplanes/{name}/_outbounds/{outbound-kri}/_routes/{route-kri}/_policies':
+    $ref: 'paths/meshes_{mesh}_dataplanes_{name}__outbounds_{outboundkri}__routes_{routekri}__policies.yaml'
+  '/meshes/{mesh}/{policyType}/{policyName}/_resources/dataplanes':
+    $ref: 'paths/meshes_{mesh}_{policyType}_{policyName}__resources_dataplanes.yaml'
+  '/meshes/{mesh}/{serviceType}/{serviceName}/_hostnames':
+    $ref: 'paths/meshes_{mesh}_{serviceType}_{serviceName}__hostnames.yaml'
+  '/meshes/{mesh}/meshaccesslogs/{name}':
+    $ref: 'paths/meshes_{mesh}_meshaccesslogs_{name}.yaml'
+  '/meshes/{mesh}/meshaccesslogs':
+    $ref: 'paths/meshes_{mesh}_meshaccesslogs.yaml'
+  '/meshes/{mesh}/meshcircuitbreakers/{name}':
+    $ref: 'paths/meshes_{mesh}_meshcircuitbreakers_{name}.yaml'
+  '/meshes/{mesh}/meshcircuitbreakers':
+    $ref: 'paths/meshes_{mesh}_meshcircuitbreakers.yaml'
+  '/meshes/{mesh}/meshfaultinjections/{name}':
+    $ref: 'paths/meshes_{mesh}_meshfaultinjections_{name}.yaml'
+  '/meshes/{mesh}/meshfaultinjections':
+    $ref: 'paths/meshes_{mesh}_meshfaultinjections.yaml'
+  '/meshes/{mesh}/meshhealthchecks/{name}':
+    $ref: 'paths/meshes_{mesh}_meshhealthchecks_{name}.yaml'
+  '/meshes/{mesh}/meshhealthchecks':
+    $ref: 'paths/meshes_{mesh}_meshhealthchecks.yaml'
+  '/meshes/{mesh}/meshhttproutes/{name}':
+    $ref: 'paths/meshes_{mesh}_meshhttproutes_{name}.yaml'
+  '/meshes/{mesh}/meshhttproutes':
+    $ref: 'paths/meshes_{mesh}_meshhttproutes.yaml'
+  '/meshes/{mesh}/meshloadbalancingstrategies/{name}':
+    $ref: 'paths/meshes_{mesh}_meshloadbalancingstrategies_{name}.yaml'
+  '/meshes/{mesh}/meshloadbalancingstrategies':
+    $ref: 'paths/meshes_{mesh}_meshloadbalancingstrategies.yaml'
+  '/meshes/{mesh}/meshmetrics/{name}':
+    $ref: 'paths/meshes_{mesh}_meshmetrics_{name}.yaml'
+  '/meshes/{mesh}/meshmetrics':
+    $ref: 'paths/meshes_{mesh}_meshmetrics.yaml'
+  '/meshes/{mesh}/meshpassthroughs/{name}':
+    $ref: 'paths/meshes_{mesh}_meshpassthroughs_{name}.yaml'
+  '/meshes/{mesh}/meshpassthroughs':
+    $ref: 'paths/meshes_{mesh}_meshpassthroughs.yaml'
+  '/meshes/{mesh}/meshproxypatches/{name}':
+    $ref: 'paths/meshes_{mesh}_meshproxypatches_{name}.yaml'
+  '/meshes/{mesh}/meshproxypatches':
+    $ref: 'paths/meshes_{mesh}_meshproxypatches.yaml'
+  '/meshes/{mesh}/meshratelimits/{name}':
+    $ref: 'paths/meshes_{mesh}_meshratelimits_{name}.yaml'
+  '/meshes/{mesh}/meshratelimits':
+    $ref: 'paths/meshes_{mesh}_meshratelimits.yaml'
+  '/meshes/{mesh}/meshretries/{name}':
+    $ref: 'paths/meshes_{mesh}_meshretries_{name}.yaml'
+  '/meshes/{mesh}/meshretries':
+    $ref: 'paths/meshes_{mesh}_meshretries.yaml'
+  '/meshes/{mesh}/meshtcproutes/{name}':
+    $ref: 'paths/meshes_{mesh}_meshtcproutes_{name}.yaml'
+  '/meshes/{mesh}/meshtcproutes':
+    $ref: 'paths/meshes_{mesh}_meshtcproutes.yaml'
+  '/meshes/{mesh}/meshtimeouts/{name}':
+    $ref: 'paths/meshes_{mesh}_meshtimeouts_{name}.yaml'
+  '/meshes/{mesh}/meshtimeouts':
+    $ref: 'paths/meshes_{mesh}_meshtimeouts.yaml'
+  '/meshes/{mesh}/meshtlses/{name}':
+    $ref: 'paths/meshes_{mesh}_meshtlses_{name}.yaml'
+  '/meshes/{mesh}/meshtlses':
+    $ref: 'paths/meshes_{mesh}_meshtlses.yaml'
+  '/meshes/{mesh}/meshtraces/{name}':
+    $ref: 'paths/meshes_{mesh}_meshtraces_{name}.yaml'
+  '/meshes/{mesh}/meshtraces':
+    $ref: 'paths/meshes_{mesh}_meshtraces.yaml'
+  '/meshes/{mesh}/meshtrafficpermissions/{name}':
+    $ref: 'paths/meshes_{mesh}_meshtrafficpermissions_{name}.yaml'
+  '/meshes/{mesh}/meshtrafficpermissions':
+    $ref: 'paths/meshes_{mesh}_meshtrafficpermissions.yaml'
+  '/meshes/{mesh}/dataplanes/{name}':
+    $ref: 'paths/meshes_{mesh}_dataplanes_{name}.yaml'
+  '/meshes/{mesh}/dataplanes':
+    $ref: 'paths/meshes_{mesh}_dataplanes.yaml'
+  '/meshes/{mesh}/dataplanes/{name}/_overview':
+    $ref: 'paths/meshes_{mesh}_dataplanes_{name}__overview.yaml'
+  '/meshes/{mesh}/dataplanes/_overview':
+    $ref: 'paths/meshes_{mesh}_dataplanes__overview.yaml'
+  '/meshes/{name}':
+    $ref: 'paths/meshes_{name}.yaml'
+  /meshes:
+    $ref: "paths/meshes.yaml"
+  '/meshes/{mesh}/meshgateways/{name}':
+    $ref: 'paths/meshes_{mesh}_meshgateways_{name}.yaml'
+  '/meshes/{mesh}/meshgateways':
+    $ref: 'paths/meshes_{mesh}_meshgateways.yaml'
+  '/meshes/{mesh}/secrets/{name}':
+    $ref: 'paths/meshes_{mesh}_secrets_{name}.yaml'
+  '/meshes/{mesh}/secrets':
+    $ref: 'paths/meshes_{mesh}_secrets.yaml'
+  '/zoneegresses/{name}':
+    $ref: 'paths/zoneegresses_{name}.yaml'
+  /zoneegresses:
+    $ref: "paths/zoneegresses.yaml"
+  '/zoneingresses/{name}':
+    $ref: 'paths/zoneingresses_{name}.yaml'
+  /zoneingresses:
+    $ref: "paths/zoneingresses.yaml"
+  '/hostnamegenerators/{name}':
+    $ref: 'paths/hostnamegenerators_{name}.yaml'
+  /hostnamegenerators:
+    $ref: "paths/hostnamegenerators.yaml"
+  '/meshes/{mesh}/meshexternalservices/{name}':
+    $ref: 'paths/meshes_{mesh}_meshexternalservices_{name}.yaml'
+  '/meshes/{mesh}/meshexternalservices':
+    $ref: 'paths/meshes_{mesh}_meshexternalservices.yaml'
+  '/meshes/{mesh}/meshidentities/{name}':
+    $ref: 'paths/meshes_{mesh}_meshidentities_{name}.yaml'
+  '/meshes/{mesh}/meshidentities':
+    $ref: 'paths/meshes_{mesh}_meshidentities.yaml'
+  '/meshes/{mesh}/meshmultizoneservices/{name}':
+    $ref: 'paths/meshes_{mesh}_meshmultizoneservices_{name}.yaml'
+  '/meshes/{mesh}/meshmultizoneservices':
+    $ref: 'paths/meshes_{mesh}_meshmultizoneservices.yaml'
+  '/meshes/{mesh}/meshservices/{name}':
+    $ref: 'paths/meshes_{mesh}_meshservices_{name}.yaml'
+  '/meshes/{mesh}/meshservices':
+    $ref: 'paths/meshes_{mesh}_meshservices.yaml'
+  '/meshes/{mesh}/meshtrusts/{name}':
+    $ref: 'paths/meshes_{mesh}_meshtrusts_{name}.yaml'
+  '/meshes/{mesh}/meshtrusts':
+    $ref: 'paths/meshes_{mesh}_meshtrusts.yaml'
+  '/_kri/{kri}':
+    $ref: 'paths/_kri_{kri}.yaml'
+  /config:
+    $ref: "paths/config.yaml"
+  /mesh-insights:
+    $ref: "paths/mesh-insights.yaml"
+  '/mesh-insights/{name}':
+    $ref: 'paths/mesh-insights_{name}.yaml'
+components:
+  schemas:
+    Index:
+      $ref: "components/schemas/Index.yaml"
+    ResourceTypeDescriptionList:
+      $ref: "components/schemas/ResourceTypeDescriptionList.yaml"
+    InspectDataplanesForPolicy:
+      $ref: "components/schemas/InspectDataplanesForPolicy.yaml"
+    DataplaneXDSConfig:
+      $ref: "components/schemas/DataplaneXDSConfig.yaml"
+    InspectRules:
+      $ref: "components/schemas/InspectRules.yaml"
+    BaseStatus:
+      $ref: "components/schemas/BaseStatus.yaml"
+    FullStatus:
+      $ref: "components/schemas/FullStatus.yaml"
+    ServicesStats:
+      $ref: "components/schemas/ServicesStats.yaml"
+    ZonesStats:
+      $ref: "components/schemas/ZonesStats.yaml"
+    DataplanesStats:
+      $ref: "components/schemas/DataplanesStats.yaml"
+    PoliciesStats:
+      $ref: "components/schemas/PoliciesStats.yaml"
+    ResourceStats:
+      $ref: "components/schemas/ResourceStats.yaml"
+    MeshesStats:
+      $ref: "components/schemas/MeshesStats.yaml"
+    schemas-GlobalInsight:
+      $ref: "components/schemas/schemas-GlobalInsight.yaml"
+    GlobalInsight:
+      $ref: "components/schemas/GlobalInsight.yaml"
+    InspectHostnames:
+      $ref: "components/schemas/InspectHostnames.yaml"
+    InspectHostname:
+      $ref: "components/schemas/InspectHostname.yaml"
+    InspectHostnameZone:
+      $ref: "components/schemas/InspectHostnameZone.yaml"
+    DataplaneNetworkingLayout:
+      $ref: "components/schemas/DataplaneNetworkingLayout.yaml"
+    InvalidParameters:
+      $ref: "components/schemas/InvalidParameters.yaml"
+    Error:
+      $ref: "components/schemas/Error.yaml"
+    PolicyDescription:
+      $ref: "components/schemas/PolicyDescription.yaml"
+    ResourceTypeDescription:
+      $ref: "components/schemas/ResourceTypeDescription.yaml"
+    Meta:
+      $ref: "components/schemas/Meta.yaml"
+    ProxyRule:
+      $ref: "components/schemas/ProxyRule.yaml"
+    RuleMatcher:
+      $ref: "components/schemas/RuleMatcher.yaml"
+    Rule:
+      $ref: "components/schemas/Rule.yaml"
+    ResourceRuleOrigin:
+      $ref: "components/schemas/ResourceRuleOrigin.yaml"
+    ResourceRule:
+      $ref: "components/schemas/ResourceRule.yaml"
+    Inbound:
+      $ref: "components/schemas/Inbound.yaml"
+    FromRule:
+      $ref: "components/schemas/FromRule.yaml"
+    InboundRule:
+      $ref: "components/schemas/InboundRule.yaml"
+    InboundRulesEntry:
+      $ref: "components/schemas/InboundRulesEntry.yaml"
+    InspectRule:
+      $ref: "components/schemas/InspectRule.yaml"
+    HttpMatch:
+      $ref: "components/schemas/HttpMatch.yaml"
+    JsonPatchItem:
+      $ref: "components/schemas/JsonPatchItem.yaml"
+    DataplaneInbound:
+      $ref: "components/schemas/DataplaneInbound.yaml"
+    DataplaneOutbound:
+      $ref: "components/schemas/DataplaneOutbound.yaml"
+    PolicyOrigin:
+      $ref: "components/schemas/PolicyOrigin.yaml"
+    PolicyConf:
+      $ref: "components/schemas/PolicyConf.yaml"
+    PoliciesList:
+      $ref: "components/schemas/PoliciesList.yaml"
+    PolicyRule:
+      $ref: "components/schemas/PolicyRule.yaml"
+    InboundPolicyConf:
+      $ref: "components/schemas/InboundPolicyConf.yaml"
+    InboundPoliciesList:
+      $ref: "components/schemas/InboundPoliciesList.yaml"
+    RouteRules:
+      $ref: "components/schemas/RouteRules.yaml"
+    RouteConf:
+      $ref: "components/schemas/RouteConf.yaml"
+    RoutesList:
+      $ref: "components/schemas/RoutesList.yaml"
+    NotFoundError:
+      $ref: "components/schemas/NotFoundError.yaml"
+    MeshAccessLogItem:
+      $ref: "components/schemas/MeshAccessLogItem.yaml"
+    MeshCircuitBreakerItem:
+      $ref: "components/schemas/MeshCircuitBreakerItem.yaml"
+    MeshFaultInjectionItem:
+      $ref: "components/schemas/MeshFaultInjectionItem.yaml"
+    MeshHealthCheckItem:
+      $ref: "components/schemas/MeshHealthCheckItem.yaml"
+    MeshHTTPRouteItem:
+      $ref: "components/schemas/MeshHTTPRouteItem.yaml"
+    MeshLoadBalancingStrategyItem:
+      $ref: "components/schemas/MeshLoadBalancingStrategyItem.yaml"
+    MeshMetricItem:
+      $ref: "components/schemas/MeshMetricItem.yaml"
+    MeshPassthroughItem:
+      $ref: "components/schemas/MeshPassthroughItem.yaml"
+    MeshProxyPatchItem:
+      $ref: "components/schemas/MeshProxyPatchItem.yaml"
+    MeshRateLimitItem:
+      $ref: "components/schemas/MeshRateLimitItem.yaml"
+    MeshRetryItem:
+      $ref: "components/schemas/MeshRetryItem.yaml"
+    MeshTCPRouteItem:
+      $ref: "components/schemas/MeshTCPRouteItem.yaml"
+    MeshTimeoutItem:
+      $ref: "components/schemas/MeshTimeoutItem.yaml"
+    MeshTLSItem:
+      $ref: "components/schemas/MeshTLSItem.yaml"
+    MeshTraceItem:
+      $ref: "components/schemas/MeshTraceItem.yaml"
+    MeshTrafficPermissionItem:
+      $ref: "components/schemas/MeshTrafficPermissionItem.yaml"
+    BuiltinCertificateAuthorityConfig:
+      $ref: "components/schemas/BuiltinCertificateAuthorityConfig.yaml"
+    DatadogTracingBackendConfig:
+      $ref: "components/schemas/DatadogTracingBackendConfig.yaml"
+    DataplaneItem:
+      $ref: "components/schemas/DataplaneItem.yaml"
+    PrometheusMetricsBackendConfig:
+      $ref: "components/schemas/PrometheusMetricsBackendConfig.yaml"
+    DataplaneOverviewWithMeta:
+      $ref: "components/schemas/DataplaneOverviewWithMeta.yaml"
+    DataplaneOverview:
+      $ref: "components/schemas/DataplaneOverview.yaml"
+    DataSource:
+      $ref: "components/schemas/DataSource.yaml"
+    DataSource_File:
+      $ref: "components/schemas/DataSource_File.yaml"
+    DataSource_Inline:
+      $ref: "components/schemas/DataSource_Inline.yaml"
+    DataSource_InlineString:
+      $ref: "components/schemas/DataSource_InlineString.yaml"
+    DataSource_Secret:
+      $ref: "components/schemas/DataSource_Secret.yaml"
+    FileLoggingBackendConfig:
+      $ref: "components/schemas/FileLoggingBackendConfig.yaml"
+    MeshItem:
+      $ref: "components/schemas/MeshItem.yaml"
+    TcpLoggingBackendConfig:
+      $ref: "components/schemas/TcpLoggingBackendConfig.yaml"
+    ProvidedCertificateAuthorityConfig:
+      $ref: "components/schemas/ProvidedCertificateAuthorityConfig.yaml"
+    ZipkinTracingBackendConfig:
+      $ref: "components/schemas/ZipkinTracingBackendConfig.yaml"
+    MeshGatewayItem:
+      $ref: "components/schemas/MeshGatewayItem.yaml"
+    SecretItem:
+      $ref: "components/schemas/SecretItem.yaml"
+    Zone:
+      $ref: "components/schemas/Zone.yaml"
+    ZoneEgressItem:
+      $ref: "components/schemas/ZoneEgressItem.yaml"
+    ZoneIngressItem:
+      $ref: "components/schemas/ZoneIngressItem.yaml"
+    HostnameGeneratorItem:
+      $ref: "components/schemas/HostnameGeneratorItem.yaml"
+    MeshExternalServiceItem:
+      $ref: "components/schemas/MeshExternalServiceItem.yaml"
+    MeshIdentityItem:
+      $ref: "components/schemas/MeshIdentityItem.yaml"
+    MeshMultiZoneServiceItem:
+      $ref: "components/schemas/MeshMultiZoneServiceItem.yaml"
+    MeshServiceItem:
+      $ref: "components/schemas/MeshServiceItem.yaml"
+    MeshTrustItem:
+      $ref: "components/schemas/MeshTrustItem.yaml"
+    Policy:
+      $ref: "components/schemas/Policy.yaml"
+    PolicyCollection:
+      $ref: "components/schemas/PolicyCollection.yaml"
+    LegacyPolicy:
+      $ref: "components/schemas/LegacyPolicy.yaml"
+    TargetRefPolicy:
+      $ref: "components/schemas/TargetRefPolicy.yaml"
+  examples:
+    GlobalInsightExample:
+      $ref: "components/examples/GlobalInsightExample.yaml"
+    InspectDataplanesForPolicyExample:
+      $ref: "components/examples/InspectDataplanesForPolicyExample.yaml"
+    InspectHostnamesExample:
+      $ref: "components/examples/InspectHostnamesExample.yaml"
+  responses:
+    IndexResponse:
+      $ref: "components/responses/IndexResponse.yaml"
+    ResourceTypeDescriptionListResponse:
+      $ref: "components/responses/ResourceTypeDescriptionListResponse.yaml"
+    GlobalInsightResponse:
+      $ref: "components/responses/GlobalInsightResponse.yaml"
+    InspectDataplanesForPolicyResponse:
+      $ref: "components/responses/InspectDataplanesForPolicyResponse.yaml"
+    GetDataplaneXDSConfigResponse:
+      $ref: "components/responses/GetDataplaneXDSConfigResponse.yaml"
+    InspectRulesResponse:
+      $ref: "components/responses/InspectRulesResponse.yaml"
+    InspectHostnamesResponse:
+      $ref: "components/responses/InspectHostnamesResponse.yaml"
+    DataplaneNetworkingLayoutResponse:
+      $ref: "components/responses/DataplaneNetworkingLayoutResponse.yaml"
+    ProxyPolicyConfResponse:
+      $ref: "components/responses/ProxyPolicyConfResponse.yaml"
+    InboundPolicyConfResponse:
+      $ref: "components/responses/InboundPolicyConfResponse.yaml"
+    OutboundPolicyConfResponse:
+      $ref: "components/responses/OutboundPolicyConfResponse.yaml"
+    RoutesListResponse:
+      $ref: "components/responses/RoutesListResponse.yaml"
+    RoutePolicyConfResponse:
+      $ref: "components/responses/RoutePolicyConfResponse.yaml"
+    BadRequest:
+      $ref: "components/responses/BadRequest.yaml"
+    Internal:
+      $ref: "components/responses/Internal.yaml"
+    NotFound:
+      $ref: "components/responses/NotFound.yaml"
+    MeshAccessLogItem:
+      $ref: "components/responses/MeshAccessLogItem.yaml"
+    MeshAccessLogList:
+      $ref: "components/responses/MeshAccessLogList.yaml"
+    MeshAccessLogCreateOrUpdateSuccessResponse:
+      $ref: "components/responses/MeshAccessLogCreateOrUpdateSuccessResponse.yaml"
+    MeshAccessLogDeleteSuccessResponse:
+      $ref: "components/responses/MeshAccessLogDeleteSuccessResponse.yaml"
+    MeshCircuitBreakerItem:
+      $ref: "components/responses/MeshCircuitBreakerItem.yaml"
+    MeshCircuitBreakerList:
+      $ref: "components/responses/MeshCircuitBreakerList.yaml"
+    MeshCircuitBreakerCreateOrUpdateSuccessResponse:
+      $ref: "components/responses/MeshCircuitBreakerCreateOrUpdateSuccessResponse.yaml"
+    MeshCircuitBreakerDeleteSuccessResponse:
+      $ref: "components/responses/MeshCircuitBreakerDeleteSuccessResponse.yaml"
+    MeshFaultInjectionItem:
+      $ref: "components/responses/MeshFaultInjectionItem.yaml"
+    MeshFaultInjectionList:
+      $ref: "components/responses/MeshFaultInjectionList.yaml"
+    MeshFaultInjectionCreateOrUpdateSuccessResponse:
+      $ref: "components/responses/MeshFaultInjectionCreateOrUpdateSuccessResponse.yaml"
+    MeshFaultInjectionDeleteSuccessResponse:
+      $ref: "components/responses/MeshFaultInjectionDeleteSuccessResponse.yaml"
+    MeshHealthCheckItem:
+      $ref: "components/responses/MeshHealthCheckItem.yaml"
+    MeshHealthCheckList:
+      $ref: "components/responses/MeshHealthCheckList.yaml"
+    MeshHealthCheckCreateOrUpdateSuccessResponse:
+      $ref: "components/responses/MeshHealthCheckCreateOrUpdateSuccessResponse.yaml"
+    MeshHealthCheckDeleteSuccessResponse:
+      $ref: "components/responses/MeshHealthCheckDeleteSuccessResponse.yaml"
+    MeshHTTPRouteItem:
+      $ref: "components/responses/MeshHTTPRouteItem.yaml"
+    MeshHTTPRouteList:
+      $ref: "components/responses/MeshHTTPRouteList.yaml"
+    MeshHTTPRouteCreateOrUpdateSuccessResponse:
+      $ref: "components/responses/MeshHTTPRouteCreateOrUpdateSuccessResponse.yaml"
+    MeshHTTPRouteDeleteSuccessResponse:
+      $ref: "components/responses/MeshHTTPRouteDeleteSuccessResponse.yaml"
+    MeshLoadBalancingStrategyItem:
+      $ref: "components/responses/MeshLoadBalancingStrategyItem.yaml"
+    MeshLoadBalancingStrategyList:
+      $ref: "components/responses/MeshLoadBalancingStrategyList.yaml"
+    MeshLoadBalancingStrategyCreateOrUpdateSuccessResponse:
+      $ref: "components/responses/MeshLoadBalancingStrategyCreateOrUpdateSuccessResponse.yaml"
+    MeshLoadBalancingStrategyDeleteSuccessResponse:
+      $ref: "components/responses/MeshLoadBalancingStrategyDeleteSuccessResponse.yaml"
+    MeshMetricItem:
+      $ref: "components/responses/MeshMetricItem.yaml"
+    MeshMetricList:
+      $ref: "components/responses/MeshMetricList.yaml"
+    MeshMetricCreateOrUpdateSuccessResponse:
+      $ref: "components/responses/MeshMetricCreateOrUpdateSuccessResponse.yaml"
+    MeshMetricDeleteSuccessResponse:
+      $ref: "components/responses/MeshMetricDeleteSuccessResponse.yaml"
+    MeshPassthroughItem:
+      $ref: "components/responses/MeshPassthroughItem.yaml"
+    MeshPassthroughList:
+      $ref: "components/responses/MeshPassthroughList.yaml"
+    MeshPassthroughCreateOrUpdateSuccessResponse:
+      $ref: "components/responses/MeshPassthroughCreateOrUpdateSuccessResponse.yaml"
+    MeshPassthroughDeleteSuccessResponse:
+      $ref: "components/responses/MeshPassthroughDeleteSuccessResponse.yaml"
+    MeshProxyPatchItem:
+      $ref: "components/responses/MeshProxyPatchItem.yaml"
+    MeshProxyPatchList:
+      $ref: "components/responses/MeshProxyPatchList.yaml"
+    MeshProxyPatchCreateOrUpdateSuccessResponse:
+      $ref: "components/responses/MeshProxyPatchCreateOrUpdateSuccessResponse.yaml"
+    MeshProxyPatchDeleteSuccessResponse:
+      $ref: "components/responses/MeshProxyPatchDeleteSuccessResponse.yaml"
+    MeshRateLimitItem:
+      $ref: "components/responses/MeshRateLimitItem.yaml"
+    MeshRateLimitList:
+      $ref: "components/responses/MeshRateLimitList.yaml"
+    MeshRateLimitCreateOrUpdateSuccessResponse:
+      $ref: "components/responses/MeshRateLimitCreateOrUpdateSuccessResponse.yaml"
+    MeshRateLimitDeleteSuccessResponse:
+      $ref: "components/responses/MeshRateLimitDeleteSuccessResponse.yaml"
+    MeshRetryItem:
+      $ref: "components/responses/MeshRetryItem.yaml"
+    MeshRetryList:
+      $ref: "components/responses/MeshRetryList.yaml"
+    MeshRetryCreateOrUpdateSuccessResponse:
+      $ref: "components/responses/MeshRetryCreateOrUpdateSuccessResponse.yaml"
+    MeshRetryDeleteSuccessResponse:
+      $ref: "components/responses/MeshRetryDeleteSuccessResponse.yaml"
+    MeshTCPRouteItem:
+      $ref: "components/responses/MeshTCPRouteItem.yaml"
+    MeshTCPRouteList:
+      $ref: "components/responses/MeshTCPRouteList.yaml"
+    MeshTCPRouteCreateOrUpdateSuccessResponse:
+      $ref: "components/responses/MeshTCPRouteCreateOrUpdateSuccessResponse.yaml"
+    MeshTCPRouteDeleteSuccessResponse:
+      $ref: "components/responses/MeshTCPRouteDeleteSuccessResponse.yaml"
+    MeshTimeoutItem:
+      $ref: "components/responses/MeshTimeoutItem.yaml"
+    MeshTimeoutList:
+      $ref: "components/responses/MeshTimeoutList.yaml"
+    MeshTimeoutCreateOrUpdateSuccessResponse:
+      $ref: "components/responses/MeshTimeoutCreateOrUpdateSuccessResponse.yaml"
+    MeshTimeoutDeleteSuccessResponse:
+      $ref: "components/responses/MeshTimeoutDeleteSuccessResponse.yaml"
+    MeshTLSItem:
+      $ref: "components/responses/MeshTLSItem.yaml"
+    MeshTLSList:
+      $ref: "components/responses/MeshTLSList.yaml"
+    MeshTLSCreateOrUpdateSuccessResponse:
+      $ref: "components/responses/MeshTLSCreateOrUpdateSuccessResponse.yaml"
+    MeshTLSDeleteSuccessResponse:
+      $ref: "components/responses/MeshTLSDeleteSuccessResponse.yaml"
+    MeshTraceItem:
+      $ref: "components/responses/MeshTraceItem.yaml"
+    MeshTraceList:
+      $ref: "components/responses/MeshTraceList.yaml"
+    MeshTraceCreateOrUpdateSuccessResponse:
+      $ref: "components/responses/MeshTraceCreateOrUpdateSuccessResponse.yaml"
+    MeshTraceDeleteSuccessResponse:
+      $ref: "components/responses/MeshTraceDeleteSuccessResponse.yaml"
+    MeshTrafficPermissionItem:
+      $ref: "components/responses/MeshTrafficPermissionItem.yaml"
+    MeshTrafficPermissionList:
+      $ref: "components/responses/MeshTrafficPermissionList.yaml"
+    MeshTrafficPermissionCreateOrUpdateSuccessResponse:
+      $ref: "components/responses/MeshTrafficPermissionCreateOrUpdateSuccessResponse.yaml"
+    MeshTrafficPermissionDeleteSuccessResponse:
+      $ref: "components/responses/MeshTrafficPermissionDeleteSuccessResponse.yaml"
+    DataplaneItem:
+      $ref: "components/responses/DataplaneItem.yaml"
+    DataplaneList:
+      $ref: "components/responses/DataplaneList.yaml"
+    DataplaneCreateOrUpdateSuccessResponse:
+      $ref: "components/responses/DataplaneCreateOrUpdateSuccessResponse.yaml"
+    DataplaneDeleteSuccessResponse:
+      $ref: "components/responses/DataplaneDeleteSuccessResponse.yaml"
+    GetDataplaneOverviewResponse:
+      $ref: "components/responses/GetDataplaneOverviewResponse.yaml"
+    GetDataplaneOverviewListResponse:
+      $ref: "components/responses/GetDataplaneOverviewListResponse.yaml"
+    MeshItem:
+      $ref: "components/responses/MeshItem.yaml"
+    MeshList:
+      $ref: "components/responses/MeshList.yaml"
+    MeshCreateOrUpdateSuccessResponse:
+      $ref: "components/responses/MeshCreateOrUpdateSuccessResponse.yaml"
+    MeshDeleteSuccessResponse:
+      $ref: "components/responses/MeshDeleteSuccessResponse.yaml"
+    MeshGatewayItem:
+      $ref: "components/responses/MeshGatewayItem.yaml"
+    MeshGatewayList:
+      $ref: "components/responses/MeshGatewayList.yaml"
+    MeshGatewayCreateOrUpdateSuccessResponse:
+      $ref: "components/responses/MeshGatewayCreateOrUpdateSuccessResponse.yaml"
+    MeshGatewayDeleteSuccessResponse:
+      $ref: "components/responses/MeshGatewayDeleteSuccessResponse.yaml"
+    SecretItem:
+      $ref: "components/responses/SecretItem.yaml"
+    SecretList:
+      $ref: "components/responses/SecretList.yaml"
+    SecretCreateOrUpdateSuccessResponse:
+      $ref: "components/responses/SecretCreateOrUpdateSuccessResponse.yaml"
+    SecretDeleteSuccessResponse:
+      $ref: "components/responses/SecretDeleteSuccessResponse.yaml"
+    ZoneEgressItem:
+      $ref: "components/responses/ZoneEgressItem.yaml"
+    ZoneEgressList:
+      $ref: "components/responses/ZoneEgressList.yaml"
+    ZoneEgressCreateOrUpdateSuccessResponse:
+      $ref: "components/responses/ZoneEgressCreateOrUpdateSuccessResponse.yaml"
+    ZoneEgressDeleteSuccessResponse:
+      $ref: "components/responses/ZoneEgressDeleteSuccessResponse.yaml"
+    ZoneIngressItem:
+      $ref: "components/responses/ZoneIngressItem.yaml"
+    ZoneIngressList:
+      $ref: "components/responses/ZoneIngressList.yaml"
+    ZoneIngressCreateOrUpdateSuccessResponse:
+      $ref: "components/responses/ZoneIngressCreateOrUpdateSuccessResponse.yaml"
+    ZoneIngressDeleteSuccessResponse:
+      $ref: "components/responses/ZoneIngressDeleteSuccessResponse.yaml"
+    HostnameGeneratorItem:
+      $ref: "components/responses/HostnameGeneratorItem.yaml"
+    HostnameGeneratorList:
+      $ref: "components/responses/HostnameGeneratorList.yaml"
+    HostnameGeneratorCreateOrUpdateSuccessResponse:
+      $ref: "components/responses/HostnameGeneratorCreateOrUpdateSuccessResponse.yaml"
+    HostnameGeneratorDeleteSuccessResponse:
+      $ref: "components/responses/HostnameGeneratorDeleteSuccessResponse.yaml"
+    MeshExternalServiceItem:
+      $ref: "components/responses/MeshExternalServiceItem.yaml"
+    MeshExternalServiceList:
+      $ref: "components/responses/MeshExternalServiceList.yaml"
+    MeshExternalServiceCreateOrUpdateSuccessResponse:
+      $ref: "components/responses/MeshExternalServiceCreateOrUpdateSuccessResponse.yaml"
+    MeshExternalServiceDeleteSuccessResponse:
+      $ref: "components/responses/MeshExternalServiceDeleteSuccessResponse.yaml"
+    MeshIdentityItem:
+      $ref: "components/responses/MeshIdentityItem.yaml"
+    MeshIdentityList:
+      $ref: "components/responses/MeshIdentityList.yaml"
+    MeshIdentityCreateOrUpdateSuccessResponse:
+      $ref: "components/responses/MeshIdentityCreateOrUpdateSuccessResponse.yaml"
+    MeshIdentityDeleteSuccessResponse:
+      $ref: "components/responses/MeshIdentityDeleteSuccessResponse.yaml"
+    MeshMultiZoneServiceItem:
+      $ref: "components/responses/MeshMultiZoneServiceItem.yaml"
+    MeshMultiZoneServiceList:
+      $ref: "components/responses/MeshMultiZoneServiceList.yaml"
+    MeshMultiZoneServiceCreateOrUpdateSuccessResponse:
+      $ref: "components/responses/MeshMultiZoneServiceCreateOrUpdateSuccessResponse.yaml"
+    MeshMultiZoneServiceDeleteSuccessResponse:
+      $ref: "components/responses/MeshMultiZoneServiceDeleteSuccessResponse.yaml"
+    MeshServiceItem:
+      $ref: "components/responses/MeshServiceItem.yaml"
+    MeshServiceList:
+      $ref: "components/responses/MeshServiceList.yaml"
+    MeshServiceCreateOrUpdateSuccessResponse:
+      $ref: "components/responses/MeshServiceCreateOrUpdateSuccessResponse.yaml"
+    MeshServiceDeleteSuccessResponse:
+      $ref: "components/responses/MeshServiceDeleteSuccessResponse.yaml"
+    MeshTrustItem:
+      $ref: "components/responses/MeshTrustItem.yaml"
+    MeshTrustList:
+      $ref: "components/responses/MeshTrustList.yaml"
+    MeshTrustCreateOrUpdateSuccessResponse:
+      $ref: "components/responses/MeshTrustCreateOrUpdateSuccessResponse.yaml"
+    MeshTrustDeleteSuccessResponse:
+      $ref: "components/responses/MeshTrustDeleteSuccessResponse.yaml"
+  securitySchemes:
+    BasicAuth:
+      $ref: "components/securitySchemes/BasicAuth.yaml"
+    BearerAuth:
+      $ref: "components/securitySchemes/BearerAuth.yaml"
+security:
+  - BasicAuth: []
+  - BearerAuth: []
+  - {}

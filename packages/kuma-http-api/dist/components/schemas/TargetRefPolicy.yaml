@@ -1,0 +1,48 @@
+description: Successful response
+type: object
+properties:
+  type:
+    description: the type of the resource
+    type: string
+  mesh:
+    description: Mesh is the name of the Kuma mesh this resource belongs to. It may be omitted for cluster-scoped resources.
+    type: string
+    default: default
+  kri:
+    description: A unique identifier for this resource instance used by internal tooling and integrations. Typically derived from resource attributes and may be used for cross-references or indexing
+    type: string
+    example: kri_mal_default_zone-east_kuma-demo_mypolicy1_
+    readOnly: true
+  name:
+    description: Name of the Kuma resource
+    type: string
+  labels:
+    description: The labels to help identity resources
+    type: object
+    additionalProperties:
+      type: string
+  creationTime:
+    description: Time at which the resource was created
+    type: string
+    format: date-time
+    example: '0001-01-01T00:00:00Z'
+    readOnly: true
+  modificationTime:
+    description: Time at which the resource was updated
+    type: string
+    format: date-time
+    example: '0001-01-01T00:00:00Z'
+    readOnly: true
+  spec:
+    description: Spec is the specification of the Kuma Policy resource.
+    properties:
+      targetRef:
+        $ref: "./MeshAccessLogItem.yaml#/properties/spec/properties/targetRef"
+content:
+  application/json:
+    schema:
+      $ref: "MeshAccessLogItem.yaml"
+required:
+  - type
+  - name
+  - spec

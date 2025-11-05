@@ -1,0 +1,36 @@
+get:
+  operationId: get-route-policy-conf
+  summary: Get policies for this route
+  description: Returns route policy configuration derived from combining all policies selecting this dataplane
+  parameters:
+    - name: mesh
+      in: path
+      description: The mesh of the DPP to get the policies for.
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: The name of the DPP within the mesh to get the policies for.
+      required: true
+      schema:
+        type: string
+    - name: outbound-kri
+      in: path
+      description: The KRI of the Outbound to get the routes for.
+      required: true
+      schema:
+        type: string
+    - name: route-kri
+      in: path
+      description: The KRI of the Route to get the configuration for.
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: "../components/responses/RoutePolicyConfResponse.yaml"
+    '400':
+      $ref: "../components/responses/BadRequest.yaml"
+    '500':
+      $ref: "../components/responses/Internal.yaml"

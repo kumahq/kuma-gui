@@ -1,0 +1,76 @@
+get:
+  operationId: getMeshRateLimit
+  summary: Returns MeshRateLimit entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshRateLimit
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: "../components/responses/MeshRateLimitItem.yaml"
+    '404':
+      $ref: "../components/responses/NotFound.yaml"
+  tags:
+    - MeshRateLimit
+put:
+  operationId: putMeshRateLimit
+  summary: Creates or Updates MeshRateLimit entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshRateLimit
+      required: true
+      schema:
+        type: string
+  requestBody:
+    description: Put request
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../components/schemas/MeshRateLimitItem.yaml"
+  responses:
+    '200':
+      $ref: "../components/responses/MeshRateLimitCreateOrUpdateSuccessResponse.yaml"
+    '201':
+      $ref: "../components/responses/MeshRateLimitCreateOrUpdateSuccessResponse.yaml"
+  tags:
+    - MeshRateLimit
+delete:
+  operationId: deleteMeshRateLimit
+  summary: Deletes MeshRateLimit entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshRateLimit
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: "../components/responses/MeshRateLimitDeleteSuccessResponse.yaml"
+    '404':
+      $ref: "../components/responses/NotFound.yaml"
+  tags:
+    - MeshRateLimit

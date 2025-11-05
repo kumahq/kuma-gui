@@ -1,0 +1,76 @@
+get:
+  operationId: getMeshTrafficPermission
+  summary: Returns MeshTrafficPermission entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshTrafficPermission
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: "../components/responses/MeshTrafficPermissionItem.yaml"
+    '404':
+      $ref: "../components/responses/NotFound.yaml"
+  tags:
+    - MeshTrafficPermission
+put:
+  operationId: putMeshTrafficPermission
+  summary: Creates or Updates MeshTrafficPermission entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshTrafficPermission
+      required: true
+      schema:
+        type: string
+  requestBody:
+    description: Put request
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../components/schemas/MeshTrafficPermissionItem.yaml"
+  responses:
+    '200':
+      $ref: "../components/responses/MeshTrafficPermissionCreateOrUpdateSuccessResponse.yaml"
+    '201':
+      $ref: "../components/responses/MeshTrafficPermissionCreateOrUpdateSuccessResponse.yaml"
+  tags:
+    - MeshTrafficPermission
+delete:
+  operationId: deleteMeshTrafficPermission
+  summary: Deletes MeshTrafficPermission entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshTrafficPermission
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: "../components/responses/MeshTrafficPermissionDeleteSuccessResponse.yaml"
+    '404':
+      $ref: "../components/responses/NotFound.yaml"
+  tags:
+    - MeshTrafficPermission

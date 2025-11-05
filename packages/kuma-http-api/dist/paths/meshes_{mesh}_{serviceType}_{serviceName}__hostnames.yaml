@@ -1,0 +1,41 @@
+get:
+  operationId: inspect-hostnames
+  summary: Returns hostnames for service
+  description: Returns hostnames for a service
+  parameters:
+    - name: mesh
+      in: path
+      description: The mesh the service is part of
+      required: true
+      schema:
+        type: string
+      example: default
+    - name: serviceType
+      in: path
+      description: The type of the service
+      required: true
+      schema:
+        type: string
+        enum:
+          - meshservices
+          - meshmultizoneservices
+          - meshexternalservices
+      example: meshservices
+    - name: serviceName
+      in: path
+      description: The name of the service
+      required: true
+      schema:
+        type: string
+      example: redis
+  responses:
+    '200':
+      $ref: "../components/responses/InspectHostnamesResponse.yaml"
+    '400':
+      $ref: "../components/responses/BadRequest.yaml"
+    '404':
+      $ref: "../components/responses/NotFound.yaml"
+    '500':
+      $ref: "../components/responses/Internal.yaml"
+  tags:
+    - Inspect

@@ -1,0 +1,14 @@
+description: A list of hostnames
+type: object
+properties:
+  total:
+    type: integer
+    example: 200
+  items:
+    type: array
+    items:
+      $ref: "InspectHostname.yaml"
+required:
+  - total
+  - items
+title: InspectHostnames

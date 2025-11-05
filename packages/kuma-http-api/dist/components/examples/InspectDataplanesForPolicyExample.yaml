@@ -1,0 +1,14 @@
+value:
+  total: 100
+  next: 'http://localhost:5681/meshes/default/meshretries/_resources/dataplanes?offset=100'
+  items:
+    - type: Dataplane
+      mesh: default
+      name: dp-1
+      labels:
+        k8s.kuma.io/namespace: kuma-system
+    - type: Dataplane
+      mesh: default
+      name: dp-2
+      labels:
+        k8s.kuma.io/namespace: kuma-system

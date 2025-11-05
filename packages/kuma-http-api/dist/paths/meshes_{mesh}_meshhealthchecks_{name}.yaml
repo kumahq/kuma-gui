@@ -1,0 +1,76 @@
+get:
+  operationId: getMeshHealthCheck
+  summary: Returns MeshHealthCheck entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshHealthCheck
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: "../components/responses/MeshHealthCheckItem.yaml"
+    '404':
+      $ref: "../components/responses/NotFound.yaml"
+  tags:
+    - MeshHealthCheck
+put:
+  operationId: putMeshHealthCheck
+  summary: Creates or Updates MeshHealthCheck entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshHealthCheck
+      required: true
+      schema:
+        type: string
+  requestBody:
+    description: Put request
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../components/schemas/MeshHealthCheckItem.yaml"
+  responses:
+    '200':
+      $ref: "../components/responses/MeshHealthCheckCreateOrUpdateSuccessResponse.yaml"
+    '201':
+      $ref: "../components/responses/MeshHealthCheckCreateOrUpdateSuccessResponse.yaml"
+  tags:
+    - MeshHealthCheck
+delete:
+  operationId: deleteMeshHealthCheck
+  summary: Deletes MeshHealthCheck entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshHealthCheck
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: "../components/responses/MeshHealthCheckDeleteSuccessResponse.yaml"
+    '404':
+      $ref: "../components/responses/NotFound.yaml"
+  tags:
+    - MeshHealthCheck

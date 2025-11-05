@@ -1,0 +1,76 @@
+get:
+  operationId: getMeshTrust
+  summary: Returns MeshTrust entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshTrust
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: "../components/responses/MeshTrustItem.yaml"
+    '404':
+      $ref: "../components/responses/NotFound.yaml"
+  tags:
+    - MeshTrust
+put:
+  operationId: putMeshTrust
+  summary: Creates or Updates MeshTrust entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshTrust
+      required: true
+      schema:
+        type: string
+  requestBody:
+    description: Put request
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../components/schemas/MeshTrustItem.yaml"
+  responses:
+    '200':
+      $ref: "../components/responses/MeshTrustCreateOrUpdateSuccessResponse.yaml"
+    '201':
+      $ref: "../components/responses/MeshTrustCreateOrUpdateSuccessResponse.yaml"
+  tags:
+    - MeshTrust
+delete:
+  operationId: deleteMeshTrust
+  summary: Deletes MeshTrust entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshTrust
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: "../components/responses/MeshTrustDeleteSuccessResponse.yaml"
+    '404':
+      $ref: "../components/responses/NotFound.yaml"
+  tags:
+    - MeshTrust

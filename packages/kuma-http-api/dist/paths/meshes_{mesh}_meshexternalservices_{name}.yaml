@@ -1,0 +1,76 @@
+get:
+  operationId: getMeshExternalService
+  summary: Returns MeshExternalService entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshExternalService
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: "../components/responses/MeshExternalServiceItem.yaml"
+    '404':
+      $ref: "../components/responses/NotFound.yaml"
+  tags:
+    - MeshExternalService
+put:
+  operationId: putMeshExternalService
+  summary: Creates or Updates MeshExternalService entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshExternalService
+      required: true
+      schema:
+        type: string
+  requestBody:
+    description: Put request
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../components/schemas/MeshExternalServiceItem.yaml"
+  responses:
+    '200':
+      $ref: "../components/responses/MeshExternalServiceCreateOrUpdateSuccessResponse.yaml"
+    '201':
+      $ref: "../components/responses/MeshExternalServiceCreateOrUpdateSuccessResponse.yaml"
+  tags:
+    - MeshExternalService
+delete:
+  operationId: deleteMeshExternalService
+  summary: Deletes MeshExternalService entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshExternalService
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: "../components/responses/MeshExternalServiceDeleteSuccessResponse.yaml"
+    '404':
+      $ref: "../components/responses/NotFound.yaml"
+  tags:
+    - MeshExternalService

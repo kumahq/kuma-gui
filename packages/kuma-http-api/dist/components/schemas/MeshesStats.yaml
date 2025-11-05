@@ -1,0 +1,10 @@
+description: Mesh statistics
+type: object
+properties:
+  total:
+    description: Number of meshes
+    type: integer
+    example: 3
+required:
+  - total
+title: Meshes Stats

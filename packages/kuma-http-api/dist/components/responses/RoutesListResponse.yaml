@@ -1,0 +1,5 @@
+description: A response containing routes configuration for selected outbound
+content:
+  application/json:
+    schema:
+      $ref: "../schemas/RoutesList.yaml"

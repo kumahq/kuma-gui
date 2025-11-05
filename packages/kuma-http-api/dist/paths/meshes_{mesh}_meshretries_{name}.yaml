@@ -1,0 +1,76 @@
+get:
+  operationId: getMeshRetry
+  summary: Returns MeshRetry entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshRetry
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: "../components/responses/MeshRetryItem.yaml"
+    '404':
+      $ref: "../components/responses/NotFound.yaml"
+  tags:
+    - MeshRetry
+put:
+  operationId: putMeshRetry
+  summary: Creates or Updates MeshRetry entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshRetry
+      required: true
+      schema:
+        type: string
+  requestBody:
+    description: Put request
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../components/schemas/MeshRetryItem.yaml"
+  responses:
+    '200':
+      $ref: "../components/responses/MeshRetryCreateOrUpdateSuccessResponse.yaml"
+    '201':
+      $ref: "../components/responses/MeshRetryCreateOrUpdateSuccessResponse.yaml"
+  tags:
+    - MeshRetry
+delete:
+  operationId: deleteMeshRetry
+  summary: Deletes MeshRetry entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshRetry
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: "../components/responses/MeshRetryDeleteSuccessResponse.yaml"
+    '404':
+      $ref: "../components/responses/NotFound.yaml"
+  tags:
+    - MeshRetry
