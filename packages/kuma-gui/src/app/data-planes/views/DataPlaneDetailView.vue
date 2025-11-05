@@ -413,15 +413,6 @@
                 }"
               />
             </XNotification>
-            <!-- <XNotification
-              :notify="!!Object.keys(traffic?.$meta.alerts ?? {})?.length"
-              :data-testid="`warning-abnormal-traffic-stats`"
-              :uri="`data-planes.notifications.abnormal-traffic-stats.${props.data.id}`"
-            >
-              <XI18n
-                :path="`data-planes.notifications.abnormal-traffic-stats`"
-              />
-            </XNotification> -->
             <XCard
               class="traffic"
               data-testid="dataplane-traffic"

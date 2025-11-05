@@ -636,36 +636,41 @@
                                   data-actionable
                                 >
                                   <template #state>
-                                    <XNotification
-                                      :notify="outbound.$meta.alerts.reports.length > 0"
-                                      :data-testid="`warning-abnormal-traffic-stats`"
-                                      :uri="`data-planes.notifications.abnormal-traffic-stats.${props.data.id}`"
+                                    <template
+                                      v-for="reports in [outbound.$meta.alerts.reports ?? []]"
+                                      :key="typeof reports"
                                     >
-                                      <XI18n
-                                        path="data-planes.notifications.abnormal-traffic-stats"
-                                      />
-                                    </XNotification>
-                                    <XAction
-                                      v-if="outbound.$meta.alerts.reports.length > 0"
-                                      data-action
-                                      :to="{
-                                        name: 'data-plane-connection-outbound-summary-stats-view',
-                                        params: {
-                                          connection: name,
-                                        },
-                                        query: {
-                                          codeSearch: outbound.$meta.alerts.reports.join('|'),
-                                          codeFilter: true,
-                                          codeRegExp: true,
-                                        },
-                                      }"
-                                    >
-                                      <XIcon
-                                        name="warning"
-                                        :size="KUI_ICON_SIZE_40"
-                                        placement="right"
-                                      />
-                                    </XAction>
+                                      <XNotification
+                                        :notify="reports.length > 0"
+                                        :data-testid="`warning-abnormal-traffic-stats`"
+                                        :uri="`data-planes.notifications.abnormal-traffic-stats.${props.data.id}`"
+                                      >
+                                        <XI18n
+                                          path="data-planes.notifications.abnormal-traffic-stats"
+                                        />
+                                      </XNotification>
+                                      <XAction
+                                        v-if="reports.length > 0"
+                                        data-action
+                                        :to="{
+                                          name: 'data-plane-connection-outbound-summary-stats-view',
+                                          params: {
+                                            connection: name,
+                                          },
+                                          query: {
+                                            codeSearch: reports.join('|'),
+                                            codeFilter: true,
+                                            codeRegExp: true,
+                                          },
+                                        }"
+                                      >
+                                        <XIcon
+                                          name="warning"
+                                          :size="KUI_ICON_SIZE_40"
+                                          placement="right"
+                                        />
+                                      </XAction>
+                                    </template>
                                   </template>
                                   <XAction
                                     data-action

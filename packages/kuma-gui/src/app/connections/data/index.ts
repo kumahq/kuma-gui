@@ -300,5 +300,5 @@ const parse = (lines: string): Record<string, any> => {
       }
     }, prev)
     return prev
-  }, {} )
+  }, {})
 }
