@@ -27,14 +27,13 @@ const props = withDefaults(defineProps<{
 </script>
 
 <style lang="scss" scoped>
+.app-navigator::before {
+  content: none;
+}
 :deep(a) {
   &::before {
     content: '';
-    -webkit-mask-image: var(--icon);
-    mask-image: var(--icon);
-    background-color: currentColor;
-    height: 20px;
-    width: 20px;
+    animation-name: var(--icon-name-start), icon-size-40;
     margin-right: $kui-space-40;
   }
 }

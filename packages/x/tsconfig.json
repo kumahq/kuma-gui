@@ -1,9 +1,6 @@
 {
   "$schema": "https://schemastore.org/tsconfig.json",
-  "extends": "@kumahq/config/tsconfig/node",
-  "compilerOptions": {
-    "lib": ["esnext", "dom", "dom.iterable"],
-  },
+  "extends": "@kumahq/config/tsconfig/browser",
   "include": [
     "**/*.ts",
     "**/*.vue",

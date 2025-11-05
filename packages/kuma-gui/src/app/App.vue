@@ -1,98 +1,101 @@
 <template>
-  <!-- whilst we don't use the addresses here, -->
-  <!-- we want to make sure they are retrieved/correctly set -->
-  <DataSource
-    :src="`/control-plane/addresses`"
-    v-slot="{ data: addresses }: ControlPlaneAddressesSource"
-  >
-    <RouteView
-      v-if="typeof addresses !== 'undefined'"
-      name="app"
-      :attrs="{
-        class: 'kuma-ready',
-      }"
-      data-testid-root="mesh-app"
-      v-slot="{ t, can }"
+  <XTheme>
+    <!-- whilst we don't use the addresses here, -->
+    <!-- we want to make sure they are retrieved/correctly set -->
+    <DataSource
+      :src="`/control-plane/addresses`"
+      v-slot="{ data: addresses }: ControlPlaneAddressesSource"
     >
-      <ApplicationShell
-        class="kuma-application"
+      <RouteView
+        v-if="typeof addresses !== 'undefined'"
+        name="app"
+        :attrs="{
+          class: 'kuma-ready',
+        }"
+        data-testid-root="mesh-app"
+        v-slot="{ t, can }"
       >
-        <template #home>
-          <img
-            class="logo"
-            src="@/assets/images/product-logo.png"
-            :alt="`${t('common.product.name')} Logo`"
-            data-testid="logo"
-          >
-        </template>
-
-        <template #navigation>
-          <AppNavigator
-            v-style="'--icon: var(--icon-home)'"
-            data-testid="control-planes-navigator"
-            :active="child.name === 'control-plane-detail-view'"
-            label="Home"
-            :to="{
-              name: 'control-plane-root-view',
-            }"
-          />
-          <AppNavigator
-            v-if="can('use zones')"
-            v-style="'--icon: var(--icon-zones)'"
-            data-testid="zones-navigator"
-            :active="child.name === 'zone-index-view'"
-            label="Zones"
-            :to="{
-              name: 'zone-index-view',
-            }"
-          />
-          <AppNavigator
-            v-else
-            v-style="'--icon: var(--icon-zone-egresses)'"
-            data-testid="zone-egresses-navigator"
-            :active="child.name === 'zone-egress-index-view'"
-            label="ZoneEgresses"
-            :to="{
-              name: 'zone-egress-list-view',
-            }"
-          />
-          <AppNavigator
-            v-style="'--icon: var(--icon-meshes)'"
-            :active="child.name === 'mesh-index-view'"
-            data-testid="meshes-navigator"
-            label="Meshes"
-            :to="{
-              name: 'mesh-index-view',
-            }"
-          />
-        </template>
-
-        <template #bottomNavigation>
-          <AppNavigator
-            v-style="'--icon: var(--icon-configuration)'"
-            :active="child.name === 'configuration-view'"
-            data-testid="configuration-navigator"
-            label="Configuration"
-            :to="{
-              name: 'configuration-view',
-            }"
-          />
-        </template>
-
-        <AppView
-          :notifications="true"
+        <ApplicationShell
+          class="kuma-application"
         >
-          <RouterView
-            v-slot="{ Component }"
-          >
-            <component
-              :is="Component"
+          <template #home>
+            <img
+              class="logo"
+              src="@/assets/images/product-logo.png"
+              :alt="`${t('common.product.name')} Logo`"
+              data-testid="logo"
+            >
+          </template>
+
+          <template #navigation>
+            <AppNavigator
+              v-icon-start="`home`"
+              data-testid="control-planes-navigator"
+              :active="child.name === 'control-plane-detail-view'"
+              label="Home"
+              :to="{
+                name: 'control-plane-root-view',
+              }"
             />
-          </RouterView>
-        </AppView>
-      </ApplicationShell>
-    </RouteView>
-  </DataSource>
+            <AppNavigator
+              v-if="can('use zones')"
+              v-icon-start="`zone`"
+              data-testid="zones-navigator"
+              :active="child.name === 'zone-index-view'"
+              label="Zones"
+              :to="{
+                name: 'zone-index-view',
+              }"
+            />
+            <AppNavigator
+              v-else
+              v-icon-start="`zone-egress`"
+              data-testid="zone-egresses-navigator"
+              :active="child.name === 'zone-egress-index-view'"
+              label="ZoneEgresses"
+              :to="{
+                name: 'zone-egress-list-view',
+              }"
+            />
+            <AppNavigator
+              v-icon-start="`mesh`"
+              v-style="'--icon-name-start: var(--icon-mesh)'"
+              :active="child.name === 'mesh-index-view'"
+              data-testid="meshes-navigator"
+              label="Meshes"
+              :to="{
+                name: 'mesh-index-view',
+              }"
+            />
+          </template>
+
+          <template #bottomNavigation>
+            <AppNavigator
+              v-icon-start="`configuration`"
+              :active="child.name === 'configuration-view'"
+              data-testid="configuration-navigator"
+              label="Configuration"
+              :to="{
+                name: 'configuration-view',
+              }"
+            />
+          </template>
+
+          <AppView
+            :notifications="true"
+          >
+            <RouterView
+              v-slot="{ Component }"
+            >
+              <component
+                :is="Component"
+              />
+            </RouterView>
+          </AppView>
+        </ApplicationShell>
+      </RouteView>
+    </DataSource>
+  </XTheme>
 </template>
 
 <script lang="ts" setup>
@@ -126,13 +129,5 @@ router.afterEach(() => {
 <style lang="scss" scoped>
 .logo {
   max-height: 36px;
-}
-
-:deep(.app-sidebar) {
-  --icon-home: url('@/assets/images/navigation/icon-home.svg');
-  --icon-zones: url('@/assets/images/zone.svg');
-  --icon-meshes: url('@/assets/images/mesh.svg');
-  --icon-configuration: url('@/assets/images/navigation/icon-configuration.svg');
-  --icon-zone-egresses: url('@/assets/images/navigation/icon-zone-egresses.svg');
 }
 </style>

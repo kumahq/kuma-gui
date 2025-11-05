@@ -9,8 +9,7 @@ import {
   DataplaneNetworkingLayout,
 } from './data'
 import type { DataSourceResponse } from '@/app/application'
-import { YAML } from '@/app/application'
-import { defineSources } from '@/app/application/services/data-source'
+import { YAML , defineSources } from '@/app/application'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import { Resource } from '@/app/resources/data/Resource'
 import type { PaginatedApiListResponse as CollectionResponse, ApiKindListResponse as KindCollectionResponse } from '@/types/api.d'

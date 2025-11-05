@@ -56,3 +56,17 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/MeshInsight'
+
+    # We use these to make a "generic" policy that covers any type of legacy
+    # policy and any type of targetRef policy
+    Policy:
+      $ref: 'policy.yaml#/components/schemas/Policy'
+    PolicyCollection:
+      allOf:
+        - $ref: 'entity.yaml#/components/schemas/PagedCollection'
+        - type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/Policy'

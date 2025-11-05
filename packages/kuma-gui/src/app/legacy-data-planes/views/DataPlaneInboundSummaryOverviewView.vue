@@ -116,11 +116,11 @@
                           <XCard>
                             <AccordionItem>
                               <template #accordion-header>
-                                <PolicyTypeTag
-                                  :policy-type="key"
+                                <span
+                                  v-icon-start="{name: key, size: '60', default: 'policy'}"
                                 >
                                   {{ key }} ({{ rules!.length }})
-                                </PolicyTypeTag>
+                                </span>
                               </template>
                               <template #accordion-content>
                                 <XTable
@@ -212,7 +212,6 @@
 import { YAML } from '@/app/application'
 import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
-import PolicyTypeTag from '@/app/common/PolicyTypeTag.vue'
 import TagList from '@/app/common/TagList.vue'
 import type { DataplaneInbound } from '@/app/data-planes/data'
 import { sources as policySources } from '@/app/policies/sources'
