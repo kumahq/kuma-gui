@@ -9,7 +9,7 @@ const $ = {
   kumaFS: token<typeof fs>('fake.fs.kuma'),
 }
 
-export const services = (app: Record<string, Token>): ServiceDefinition[] => [
+export const locales = (app: Record<string, Token>): ServiceDefinition[] => [
   [token('kuma.locales.debug'), {
     service: () => {
       return {
@@ -25,7 +25,9 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => [
       app.enUs ?? token(''),
     ],
   }],
+]
 
+export const services = (app: Record<string, Token>): ServiceDefinition[] => [
   [token('kuma.env.vars'), {
     service: () => {
       return {

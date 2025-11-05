@@ -54,6 +54,7 @@ async function mountVueApplication() {
           ...application.services(TOKENS),
           ...serviceMeshDebug.services(TOKENS),
           ...kuma.services(TOKENS),
+          ...kuma.locales(TOKENS),
           ...msw.services(TOKENS),
           ...fakeFs.services(TOKENS),
         ]
