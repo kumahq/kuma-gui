@@ -409,7 +409,7 @@
                       },
                     ])
                   }, []) : props.data.dataplane.networking.inbounds]"
-                  :key="inbounds"
+                  :key="typeof inbounds"
                 >
                   <ConnectionGroup
                     type="inbound"
@@ -447,7 +447,7 @@
                               v-for="stats in [
                                 traffic?.inbounds[item.clusterName],
                               ]"
-                              :key="stats"
+                              :key="typeof stats"
                             >
                               <ConnectionCard
                                 data-testid="dataplane-inbound"
@@ -607,15 +607,6 @@
                         :items="Object.entries<any>(traffic.outbounds)"
                         v-slot="{ items: outbounds }"
                       >
-                        <XNotification
-                          :notify="outbounds.some(([,outbound]) => outbound.$meta.alerts.reports.length > 0)"
-                          :data-testid="`warning-abnormal-traffic-stats`"
-                          :uri="`data-planes.notifications.abnormal-traffic-stats.${props.data.id}`"
-                        >
-                          <XI18n
-                            path="data-planes.notifications.abnormal-traffic-stats"
-                          />
-                        </XNotification>
                         <ConnectionGroup
                           v-if="outbounds.length > 0"
                           type="outbound"
@@ -626,7 +617,7 @@
                           <!-- so we replace this with `` if we find it to get the service name for linking -->
                           <template
                             v-for="hash in [/-([a-f0-9]){16}$/]"
-                            :key="hash"
+                            :key="typeof hash"
                           >
                             <XLayout
                               type="stack"
@@ -645,6 +636,15 @@
                                   data-actionable
                                 >
                                   <template #state>
+                                    <XNotification
+                                      :notify="outbound.$meta.alerts.reports.length > 0"
+                                      :data-testid="`warning-abnormal-traffic-stats`"
+                                      :uri="`data-planes.notifications.abnormal-traffic-stats.${props.data.id}`"
+                                    >
+                                      <XI18n
+                                        path="data-planes.notifications.abnormal-traffic-stats"
+                                      />
+                                    </XNotification>
                                     <XAction
                                       v-if="outbound.$meta.alerts.reports.length > 0"
                                       data-action
