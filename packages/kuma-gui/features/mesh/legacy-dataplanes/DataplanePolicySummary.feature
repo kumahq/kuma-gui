@@ -50,7 +50,8 @@ Feature: Dataplane policy summary
     Then the "$summary-slideout-container" element exists
     And the "$summary-title" element contains "the-other-http-route"
     And the "$summary-content" element contains "Target Ref"
-    And the "$summary-content" element contains "MeshGateway:foo"
+    And the "$summary-content" element contains "MeshGateway"
+    And the "$summary-content" element contains "foo"
     And the "$summary-content" element contains "Namespace"
     And the "$summary-content" element contains "kuma-system"
     And the "$select-preference" element exists

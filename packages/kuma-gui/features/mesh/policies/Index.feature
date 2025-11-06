@@ -128,7 +128,8 @@ Feature: mesh / policies / index
     When I visit the "/meshes/default/policies/meshfaultinjections" URL
     Then the "$item:nth-child(1) td:nth-child(2)" element contains "mfi-1"
     And the "$item:nth-child(1) td:nth-child(4)" element contains "zone-1"
-    And the "$item:nth-child(1) td:nth-child(5)" element contains "MeshService:service-1"
+    And the "$item:nth-child(1) td:nth-child(5)" element contains "MeshService"
+    And the "$item:nth-child(1) td:nth-child(5)" element contains "service-1"
 
   Scenario: Hides legacy policy types if there are no legacy policies applied
     Given the URL "/mesh-insights/default" responds with
