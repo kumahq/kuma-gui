@@ -4,7 +4,7 @@ import { build, token } from '@kumahq/container'
 import { TOKENS, services as e2e } from './services'
 import { services as application } from '@/app/application/debug'
 import { TOKENS as FAKE_FS, services as fakeFs } from '@/app/fake-fs'
-import { services as kuma } from '@/app/kuma/debug'
+import { services as kuma, locales } from '@/app/kuma/debug'
 
 (async () => {
   const $ = {
@@ -16,6 +16,7 @@ import { services as kuma } from '@/app/kuma/debug'
     // mocks
     fakeFs($),
     kuma($),
+    locales($),
     application($),
     //
 
