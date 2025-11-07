@@ -179,19 +179,10 @@
                         {{ item.namespace.length > 0 ? item.namespace : t('common.detail.none') }}
                       </template>
 
-                      <template #targetRef="{ row }">
-                        <XBadge
-                          v-if="typeof row.spec?.targetRef !== 'undefined'"
-                          appearance="neutral"
-                        >
-                          {{ row.spec.targetRef.kind }}<span v-if="row.spec.targetRef.name">:<b>{{ row.spec.targetRef.name }}</b></span>
-                        </XBadge>
-                        <XBadge
-                          v-else
-                          appearance="neutral"
-                        >
-                          Mesh
-                        </XBadge>
+                      <template #targetRef="{ row: item }">
+                        <KumaTargetRef
+                          :target-ref="item.spec?.targetRef"
+                        />
                       </template>
 
                       <template #zone="{ row }">

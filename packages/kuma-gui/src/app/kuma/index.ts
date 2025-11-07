@@ -4,10 +4,12 @@ import { vars } from './env'
 import locales from './locales/en-us/index.yaml'
 import { ValidationError } from '@/app/application'
 import KumaPort from '@/app/kuma/components/kuma-port/KumaPort.vue'
+import KumaTargetRef from '@/app/kuma/components/kuma-target-ref/KumaTargetRef.vue'
 import { ApiError } from '@/app/kuma/services/kuma-api/ApiError'
 import KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import { RestClient } from '@/app/kuma/services/kuma-api/RestClient'
 import type { ServiceDefinition } from '@kumahq/container'
+
 export * from './utils'
 export { Kri } from './kri'
 
@@ -16,6 +18,7 @@ type Token = ReturnType<typeof token>
 declare module 'vue' {
   export interface GlobalComponents {
     KumaPort: typeof KumaPort
+    KumaTargetRef: typeof KumaTargetRef
   }
 }
 export const TOKENS = {
@@ -112,6 +115,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       service: () => {
         return [
           ['KumaPort', KumaPort],
+          ['KumaTargetRef', KumaTargetRef],
         ]
       },
       labels: [

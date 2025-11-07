@@ -21,19 +21,17 @@ dl.variant-x-stack {
     display: flex;
     align-items: baseline;
   }
-  :deep(div) {
-    gap: $kui-space-40;
-  }
   & {
     flex-wrap: wrap;
     row-gap: $kui-space-30;
     column-gap: $kui-space-70;
   }
-  :deep(dt) {
-    gap: unset;
-    &::after {
-      content: ": ";
-      display: inline;
+  :deep(dd:first-of-type) {
+    display: flex;
+    align-items: baseline;
+    &::before {
+      content: ":";
+      margin-right: $kui-space-30;
     }
   }
 }
