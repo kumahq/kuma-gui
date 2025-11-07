@@ -409,7 +409,7 @@
                       },
                     ])
                   }, []) : props.data.dataplane.networking.inbounds]"
-                  :key="inbounds"
+                  :key="typeof inbounds"
                 >
                   <ConnectionGroup
                     type="inbound"
@@ -447,7 +447,7 @@
                               v-for="stats in [
                                 traffic?.inbounds[item.clusterName],
                               ]"
-                              :key="stats"
+                              :key="typeof stats"
                             >
                               <ConnectionCard
                                 data-testid="dataplane-inbound"
@@ -473,6 +473,42 @@
                                   >
                                     {{ t('data-planes.routes.item.unhealthy_inbound', { port: item.port }) }}
                                   </XIcon>
+                                  <template
+                                    v-for="reports in [stats?.$meta.alerts.reports ?? []]"
+                                    v-else
+                                    :key="typeof reports"
+                                  >
+                                    <XNotification
+                                      :notify="reports.length > 0"
+                                      :data-testid="`warning-abnormal-traffic-stats`"
+                                      :uri="`data-planes.notifications.abnormal-traffic-stats.${props.data.id}`"
+                                    >
+                                      <XI18n
+                                        :path="`data-planes.notifications.abnormal-traffic-stats`"
+                                      />
+                                    </XNotification>
+                                    <XAction
+                                      v-if="reports.length"
+                                      data-action
+                                      :to="{
+                                        name: 'data-plane-connection-inbound-summary-stats-view',
+                                        params: {
+                                          connection: item.clusterName,
+                                        },
+                                        query: {
+                                          codeSearch: reports.join('|'),
+                                          codeFilter: true,
+                                          codeRegExp: true,
+                                        },
+                                      }"
+                                    >
+                                      <XIcon
+                                        name="warning"
+                                        :size="KUI_ICON_SIZE_40"
+                                        placement="right"
+                                      />
+                                    </XAction>
+                                  </template>
                                 </template>
                                 <XAction
                                   data-action
@@ -581,7 +617,7 @@
                           <!-- so we replace this with `` if we find it to get the service name for linking -->
                           <template
                             v-for="hash in [/-([a-f0-9]){16}$/]"
-                            :key="hash"
+                            :key="typeof hash"
                           >
                             <XLayout
                               type="stack"
@@ -599,6 +635,43 @@
                                   :direction="direction"
                                   data-actionable
                                 >
+                                  <template #state>
+                                    <template
+                                      v-for="reports in [outbound.$meta.alerts.reports ?? []]"
+                                      :key="typeof reports"
+                                    >
+                                      <XNotification
+                                        :notify="reports.length > 0"
+                                        :data-testid="`warning-abnormal-traffic-stats`"
+                                        :uri="`data-planes.notifications.abnormal-traffic-stats.${props.data.id}`"
+                                      >
+                                        <XI18n
+                                          path="data-planes.notifications.abnormal-traffic-stats"
+                                        />
+                                      </XNotification>
+                                      <XAction
+                                        v-if="reports.length > 0"
+                                        data-action
+                                        :to="{
+                                          name: 'data-plane-connection-outbound-summary-stats-view',
+                                          params: {
+                                            connection: name,
+                                          },
+                                          query: {
+                                            codeSearch: reports.join('|'),
+                                            codeFilter: true,
+                                            codeRegExp: true,
+                                          },
+                                        }"
+                                      >
+                                        <XIcon
+                                          name="warning"
+                                          :size="KUI_ICON_SIZE_40"
+                                          placement="right"
+                                        />
+                                      </XAction>
+                                    </template>
+                                  </template>
                                   <XAction
                                     data-action
                                     :to="{

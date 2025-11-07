@@ -70,8 +70,8 @@ export const sources = (api: KumaApi) => {
       let inbounds, outbounds, passthrough
       if (proxyType === 'dataplane') {
         // pick out the listeners/inbounds that start with our ip address (the.ip.address.1_port000)
-        inbounds = params.socketAddress === 'localhost'
-          ? Object.fromEntries(Object.entries(connections.cluster).filter(([key, _value]) => key.startsWith('localhost_')))
+        inbounds = params.socketAddress === 'localhost' || params.socketAddress === 'self_inbound'
+          ? Object.fromEntries(Object.entries(connections.cluster).filter(([key, _value]) => key.startsWith('localhost_') || key.startsWith('self_inbound')))
           : Object.fromEntries(Object.entries(connections.listener).filter(([key, value]) => key.startsWith(`${params.socketAddress}_`) && !value.$clusterName.startsWith('_')))
 
         outbounds = Object.fromEntries(Object.entries(connections.cluster).filter(([key, _value]) => ![

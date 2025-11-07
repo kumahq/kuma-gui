@@ -1,3 +1,5 @@
+import { get } from '@/app/application'
+
 const protocols = ['http', 'tcp'] as const
 const appProtocols = ['http', 'tcp', 'grpc'] as const
 
@@ -6,12 +8,85 @@ const trailingPortRe = /_\d{1,5}\./
 const trailingPortRe2 = /_\d{1,5}/
 const meshServiceRe = /_(mz|m|ext){1}svc_\d{1,5}(-[a-z0-9]+)?$/
 
+const isNonZero = (val: unknown) => parseInt(String(val), 10) > 0
+
+const monitoring = {
+  cluster: {
+    '*': {
+      circuit_breakers: {
+        '*': {
+          cx_open: {
+            report: (path: string) => [...[path.match(/circuit_breakers\..+\.cx_open/)?.[0] ?? []], 'circuit_breakers', 'cx_open'],
+            check: isNonZero,
+          },
+          cx_pool_open: {
+            report: (path: string) => [...[path.match(/circuit_breakers\..+\.cx_pool_open/)?.[0] ?? []], 'circuit_breakers', 'cx_pool_open'],
+            check: isNonZero,
+          },
+          rq_pending_open: {
+            report: (path: string) => [...[path.match(/circuit_breakers\..+\.rq_pending_open/)?.[0] ?? []], 'circuit_breakers', 'rq_pending_open'],
+            check: isNonZero,
+          },
+          rq_open: {
+            report: (path: string) => [...[path.match(/circuit_breakers\..+\.rq_open/)?.[0] ?? []], 'circuit_breakers', 'rq_open'],
+            check: isNonZero,
+          },
+          rq_retry_open: {
+            report: (path: string) => [...[path.match(/circuit_breakers\..+\.rq_retry_open/)?.[0] ?? []], 'circuit_breakers', 'rq_retry_open'],
+            check: isNonZero,
+          },
+        },
+      },
+      outlier_detection: {
+        '*': {
+          ejections_active: {
+            report: (path: string) => [...[path.match(/outlier_detection\..+\.ejections_active/)?.[0] ?? []], 'outlier_detection', 'ejections_active'],
+            check: isNonZero,
+          },
+        },
+      },
+    },
+  },
+}
+
+const isNonNullableObject = (o: unknown): o is NonNullable<Record<string, unknown>> => {
+  return typeof o === 'object' && o !== null && o !== undefined
+}
+
+const isEvaluatable = (o: unknown): o is { check: (p: unknown) => boolean, report: (p: string) => string } => {
+  return isNonNullableObject(o) && 'check' in o && 'report' in o && typeof o.check === 'function' && typeof o.report === 'function'
+}
+
 export const Stat = {
   fromCollection(items: string) {
     return parse(items)
   },
 }
 export const ConnectionCollection = {
+  /**
+   * Traverse a given stats JSON and compare against the monitoring config
+   * @param item - stats JSON object
+   * @param key - monitoring key e.g. 'cluster.*', used to give a starting point in the monitoring config
+   * @param prefix - prefix to add to the path, the path is being used to create a report
+   */
+  monitor(item: Record<string, any>, key: string, prefix: string = '') {
+    const result: { reports: string[] } = { reports: [] }
+
+    const traverse = (tree: Record<string, unknown>, comparator: Record<string, unknown>, path: string) => {
+      for (const key in tree) {
+        const _path = `${path}.${key}`
+        if (isNonNullableObject(tree[key]) && (isNonNullableObject(comparator[key]) || '*' in comparator)) {
+          traverse(tree[key], comparator['*' in comparator ? '*' : key] as Record<string, unknown>, _path)
+        } else if(isEvaluatable(comparator[key]) && comparator[key].check(tree[key])) {
+          result.reports = Array.from(new Set([...result.reports, ...comparator[key].report(_path)]))
+        }
+      }
+    }
+
+    traverse(item, get(monitoring, key), prefix)
+
+    return result
+  },
   fromObject(item: Record<string, any>) {
     // look in `listener.<inbound-address_port>.<potential-protocol>.<cluster-name>.<...stats>`
     // following this we will end up with `listener.<inbound-address_port>.<definite-protocol>.<...stats>`
@@ -22,6 +97,9 @@ export const ConnectionCollection = {
             const { http, ...tcp } = value
             const stats = {
               tcp,
+              $meta: {
+                alerts: { reports: [] as string[] },
+              },
             }
             if (typeof http !== 'undefined') {
               // check http protocol for existence i.e. `listener.<inbound-socket-address | clustername>.http.<cluster-name>.<...stats>`
@@ -47,6 +125,7 @@ export const ConnectionCollection = {
           }),
       )
       : {}
+
     const cluster = typeof item.cluster !== 'undefined'
       ? Object.fromEntries(Object.entries<any>(item.cluster)
         .map(([cluster, value]) => {
@@ -60,11 +139,15 @@ export const ConnectionCollection = {
               zone: '',
               port: '',
             },
+            $meta: {
+              alerts: ConnectionCollection.monitor(value, 'cluster.*', `cluster.${cluster}`),
+            },
             tcp,
             ...(typeof http !== 'undefined' ? { http } : {}),
             ...(typeof http2 !== 'undefined' ? { http2 } : {}),
             ...(typeof grpc !== 'undefined' ? { grpc } : {}),
           }
+
           // sniff the name to see if we are a new type of service
           const found = cluster.match(meshServiceRe)
           if (found) {
@@ -99,6 +182,7 @@ export const ConnectionCollection = {
               }
             }
           })
+
           // if we don't find any appProtocols (e.g. http., tcp. or .grpc) at
           // root (which is always the case for a gateway) then sniff based on
           // a http non-zero value. If we find it then add the stats to http
@@ -135,6 +219,7 @@ export const ConnectionCollection = {
       'meshtrace_zipkin',
       'meshtrace_opentelemetry',
     ].some(item => key.startsWith(item))))
+
     return {
       listener,
       cluster: withoutInternals,
@@ -142,7 +227,24 @@ export const ConnectionCollection = {
   },
 }
 
-// just does the initial response to JSON parsing
+/**
+ * The parsing function has exactly one job: to convert the flat stats line by line into a nested JSON object.
+ * @param {string} lines - raw string lines from the stats endpoint, separated by new lines
+ * @returns {Record<string, any>}
+ * @example
+ * const raw = `
+ * listener.0.0.0.0_8080.http.downstream_rq_2xx: 15
+ * `
+ * // {
+ * //   listener: {
+ * //     '0.0.0.0_8080': {
+ * //       http: {
+ * //         downstream_rq_2xx: 15,
+ * //       }
+ * //     }
+ * //   },
+ * // }
+ */
 const parse = (lines: string): Record<string, any> => {
   // for each line
   return lines.trim().split('\n').filter((item) => {

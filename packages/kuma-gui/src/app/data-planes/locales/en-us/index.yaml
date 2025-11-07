@@ -24,7 +24,8 @@ data-planes:
     networking-transparent-proxying: !!text/markdown |
       This data plane runs without <a target="_blank" href="{KUMA_DOCS_URL}/production/dp-config/transparent-proxying">transparent proxying</a>.
       In order to communicate to other services in the mesh, make sure to define <a target="_blank" href="{KUMA_DOCS_URL}/production/dp-config/dpp-on-universal">outbounds</a>.
-
+    abnormal-traffic-stats: !!text/markdown |
+      Abnormal traffic stats detected. Investigate the traffic patterns of individually marked inbounds and outbounds.
 
   x-empty-state:
     title: There are no data planes present

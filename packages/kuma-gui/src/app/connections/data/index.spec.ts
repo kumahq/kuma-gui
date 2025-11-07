@@ -25,6 +25,7 @@ tcp.service_with_underscores_8081.numbers: 0
 http.admin.connections_accepted_per_socket_event: P0(nan,1) P25(nan,1.025) P50(nan,1.05) P75(nan,1.075) P90(nan,1.09) P95(nan,1.095) P99(nan,1.099) P99.5(nan,1.0995) P99.9(nan,1.0999) P100(nan,1.1)
 http.127.0.0.1.borken_due_to_ip_but_never_happens: 0
 not_http_or_tcp_as_root.service_with_underscores_8080.numbers: 0
+cluster.self_inbound_dp_http.circuit_breakers.default.cx_open: 1
 `)
       expect(actual).toStrictEqual(expected)
     })
@@ -40,6 +41,11 @@ describe('ConnectionCollection', () => {
             $clusterName: 'edge-gateway',
             http: {
               downstream_rq_1xx: 0,
+            },
+            $meta: {
+              alerts: {
+                reports: [],
+              },
             },
           },
         },
@@ -60,6 +66,33 @@ describe('ConnectionCollection', () => {
               response_message_count: 12,
               success: 12,
               total: 12,
+            },
+            $meta: {
+              alerts: {
+                reports: [],
+              },
+            },
+          },
+          self_inbound_dp_http: {
+            $resourceMeta: {
+              mesh: '',
+              name: '',
+              namespace: '',
+              port: '',
+              type: '',
+              zone: '',
+            },
+            $meta: {
+              alerts: {
+                reports: ['circuit_breakers.default.cx_open', 'circuit_breakers', 'cx_open'],
+              },
+            },
+            tcp: {
+              circuit_breakers: {
+                default: {
+                  cx_open: 1,
+                },
+              },
             },
           },
         },
@@ -106,6 +139,13 @@ function statsAsJSON() {
           response_message_count: 12,
           success: 12,
           total: 12,
+        },
+      },
+      self_inbound_dp_http: {
+        circuit_breakers: {
+          default: {
+            cx_open: 1,
+          },
         },
       },
     },

@@ -57,11 +57,17 @@ const hub = {
     del([str])
     emit('reset', str)
   },
+  has: (variant: AlertAppearance, str: string): boolean => {
+    return notifications.value.has(variant) && notifications.value.get(variant)!.has(str)
+  },
   uri: `x-notification-hub-${props.uri}`,
 
 }
+export type XNotificationHubInjectable = typeof hub
+
 watch(() => props.dismissed, () => {
   del(props.dismissed)
 }, { immediate: true })
+
 
 </script>

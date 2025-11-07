@@ -476,6 +476,42 @@
                                     >
                                       {{ t('data-planes.routes.item.unhealthy_inbound', { port: inbound?.port }) }}
                                     </XIcon>
+                                    <template
+                                      v-for="reports in [traffic?.inbounds[item.stat_prefix]?.$meta.alerts.reports ?? []]"
+                                      v-else
+                                      :key="typeof reports"
+                                    >
+                                      <XNotification
+                                        :notify="reports.length > 0"
+                                        :data-testid="`warning-abnormal-traffic-stats`"
+                                        :uri="`data-planes.notifications.abnormal-traffic-stats.${props.data.id}`"
+                                      >
+                                        <XI18n
+                                          :path="`data-planes.notifications.abnormal-traffic-stats`"
+                                        />
+                                      </XNotification>
+                                      <XAction
+                                        v-if="reports.length"
+                                        data-action
+                                        :to="{
+                                          name: 'data-plane-connection-inbound-summary-stats-view',
+                                          params: {
+                                            connection: item.stat_prefix,
+                                          },
+                                          query: {
+                                            codeSearch: reports.join('|'),
+                                            codeFilter: true,
+                                            codeRegExp: true,
+                                          },
+                                        }"
+                                      >
+                                        <XIcon
+                                          name="warning"
+                                          :size="KUI_ICON_SIZE_40"
+                                          placement="right"
+                                        />
+                                      </XAction>
+                                    </template>
                                   </template>
                                   <XAction
                                     data-action
@@ -561,6 +597,43 @@
                                 :traffic="traffic?.outbounds[outbound.kri]"
                                 data-actionable
                               >
+                                <template #state>
+                                  <template
+                                    v-for="reports in [traffic?.outbounds[outbound.proxyResourceName]?.$meta.alerts.reports ?? []]"
+                                    :key="typeof reports"
+                                  >
+                                    <XNotification
+                                      :notify="reports.length > 0"
+                                      :data-testid="`warning-abnormal-traffic-stats`"
+                                      :uri="`data-planes.notifications.abnormal-traffic-stats.${props.data.id}`"
+                                    >
+                                      <XI18n
+                                        :path="`data-planes.notifications.abnormal-traffic-stats`"
+                                      />
+                                    </XNotification>
+                                    <XAction
+                                      v-if="reports.length"
+                                      data-action
+                                      :to="{
+                                        name: 'data-plane-connection-outbound-summary-stats-view',
+                                        params: {
+                                          connection: outbound.proxyResourceName,
+                                        },
+                                        query: {
+                                          codeSearch: reports.join('|'),
+                                          codeFilter: true,
+                                          codeRegExp: true,
+                                        },
+                                      }"
+                                    >
+                                      <XIcon
+                                        name="warning"
+                                        :size="KUI_ICON_SIZE_40"
+                                        placement="right"
+                                      />
+                                    </XAction>
+                                  </template>
+                                </template>
                                 <XAction
                                   data-action
                                   :to="{
