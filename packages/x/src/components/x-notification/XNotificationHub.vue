@@ -11,9 +11,12 @@
   </XProvider>
 </template>
 <script lang="ts" setup>
+import { type AlertAppearance } from '@kong/kongponents'
 import { shallowRef, watch } from 'vue'
 
-import type { AlertAppearance } from '@kong/kongponents'
+import { useToasterManager } from './useToasterManager'
+
+const { toaster } = useToasterManager()
 
 const emit = defineEmits<{
   (event: 'reset', value: string): void
@@ -60,8 +63,8 @@ const hub = {
   has: (variant: AlertAppearance, str: string): boolean => {
     return notifications.value.has(variant) && notifications.value.get(variant)!.has(str)
   },
+  toaster,
   uri: `x-notification-hub-${props.uri}`,
-
 }
 export type XNotificationHubInjectable = typeof hub
 
