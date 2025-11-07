@@ -33,6 +33,7 @@
     :writing="writing"
     :data="data"
     :payload="payload"
+    :isSuccess="!writing && !!data"
   />
 </template>
 

@@ -17,9 +17,17 @@
       :name="`${provider.uri}-${props.uri}`"
     />
   </template>
+  <template v-if="provider && props.type === 'toast' && props.notify && toastMessage.length > 0">
+    {{
+      provider.toaster.open({
+        appearance: props.variant,
+        message: toastMessage,
+      }) 
+    }}
+  </template>
 </template>
 <script lang="ts" setup>
-import { inject, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { computed, h, inject, onBeforeUnmount, onMounted, ref, render, watch } from 'vue'
 
 import type { XNotificationHubInjectable } from './XNotificationHub.vue'
 import type { AlertAppearance } from '@kong/kongponents'
@@ -30,9 +38,23 @@ const props = withDefaults(defineProps<{
   uri: string
   variant?: AlertAppearance
   notify?: boolean
+  type?: 'toast' | 'banner'
 }>(), {
   variant: 'warning',
   notify: false,
+  type: 'banner',
+})
+const slots = defineSlots()
+
+const toastMessage = computed(() => {
+  if(!slots.default || props.type !== 'toast') {
+    return ''
+  }
+  const slotContent = slots.default()
+  const tempDiv = document.createElement('div')
+  render(h('div', {}, slotContent), tempDiv)
+  const message = tempDiv.textContent || tempDiv.innerText || ''
+  return message
 })
 
 /**
@@ -42,11 +64,10 @@ const props = withDefaults(defineProps<{
  */
 const shouldRender = ref<boolean>(props.notify)
 
-const slots = defineSlots()
 watch(() => {
   return !!(props.notify && slots.default)
 }, (bool) => {
-  if(typeof provider !== 'undefined') {
+  if(typeof provider !== 'undefined' && props.type === 'banner') {
     shouldRender.value = !provider.has(props.variant, props.uri) && props.notify
     if(bool) {
       provider.set(props.uri, props)
@@ -57,7 +78,7 @@ watch(() => {
 })
 if(slots.default) {
   onMounted(() => {
-    if(typeof provider !== 'undefined') {
+    if(typeof provider !== 'undefined' && props.type === 'banner') {
       shouldRender.value = !provider.has(props.variant, props.uri) && props.notify
       if(props.notify) {
         provider.set(props.uri, props)
@@ -68,7 +89,7 @@ if(slots.default) {
   })
 }
 onBeforeUnmount(() => {
-  if(typeof provider !== 'undefined') {
+  if(typeof provider !== 'undefined' && props.type === 'banner') {
     provider.delete(props.uri)
   }
 })
