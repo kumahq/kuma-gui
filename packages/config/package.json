@@ -43,7 +43,7 @@
     "cypress-fail-on-console-error": "^5.1.1",
     "cypress-terminal-report": "^7.3.3",
     "deepmerge": "^4.3.1",
-    "esbuild": "^0.25.11",
+    "esbuild": "^0.25.12",
     "escape-string-regexp": "^4.0.0",
     "eslint": "^9.38.0",
     "eslint-import-resolver-alias": "^1.1.2",
@@ -62,7 +62,7 @@
     "typescript": "^5.9.3",
     "vite": "^7.1.12",
     "vitepress": "^2.0.0-alpha.12",
-    "vitest": "^4.0.5",
-    "vue-tsc": "^3.1.2"
+    "vitest": "^4.0.7",
+    "vue-tsc": "^3.1.3"
   }
 }
