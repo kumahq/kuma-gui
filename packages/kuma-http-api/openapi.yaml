@@ -3,6 +3,7 @@ info:
   title: Kuma API
   description: Kuma API
   version: v1alpha1
+  x-oas-source: kumahq/kuma@3a3d21b2be69f82fa14364dfe33b1ece16aa26c9
 paths:
   /:
     get:

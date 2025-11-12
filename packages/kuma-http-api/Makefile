@@ -27,27 +27,38 @@ lint: .lint/js ## Dev: Run lint checks
 ## When amending the specs also see `make generate/oas-for-ts` in the main kuma
 ## repository to regenerate the specs before running `make build`
 .PHONY: build
-build: ## Regenerate the TS types from kumahq/kuma OpenAPI specs
+build: GIT_SHA?=$(shell $(MAKE) version)
+build: kuma/docs/generated/openapi.yaml ## Regenerate the TS types from kumahq/kuma OpenAPI specs whilst applying overlays in ./src
+	@echo "Rebuilding types for kumahq/kuma@$(GIT_SHA)"
 	@$(MAKE) \
 		-f ../config/src/mk/openapi.mk \
 			./index.d.ts \
-				OPENAPI_SRC=./kuma/docs/generated/openapi.yaml
+				OPENAPI_SRC=$< \
+				OPENAPI_SHA=$(shell $(MAKE) git-version)
 
-types/fetch:
-	@echo "Fetching latest kumahq/kuma@master..."
-	@if [ -d "./kuma/.git" ]; then \
-		cd ./kuma \
-			&& git pull; \
-	else \
-		git clone https://github.com/kumahq/kuma.git \
-			--single-branch --branch=master \
+.PHONY: version
+version: ## Print the version of the OAS spec. In this case it is the full SHA of the kumahq/kuma repository where the OAS spec was generated from
+	@$(MAKE) \
+		-f ../config/src/mk/openapi.mk \
+			version
+
+.PHONY: git-version
+git-version:
+	@git -C ./kuma describe --always --dirty --abbrev=40
+
+kuma/docs/generated/openapi.yaml:
+	@echo "Fetching kumahq/kuma@$(GIT_SHA)..."
+	@git clone https://github.com/kumahq/kuma.git \
 			--depth 1; \
-	fi
+		cd ./kuma; \
+		git fetch --depth 1 origin $(GIT_SHA); \
+		git checkout $(GIT_SHA)
 
 types/clean:
 	@echo "Removing build artifacts and cloned kuma repository at..."
-	@echo "./kuma..."
+	@echo "./kuma ./generated" \
+		| xargs -n1
 	@if $(MAKE) -s confirm ; then \
 		rm -rf ./kuma; \
-		rm -rf ./build ./dist ./generated openapi.yaml index.d.ts; \
+		rm -rf ./generated; \
 	fi
