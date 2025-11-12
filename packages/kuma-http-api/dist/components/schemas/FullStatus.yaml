@@ -1,0 +1,13 @@
+allOf:
+  - $ref: "BaseStatus.yaml"
+  - type: object
+    required:
+      - offline
+      - partiallyDegraded
+    properties:
+      offline:
+        type: integer
+        example: 15
+      partiallyDegraded:
+        type: integer
+        example: 5

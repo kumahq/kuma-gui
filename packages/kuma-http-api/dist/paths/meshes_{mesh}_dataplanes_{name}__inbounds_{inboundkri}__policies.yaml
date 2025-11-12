@@ -1,0 +1,30 @@
+get:
+  operationId: get-inbound-policy-conf
+  summary: Get policies for this inbound
+  description: Returns inbound policy configuration derived from combining all policies selecting this dataplane
+  parameters:
+    - name: mesh
+      in: path
+      description: The mesh of the DPP to get the policies for.
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: The name of the DPP within the mesh to get the policies for.
+      required: true
+      schema:
+        type: string
+    - name: inbound-kri
+      in: path
+      description: The name of the Inbound from DPP to get the policies for.
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: "../components/responses/InboundPolicyConfResponse.yaml"
+    '400':
+      $ref: "../components/responses/BadRequest.yaml"
+    '500':
+      $ref: "../components/responses/Internal.yaml"

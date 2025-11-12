@@ -1,0 +1,58 @@
+get:
+  operationId: getMesh
+  summary: Returns Mesh entity
+  parameters:
+    - name: name
+      in: path
+      description: name of the Mesh
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: "../components/responses/MeshItem.yaml"
+    '404':
+      $ref: "../components/responses/NotFound.yaml"
+  tags:
+    - Mesh
+put:
+  operationId: putMesh
+  summary: Creates or Updates Mesh entity
+  parameters:
+    - name: name
+      in: path
+      description: name of the Mesh
+      required: true
+      schema:
+        type: string
+  requestBody:
+    description: Put request
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../components/schemas/MeshItem.yaml"
+  responses:
+    '200':
+      $ref: "../components/responses/MeshCreateOrUpdateSuccessResponse.yaml"
+    '201':
+      $ref: "../components/responses/MeshCreateOrUpdateSuccessResponse.yaml"
+  tags:
+    - Mesh
+delete:
+  operationId: deleteMesh
+  summary: Deletes Mesh entity
+  parameters:
+    - name: name
+      in: path
+      description: name of the Mesh
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: "../components/responses/MeshDeleteSuccessResponse.yaml"
+    '404':
+      $ref: "../components/responses/NotFound.yaml"
+  tags:
+    - Mesh

@@ -1,0 +1,76 @@
+get:
+  operationId: getMeshHTTPRoute
+  summary: Returns MeshHTTPRoute entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshHTTPRoute
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: "../components/responses/MeshHTTPRouteItem.yaml"
+    '404':
+      $ref: "../components/responses/NotFound.yaml"
+  tags:
+    - MeshHTTPRoute
+put:
+  operationId: putMeshHTTPRoute
+  summary: Creates or Updates MeshHTTPRoute entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshHTTPRoute
+      required: true
+      schema:
+        type: string
+  requestBody:
+    description: Put request
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../components/schemas/MeshHTTPRouteItem.yaml"
+  responses:
+    '200':
+      $ref: "../components/responses/MeshHTTPRouteCreateOrUpdateSuccessResponse.yaml"
+    '201':
+      $ref: "../components/responses/MeshHTTPRouteCreateOrUpdateSuccessResponse.yaml"
+  tags:
+    - MeshHTTPRoute
+delete:
+  operationId: deleteMeshHTTPRoute
+  summary: Deletes MeshHTTPRoute entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshHTTPRoute
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: "../components/responses/MeshHTTPRouteDeleteSuccessResponse.yaml"
+    '404':
+      $ref: "../components/responses/NotFound.yaml"
+  tags:
+    - MeshHTTPRoute

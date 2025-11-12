@@ -1,0 +1,5 @@
+description: A response containing policies configuration for selected route
+content:
+  application/json:
+    schema:
+      $ref: "../schemas/PoliciesList.yaml"

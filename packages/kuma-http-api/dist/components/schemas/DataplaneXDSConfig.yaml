@@ -1,0 +1,15 @@
+type: object
+properties:
+  xds:
+    description: The raw XDS config as an inline JSON object
+    type: object
+  diff:
+    description: |
+      Contains a diff in a JSONPatch format between the XDS config returned in 'xds' and the current proxy XDS config.
+      By default, the field is empty. To include the diff in the response, use the `include=diff` query parameter.
+    type: array
+    items:
+      $ref: "JsonPatchItem.yaml"
+required:
+  - xds
+title: DataplaneXDSConfig

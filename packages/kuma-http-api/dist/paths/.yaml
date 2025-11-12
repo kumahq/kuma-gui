@@ -1,0 +1,13 @@
+get:
+  operationId: index
+  summary: The index endpoint
+  description: 'The index endpoint, some common metadata'
+  responses:
+    '200':
+      $ref: "../components/responses/IndexResponse.yaml"
+    '400':
+      $ref: "../components/responses/BadRequest.yaml"
+    '500':
+      $ref: "../components/responses/Internal.yaml"
+  tags:
+    - System

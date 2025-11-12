@@ -1,0 +1,14 @@
+type: object
+properties:
+  cert:
+    oneOf:
+      - $ref: "DataSource_File.yaml"
+      - $ref: "DataSource_Inline.yaml"
+      - $ref: "DataSource_InlineString.yaml"
+      - $ref: "DataSource_Secret.yaml"
+  key:
+    oneOf:
+      - $ref: "DataSource_File.yaml"
+      - $ref: "DataSource_Inline.yaml"
+      - $ref: "DataSource_InlineString.yaml"
+      - $ref: "DataSource_Secret.yaml"

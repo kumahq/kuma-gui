@@ -1,0 +1,58 @@
+get:
+  operationId: getZoneIngress
+  summary: Returns ZoneIngress entity
+  parameters:
+    - name: name
+      in: path
+      description: name of the ZoneIngress
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: "../components/responses/ZoneIngressItem.yaml"
+    '404':
+      $ref: "../components/responses/NotFound.yaml"
+  tags:
+    - ZoneIngress
+put:
+  operationId: putZoneIngress
+  summary: Creates or Updates ZoneIngress entity
+  parameters:
+    - name: name
+      in: path
+      description: name of the ZoneIngress
+      required: true
+      schema:
+        type: string
+  requestBody:
+    description: Put request
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../components/schemas/ZoneIngressItem.yaml"
+  responses:
+    '200':
+      $ref: "../components/responses/ZoneIngressCreateOrUpdateSuccessResponse.yaml"
+    '201':
+      $ref: "../components/responses/ZoneIngressCreateOrUpdateSuccessResponse.yaml"
+  tags:
+    - ZoneIngress
+delete:
+  operationId: deleteZoneIngress
+  summary: Deletes ZoneIngress entity
+  parameters:
+    - name: name
+      in: path
+      description: name of the ZoneIngress
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: "../components/responses/ZoneIngressDeleteSuccessResponse.yaml"
+    '404':
+      $ref: "../components/responses/NotFound.yaml"
+  tags:
+    - ZoneIngress

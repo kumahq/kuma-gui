@@ -1,0 +1,20 @@
+description: Zone statistics
+type: object
+properties:
+  controlPlanes:
+    description: Control Planes statistics
+    allOf:
+      - $ref: "BaseStatus.yaml"
+  zoneEgresses:
+    description: Zone Egresses statistics
+    allOf:
+      - $ref: "BaseStatus.yaml"
+  zoneIngresses:
+    description: Zone Ingresses statistics
+    allOf:
+      - $ref: "BaseStatus.yaml"
+required:
+  - controlPlanes
+  - zoneEgresses
+  - zoneIngresses
+title: Zones Stats

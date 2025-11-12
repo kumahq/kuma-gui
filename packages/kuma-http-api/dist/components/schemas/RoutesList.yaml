@@ -1,0 +1,9 @@
+type: object
+properties:
+  routes:
+    description: Computed list of routes
+    type: array
+    items:
+      $ref: "RouteConf.yaml"
+required:
+  - routes

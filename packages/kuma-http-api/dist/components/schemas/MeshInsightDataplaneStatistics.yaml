@@ -1,0 +1,11 @@
+type: object
+properties:
+  total:
+    type: number
+  online:
+    type: number
+  offline:
+    type: number
+  partiallyDegraded:
+    type: number
+

@@ -1,0 +1,42 @@
+description: Global Insight contains statistics for all main resources
+type: object
+properties:
+  createdAt:
+    description: Time of Global Insight creation
+    type: string
+    format: date-time
+    example: '2023-01-11T02:30:42.227Z'
+  services:
+    description: Mesh services statistics
+    allOf:
+      - $ref: "ServicesStats.yaml"
+  zones:
+    description: Zones statistics
+    allOf:
+      - $ref: "ZonesStats.yaml"
+  dataplanes:
+    description: Dataplane proxy statistics
+    allOf:
+      - $ref: "DataplanesStats.yaml"
+  policies:
+    description: Policies statistics
+    allOf:
+      - $ref: "PoliciesStats.yaml"
+  meshes:
+    description: Mesh statistics
+    allOf:
+      - $ref: "MeshesStats.yaml"
+  resources:
+    description: A map of resource names to their corresponding statistics
+    type: object
+    additionalProperties:
+      $ref: "ResourceStats.yaml"
+required:
+  - createdAt
+  - services
+  - zones
+  - dataplanes
+  - policies
+  - meshes
+  - resources
+title: GlobalInsight

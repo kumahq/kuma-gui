@@ -1,0 +1,37 @@
+type: object
+properties:
+  type:
+    description: the type of the policy
+    type: string
+    example: MeshRetry
+  proxyRule:
+    $ref: "ProxyRule.yaml"
+  toRules:
+    description: a set of rules for the outbounds of this proxy. The field is not set when 'meshService.mode' on Mesh is set to 'Exclusive'.
+    type: array
+    items:
+      $ref: "Rule.yaml"
+  toResourceRules:
+    description: 'a set of rules for the outbounds produced by real resources (i.e MeshService, MeshExternalService, MeshMultiZoneService).'
+    type: array
+    items:
+      $ref: "ResourceRule.yaml"
+  fromRules:
+    description: a set of rules for each inbound of this proxy
+    type: array
+    items:
+      $ref: "FromRule.yaml"
+  inboundRules:
+    description: 'a set of rules for each inbound port of the proxy. When the policy descriptor has ''isFromAsRules'' set to true, this field supersedes ''fromRules'' and should be used instead.'
+    type: array
+    items:
+      $ref: "InboundRulesEntry.yaml"
+  warnings:
+    description: a set of warnings to show in policy matching
+    type: array
+    items:
+      type: string
+    example:
+      - Mesh is not Mtls enabled this policy will have no effect
+required:
+  - type

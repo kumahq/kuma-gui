@@ -1,0 +1,15 @@
+description: a rule that affects the entire proxy
+type: object
+properties:
+  conf:
+    description: The actual conf generated
+    type: object
+    additionalProperties: true
+    x-go-type: 'interface{}'
+  origin:
+    type: array
+    items:
+      $ref: "Meta.yaml"
+required:
+  - conf
+  - origin

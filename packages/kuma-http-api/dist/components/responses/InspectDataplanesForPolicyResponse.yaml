@@ -1,0 +1,8 @@
+description: A response containing dataplanes that match a policy.
+content:
+  application/json:
+    schema:
+      $ref: "../schemas/InspectDataplanesForPolicy.yaml"
+    examples:
+      ResponseForDataplane:
+        $ref: "../examples/InspectDataplanesForPolicyExample.yaml"

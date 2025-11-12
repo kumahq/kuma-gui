@@ -1,0 +1,6 @@
+description: TcpLoggingBackendConfig defines configuration for TCP based access logs
+type: object
+properties:
+  address:
+    description: Address to TCP service that will receive logs
+    type: string

@@ -1,0 +1,38 @@
+get:
+  operationId: inspect-dataplanes-rules
+  summary: Returns rules matching this dataplane
+  description: Returns rules matching this dataplane
+  parameters:
+    - name: mesh
+      in: path
+      description: The mesh the policy is part of
+      required: true
+      schema:
+        type: string
+      example: default
+    - name: resourceType
+      in: path
+      description: The type of resource (only some resources support rules api)
+      required: true
+      schema:
+        type: string
+        enum:
+          - dataplanes
+          - meshgateways
+      example: dataplanes
+    - name: resourceName
+      in: path
+      description: The name of the resource
+      required: true
+      schema:
+        type: string
+      example: my-dp
+  responses:
+    '200':
+      $ref: "../components/responses/InspectRulesResponse.yaml"
+    '400':
+      $ref: "../components/responses/BadRequest.yaml"
+    '500':
+      $ref: "../components/responses/Internal.yaml"
+  tags:
+    - Inspect

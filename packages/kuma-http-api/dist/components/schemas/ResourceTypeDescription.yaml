@@ -1,0 +1,37 @@
+description: 'Description of a resource type, this is useful for dynamically generated clients and the gui'
+type: object
+properties:
+  name:
+    description: the name of the resource type
+    type: string
+  scope:
+    type: string
+    enum:
+      - Global
+      - Mesh
+  readOnly:
+    type: boolean
+  path:
+    description: the path to use for accessing this resource. If scope is `Global` then it will be `/<path>` otherwise it will be `/meshes/<path>`
+    type: string
+  singularDisplayName:
+    type: string
+  pluralDisplayName:
+    type: string
+  shortName:
+    description: the short name of the resource type used in KRIs and kubectl
+    type: string
+  includeInFederation:
+    description: description resources of this type should be included in federetion-with-policies export profile (especially useful for moving from non-federated to federated or migrating to a new global).
+    type: boolean
+  policy:
+    $ref: "PolicyDescription.yaml"
+required:
+  - name
+  - scope
+  - readOnly
+  - path
+  - singularDisplayName
+  - pluralDisplayName
+  - includeInFederation
+  - shortName

@@ -1,0 +1,31 @@
+description: Services statistics
+type: object
+properties:
+  internal:
+    description: Internal services statistics
+    allOf:
+      - $ref: "FullStatus.yaml"
+  external:
+    description: External services statistics
+    type: object
+    properties:
+      total:
+        type: integer
+        example: 5
+    required:
+      - total
+  gatewayBuiltin:
+    description: Builtin Gateway services statistics
+    allOf:
+      - $ref: "FullStatus.yaml"
+  gatewayDelegated:
+    description: Delegated Gateway services statistics
+    allOf:
+      - $ref: "FullStatus.yaml"
+required:
+  - total
+  - internal
+  - external
+  - gatewayBuiltin
+  - gatewayDelegated
+title: ServicesStats

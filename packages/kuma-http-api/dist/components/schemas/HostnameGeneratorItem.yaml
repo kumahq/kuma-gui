@@ -1,0 +1,80 @@
+type: object
+properties:
+  type:
+    description: the type of the resource
+    type: string
+    enum:
+      - HostnameGenerator
+  kri:
+    description: A unique identifier for this resource instance used by internal tooling and integrations. Typically derived from resource attributes and may be used for cross-references or indexing
+    type: string
+    example: kri_hg___kuma-system_myresource1_
+    readOnly: true
+  name:
+    description: Name of the Kuma resource
+    type: string
+  labels:
+    description: The labels to help identity resources
+    type: object
+    additionalProperties:
+      type: string
+  spec:
+    description: Spec is the specification of the Kuma HostnameGenerator resource.
+    type: object
+    properties:
+      extension:
+        description: Extension struct for a plugin configuration
+        type: object
+        properties:
+          config:
+            description: Config freeform configuration for the extension.
+            x-kubernetes-preserve-unknown-fields: true
+          type:
+            description: Type of the extension.
+            type: string
+        required:
+          - type
+      selector:
+        type: object
+        properties:
+          meshExternalService:
+            type: object
+            properties:
+              matchLabels:
+                type: object
+                additionalProperties:
+                  type: string
+          meshMultiZoneService:
+            type: object
+            properties:
+              matchLabels:
+                type: object
+                additionalProperties:
+                  type: string
+          meshService:
+            type: object
+            properties:
+              matchLabels:
+                type: object
+                additionalProperties:
+                  type: string
+      template:
+        type: string
+    required:
+      - template
+  creationTime:
+    description: Time at which the resource was created
+    type: string
+    format: date-time
+    example: '0001-01-01T00:00:00Z'
+    readOnly: true
+  modificationTime:
+    description: Time at which the resource was updated
+    type: string
+    format: date-time
+    example: '0001-01-01T00:00:00Z'
+    readOnly: true
+required:
+  - type
+  - name
+  - spec

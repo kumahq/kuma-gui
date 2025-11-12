@@ -1,0 +1,44 @@
+get:
+  operationId: getByKri
+  summary: Returns a resource by KRI
+  parameters:
+    - name: kri
+      in: path
+      description: KRI of the resource
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      description: The resource
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: "../components/schemas/DataplaneItem.yaml"
+              - $ref: "../components/schemas/MeshItem.yaml"
+              - $ref: "../components/schemas/MeshAccessLogItem.yaml"
+              - $ref: "../components/schemas/MeshCircuitBreakerItem.yaml"
+              - $ref: "../components/schemas/MeshFaultInjectionItem.yaml"
+              - $ref: "../components/schemas/MeshGatewayItem.yaml"
+              - $ref: "../components/schemas/MeshHTTPRouteItem.yaml"
+              - $ref: "../components/schemas/MeshHealthCheckItem.yaml"
+              - $ref: "../components/schemas/MeshLoadBalancingStrategyItem.yaml"
+              - $ref: "../components/schemas/MeshMetricItem.yaml"
+              - $ref: "../components/schemas/MeshPassthroughItem.yaml"
+              - $ref: "../components/schemas/MeshProxyPatchItem.yaml"
+              - $ref: "../components/schemas/MeshRateLimitItem.yaml"
+              - $ref: "../components/schemas/MeshRetryItem.yaml"
+              - $ref: "../components/schemas/MeshTCPRouteItem.yaml"
+              - $ref: "../components/schemas/MeshTLSItem.yaml"
+              - $ref: "../components/schemas/MeshTimeoutItem.yaml"
+              - $ref: "../components/schemas/MeshTraceItem.yaml"
+              - $ref: "../components/schemas/MeshTrafficPermissionItem.yaml"
+              - $ref: "../components/schemas/ZoneEgressItem.yaml"
+              - $ref: "../components/schemas/ZoneIngressItem.yaml"
+    '400':
+      $ref: "../components/responses/BadRequest.yaml"
+    '404':
+      $ref: "../components/responses/NotFound.yaml"
+  tags:
+    - KRI

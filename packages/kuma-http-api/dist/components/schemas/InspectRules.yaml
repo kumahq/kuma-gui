@@ -1,0 +1,18 @@
+description: A list of rules for a dataplane
+type: object
+properties:
+  resource:
+    $ref: "Meta.yaml"
+  rules:
+    type: array
+    items:
+      $ref: "InspectRule.yaml"
+  httpMatches:
+    type: array
+    items:
+      $ref: "HttpMatch.yaml"
+required:
+  - rules
+  - resource
+  - httpMatches
+title: InspectRules

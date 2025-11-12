@@ -1,0 +1,15 @@
+description: An supported hostname along with the zones it exists in
+type: object
+properties:
+  hostname:
+    description: Generated hostname
+    type: string
+    example: redis.redis-system.svc.east.mesh.local
+  zones:
+    type: array
+    items:
+      $ref: "InspectHostnameZone.yaml"
+required:
+  - hostname
+  - zones
+title: InspectHostname

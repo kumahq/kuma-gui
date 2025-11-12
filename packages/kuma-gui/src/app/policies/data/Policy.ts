@@ -3,7 +3,7 @@ import { Resource } from '@/app/resources/data/Resource'
 import type { components } from '@kumahq/kuma-http-api'
 
 export type KumaPolicy = components['schemas']['Policy']
-export type KumaPolicyCollection =components['schemas']['PolicyCollection']
+export type KumaPolicyCollection = components['schemas']['PolicyCollection']
 
 /**
  * @description we use this to workaround the fact that sometimes we need to call URLs with

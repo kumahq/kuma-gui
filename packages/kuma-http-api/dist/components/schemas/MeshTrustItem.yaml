@@ -1,0 +1,83 @@
+type: object
+properties:
+  type:
+    description: the type of the resource
+    type: string
+    enum:
+      - MeshTrust
+  mesh:
+    description: Mesh is the name of the Kuma mesh this resource belongs to. It may be omitted for cluster-scoped resources.
+    type: string
+    default: default
+  kri:
+    description: A unique identifier for this resource instance used by internal tooling and integrations. Typically derived from resource attributes and may be used for cross-references or indexing
+    type: string
+    example: kri_mtrust_default_zone-east_kuma-system_myresource1_
+    readOnly: true
+  name:
+    description: Name of the Kuma resource
+    type: string
+  labels:
+    description: The labels to help identity resources
+    type: object
+    additionalProperties:
+      type: string
+  spec:
+    description: Spec is the specification of the Kuma MeshTrust resource.
+    type: object
+    properties:
+      caBundles:
+        description: |-
+          CABundles contains a list of CA bundles supported by this TrustDomain.
+          At least one CA bundle must be specified.
+        type: array
+        items:
+          properties:
+            pem:
+              description: Pem contains the PEM-encoded CA bundle if the Type is set to a PEM-based format.
+              type: object
+              properties:
+                value:
+                  description: Value holds the PEM-encoded CA bundle as a string.
+                  type: string
+              required:
+                - value
+            type:
+              description: Type specifies the format or source type of the CA bundle.
+              type: string
+              enum:
+                - Pem
+          required:
+            - type
+          type: object
+        minItems: 1
+      origin:
+        description: Origin specifies whether the resource was created from a MeshIdentity.
+        type: object
+        properties:
+          kri:
+            description: Resource identifier
+            type: string
+      trustDomain:
+        description: TrustDomain is the trust domain associated with this resource.
+        type: string
+        maxLength: 253
+    required:
+      - caBundles
+      - trustDomain
+  creationTime:
+    description: Time at which the resource was created
+    type: string
+    format: date-time
+    example: '0001-01-01T00:00:00Z'
+    readOnly: true
+  modificationTime:
+    description: Time at which the resource was updated
+    type: string
+    format: date-time
+    example: '0001-01-01T00:00:00Z'
+    readOnly: true
+required:
+  - type
+  - name
+  - spec

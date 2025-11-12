@@ -1,0 +1,16 @@
+type: object
+properties:
+  total:
+    type: integer
+  items:
+    type: array
+    items:
+      type: object
+  next:
+    nullable: true
+    type: string
+required:
+  - next
+  - total
+  - items
+

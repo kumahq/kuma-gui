@@ -1,0 +1,5 @@
+description: A response for the index endpoint
+content:
+  application/json:
+    schema:
+      $ref: "../schemas/Index.yaml"

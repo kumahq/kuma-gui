@@ -1,0 +1,76 @@
+get:
+  operationId: getMeshFaultInjection
+  summary: Returns MeshFaultInjection entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshFaultInjection
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: "../components/responses/MeshFaultInjectionItem.yaml"
+    '404':
+      $ref: "../components/responses/NotFound.yaml"
+  tags:
+    - MeshFaultInjection
+put:
+  operationId: putMeshFaultInjection
+  summary: Creates or Updates MeshFaultInjection entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshFaultInjection
+      required: true
+      schema:
+        type: string
+  requestBody:
+    description: Put request
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../components/schemas/MeshFaultInjectionItem.yaml"
+  responses:
+    '200':
+      $ref: "../components/responses/MeshFaultInjectionCreateOrUpdateSuccessResponse.yaml"
+    '201':
+      $ref: "../components/responses/MeshFaultInjectionCreateOrUpdateSuccessResponse.yaml"
+  tags:
+    - MeshFaultInjection
+delete:
+  operationId: deleteMeshFaultInjection
+  summary: Deletes MeshFaultInjection entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshFaultInjection
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: "../components/responses/MeshFaultInjectionDeleteSuccessResponse.yaml"
+    '404':
+      $ref: "../components/responses/NotFound.yaml"
+  tags:
+    - MeshFaultInjection

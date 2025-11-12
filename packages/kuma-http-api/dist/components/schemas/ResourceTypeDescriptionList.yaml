@@ -1,0 +1,10 @@
+description: A list of all resources install
+type: object
+properties:
+  resources:
+    type: array
+    items:
+      $ref: "ResourceTypeDescription.yaml"
+required:
+  - resources
+title: ResourceTypeDescriptionList

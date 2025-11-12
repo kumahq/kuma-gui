@@ -1,0 +1,28 @@
+overlay: 1.0.0
+info:
+  title: Overlay to customise API for Kuma
+  version: 0.1.0
+extends: ../generated/openapi.yaml
+actions:
+  # Additional schemas
+  - target: '$.components.schemas'
+    update:
+      Policy:
+        $ref: "components/schemas/Policy.yaml"
+      PolicyCollection:
+        $ref: "components/schemas/PolicyCollection.yaml"
+      LegacyPolicy:
+        $ref: "components/schemas/LegacyPolicy.yaml"
+      TargetRefPolicy:
+        $ref: "components/schemas/TargetRefPolicy.yaml"
+
+  # Additional paths. These will include any schemas used in the <path>.yaml file
+  - target: "$.paths"
+    update:
+      /config:
+        $ref: "paths/config.yaml"
+      /mesh-insights:
+        $ref: "paths/mesh-insights.yaml"
+      /mesh-insights/{name}:
+        $ref: "paths/mesh-insights_{name}.yaml"
+

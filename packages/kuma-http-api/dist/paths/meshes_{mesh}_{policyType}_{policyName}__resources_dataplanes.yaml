@@ -1,0 +1,53 @@
+get:
+  operationId: inspect-resources
+  summary: Returns resources matched by this policy
+  description: Returns resources matched by this policy. In the case of `targetRef` policies we'll match using the top level `targetRef`
+  parameters:
+    - name: mesh
+      in: path
+      description: The mesh the policy is part of
+      required: true
+      schema:
+        type: string
+      example: default
+    - name: policyType
+      in: path
+      description: The type of the policy
+      required: true
+      schema:
+        type: string
+      example: meshretries
+    - name: policyName
+      in: path
+      description: The type of the policy
+      required: true
+      schema:
+        type: string
+      example: retry-all
+    - name: size
+      in: query
+      description: The max number of items to return
+      required: false
+      schema:
+        type: integer
+    - name: offset
+      in: query
+      description: The offset of result
+      required: false
+      schema:
+        type: integer
+    - name: name
+      in: query
+      description: A sub string to filter resources by name
+      required: false
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: "../components/responses/InspectDataplanesForPolicyResponse.yaml"
+    '400':
+      $ref: "../components/responses/BadRequest.yaml"
+    '500':
+      $ref: "../components/responses/Internal.yaml"
+  tags:
+    - Inspect

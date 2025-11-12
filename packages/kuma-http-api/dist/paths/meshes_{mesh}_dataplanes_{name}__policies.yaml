@@ -1,0 +1,24 @@
+get:
+  operationId: get-proxy-policy-conf
+  summary: Get proxy policies for this dataplane
+  description: Returns proxy level policy configuration derived from combining all proxy policies selecting this dataplane
+  parameters:
+    - name: mesh
+      in: path
+      description: The mesh of the DPP to get the diff for.
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: The name of the DPP within the mesh to get the diff for.
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: "../components/responses/ProxyPolicyConfResponse.yaml"
+    '400':
+      $ref: "../components/responses/BadRequest.yaml"
+    '500':
+      $ref: "../components/responses/Internal.yaml"

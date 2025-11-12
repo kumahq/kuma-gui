@@ -1,0 +1,76 @@
+get:
+  operationId: getMeshPassthrough
+  summary: Returns MeshPassthrough entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshPassthrough
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: "../components/responses/MeshPassthroughItem.yaml"
+    '404':
+      $ref: "../components/responses/NotFound.yaml"
+  tags:
+    - MeshPassthrough
+put:
+  operationId: putMeshPassthrough
+  summary: Creates or Updates MeshPassthrough entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshPassthrough
+      required: true
+      schema:
+        type: string
+  requestBody:
+    description: Put request
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../components/schemas/MeshPassthroughItem.yaml"
+  responses:
+    '200':
+      $ref: "../components/responses/MeshPassthroughCreateOrUpdateSuccessResponse.yaml"
+    '201':
+      $ref: "../components/responses/MeshPassthroughCreateOrUpdateSuccessResponse.yaml"
+  tags:
+    - MeshPassthrough
+delete:
+  operationId: deleteMeshPassthrough
+  summary: Deletes MeshPassthrough entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshPassthrough
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: "../components/responses/MeshPassthroughDeleteSuccessResponse.yaml"
+    '404':
+      $ref: "../components/responses/NotFound.yaml"
+  tags:
+    - MeshPassthrough

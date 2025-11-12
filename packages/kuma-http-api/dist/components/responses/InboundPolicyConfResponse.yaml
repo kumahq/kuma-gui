@@ -1,0 +1,5 @@
+description: A response containing policies configuration for selected inbound
+content:
+  application/json:
+    schema:
+      $ref: "../schemas/InboundPoliciesList.yaml"

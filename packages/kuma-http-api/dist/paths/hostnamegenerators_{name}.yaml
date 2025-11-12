@@ -1,0 +1,58 @@
+get:
+  operationId: getHostnameGenerator
+  summary: Returns HostnameGenerator entity
+  parameters:
+    - name: name
+      in: path
+      description: name of the HostnameGenerator
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: "../components/responses/HostnameGeneratorItem.yaml"
+    '404':
+      $ref: "../components/responses/NotFound.yaml"
+  tags:
+    - HostnameGenerator
+put:
+  operationId: putHostnameGenerator
+  summary: Creates or Updates HostnameGenerator entity
+  parameters:
+    - name: name
+      in: path
+      description: name of the HostnameGenerator
+      required: true
+      schema:
+        type: string
+  requestBody:
+    description: Put request
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../components/schemas/HostnameGeneratorItem.yaml"
+  responses:
+    '200':
+      $ref: "../components/responses/HostnameGeneratorCreateOrUpdateSuccessResponse.yaml"
+    '201':
+      $ref: "../components/responses/HostnameGeneratorCreateOrUpdateSuccessResponse.yaml"
+  tags:
+    - HostnameGenerator
+delete:
+  operationId: deleteHostnameGenerator
+  summary: Deletes HostnameGenerator entity
+  parameters:
+    - name: name
+      in: path
+      description: name of the HostnameGenerator
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: "../components/responses/HostnameGeneratorDeleteSuccessResponse.yaml"
+    '404':
+      $ref: "../components/responses/NotFound.yaml"
+  tags:
+    - HostnameGenerator

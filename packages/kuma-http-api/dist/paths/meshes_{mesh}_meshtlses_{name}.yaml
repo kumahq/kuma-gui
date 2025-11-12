@@ -1,0 +1,76 @@
+get:
+  operationId: getMeshTLS
+  summary: Returns MeshTLS entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshTLS
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: "../components/responses/MeshTLSItem.yaml"
+    '404':
+      $ref: "../components/responses/NotFound.yaml"
+  tags:
+    - MeshTLS
+put:
+  operationId: putMeshTLS
+  summary: Creates or Updates MeshTLS entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshTLS
+      required: true
+      schema:
+        type: string
+  requestBody:
+    description: Put request
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../components/schemas/MeshTLSItem.yaml"
+  responses:
+    '200':
+      $ref: "../components/responses/MeshTLSCreateOrUpdateSuccessResponse.yaml"
+    '201':
+      $ref: "../components/responses/MeshTLSCreateOrUpdateSuccessResponse.yaml"
+  tags:
+    - MeshTLS
+delete:
+  operationId: deleteMeshTLS
+  summary: Deletes MeshTLS entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshTLS
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: "../components/responses/MeshTLSDeleteSuccessResponse.yaml"
+    '404':
+      $ref: "../components/responses/NotFound.yaml"
+  tags:
+    - MeshTLS

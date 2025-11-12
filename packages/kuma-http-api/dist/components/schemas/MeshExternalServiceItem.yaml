@@ -1,0 +1,305 @@
+type: object
+properties:
+  type:
+    description: the type of the resource
+    type: string
+    enum:
+      - MeshExternalService
+  mesh:
+    description: Mesh is the name of the Kuma mesh this resource belongs to. It may be omitted for cluster-scoped resources.
+    type: string
+    default: default
+  kri:
+    description: A unique identifier for this resource instance used by internal tooling and integrations. Typically derived from resource attributes and may be used for cross-references or indexing
+    type: string
+    example: kri_extsvc_default_zone-east_kuma-system_myresource1_
+    readOnly: true
+  name:
+    description: Name of the Kuma resource
+    type: string
+  labels:
+    description: The labels to help identity resources
+    type: object
+    additionalProperties:
+      type: string
+  spec:
+    description: Spec is the specification of the Kuma MeshExternalService resource.
+    type: object
+    properties:
+      endpoints:
+        description: Endpoints defines a list of destinations to send traffic to.
+        type: array
+        items:
+          properties:
+            address:
+              description: 'Address defines an address to which a user want to send a request. Is possible to provide `domain`, `ip`.'
+              type: string
+              example: example.com
+              minLength: 1
+            port:
+              description: Port of the endpoint
+              type: integer
+              format: int32
+              maximum: 65535
+              minimum: 1
+          required:
+            - address
+            - port
+          type: object
+      extension:
+        description: 'Extension struct for a plugin configuration, in the presence of an extension `endpoints` and `tls` are not required anymore - it''s up to the extension to validate them independently.'
+        type: object
+        properties:
+          config:
+            description: Config freeform configuration for the extension.
+            x-kubernetes-preserve-unknown-fields: true
+          type:
+            description: Type of the extension.
+            type: string
+        required:
+          - type
+      match:
+        description: Match defines traffic that should be routed through the sidecar.
+        type: object
+        properties:
+          port:
+            description: Port defines a port to which a user does request.
+            type: integer
+            format: int32
+            maximum: 65535
+            minimum: 1
+          protocol:
+            description: 'Protocol defines a protocol of the communication. Possible values: `tcp`, `grpc`, `http`, `http2`.'
+            type: string
+            default: tcp
+            enum:
+              - tcp
+              - grpc
+              - http
+              - http2
+          type:
+            description: 'Type of the match, only `HostnameGenerator` is available at the moment.'
+            type: string
+            default: HostnameGenerator
+            enum:
+              - HostnameGenerator
+        required:
+          - port
+      tls:
+        description: Tls provides a TLS configuration when proxy is resposible for a TLS origination
+        type: object
+        properties:
+          allowRenegotiation:
+            description: |-
+              AllowRenegotiation defines if TLS sessions will allow renegotiation.
+              Setting this to true is not recommended for security reasons.
+            type: boolean
+            default: false
+          enabled:
+            description: Enabled defines if proxy should originate TLS.
+            type: boolean
+            default: false
+          verification:
+            description: Verification section for providing TLS verification details.
+            type: object
+            properties:
+              caCert:
+                description: CaCert defines a certificate of CA.
+                type: object
+                properties:
+                  inline:
+                    description: Data source is inline bytes.
+                    type: string
+                    format: byte
+                  inlineString:
+                    description: Data source is inline string`
+                    type: string
+                  secret:
+                    description: Data source is a secret with given Secret key.
+                    type: string
+              clientCert:
+                description: ClientCert defines a certificate of a client.
+                type: object
+                properties:
+                  inline:
+                    description: Data source is inline bytes.
+                    type: string
+                    format: byte
+                  inlineString:
+                    description: Data source is inline string`
+                    type: string
+                  secret:
+                    description: Data source is a secret with given Secret key.
+                    type: string
+              clientKey:
+                description: ClientKey defines a client private key.
+                type: object
+                properties:
+                  inline:
+                    description: Data source is inline bytes.
+                    type: string
+                    format: byte
+                  inlineString:
+                    description: Data source is inline string`
+                    type: string
+                  secret:
+                    description: Data source is a secret with given Secret key.
+                    type: string
+              mode:
+                description: 'Mode defines if proxy should skip verification, one of `SkipSAN`, `SkipCA`, `Secured`, `SkipAll`. Default `Secured`.'
+                type: string
+                default: Secured
+                enum:
+                  - SkipSAN
+                  - SkipCA
+                  - Secured
+                  - SkipAll
+              serverName:
+                description: ServerName overrides the default Server Name Indicator set by Kuma.
+                type: string
+              subjectAltNames:
+                description: SubjectAltNames list of names to verify in the certificate.
+                type: array
+                items:
+                  properties:
+                    type:
+                      description: 'Type specifies matching type, one of `Exact`, `Prefix`. Default: `Exact`'
+                      type: string
+                      default: Exact
+                      enum:
+                        - Exact
+                        - Prefix
+                    value:
+                      description: Value to match.
+                      type: string
+                  required:
+                    - value
+                  type: object
+          version:
+            description: Version section for providing version specification.
+            type: object
+            properties:
+              max:
+                description: 'Max defines maximum supported version. One of `TLSAuto`, `TLS10`, `TLS11`, `TLS12`, `TLS13`.'
+                type: string
+                default: TLSAuto
+                enum:
+                  - TLSAuto
+                  - TLS10
+                  - TLS11
+                  - TLS12
+                  - TLS13
+              min:
+                description: 'Min defines minimum supported version. One of `TLSAuto`, `TLS10`, `TLS11`, `TLS12`, `TLS13`.'
+                type: string
+                default: TLSAuto
+                enum:
+                  - TLSAuto
+                  - TLS10
+                  - TLS11
+                  - TLS12
+                  - TLS13
+    required:
+      - match
+  creationTime:
+    description: Time at which the resource was created
+    type: string
+    format: date-time
+    example: '0001-01-01T00:00:00Z'
+    readOnly: true
+  modificationTime:
+    description: Time at which the resource was updated
+    type: string
+    format: date-time
+    example: '0001-01-01T00:00:00Z'
+    readOnly: true
+  status:
+    description: Status is the current status of the Kuma MeshExternalService resource.
+    type: object
+    properties:
+      addresses:
+        description: Addresses section for generated domains
+        type: array
+        items:
+          properties:
+            hostname:
+              type: string
+            hostnameGeneratorRef:
+              type: object
+              properties:
+                coreName:
+                  type: string
+              required:
+                - coreName
+            origin:
+              type: string
+          type: object
+      hostnameGenerators:
+        type: array
+        items:
+          properties:
+            conditions:
+              description: Conditions is an array of hostname generator conditions.
+              type: array
+              items:
+                properties:
+                  message:
+                    description: |-
+                      message is a human readable message indicating details about the transition.
+                      This may be an empty string.
+                    type: string
+                    maxLength: 32768
+                  reason:
+                    description: |-
+                      reason contains a programmatic identifier indicating the reason for the condition's last transition.
+                      Producers of specific condition types may define expected values and meanings for this field,
+                      and whether the values are considered a guaranteed API.
+                      The value should be a CamelCase string.
+                      This field may not be empty.
+                    type: string
+                    maxLength: 1024
+                    minLength: 1
+                    pattern: '^[A-Za-z]([A-Za-z0-9_,:]*[A-Za-z0-9_])?$'
+                  status:
+                    description: 'status of the condition, one of True, False, Unknown.'
+                    type: string
+                    enum:
+                      - 'True'
+                      - 'False'
+                      - Unknown
+                  type:
+                    description: type of condition in CamelCase or in foo.example.com/CamelCase.
+                    type: string
+                    maxLength: 316
+                    pattern: '^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$'
+                required:
+                  - message
+                  - reason
+                  - status
+                  - type
+                type: object
+              x-kubernetes-list-map-keys:
+                - type
+              x-kubernetes-list-type: map
+            hostnameGeneratorRef:
+              type: object
+              properties:
+                coreName:
+                  type: string
+              required:
+                - coreName
+          required:
+            - hostnameGeneratorRef
+          type: object
+      vip:
+        description: Vip section for allocated IP
+        type: object
+        properties:
+          ip:
+            description: Value allocated IP for a provided domain with `HostnameGenerator` type in a match section.
+            type: string
+    readOnly: true
+required:
+  - type
+  - name
+  - spec

@@ -1,0 +1,19 @@
+overlay: 1.0.0
+info:
+  title: Overlay to customise API for Kuma
+  version: 0.1.0
+extends: ../../../generated/components/schemas/MeshAccessLogItem.yaml
+actions:
+  - target: '$.properties.spec'
+    remove: true
+  # This removes the `type: 'MeshAccessLog'`
+  - target: '$.properties.type.enum'
+    remove: true
+  - target: '$.properties'
+    update:
+      spec:
+        description: Spec is the specification of the Kuma Policy resource.
+        properties:
+          targetRef:
+            $ref: './MeshAccessLogItem.yaml#/properties/spec/properties/targetRef'
+

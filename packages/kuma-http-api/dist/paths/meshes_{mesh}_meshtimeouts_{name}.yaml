@@ -1,0 +1,76 @@
+get:
+  operationId: getMeshTimeout
+  summary: Returns MeshTimeout entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshTimeout
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: "../components/responses/MeshTimeoutItem.yaml"
+    '404':
+      $ref: "../components/responses/NotFound.yaml"
+  tags:
+    - MeshTimeout
+put:
+  operationId: putMeshTimeout
+  summary: Creates or Updates MeshTimeout entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshTimeout
+      required: true
+      schema:
+        type: string
+  requestBody:
+    description: Put request
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../components/schemas/MeshTimeoutItem.yaml"
+  responses:
+    '200':
+      $ref: "../components/responses/MeshTimeoutCreateOrUpdateSuccessResponse.yaml"
+    '201':
+      $ref: "../components/responses/MeshTimeoutCreateOrUpdateSuccessResponse.yaml"
+  tags:
+    - MeshTimeout
+delete:
+  operationId: deleteMeshTimeout
+  summary: Deletes MeshTimeout entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshTimeout
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: "../components/responses/MeshTimeoutDeleteSuccessResponse.yaml"
+    '404':
+      $ref: "../components/responses/NotFound.yaml"
+  tags:
+    - MeshTimeout

@@ -33,16 +33,29 @@ jobs:
   sync:
     timeout-minutes: 10
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        package:
+          - name: "@kumahq/kuma-http-api"
+            path: packages/kuma-http-api
+            source: kumahq/kuma
+    name: |
+      Updating ${{ matrix.package.name }} from ${{ matrix.package.source }}
     steps:
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
       - uses: ./.github/actions/bootstrap/
         with:
           install-cmd: |
             make install
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          repository: ${{ matrix.package.source }}
+          ref: ${{ env.BRANCH }}
+          path: ${{ matrix.package.path }}/kuma
       - run: |
-          make -C packages/kuma-http-api types/fetch
-          make -C packages/kuma-http-api build
-          echo KUMA_HEAD="$(git -C packages/kuma-http-api/kuma rev-parse --short HEAD)" >> "$GITHUB_ENV"
+          make -C ${{ matrix.package.path }} build \
+            GIT_SHA=$(git -C ${{ matrix.package.path }}/kuma rev-parse HEAD)
+          echo KUMA_HEAD="$(git -C ${{ matrix.package.path }}/kuma rev-parse --short HEAD)" >> "$GITHUB_ENV"
       - if: ${{ github.event_name == 'pull_request' }}
         run: |
           echo 'chore(kuma-http-api): bump kuma OAS based types - ${{ env.KUMA_HEAD }}'

@@ -1,0 +1,5 @@
+description: A response containing the overview of a dataplane.
+content:
+  application/json:
+    schema:
+      $ref: "../schemas/DataplaneOverviewWithMeta.yaml"

@@ -1,0 +1,11 @@
+type: object
+properties:
+  inbound:
+    $ref: "Inbound.yaml"
+  rules:
+    type: array
+    items:
+      $ref: "Rule.yaml"
+required:
+  - rules
+  - inbound

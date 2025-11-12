@@ -1,0 +1,76 @@
+get:
+  operationId: getMeshTCPRoute
+  summary: Returns MeshTCPRoute entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshTCPRoute
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: "../components/responses/MeshTCPRouteItem.yaml"
+    '404':
+      $ref: "../components/responses/NotFound.yaml"
+  tags:
+    - MeshTCPRoute
+put:
+  operationId: putMeshTCPRoute
+  summary: Creates or Updates MeshTCPRoute entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshTCPRoute
+      required: true
+      schema:
+        type: string
+  requestBody:
+    description: Put request
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../components/schemas/MeshTCPRouteItem.yaml"
+  responses:
+    '200':
+      $ref: "../components/responses/MeshTCPRouteCreateOrUpdateSuccessResponse.yaml"
+    '201':
+      $ref: "../components/responses/MeshTCPRouteCreateOrUpdateSuccessResponse.yaml"
+  tags:
+    - MeshTCPRoute
+delete:
+  operationId: deleteMeshTCPRoute
+  summary: Deletes MeshTCPRoute entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshTCPRoute
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: "../components/responses/MeshTCPRouteDeleteSuccessResponse.yaml"
+    '404':
+      $ref: "../components/responses/NotFound.yaml"
+  tags:
+    - MeshTCPRoute
