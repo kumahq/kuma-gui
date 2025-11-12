@@ -1,0 +1,76 @@
+get:
+  operationId: getWorkload
+  summary: Returns Workload entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the Workload
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: "../components/responses/WorkloadItem.yaml"
+    '404':
+      $ref: "../components/responses/NotFound.yaml"
+  tags:
+    - Workload
+put:
+  operationId: putWorkload
+  summary: Creates or Updates Workload entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the Workload
+      required: true
+      schema:
+        type: string
+  requestBody:
+    description: Put request
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../components/schemas/WorkloadItem.yaml"
+  responses:
+    '200':
+      $ref: "../components/responses/WorkloadCreateOrUpdateSuccessResponse.yaml"
+    '201':
+      $ref: "../components/responses/WorkloadCreateOrUpdateSuccessResponse.yaml"
+  tags:
+    - Workload
+delete:
+  operationId: deleteWorkload
+  summary: Deletes Workload entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the Workload
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: "../components/responses/WorkloadDeleteSuccessResponse.yaml"
+    '404':
+      $ref: "../components/responses/NotFound.yaml"
+  tags:
+    - Workload

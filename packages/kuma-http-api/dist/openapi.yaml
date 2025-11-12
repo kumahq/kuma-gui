@@ -146,6 +146,10 @@ paths:
     $ref: 'paths/meshes_{mesh}_meshtrusts_{name}.yaml'
   '/meshes/{mesh}/meshtrusts':
     $ref: 'paths/meshes_{mesh}_meshtrusts.yaml'
+  '/meshes/{mesh}/workloads/{name}':
+    $ref: 'paths/meshes_{mesh}_workloads_{name}.yaml'
+  '/meshes/{mesh}/workloads':
+    $ref: 'paths/meshes_{mesh}_workloads.yaml'
   '/_kri/{kri}':
     $ref: 'paths/_kri_{kri}.yaml'
   /config:
@@ -338,6 +342,8 @@ components:
       $ref: "components/schemas/MeshServiceItem.yaml"
     MeshTrustItem:
       $ref: "components/schemas/MeshTrustItem.yaml"
+    WorkloadItem:
+      $ref: "components/schemas/WorkloadItem.yaml"
     Policy:
       $ref: "components/schemas/Policy.yaml"
     PolicyCollection:
@@ -614,6 +620,14 @@ components:
       $ref: "components/responses/MeshTrustCreateOrUpdateSuccessResponse.yaml"
     MeshTrustDeleteSuccessResponse:
       $ref: "components/responses/MeshTrustDeleteSuccessResponse.yaml"
+    WorkloadItem:
+      $ref: "components/responses/WorkloadItem.yaml"
+    WorkloadList:
+      $ref: "components/responses/WorkloadList.yaml"
+    WorkloadCreateOrUpdateSuccessResponse:
+      $ref: "components/responses/WorkloadCreateOrUpdateSuccessResponse.yaml"
+    WorkloadDeleteSuccessResponse:
+      $ref: "components/responses/WorkloadDeleteSuccessResponse.yaml"
   securitySchemes:
     BasicAuth:
       $ref: "components/securitySchemes/BasicAuth.yaml"
