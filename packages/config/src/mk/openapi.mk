@@ -41,7 +41,7 @@ $(YAML_OUTPUT_FILES): dist/%.yaml: src/%.yaml
 ## to signal that dist needs copying and we then skip anything that exists
 dist/paths/.yaml: generated/openapi.yaml
 	@echo "Copying generated to dist..."
-	@cp -nR generated/ dist/ || true
+	@cp -nvR generated/ dist/ || true
 
 generated/openapi.yaml: $(OPENAPI_SRC)
 	@echo "Splitting $<..."
