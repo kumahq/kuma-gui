@@ -111,11 +111,6 @@
                         params: {
                           zone: item.name,
                         },
-                        query: {
-                          page: route.params.page,
-                          size: route.params.size,
-                          s: route.params.s,
-                        },
                       }"
                     >
                       {{ item.name }}

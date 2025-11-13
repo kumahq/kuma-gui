@@ -73,10 +73,6 @@
                           mesh: item.mesh,
                           service: item.name,
                         },
-                        query: {
-                          page: route.params.page,
-                          size: route.params.size,
-                        },
                       }"
                     >
                       {{ item.name }}
