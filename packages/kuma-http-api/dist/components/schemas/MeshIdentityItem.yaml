@@ -192,8 +192,6 @@ properties:
             type: string
           trustDomain:
             type: string
-    required:
-      - provider
   creationTime:
     description: Time at which the resource was created
     type: string

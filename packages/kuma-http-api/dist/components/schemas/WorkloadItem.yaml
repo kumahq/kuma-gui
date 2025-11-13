@@ -1,0 +1,68 @@
+type: object
+properties:
+  type:
+    description: the type of the resource
+    type: string
+    enum:
+      - Workload
+  mesh:
+    description: Mesh is the name of the Kuma mesh this resource belongs to. It may be omitted for cluster-scoped resources.
+    type: string
+    default: default
+  kri:
+    description: A unique identifier for this resource instance used by internal tooling and integrations. Typically derived from resource attributes and may be used for cross-references or indexing
+    type: string
+    example: kri_wl_default_zone-east_kuma-demo_myresource1_
+    readOnly: true
+  name:
+    description: Name of the Kuma resource
+    type: string
+  labels:
+    description: The labels to help identity resources
+    type: object
+    additionalProperties:
+      type: string
+  spec:
+    description: Spec is the specification of the Kuma Workload resource.
+    type: object
+  creationTime:
+    description: Time at which the resource was created
+    type: string
+    format: date-time
+    example: '0001-01-01T00:00:00Z'
+    readOnly: true
+  modificationTime:
+    description: Time at which the resource was updated
+    type: string
+    format: date-time
+    example: '0001-01-01T00:00:00Z'
+    readOnly: true
+  status:
+    description: Status is the current status of the Kuma Workload resource.
+    type: object
+    properties:
+      dataplaneProxies:
+        description: DataplaneProxies defines statistics of data plane proxies that are part of this workload
+        type: object
+        properties:
+          connected:
+            description: Connected defines number of connected data plane proxies
+            type: integer
+            format: int32
+          healthy:
+            description: Healthy defines number of healthy data plane proxies for this workload
+            type: integer
+            format: int32
+          total:
+            description: Total defines total number of data plane proxies for this workload
+            type: integer
+            format: int32
+        required:
+          - connected
+          - healthy
+          - total
+    readOnly: true
+required:
+  - type
+  - name
+  - spec

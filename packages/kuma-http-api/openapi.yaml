@@ -3,7 +3,7 @@ info:
   title: Kuma API
   description: Kuma API
   version: v1alpha1
-  x-oas-source: kumahq/kuma@3a3d21b2be69f82fa14364dfe33b1ece16aa26c9
+  x-oas-source: kumahq/kuma@564c29e0eb40e5506f550e75666a2636f24b8e50
 paths:
   /:
     get:
@@ -3765,6 +3765,128 @@ paths:
           $ref: '#/components/responses/MeshTrustList'
       tags:
         - MeshTrust
+  '/meshes/{mesh}/workloads/{name}':
+    get:
+      operationId: getWorkload
+      summary: Returns Workload entity
+      parameters:
+        - name: mesh
+          in: path
+          description: name of the mesh
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: path
+          description: name of the Workload
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/WorkloadItem'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      tags:
+        - Workload
+    put:
+      operationId: putWorkload
+      summary: Creates or Updates Workload entity
+      parameters:
+        - name: mesh
+          in: path
+          description: name of the mesh
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: path
+          description: name of the Workload
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Put request
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkloadItem'
+      responses:
+        '200':
+          $ref: '#/components/responses/WorkloadCreateOrUpdateSuccessResponse'
+        '201':
+          $ref: '#/components/responses/WorkloadCreateOrUpdateSuccessResponse'
+      tags:
+        - Workload
+    delete:
+      operationId: deleteWorkload
+      summary: Deletes Workload entity
+      parameters:
+        - name: mesh
+          in: path
+          description: name of the mesh
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: path
+          description: name of the Workload
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/WorkloadDeleteSuccessResponse'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      tags:
+        - Workload
+  '/meshes/{mesh}/workloads':
+    get:
+      operationId: getWorkloadList
+      summary: Returns a list of Workload in the mesh.
+      parameters:
+        - name: offset
+          in: query
+          description: offset in the list of entities
+          required: false
+          schema:
+            type: integer
+          example: 0
+        - name: size
+          in: query
+          description: the number of items per page
+          required: false
+          schema:
+            type: integer
+            default: 100
+            maximum: 1000
+            minimum: 1
+        - name: filter
+          in: query
+          description: 'filter by labels when multiple filters are present, they are ANDed'
+          required: false
+          schema:
+            type: object
+            properties:
+              key:
+                type: string
+              value:
+                type: string
+          example:
+            label.k8s.kuma.io/namespace: my-ns
+        - name: mesh
+          in: path
+          description: name of the mesh
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/WorkloadList'
+      tags:
+        - Workload
   '/_kri/{kri}':
     get:
       operationId: getByKri
@@ -7199,6 +7321,7 @@ components:
                           Allows to configure panic threshold for Envoy cluster. If not specified,
                           the default is 50%. To disable panic mode, set to 0%.
                           Either int or decimal represented as string.
+
                           Deprecated: the setting has been moved to MeshCircuitBreaker policy,
                           please use MeshCircuitBreaker policy instead.
                         anyOf:
@@ -14569,8 +14692,6 @@ components:
                   type: string
                 trustDomain:
                   type: string
-          required:
-            - provider
         creationTime:
           description: Time at which the resource was created
           type: string
@@ -15114,6 +15235,75 @@ components:
           type: string
           format: date-time
           example: '0001-01-01T00:00:00Z'
+          readOnly: true
+      required:
+        - type
+        - name
+        - spec
+    WorkloadItem:
+      type: object
+      properties:
+        type:
+          description: the type of the resource
+          type: string
+          enum:
+            - Workload
+        mesh:
+          description: Mesh is the name of the Kuma mesh this resource belongs to. It may be omitted for cluster-scoped resources.
+          type: string
+          default: default
+        kri:
+          description: A unique identifier for this resource instance used by internal tooling and integrations. Typically derived from resource attributes and may be used for cross-references or indexing
+          type: string
+          example: kri_wl_default_zone-east_kuma-demo_myresource1_
+          readOnly: true
+        name:
+          description: Name of the Kuma resource
+          type: string
+        labels:
+          description: The labels to help identity resources
+          type: object
+          additionalProperties:
+            type: string
+        spec:
+          description: Spec is the specification of the Kuma Workload resource.
+          type: object
+        creationTime:
+          description: Time at which the resource was created
+          type: string
+          format: date-time
+          example: '0001-01-01T00:00:00Z'
+          readOnly: true
+        modificationTime:
+          description: Time at which the resource was updated
+          type: string
+          format: date-time
+          example: '0001-01-01T00:00:00Z'
+          readOnly: true
+        status:
+          description: Status is the current status of the Kuma Workload resource.
+          type: object
+          properties:
+            dataplaneProxies:
+              description: DataplaneProxies defines statistics of data plane proxies that are part of this workload
+              type: object
+              properties:
+                connected:
+                  description: Connected defines number of connected data plane proxies
+                  type: integer
+                  format: int32
+                healthy:
+                  description: Healthy defines number of healthy data plane proxies for this workload
+                  type: integer
+                  format: int32
+                total:
+                  description: Total defines total number of data plane proxies for this workload
+                  type: integer
+                  format: int32
+              required:
+                - connected
+                - healthy
+                - total
           readOnly: true
       required:
         - type
@@ -16795,6 +16985,50 @@ components:
                 type: array
                 items:
                   $ref: '#/components/schemas/MeshTrustItem'
+              total:
+                description: The total number of entities
+                type: number
+              next:
+                description: URL to the next page
+                type: string
+    WorkloadItem:
+      description: Successful response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WorkloadItem'
+    WorkloadCreateOrUpdateSuccessResponse:
+      description: Successful response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              warnings:
+                description: |
+                  warnings is a list of warning messages to return to the requesting Kuma API clients.
+                  Warning messages describe a problem the client making the API request should correct or be aware of.
+                type: array
+                items:
+                  type: string
+                readOnly: true
+    WorkloadDeleteSuccessResponse:
+      description: Successful response
+      content:
+        application/json:
+          schema:
+            type: object
+    WorkloadList:
+      description: List
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              items:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WorkloadItem'
               total:
                 description: The total number of entities
                 type: number
