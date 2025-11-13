@@ -21,7 +21,7 @@
       </slot>
     </template>
     <template
-      v-else-if="allData.length > 0 && allData.every(item => typeof item !== 'undefined')"
+      v-else-if="allData.length === 0 || allData.every(item => typeof item !== 'undefined')"
     >
       <slot
         name="default"
@@ -58,13 +58,14 @@
 <script lang="ts" generic="T extends string | {
   toString(): string
   typeOf(): any
-}" setup
+}, K" setup
 >
 import { computed, ref, provide } from 'vue'
 
 import type { TypeOf } from '../../../'
+
 const props = withDefaults(defineProps<{
-  data?: unknown[]
+  data?: K[]
   errors?: (Error | undefined)[]
   src?: T
   loader?: boolean
@@ -75,10 +76,14 @@ const props = withDefaults(defineProps<{
   src: '' as any,
   loader: true,
   variant: 'default',
+
 })
+
+type Data = NonNullable<TypeOf<T>>
+
 defineSlots<{
   default(props: {
-    data: NonNullable<TypeOf<T>>
+    data: Data
     error: Error | undefined
     refresh: () => void
   }): any
@@ -88,12 +93,12 @@ defineSlots<{
     refresh: () => void
   }): any
   error(props: {
-    data: NonNullable<TypeOf<T>>
+    data: Data
     error: Error | undefined
     refresh: () => void
   }): any
   disconnected(props: {
-    data: NonNullable<TypeOf<T>>
+    data: Data
     error: Error | undefined
     refresh: () => void
   }): any
@@ -108,15 +113,17 @@ const srcData = ref<unknown>(undefined)
 const srcError = ref<Error | undefined>(undefined)
 
 const allData = computed(() => {
+  const data = props.data.filter(item => !(item instanceof Error))
   if (props.src !== '') {
-    return [srcData.value as unknown].concat(props.data)
+    return [srcData.value as unknown].concat(data)
   }
-  return props.data
+  return data
 })
 
 const allErrors = computed(() => {
+  const dataErrors = props.data.filter(item => item instanceof Error)
   const errors = typeof srcError.value === 'undefined' ? props.errors : ([srcError.value] as (Error | undefined)[]).concat(props.errors)
-  return errors.filter(<T>(item: T): item is NonNullable<T> => Boolean(item))
+  return errors.concat(dataErrors).filter(<T>(item: T): item is NonNullable<T> => Boolean(item))
 })
 
 </script>
