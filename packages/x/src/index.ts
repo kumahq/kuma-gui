@@ -1,5 +1,4 @@
 import {
-  KCard,
   KPop,
   KRadio,
   KLabel,
@@ -16,6 +15,7 @@ import {
   XAnonymous,
   XBadge,
   XBreadcrumbs,
+  XCard,
   XCheckBox,
   XCodeBlock,
   XCopyButton,
@@ -56,7 +56,7 @@ export * from './components'
 
 const components = [
   ['XAlert', XAlert],
-  ['XCard', KCard],
+  ['XCard', XCard],
   ['XLabel', KLabel],
   ['XPop', KPop],
   ['XRadio', KRadio],
@@ -110,7 +110,7 @@ const directives = [
 
 declare module 'vue' {
   export interface GlobalComponents {
-    XCard: typeof KCard
+    XCard: typeof XCard
     XLabel: typeof KLabel
     XPop: typeof KPop
     XRadio: typeof KRadio
