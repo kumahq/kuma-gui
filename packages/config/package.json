@@ -53,7 +53,7 @@
     "eslint-plugin-no-unsanitized": "^4.1.4",
     "eslint-plugin-vue": "^10.5.1",
     "globals": "^16.5.0",
-    "js-yaml": "^4.1.0",
+    "js-yaml": "^4.1.1",
     "lockfile-lint": "^4.14.1",
     "stylelint": "^16.25.0",
     "stylelint-config-html": "^1.1.0",

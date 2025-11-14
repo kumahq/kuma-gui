@@ -21,7 +21,7 @@
     "@kumahq/x": "*",
     "@vueuse/core": "^14.0.0",
     "deepmerge": "^4.3.1",
-    "js-yaml": "^4.1.0",
+    "js-yaml": "^4.1.1",
     "object.groupby": "^1.0.3",
     "openapi-fetch": "^0.15.0",
     "pretty-bytes": "^7.1.0",
