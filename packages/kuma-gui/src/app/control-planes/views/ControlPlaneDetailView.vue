@@ -22,16 +22,16 @@
           :src="uri(PolicySources, '/policy-types', {})"
           v-slot="{ data: resources }"
         >
-          <DataLoader
+          <DataSource
             :src="uri(ControlPlaneSources, '/global-insight', {})"
-            v-slot="{ data }"
+            v-slot="{ data, error }"
           >
             <ControlPlaneStatus
               :can-use-zones="can('use zones')"
-              :global-insight="data"
+              :global-insight="error ?? data"
               :resources="resources"
             />
-          </DataLoader>
+          </DataSource>
         </DataSource>
         <XLayout
           type="columns"
@@ -39,6 +39,25 @@
           <XCard
             v-if="can('use zones')"
           >
+            <div class="card-header">
+              <div class="card-title">
+                <h2>
+                  {{ t('main-overview.detail.zone_control_planes.title') }}
+                </h2>
+
+                <XAction
+                  :to="{ name: 'zone-cp-list-view' }"
+                >
+                  {{ t('main-overview.detail.about.view_all') }}
+                </XAction>
+              </div>
+              <div
+                class="card-actions"
+              >
+                <XTeleportSlot name="control-plane-detail-view-zone-actions" />
+              </div>
+            </div>
+
             <DataLoader
               :src="uri(ZoneSources, '/zone-cps', {}, {
                 page: 1,
@@ -47,25 +66,6 @@
               variant="list"
               v-slot="{ data }"
             >
-              <div class="card-header">
-                <div class="card-title">
-                  <h2>
-                    {{ t('main-overview.detail.zone_control_planes.title') }}
-                  </h2>
-
-                  <XAction
-                    :to="{ name: 'zone-cp-list-view' }"
-                  >
-                    {{ t('main-overview.detail.about.view_all') }}
-                  </XAction>
-                </div>
-                <div
-                  class="card-actions"
-                >
-                  <XTeleportSlot name="control-plane-detail-view-zone-actions" />
-                </div>
-              </div>
-
               <ZoneControlPlanesList
                 data-testid="zone-control-planes-details"
                 :items="data.items"
@@ -75,6 +75,25 @@
           </XCard>
 
           <XCard>
+            <div class="card-header">
+              <div class="card-title">
+                <h2>
+                  {{ t('main-overview.detail.meshes.title') }}
+                </h2>
+
+                <XAction
+                  :to="{ name: 'mesh-list-view' }"
+                >
+                  {{ t('main-overview.detail.about.view_all') }}
+                </XAction>
+              </div>
+              <div
+                class="card-actions"
+              >
+                <XTeleportSlot name="control-plane-detail-view-mesh-actions" />
+              </div>
+            </div>
+
             <DataLoader
               :src="uri(MeshSources, '/mesh-insights', {}, {
                 page: 1,
@@ -83,25 +102,6 @@
               variant="list"
               v-slot="{ data }"
             >
-              <div class="card-header">
-                <div class="card-title">
-                  <h2>
-                    {{ t('main-overview.detail.meshes.title') }}
-                  </h2>
-
-                  <XAction
-                    :to="{ name: 'mesh-list-view' }"
-                  >
-                    {{ t('main-overview.detail.about.view_all') }}
-                  </XAction>
-                </div>
-                <div
-                  class="card-actions"
-                >
-                  <XTeleportSlot name="control-plane-detail-view-mesh-actions" />
-                </div>
-              </div>
-
               <MeshInsightsList
                 data-testid="meshes-details"
                 :items="data.items"

@@ -149,11 +149,14 @@ import { nextTick , provide, inject, watch, ref, onBeforeUnmount } from 'vue'
 import { ROUTE_VIEW_PARENT } from '../route-view/index'
 import type { RouteView } from '../route-view/RouteView.vue'
 import { uniqueId } from '@/app/application'
-import type { BreadcrumbItem } from '@kong/kongponents'
 type AppView = {
   addBreadcrumbs: (items: BreadcrumbItem[], sym: symbol) => void
   removeBreadcrumbs: (sym: symbol) => void
 }
+import type { XBreadcrumbs } from '@kumahq/x'
+import type { ComponentInstance } from 'vue'
+
+type BreadcrumbItem = ComponentInstance<typeof XBreadcrumbs>['$props']['items'][number]
 type Breadcrumbs = Map<symbol, BreadcrumbItem[]>
 
 
