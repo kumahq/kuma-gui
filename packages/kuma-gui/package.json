@@ -49,12 +49,12 @@
     "gray-matter": "^4.0.3",
     "jsdom": "^27.1.0",
     "markdown-it": "^14.1.0",
-    "msw": "^2.12.0",
+    "msw": "^2.12.1",
     "sass": "^1.93.3",
     "vite": "^7.2.2",
     "vite-svg-loader": "^5.1.0",
-    "vitepress": "^2.0.0-alpha.12",
-    "vitest": "^4.0.7"
+    "vitepress": "^2.0.0-alpha.13",
+    "vitest": "^4.0.9"
   },
   "browserslist": [
     "> 1%",
