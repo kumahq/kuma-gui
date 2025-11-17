@@ -47,6 +47,7 @@
           replace: routeReplace,
           params: routeParams,
           back: routerBack,
+          go: routerGo,
           children,
           child,
           from: getFrom,
@@ -71,7 +72,7 @@ import {
 } from '../../utilities'
 import { sources } from '@/app/me/sources'
 import type { Ref } from 'vue'
-import type { RouteRecordRaw, RouteLocationNormalizedLoaded } from 'vue-router'
+import type { RouteRecordRaw, RouteLocationNormalizedLoaded, RouteLocationAsRelativeGeneric } from 'vue-router'
 
 
 export type RouteView = {
@@ -111,7 +112,6 @@ type Params = {
       T[P] extends BooleanConstructor ? boolean :
         T[P]
 }
-type RouteReplaceParams = Parameters<typeof router['push']>
 
 const setTitle = createTitleSetter(document)
 const setAttrs = createAttrsSetter(document.documentElement)
@@ -264,20 +264,27 @@ const routerPush = (params: Partial<PrimitiveParams>) => {
   newParams = {}
 }
 
-const routeReplace = (...args: RouteReplaceParams) => {
-  router.push(...args)
+const routeReplace = (to: RouteLocationAsRelativeGeneric) => {
+  router.push(to)
 }
 
-const routerBack = (...args: RouteReplaceParams) => {
+const routerBack = (to: RouteLocationAsRelativeGeneric) => {
+  routerGo({
+    ...to,
+    delta: -1,
+  })
+}
+const routerGo = (to: RouteLocationAsRelativeGeneric & { delta: number }) => {
+  const { delta, ...args } = to
   try {
     if (win.history.state.back !== null) {
-      router.back()
+      router.go(delta)
       return
     }
   } catch {
     // passthrough
   }
-  routeReplace(...args)
+  routeReplace(args)
 }
 
 const hasRoot: RouteView | undefined = inject(ROUTE_VIEW_ROOT, undefined)
