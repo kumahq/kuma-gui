@@ -3,6 +3,7 @@ import { create, destroy, DataSourcePool } from '@kumahq/data'
 import Data, { DataLoader, DataSink, DataSource } from '@kumahq/data/vue'
 import can from '@kumahq/settings/can'
 import env from '@kumahq/settings/env'
+import { XEmptyState } from '@kumahq/x'
 // @ts-ignore TS comes with a Object.groupBy declaration but not a polyfill
 import groupBy from 'object.groupby'
 // @ts-ignore TS comes with a set.prototype.difference declaration but not a polyfill
@@ -79,6 +80,7 @@ const $ = {
 
   notFoundView: token<() => Promise<Component>>('application.not-found'),
   applicationComponents: token('application.components'),
+  DataEmptyState: token('application.components.data-empty-state'),
 
   sources: token('data.sources'),
   dataSourcePool: token<DataSourcePool>('data.DataSourcePool'),
@@ -160,6 +162,9 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       labels: [
         app.components,
       ],
+    }],
+    [$.DataEmptyState, {
+      service: () => XEmptyState,
     }],
 
     [token('application.routes'), {
@@ -265,9 +270,11 @@ export const [
   useEnv,
   useCan,
   useI18n,
+  useDataEmptyState,
 ] = createInjections(
   $.env,
   $.can,
   $.i18n,
+  $.DataEmptyState,
 )
 export { uniqueId, YAML, get } from './utilities'

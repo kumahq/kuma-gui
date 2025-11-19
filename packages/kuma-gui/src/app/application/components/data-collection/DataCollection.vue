@@ -16,7 +16,7 @@
         name="empty"
         :items="items"
       >
-        <XEmptyState
+        <DataEmptyState
           v-if="props.empty"
           :type="props.type"
         />
@@ -32,7 +32,7 @@
       name="empty"
       :items="items"
     >
-      <XEmptyState
+      <DataEmptyState
         v-if="props.empty"
         :type="props.type"
       />
@@ -90,6 +90,10 @@
 <script lang="ts" generic="T" setup>
 import { useThrottleFn } from '@vueuse/core'
 import { computed, useSlots } from 'vue'
+
+import { useDataEmptyState } from '../../'
+
+const DataEmptyState = useDataEmptyState()
 
 type PaginationChangeEvent = {
   page: number
