@@ -95,7 +95,9 @@
                   <template
                     #empty
                   >
-                    <XEmptyState>
+                    <DataEmptyState
+                      type="policies"
+                    >
                       <template #title>
                         <h3>
                           {{ t('policies.x-empty-state.title') }}
@@ -118,7 +120,7 @@
                           {{ t('common.documentation') }}
                         </XAction>
                       </template>
-                    </XEmptyState>
+                    </DataEmptyState>
                   </template>
                   <template
                     #default
@@ -266,11 +268,14 @@
 import { usePolicyActionGroup } from '../'
 import type { PolicyResourceType } from '../data'
 import { sources } from '../sources'
+import { useDataEmptyState } from '@/app/application'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 const props = defineProps<{
   policyTypes?: PolicyResourceType[]
 }>()
 const PolicyActionGroup = usePolicyActionGroup()
+
+const DataEmptyState = useDataEmptyState()
 </script>
 <style lang="scss" scoped>
 header {
