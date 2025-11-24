@@ -44,7 +44,7 @@
     "@types/semver": "^7.7.1",
     "@vitejs/plugin-vue": "^6.0.2",
     "@vue/test-utils": "^2.4.6",
-    "cypress": "^15.6.0",
+    "cypress": "^15.7.0",
     "dotenv": "^17.2.3",
     "gray-matter": "^4.0.3",
     "jsdom": "^27.2.0",
