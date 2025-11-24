@@ -42,12 +42,12 @@ jobs:
     name: |
       Updating ${{ matrix.package.name }} from ${{ matrix.package.source }}
     steps:
-      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
       - uses: ./.github/actions/bootstrap/
         with:
           install-cmd: |
             make install
-      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
         with:
           repository: ${{ matrix.package.source }}
           ref: ${{ env.BRANCH }}
