@@ -72,7 +72,7 @@ jobs:
       BRANCH: ${{ github.event.workflow_run.head_branch || inputs.branch }}
       APP_WORKSPACE: repository
     steps:
-      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
         with:
           ref: ${{ env.SHA }}
 
@@ -83,7 +83,7 @@ jobs:
       - run: |
           make -C ${{ matrix.package.path }} build
 
-      - uses: Kong/public-shared-actions/security-actions/sca@7d7d644fa6060237073f25b32a67c66336425131 # v6.0.1
+      - uses: Kong/public-shared-actions/security-actions/sca@4cb2f03c59d51085256a1405c81e0dd7e9a91fe9 # v6.0.2
         id: sbom
         env:
           SYFT_SOURCE_NAME: ${{ github.repository }}
@@ -105,7 +105,7 @@ jobs:
           repositories: "kuma-gui,kuma"
 
 
-      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
         with:
           token: ${{ steps.github-app-token.outputs.token }}
           ref: ${{ env.BRANCH }}
