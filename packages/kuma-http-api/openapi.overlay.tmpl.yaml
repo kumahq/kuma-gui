@@ -4,9 +4,12 @@ info:
   version: 0.1.0
 extends: ./dist/openapi.yaml
 actions:
+  # versioning
   - target: "$.info"
     update:
       x-oas-source: kumahq/kuma@${GIT_SHA}
+
+  # dates to string
   - target: '$..[?(@.creationTime)]'
     update:
       creationTime:
@@ -38,12 +41,15 @@ actions:
     update:
       lastCertificateRegeneration:
         type: string
+
   - target: '$.components.schemas.MeshItem.properties'
     update:
       creationTime:
         type: string
       modificationTime:
         type: string
+
+  # numbers to string enums
   - target: '$.components.schemas.MeshItem.properties.meshServices.properties.mode.oneOf'
     remove: true
   - target: '$.components.schemas.MeshItem.properties.meshServices.properties.mode'
@@ -54,3 +60,113 @@ actions:
         - Everywhere
         - ReachableBackends
         - Exclusive
+
+  ### requestBodies: any schema marked with x-request is a request body
+
+  # delete readOnly properties from original OpenAPI completely for request bodies
+  - target: '$..[?(@["x-request"])].properties..[?(@.readOnly)]'
+    remove: true
+
+  # from in any spec/policy is deprecated
+  - target: '$..[?(@["x-request"])].properties.spec..from'
+    update:
+      deprecated: true
+
+  # don't allow other properties
+  - target: '$..[?(@["x-request"])].properties'
+    update:
+      additionalProperties: false
+
+  # readOnly properties you shouldn't set whilst editing as they essentially are a create if you change them
+  - target: '$..[?(@["x-request"])].properties.name'
+    update:
+      readOnly: true
+  - target: '$..[?(@["x-request"])].properties.type'
+    update:
+      readOnly: true
+  # readOnly properties you shouldn't set whilst editing, because in GUI you are inside a mesh
+  - target: '$..[?(@["x-request"])].properties.mesh'
+    update:
+      readOnly: true
+
+  # don't show certain labels
+  - target: '$..[?(@["x-request"])].properties.labels'
+    update:
+      patternProperties:
+        ^k8s\.kuma\.io/:
+          type: string
+          readOnly: true
+        ^kuma\.io/:
+          type: string
+          readOnly: true
+      properties:
+        kuma.io/zone:
+          type: string
+          readOnly: true
+        kuma.io/mesh:
+          type: string
+          readOnly: true
+        kuma.io/display-name:
+          type: string
+          readOnly: true
+        kuma.io/env:
+          type: string
+          readOnly: true
+        kuma.io/origin:
+          type: string
+          readOnly: true
+        kuma.io/policy-role:
+          type: string
+          readOnly: true
+        kuma.io/proxy-type:
+          type: string
+          readOnly: true
+
+  # correct top-level targetRef
+  - target: '$..[?(@["x-request"])].properties.spec.properties.targetRef.properties.kind.enum'
+    remove: true
+  - target: '$..[?(@["x-request"])].properties.spec.properties.targetRef.properties.kind'
+    update:
+      enum:
+        - Mesh
+        - Dataplane
+
+  # correct OutboundTargetRefs
+  - target: '$..[?(@["x-request"])].properties.spec..items.properties.targetRef.properties.kind.enum'
+    remove: true
+  - target: '$..[?(@["x-request"])].properties.spec...items.properties.targetRef.properties.kind'
+    update:
+      enum:
+        - MeshService
+        - MeshExternalService
+        - MeshMultiZoneService
+        - MeshHTTPRoute
+
+  # remove old targetRef props
+  - target: '$..[?(@["x-request"])].properties..targetRef.properties.mesh'
+    remove: true
+  - target: '$..[?(@["x-request"])].properties..targetRef.properties.proxyTypes'
+    remove: true
+  - target: '$..[?(@["x-request"])].properties..targetRef.properties.tags'
+    remove: true
+
+  # default all top-level targetRefs to Mesh
+  - target: '$..[?(@["x-request"])].properties.spec'
+    update:
+      default:
+        targetRef:
+          kind: Mesh
+
+  # default all OutboundTargetRefs to Mesh
+  - target: '$..[?(@["x-request"])].properties.spec..items.properties.targetRef'
+    update:
+      default:
+        kind: MeshService
+
+  # make to/rules spec.default field be required
+  - target: '$..[?(@["x-request"])].properties.spec.properties.to.items.[?(!contains("required", `default`))'
+    update:
+      - default
+  - target: '$..[?(@["x-request"])].properties.spec.properties.rules.items.[?(!contains("required", `default`))]'
+    update:
+      - default

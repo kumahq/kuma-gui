@@ -352,6 +352,40 @@ components:
       $ref: "components/schemas/LegacyPolicy.yaml"
     TargetRefPolicy:
       $ref: "components/schemas/TargetRefPolicy.yaml"
+    TargetRefPolicy_Put_RequestBody:
+      $ref: "components/schemas/TargetRefPolicy_Put_RequestBody.yaml"
+    MeshAccessLogItem_Put_RequestBody:
+      $ref: "components/schemas/MeshAccessLogItem_Put_RequestBody.yaml"
+    MeshCircuitBreakerItem_Put_RequestBody:
+      $ref: "components/schemas/MeshCircuitBreakerItem_Put_RequestBody.yaml"
+    MeshFaultInjectionItem_Put_RequestBody:
+      $ref: "components/schemas/MeshFaultInjectionItem_Put_RequestBody.yaml"
+    MeshHTTPRouteItem_Put_RequestBody:
+      $ref: "components/schemas/MeshHTTPRouteItem_Put_RequestBody.yaml"
+    MeshHealthCheckItem_Put_RequestBody:
+      $ref: "components/schemas/MeshHealthCheckItem_Put_RequestBody.yaml"
+    MeshLoadBalancingStrategyItem_Put_RequestBody:
+      $ref: "components/schemas/MeshLoadBalancingStrategyItem_Put_RequestBody.yaml"
+    MeshMetricItem_Put_RequestBody:
+      $ref: "components/schemas/MeshMetricItem_Put_RequestBody.yaml"
+    MeshPassthroughItem_Put_RequestBody:
+      $ref: "components/schemas/MeshPassthroughItem_Put_RequestBody.yaml"
+    MeshProxyPatchItem_Put_RequestBody:
+      $ref: "components/schemas/MeshProxyPatchItem_Put_RequestBody.yaml"
+    MeshRateLimitItem_Put_RequestBody:
+      $ref: "components/schemas/MeshRateLimitItem_Put_RequestBody.yaml"
+    MeshRetryItem_Put_RequestBody:
+      $ref: "components/schemas/MeshRetryItem_Put_RequestBody.yaml"
+    MeshTCPRouteItem_Put_RequestBody:
+      $ref: "components/schemas/MeshTCPRouteItem_Put_RequestBody.yaml"
+    MeshTimeoutItem_Put_RequestBody:
+      $ref: "components/schemas/MeshTimeoutItem_Put_RequestBody.yaml"
+    MeshTLSItem_Put_RequestBody:
+      $ref: "components/schemas/MeshTLSItem_Put_RequestBody.yaml"
+    MeshTraceItem_Put_RequestBody:
+      $ref: "components/schemas/MeshTraceItem_Put_RequestBody.yaml"
+    MeshTrafficPermissionItem_Put_RequestBody:
+      $ref: "components/schemas/MeshTrafficPermissionItem_Put_RequestBody.yaml"
   examples:
     GlobalInsightExample:
       $ref: "components/examples/GlobalInsightExample.yaml"

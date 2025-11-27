@@ -4,6 +4,16 @@ info:
   version: 0.1.0
 extends: ../generated/openapi.yaml
 actions:
+  # Additional paths. These will include any schemas used in the <path>.yaml file
+  - target: "$.paths"
+    update:
+      /config:
+        $ref: "paths/config.yaml"
+      /mesh-insights:
+        $ref: "paths/mesh-insights.yaml"
+      /mesh-insights/{name}:
+        $ref: "paths/mesh-insights_{name}.yaml"
+
   # Additional schemas
   - target: '$.components.schemas'
     update:
@@ -16,13 +26,105 @@ actions:
       TargetRefPolicy:
         $ref: "components/schemas/TargetRefPolicy.yaml"
 
-  # Additional paths. These will include any schemas used in the <path>.yaml file
-  - target: "$.paths"
-    update:
-      /config:
-        $ref: "paths/config.yaml"
-      /mesh-insights:
-        $ref: "paths/mesh-insights.yaml"
-      /mesh-insights/{name}:
-        $ref: "paths/mesh-insights_{name}.yaml"
+  ### RequestBodies
 
+  # TargetRef
+  - target: '$.components.schemas'
+    update:
+      TargetRefPolicy_Put_RequestBody:
+        $ref: "components/schemas/TargetRefPolicy_Put_RequestBody.yaml"
+
+  # MeshAccessLog
+  - target: '$.components.schemas'
+    update:
+      MeshAccessLogItem_Put_RequestBody:
+        $ref: "components/schemas/MeshAccessLogItem_Put_RequestBody.yaml"
+  # we decided to use x-request to mark these, so overwriting put isn't necessary...yet?
+  # - target: "$.paths['/meshes/{mesh}/meshaccesslogs/{name}']"
+  #   update:
+  #     put:
+  #       requestBody:
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: '#/components/schemas/MeshAccessLogItem_Put_RequestBody'
+  # MeshCircuitBreaker
+  - target: '$.components.schemas'
+    update:
+      MeshCircuitBreakerItem_Put_RequestBody:
+        $ref: "components/schemas/MeshCircuitBreakerItem_Put_RequestBody.yaml"
+  # MeshFaultInjection
+  - target: '$.components.schemas'
+    update:
+      MeshFaultInjectionItem_Put_RequestBody:
+        $ref: "components/schemas/MeshFaultInjectionItem_Put_RequestBody.yaml"
+  # MeshHTTPRoute
+  - target: '$.components.schemas'
+    update:
+      MeshHTTPRouteItem_Put_RequestBody:
+        $ref: "components/schemas/MeshHTTPRouteItem_Put_RequestBody.yaml"
+  # MeshHealthCheck
+  - target: '$.components.schemas'
+    update:
+      MeshHealthCheckItem_Put_RequestBody:
+        $ref: "components/schemas/MeshHealthCheckItem_Put_RequestBody.yaml"
+  # MeshLoadBalancingStrategy
+  - target: '$.components.schemas'
+    update:
+      MeshLoadBalancingStrategyItem_Put_RequestBody:
+        $ref: "components/schemas/MeshLoadBalancingStrategyItem_Put_RequestBody.yaml"
+  # MeshMetric
+  - target: '$.components.schemas'
+    update:
+      MeshMetricItem_Put_RequestBody:
+        $ref: "components/schemas/MeshMetricItem_Put_RequestBody.yaml"
+  # MeshPassthrough
+  - target: '$.components.schemas'
+    update:
+      MeshPassthroughItem_Put_RequestBody:
+        $ref: "components/schemas/MeshPassthroughItem_Put_RequestBody.yaml"
+  # MeshProxyPatch
+  - target: '$.components.schemas'
+    update:
+      MeshProxyPatchItem_Put_RequestBody:
+        $ref: "components/schemas/MeshProxyPatchItem_Put_RequestBody.yaml"
+  # MeshRateLimit
+  - target: '$.components.schemas'
+    update:
+      MeshRateLimitItem_Put_RequestBody:
+        $ref: "components/schemas/MeshRateLimitItem_Put_RequestBody.yaml"
+  # MeshRetry
+  - target: '$.components.schemas'
+    update:
+      MeshRetryItem_Put_RequestBody:
+        $ref: "components/schemas/MeshRetryItem_Put_RequestBody.yaml"
+  # MeshTCPRoute
+  - target: '$.components.schemas'
+    update:
+      MeshTCPRouteItem_Put_RequestBody:
+        $ref: "components/schemas/MeshTCPRouteItem_Put_RequestBody.yaml"
+  # MeshTCPRoute
+  - target: '$.components.schemas'
+    update:
+      MeshTCPRouteItem_Put_RequestBody:
+        $ref: "components/schemas/MeshTCPRouteItem_Put_RequestBody.yaml"
+  # MeshTimeout
+  - target: '$.components.schemas'
+    update:
+      MeshTimeoutItem_Put_RequestBody:
+        $ref: "components/schemas/MeshTimeoutItem_Put_RequestBody.yaml"
+  # MeshTLS
+  - target: '$.components.schemas'
+    update:
+      MeshTLSItem_Put_RequestBody:
+        $ref: "components/schemas/MeshTLSItem_Put_RequestBody.yaml"
+  # MeshTrace
+  - target: '$.components.schemas'
+    update:
+      MeshTraceItem_Put_RequestBody:
+        $ref: "components/schemas/MeshTraceItem_Put_RequestBody.yaml"
+  # MeshTrafficPermission
+  - target: '$.components.schemas'
+    update:
+      MeshTrafficPermissionItem_Put_RequestBody:
+        $ref: "components/schemas/MeshTrafficPermissionItem_Put_RequestBody.yaml"

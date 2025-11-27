@@ -1,0 +1,20 @@
+overlay: 1.0.0
+info:
+  title: Customise MeshHTTPRoute
+  version: 0.1.0
+extends: ../../../generated/components/schemas/MeshHTTPRouteItem.yaml
+actions:
+  # mark as a request body so we can make amends for request bodies
+  - target: '$'
+    update:
+      x-request: true
+
+  # default specs.default just for this policy
+  - target: '$.properties.spec.properties.to.items'
+    update:
+      default:
+        rules: []
+  - target: '$.properties.spec.properties.rules.items'
+    update:
+      default:
+        rules: []
