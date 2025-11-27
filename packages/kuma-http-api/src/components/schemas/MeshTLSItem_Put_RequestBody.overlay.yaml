@@ -1,0 +1,19 @@
+overlay: 1.0.0
+info:
+  title: Customise MeshTLS
+  version: 0.1.0
+extends: ../../../generated/components/schemas/MeshTLSItem.yaml
+actions:
+  # mark as a request body so we can make amends for request bodies
+  - target: '$'
+    update:
+      x-request: true
+
+  # default specs.default just for this policy
+  - target: '$.properties.spec.properties.rules.items'
+    update:
+      default:
+        targetRef:
+          kind: MeshService
+        default:
+          mode: Strict
