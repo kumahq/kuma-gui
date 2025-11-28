@@ -2041,123 +2041,22 @@ export interface components {
                      *     'targetRef'
                      */
                     default: {
-                        backends?: {
-                            /** @description FileBackend defines configuration for file based access logs */
-                            file?: {
-                                /**
-                                 * @description Format of access logs. Placeholders available on
-                                 *     https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
-                                 */
-                                format?: {
-                                    /**
-                                     * @example [
-                                     *       {
-                                     *         "key": "start_time",
-                                     *         "value": "%START_TIME%"
-                                     *       },
-                                     *       {
-                                     *         "key": "bytes_received",
-                                     *         "value": "%BYTES_RECEIVED%"
-                                     *       }
-                                     *     ]
-                                     */
-                                    json?: {
-                                        key: string;
-                                        value: string;
-                                    }[];
-                                    /** @default false */
-                                    omitEmptyValues: boolean;
-                                    /** @example [%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST% */
-                                    plain?: string;
-                                    /** @enum {string} */
-                                    type: "Plain" | "Json";
-                                };
-                                /**
-                                 * @description Path to a file that logs will be written to
-                                 * @example /tmp/access.log
-                                 */
-                                path: string;
-                            };
-                            /** @description Defines an OpenTelemetry logging backend. */
-                            openTelemetry?: {
-                                /**
-                                 * @description Attributes can contain placeholders available on
-                                 *     https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
-                                 * @example [
-                                 *       {
-                                 *         "key": "mesh",
-                                 *         "value": "%KUMA_MESH%"
-                                 *       }
-                                 *     ]
-                                 */
-                                attributes?: {
-                                    key: string;
-                                    value: string;
-                                }[];
-                                /**
-                                 * @description Body is a raw string or an OTLP any value as described at
-                                 *     https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/logs/data-model.md#field-body
-                                 *     It can contain placeholders available on
-                                 *     https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
-                                 * @example {
-                                 *       "kvlistValue": {
-                                 *         "values": [
-                                 *           {
-                                 *             "key": "mesh",
-                                 *             "value": {
-                                 *               "stringValue": "%KUMA_MESH%"
-                                 *             }
-                                 *           }
-                                 *         ]
-                                 *       }
-                                 *     }
-                                 */
-                                body?: unknown;
-                                /**
-                                 * @description Endpoint of OpenTelemetry collector. An empty port defaults to 4317.
-                                 * @example otel-collector:4317
-                                 */
-                                endpoint: string;
-                            };
-                            /** @description TCPBackend defines a TCP logging backend. */
-                            tcp?: {
-                                /**
-                                 * @description Address of the TCP logging backend
-                                 * @example 127.0.0.1:5000
-                                 */
-                                address: string;
-                                /**
-                                 * @description Format of access logs. Placeholders available on
-                                 *     https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
-                                 */
-                                format?: {
-                                    /**
-                                     * @example [
-                                     *       {
-                                     *         "key": "start_time",
-                                     *         "value": "%START_TIME%"
-                                     *       },
-                                     *       {
-                                     *         "key": "bytes_received",
-                                     *         "value": "%BYTES_RECEIVED%"
-                                     *       }
-                                     *     ]
-                                     */
-                                    json?: {
-                                        key: string;
-                                        value: string;
-                                    }[];
-                                    /** @default false */
-                                    omitEmptyValues: boolean;
-                                    /** @example [%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST% */
-                                    plain?: string;
-                                    /** @enum {string} */
-                                    type: "Plain" | "Json";
-                                };
-                            };
+                        backends?: ({
                             /** @enum {string} */
                             type: "Tcp" | "File" | "OpenTelemetry";
-                        }[];
+                        } & ({
+                            /** @constant */
+                            type?: "Tcp";
+                            address: string;
+                        } | {
+                            /** @constant */
+                            type?: "File";
+                            path: string;
+                        } | {
+                            /** @constant */
+                            type?: "OpenTelemetry";
+                            endpoint: string;
+                        }))[];
                     };
                     /**
                      * @description TargetRef is a reference to the resource that represents a group of
@@ -2214,123 +2113,22 @@ export interface components {
                 rules?: {
                     /** @description Default contains configuration of the inbound access logging */
                     default: {
-                        backends?: {
-                            /** @description FileBackend defines configuration for file based access logs */
-                            file?: {
-                                /**
-                                 * @description Format of access logs. Placeholders available on
-                                 *     https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
-                                 */
-                                format?: {
-                                    /**
-                                     * @example [
-                                     *       {
-                                     *         "key": "start_time",
-                                     *         "value": "%START_TIME%"
-                                     *       },
-                                     *       {
-                                     *         "key": "bytes_received",
-                                     *         "value": "%BYTES_RECEIVED%"
-                                     *       }
-                                     *     ]
-                                     */
-                                    json?: {
-                                        key: string;
-                                        value: string;
-                                    }[];
-                                    /** @default false */
-                                    omitEmptyValues: boolean;
-                                    /** @example [%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST% */
-                                    plain?: string;
-                                    /** @enum {string} */
-                                    type: "Plain" | "Json";
-                                };
-                                /**
-                                 * @description Path to a file that logs will be written to
-                                 * @example /tmp/access.log
-                                 */
-                                path: string;
-                            };
-                            /** @description Defines an OpenTelemetry logging backend. */
-                            openTelemetry?: {
-                                /**
-                                 * @description Attributes can contain placeholders available on
-                                 *     https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
-                                 * @example [
-                                 *       {
-                                 *         "key": "mesh",
-                                 *         "value": "%KUMA_MESH%"
-                                 *       }
-                                 *     ]
-                                 */
-                                attributes?: {
-                                    key: string;
-                                    value: string;
-                                }[];
-                                /**
-                                 * @description Body is a raw string or an OTLP any value as described at
-                                 *     https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/logs/data-model.md#field-body
-                                 *     It can contain placeholders available on
-                                 *     https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
-                                 * @example {
-                                 *       "kvlistValue": {
-                                 *         "values": [
-                                 *           {
-                                 *             "key": "mesh",
-                                 *             "value": {
-                                 *               "stringValue": "%KUMA_MESH%"
-                                 *             }
-                                 *           }
-                                 *         ]
-                                 *       }
-                                 *     }
-                                 */
-                                body?: unknown;
-                                /**
-                                 * @description Endpoint of OpenTelemetry collector. An empty port defaults to 4317.
-                                 * @example otel-collector:4317
-                                 */
-                                endpoint: string;
-                            };
-                            /** @description TCPBackend defines a TCP logging backend. */
-                            tcp?: {
-                                /**
-                                 * @description Address of the TCP logging backend
-                                 * @example 127.0.0.1:5000
-                                 */
-                                address: string;
-                                /**
-                                 * @description Format of access logs. Placeholders available on
-                                 *     https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
-                                 */
-                                format?: {
-                                    /**
-                                     * @example [
-                                     *       {
-                                     *         "key": "start_time",
-                                     *         "value": "%START_TIME%"
-                                     *       },
-                                     *       {
-                                     *         "key": "bytes_received",
-                                     *         "value": "%BYTES_RECEIVED%"
-                                     *       }
-                                     *     ]
-                                     */
-                                    json?: {
-                                        key: string;
-                                        value: string;
-                                    }[];
-                                    /** @default false */
-                                    omitEmptyValues: boolean;
-                                    /** @example [%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST% */
-                                    plain?: string;
-                                    /** @enum {string} */
-                                    type: "Plain" | "Json";
-                                };
-                            };
+                        backends?: ({
                             /** @enum {string} */
                             type: "Tcp" | "File" | "OpenTelemetry";
-                        }[];
+                        } & ({
+                            /** @constant */
+                            type?: "Tcp";
+                            address: string;
+                        } | {
+                            /** @constant */
+                            type?: "File";
+                            path: string;
+                        } | {
+                            /** @constant */
+                            type?: "OpenTelemetry";
+                            endpoint: string;
+                        }))[];
                     };
                 }[];
                 /**
@@ -2388,123 +2186,22 @@ export interface components {
                      *     'targetRef'
                      */
                     default: {
-                        backends?: {
-                            /** @description FileBackend defines configuration for file based access logs */
-                            file?: {
-                                /**
-                                 * @description Format of access logs. Placeholders available on
-                                 *     https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
-                                 */
-                                format?: {
-                                    /**
-                                     * @example [
-                                     *       {
-                                     *         "key": "start_time",
-                                     *         "value": "%START_TIME%"
-                                     *       },
-                                     *       {
-                                     *         "key": "bytes_received",
-                                     *         "value": "%BYTES_RECEIVED%"
-                                     *       }
-                                     *     ]
-                                     */
-                                    json?: {
-                                        key: string;
-                                        value: string;
-                                    }[];
-                                    /** @default false */
-                                    omitEmptyValues: boolean;
-                                    /** @example [%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST% */
-                                    plain?: string;
-                                    /** @enum {string} */
-                                    type: "Plain" | "Json";
-                                };
-                                /**
-                                 * @description Path to a file that logs will be written to
-                                 * @example /tmp/access.log
-                                 */
-                                path: string;
-                            };
-                            /** @description Defines an OpenTelemetry logging backend. */
-                            openTelemetry?: {
-                                /**
-                                 * @description Attributes can contain placeholders available on
-                                 *     https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
-                                 * @example [
-                                 *       {
-                                 *         "key": "mesh",
-                                 *         "value": "%KUMA_MESH%"
-                                 *       }
-                                 *     ]
-                                 */
-                                attributes?: {
-                                    key: string;
-                                    value: string;
-                                }[];
-                                /**
-                                 * @description Body is a raw string or an OTLP any value as described at
-                                 *     https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/logs/data-model.md#field-body
-                                 *     It can contain placeholders available on
-                                 *     https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
-                                 * @example {
-                                 *       "kvlistValue": {
-                                 *         "values": [
-                                 *           {
-                                 *             "key": "mesh",
-                                 *             "value": {
-                                 *               "stringValue": "%KUMA_MESH%"
-                                 *             }
-                                 *           }
-                                 *         ]
-                                 *       }
-                                 *     }
-                                 */
-                                body?: unknown;
-                                /**
-                                 * @description Endpoint of OpenTelemetry collector. An empty port defaults to 4317.
-                                 * @example otel-collector:4317
-                                 */
-                                endpoint: string;
-                            };
-                            /** @description TCPBackend defines a TCP logging backend. */
-                            tcp?: {
-                                /**
-                                 * @description Address of the TCP logging backend
-                                 * @example 127.0.0.1:5000
-                                 */
-                                address: string;
-                                /**
-                                 * @description Format of access logs. Placeholders available on
-                                 *     https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
-                                 */
-                                format?: {
-                                    /**
-                                     * @example [
-                                     *       {
-                                     *         "key": "start_time",
-                                     *         "value": "%START_TIME%"
-                                     *       },
-                                     *       {
-                                     *         "key": "bytes_received",
-                                     *         "value": "%BYTES_RECEIVED%"
-                                     *       }
-                                     *     ]
-                                     */
-                                    json?: {
-                                        key: string;
-                                        value: string;
-                                    }[];
-                                    /** @default false */
-                                    omitEmptyValues: boolean;
-                                    /** @example [%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST% */
-                                    plain?: string;
-                                    /** @enum {string} */
-                                    type: "Plain" | "Json";
-                                };
-                            };
+                        backends?: ({
                             /** @enum {string} */
                             type: "Tcp" | "File" | "OpenTelemetry";
-                        }[];
+                        } & ({
+                            /** @constant */
+                            type?: "Tcp";
+                            address: string;
+                        } | {
+                            /** @constant */
+                            type?: "File";
+                            path: string;
+                        } | {
+                            /** @constant */
+                            type?: "OpenTelemetry";
+                            endpoint: string;
+                        }))[];
                     };
                     /**
                      * @description TargetRef is a reference to the resource that represents a group of
@@ -9880,59 +9577,34 @@ export interface components {
                      *     'targetRef'
                      */
                     default: {
-                        backends?: {
+                        backends?: ({
+                            /** @enum {string} */
+                            type: "Tcp" | "File" | "OpenTelemetry";
+                        } & ({
+                            /** @constant */
+                            type?: "Tcp";
+                            tcp?: {
+                                /**
+                                 * @description Address of the TCP logging backend
+                                 * @example 127.0.0.1:5000
+                                 */
+                                address: string;
+                            };
+                        } | {
+                            /** @constant */
+                            type?: "File";
                             /** @description FileBackend defines configuration for file based access logs */
                             file?: {
-                                /**
-                                 * @description Format of access logs. Placeholders available on
-                                 *     https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
-                                 */
-                                format?: {
-                                    /**
-                                     * @example [
-                                     *       {
-                                     *         "key": "start_time",
-                                     *         "value": "%START_TIME%"
-                                     *       },
-                                     *       {
-                                     *         "key": "bytes_received",
-                                     *         "value": "%BYTES_RECEIVED%"
-                                     *       }
-                                     *     ]
-                                     */
-                                    json?: {
-                                        key: string;
-                                        value: string;
-                                    }[];
-                                    /** @default false */
-                                    omitEmptyValues: boolean;
-                                    /** @example [%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST% */
-                                    plain?: string;
-                                    /** @enum {string} */
-                                    type: "Plain" | "Json";
-                                };
                                 /**
                                  * @description Path to a file that logs will be written to
                                  * @example /tmp/access.log
                                  */
                                 path: string;
                             };
-                            /** @description Defines an OpenTelemetry logging backend. */
+                        } | {
+                            /** @constant */
+                            type?: "OpenTelemetry";
                             openTelemetry?: {
-                                /**
-                                 * @description Attributes can contain placeholders available on
-                                 *     https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
-                                 * @example [
-                                 *       {
-                                 *         "key": "mesh",
-                                 *         "value": "%KUMA_MESH%"
-                                 *       }
-                                 *     ]
-                                 */
-                                attributes?: {
-                                    key: string;
-                                    value: string;
-                                }[];
                                 /**
                                  * @description Body is a raw string or an OTLP any value as described at
                                  *     https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/logs/data-model.md#field-body
@@ -9958,45 +9630,7 @@ export interface components {
                                  */
                                 endpoint: string;
                             };
-                            /** @description TCPBackend defines a TCP logging backend. */
-                            tcp?: {
-                                /**
-                                 * @description Address of the TCP logging backend
-                                 * @example 127.0.0.1:5000
-                                 */
-                                address: string;
-                                /**
-                                 * @description Format of access logs. Placeholders available on
-                                 *     https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
-                                 */
-                                format?: {
-                                    /**
-                                     * @example [
-                                     *       {
-                                     *         "key": "start_time",
-                                     *         "value": "%START_TIME%"
-                                     *       },
-                                     *       {
-                                     *         "key": "bytes_received",
-                                     *         "value": "%BYTES_RECEIVED%"
-                                     *       }
-                                     *     ]
-                                     */
-                                    json?: {
-                                        key: string;
-                                        value: string;
-                                    }[];
-                                    /** @default false */
-                                    omitEmptyValues: boolean;
-                                    /** @example [%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST% */
-                                    plain?: string;
-                                    /** @enum {string} */
-                                    type: "Plain" | "Json";
-                                };
-                            };
-                            /** @enum {string} */
-                            type: "Tcp" | "File" | "OpenTelemetry";
-                        }[];
+                        }))[];
                     };
                     /**
                      * @description TargetRef is a reference to the resource that represents a group of
@@ -10042,59 +9676,34 @@ export interface components {
                 rules?: {
                     /** @description Default contains configuration of the inbound access logging */
                     default: {
-                        backends?: {
+                        backends?: ({
+                            /** @enum {string} */
+                            type: "Tcp" | "File" | "OpenTelemetry";
+                        } & ({
+                            /** @constant */
+                            type?: "Tcp";
+                            tcp?: {
+                                /**
+                                 * @description Address of the TCP logging backend
+                                 * @example 127.0.0.1:5000
+                                 */
+                                address: string;
+                            };
+                        } | {
+                            /** @constant */
+                            type?: "File";
                             /** @description FileBackend defines configuration for file based access logs */
                             file?: {
-                                /**
-                                 * @description Format of access logs. Placeholders available on
-                                 *     https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
-                                 */
-                                format?: {
-                                    /**
-                                     * @example [
-                                     *       {
-                                     *         "key": "start_time",
-                                     *         "value": "%START_TIME%"
-                                     *       },
-                                     *       {
-                                     *         "key": "bytes_received",
-                                     *         "value": "%BYTES_RECEIVED%"
-                                     *       }
-                                     *     ]
-                                     */
-                                    json?: {
-                                        key: string;
-                                        value: string;
-                                    }[];
-                                    /** @default false */
-                                    omitEmptyValues: boolean;
-                                    /** @example [%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST% */
-                                    plain?: string;
-                                    /** @enum {string} */
-                                    type: "Plain" | "Json";
-                                };
                                 /**
                                  * @description Path to a file that logs will be written to
                                  * @example /tmp/access.log
                                  */
                                 path: string;
                             };
-                            /** @description Defines an OpenTelemetry logging backend. */
+                        } | {
+                            /** @constant */
+                            type?: "OpenTelemetry";
                             openTelemetry?: {
-                                /**
-                                 * @description Attributes can contain placeholders available on
-                                 *     https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
-                                 * @example [
-                                 *       {
-                                 *         "key": "mesh",
-                                 *         "value": "%KUMA_MESH%"
-                                 *       }
-                                 *     ]
-                                 */
-                                attributes?: {
-                                    key: string;
-                                    value: string;
-                                }[];
                                 /**
                                  * @description Body is a raw string or an OTLP any value as described at
                                  *     https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/logs/data-model.md#field-body
@@ -10120,45 +9729,7 @@ export interface components {
                                  */
                                 endpoint: string;
                             };
-                            /** @description TCPBackend defines a TCP logging backend. */
-                            tcp?: {
-                                /**
-                                 * @description Address of the TCP logging backend
-                                 * @example 127.0.0.1:5000
-                                 */
-                                address: string;
-                                /**
-                                 * @description Format of access logs. Placeholders available on
-                                 *     https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
-                                 */
-                                format?: {
-                                    /**
-                                     * @example [
-                                     *       {
-                                     *         "key": "start_time",
-                                     *         "value": "%START_TIME%"
-                                     *       },
-                                     *       {
-                                     *         "key": "bytes_received",
-                                     *         "value": "%BYTES_RECEIVED%"
-                                     *       }
-                                     *     ]
-                                     */
-                                    json?: {
-                                        key: string;
-                                        value: string;
-                                    }[];
-                                    /** @default false */
-                                    omitEmptyValues: boolean;
-                                    /** @example [%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST% */
-                                    plain?: string;
-                                    /** @enum {string} */
-                                    type: "Plain" | "Json";
-                                };
-                            };
-                            /** @enum {string} */
-                            type: "Tcp" | "File" | "OpenTelemetry";
-                        }[];
+                        }))[];
                     };
                 }[];
                 /**
@@ -10202,59 +9773,34 @@ export interface components {
                      *     'targetRef'
                      */
                     default: {
-                        backends?: {
+                        backends?: ({
+                            /** @enum {string} */
+                            type: "Tcp" | "File" | "OpenTelemetry";
+                        } & ({
+                            /** @constant */
+                            type?: "Tcp";
+                            tcp?: {
+                                /**
+                                 * @description Address of the TCP logging backend
+                                 * @example 127.0.0.1:5000
+                                 */
+                                address: string;
+                            };
+                        } | {
+                            /** @constant */
+                            type?: "File";
                             /** @description FileBackend defines configuration for file based access logs */
                             file?: {
-                                /**
-                                 * @description Format of access logs. Placeholders available on
-                                 *     https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
-                                 */
-                                format?: {
-                                    /**
-                                     * @example [
-                                     *       {
-                                     *         "key": "start_time",
-                                     *         "value": "%START_TIME%"
-                                     *       },
-                                     *       {
-                                     *         "key": "bytes_received",
-                                     *         "value": "%BYTES_RECEIVED%"
-                                     *       }
-                                     *     ]
-                                     */
-                                    json?: {
-                                        key: string;
-                                        value: string;
-                                    }[];
-                                    /** @default false */
-                                    omitEmptyValues: boolean;
-                                    /** @example [%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST% */
-                                    plain?: string;
-                                    /** @enum {string} */
-                                    type: "Plain" | "Json";
-                                };
                                 /**
                                  * @description Path to a file that logs will be written to
                                  * @example /tmp/access.log
                                  */
                                 path: string;
                             };
-                            /** @description Defines an OpenTelemetry logging backend. */
+                        } | {
+                            /** @constant */
+                            type?: "OpenTelemetry";
                             openTelemetry?: {
-                                /**
-                                 * @description Attributes can contain placeholders available on
-                                 *     https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
-                                 * @example [
-                                 *       {
-                                 *         "key": "mesh",
-                                 *         "value": "%KUMA_MESH%"
-                                 *       }
-                                 *     ]
-                                 */
-                                attributes?: {
-                                    key: string;
-                                    value: string;
-                                }[];
                                 /**
                                  * @description Body is a raw string or an OTLP any value as described at
                                  *     https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/logs/data-model.md#field-body
@@ -10280,45 +9826,7 @@ export interface components {
                                  */
                                 endpoint: string;
                             };
-                            /** @description TCPBackend defines a TCP logging backend. */
-                            tcp?: {
-                                /**
-                                 * @description Address of the TCP logging backend
-                                 * @example 127.0.0.1:5000
-                                 */
-                                address: string;
-                                /**
-                                 * @description Format of access logs. Placeholders available on
-                                 *     https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
-                                 */
-                                format?: {
-                                    /**
-                                     * @example [
-                                     *       {
-                                     *         "key": "start_time",
-                                     *         "value": "%START_TIME%"
-                                     *       },
-                                     *       {
-                                     *         "key": "bytes_received",
-                                     *         "value": "%BYTES_RECEIVED%"
-                                     *       }
-                                     *     ]
-                                     */
-                                    json?: {
-                                        key: string;
-                                        value: string;
-                                    }[];
-                                    /** @default false */
-                                    omitEmptyValues: boolean;
-                                    /** @example [%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST% */
-                                    plain?: string;
-                                    /** @enum {string} */
-                                    type: "Plain" | "Json";
-                                };
-                            };
-                            /** @enum {string} */
-                            type: "Tcp" | "File" | "OpenTelemetry";
-                        }[];
+                        }))[];
                     };
                     /**
                      * @description TargetRef is a reference to the resource that represents a group of
