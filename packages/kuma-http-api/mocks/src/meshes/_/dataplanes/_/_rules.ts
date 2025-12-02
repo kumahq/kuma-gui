@@ -29,7 +29,7 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
 
   const parts = String(name).split('.')
   const displayName = parts.slice(0, -1).join('.')
-  const nspace = parts.pop()
+  const nspace = parts.at(-1) ?? ''
 
   return {
     headers: {},

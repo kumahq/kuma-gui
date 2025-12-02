@@ -41,7 +41,7 @@
           <h1
             v-if="data"
           >
-            <XCopyButton :text="route.params.service">
+            <XCopyButton :text="data.name">
               <RouteTitle
                 :title="t('services.routes.item.title', { name: data.name })"
               />

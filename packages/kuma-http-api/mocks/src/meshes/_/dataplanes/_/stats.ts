@@ -3,7 +3,7 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
   const { name, mesh } = req.params
   const parts = String(name).split('.')
   const displayName = parts.slice(0, -1).join('.')
-  const nspace = parts.pop()
+  const nspace = parts.at(-1) ?? ''
 
   const isUnifiedResourceNamingEnabled = env('KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED', '') === 'true'
   // use seed to sync the ports in stats.ts with the ports in _overview.ts

@@ -2,7 +2,7 @@ import type { Dependencies, ResponseHandler } from '#mocks'
 import type { components } from '@kumahq/kuma-http-api'
 type Entity = components['schemas']['MeshServiceItem']
 
-export default ({ fake }: Dependencies): ResponseHandler => (req) => {
+export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
   const query = req.url.searchParams
   const kri = req.params.kri as string | undefined
   const [
@@ -12,9 +12,10 @@ export default ({ fake }: Dependencies): ResponseHandler => (req) => {
     name = req.params.name as string,
   ] = kri?.split('_') ?? ''
 
+  const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
   const parts = String(name).split('.')
-  const k8s = parts.length > 1
-  const namespace = ns ?? parts.pop()
+  const displayName = parts.slice(0, -1).join('.')
+  const nspace = ns ?? parts.at(-1) ?? ''
 
   const proxies = fake.number.int({ min: 1, max: 120 })
 
@@ -32,8 +33,8 @@ export default ({ fake }: Dependencies): ResponseHandler => (req) => {
       ...(k8s
         ? {
           labels: {
-            'kuma.io/display-name': parts.slice(0, -1).join('.'),
-            'k8s.kuma.io/namespace': namespace!,
+            'kuma.io/display-name': displayName,
+            'k8s.kuma.io/namespace': nspace,
             'kuma.io/origin': 'zone',
             'kuma.io/zone': zone ?? fake.word.noun(),
           },
@@ -56,7 +57,7 @@ export default ({ fake }: Dependencies): ResponseHandler => (req) => {
           const type = fake.helpers.arrayElement(['ServiceTag', 'SpiffeID'])
           return {
             type,
-            value: type === 'ServiceTag' ? `${fake.word.noun()}-${index + 1}` : fake.kuma.spiffeId({ mesh, namespace, sa: name }),
+            value: type === 'ServiceTag' ? `${fake.word.noun()}-${index + 1}` : fake.kuma.spiffeId({ mesh, namespace: nspace, sa: name }),
           }
         }),
       },

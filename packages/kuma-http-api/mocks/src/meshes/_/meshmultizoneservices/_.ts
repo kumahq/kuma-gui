@@ -4,17 +4,19 @@ type Entity = components['schemas']['MeshMultiZoneServiceItem']
 
 export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
   const query = req.url.searchParams
-  
+
   const kri = req.params.kri as string | undefined
   const [
     mesh = req.params.mesh as string,
     _zone,
-    _namespace,
+    ns,
     name = req.params.name as string,
   ] = kri?.split('_') ?? ''
 
+  const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
   const parts = String(name).split('.')
-  const k8s = parts.length > 1
+  const displayName = parts.slice(0, -1).join('.')
+  const nspace = ns ?? parts.at(-1) ?? ''
 
   const serviceCount = parseInt(env('KUMA_SERVICE_COUNT', `${fake.number.int({ min: 1, max: 120 })}`))
 
@@ -32,8 +34,8 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
       ...(k8s
         ? {
           labels: {
-            'kuma.io/display-name': parts.slice(0, -1).join('.'),
-            'k8s.kuma.io/namespace': parts.pop()!,
+            'kuma.io/display-name': displayName,
+            'k8s.kuma.io/namespace': nspace,
           },
         }
         : {}),
