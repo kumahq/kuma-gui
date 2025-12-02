@@ -38,6 +38,12 @@
       "dependencyDashboardApproval": true
     },
     {
+      "groupName": "github-actions",
+      "matchManagers": [
+        "github-actions"
+      ]
+    },
+    {
       "groupName": "patch",
       "matchUpdateTypes": [
         "patch"
