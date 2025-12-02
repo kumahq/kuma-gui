@@ -49,7 +49,7 @@
             key: 'no-mtls',
           },
           {
-            bool: !can('use transparent-proxying', props.data),
+            bool: props.data.dataplane.networking.gateway?.type !== 'BUILTIN' && !can('use transparent-proxying', props.data),
             key: 'networking-transparent-proxying',
             variant: 'info' as const,
           },
