@@ -31,15 +31,6 @@ export const DataplaneOverview = {
     const zone = tags.find((tag) => tag.label === 'kuma.io/zone')?.value
     const labels = typeof item.labels !== 'undefined' ? item.labels : {}
 
-    const { config } = Dataplane.fromObject({
-      type: 'Dataplane',
-      name: item.name,
-      mesh: item.mesh,
-      creationTime: item.creationTime,
-      modificationTime: item.modificationTime,
-      networking: item.dataplane.networking,
-    })
-
     return {
       ...item,
       id: item.name,
@@ -74,7 +65,17 @@ export const DataplaneOverview = {
       isCertExpiresSoon,
       services,
       zone,
-      config,
+      config: {
+        ...Dataplane.fromObject({
+          type: 'Dataplane',
+          name: item.name,
+          mesh: item.mesh,
+          ...item.dataplane,
+        }).config,
+        ...(typeof item.labels !== 'undefined' ? { labels: item.labels } : {}),
+        creationTime: item.creationTime,
+        modificationTime: item.modificationTime,
+      },
     }
   },
 
@@ -98,7 +99,7 @@ function getTags({ gateway, inbounds }: DataplaneNetworking): LabelValue[] {
   }
 
   if (gateway) {
-    tags = Object.entries(gateway.tags).map(([key, value]) => `${key}${separator}${value}`)
+    tags = Object.entries(gateway.tags ?? {}).map(([key, value]) => `${key}${separator}${value}`)
   }
 
   const uniqueTags = Array.from(new Set(tags))
@@ -116,7 +117,7 @@ function getIsCertExpired({ mTLS }: DataplaneInsight): boolean {
 }
 
 function getIsCertExpiresSoon({ mTLS }: DataplaneInsight): boolean {
-  if(!mTLS?.certificateExpirationTime) return false
+  if (!mTLS?.certificateExpirationTime) return false
   const expiryTime = new Date(mTLS.certificateExpirationTime).getTime()
   const weekBefore = expiryTime - 3_600_000 * 24 * 7
   return Date.now() > weekBefore && Date.now() < expiryTime
