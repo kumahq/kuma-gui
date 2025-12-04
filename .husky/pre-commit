@@ -1,1 +1,1 @@
-lint-staged
+make git/pre-commit

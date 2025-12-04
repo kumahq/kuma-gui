@@ -7,7 +7,7 @@
 # bumping the date of the lockfile, and a npm install will not bump the date of
 # node-modules, the touch make sure the date of node_modules is bumped always
 .PHONY: .install
-.install: check/node $(NPM_WORKSPACE_ROOT)/node_modules
+.install: check/node $(NPM_WORKSPACE_ROOT)/node_modules git/hooks
 
 $(NPM_WORKSPACE_ROOT)/node_modules: $(if $(CI),,$(NPM_WORKSPACE_ROOT)/package-lock.json $(shell find $(NPM_WORKSPACE_ROOT) -maxdepth 5 -path "*/node_modules/*" -prune -o -name "package.json" -print))
 	@cd $(NPM_WORKSPACE_ROOT) \
@@ -35,3 +35,4 @@ $(NPM_WORKSPACE_ROOT)/node_modules: $(if $(CI),,$(NPM_WORKSPACE_ROOT)/package-lo
 .post-upgrade/msw: MSW ?= $(shell $(MAKE) resolve/bin BIN=msw)
 .post-upgrade/msw:
 	@$(MSW) init
+
