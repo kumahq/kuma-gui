@@ -235,7 +235,7 @@
                 >
                   <XIcon
                     v-if="warnings.length > 0"
-                    name="warning"
+                    :name="item.isCertExpired ? 'danger': 'warning'"
                     data-testid="warning"
                   >
                     <ul>
