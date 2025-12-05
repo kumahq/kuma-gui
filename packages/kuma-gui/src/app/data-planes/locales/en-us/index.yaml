@@ -152,6 +152,8 @@ data-planes:
         dp-cp-incompatible: Version mismatch
         certificate-expires-soon: Certificate expires soon
         certificate-expired: Certificate expired
+      mtls:
+        managed_externally: Externally managed
   href:
     docs:
       data_plane_proxy: '{KUMA_DOCS_URL}/production/dp-config/dpp?{KUMA_UTM_QUERY_PARAMS}'
