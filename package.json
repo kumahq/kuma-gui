@@ -11,9 +11,7 @@
     "glob": "^11.1.0"
   },
   "devDependencies": {
-    "@kumahq/config": "*",
-    "husky": "^9.1.7",
-    "lint-staged": "^16.2.7"
+    "@kumahq/config": "*"
   },
   "engines": {
     "node": ">=22.19.0",

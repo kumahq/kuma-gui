@@ -1,8 +1,17 @@
 resolve/bin: PACKAGE?=$(BIN)
 resolve/bin:
 	@cd $(KUMAHQ_CONFIG) && \
-		node -e \
-			"const p = require.resolve('$(PACKAGE)/package.json');const { dirname, resolve } = require('path'); const json = require(p); console.log(resolve(dirname(p), json.bin['$(BIN)'] ?? json.bin))"
+		npm pkg get --workspaces=false dependencies["$(PACKAGE)"] | tr -d '"' | xargs -I{} \
+			npm query --package-lock-only --expect-result-count 1 "[name=\"$(PACKAGE)\"]:semver({})" | \
+				node -e \
+					"const { resolve } = require('path'); const json = JSON.parse(fs.readFileSync(0, 'utf8'))[0]; console.log(resolve(json.realpath, json.bin['$(BIN)'] ?? json.bin))"
+
+
+.PHONY: check/postinstall
+check/postinstall: ## Dev: show all packages that have postinstall scripts
+	@npm query ":attr(scripts, [postinstall])" | \
+		jq -r 'unique_by(.name) | map("\(.name): \(.scripts.postinstall)") | join("\n")'
+
 .PHONY: check/node
 check/node: NPM_VERSION:=$(shell cat $(NPM_WORKSPACE_ROOT)/package.json | jq -r '.engines.npm')
 check/node: NODE_VERSION:=v$(shell head -n1 $(NPM_WORKSPACE_ROOT)/.nvmrc)
@@ -18,6 +27,7 @@ check/node:
 		echo "Make sure npm@$(NPM_VERSION) is installed. Try npm install -g npm@$(NPM_VERSION)"; \
 		exit 1; \
 	fi
+
 
 .PHONY: .lint
 .lint: .lint/js .lint/ts .lint/css .lint/lock .lint/gherkin
@@ -47,7 +57,7 @@ check/node:
 		./src/**/*.{css,scss,vue}
 
 .PHONY: lint/gherkin
-.lint/gherkin: GHERKIN_UTILS ?= $(shell $(MAKE) resolve/bin BIN=@cucumber/gherkin-utils)
+.lint/gherkin: GHERKIN_UTILS ?= $(shell $(MAKE) resolve/bin PACKAGE=@cucumber/gherkin-utils BIN=gherkin-utils)
 .lint/gherkin:
 	@find ./features \
 		-name '*.feature' \
