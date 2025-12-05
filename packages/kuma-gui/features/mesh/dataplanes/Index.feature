@@ -83,8 +83,7 @@ Feature: mesh / dataplanes / index
                       kuma.io/service: !!js/undefined
                     state: Ready
             dataplaneInsight:
-              mTLS:
-                certificateExpirationTime: !!js/undefined
+              mTLS: <mTLS>
               subscriptions:
                 - connectTime: 2021-02-17T07:33:36.412683Z
                   disconnectTime: 2021-02-17T07:33:36.412683Z
@@ -92,10 +91,16 @@ Feature: mesh / dataplanes / index
     When I visit the "/meshes/default/data-planes" URL
     Then the "$service-cell" element is empty
     Then the "$item:nth-child(1)" element contains
-      | Value          |
-      | dpp-2          |
-      | No certificate |
-      | Offline        |
+      | Value         |
+      | dpp-2         |
+      | <mTLSColText> |
+      | Offline       |
+
+    Examples:
+      | mTLS                                                | mTLSColText          |
+      | !!js/undefined                                      | No certificate       |
+      | { certificateExpirationTime: !!js/undefined }       | Externally managed   |
+      | { certificateExpirationTime: 2023-11-03T09:10:17Z } | Nov 3, 2023, 9:10 AM |
 
   Scenario: Searching by tag doesn't overwrite the existing service tag
     When I visit the "/meshes/default/data-planes" URL

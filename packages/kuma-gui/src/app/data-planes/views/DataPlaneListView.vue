@@ -200,12 +200,21 @@
               </template>
 
               <template #certificate="{ row }">
-                <template v-if="row.dataplaneInsight.mTLS?.certificateExpirationTime">
-                  {{ t('common.formats.datetime', { value: Date.parse(row.dataplaneInsight.mTLS.certificateExpirationTime) }) }}
-                </template>
+                <template
+                  v-for="mTLS in [row.dataplaneInsight.mTLS]"
+                  :key="typeof mTLS"
+                >
+                  <template v-if="mTLS?.certificateExpirationTime">
+                    {{ t('common.formats.datetime', { value: Date.parse(mTLS.certificateExpirationTime) }) }}
+                  </template>
 
-                <template v-else>
-                  {{ t('data-planes.components.data-plane-list.certificate.none') }}
+                  <template v-else-if="mTLS">
+                    {{ t('data-planes.routes.items.mtls.managed_externally') }}
+                  </template>
+
+                  <template v-else>
+                    {{ t('data-planes.components.data-plane-list.certificate.none') }}
+                  </template>
                 </template>
               </template>
 
