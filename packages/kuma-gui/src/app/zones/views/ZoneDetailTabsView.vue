@@ -38,9 +38,9 @@
                 </XIcon>
               </template>
               <h1>
-                <XCopyButton :text="route.params.zone">
+                <XCopyButton :text="data.name">
                   <RouteTitle
-                    :title="t('zone-cps.routes.item.title', { name: route.params.zone })"
+                    :title="t('zone-cps.routes.item.title', { name: data.name })"
                   />
                 </XCopyButton>
               </h1>

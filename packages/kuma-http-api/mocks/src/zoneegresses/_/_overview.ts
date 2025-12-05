@@ -5,7 +5,7 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
 
   const parts = String(name).split('.')
   const displayName = parts.slice(0, -1).join('.')
-  const nspace = parts.pop()
+  const nspace = parts.at(-1) ?? ''
 
   const zoneName = fake.word.noun()
 

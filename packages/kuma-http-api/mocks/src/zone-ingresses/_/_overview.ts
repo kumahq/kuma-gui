@@ -4,13 +4,8 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
   const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
 
   const parts = String(name).split('.')
-  let displayName = parts.slice(0, -1).join('.')
-  let nspace = parts.pop()
-
-  if (displayName.length === 0) {
-    displayName = String(nspace)
-    nspace = ''
-  }
+  const displayName = parts.slice(0, -1).join('.')
+  const nspace = parts.at(-1) ?? ''
 
   const zoneName = fake.word.noun()
 

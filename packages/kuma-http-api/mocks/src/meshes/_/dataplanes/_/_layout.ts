@@ -11,7 +11,7 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
 
   const parts = String(name).split('.')
   const displayName = parts.slice(0, -1).join('.')
-  const nspace = parts.pop()
+  const nspace = parts.at(-1) ?? ''
 
   const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
   // use seed to sync the ports in stats.ts with the ports in _overview.ts
