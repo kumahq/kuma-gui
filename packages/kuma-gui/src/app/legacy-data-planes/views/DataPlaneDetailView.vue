@@ -395,7 +395,7 @@
                     // the envoy admin inbound that is used for kumas /stats API. Ignore
                     // the envoy admin inbound when we find it
                     const port = key.split('_').at(-1)
-                    if (port === (props.data.dataplane.networking.admin?.port ?? '9901')) {
+                    if (port === String(props.data.dataplane.networking.admin?.port ?? 9901)) {
                       return prev
                     }
                     return prev.concat([

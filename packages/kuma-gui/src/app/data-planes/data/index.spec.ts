@@ -36,7 +36,7 @@ describe('Dataplane', () => {
       'absent inbound, inbounds remains defined',
       async ({ fixture }) => {
         const actual = await fixture.setup((item) => {
-          delete item.networking.inbound
+          delete item.networking?.inbound
           return item
         })
         expect(actual.networking.inbounds).toBeDefined()
@@ -61,7 +61,7 @@ describe('Dataplane', () => {
       'absent outbound, outbounds remains defined',
       async ({ fixture }) => {
         const actual = await fixture.setup((item) => {
-          delete item.networking.outbound
+          delete item.networking?.outbound
           return item
         })
         expect(actual.networking.outbounds).toBeDefined()
