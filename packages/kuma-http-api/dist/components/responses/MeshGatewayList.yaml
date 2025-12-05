@@ -8,9 +8,9 @@ content:
           type: array
           items:
             $ref: "../schemas/MeshGatewayItem.yaml"
-        total:
-          description: The total number of entities
-          type: number
         next:
           description: URL to the next page
           type: string
+        total:
+          description: The total number of entities
+          type: number

@@ -19,7 +19,11 @@ properties:
     readOnly: true
     x-go-name: KRI
   labels:
-    description: the label of the resource
+    description: |
+      Labels of the resource. Note: certain system labels are immutable after creation:
+      - `kuma.io/origin`: Resource origin (zone/global). Immutable.
+      - `kuma.io/zone`: Zone where resource originated. Immutable.
+      - `kuma.io/display-name`: Display name for the resource. Immutable.
     type: object
     example:
       k8s.kuma.io/namespace: kuma-system

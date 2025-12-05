@@ -1,3 +1,26 @@
+delete:
+  operationId: deleteMeshGateway
+  summary: Deletes MeshGateway entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshGateway
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: "../components/responses/MeshGatewayDeleteSuccessResponse.yaml"
+    '404':
+      $ref: "../components/responses/NotFound.yaml"
+  tags:
+    - MeshGateway
 get:
   operationId: getMeshGateway
   summary: Returns MeshGateway entity
@@ -49,28 +72,5 @@ put:
       $ref: "../components/responses/MeshGatewayCreateOrUpdateSuccessResponse.yaml"
     '201':
       $ref: "../components/responses/MeshGatewayCreateOrUpdateSuccessResponse.yaml"
-  tags:
-    - MeshGateway
-delete:
-  operationId: deleteMeshGateway
-  summary: Deletes MeshGateway entity
-  parameters:
-    - name: mesh
-      in: path
-      description: name of the mesh
-      required: true
-      schema:
-        type: string
-    - name: name
-      in: path
-      description: name of the MeshGateway
-      required: true
-      schema:
-        type: string
-  responses:
-    '200':
-      $ref: "../components/responses/MeshGatewayDeleteSuccessResponse.yaml"
-    '404':
-      $ref: "../components/responses/NotFound.yaml"
   tags:
     - MeshGateway

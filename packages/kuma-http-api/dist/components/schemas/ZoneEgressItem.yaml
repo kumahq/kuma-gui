@@ -1,4 +1,3 @@
-description: Successful response
 type: object
 properties:
   labels:
@@ -31,10 +30,6 @@ properties:
       Zone field contains Zone name where egress is serving, field will be
       automatically set by Global Kuma CP
     type: string
-content:
-  application/json:
-    schema:
-      $ref: "ZoneEgressItem.yaml"
 required:
   - type
   - name

@@ -3,6 +3,7 @@ info:
   title: Kuma API
   description: Kuma API
   version: v1alpha1
+  x-ref-schema-name: DataplaneOverview
 paths:
   /:
     $ref: "paths/.yaml"
@@ -30,6 +31,8 @@ paths:
     $ref: 'paths/meshes_{mesh}_{policyType}_{policyName}__resources_dataplanes.yaml'
   '/meshes/{mesh}/{serviceType}/{serviceName}/_hostnames':
     $ref: 'paths/meshes_{mesh}_{serviceType}_{serviceName}__hostnames.yaml'
+  '/_kri/{kri}':
+    $ref: 'paths/_kri_{kri}.yaml'
   '/meshes/{mesh}/meshaccesslogs/{name}':
     $ref: 'paths/meshes_{mesh}_meshaccesslogs_{name}.yaml'
   '/meshes/{mesh}/meshaccesslogs':
@@ -94,34 +97,34 @@ paths:
     $ref: 'paths/meshes_{mesh}_meshtrafficpermissions_{name}.yaml'
   '/meshes/{mesh}/meshtrafficpermissions':
     $ref: 'paths/meshes_{mesh}_meshtrafficpermissions.yaml'
-  '/meshes/{mesh}/dataplanes/{name}':
-    $ref: 'paths/meshes_{mesh}_dataplanes_{name}.yaml'
   '/meshes/{mesh}/dataplanes':
     $ref: 'paths/meshes_{mesh}_dataplanes.yaml'
+  '/meshes/{mesh}/dataplanes/{name}':
+    $ref: 'paths/meshes_{mesh}_dataplanes_{name}.yaml'
   '/meshes/{mesh}/dataplanes/{name}/_overview':
     $ref: 'paths/meshes_{mesh}_dataplanes_{name}__overview.yaml'
   '/meshes/{mesh}/dataplanes/_overview':
     $ref: 'paths/meshes_{mesh}_dataplanes__overview.yaml'
-  '/meshes/{name}':
-    $ref: 'paths/meshes_{name}.yaml'
   /meshes:
     $ref: "paths/meshes.yaml"
-  '/meshes/{mesh}/meshgateways/{name}':
-    $ref: 'paths/meshes_{mesh}_meshgateways_{name}.yaml'
+  '/meshes/{name}':
+    $ref: 'paths/meshes_{name}.yaml'
   '/meshes/{mesh}/meshgateways':
     $ref: 'paths/meshes_{mesh}_meshgateways.yaml'
-  '/meshes/{mesh}/secrets/{name}':
-    $ref: 'paths/meshes_{mesh}_secrets_{name}.yaml'
+  '/meshes/{mesh}/meshgateways/{name}':
+    $ref: 'paths/meshes_{mesh}_meshgateways_{name}.yaml'
   '/meshes/{mesh}/secrets':
     $ref: 'paths/meshes_{mesh}_secrets.yaml'
-  '/zoneegresses/{name}':
-    $ref: 'paths/zoneegresses_{name}.yaml'
+  '/meshes/{mesh}/secrets/{name}':
+    $ref: 'paths/meshes_{mesh}_secrets_{name}.yaml'
   /zoneegresses:
     $ref: "paths/zoneegresses.yaml"
-  '/zoneingresses/{name}':
-    $ref: 'paths/zoneingresses_{name}.yaml'
+  '/zoneegresses/{name}':
+    $ref: 'paths/zoneegresses_{name}.yaml'
   /zoneingresses:
     $ref: "paths/zoneingresses.yaml"
+  '/zoneingresses/{name}':
+    $ref: 'paths/zoneingresses_{name}.yaml'
   '/hostnamegenerators/{name}':
     $ref: 'paths/hostnamegenerators_{name}.yaml'
   /hostnamegenerators:
@@ -150,8 +153,6 @@ paths:
     $ref: 'paths/meshes_{mesh}_workloads_{name}.yaml'
   '/meshes/{mesh}/workloads':
     $ref: 'paths/meshes_{mesh}_workloads.yaml'
-  '/_kri/{kri}':
-    $ref: 'paths/_kri_{kri}.yaml'
   /config:
     $ref: "paths/config.yaml"
   /mesh-insights:
@@ -256,16 +257,44 @@ components:
       $ref: "components/schemas/RoutesList.yaml"
     NotFoundError:
       $ref: "components/schemas/NotFoundError.yaml"
+    PrometheusMetricsBackendConfig:
+      $ref: "components/schemas/PrometheusMetricsBackendConfig.yaml"
+    DataplaneItem:
+      $ref: "components/schemas/DataplaneItem.yaml"
+    FileLoggingBackendConfig:
+      $ref: "components/schemas/FileLoggingBackendConfig.yaml"
+    TcpLoggingBackendConfig:
+      $ref: "components/schemas/TcpLoggingBackendConfig.yaml"
+    DataSource_File:
+      $ref: "components/schemas/DataSource_File.yaml"
+    DataSource_Inline:
+      $ref: "components/schemas/DataSource_Inline.yaml"
+    DataSource_InlineString:
+      $ref: "components/schemas/DataSource_InlineString.yaml"
+    DataSource_Secret:
+      $ref: "components/schemas/DataSource_Secret.yaml"
+    ProvidedCertificateAuthorityConfig:
+      $ref: "components/schemas/ProvidedCertificateAuthorityConfig.yaml"
+    BuiltinCertificateAuthorityConfig:
+      $ref: "components/schemas/BuiltinCertificateAuthorityConfig.yaml"
+    DatadogTracingBackendConfig:
+      $ref: "components/schemas/DatadogTracingBackendConfig.yaml"
+    ZipkinTracingBackendConfig:
+      $ref: "components/schemas/ZipkinTracingBackendConfig.yaml"
+    MeshItem:
+      $ref: "components/schemas/MeshItem.yaml"
     MeshAccessLogItem:
       $ref: "components/schemas/MeshAccessLogItem.yaml"
     MeshCircuitBreakerItem:
       $ref: "components/schemas/MeshCircuitBreakerItem.yaml"
     MeshFaultInjectionItem:
       $ref: "components/schemas/MeshFaultInjectionItem.yaml"
-    MeshHealthCheckItem:
-      $ref: "components/schemas/MeshHealthCheckItem.yaml"
+    MeshGatewayItem:
+      $ref: "components/schemas/MeshGatewayItem.yaml"
     MeshHTTPRouteItem:
       $ref: "components/schemas/MeshHTTPRouteItem.yaml"
+    MeshHealthCheckItem:
+      $ref: "components/schemas/MeshHealthCheckItem.yaml"
     MeshLoadBalancingStrategyItem:
       $ref: "components/schemas/MeshLoadBalancingStrategyItem.yaml"
     MeshMetricItem:
@@ -280,56 +309,24 @@ components:
       $ref: "components/schemas/MeshRetryItem.yaml"
     MeshTCPRouteItem:
       $ref: "components/schemas/MeshTCPRouteItem.yaml"
-    MeshTimeoutItem:
-      $ref: "components/schemas/MeshTimeoutItem.yaml"
     MeshTLSItem:
       $ref: "components/schemas/MeshTLSItem.yaml"
+    MeshTimeoutItem:
+      $ref: "components/schemas/MeshTimeoutItem.yaml"
     MeshTraceItem:
       $ref: "components/schemas/MeshTraceItem.yaml"
     MeshTrafficPermissionItem:
       $ref: "components/schemas/MeshTrafficPermissionItem.yaml"
-    BuiltinCertificateAuthorityConfig:
-      $ref: "components/schemas/BuiltinCertificateAuthorityConfig.yaml"
-    DatadogTracingBackendConfig:
-      $ref: "components/schemas/DatadogTracingBackendConfig.yaml"
-    DataplaneItem:
-      $ref: "components/schemas/DataplaneItem.yaml"
-    PrometheusMetricsBackendConfig:
-      $ref: "components/schemas/PrometheusMetricsBackendConfig.yaml"
-    DataplaneOverviewWithMeta:
-      $ref: "components/schemas/DataplaneOverviewWithMeta.yaml"
-    DataplaneOverview:
-      $ref: "components/schemas/DataplaneOverview.yaml"
-    DataSource:
-      $ref: "components/schemas/DataSource.yaml"
-    DataSource_File:
-      $ref: "components/schemas/DataSource_File.yaml"
-    DataSource_Inline:
-      $ref: "components/schemas/DataSource_Inline.yaml"
-    DataSource_InlineString:
-      $ref: "components/schemas/DataSource_InlineString.yaml"
-    DataSource_Secret:
-      $ref: "components/schemas/DataSource_Secret.yaml"
-    FileLoggingBackendConfig:
-      $ref: "components/schemas/FileLoggingBackendConfig.yaml"
-    MeshItem:
-      $ref: "components/schemas/MeshItem.yaml"
-    TcpLoggingBackendConfig:
-      $ref: "components/schemas/TcpLoggingBackendConfig.yaml"
-    ProvidedCertificateAuthorityConfig:
-      $ref: "components/schemas/ProvidedCertificateAuthorityConfig.yaml"
-    ZipkinTracingBackendConfig:
-      $ref: "components/schemas/ZipkinTracingBackendConfig.yaml"
-    MeshGatewayItem:
-      $ref: "components/schemas/MeshGatewayItem.yaml"
-    SecretItem:
-      $ref: "components/schemas/SecretItem.yaml"
-    Zone:
-      $ref: "components/schemas/Zone.yaml"
     ZoneEgressItem:
       $ref: "components/schemas/ZoneEgressItem.yaml"
     ZoneIngressItem:
       $ref: "components/schemas/ZoneIngressItem.yaml"
+    DataplaneOverviewWithMeta:
+      $ref: "components/schemas/DataplaneOverviewWithMeta.yaml"
+    DataplaneOverview:
+      $ref: "components/schemas/DataplaneOverview.yaml"
+    SecretItem:
+      $ref: "components/schemas/SecretItem.yaml"
     HostnameGeneratorItem:
       $ref: "components/schemas/HostnameGeneratorItem.yaml"
     MeshExternalServiceItem:
@@ -554,58 +551,58 @@ components:
       $ref: "components/responses/MeshTrafficPermissionCreateOrUpdateSuccessResponse.yaml"
     MeshTrafficPermissionDeleteSuccessResponse:
       $ref: "components/responses/MeshTrafficPermissionDeleteSuccessResponse.yaml"
-    DataplaneItem:
-      $ref: "components/responses/DataplaneItem.yaml"
-    DataplaneList:
-      $ref: "components/responses/DataplaneList.yaml"
     DataplaneCreateOrUpdateSuccessResponse:
       $ref: "components/responses/DataplaneCreateOrUpdateSuccessResponse.yaml"
     DataplaneDeleteSuccessResponse:
       $ref: "components/responses/DataplaneDeleteSuccessResponse.yaml"
+    DataplaneItem:
+      $ref: "components/responses/DataplaneItem.yaml"
+    DataplaneList:
+      $ref: "components/responses/DataplaneList.yaml"
     GetDataplaneOverviewResponse:
       $ref: "components/responses/GetDataplaneOverviewResponse.yaml"
     GetDataplaneOverviewListResponse:
       $ref: "components/responses/GetDataplaneOverviewListResponse.yaml"
-    MeshItem:
-      $ref: "components/responses/MeshItem.yaml"
-    MeshList:
-      $ref: "components/responses/MeshList.yaml"
     MeshCreateOrUpdateSuccessResponse:
       $ref: "components/responses/MeshCreateOrUpdateSuccessResponse.yaml"
     MeshDeleteSuccessResponse:
       $ref: "components/responses/MeshDeleteSuccessResponse.yaml"
-    MeshGatewayItem:
-      $ref: "components/responses/MeshGatewayItem.yaml"
-    MeshGatewayList:
-      $ref: "components/responses/MeshGatewayList.yaml"
+    MeshItem:
+      $ref: "components/responses/MeshItem.yaml"
+    MeshList:
+      $ref: "components/responses/MeshList.yaml"
     MeshGatewayCreateOrUpdateSuccessResponse:
       $ref: "components/responses/MeshGatewayCreateOrUpdateSuccessResponse.yaml"
     MeshGatewayDeleteSuccessResponse:
       $ref: "components/responses/MeshGatewayDeleteSuccessResponse.yaml"
-    SecretItem:
-      $ref: "components/responses/SecretItem.yaml"
-    SecretList:
-      $ref: "components/responses/SecretList.yaml"
+    MeshGatewayItem:
+      $ref: "components/responses/MeshGatewayItem.yaml"
+    MeshGatewayList:
+      $ref: "components/responses/MeshGatewayList.yaml"
     SecretCreateOrUpdateSuccessResponse:
       $ref: "components/responses/SecretCreateOrUpdateSuccessResponse.yaml"
     SecretDeleteSuccessResponse:
       $ref: "components/responses/SecretDeleteSuccessResponse.yaml"
-    ZoneEgressItem:
-      $ref: "components/responses/ZoneEgressItem.yaml"
-    ZoneEgressList:
-      $ref: "components/responses/ZoneEgressList.yaml"
+    SecretItem:
+      $ref: "components/responses/SecretItem.yaml"
+    SecretList:
+      $ref: "components/responses/SecretList.yaml"
     ZoneEgressCreateOrUpdateSuccessResponse:
       $ref: "components/responses/ZoneEgressCreateOrUpdateSuccessResponse.yaml"
     ZoneEgressDeleteSuccessResponse:
       $ref: "components/responses/ZoneEgressDeleteSuccessResponse.yaml"
-    ZoneIngressItem:
-      $ref: "components/responses/ZoneIngressItem.yaml"
-    ZoneIngressList:
-      $ref: "components/responses/ZoneIngressList.yaml"
+    ZoneEgressItem:
+      $ref: "components/responses/ZoneEgressItem.yaml"
+    ZoneEgressList:
+      $ref: "components/responses/ZoneEgressList.yaml"
     ZoneIngressCreateOrUpdateSuccessResponse:
       $ref: "components/responses/ZoneIngressCreateOrUpdateSuccessResponse.yaml"
     ZoneIngressDeleteSuccessResponse:
       $ref: "components/responses/ZoneIngressDeleteSuccessResponse.yaml"
+    ZoneIngressItem:
+      $ref: "components/responses/ZoneIngressItem.yaml"
+    ZoneIngressList:
+      $ref: "components/responses/ZoneIngressList.yaml"
     HostnameGeneratorItem:
       $ref: "components/responses/HostnameGeneratorItem.yaml"
     HostnameGeneratorList:

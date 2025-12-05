@@ -264,6 +264,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/_kri/{kri}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Returns a resource by KRI */
+        get: operations["getByKri"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/meshes/{mesh}/meshaccesslogs/{name}": {
         parameters: {
             query?: never;
@@ -840,6 +857,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/meshes/{mesh}/dataplanes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Returns a list of Dataplane in the mesh. */
+        get: operations["getDataplaneList"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/meshes/{mesh}/dataplanes/{name}": {
         parameters: {
             query?: never;
@@ -854,23 +888,6 @@ export interface paths {
         post?: never;
         /** Deletes Dataplane entity */
         delete: operations["deleteDataplane"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/meshes/{mesh}/dataplanes": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Returns a list of Dataplane in the mesh. */
-        get: operations["getDataplaneList"];
-        put?: never;
-        post?: never;
-        delete?: never;
         options?: never;
         head?: never;
         patch?: never;
@@ -908,6 +925,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/meshes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Returns a list of Mesh in the mesh. */
+        get: operations["getMeshList"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/meshes/{name}": {
         parameters: {
             query?: never;
@@ -927,15 +961,15 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/meshes": {
+    "/meshes/{mesh}/meshgateways": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /** Returns a list of Mesh in the mesh. */
-        get: operations["getMeshList"];
+        /** Returns a list of MeshGateway in the mesh. */
+        get: operations["getMeshGatewayList"];
         put?: never;
         post?: never;
         delete?: never;
@@ -963,15 +997,15 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/meshes/{mesh}/meshgateways": {
+    "/meshes/{mesh}/secrets": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /** Returns a list of MeshGateway in the mesh. */
-        get: operations["getMeshGatewayList"];
+        /** Returns a list of Secret in the mesh. */
+        get: operations["getSecretList"];
         put?: never;
         post?: never;
         delete?: never;
@@ -999,15 +1033,15 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/meshes/{mesh}/secrets": {
+    "/zoneegresses": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /** Returns a list of Secret in the mesh. */
-        get: operations["getSecretList"];
+        /** Returns a list of ZoneEgress in the mesh. */
+        get: operations["getZoneEgressList"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1035,15 +1069,15 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/zoneegresses": {
+    "/zoneingresses": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /** Returns a list of ZoneEgress in the mesh. */
-        get: operations["getZoneEgressList"];
+        /** Returns a list of ZoneIngress in the mesh. */
+        get: operations["getZoneIngressList"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1066,23 +1100,6 @@ export interface paths {
         post?: never;
         /** Deletes ZoneIngress entity */
         delete: operations["deleteZoneIngress"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/zoneingresses": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Returns a list of ZoneIngress in the mesh. */
-        get: operations["getZoneIngressList"];
-        put?: never;
-        post?: never;
-        delete?: never;
         options?: never;
         head?: never;
         patch?: never;
@@ -1332,23 +1349,6 @@ export interface paths {
         };
         /** Returns a list of Workload in the mesh. */
         get: operations["getWorkloadList"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/_kri/{kri}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Returns a resource by KRI */
-        get: operations["getByKri"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1728,7 +1728,10 @@ export interface components {
              */
             readonly kri?: string;
             /**
-             * @description the label of the resource
+             * @description Labels of the resource. Note: certain system labels are immutable after creation:
+             *     - `kuma.io/origin`: Resource origin (zone/global). Immutable.
+             *     - `kuma.io/zone`: Zone where resource originated. Immutable.
+             *     - `kuma.io/display-name`: Display name for the resource. Immutable.
              * @example {
              *       "k8s.kuma.io/namespace": "kuma-system",
              *       "kuma.io/display-name": "mtp",
@@ -2009,7 +2012,686 @@ export interface components {
             /** @example The requested resource was not found */
             detail?: string;
         };
-        /** @description Successful response */
+        /** @description PrometheusMetricsBackendConfig defines configuration of Prometheus backend */
+        PrometheusMetricsBackendConfig: {
+            /**
+             * @description Map with the configuration of applications which metrics are going to be
+             *     scrapped by kuma-dp.
+             */
+            aggregate?: {
+                /** @description Address on which a service expose HTTP endpoint with Prometheus metrics. */
+                address?: string;
+                /**
+                 * @description If false then the application won't be scrapped. If nil, then it is treated
+                 *     as true and kuma-dp scrapes metrics from the service.
+                 */
+                enabled?: boolean;
+                /** @description Name which identify given configuration. */
+                name?: string;
+                /** @description Path on which a service expose HTTP endpoint with Prometheus metrics. */
+                path?: string;
+                /** @description Port on which a service expose HTTP endpoint with Prometheus metrics. */
+                port?: number;
+            }[];
+            /** @description Configuration of Envoy's metrics. */
+            envoy?: {
+                /**
+                 * @description FilterRegex value that is going to be passed to Envoy for filtering
+                 *     Envoy metrics.
+                 */
+                filterRegex?: string;
+                /**
+                 * @description If true then return metrics that Envoy has updated (counters incremented
+                 *     at least once, gauges changed at least once, and histograms added to at
+                 *     least once). If nil, then it is treated as false.
+                 */
+                usedOnly?: boolean;
+            };
+            /**
+             * @description Path on which a dataplane should expose HTTP endpoint with Prometheus
+             *     metrics.
+             */
+            path?: string;
+            /**
+             * @description Port on which a dataplane should expose HTTP endpoint with Prometheus
+             *     metrics.
+             */
+            port?: number;
+            /**
+             * @description If true then endpoints for scraping metrics won't require mTLS even if mTLS
+             *     is enabled in Mesh. If nil, then it is treated as false.
+             */
+            skipMTLS?: boolean;
+            /**
+             * @description Tags associated with an application this dataplane is deployed next to,
+             *     e.g. service=web, version=1.0.
+             *     `service` tag is mandatory.
+             */
+            tags?: {
+                [key: string]: string;
+            };
+            /** @description Configuration of TLS for prometheus listener. */
+            tls?: {
+                /**
+                 * @description mode defines how configured is the TLS for Prometheus.
+                 *     Supported values, delegated, disabled, activeMTLSBackend. Default to
+                 *     `activeMTLSBackend`.
+                 */
+                mode?: string | number;
+            };
+        };
+        DataplaneItem: {
+            labels?: {
+                [key: string]: string;
+            };
+            mesh: string;
+            /**
+             * @description Configuration for metrics that should be collected and exposed by the
+             *     data plane proxy.
+             *
+             *     Settings defined here will override their respective defaults
+             *     defined at a Mesh level.
+             */
+            metrics?: {
+                conf?: components["schemas"]["PrometheusMetricsBackendConfig"];
+                /** @description Name of the backend, can be then used in Mesh.metrics.enabledBackend */
+                name?: string;
+                /** @description Type of the backend (Kuma ships with 'prometheus') */
+                type?: string;
+            };
+            name: string;
+            /**
+             * @description Networking describes inbound and outbound interfaces of the data plane
+             *     proxy.
+             */
+            networking?: {
+                /**
+                 * @description IP on which the data plane proxy is accessible to the control plane and
+                 *     other data plane proxies in the same network. This can also be a
+                 *     hostname, in which case the control plane will periodically resolve it.
+                 */
+                address?: string;
+                /**
+                 * @description Admin describes configuration related to Envoy Admin API.
+                 *     Due to security, all the Envoy Admin endpoints are exposed only on
+                 *     localhost. Additionally, Envoy will expose `/ready` endpoint on
+                 *     `networking.address` for health checking systems to be able to check the
+                 *     state of Envoy. The rest of the endpoints exposed on `networking.address`
+                 *     are always protected by mTLS and only meant to be consumed internally by
+                 *     the control plane.
+                 */
+                admin?: {
+                    /** @description Port on which Envoy Admin API server will be listening */
+                    port?: number;
+                };
+                /**
+                 * @description In some situations, a data plane proxy resides in a private network (e.g.
+                 *     Docker) and is not reachable via `address` to other data plane proxies.
+                 *     `advertisedAddress` is configured with a routable address for such data
+                 *     plane proxy so that other proxies in the mesh can connect to it over
+                 *     `advertisedAddress` and not via address.
+                 *
+                 *     Envoy still binds to the `address`, not `advertisedAddress`.
+                 */
+                advertisedAddress?: string;
+                /** @description Gateway describes a configuration of the gateway of the data plane proxy. */
+                gateway?: {
+                    /**
+                     * @description Tags associated with a gateway of this data plane to, e.g.
+                     *     `kuma.io/service=gateway`, `env=prod`. `kuma.io/service` tag is
+                     *     mandatory.
+                     */
+                    tags?: {
+                        [key: string]: string;
+                    };
+                    /**
+                     * @description Type of gateway this data plane proxy manages.
+                     *     There are two types: `DELEGATED` and `BUILTIN`. Defaults to
+                     *     `DELEGATED`.
+                     *
+                     *     A `DELEGATED` gateway is an independently deployed proxy (e.g., Kong,
+                     *     Contour, etc) that receives inbound traffic that is not proxied by
+                     *     Kuma, and it sends outbound traffic into the data plane proxy.
+                     *
+                     *     The `BUILTIN` gateway type causes the data plane proxy itself to be
+                     *     configured as a gateway.
+                     *
+                     *     See https://kuma.io/docs/latest/explore/gateway/ for more information.
+                     */
+                    type?: string | number;
+                };
+                /**
+                 * @description Inbound describes a list of inbound interfaces of the data plane proxy.
+                 *
+                 *     Inbound describes a service implemented by the data plane proxy.
+                 *     All incoming traffic to a data plane proxy is going through inbound
+                 *     listeners. For every defined Inbound there is a corresponding Envoy
+                 *     Listener.
+                 */
+                inbound?: {
+                    /**
+                     * @description Address on which inbound listener will be exposed.
+                     *     Defaults to `networking.address`.
+                     */
+                    address?: string;
+                    /**
+                     * @description Health describes the status of an inbound.
+                     *     If 'health' is nil we consider data plane proxy as healthy.
+                     *     Unhealthy data plane proxies are excluded from Endpoints Discovery
+                     *     Service (EDS). On Kubernetes, it is filled automatically by the control
+                     *     plane if Pod has readiness probe configured. On Universal, it can be
+                     *     set by the external health checking system, but the most common way is
+                     *     to use service probes.
+                     *
+                     *     See https://kuma.io/docs/latest/documentation/health for more
+                     *     information.
+                     */
+                    health?: {
+                        /**
+                         * @description Ready indicates if the data plane proxy is ready to serve the
+                         *     traffic.
+                         */
+                        ready?: boolean;
+                    };
+                    /** @description Name adds another way of referencing this port, usable with MeshService */
+                    name?: string;
+                    /**
+                     * @description Port of the inbound interface that will forward requests to the
+                     *     service.
+                     *
+                     *     When transparent proxying is used, it is a port on which the service is
+                     *     listening to. When transparent proxying is not used, Envoy will bind to
+                     *     this port.
+                     */
+                    port?: number;
+                    /**
+                     * @description Address of the service that requests will be forwarded to.
+                     *     Defaults to 'inbound.address', since Kuma DP should be deployed next
+                     *     to the service.
+                     */
+                    serviceAddress?: string;
+                    /**
+                     * @description Port of the service that requests will be forwarded to.
+                     *     Defaults to the same value as `port`.
+                     */
+                    servicePort?: number;
+                    /**
+                     * @description ServiceProbe defines parameters for probing the service next to
+                     *     sidecar. When service probe is defined, Envoy will periodically health
+                     *     check the application next to it and report the status to the control
+                     *     plane. On Kubernetes, Kuma deployments rely on Kubernetes probes so
+                     *     this is not used.
+                     *
+                     *     See https://kuma.io/docs/latest/documentation/health for more
+                     *     information.
+                     */
+                    serviceProbe?: {
+                        /**
+                         * Format: uint32
+                         * @description Number of consecutive healthy checks before considering a host
+                         *     healthy.
+                         */
+                        healthyThreshold?: number;
+                        /** @description Interval between consecutive health checks. */
+                        interval?: {
+                            nanos?: number;
+                            seconds?: number;
+                        };
+                        /** @description Tcp checker tries to establish tcp connection with destination */
+                        tcp?: Record<string, never>;
+                        /** @description Maximum time to wait for a health check response. */
+                        timeout?: {
+                            nanos?: number;
+                            seconds?: number;
+                        };
+                        /**
+                         * Format: uint32
+                         * @description Number of consecutive unhealthy checks before considering a host
+                         *     unhealthy.
+                         */
+                        unhealthyThreshold?: number;
+                    };
+                    /** @description State describes the current state of the listener. */
+                    state?: string | number;
+                    /**
+                     * @description Tags associated with an application this data plane proxy is deployed
+                     *     next to, e.g. `kuma.io/service=web`, `version=1.0`. You can then
+                     *     reference these tags in policies like MeshTrafficPermission.
+                     *     `kuma.io/service` tag is mandatory.
+                     */
+                    tags?: {
+                        [key: string]: string;
+                    };
+                }[];
+                /**
+                 * @description Outbound describes a list of services consumed by the data plane proxy.
+                 *     For every defined Outbound, there is a corresponding Envoy Listener.
+                 */
+                outbound?: {
+                    /**
+                     * @description IP on which the consumed service will be available to this data plane
+                     *     proxy. On Kubernetes, it's usually ClusterIP of a Service or PodIP of a
+                     *     Headless Service. Defaults to 127.0.0.1
+                     */
+                    address?: string;
+                    /**
+                     * @description BackendRef is a way to target MeshService.
+                     *     Experimental. Do not use on production yet.
+                     */
+                    backendRef?: {
+                        /** @description Kind is a type of the object to target. Allowed: MeshService */
+                        kind?: string;
+                        /**
+                         * @description Labels to select a single object.
+                         *     If no object is selected then outbound is not created.
+                         *     If multiple objects are selected then the oldest one is used.
+                         */
+                        labels?: {
+                            [key: string]: string;
+                        };
+                        /** @description Name of the targeted object */
+                        name?: string;
+                        /** @description Port of the targeted object. Required when kind is MeshService. */
+                        port?: number;
+                    };
+                    /**
+                     * @description Port on which the consumed service will be available to this data plane
+                     *     proxy. When transparent proxying is not used, Envoy will bind to this
+                     *     port.
+                     */
+                    port?: number;
+                    /**
+                     * @description Tags of consumed data plane proxies.
+                     *     `kuma.io/service` tag is required.
+                     *     These tags can then be referenced in `destinations` section of policies
+                     *     like TrafficRoute or in `to` section in policies like MeshAccessLog. It
+                     *     is recommended to only use `kuma.io/service`. If you need to consume
+                     *     specific data plane proxy of a service (for example: `version=v2`) the
+                     *     better practice is to use TrafficRoute.
+                     */
+                    tags?: {
+                        [key: string]: string;
+                    };
+                }[];
+                /**
+                 * @description TransparentProxying describes the configuration for transparent proxying.
+                 *     It is used by default on Kubernetes.
+                 */
+                transparentProxying?: {
+                    /**
+                     * @description List of services that will be accessed directly via IP:PORT
+                     *     Use `*` to indicate direct access to every service in the Mesh.
+                     *     Using `*` to directly access every service is a resource-intensive
+                     *     operation, use it only if needed.
+                     */
+                    directAccessServices?: string[];
+                    /** @description The IP family mode to enable for. Can be "IPv4" or "DualStack". */
+                    ipFamilyMode?: string | number;
+                    /**
+                     * @description Reachable backend via transparent proxy when running with
+                     *     MeshExternalService, MeshService and MeshMultiZoneService. Setting an
+                     *     explicit list of refs can dramatically improve the performance of the
+                     *     mesh. If not specified, all services in the mesh are reachable.
+                     */
+                    reachableBackends?: {
+                        refs?: {
+                            /**
+                             * @description Type of the backend: MeshService or MeshExternalService
+                             *
+                             *     	+required
+                             */
+                            kind?: string;
+                            /**
+                             * @description Labels used to select backends
+                             *
+                             *     	+optional
+                             */
+                            labels?: {
+                                [key: string]: string;
+                            };
+                            /**
+                             * @description Name of the backend.
+                             *
+                             *     	+optional
+                             */
+                            name?: string;
+                            /**
+                             * @description Namespace of the backend. Might be empty
+                             *
+                             *     	+optional
+                             */
+                            namespace?: string;
+                            /**
+                             * Format: uint32
+                             * @description Port of the backend.
+                             *
+                             *     	+optional
+                             */
+                            port?: number;
+                        }[];
+                    };
+                    /**
+                     * @description List of reachable services (represented by the value of
+                     *     `kuma.io/service`) via transparent proxying. Setting an explicit list
+                     *     can dramatically improve the performance of the mesh. If not specified,
+                     *     all services in the mesh are reachable.
+                     */
+                    reachableServices?: string[];
+                    /** @description Port on which all inbound traffic is being transparently redirected. */
+                    redirectPortInbound?: number;
+                    /** @description Port on which all outbound traffic is being transparently redirected. */
+                    redirectPortOutbound?: number;
+                };
+            };
+            /**
+             * @description Probes describe a list of endpoints that will be exposed without mTLS.
+             *     This is useful to expose the health endpoints of the application so the
+             *     orchestration system (e.g. Kubernetes) can still health check the
+             *     application.
+             *
+             *     See
+             *     https://kuma.io/docs/latest/policies/service-health-probes/#virtual-probes
+             *     for more information.
+             *     Deprecated: this feature will be removed for Universal; on Kubernetes, it's
+             *     not needed anymore.
+             */
+            probes?: {
+                /** @description List of endpoints to expose without mTLS. */
+                endpoints?: {
+                    /**
+                     * @description Inbound path is a path of the application from which we expose the
+                     *     endpoint. It is recommended to be as specific as possible.
+                     */
+                    inboundPath?: string;
+                    /**
+                     * @description Inbound port is a port of the application from which we expose the
+                     *     endpoint.
+                     */
+                    inboundPort?: number;
+                    /** @description Path is a path on which we expose inbound path on the probes port. */
+                    path?: string;
+                }[];
+                /**
+                 * @description Port on which the probe endpoints will be exposed. This cannot overlap
+                 *     with any other ports.
+                 */
+                port?: number;
+            };
+            type: string;
+        };
+        /** @description FileLoggingBackendConfig defines configuration for file based access logs */
+        FileLoggingBackendConfig: {
+            /** @description Path to a file that logs will be written to */
+            path?: string;
+        };
+        /** @description TcpLoggingBackendConfig defines configuration for TCP based access logs */
+        TcpLoggingBackendConfig: {
+            /** @description Address to TCP service that will receive logs */
+            address?: string;
+        };
+        DataSource_File: {
+            /**
+             * @description Data source is a path to a file.
+             *     Deprecated, use other sources of a data.
+             */
+            file?: string;
+        };
+        DataSource_Inline: {
+            /**
+             * Format: byte
+             * @description Data source is inline bytes.
+             */
+            inline?: string;
+        };
+        DataSource_InlineString: {
+            /** @description Data source is inline string */
+            inlineString?: string;
+        };
+        DataSource_Secret: {
+            /** @description Data source is a secret with given Secret key. */
+            secret?: string;
+        };
+        ProvidedCertificateAuthorityConfig: {
+            cert?: components["schemas"]["DataSource_File"] | components["schemas"]["DataSource_Inline"] | components["schemas"]["DataSource_InlineString"] | components["schemas"]["DataSource_Secret"];
+            key?: components["schemas"]["DataSource_File"] | components["schemas"]["DataSource_Inline"] | components["schemas"]["DataSource_InlineString"] | components["schemas"]["DataSource_Secret"];
+        };
+        BuiltinCertificateAuthorityConfig: {
+            caCert?: {
+                expiration?: string;
+                /** Format: uint32 */
+                rsaBits?: number;
+            };
+        };
+        DatadogTracingBackendConfig: {
+            /** @description Address of datadog collector. */
+            address?: string;
+            /** @description Port of datadog collector */
+            port?: number;
+            /**
+             * @description Determines if datadog service name should be split based on traffic
+             *     direction and destination. For example, with `splitService: true` and a
+             *     `backend` service that communicates with a couple of databases, you would
+             *     get service names like `backend_INBOUND`, `backend_OUTBOUND_db1`, and
+             *     `backend_OUTBOUND_db2` in Datadog. Default: false
+             */
+            splitService?: boolean;
+        };
+        ZipkinTracingBackendConfig: {
+            /**
+             * @description Version of the API. values: httpJson, httpJsonV1, httpProto. Default:
+             *     httpJson see
+             *     https://www.envoyproxy.io/docs/envoy/latest/api-v3/config/trace/v3/trace.proto#envoy-v3-api-enum-config-trace-v3-zipkinconfig-collectorendpointversion
+             */
+            apiVersion?: string;
+            /**
+             * @description Determines whether client and server spans will share the same span
+             *     context. Default: true.
+             *     https://www.envoyproxy.io/docs/envoy/latest/api-v3/config/trace/v3/zipkin.proto#config-trace-v3-zipkinconfig
+             */
+            sharedSpanContext?: boolean;
+            /** @description Generate 128bit traces. Default: false */
+            traceId128bit?: boolean;
+            /** @description Address of Zipkin collector. */
+            url?: string;
+        };
+        MeshItem: {
+            /** @description Constraints that applies to the mesh and its entities */
+            constraints?: {
+                /**
+                 * @description DataplaneProxyMembership defines a set of requirements for data plane
+                 *     proxies to be a member of the mesh.
+                 */
+                dataplaneProxy?: {
+                    /**
+                     * @description Requirements defines a set of requirements that data plane proxies must
+                     *     fulfill in order to join the mesh. A data plane proxy must fulfill at
+                     *     least one requirement in order to join the mesh. Empty list of allowed
+                     *     requirements means that any proxy that is not explicitly denied can join.
+                     */
+                    requirements?: {
+                        /**
+                         * @description Tags defines set of required tags. You can specify '*' in value to
+                         *     require non empty value of tag
+                         */
+                        tags?: {
+                            [key: string]: string;
+                        };
+                    }[];
+                    /**
+                     * @description Restrictions defines a set of restrictions that data plane proxies cannot
+                     *     fulfill in order to join the mesh. A data plane proxy cannot fulfill any
+                     *     requirement in order to join the mesh.
+                     *     Restrictions takes precedence over requirements.
+                     */
+                    restrictions?: {
+                        /**
+                         * @description Tags defines set of required tags. You can specify '*' in value to
+                         *     require non empty value of tag
+                         */
+                        tags?: {
+                            [key: string]: string;
+                        };
+                    }[];
+                };
+            };
+            labels?: {
+                [key: string]: string;
+            };
+            /**
+             * @description Logging settings.
+             *     +optional
+             */
+            logging?: {
+                /** @description List of available logging backends */
+                backends?: {
+                    conf?: components["schemas"]["FileLoggingBackendConfig"] | components["schemas"]["TcpLoggingBackendConfig"];
+                    /**
+                     * @description Format of access logs. Placeholders available on
+                     *     https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log
+                     */
+                    format?: string;
+                    /**
+                     * @description Name of the backend, can be then used in Mesh.logging.defaultBackend or in
+                     *     TrafficLogging
+                     */
+                    name?: string;
+                    /** @description Type of the backend (Kuma ships with 'tcp' and 'file') */
+                    type?: string;
+                }[];
+                /** @description Name of the default backend */
+                defaultBackend?: string;
+            };
+            meshServices?: {
+                /** @enum {string} */
+                mode?: "Disabled" | "Everywhere" | "ReachableBackends" | "Exclusive";
+            };
+            /**
+             * @description Configuration for metrics collected and exposed by dataplanes.
+             *
+             *     Settings defined here become defaults for every dataplane in a given Mesh.
+             *     Additionally, it is also possible to further customize this configuration
+             *     for each dataplane individually using Dataplane resource.
+             *     +optional
+             */
+            metrics?: {
+                /** @description List of available Metrics backends */
+                backends?: {
+                    conf?: components["schemas"]["PrometheusMetricsBackendConfig"];
+                    /** @description Name of the backend, can be then used in Mesh.metrics.enabledBackend */
+                    name?: string;
+                    /** @description Type of the backend (Kuma ships with 'prometheus') */
+                    type?: string;
+                }[];
+                /** @description Name of the enabled backend */
+                enabledBackend?: string;
+            };
+            /**
+             * @description mTLS settings.
+             *     +optional
+             */
+            mtls?: {
+                /** @description List of available Certificate Authority backends */
+                backends?: {
+                    conf?: components["schemas"]["ProvidedCertificateAuthorityConfig"] | components["schemas"]["BuiltinCertificateAuthorityConfig"];
+                    /** @description Dataplane certificate settings */
+                    dpCert?: {
+                        /** @description Timeout on request to CA for DP certificate generation and retrieval */
+                        requestTimeout?: {
+                            nanos?: number;
+                            seconds?: number;
+                        };
+                        /** @description Rotation settings */
+                        rotation?: {
+                            /** @description Time after which generated certificate for Dataplane will expire */
+                            expiration?: string;
+                        };
+                    };
+                    /**
+                     * @description Mode defines the behaviour of inbound listeners with regard to traffic
+                     *     encryption
+                     */
+                    mode?: string | number;
+                    /** @description Name of the backend */
+                    name?: string;
+                    rootChain?: {
+                        /**
+                         * @description Timeout on request for to CA for root certificate chain.
+                         *     If not specified, defaults to 10s.
+                         */
+                        requestTimeout?: {
+                            nanos?: number;
+                            seconds?: number;
+                        };
+                    };
+                    /**
+                     * @description Type of the backend. Has to be one of the loaded plugins (Kuma ships with
+                     *     builtin and provided)
+                     */
+                    type?: string;
+                }[];
+                /** @description Name of the enabled backend */
+                enabledBackend?: string;
+                /** @description If enabled, skips CA validation. */
+                skipValidation?: boolean;
+            };
+            name: string;
+            /** @description Networking settings of the mesh */
+            networking?: {
+                /** @description Outbound settings */
+                outbound?: {
+                    /** @description Control the passthrough cluster */
+                    passthrough?: boolean;
+                };
+            };
+            /** @description Routing settings of the mesh */
+            routing?: {
+                /**
+                 * @description If true, blocks traffic to MeshExternalServices.
+                 *     Default: false
+                 */
+                defaultForbidMeshExternalServiceAccess?: boolean;
+                /** @description Enable the Locality Aware Load Balancing */
+                localityAwareLoadBalancing?: boolean;
+                /**
+                 * @description Enable routing traffic to services in other zone or external services
+                 *     through ZoneEgress. Default: false
+                 */
+                zoneEgress?: boolean;
+            };
+            /**
+             * @description List of policies to skip creating by default when the mesh is created.
+             *     e.g. TrafficPermission, MeshRetry, etc. An '*' can be used to skip all
+             *     policies.
+             */
+            skipCreatingInitialPolicies?: string[];
+            /**
+             * @description Tracing settings.
+             *     +optional
+             */
+            tracing?: {
+                /** @description List of available tracing backends */
+                backends?: {
+                    conf?: components["schemas"]["DatadogTracingBackendConfig"] | components["schemas"]["ZipkinTracingBackendConfig"];
+                    /**
+                     * @description Name of the backend, can be then used in Mesh.tracing.defaultBackend or in
+                     *     TrafficTrace
+                     */
+                    name?: string;
+                    /**
+                     * @description Percentage of traces that will be sent to the backend (range 0.0 - 100.0).
+                     *     Empty value defaults to 100.0%
+                     */
+                    sampling?: number;
+                    /** @description Type of the backend (Kuma ships with 'zipkin') */
+                    type?: string;
+                }[];
+                /** @description Name of the default backend */
+                defaultBackend?: string;
+            };
+            type: string;
+            creationTime?: string;
+            modificationTime?: string;
+        };
         MeshAccessLogItem: {
             /**
              * @description the type of the resource
@@ -2041,22 +2723,123 @@ export interface components {
                      *     'targetRef'
                      */
                     default: {
-                        backends?: ({
+                        backends?: {
+                            /** @description FileBackend defines configuration for file based access logs */
+                            file?: {
+                                /**
+                                 * @description Format of access logs. Placeholders available on
+                                 *     https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
+                                 */
+                                format?: {
+                                    /**
+                                     * @example [
+                                     *       {
+                                     *         "key": "start_time",
+                                     *         "value": "%START_TIME%"
+                                     *       },
+                                     *       {
+                                     *         "key": "bytes_received",
+                                     *         "value": "%BYTES_RECEIVED%"
+                                     *       }
+                                     *     ]
+                                     */
+                                    json?: {
+                                        key: string;
+                                        value: string;
+                                    }[];
+                                    /** @default false */
+                                    omitEmptyValues: boolean;
+                                    /** @example [%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST% */
+                                    plain?: string;
+                                    /** @enum {string} */
+                                    type: "Plain" | "Json";
+                                };
+                                /**
+                                 * @description Path to a file that logs will be written to
+                                 * @example /tmp/access.log
+                                 */
+                                path: string;
+                            };
+                            /** @description Defines an OpenTelemetry logging backend. */
+                            openTelemetry?: {
+                                /**
+                                 * @description Attributes can contain placeholders available on
+                                 *     https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
+                                 * @example [
+                                 *       {
+                                 *         "key": "mesh",
+                                 *         "value": "%KUMA_MESH%"
+                                 *       }
+                                 *     ]
+                                 */
+                                attributes?: {
+                                    key: string;
+                                    value: string;
+                                }[];
+                                /**
+                                 * @description Body is a raw string or an OTLP any value as described at
+                                 *     https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/logs/data-model.md#field-body
+                                 *     It can contain placeholders available on
+                                 *     https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
+                                 * @example {
+                                 *       "kvlistValue": {
+                                 *         "values": [
+                                 *           {
+                                 *             "key": "mesh",
+                                 *             "value": {
+                                 *               "stringValue": "%KUMA_MESH%"
+                                 *             }
+                                 *           }
+                                 *         ]
+                                 *       }
+                                 *     }
+                                 */
+                                body?: unknown;
+                                /**
+                                 * @description Endpoint of OpenTelemetry collector. An empty port defaults to 4317.
+                                 * @example otel-collector:4317
+                                 */
+                                endpoint: string;
+                            };
+                            /** @description TCPBackend defines a TCP logging backend. */
+                            tcp?: {
+                                /**
+                                 * @description Address of the TCP logging backend
+                                 * @example 127.0.0.1:5000
+                                 */
+                                address: string;
+                                /**
+                                 * @description Format of access logs. Placeholders available on
+                                 *     https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
+                                 */
+                                format?: {
+                                    /**
+                                     * @example [
+                                     *       {
+                                     *         "key": "start_time",
+                                     *         "value": "%START_TIME%"
+                                     *       },
+                                     *       {
+                                     *         "key": "bytes_received",
+                                     *         "value": "%BYTES_RECEIVED%"
+                                     *       }
+                                     *     ]
+                                     */
+                                    json?: {
+                                        key: string;
+                                        value: string;
+                                    }[];
+                                    /** @default false */
+                                    omitEmptyValues: boolean;
+                                    /** @example [%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST% */
+                                    plain?: string;
+                                    /** @enum {string} */
+                                    type: "Plain" | "Json";
+                                };
+                            };
                             /** @enum {string} */
                             type: "Tcp" | "File" | "OpenTelemetry";
-                        } & ({
-                            /** @constant */
-                            type?: "Tcp";
-                            address: string;
-                        } | {
-                            /** @constant */
-                            type?: "File";
-                            path: string;
-                        } | {
-                            /** @constant */
-                            type?: "OpenTelemetry";
-                            endpoint: string;
-                        }))[];
+                        }[];
                     };
                     /**
                      * @description TargetRef is a reference to the resource that represents a group of
@@ -2113,22 +2896,123 @@ export interface components {
                 rules?: {
                     /** @description Default contains configuration of the inbound access logging */
                     default: {
-                        backends?: ({
+                        backends?: {
+                            /** @description FileBackend defines configuration for file based access logs */
+                            file?: {
+                                /**
+                                 * @description Format of access logs. Placeholders available on
+                                 *     https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
+                                 */
+                                format?: {
+                                    /**
+                                     * @example [
+                                     *       {
+                                     *         "key": "start_time",
+                                     *         "value": "%START_TIME%"
+                                     *       },
+                                     *       {
+                                     *         "key": "bytes_received",
+                                     *         "value": "%BYTES_RECEIVED%"
+                                     *       }
+                                     *     ]
+                                     */
+                                    json?: {
+                                        key: string;
+                                        value: string;
+                                    }[];
+                                    /** @default false */
+                                    omitEmptyValues: boolean;
+                                    /** @example [%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST% */
+                                    plain?: string;
+                                    /** @enum {string} */
+                                    type: "Plain" | "Json";
+                                };
+                                /**
+                                 * @description Path to a file that logs will be written to
+                                 * @example /tmp/access.log
+                                 */
+                                path: string;
+                            };
+                            /** @description Defines an OpenTelemetry logging backend. */
+                            openTelemetry?: {
+                                /**
+                                 * @description Attributes can contain placeholders available on
+                                 *     https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
+                                 * @example [
+                                 *       {
+                                 *         "key": "mesh",
+                                 *         "value": "%KUMA_MESH%"
+                                 *       }
+                                 *     ]
+                                 */
+                                attributes?: {
+                                    key: string;
+                                    value: string;
+                                }[];
+                                /**
+                                 * @description Body is a raw string or an OTLP any value as described at
+                                 *     https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/logs/data-model.md#field-body
+                                 *     It can contain placeholders available on
+                                 *     https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
+                                 * @example {
+                                 *       "kvlistValue": {
+                                 *         "values": [
+                                 *           {
+                                 *             "key": "mesh",
+                                 *             "value": {
+                                 *               "stringValue": "%KUMA_MESH%"
+                                 *             }
+                                 *           }
+                                 *         ]
+                                 *       }
+                                 *     }
+                                 */
+                                body?: unknown;
+                                /**
+                                 * @description Endpoint of OpenTelemetry collector. An empty port defaults to 4317.
+                                 * @example otel-collector:4317
+                                 */
+                                endpoint: string;
+                            };
+                            /** @description TCPBackend defines a TCP logging backend. */
+                            tcp?: {
+                                /**
+                                 * @description Address of the TCP logging backend
+                                 * @example 127.0.0.1:5000
+                                 */
+                                address: string;
+                                /**
+                                 * @description Format of access logs. Placeholders available on
+                                 *     https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
+                                 */
+                                format?: {
+                                    /**
+                                     * @example [
+                                     *       {
+                                     *         "key": "start_time",
+                                     *         "value": "%START_TIME%"
+                                     *       },
+                                     *       {
+                                     *         "key": "bytes_received",
+                                     *         "value": "%BYTES_RECEIVED%"
+                                     *       }
+                                     *     ]
+                                     */
+                                    json?: {
+                                        key: string;
+                                        value: string;
+                                    }[];
+                                    /** @default false */
+                                    omitEmptyValues: boolean;
+                                    /** @example [%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST% */
+                                    plain?: string;
+                                    /** @enum {string} */
+                                    type: "Plain" | "Json";
+                                };
+                            };
                             /** @enum {string} */
                             type: "Tcp" | "File" | "OpenTelemetry";
-                        } & ({
-                            /** @constant */
-                            type?: "Tcp";
-                            address: string;
-                        } | {
-                            /** @constant */
-                            type?: "File";
-                            path: string;
-                        } | {
-                            /** @constant */
-                            type?: "OpenTelemetry";
-                            endpoint: string;
-                        }))[];
+                        }[];
                     };
                 }[];
                 /**
@@ -2186,22 +3070,123 @@ export interface components {
                      *     'targetRef'
                      */
                     default: {
-                        backends?: ({
+                        backends?: {
+                            /** @description FileBackend defines configuration for file based access logs */
+                            file?: {
+                                /**
+                                 * @description Format of access logs. Placeholders available on
+                                 *     https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
+                                 */
+                                format?: {
+                                    /**
+                                     * @example [
+                                     *       {
+                                     *         "key": "start_time",
+                                     *         "value": "%START_TIME%"
+                                     *       },
+                                     *       {
+                                     *         "key": "bytes_received",
+                                     *         "value": "%BYTES_RECEIVED%"
+                                     *       }
+                                     *     ]
+                                     */
+                                    json?: {
+                                        key: string;
+                                        value: string;
+                                    }[];
+                                    /** @default false */
+                                    omitEmptyValues: boolean;
+                                    /** @example [%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST% */
+                                    plain?: string;
+                                    /** @enum {string} */
+                                    type: "Plain" | "Json";
+                                };
+                                /**
+                                 * @description Path to a file that logs will be written to
+                                 * @example /tmp/access.log
+                                 */
+                                path: string;
+                            };
+                            /** @description Defines an OpenTelemetry logging backend. */
+                            openTelemetry?: {
+                                /**
+                                 * @description Attributes can contain placeholders available on
+                                 *     https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
+                                 * @example [
+                                 *       {
+                                 *         "key": "mesh",
+                                 *         "value": "%KUMA_MESH%"
+                                 *       }
+                                 *     ]
+                                 */
+                                attributes?: {
+                                    key: string;
+                                    value: string;
+                                }[];
+                                /**
+                                 * @description Body is a raw string or an OTLP any value as described at
+                                 *     https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/logs/data-model.md#field-body
+                                 *     It can contain placeholders available on
+                                 *     https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
+                                 * @example {
+                                 *       "kvlistValue": {
+                                 *         "values": [
+                                 *           {
+                                 *             "key": "mesh",
+                                 *             "value": {
+                                 *               "stringValue": "%KUMA_MESH%"
+                                 *             }
+                                 *           }
+                                 *         ]
+                                 *       }
+                                 *     }
+                                 */
+                                body?: unknown;
+                                /**
+                                 * @description Endpoint of OpenTelemetry collector. An empty port defaults to 4317.
+                                 * @example otel-collector:4317
+                                 */
+                                endpoint: string;
+                            };
+                            /** @description TCPBackend defines a TCP logging backend. */
+                            tcp?: {
+                                /**
+                                 * @description Address of the TCP logging backend
+                                 * @example 127.0.0.1:5000
+                                 */
+                                address: string;
+                                /**
+                                 * @description Format of access logs. Placeholders available on
+                                 *     https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
+                                 */
+                                format?: {
+                                    /**
+                                     * @example [
+                                     *       {
+                                     *         "key": "start_time",
+                                     *         "value": "%START_TIME%"
+                                     *       },
+                                     *       {
+                                     *         "key": "bytes_received",
+                                     *         "value": "%BYTES_RECEIVED%"
+                                     *       }
+                                     *     ]
+                                     */
+                                    json?: {
+                                        key: string;
+                                        value: string;
+                                    }[];
+                                    /** @default false */
+                                    omitEmptyValues: boolean;
+                                    /** @example [%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST% */
+                                    plain?: string;
+                                    /** @enum {string} */
+                                    type: "Plain" | "Json";
+                                };
+                            };
                             /** @enum {string} */
                             type: "Tcp" | "File" | "OpenTelemetry";
-                        } & ({
-                            /** @constant */
-                            type?: "Tcp";
-                            address: string;
-                        } | {
-                            /** @constant */
-                            type?: "File";
-                            path: string;
-                        } | {
-                            /** @constant */
-                            type?: "OpenTelemetry";
-                            endpoint: string;
-                        }))[];
+                        }[];
                     };
                     /**
                      * @description TargetRef is a reference to the resource that represents a group of
@@ -2265,7 +3250,6 @@ export interface components {
              */
             readonly modificationTime?: string;
         };
-        /** @description Successful response */
         MeshCircuitBreakerItem: {
             /**
              * @description the type of the resource
@@ -3172,7 +4156,6 @@ export interface components {
              */
             readonly modificationTime?: string;
         };
-        /** @description Successful response */
         MeshFaultInjectionItem: {
             /**
              * @description the type of the resource
@@ -3528,294 +4511,109 @@ export interface components {
              */
             readonly modificationTime?: string;
         };
-        /** @description Successful response */
-        MeshHealthCheckItem: {
-            /**
-             * @description the type of the resource
-             * @enum {string}
-             */
-            type: "MeshHealthCheck";
-            /**
-             * @description Mesh is the name of the Kuma mesh this resource belongs to. It may be omitted for cluster-scoped resources.
-             * @default default
-             */
-            mesh: string;
-            /**
-             * @description A unique identifier for this resource instance used by internal tooling and integrations. Typically derived from resource attributes and may be used for cross-references or indexing
-             * @example kri_mhc_default_zone-east_kuma-demo_mypolicy1_
-             */
-            readonly kri?: string;
-            /** @description Name of the Kuma resource */
-            name: string;
-            /** @description The labels to help identity resources */
-            labels?: {
-                [key: string]: string;
-            };
-            /** @description Spec is the specification of the Kuma MeshHealthCheck resource. */
-            spec: {
+        MeshGatewayItem: {
+            /** @description The desired configuration of the MeshGateway. */
+            conf?: {
                 /**
-                 * @description TargetRef is a reference to the resource the policy takes an effect on.
-                 *     The resource could be either a real store object or virtual resource
-                 *     defined inplace.
+                 * @description Listeners define logical endpoints that are bound on this MeshGateway's
+                 *     address(es).
                  */
-                targetRef?: {
+                listeners?: {
                     /**
-                     * @description Kind of the referenced resource
-                     * @enum {string}
+                     * @description CrossMesh enables traffic to flow to this listener only from other
+                     *     meshes.
                      */
-                    kind: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
+                    crossMesh?: boolean;
                     /**
-                     * @description Labels are used to select group of MeshServices that match labels. Either Labels or
-                     *     Name and Namespace can be used.
+                     * @description Hostname specifies the virtual hostname to match for protocol types that
+                     *     define this concept. When unspecified, "", or `*`, all hostnames are
+                     *     matched. This field can be omitted for protocols that don't require
+                     *     hostname based matching.
                      */
-                    labels?: {
-                        [key: string]: string;
+                    hostname?: string;
+                    /**
+                     * @description Port is the network port. Multiple listeners may use the
+                     *     same port, subject to the Listener compatibility rules.
+                     */
+                    port?: number;
+                    /** @description Protocol specifies the network protocol this listener expects to receive. */
+                    protocol?: string | number;
+                    /** @description Resources is used to specify listener-specific resource settings. */
+                    resources?: {
+                        connectionLimit?: number;
                     };
-                    /** @description Mesh is reserved for future use to identify cross mesh resources. */
-                    mesh?: string;
                     /**
-                     * @description Name of the referenced resource. Can only be used with kinds: `MeshService`,
-                     *     `MeshServiceSubset` and `MeshGatewayRoute`
-                     */
-                    name?: string;
-                    /**
-                     * @description Namespace specifies the namespace of target resource. If empty only resources in policy namespace
-                     *     will be targeted.
-                     */
-                    namespace?: string;
-                    /**
-                     * @description ProxyTypes specifies the data plane types that are subject to the policy. When not specified,
-                     *     all data plane types are targeted by the policy.
-                     */
-                    proxyTypes?: ("Sidecar" | "Gateway")[];
-                    /**
-                     * @description SectionName is used to target specific section of resource.
-                     *     For example, you can target port from MeshService.ports[] by its name. Only traffic to this port will be affected.
-                     */
-                    sectionName?: string;
-                    /**
-                     * @description Tags used to select a subset of proxies by tags. Can only be used with kinds
-                     *     `MeshSubset` and `MeshServiceSubset`
+                     * @description Tags specifies a unique combination of tags that routes can use
+                     *     to match themselves to this listener.
+                     *
+                     *     When matching routes to listeners, the control plane constructs a
+                     *     set of matching tags for each listener by forming the union of the
+                     *     gateway tags and the listener tags. A route will be attached to the
+                     *     listener if all of the route's tags are preset in the matching tags
                      */
                     tags?: {
                         [key: string]: string;
                     };
-                };
-                /** @description To list makes a match between the consumed services and corresponding configurations */
-                to?: {
                     /**
-                     * @description Default is a configuration specific to the group of destinations referenced in
-                     *     'targetRef'
+                     * @description TLS is the TLS configuration for the Listener. This field
+                     *     is required if the Protocol field is "HTTPS" or "TLS" and
+                     *     ignored otherwise.
                      */
-                    default?: {
+                    tls?: {
                         /**
-                         * @description If set to true, health check failure events will always be logged. If set
-                         *     to false, only the initial health check failure event will be logged. The
-                         *     default value is false.
-                         */
-                        alwaysLogHealthCheckFailures?: boolean;
-                        /**
-                         * @description Specifies the path to the file where Envoy can log health check events.
-                         *     If empty, no event log will be written.
-                         */
-                        eventLogPath?: string;
-                        /**
-                         * @description If set to true, Envoy will not consider any hosts when the cluster is in
-                         *     'panic mode'. Instead, the cluster will fail all requests as if all hosts
-                         *     are unhealthy. This can help avoid potentially overwhelming a failing
-                         *     service.
-                         */
-                        failTrafficOnPanic?: boolean;
-                        /**
-                         * @description GrpcHealthCheck defines gRPC configuration which will instruct the service
-                         *     the health check will be made for is a gRPC service.
-                         */
-                        grpc?: {
-                            /**
-                             * @description The value of the :authority header in the gRPC health check request,
-                             *     by default name of the cluster this health check is associated with
-                             */
-                            authority?: string;
-                            /** @description If true the GrpcHealthCheck is disabled */
-                            disabled?: boolean;
-                            /** @description Service name parameter which will be sent to gRPC service */
-                            serviceName?: string;
-                        };
-                        /**
-                         * @description Allows to configure panic threshold for Envoy cluster. If not specified,
-                         *     the default is 50%. To disable panic mode, set to 0%.
-                         *     Either int or decimal represented as string.
+                         * @description Certificates is an array of datasources that contain TLS
+                         *     certificates and private keys.  Each datasource must contain a
+                         *     sequence of PEM-encoded objects. The server certificate and private
+                         *     key are required, but additional certificates are allowed and will
+                         *     be added to the certificate chain.  The server certificate must
+                         *     be the first certificate in the datasource.
                          *
-                         *     Deprecated: the setting has been moved to MeshCircuitBreaker policy,
-                         *     please use MeshCircuitBreaker policy instead.
+                         *     When multiple certificate datasources are configured, they must have
+                         *     different key types. In practice, this means that one datasource
+                         *     should contain an RSA key and certificate, and the other an
+                         *     ECDSA key and certificate.
                          */
-                        healthyPanicThreshold?: number | string;
+                        certificates?: (components["schemas"]["DataSource_File"] | components["schemas"]["DataSource_Inline"] | components["schemas"]["DataSource_InlineString"] | components["schemas"]["DataSource_Secret"])[];
                         /**
-                         * Format: int32
-                         * @description Number of consecutive healthy checks before considering a host healthy.
-                         *     If not specified then the default value is 1
+                         * @description Mode defines the TLS behavior for the TLS session initiated
+                         *     by the client.
                          */
-                        healthyThreshold?: number;
+                        mode?: string | number;
                         /**
-                         * @description HttpHealthCheck defines HTTP configuration which will instruct the service
-                         *     the health check will be made for is an HTTP service.
+                         * @description Options should eventually configure how TLS is configured. This
+                         *     is where cipher suite and version configuration can be specified,
+                         *     client certificates enforced, and so on.
                          */
-                        http?: {
-                            /** @description If true the HttpHealthCheck is disabled */
-                            disabled?: boolean;
-                            /** @description List of HTTP response statuses which are considered healthy */
-                            expectedStatuses?: number[];
-                            /**
-                             * @description The HTTP path which will be requested during the health check
-                             *     (ie. /health)
-                             *     If not specified then the default value is "/"
-                             */
-                            path?: string;
-                            /**
-                             * @description The list of HTTP headers which should be added to each health check
-                             *     request
-                             */
-                            requestHeadersToAdd?: {
-                                add?: {
-                                    name: string;
-                                    value: string;
-                                }[];
-                                set?: {
-                                    name: string;
-                                    value: string;
-                                }[];
-                            };
-                        };
-                        /**
-                         * @description If specified, Envoy will start health checking after a random time in
-                         *     ms between 0 and initialJitter. This only applies to the first health
-                         *     check.
-                         */
-                        initialJitter?: string;
-                        /**
-                         * @description Interval between consecutive health checks.
-                         *     If not specified then the default value is 1m
-                         */
-                        interval?: string;
-                        /**
-                         * @description If specified, during every interval Envoy will add IntervalJitter to the
-                         *     wait time.
-                         */
-                        intervalJitter?: string;
-                        /**
-                         * Format: int32
-                         * @description If specified, during every interval Envoy will add IntervalJitter *
-                         *     IntervalJitterPercent / 100 to the wait time. If IntervalJitter and
-                         *     IntervalJitterPercent are both set, both of them will be used to
-                         *     increase the wait time.
-                         */
-                        intervalJitterPercent?: number;
-                        /**
-                         * @description The "no traffic interval" is a special health check interval that is used
-                         *     when a cluster has never had traffic routed to it. This lower interval
-                         *     allows cluster information to be kept up to date, without sending a
-                         *     potentially large amount of active health checking traffic for no reason.
-                         *     Once a cluster has been used for traffic routing, Envoy will shift back
-                         *     to using the standard health check interval that is defined. Note that
-                         *     this interval takes precedence over any other. The default value for "no
-                         *     traffic interval" is 60 seconds.
-                         */
-                        noTrafficInterval?: string;
-                        /** @description Reuse health check connection between health checks. Default is true. */
-                        reuseConnection?: boolean;
-                        /**
-                         * @description TcpHealthCheck defines configuration for specifying bytes to send and
-                         *     expected response during the health check
-                         */
-                        tcp?: {
-                            /** @description If true the TcpHealthCheck is disabled */
-                            disabled?: boolean;
-                            /**
-                             * @description List of Base64 encoded blocks of strings expected as a response. When checking the response,
-                             *     "fuzzy" matching is performed such that each block must be found, and
-                             *     in the order specified, but not necessarily contiguous.
-                             *     If not provided or empty, checks will be performed as "connect only" and be marked as successful when TCP connection is successfully established.
-                             */
-                            receive?: string[];
-                            /** @description Base64 encoded content of the message which will be sent during the health check to the target */
-                            send?: string;
-                        };
-                        /**
-                         * @description Maximum time to wait for a health check response.
-                         *     If not specified then the default value is 15s
-                         */
-                        timeout?: string;
-                        /**
-                         * Format: int32
-                         * @description Number of consecutive unhealthy checks before considering a host
-                         *     unhealthy.
-                         *     If not specified then the default value is 5
-                         */
-                        unhealthyThreshold?: number;
-                    };
-                    /**
-                     * @description TargetRef is a reference to the resource that represents a group of
-                     *     destinations.
-                     */
-                    targetRef: {
-                        /**
-                         * @description Kind of the referenced resource
-                         * @enum {string}
-                         */
-                        kind: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
-                        /**
-                         * @description Labels are used to select group of MeshServices that match labels. Either Labels or
-                         *     Name and Namespace can be used.
-                         */
-                        labels?: {
-                            [key: string]: string;
-                        };
-                        /** @description Mesh is reserved for future use to identify cross mesh resources. */
-                        mesh?: string;
-                        /**
-                         * @description Name of the referenced resource. Can only be used with kinds: `MeshService`,
-                         *     `MeshServiceSubset` and `MeshGatewayRoute`
-                         */
-                        name?: string;
-                        /**
-                         * @description Namespace specifies the namespace of target resource. If empty only resources in policy namespace
-                         *     will be targeted.
-                         */
-                        namespace?: string;
-                        /**
-                         * @description ProxyTypes specifies the data plane types that are subject to the policy. When not specified,
-                         *     all data plane types are targeted by the policy.
-                         */
-                        proxyTypes?: ("Sidecar" | "Gateway")[];
-                        /**
-                         * @description SectionName is used to target specific section of resource.
-                         *     For example, you can target port from MeshService.ports[] by its name. Only traffic to this port will be affected.
-                         */
-                        sectionName?: string;
-                        /**
-                         * @description Tags used to select a subset of proxies by tags. Can only be used with kinds
-                         *     `MeshSubset` and `MeshServiceSubset`
-                         */
-                        tags?: {
-                            [key: string]: string;
-                        };
+                        options?: Record<string, never>;
                     };
                 }[];
             };
+            labels?: {
+                [key: string]: string;
+            };
+            mesh: string;
+            name: string;
             /**
-             * Format: date-time
-             * @description Time at which the resource was created
-             * @example 0001-01-01T00:00:00Z
+             * @description Selectors is a list of selectors that are used to match builtin
+             *     gateway dataplanes that will receive this MeshGateway configuration.
              */
-            readonly creationTime?: string;
+            selectors?: {
+                /** @description Tags to match, can be used for both source and destinations */
+                match?: {
+                    [key: string]: string;
+                };
+            }[];
             /**
-             * Format: date-time
-             * @description Time at which the resource was updated
-             * @example 0001-01-01T00:00:00Z
+             * @description Tags is the set of tags common to all of the gateway's listeners.
+             *
+             *     This field must not include a `kuma.io/service` tag (the service is always
+             *     defined on the dataplanes).
              */
-            readonly modificationTime?: string;
+            tags?: {
+                [key: string]: string;
+            };
+            type: string;
         };
-        /** @description Successful response */
         MeshHTTPRouteItem: {
             /**
              * @description the type of the resource
@@ -4211,7 +5009,292 @@ export interface components {
              */
             readonly modificationTime?: string;
         };
-        /** @description Successful response */
+        MeshHealthCheckItem: {
+            /**
+             * @description the type of the resource
+             * @enum {string}
+             */
+            type: "MeshHealthCheck";
+            /**
+             * @description Mesh is the name of the Kuma mesh this resource belongs to. It may be omitted for cluster-scoped resources.
+             * @default default
+             */
+            mesh: string;
+            /**
+             * @description A unique identifier for this resource instance used by internal tooling and integrations. Typically derived from resource attributes and may be used for cross-references or indexing
+             * @example kri_mhc_default_zone-east_kuma-demo_mypolicy1_
+             */
+            readonly kri?: string;
+            /** @description Name of the Kuma resource */
+            name: string;
+            /** @description The labels to help identity resources */
+            labels?: {
+                [key: string]: string;
+            };
+            /** @description Spec is the specification of the Kuma MeshHealthCheck resource. */
+            spec: {
+                /**
+                 * @description TargetRef is a reference to the resource the policy takes an effect on.
+                 *     The resource could be either a real store object or virtual resource
+                 *     defined inplace.
+                 */
+                targetRef?: {
+                    /**
+                     * @description Kind of the referenced resource
+                     * @enum {string}
+                     */
+                    kind: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
+                    /**
+                     * @description Labels are used to select group of MeshServices that match labels. Either Labels or
+                     *     Name and Namespace can be used.
+                     */
+                    labels?: {
+                        [key: string]: string;
+                    };
+                    /** @description Mesh is reserved for future use to identify cross mesh resources. */
+                    mesh?: string;
+                    /**
+                     * @description Name of the referenced resource. Can only be used with kinds: `MeshService`,
+                     *     `MeshServiceSubset` and `MeshGatewayRoute`
+                     */
+                    name?: string;
+                    /**
+                     * @description Namespace specifies the namespace of target resource. If empty only resources in policy namespace
+                     *     will be targeted.
+                     */
+                    namespace?: string;
+                    /**
+                     * @description ProxyTypes specifies the data plane types that are subject to the policy. When not specified,
+                     *     all data plane types are targeted by the policy.
+                     */
+                    proxyTypes?: ("Sidecar" | "Gateway")[];
+                    /**
+                     * @description SectionName is used to target specific section of resource.
+                     *     For example, you can target port from MeshService.ports[] by its name. Only traffic to this port will be affected.
+                     */
+                    sectionName?: string;
+                    /**
+                     * @description Tags used to select a subset of proxies by tags. Can only be used with kinds
+                     *     `MeshSubset` and `MeshServiceSubset`
+                     */
+                    tags?: {
+                        [key: string]: string;
+                    };
+                };
+                /** @description To list makes a match between the consumed services and corresponding configurations */
+                to?: {
+                    /**
+                     * @description Default is a configuration specific to the group of destinations referenced in
+                     *     'targetRef'
+                     */
+                    default?: {
+                        /**
+                         * @description If set to true, health check failure events will always be logged. If set
+                         *     to false, only the initial health check failure event will be logged. The
+                         *     default value is false.
+                         */
+                        alwaysLogHealthCheckFailures?: boolean;
+                        /**
+                         * @description Specifies the path to the file where Envoy can log health check events.
+                         *     If empty, no event log will be written.
+                         */
+                        eventLogPath?: string;
+                        /**
+                         * @description If set to true, Envoy will not consider any hosts when the cluster is in
+                         *     'panic mode'. Instead, the cluster will fail all requests as if all hosts
+                         *     are unhealthy. This can help avoid potentially overwhelming a failing
+                         *     service.
+                         */
+                        failTrafficOnPanic?: boolean;
+                        /**
+                         * @description GrpcHealthCheck defines gRPC configuration which will instruct the service
+                         *     the health check will be made for is a gRPC service.
+                         */
+                        grpc?: {
+                            /**
+                             * @description The value of the :authority header in the gRPC health check request,
+                             *     by default name of the cluster this health check is associated with
+                             */
+                            authority?: string;
+                            /** @description If true the GrpcHealthCheck is disabled */
+                            disabled?: boolean;
+                            /** @description Service name parameter which will be sent to gRPC service */
+                            serviceName?: string;
+                        };
+                        /**
+                         * @description Allows to configure panic threshold for Envoy cluster. If not specified,
+                         *     the default is 50%. To disable panic mode, set to 0%.
+                         *     Either int or decimal represented as string.
+                         *
+                         *     Deprecated: the setting has been moved to MeshCircuitBreaker policy,
+                         *     please use MeshCircuitBreaker policy instead.
+                         */
+                        healthyPanicThreshold?: number | string;
+                        /**
+                         * Format: int32
+                         * @description Number of consecutive healthy checks before considering a host healthy.
+                         *     If not specified then the default value is 1
+                         */
+                        healthyThreshold?: number;
+                        /**
+                         * @description HttpHealthCheck defines HTTP configuration which will instruct the service
+                         *     the health check will be made for is an HTTP service.
+                         */
+                        http?: {
+                            /** @description If true the HttpHealthCheck is disabled */
+                            disabled?: boolean;
+                            /** @description List of HTTP response statuses which are considered healthy */
+                            expectedStatuses?: number[];
+                            /**
+                             * @description The HTTP path which will be requested during the health check
+                             *     (ie. /health)
+                             *     If not specified then the default value is "/"
+                             */
+                            path?: string;
+                            /**
+                             * @description The list of HTTP headers which should be added to each health check
+                             *     request
+                             */
+                            requestHeadersToAdd?: {
+                                add?: {
+                                    name: string;
+                                    value: string;
+                                }[];
+                                set?: {
+                                    name: string;
+                                    value: string;
+                                }[];
+                            };
+                        };
+                        /**
+                         * @description If specified, Envoy will start health checking after a random time in
+                         *     ms between 0 and initialJitter. This only applies to the first health
+                         *     check.
+                         */
+                        initialJitter?: string;
+                        /**
+                         * @description Interval between consecutive health checks.
+                         *     If not specified then the default value is 1m
+                         */
+                        interval?: string;
+                        /**
+                         * @description If specified, during every interval Envoy will add IntervalJitter to the
+                         *     wait time.
+                         */
+                        intervalJitter?: string;
+                        /**
+                         * Format: int32
+                         * @description If specified, during every interval Envoy will add IntervalJitter *
+                         *     IntervalJitterPercent / 100 to the wait time. If IntervalJitter and
+                         *     IntervalJitterPercent are both set, both of them will be used to
+                         *     increase the wait time.
+                         */
+                        intervalJitterPercent?: number;
+                        /**
+                         * @description The "no traffic interval" is a special health check interval that is used
+                         *     when a cluster has never had traffic routed to it. This lower interval
+                         *     allows cluster information to be kept up to date, without sending a
+                         *     potentially large amount of active health checking traffic for no reason.
+                         *     Once a cluster has been used for traffic routing, Envoy will shift back
+                         *     to using the standard health check interval that is defined. Note that
+                         *     this interval takes precedence over any other. The default value for "no
+                         *     traffic interval" is 60 seconds.
+                         */
+                        noTrafficInterval?: string;
+                        /** @description Reuse health check connection between health checks. Default is true. */
+                        reuseConnection?: boolean;
+                        /**
+                         * @description TcpHealthCheck defines configuration for specifying bytes to send and
+                         *     expected response during the health check
+                         */
+                        tcp?: {
+                            /** @description If true the TcpHealthCheck is disabled */
+                            disabled?: boolean;
+                            /**
+                             * @description List of Base64 encoded blocks of strings expected as a response. When checking the response,
+                             *     "fuzzy" matching is performed such that each block must be found, and
+                             *     in the order specified, but not necessarily contiguous.
+                             *     If not provided or empty, checks will be performed as "connect only" and be marked as successful when TCP connection is successfully established.
+                             */
+                            receive?: string[];
+                            /** @description Base64 encoded content of the message which will be sent during the health check to the target */
+                            send?: string;
+                        };
+                        /**
+                         * @description Maximum time to wait for a health check response.
+                         *     If not specified then the default value is 15s
+                         */
+                        timeout?: string;
+                        /**
+                         * Format: int32
+                         * @description Number of consecutive unhealthy checks before considering a host
+                         *     unhealthy.
+                         *     If not specified then the default value is 5
+                         */
+                        unhealthyThreshold?: number;
+                    };
+                    /**
+                     * @description TargetRef is a reference to the resource that represents a group of
+                     *     destinations.
+                     */
+                    targetRef: {
+                        /**
+                         * @description Kind of the referenced resource
+                         * @enum {string}
+                         */
+                        kind: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
+                        /**
+                         * @description Labels are used to select group of MeshServices that match labels. Either Labels or
+                         *     Name and Namespace can be used.
+                         */
+                        labels?: {
+                            [key: string]: string;
+                        };
+                        /** @description Mesh is reserved for future use to identify cross mesh resources. */
+                        mesh?: string;
+                        /**
+                         * @description Name of the referenced resource. Can only be used with kinds: `MeshService`,
+                         *     `MeshServiceSubset` and `MeshGatewayRoute`
+                         */
+                        name?: string;
+                        /**
+                         * @description Namespace specifies the namespace of target resource. If empty only resources in policy namespace
+                         *     will be targeted.
+                         */
+                        namespace?: string;
+                        /**
+                         * @description ProxyTypes specifies the data plane types that are subject to the policy. When not specified,
+                         *     all data plane types are targeted by the policy.
+                         */
+                        proxyTypes?: ("Sidecar" | "Gateway")[];
+                        /**
+                         * @description SectionName is used to target specific section of resource.
+                         *     For example, you can target port from MeshService.ports[] by its name. Only traffic to this port will be affected.
+                         */
+                        sectionName?: string;
+                        /**
+                         * @description Tags used to select a subset of proxies by tags. Can only be used with kinds
+                         *     `MeshSubset` and `MeshServiceSubset`
+                         */
+                        tags?: {
+                            [key: string]: string;
+                        };
+                    };
+                }[];
+            };
+            /**
+             * Format: date-time
+             * @description Time at which the resource was created
+             * @example 0001-01-01T00:00:00Z
+             */
+            readonly creationTime?: string;
+            /**
+             * Format: date-time
+             * @description Time at which the resource was updated
+             * @example 0001-01-01T00:00:00Z
+             */
+            readonly modificationTime?: string;
+        };
         MeshLoadBalancingStrategyItem: {
             /**
              * @description the type of the resource
@@ -4640,7 +5723,6 @@ export interface components {
              */
             readonly modificationTime?: string;
         };
-        /** @description Successful response */
         MeshMetricItem: {
             /**
              * @description the type of the resource
@@ -4834,7 +5916,6 @@ export interface components {
              */
             readonly modificationTime?: string;
         };
-        /** @description Successful response */
         MeshPassthroughItem: {
             /**
              * @description the type of the resource
@@ -4952,7 +6033,6 @@ export interface components {
              */
             readonly modificationTime?: string;
         };
-        /** @description Successful response */
         MeshProxyPatchItem: {
             /**
              * @description the type of the resource
@@ -5317,7 +6397,6 @@ export interface components {
              */
             readonly modificationTime?: string;
         };
-        /** @description Successful response */
         MeshRateLimitItem: {
             /**
              * @description the type of the resource
@@ -5714,7 +6793,6 @@ export interface components {
              */
             readonly modificationTime?: string;
         };
-        /** @description Successful response */
         MeshRetryItem: {
             /**
              * @description the type of the resource
@@ -6096,7 +7174,6 @@ export interface components {
              */
             readonly modificationTime?: string;
         };
-        /** @description Successful response */
         MeshTCPRouteItem: {
             /**
              * @description the type of the resource
@@ -6298,7 +7375,201 @@ export interface components {
              */
             readonly modificationTime?: string;
         };
-        /** @description Successful response */
+        MeshTLSItem: {
+            /**
+             * @description the type of the resource
+             * @enum {string}
+             */
+            type: "MeshTLS";
+            /**
+             * @description Mesh is the name of the Kuma mesh this resource belongs to. It may be omitted for cluster-scoped resources.
+             * @default default
+             */
+            mesh: string;
+            /**
+             * @description A unique identifier for this resource instance used by internal tooling and integrations. Typically derived from resource attributes and may be used for cross-references or indexing
+             * @example kri_mtls_default_zone-east_kuma-demo_mypolicy1_
+             */
+            readonly kri?: string;
+            /** @description Name of the Kuma resource */
+            name: string;
+            /** @description The labels to help identity resources */
+            labels?: {
+                [key: string]: string;
+            };
+            /** @description Spec is the specification of the Kuma MeshTLS resource. */
+            spec: {
+                /** @description From list makes a match between clients and corresponding configurations */
+                from?: {
+                    /**
+                     * @description Default is a configuration specific to the group of clients referenced in
+                     *     'targetRef'
+                     */
+                    default?: {
+                        /**
+                         * @description Mode defines the behavior of inbound listeners with regard to traffic encryption.
+                         * @enum {string}
+                         */
+                        mode?: "Permissive" | "Strict";
+                        /** @description TlsCiphers section for providing ciphers specification. */
+                        tlsCiphers?: ("ECDHE-ECDSA-AES128-GCM-SHA256" | "ECDHE-ECDSA-AES256-GCM-SHA384" | "ECDHE-ECDSA-CHACHA20-POLY1305" | "ECDHE-RSA-AES128-GCM-SHA256" | "ECDHE-RSA-AES256-GCM-SHA384" | "ECDHE-RSA-CHACHA20-POLY1305")[];
+                        /** @description Version section for providing version specification. */
+                        tlsVersion?: {
+                            /**
+                             * @description Max defines maximum supported version. One of `TLSAuto`, `TLS10`, `TLS11`, `TLS12`, `TLS13`.
+                             * @default TLSAuto
+                             * @enum {string}
+                             */
+                            max: "TLSAuto" | "TLS10" | "TLS11" | "TLS12" | "TLS13";
+                            /**
+                             * @description Min defines minimum supported version. One of `TLSAuto`, `TLS10`, `TLS11`, `TLS12`, `TLS13`.
+                             * @default TLSAuto
+                             * @enum {string}
+                             */
+                            min: "TLSAuto" | "TLS10" | "TLS11" | "TLS12" | "TLS13";
+                        };
+                    };
+                    /**
+                     * @description TargetRef is a reference to the resource that represents a group of
+                     *     clients.
+                     */
+                    targetRef: {
+                        /**
+                         * @description Kind of the referenced resource
+                         * @enum {string}
+                         */
+                        kind: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
+                        /**
+                         * @description Labels are used to select group of MeshServices that match labels. Either Labels or
+                         *     Name and Namespace can be used.
+                         */
+                        labels?: {
+                            [key: string]: string;
+                        };
+                        /** @description Mesh is reserved for future use to identify cross mesh resources. */
+                        mesh?: string;
+                        /**
+                         * @description Name of the referenced resource. Can only be used with kinds: `MeshService`,
+                         *     `MeshServiceSubset` and `MeshGatewayRoute`
+                         */
+                        name?: string;
+                        /**
+                         * @description Namespace specifies the namespace of target resource. If empty only resources in policy namespace
+                         *     will be targeted.
+                         */
+                        namespace?: string;
+                        /**
+                         * @description ProxyTypes specifies the data plane types that are subject to the policy. When not specified,
+                         *     all data plane types are targeted by the policy.
+                         */
+                        proxyTypes?: ("Sidecar" | "Gateway")[];
+                        /**
+                         * @description SectionName is used to target specific section of resource.
+                         *     For example, you can target port from MeshService.ports[] by its name. Only traffic to this port will be affected.
+                         */
+                        sectionName?: string;
+                        /**
+                         * @description Tags used to select a subset of proxies by tags. Can only be used with kinds
+                         *     `MeshSubset` and `MeshServiceSubset`
+                         */
+                        tags?: {
+                            [key: string]: string;
+                        };
+                    };
+                }[];
+                /**
+                 * @description Rules defines inbound tls configurations. Currently limited to
+                 *     selecting all inbound traffic, as L7 matching is not yet implemented.
+                 */
+                rules?: {
+                    /** @description Default contains configuration of the inbound tls */
+                    default?: {
+                        /**
+                         * @description Mode defines the behavior of inbound listeners with regard to traffic encryption.
+                         * @enum {string}
+                         */
+                        mode?: "Permissive" | "Strict";
+                        /** @description TlsCiphers section for providing ciphers specification. */
+                        tlsCiphers?: ("ECDHE-ECDSA-AES128-GCM-SHA256" | "ECDHE-ECDSA-AES256-GCM-SHA384" | "ECDHE-ECDSA-CHACHA20-POLY1305" | "ECDHE-RSA-AES128-GCM-SHA256" | "ECDHE-RSA-AES256-GCM-SHA384" | "ECDHE-RSA-CHACHA20-POLY1305")[];
+                        /** @description Version section for providing version specification. */
+                        tlsVersion?: {
+                            /**
+                             * @description Max defines maximum supported version. One of `TLSAuto`, `TLS10`, `TLS11`, `TLS12`, `TLS13`.
+                             * @default TLSAuto
+                             * @enum {string}
+                             */
+                            max: "TLSAuto" | "TLS10" | "TLS11" | "TLS12" | "TLS13";
+                            /**
+                             * @description Min defines minimum supported version. One of `TLSAuto`, `TLS10`, `TLS11`, `TLS12`, `TLS13`.
+                             * @default TLSAuto
+                             * @enum {string}
+                             */
+                            min: "TLSAuto" | "TLS10" | "TLS11" | "TLS12" | "TLS13";
+                        };
+                    };
+                }[];
+                /**
+                 * @description TargetRef is a reference to the resource the policy takes an effect on.
+                 *     The resource could be either a real store object or virtual resource
+                 *     defined in-place.
+                 */
+                targetRef?: {
+                    /**
+                     * @description Kind of the referenced resource
+                     * @enum {string}
+                     */
+                    kind: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
+                    /**
+                     * @description Labels are used to select group of MeshServices that match labels. Either Labels or
+                     *     Name and Namespace can be used.
+                     */
+                    labels?: {
+                        [key: string]: string;
+                    };
+                    /** @description Mesh is reserved for future use to identify cross mesh resources. */
+                    mesh?: string;
+                    /**
+                     * @description Name of the referenced resource. Can only be used with kinds: `MeshService`,
+                     *     `MeshServiceSubset` and `MeshGatewayRoute`
+                     */
+                    name?: string;
+                    /**
+                     * @description Namespace specifies the namespace of target resource. If empty only resources in policy namespace
+                     *     will be targeted.
+                     */
+                    namespace?: string;
+                    /**
+                     * @description ProxyTypes specifies the data plane types that are subject to the policy. When not specified,
+                     *     all data plane types are targeted by the policy.
+                     */
+                    proxyTypes?: ("Sidecar" | "Gateway")[];
+                    /**
+                     * @description SectionName is used to target specific section of resource.
+                     *     For example, you can target port from MeshService.ports[] by its name. Only traffic to this port will be affected.
+                     */
+                    sectionName?: string;
+                    /**
+                     * @description Tags used to select a subset of proxies by tags. Can only be used with kinds
+                     *     `MeshSubset` and `MeshServiceSubset`
+                     */
+                    tags?: {
+                        [key: string]: string;
+                    };
+                };
+            };
+            /**
+             * Format: date-time
+             * @description Time at which the resource was created
+             * @example 0001-01-01T00:00:00Z
+             */
+            readonly creationTime?: string;
+            /**
+             * Format: date-time
+             * @description Time at which the resource was updated
+             * @example 0001-01-01T00:00:00Z
+             */
+            readonly modificationTime?: string;
+        };
         MeshTimeoutItem: {
             /**
              * @description the type of the resource
@@ -6638,203 +7909,6 @@ export interface components {
              */
             readonly modificationTime?: string;
         };
-        /** @description Successful response */
-        MeshTLSItem: {
-            /**
-             * @description the type of the resource
-             * @enum {string}
-             */
-            type: "MeshTLS";
-            /**
-             * @description Mesh is the name of the Kuma mesh this resource belongs to. It may be omitted for cluster-scoped resources.
-             * @default default
-             */
-            mesh: string;
-            /**
-             * @description A unique identifier for this resource instance used by internal tooling and integrations. Typically derived from resource attributes and may be used for cross-references or indexing
-             * @example kri_mtls_default_zone-east_kuma-demo_mypolicy1_
-             */
-            readonly kri?: string;
-            /** @description Name of the Kuma resource */
-            name: string;
-            /** @description The labels to help identity resources */
-            labels?: {
-                [key: string]: string;
-            };
-            /** @description Spec is the specification of the Kuma MeshTLS resource. */
-            spec: {
-                /** @description From list makes a match between clients and corresponding configurations */
-                from?: {
-                    /**
-                     * @description Default is a configuration specific to the group of clients referenced in
-                     *     'targetRef'
-                     */
-                    default?: {
-                        /**
-                         * @description Mode defines the behavior of inbound listeners with regard to traffic encryption.
-                         * @enum {string}
-                         */
-                        mode?: "Permissive" | "Strict";
-                        /** @description TlsCiphers section for providing ciphers specification. */
-                        tlsCiphers?: ("ECDHE-ECDSA-AES128-GCM-SHA256" | "ECDHE-ECDSA-AES256-GCM-SHA384" | "ECDHE-ECDSA-CHACHA20-POLY1305" | "ECDHE-RSA-AES128-GCM-SHA256" | "ECDHE-RSA-AES256-GCM-SHA384" | "ECDHE-RSA-CHACHA20-POLY1305")[];
-                        /** @description Version section for providing version specification. */
-                        tlsVersion?: {
-                            /**
-                             * @description Max defines maximum supported version. One of `TLSAuto`, `TLS10`, `TLS11`, `TLS12`, `TLS13`.
-                             * @default TLSAuto
-                             * @enum {string}
-                             */
-                            max: "TLSAuto" | "TLS10" | "TLS11" | "TLS12" | "TLS13";
-                            /**
-                             * @description Min defines minimum supported version. One of `TLSAuto`, `TLS10`, `TLS11`, `TLS12`, `TLS13`.
-                             * @default TLSAuto
-                             * @enum {string}
-                             */
-                            min: "TLSAuto" | "TLS10" | "TLS11" | "TLS12" | "TLS13";
-                        };
-                    };
-                    /**
-                     * @description TargetRef is a reference to the resource that represents a group of
-                     *     clients.
-                     */
-                    targetRef: {
-                        /**
-                         * @description Kind of the referenced resource
-                         * @enum {string}
-                         */
-                        kind: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
-                        /**
-                         * @description Labels are used to select group of MeshServices that match labels. Either Labels or
-                         *     Name and Namespace can be used.
-                         */
-                        labels?: {
-                            [key: string]: string;
-                        };
-                        /** @description Mesh is reserved for future use to identify cross mesh resources. */
-                        mesh?: string;
-                        /**
-                         * @description Name of the referenced resource. Can only be used with kinds: `MeshService`,
-                         *     `MeshServiceSubset` and `MeshGatewayRoute`
-                         */
-                        name?: string;
-                        /**
-                         * @description Namespace specifies the namespace of target resource. If empty only resources in policy namespace
-                         *     will be targeted.
-                         */
-                        namespace?: string;
-                        /**
-                         * @description ProxyTypes specifies the data plane types that are subject to the policy. When not specified,
-                         *     all data plane types are targeted by the policy.
-                         */
-                        proxyTypes?: ("Sidecar" | "Gateway")[];
-                        /**
-                         * @description SectionName is used to target specific section of resource.
-                         *     For example, you can target port from MeshService.ports[] by its name. Only traffic to this port will be affected.
-                         */
-                        sectionName?: string;
-                        /**
-                         * @description Tags used to select a subset of proxies by tags. Can only be used with kinds
-                         *     `MeshSubset` and `MeshServiceSubset`
-                         */
-                        tags?: {
-                            [key: string]: string;
-                        };
-                    };
-                }[];
-                /**
-                 * @description Rules defines inbound tls configurations. Currently limited to
-                 *     selecting all inbound traffic, as L7 matching is not yet implemented.
-                 */
-                rules?: {
-                    /** @description Default contains configuration of the inbound tls */
-                    default?: {
-                        /**
-                         * @description Mode defines the behavior of inbound listeners with regard to traffic encryption.
-                         * @enum {string}
-                         */
-                        mode?: "Permissive" | "Strict";
-                        /** @description TlsCiphers section for providing ciphers specification. */
-                        tlsCiphers?: ("ECDHE-ECDSA-AES128-GCM-SHA256" | "ECDHE-ECDSA-AES256-GCM-SHA384" | "ECDHE-ECDSA-CHACHA20-POLY1305" | "ECDHE-RSA-AES128-GCM-SHA256" | "ECDHE-RSA-AES256-GCM-SHA384" | "ECDHE-RSA-CHACHA20-POLY1305")[];
-                        /** @description Version section for providing version specification. */
-                        tlsVersion?: {
-                            /**
-                             * @description Max defines maximum supported version. One of `TLSAuto`, `TLS10`, `TLS11`, `TLS12`, `TLS13`.
-                             * @default TLSAuto
-                             * @enum {string}
-                             */
-                            max: "TLSAuto" | "TLS10" | "TLS11" | "TLS12" | "TLS13";
-                            /**
-                             * @description Min defines minimum supported version. One of `TLSAuto`, `TLS10`, `TLS11`, `TLS12`, `TLS13`.
-                             * @default TLSAuto
-                             * @enum {string}
-                             */
-                            min: "TLSAuto" | "TLS10" | "TLS11" | "TLS12" | "TLS13";
-                        };
-                    };
-                }[];
-                /**
-                 * @description TargetRef is a reference to the resource the policy takes an effect on.
-                 *     The resource could be either a real store object or virtual resource
-                 *     defined in-place.
-                 */
-                targetRef?: {
-                    /**
-                     * @description Kind of the referenced resource
-                     * @enum {string}
-                     */
-                    kind: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
-                    /**
-                     * @description Labels are used to select group of MeshServices that match labels. Either Labels or
-                     *     Name and Namespace can be used.
-                     */
-                    labels?: {
-                        [key: string]: string;
-                    };
-                    /** @description Mesh is reserved for future use to identify cross mesh resources. */
-                    mesh?: string;
-                    /**
-                     * @description Name of the referenced resource. Can only be used with kinds: `MeshService`,
-                     *     `MeshServiceSubset` and `MeshGatewayRoute`
-                     */
-                    name?: string;
-                    /**
-                     * @description Namespace specifies the namespace of target resource. If empty only resources in policy namespace
-                     *     will be targeted.
-                     */
-                    namespace?: string;
-                    /**
-                     * @description ProxyTypes specifies the data plane types that are subject to the policy. When not specified,
-                     *     all data plane types are targeted by the policy.
-                     */
-                    proxyTypes?: ("Sidecar" | "Gateway")[];
-                    /**
-                     * @description SectionName is used to target specific section of resource.
-                     *     For example, you can target port from MeshService.ports[] by its name. Only traffic to this port will be affected.
-                     */
-                    sectionName?: string;
-                    /**
-                     * @description Tags used to select a subset of proxies by tags. Can only be used with kinds
-                     *     `MeshSubset` and `MeshServiceSubset`
-                     */
-                    tags?: {
-                        [key: string]: string;
-                    };
-                };
-            };
-            /**
-             * Format: date-time
-             * @description Time at which the resource was created
-             * @example 0001-01-01T00:00:00Z
-             */
-            readonly creationTime?: string;
-            /**
-             * Format: date-time
-             * @description Time at which the resource was updated
-             * @example 0001-01-01T00:00:00Z
-             */
-            readonly modificationTime?: string;
-        };
-        /** @description Successful response */
         MeshTraceItem: {
             /**
              * @description the type of the resource
@@ -7042,7 +8116,6 @@ export interface components {
              */
             readonly modificationTime?: string;
         };
-        /** @description Successful response */
         MeshTrafficPermissionItem: {
             /**
              * @description the type of the resource
@@ -7237,413 +8310,82 @@ export interface components {
              */
             readonly modificationTime?: string;
         };
-        /** @description PrometheusMetricsBackendConfig defines configuration of Prometheus backend */
-        PrometheusMetricsBackendConfig: {
-            /**
-             * @description Map with the configuration of applications which metrics are going to be
-             *     scrapped by kuma-dp.
-             */
-            aggregate?: {
-                /** @description Address on which a service expose HTTP endpoint with Prometheus metrics. */
-                address?: string;
-                /**
-                 * @description If false then the application won't be scrapped. If nil, then it is treated
-                 *     as true and kuma-dp scrapes metrics from the service.
-                 */
-                enabled?: boolean;
-                /** @description Name which identify given configuration. */
-                name?: string;
-                /** @description Path on which a service expose HTTP endpoint with Prometheus metrics. */
-                path?: string;
-                /** @description Port on which a service expose HTTP endpoint with Prometheus metrics. */
-                port?: number;
-            }[];
-            /** @description Configuration of Envoy's metrics. */
-            envoy?: {
-                /**
-                 * @description FilterRegex value that is going to be passed to Envoy for filtering
-                 *     Envoy metrics.
-                 */
-                filterRegex?: string;
-                /**
-                 * @description If true then return metrics that Envoy has updated (counters incremented
-                 *     at least once, gauges changed at least once, and histograms added to at
-                 *     least once). If nil, then it is treated as false.
-                 */
-                usedOnly?: boolean;
-            };
-            /**
-             * @description Path on which a dataplane should expose HTTP endpoint with Prometheus
-             *     metrics.
-             */
-            path?: string;
-            /**
-             * @description Port on which a dataplane should expose HTTP endpoint with Prometheus
-             *     metrics.
-             */
-            port?: number;
-            /**
-             * @description If true then endpoints for scraping metrics won't require mTLS even if mTLS
-             *     is enabled in Mesh. If nil, then it is treated as false.
-             */
-            skipMTLS?: boolean;
-            /**
-             * @description Tags associated with an application this dataplane is deployed next to,
-             *     e.g. service=web, version=1.0.
-             *     `service` tag is mandatory.
-             */
-            tags?: {
-                [key: string]: string;
-            };
-            /** @description Configuration of TLS for prometheus listener. */
-            tls?: {
-                /**
-                 * @description mode defines how configured is the TLS for Prometheus.
-                 *     Supported values, delegated, disabled, activeMTLSBackend. Default to
-                 *     `activeMTLSBackend`.
-                 */
-                mode?: string | number;
-            };
-        };
-        /** @description Successful response */
-        DataplaneItem: {
+        ZoneEgressItem: {
             labels?: {
                 [key: string]: string;
             };
-            mesh: string;
+            name: string;
+            /** @description Networking defines the address and port of the Egress to listen on. */
+            networking?: {
+                /** @description Address on which inbound listener will be exposed */
+                address?: string;
+                /** @description Admin contains configuration related to Envoy Admin API */
+                admin?: {
+                    /** @description Port on which Envoy Admin API server will be listening */
+                    port?: number;
+                };
+                /** @description Port of the inbound interface that will forward requests to the service. */
+                port?: number;
+            };
+            type: string;
             /**
-             * @description Configuration for metrics that should be collected and exposed by the
-             *     data plane proxy.
-             *
-             *     Settings defined here will override their respective defaults
-             *     defined at a Mesh level.
+             * @description Zone field contains Zone name where egress is serving, field will be
+             *     automatically set by Global Kuma CP
              */
-            metrics?: {
-                conf?: components["schemas"]["PrometheusMetricsBackendConfig"];
-                /** @description Name of the backend, can be then used in Mesh.metrics.enabledBackend */
-                name?: string;
-                /** @description Type of the backend (Kuma ships with 'prometheus') */
-                type?: string;
+            zone?: string;
+        };
+        ZoneIngressItem: {
+            /**
+             * @description AvailableService contains tags that represent unique subset of
+             *     endpoints
+             */
+            availableServices?: {
+                /** @description instance of external service available from the zone */
+                externalService?: boolean;
+                /** @description number of instances available for given tags */
+                instances?: number;
+                /** @description mesh of the instances available for given tags */
+                mesh?: string;
+                /** @description tags of the service */
+                tags?: {
+                    [key: string]: string;
+                };
+            }[];
+            labels?: {
+                [key: string]: string;
             };
             name: string;
             /**
-             * @description Networking describes inbound and outbound interfaces of the data plane
-             *     proxy.
+             * @description Networking defines the address and port of the Ingress to listen on.
+             *     Additionally publicly advertised address and port could be specified.
              */
             networking?: {
-                /**
-                 * @description IP on which the data plane proxy is accessible to the control plane and
-                 *     other data plane proxies in the same network. This can also be a
-                 *     hostname, in which case the control plane will periodically resolve it.
-                 */
+                /** @description Address on which inbound listener will be exposed */
                 address?: string;
-                /**
-                 * @description Admin describes configuration related to Envoy Admin API.
-                 *     Due to security, all the Envoy Admin endpoints are exposed only on
-                 *     localhost. Additionally, Envoy will expose `/ready` endpoint on
-                 *     `networking.address` for health checking systems to be able to check the
-                 *     state of Envoy. The rest of the endpoints exposed on `networking.address`
-                 *     are always protected by mTLS and only meant to be consumed internally by
-                 *     the control plane.
-                 */
+                /** @description Admin contains configuration related to Envoy Admin API */
                 admin?: {
                     /** @description Port on which Envoy Admin API server will be listening */
                     port?: number;
                 };
                 /**
-                 * @description In some situations, a data plane proxy resides in a private network (e.g.
-                 *     Docker) and is not reachable via `address` to other data plane proxies.
-                 *     `advertisedAddress` is configured with a routable address for such data
-                 *     plane proxy so that other proxies in the mesh can connect to it over
-                 *     `advertisedAddress` and not via address.
-                 *
-                 *     Envoy still binds to the `address`, not `advertisedAddress`.
+                 * @description AdvertisedAddress defines IP or DNS name on which ZoneIngress is
+                 *     accessible to other Kuma clusters.
                  */
                 advertisedAddress?: string;
-                /** @description Gateway describes a configuration of the gateway of the data plane proxy. */
-                gateway?: {
-                    /**
-                     * @description Tags associated with a gateway of this data plane to, e.g.
-                     *     `kuma.io/service=gateway`, `env=prod`. `kuma.io/service` tag is
-                     *     mandatory.
-                     */
-                    tags?: {
-                        [key: string]: string;
-                    };
-                    /**
-                     * @description Type of gateway this data plane proxy manages.
-                     *     There are two types: `DELEGATED` and `BUILTIN`. Defaults to
-                     *     `DELEGATED`.
-                     *
-                     *     A `DELEGATED` gateway is an independently deployed proxy (e.g., Kong,
-                     *     Contour, etc) that receives inbound traffic that is not proxied by
-                     *     Kuma, and it sends outbound traffic into the data plane proxy.
-                     *
-                     *     The `BUILTIN` gateway type causes the data plane proxy itself to be
-                     *     configured as a gateway.
-                     *
-                     *     See https://kuma.io/docs/latest/explore/gateway/ for more information.
-                     */
-                    type?: string | number;
-                };
                 /**
-                 * @description Inbound describes a list of inbound interfaces of the data plane proxy.
-                 *
-                 *     Inbound describes a service implemented by the data plane proxy.
-                 *     All incoming traffic to a data plane proxy is going through inbound
-                 *     listeners. For every defined Inbound there is a corresponding Envoy
-                 *     Listener.
+                 * @description AdvertisedPort defines port on which ZoneIngress is accessible to other
+                 *     Kuma clusters.
                  */
-                inbound?: {
-                    /**
-                     * @description Address on which inbound listener will be exposed.
-                     *     Defaults to `networking.address`.
-                     */
-                    address?: string;
-                    /**
-                     * @description Health describes the status of an inbound.
-                     *     If 'health' is nil we consider data plane proxy as healthy.
-                     *     Unhealthy data plane proxies are excluded from Endpoints Discovery
-                     *     Service (EDS). On Kubernetes, it is filled automatically by the control
-                     *     plane if Pod has readiness probe configured. On Universal, it can be
-                     *     set by the external health checking system, but the most common way is
-                     *     to use service probes.
-                     *
-                     *     See https://kuma.io/docs/latest/documentation/health for more
-                     *     information.
-                     */
-                    health?: {
-                        /**
-                         * @description Ready indicates if the data plane proxy is ready to serve the
-                         *     traffic.
-                         */
-                        ready?: boolean;
-                    };
-                    /** @description Name adds another way of referencing this port, usable with MeshService */
-                    name?: string;
-                    /**
-                     * @description Port of the inbound interface that will forward requests to the
-                     *     service.
-                     *
-                     *     When transparent proxying is used, it is a port on which the service is
-                     *     listening to. When transparent proxying is not used, Envoy will bind to
-                     *     this port.
-                     */
-                    port?: number;
-                    /**
-                     * @description Address of the service that requests will be forwarded to.
-                     *     Defaults to 'inbound.address', since Kuma DP should be deployed next
-                     *     to the service.
-                     */
-                    serviceAddress?: string;
-                    /**
-                     * @description Port of the service that requests will be forwarded to.
-                     *     Defaults to the same value as `port`.
-                     */
-                    servicePort?: number;
-                    /**
-                     * @description ServiceProbe defines parameters for probing the service next to
-                     *     sidecar. When service probe is defined, Envoy will periodically health
-                     *     check the application next to it and report the status to the control
-                     *     plane. On Kubernetes, Kuma deployments rely on Kubernetes probes so
-                     *     this is not used.
-                     *
-                     *     See https://kuma.io/docs/latest/documentation/health for more
-                     *     information.
-                     */
-                    serviceProbe?: {
-                        /**
-                         * Format: uint32
-                         * @description Number of consecutive healthy checks before considering a host
-                         *     healthy.
-                         */
-                        healthyThreshold?: number;
-                        /** @description Interval between consecutive health checks. */
-                        interval?: {
-                            nanos?: number;
-                            seconds?: number;
-                        };
-                        /** @description Tcp checker tries to establish tcp connection with destination */
-                        tcp?: Record<string, never>;
-                        /** @description Maximum time to wait for a health check response. */
-                        timeout?: {
-                            nanos?: number;
-                            seconds?: number;
-                        };
-                        /**
-                         * Format: uint32
-                         * @description Number of consecutive unhealthy checks before considering a host
-                         *     unhealthy.
-                         */
-                        unhealthyThreshold?: number;
-                    };
-                    /** @description State describes the current state of the listener. */
-                    state?: string | number;
-                    /**
-                     * @description Tags associated with an application this data plane proxy is deployed
-                     *     next to, e.g. `kuma.io/service=web`, `version=1.0`. You can then
-                     *     reference these tags in policies like MeshTrafficPermission.
-                     *     `kuma.io/service` tag is mandatory.
-                     */
-                    tags?: {
-                        [key: string]: string;
-                    };
-                }[];
-                /**
-                 * @description Outbound describes a list of services consumed by the data plane proxy.
-                 *     For every defined Outbound, there is a corresponding Envoy Listener.
-                 */
-                outbound?: {
-                    /**
-                     * @description IP on which the consumed service will be available to this data plane
-                     *     proxy. On Kubernetes, it's usually ClusterIP of a Service or PodIP of a
-                     *     Headless Service. Defaults to 127.0.0.1
-                     */
-                    address?: string;
-                    /**
-                     * @description BackendRef is a way to target MeshService.
-                     *     Experimental. Do not use on production yet.
-                     */
-                    backendRef?: {
-                        /** @description Kind is a type of the object to target. Allowed: MeshService */
-                        kind?: string;
-                        /**
-                         * @description Labels to select a single object.
-                         *     If no object is selected then outbound is not created.
-                         *     If multiple objects are selected then the oldest one is used.
-                         */
-                        labels?: {
-                            [key: string]: string;
-                        };
-                        /** @description Name of the targeted object */
-                        name?: string;
-                        /** @description Port of the targeted object. Required when kind is MeshService. */
-                        port?: number;
-                    };
-                    /**
-                     * @description Port on which the consumed service will be available to this data plane
-                     *     proxy. When transparent proxying is not used, Envoy will bind to this
-                     *     port.
-                     */
-                    port?: number;
-                    /**
-                     * @description Tags of consumed data plane proxies.
-                     *     `kuma.io/service` tag is required.
-                     *     These tags can then be referenced in `destinations` section of policies
-                     *     like TrafficRoute or in `to` section in policies like MeshAccessLog. It
-                     *     is recommended to only use `kuma.io/service`. If you need to consume
-                     *     specific data plane proxy of a service (for example: `version=v2`) the
-                     *     better practice is to use TrafficRoute.
-                     */
-                    tags?: {
-                        [key: string]: string;
-                    };
-                }[];
-                /**
-                 * @description TransparentProxying describes the configuration for transparent proxying.
-                 *     It is used by default on Kubernetes.
-                 */
-                transparentProxying?: {
-                    /**
-                     * @description List of services that will be accessed directly via IP:PORT
-                     *     Use `*` to indicate direct access to every service in the Mesh.
-                     *     Using `*` to directly access every service is a resource-intensive
-                     *     operation, use it only if needed.
-                     */
-                    directAccessServices?: string[];
-                    /** @description The IP family mode to enable for. Can be "IPv4" or "DualStack". */
-                    ipFamilyMode?: string | number;
-                    /**
-                     * @description Reachable backend via transparent proxy when running with
-                     *     MeshExternalService, MeshService and MeshMultiZoneService. Setting an
-                     *     explicit list of refs can dramatically improve the performance of the
-                     *     mesh. If not specified, all services in the mesh are reachable.
-                     */
-                    reachableBackends?: {
-                        refs?: {
-                            /**
-                             * @description Type of the backend: MeshService or MeshExternalService
-                             *
-                             *     	+required
-                             */
-                            kind?: string;
-                            /**
-                             * @description Labels used to select backends
-                             *
-                             *     	+optional
-                             */
-                            labels?: {
-                                [key: string]: string;
-                            };
-                            /**
-                             * @description Name of the backend.
-                             *
-                             *     	+optional
-                             */
-                            name?: string;
-                            /**
-                             * @description Namespace of the backend. Might be empty
-                             *
-                             *     	+optional
-                             */
-                            namespace?: string;
-                            /**
-                             * Format: uint32
-                             * @description Port of the backend.
-                             *
-                             *     	+optional
-                             */
-                            port?: number;
-                        }[];
-                    };
-                    /**
-                     * @description List of reachable services (represented by the value of
-                     *     `kuma.io/service`) via transparent proxying. Setting an explicit list
-                     *     can dramatically improve the performance of the mesh. If not specified,
-                     *     all services in the mesh are reachable.
-                     */
-                    reachableServices?: string[];
-                    /** @description Port on which all inbound traffic is being transparently redirected. */
-                    redirectPortInbound?: number;
-                    /** @description Port on which all outbound traffic is being transparently redirected. */
-                    redirectPortOutbound?: number;
-                };
-            };
-            /**
-             * @description Probes describe a list of endpoints that will be exposed without mTLS.
-             *     This is useful to expose the health endpoints of the application so the
-             *     orchestration system (e.g. Kubernetes) can still health check the
-             *     application.
-             *
-             *     See
-             *     https://kuma.io/docs/latest/policies/service-health-probes/#virtual-probes
-             *     for more information.
-             *     Deprecated: this feature will be removed for Universal; on Kubernetes, it's
-             *     not needed anymore.
-             */
-            probes?: {
-                /** @description List of endpoints to expose without mTLS. */
-                endpoints?: {
-                    /**
-                     * @description Inbound path is a path of the application from which we expose the
-                     *     endpoint. It is recommended to be as specific as possible.
-                     */
-                    inboundPath?: string;
-                    /**
-                     * @description Inbound port is a port of the application from which we expose the
-                     *     endpoint.
-                     */
-                    inboundPort?: number;
-                    /** @description Path is a path on which we expose inbound path on the probes port. */
-                    path?: string;
-                }[];
-                /**
-                 * @description Port on which the probe endpoints will be exposed. This cannot overlap
-                 *     with any other ports.
-                 */
+                advertisedPort?: number;
+                /** @description Port of the inbound interface that will forward requests to the service. */
                 port?: number;
             };
             type: string;
+            /**
+             * @description Zone field contains Zone name where ingress is serving, field will be
+             *     automatically set by Global Kuma CP
+             */
+            zone?: string;
         };
         /** @description DataplaneOverview defines the projected state of a Dataplane. */
         DataplaneOverview: {
@@ -8096,384 +8838,6 @@ export interface components {
             };
         };
         DataplaneOverviewWithMeta: components["schemas"]["Meta"] & components["schemas"]["DataplaneOverview"];
-        /** @description FileLoggingBackendConfig defines configuration for file based access logs */
-        FileLoggingBackendConfig: {
-            /** @description Path to a file that logs will be written to */
-            path?: string;
-        };
-        /** @description TcpLoggingBackendConfig defines configuration for TCP based access logs */
-        TcpLoggingBackendConfig: {
-            /** @description Address to TCP service that will receive logs */
-            address?: string;
-        };
-        DataSource_File: {
-            /**
-             * @description Data source is a path to a file.
-             *     Deprecated, use other sources of a data.
-             */
-            file?: string;
-        };
-        DataSource_Inline: {
-            /**
-             * Format: byte
-             * @description Data source is inline bytes.
-             */
-            inline?: string;
-        };
-        DataSource_InlineString: {
-            /** @description Data source is inline string */
-            inlineString?: string;
-        };
-        DataSource_Secret: {
-            /** @description Data source is a secret with given Secret key. */
-            secret?: string;
-        };
-        ProvidedCertificateAuthorityConfig: {
-            cert?: components["schemas"]["DataSource_File"] | components["schemas"]["DataSource_Inline"] | components["schemas"]["DataSource_InlineString"] | components["schemas"]["DataSource_Secret"];
-            key?: components["schemas"]["DataSource_File"] | components["schemas"]["DataSource_Inline"] | components["schemas"]["DataSource_InlineString"] | components["schemas"]["DataSource_Secret"];
-        };
-        BuiltinCertificateAuthorityConfig: {
-            caCert?: {
-                expiration?: string;
-                /** Format: uint32 */
-                rsaBits?: number;
-            };
-        };
-        DatadogTracingBackendConfig: {
-            /** @description Address of datadog collector. */
-            address?: string;
-            /** @description Port of datadog collector */
-            port?: number;
-            /**
-             * @description Determines if datadog service name should be split based on traffic
-             *     direction and destination. For example, with `splitService: true` and a
-             *     `backend` service that communicates with a couple of databases, you would
-             *     get service names like `backend_INBOUND`, `backend_OUTBOUND_db1`, and
-             *     `backend_OUTBOUND_db2` in Datadog. Default: false
-             */
-            splitService?: boolean;
-        };
-        ZipkinTracingBackendConfig: {
-            /**
-             * @description Version of the API. values: httpJson, httpJsonV1, httpProto. Default:
-             *     httpJson see
-             *     https://www.envoyproxy.io/docs/envoy/latest/api-v3/config/trace/v3/trace.proto#envoy-v3-api-enum-config-trace-v3-zipkinconfig-collectorendpointversion
-             */
-            apiVersion?: string;
-            /**
-             * @description Determines whether client and server spans will share the same span
-             *     context. Default: true.
-             *     https://www.envoyproxy.io/docs/envoy/latest/api-v3/config/trace/v3/zipkin.proto#config-trace-v3-zipkinconfig
-             */
-            sharedSpanContext?: boolean;
-            /** @description Generate 128bit traces. Default: false */
-            traceId128bit?: boolean;
-            /** @description Address of Zipkin collector. */
-            url?: string;
-        };
-        /** @description Successful response */
-        MeshItem: {
-            /** @description Constraints that applies to the mesh and its entities */
-            constraints?: {
-                /**
-                 * @description DataplaneProxyMembership defines a set of requirements for data plane
-                 *     proxies to be a member of the mesh.
-                 */
-                dataplaneProxy?: {
-                    /**
-                     * @description Requirements defines a set of requirements that data plane proxies must
-                     *     fulfill in order to join the mesh. A data plane proxy must fulfill at
-                     *     least one requirement in order to join the mesh. Empty list of allowed
-                     *     requirements means that any proxy that is not explicitly denied can join.
-                     */
-                    requirements?: {
-                        /**
-                         * @description Tags defines set of required tags. You can specify '*' in value to
-                         *     require non empty value of tag
-                         */
-                        tags?: {
-                            [key: string]: string;
-                        };
-                    }[];
-                    /**
-                     * @description Restrictions defines a set of restrictions that data plane proxies cannot
-                     *     fulfill in order to join the mesh. A data plane proxy cannot fulfill any
-                     *     requirement in order to join the mesh.
-                     *     Restrictions takes precedence over requirements.
-                     */
-                    restrictions?: {
-                        /**
-                         * @description Tags defines set of required tags. You can specify '*' in value to
-                         *     require non empty value of tag
-                         */
-                        tags?: {
-                            [key: string]: string;
-                        };
-                    }[];
-                };
-            };
-            labels?: {
-                [key: string]: string;
-            };
-            /**
-             * @description Logging settings.
-             *     +optional
-             */
-            logging?: {
-                /** @description List of available logging backends */
-                backends?: {
-                    conf?: components["schemas"]["FileLoggingBackendConfig"] | components["schemas"]["TcpLoggingBackendConfig"];
-                    /**
-                     * @description Format of access logs. Placeholders available on
-                     *     https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log
-                     */
-                    format?: string;
-                    /**
-                     * @description Name of the backend, can be then used in Mesh.logging.defaultBackend or in
-                     *     TrafficLogging
-                     */
-                    name?: string;
-                    /** @description Type of the backend (Kuma ships with 'tcp' and 'file') */
-                    type?: string;
-                }[];
-                /** @description Name of the default backend */
-                defaultBackend?: string;
-            };
-            meshServices?: {
-                /** @enum {string} */
-                mode?: "Disabled" | "Everywhere" | "ReachableBackends" | "Exclusive";
-            };
-            /**
-             * @description Configuration for metrics collected and exposed by dataplanes.
-             *
-             *     Settings defined here become defaults for every dataplane in a given Mesh.
-             *     Additionally, it is also possible to further customize this configuration
-             *     for each dataplane individually using Dataplane resource.
-             *     +optional
-             */
-            metrics?: {
-                /** @description List of available Metrics backends */
-                backends?: {
-                    conf?: components["schemas"]["PrometheusMetricsBackendConfig"];
-                    /** @description Name of the backend, can be then used in Mesh.metrics.enabledBackend */
-                    name?: string;
-                    /** @description Type of the backend (Kuma ships with 'prometheus') */
-                    type?: string;
-                }[];
-                /** @description Name of the enabled backend */
-                enabledBackend?: string;
-            };
-            /**
-             * @description mTLS settings.
-             *     +optional
-             */
-            mtls?: {
-                /** @description List of available Certificate Authority backends */
-                backends?: {
-                    conf?: components["schemas"]["ProvidedCertificateAuthorityConfig"] | components["schemas"]["BuiltinCertificateAuthorityConfig"];
-                    /** @description Dataplane certificate settings */
-                    dpCert?: {
-                        /** @description Timeout on request to CA for DP certificate generation and retrieval */
-                        requestTimeout?: {
-                            nanos?: number;
-                            seconds?: number;
-                        };
-                        /** @description Rotation settings */
-                        rotation?: {
-                            /** @description Time after which generated certificate for Dataplane will expire */
-                            expiration?: string;
-                        };
-                    };
-                    /**
-                     * @description Mode defines the behaviour of inbound listeners with regard to traffic
-                     *     encryption
-                     */
-                    mode?: string | number;
-                    /** @description Name of the backend */
-                    name?: string;
-                    rootChain?: {
-                        /**
-                         * @description Timeout on request for to CA for root certificate chain.
-                         *     If not specified, defaults to 10s.
-                         */
-                        requestTimeout?: {
-                            nanos?: number;
-                            seconds?: number;
-                        };
-                    };
-                    /**
-                     * @description Type of the backend. Has to be one of the loaded plugins (Kuma ships with
-                     *     builtin and provided)
-                     */
-                    type?: string;
-                }[];
-                /** @description Name of the enabled backend */
-                enabledBackend?: string;
-                /** @description If enabled, skips CA validation. */
-                skipValidation?: boolean;
-            };
-            name: string;
-            /** @description Networking settings of the mesh */
-            networking?: {
-                /** @description Outbound settings */
-                outbound?: {
-                    /** @description Control the passthrough cluster */
-                    passthrough?: boolean;
-                };
-            };
-            /** @description Routing settings of the mesh */
-            routing?: {
-                /**
-                 * @description If true, blocks traffic to MeshExternalServices.
-                 *     Default: false
-                 */
-                defaultForbidMeshExternalServiceAccess?: boolean;
-                /** @description Enable the Locality Aware Load Balancing */
-                localityAwareLoadBalancing?: boolean;
-                /**
-                 * @description Enable routing traffic to services in other zone or external services
-                 *     through ZoneEgress. Default: false
-                 */
-                zoneEgress?: boolean;
-            };
-            /**
-             * @description List of policies to skip creating by default when the mesh is created.
-             *     e.g. TrafficPermission, MeshRetry, etc. An '*' can be used to skip all
-             *     policies.
-             */
-            skipCreatingInitialPolicies?: string[];
-            /**
-             * @description Tracing settings.
-             *     +optional
-             */
-            tracing?: {
-                /** @description List of available tracing backends */
-                backends?: {
-                    conf?: components["schemas"]["DatadogTracingBackendConfig"] | components["schemas"]["ZipkinTracingBackendConfig"];
-                    /**
-                     * @description Name of the backend, can be then used in Mesh.tracing.defaultBackend or in
-                     *     TrafficTrace
-                     */
-                    name?: string;
-                    /**
-                     * @description Percentage of traces that will be sent to the backend (range 0.0 - 100.0).
-                     *     Empty value defaults to 100.0%
-                     */
-                    sampling?: number;
-                    /** @description Type of the backend (Kuma ships with 'zipkin') */
-                    type?: string;
-                }[];
-                /** @description Name of the default backend */
-                defaultBackend?: string;
-            };
-            type: string;
-            creationTime?: string;
-            modificationTime?: string;
-        };
-        /** @description Successful response */
-        MeshGatewayItem: {
-            /** @description The desired configuration of the MeshGateway. */
-            conf?: {
-                /**
-                 * @description Listeners define logical endpoints that are bound on this MeshGateway's
-                 *     address(es).
-                 */
-                listeners?: {
-                    /**
-                     * @description CrossMesh enables traffic to flow to this listener only from other
-                     *     meshes.
-                     */
-                    crossMesh?: boolean;
-                    /**
-                     * @description Hostname specifies the virtual hostname to match for protocol types that
-                     *     define this concept. When unspecified, "", or `*`, all hostnames are
-                     *     matched. This field can be omitted for protocols that don't require
-                     *     hostname based matching.
-                     */
-                    hostname?: string;
-                    /**
-                     * @description Port is the network port. Multiple listeners may use the
-                     *     same port, subject to the Listener compatibility rules.
-                     */
-                    port?: number;
-                    /** @description Protocol specifies the network protocol this listener expects to receive. */
-                    protocol?: string | number;
-                    /** @description Resources is used to specify listener-specific resource settings. */
-                    resources?: {
-                        connectionLimit?: number;
-                    };
-                    /**
-                     * @description Tags specifies a unique combination of tags that routes can use
-                     *     to match themselves to this listener.
-                     *
-                     *     When matching routes to listeners, the control plane constructs a
-                     *     set of matching tags for each listener by forming the union of the
-                     *     gateway tags and the listener tags. A route will be attached to the
-                     *     listener if all of the route's tags are preset in the matching tags
-                     */
-                    tags?: {
-                        [key: string]: string;
-                    };
-                    /**
-                     * @description TLS is the TLS configuration for the Listener. This field
-                     *     is required if the Protocol field is "HTTPS" or "TLS" and
-                     *     ignored otherwise.
-                     */
-                    tls?: {
-                        /**
-                         * @description Certificates is an array of datasources that contain TLS
-                         *     certificates and private keys.  Each datasource must contain a
-                         *     sequence of PEM-encoded objects. The server certificate and private
-                         *     key are required, but additional certificates are allowed and will
-                         *     be added to the certificate chain.  The server certificate must
-                         *     be the first certificate in the datasource.
-                         *
-                         *     When multiple certificate datasources are configured, they must have
-                         *     different key types. In practice, this means that one datasource
-                         *     should contain an RSA key and certificate, and the other an
-                         *     ECDSA key and certificate.
-                         */
-                        certificates?: (components["schemas"]["DataSource_File"] | components["schemas"]["DataSource_Inline"] | components["schemas"]["DataSource_InlineString"] | components["schemas"]["DataSource_Secret"])[];
-                        /**
-                         * @description Mode defines the TLS behavior for the TLS session initiated
-                         *     by the client.
-                         */
-                        mode?: string | number;
-                        /**
-                         * @description Options should eventually configure how TLS is configured. This
-                         *     is where cipher suite and version configuration can be specified,
-                         *     client certificates enforced, and so on.
-                         */
-                        options?: Record<string, never>;
-                    };
-                }[];
-            };
-            labels?: {
-                [key: string]: string;
-            };
-            mesh: string;
-            name: string;
-            /**
-             * @description Selectors is a list of selectors that are used to match builtin
-             *     gateway dataplanes that will receive this MeshGateway configuration.
-             */
-            selectors?: {
-                /** @description Tags to match, can be used for both source and destinations */
-                match?: {
-                    [key: string]: string;
-                };
-            }[];
-            /**
-             * @description Tags is the set of tags common to all of the gateway's listeners.
-             *
-             *     This field must not include a `kuma.io/service` tag (the service is always
-             *     defined on the dataplanes).
-             */
-            tags?: {
-                [key: string]: string;
-            };
-            type: string;
-        };
         SecretItem: {
             /**
              * Format: byte
@@ -8486,85 +8850,6 @@ export interface components {
             mesh: string;
             name: string;
             type: string;
-        };
-        /** @description Successful response */
-        ZoneEgressItem: {
-            labels?: {
-                [key: string]: string;
-            };
-            name: string;
-            /** @description Networking defines the address and port of the Egress to listen on. */
-            networking?: {
-                /** @description Address on which inbound listener will be exposed */
-                address?: string;
-                /** @description Admin contains configuration related to Envoy Admin API */
-                admin?: {
-                    /** @description Port on which Envoy Admin API server will be listening */
-                    port?: number;
-                };
-                /** @description Port of the inbound interface that will forward requests to the service. */
-                port?: number;
-            };
-            type: string;
-            /**
-             * @description Zone field contains Zone name where egress is serving, field will be
-             *     automatically set by Global Kuma CP
-             */
-            zone?: string;
-        };
-        /** @description Successful response */
-        ZoneIngressItem: {
-            /**
-             * @description AvailableService contains tags that represent unique subset of
-             *     endpoints
-             */
-            availableServices?: {
-                /** @description instance of external service available from the zone */
-                externalService?: boolean;
-                /** @description number of instances available for given tags */
-                instances?: number;
-                /** @description mesh of the instances available for given tags */
-                mesh?: string;
-                /** @description tags of the service */
-                tags?: {
-                    [key: string]: string;
-                };
-            }[];
-            labels?: {
-                [key: string]: string;
-            };
-            name: string;
-            /**
-             * @description Networking defines the address and port of the Ingress to listen on.
-             *     Additionally publicly advertised address and port could be specified.
-             */
-            networking?: {
-                /** @description Address on which inbound listener will be exposed */
-                address?: string;
-                /** @description Admin contains configuration related to Envoy Admin API */
-                admin?: {
-                    /** @description Port on which Envoy Admin API server will be listening */
-                    port?: number;
-                };
-                /**
-                 * @description AdvertisedAddress defines IP or DNS name on which ZoneIngress is
-                 *     accessible to other Kuma clusters.
-                 */
-                advertisedAddress?: string;
-                /**
-                 * @description AdvertisedPort defines port on which ZoneIngress is accessible to other
-                 *     Kuma clusters.
-                 */
-                advertisedPort?: number;
-                /** @description Port of the inbound interface that will forward requests to the service. */
-                port?: number;
-            };
-            type: string;
-            /**
-             * @description Zone field contains Zone name where ingress is serving, field will be
-             *     automatically set by Global Kuma CP
-             */
-            zone?: string;
         };
         HostnameGeneratorItem: {
             /**
@@ -9404,26 +9689,6 @@ export interface components {
         MeshInsightCollection: components["schemas"]["PagedCollection"] & {
             items?: components["schemas"]["MeshInsight"][];
         };
-        DataSource: {
-            /**
-             * @description Types that are valid to be assigned to Type:
-             *
-             *     	*DataSource_Secret
-             *     	*DataSource_File
-             *     	*DataSource_Inline
-             *     	*DataSource_InlineString
-             */
-            Type?: unknown;
-        };
-        /** @description Zone defines the Zone configuration used at the Global Control Plane within a distributed deployment */
-        Zone: {
-            /**
-             * @description enable allows to turn the zone on/off and exclude the whole zone from
-             *     balancing traffic on it
-             */
-            enabled?: boolean;
-        };
-        /** @description Successful response */
         TargetRefPolicy: {
             /** @description the type of the resource */
             type: string;
@@ -9460,7 +9725,6 @@ export interface components {
                 targetRef?: components["schemas"]["MeshAccessLogItem"]["spec"]["targetRef"];
             };
         };
-        /** @description Successful response */
         LegacyPolicy: {
             /** @description the type of the resource */
             type: string;
@@ -9496,7 +9760,6 @@ export interface components {
         PolicyCollection: components["schemas"]["PagedCollection"] & {
             items?: components["schemas"]["Policy"][];
         };
-        /** @description Successful response */
         TargetRefPolicy_Put_RequestBody: {
             /** @description the type of the resource */
             readonly type: string;
@@ -9532,7 +9795,6 @@ export interface components {
             };
             additionalProperties?: never;
         };
-        /** @description Successful response */
         MeshAccessLogItem_Put_RequestBody: {
             /**
              * @description the type of the resource
@@ -9868,7 +10130,6 @@ export interface components {
             };
             additionalProperties?: never;
         };
-        /** @description Successful response */
         MeshCircuitBreakerItem_Put_RequestBody: {
             /**
              * @description the type of the resource
@@ -10749,7 +11010,6 @@ export interface components {
             };
             additionalProperties?: never;
         };
-        /** @description Successful response */
         MeshFaultInjectionItem_Put_RequestBody: {
             /**
              * @description the type of the resource
@@ -11071,7 +11331,6 @@ export interface components {
             };
             additionalProperties?: never;
         };
-        /** @description Successful response */
         MeshHTTPRouteItem_Put_RequestBody: {
             /**
              * @description the type of the resource
@@ -11441,7 +11700,6 @@ export interface components {
             };
             additionalProperties?: never;
         };
-        /** @description Successful response */
         MeshHealthCheckItem_Put_RequestBody: {
             /**
              * @description the type of the resource
@@ -11702,7 +11960,6 @@ export interface components {
             };
             additionalProperties?: never;
         };
-        /** @description Successful response */
         MeshLoadBalancingStrategyItem_Put_RequestBody: {
             /**
              * @description the type of the resource
@@ -12108,7 +12365,6 @@ export interface components {
             };
             additionalProperties?: never;
         };
-        /** @description Successful response */
         MeshMetricItem_Put_RequestBody: {
             /**
              * @description the type of the resource
@@ -12290,7 +12546,6 @@ export interface components {
             };
             additionalProperties?: never;
         };
-        /** @description Successful response */
         MeshPassthroughItem_Put_RequestBody: {
             /**
              * @description the type of the resource
@@ -12396,7 +12651,6 @@ export interface components {
             };
             additionalProperties?: never;
         };
-        /** @description Successful response */
         MeshProxyPatchItem_Put_RequestBody: {
             /**
              * @description the type of the resource
@@ -12764,7 +13018,6 @@ export interface components {
             };
             additionalProperties?: never;
         };
-        /** @description Successful response */
         MeshRateLimitItem_Put_RequestBody: {
             /**
              * @description the type of the resource
@@ -13127,7 +13380,6 @@ export interface components {
             };
             additionalProperties?: never;
         };
-        /** @description Successful response */
         MeshRetryItem_Put_RequestBody: {
             /**
              * @description the type of the resource
@@ -13483,7 +13735,6 @@ export interface components {
             };
             additionalProperties?: never;
         };
-        /** @description Successful response */
         MeshTCPRouteItem_Put_RequestBody: {
             /**
              * @description the type of the resource
@@ -13659,7 +13910,6 @@ export interface components {
             };
             additionalProperties?: never;
         };
-        /** @description Successful response */
         MeshTimeoutItem_Put_RequestBody: {
             /**
              * @description the type of the resource
@@ -13965,7 +14215,6 @@ export interface components {
             };
             additionalProperties?: never;
         };
-        /** @description Successful response */
         MeshTLSItem_Put_RequestBody: {
             /**
              * @description the type of the resource
@@ -14138,7 +14387,6 @@ export interface components {
             };
             additionalProperties?: never;
         };
-        /** @description Successful response */
         MeshTraceItem_Put_RequestBody: {
             /**
              * @description the type of the resource
@@ -14334,7 +14582,6 @@ export interface components {
             };
             additionalProperties?: never;
         };
-        /** @description Successful response */
         MeshTrafficPermissionItem_Put_RequestBody: {
             /**
              * @description the type of the resource
@@ -15420,6 +15667,30 @@ export interface components {
                 };
             };
         };
+        /** @description List */
+        DataplaneList: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    items?: components["schemas"]["DataplaneItem"][];
+                    /** @description URL to the next page */
+                    next?: string;
+                    /** @description The total number of entities */
+                    total?: number;
+                };
+            };
+        };
+        /** @description Successful response */
+        DataplaneDeleteSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": Record<string, never>;
+            };
+        };
         /** @description Successful response */
         DataplaneItem: {
             headers: {
@@ -15441,30 +15712,6 @@ export interface components {
                      *     Warning messages describe a problem the client making the API request should correct or be aware of.
                      */
                     readonly warnings?: string[];
-                };
-            };
-        };
-        /** @description Successful response */
-        DataplaneDeleteSuccessResponse: {
-            headers: {
-                [name: string]: unknown;
-            };
-            content: {
-                "application/json": Record<string, never>;
-            };
-        };
-        /** @description List */
-        DataplaneList: {
-            headers: {
-                [name: string]: unknown;
-            };
-            content: {
-                "application/json": {
-                    items?: components["schemas"]["DataplaneItem"][];
-                    /** @description The total number of entities */
-                    total?: number;
-                    /** @description URL to the next page */
-                    next?: string;
                 };
             };
         };
@@ -15491,6 +15738,30 @@ export interface components {
                 };
             };
         };
+        /** @description List */
+        MeshList: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    items?: components["schemas"]["MeshItem"][];
+                    /** @description URL to the next page */
+                    next?: string;
+                    /** @description The total number of entities */
+                    total?: number;
+                };
+            };
+        };
+        /** @description Successful response */
+        MeshDeleteSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": Record<string, never>;
+            };
+        };
         /** @description Successful response */
         MeshItem: {
             headers: {
@@ -15515,28 +15786,28 @@ export interface components {
                 };
             };
         };
-        /** @description Successful response */
-        MeshDeleteSuccessResponse: {
-            headers: {
-                [name: string]: unknown;
-            };
-            content: {
-                "application/json": Record<string, never>;
-            };
-        };
         /** @description List */
-        MeshList: {
+        MeshGatewayList: {
             headers: {
                 [name: string]: unknown;
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["MeshItem"][];
-                    /** @description The total number of entities */
-                    total?: number;
+                    items?: components["schemas"]["MeshGatewayItem"][];
                     /** @description URL to the next page */
                     next?: string;
+                    /** @description The total number of entities */
+                    total?: number;
                 };
+            };
+        };
+        /** @description Successful response */
+        MeshGatewayDeleteSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": Record<string, never>;
             };
         };
         /** @description Successful response */
@@ -15563,28 +15834,28 @@ export interface components {
                 };
             };
         };
-        /** @description Successful response */
-        MeshGatewayDeleteSuccessResponse: {
-            headers: {
-                [name: string]: unknown;
-            };
-            content: {
-                "application/json": Record<string, never>;
-            };
-        };
         /** @description List */
-        MeshGatewayList: {
+        SecretList: {
             headers: {
                 [name: string]: unknown;
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["MeshGatewayItem"][];
-                    /** @description The total number of entities */
-                    total?: number;
+                    items?: components["schemas"]["SecretItem"][];
                     /** @description URL to the next page */
                     next?: string;
+                    /** @description The total number of entities */
+                    total?: number;
                 };
+            };
+        };
+        /** @description Successful response */
+        SecretDeleteSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": Record<string, never>;
             };
         };
         /** @description Successful response */
@@ -15611,28 +15882,28 @@ export interface components {
                 };
             };
         };
-        /** @description Successful response */
-        SecretDeleteSuccessResponse: {
-            headers: {
-                [name: string]: unknown;
-            };
-            content: {
-                "application/json": Record<string, never>;
-            };
-        };
         /** @description List */
-        SecretList: {
+        ZoneEgressList: {
             headers: {
                 [name: string]: unknown;
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["SecretItem"][];
-                    /** @description The total number of entities */
-                    total?: number;
+                    items?: components["schemas"]["ZoneEgressItem"][];
                     /** @description URL to the next page */
                     next?: string;
+                    /** @description The total number of entities */
+                    total?: number;
                 };
+            };
+        };
+        /** @description Successful response */
+        ZoneEgressDeleteSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": Record<string, never>;
             };
         };
         /** @description Successful response */
@@ -15659,28 +15930,28 @@ export interface components {
                 };
             };
         };
-        /** @description Successful response */
-        ZoneEgressDeleteSuccessResponse: {
-            headers: {
-                [name: string]: unknown;
-            };
-            content: {
-                "application/json": Record<string, never>;
-            };
-        };
         /** @description List */
-        ZoneEgressList: {
+        ZoneIngressList: {
             headers: {
                 [name: string]: unknown;
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["ZoneEgressItem"][];
-                    /** @description The total number of entities */
-                    total?: number;
+                    items?: components["schemas"]["ZoneIngressItem"][];
                     /** @description URL to the next page */
                     next?: string;
+                    /** @description The total number of entities */
+                    total?: number;
                 };
+            };
+        };
+        /** @description Successful response */
+        ZoneIngressDeleteSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": Record<string, never>;
             };
         };
         /** @description Successful response */
@@ -15704,30 +15975,6 @@ export interface components {
                      *     Warning messages describe a problem the client making the API request should correct or be aware of.
                      */
                     readonly warnings?: string[];
-                };
-            };
-        };
-        /** @description Successful response */
-        ZoneIngressDeleteSuccessResponse: {
-            headers: {
-                [name: string]: unknown;
-            };
-            content: {
-                "application/json": Record<string, never>;
-            };
-        };
-        /** @description List */
-        ZoneIngressList: {
-            headers: {
-                [name: string]: unknown;
-            };
-            content: {
-                "application/json": {
-                    items?: components["schemas"]["ZoneIngressItem"][];
-                    /** @description The total number of entities */
-                    total?: number;
-                    /** @description URL to the next page */
-                    next?: string;
                 };
             };
         };
@@ -16373,6 +16620,31 @@ export interface operations {
             400: components["responses"]["BadRequest"];
             404: components["responses"]["NotFound"];
             500: components["responses"]["Internal"];
+        };
+    };
+    getByKri: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description KRI of the resource */
+                kri: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The resource */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DataplaneItem"] | components["schemas"]["MeshItem"] | components["schemas"]["MeshAccessLogItem"] | components["schemas"]["MeshCircuitBreakerItem"] | components["schemas"]["MeshFaultInjectionItem"] | components["schemas"]["MeshGatewayItem"] | components["schemas"]["MeshHTTPRouteItem"] | components["schemas"]["MeshHealthCheckItem"] | components["schemas"]["MeshLoadBalancingStrategyItem"] | components["schemas"]["MeshMetricItem"] | components["schemas"]["MeshPassthroughItem"] | components["schemas"]["MeshProxyPatchItem"] | components["schemas"]["MeshRateLimitItem"] | components["schemas"]["MeshRetryItem"] | components["schemas"]["MeshTCPRouteItem"] | components["schemas"]["MeshTLSItem"] | components["schemas"]["MeshTimeoutItem"] | components["schemas"]["MeshTraceItem"] | components["schemas"]["MeshTrafficPermissionItem"] | components["schemas"]["ZoneEgressItem"] | components["schemas"]["ZoneIngressItem"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            404: components["responses"]["NotFound"];
         };
     };
     getMeshAccessLog: {
@@ -17847,6 +18119,39 @@ export interface operations {
             200: components["responses"]["MeshTrafficPermissionList"];
         };
     };
+    getDataplaneList: {
+        parameters: {
+            query?: {
+                /**
+                 * @description offset in the list of entities
+                 * @example 0
+                 */
+                offset?: number;
+                /** @description the number of items per page */
+                size?: number;
+                /**
+                 * @description filter by labels when multiple filters are present, they are ANDed
+                 * @example {
+                 *       "label.k8s.kuma.io/namespace": "my-ns"
+                 *     }
+                 */
+                filter?: {
+                    key?: string;
+                    value?: string;
+                };
+            };
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["DataplaneList"];
+        };
+    };
     getDataplane: {
         parameters: {
             query?: never;
@@ -17906,39 +18211,6 @@ export interface operations {
             404: components["responses"]["NotFound"];
         };
     };
-    getDataplaneList: {
-        parameters: {
-            query?: {
-                /**
-                 * @description offset in the list of entities
-                 * @example 0
-                 */
-                offset?: number;
-                /** @description the number of items per page */
-                size?: number;
-                /**
-                 * @description filter by labels when multiple filters are present, they are ANDed
-                 * @example {
-                 *       "label.k8s.kuma.io/namespace": "my-ns"
-                 *     }
-                 */
-                filter?: {
-                    key?: string;
-                    value?: string;
-                };
-            };
-            header?: never;
-            path: {
-                /** @description name of the mesh */
-                mesh: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: components["responses"]["DataplaneList"];
-        };
-    };
     getDataplaneOverview: {
         parameters: {
             query?: never;
@@ -17973,6 +18245,36 @@ export interface operations {
             200: components["responses"]["GetDataplaneOverviewListResponse"];
             400: components["responses"]["BadRequest"];
             500: components["responses"]["Internal"];
+        };
+    };
+    getMeshList: {
+        parameters: {
+            query?: {
+                /**
+                 * @description offset in the list of entities
+                 * @example 0
+                 */
+                offset?: number;
+                /** @description the number of items per page */
+                size?: number;
+                /**
+                 * @description filter by labels when multiple filters are present, they are ANDed
+                 * @example {
+                 *       "label.k8s.kuma.io/namespace": "my-ns"
+                 *     }
+                 */
+                filter?: {
+                    key?: string;
+                    value?: string;
+                };
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["MeshList"];
         };
     };
     getMesh: {
@@ -18028,7 +18330,7 @@ export interface operations {
             404: components["responses"]["NotFound"];
         };
     };
-    getMeshList: {
+    getMeshGatewayList: {
         parameters: {
             query?: {
                 /**
@@ -18050,12 +18352,15 @@ export interface operations {
                 };
             };
             header?: never;
-            path?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+            };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            200: components["responses"]["MeshList"];
+            200: components["responses"]["MeshGatewayList"];
         };
     };
     getMeshGateway: {
@@ -18117,7 +18422,7 @@ export interface operations {
             404: components["responses"]["NotFound"];
         };
     };
-    getMeshGatewayList: {
+    getSecretList: {
         parameters: {
             query?: {
                 /**
@@ -18147,7 +18452,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            200: components["responses"]["MeshGatewayList"];
+            200: components["responses"]["SecretList"];
         };
     };
     getSecret: {
@@ -18209,7 +18514,7 @@ export interface operations {
             404: components["responses"]["NotFound"];
         };
     };
-    getSecretList: {
+    getZoneEgressList: {
         parameters: {
             query?: {
                 /**
@@ -18231,15 +18536,12 @@ export interface operations {
                 };
             };
             header?: never;
-            path: {
-                /** @description name of the mesh */
-                mesh: string;
-            };
+            path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            200: components["responses"]["SecretList"];
+            200: components["responses"]["ZoneEgressList"];
         };
     };
     getZoneEgress: {
@@ -18295,7 +18597,7 @@ export interface operations {
             404: components["responses"]["NotFound"];
         };
     };
-    getZoneEgressList: {
+    getZoneIngressList: {
         parameters: {
             query?: {
                 /**
@@ -18322,7 +18624,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            200: components["responses"]["ZoneEgressList"];
+            200: components["responses"]["ZoneIngressList"];
         };
     };
     getZoneIngress: {
@@ -18376,36 +18678,6 @@ export interface operations {
         responses: {
             200: components["responses"]["ZoneIngressDeleteSuccessResponse"];
             404: components["responses"]["NotFound"];
-        };
-    };
-    getZoneIngressList: {
-        parameters: {
-            query?: {
-                /**
-                 * @description offset in the list of entities
-                 * @example 0
-                 */
-                offset?: number;
-                /** @description the number of items per page */
-                size?: number;
-                /**
-                 * @description filter by labels when multiple filters are present, they are ANDed
-                 * @example {
-                 *       "label.k8s.kuma.io/namespace": "my-ns"
-                 *     }
-                 */
-                filter?: {
-                    key?: string;
-                    value?: string;
-                };
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: components["responses"]["ZoneIngressList"];
         };
     };
     getHostnameGenerator: {
@@ -19041,31 +19313,6 @@ export interface operations {
         requestBody?: never;
         responses: {
             200: components["responses"]["WorkloadList"];
-        };
-    };
-    getByKri: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description KRI of the resource */
-                kri: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description The resource */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["DataplaneItem"] | components["schemas"]["MeshItem"] | components["schemas"]["MeshAccessLogItem"] | components["schemas"]["MeshCircuitBreakerItem"] | components["schemas"]["MeshFaultInjectionItem"] | components["schemas"]["MeshGatewayItem"] | components["schemas"]["MeshHTTPRouteItem"] | components["schemas"]["MeshHealthCheckItem"] | components["schemas"]["MeshLoadBalancingStrategyItem"] | components["schemas"]["MeshMetricItem"] | components["schemas"]["MeshPassthroughItem"] | components["schemas"]["MeshProxyPatchItem"] | components["schemas"]["MeshRateLimitItem"] | components["schemas"]["MeshRetryItem"] | components["schemas"]["MeshTCPRouteItem"] | components["schemas"]["MeshTLSItem"] | components["schemas"]["MeshTimeoutItem"] | components["schemas"]["MeshTraceItem"] | components["schemas"]["MeshTrafficPermissionItem"] | components["schemas"]["ZoneEgressItem"] | components["schemas"]["ZoneIngressItem"];
-                };
-            };
-            400: components["responses"]["BadRequest"];
-            404: components["responses"]["NotFound"];
         };
     };
 }

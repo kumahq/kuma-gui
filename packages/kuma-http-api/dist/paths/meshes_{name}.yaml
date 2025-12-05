@@ -1,3 +1,20 @@
+delete:
+  operationId: deleteMesh
+  summary: Deletes Mesh entity
+  parameters:
+    - name: name
+      in: path
+      description: name of the Mesh
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: "../components/responses/MeshDeleteSuccessResponse.yaml"
+    '404':
+      $ref: "../components/responses/NotFound.yaml"
+  tags:
+    - Mesh
 get:
   operationId: getMesh
   summary: Returns Mesh entity
@@ -37,22 +54,5 @@ put:
       $ref: "../components/responses/MeshCreateOrUpdateSuccessResponse.yaml"
     '201':
       $ref: "../components/responses/MeshCreateOrUpdateSuccessResponse.yaml"
-  tags:
-    - Mesh
-delete:
-  operationId: deleteMesh
-  summary: Deletes Mesh entity
-  parameters:
-    - name: name
-      in: path
-      description: name of the Mesh
-      required: true
-      schema:
-        type: string
-  responses:
-    '200':
-      $ref: "../components/responses/MeshDeleteSuccessResponse.yaml"
-    '404':
-      $ref: "../components/responses/NotFound.yaml"
   tags:
     - Mesh
