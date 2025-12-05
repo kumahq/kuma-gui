@@ -1,3 +1,20 @@
+delete:
+  operationId: deleteZoneEgress
+  summary: Deletes ZoneEgress entity
+  parameters:
+    - name: name
+      in: path
+      description: name of the ZoneEgress
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: "../components/responses/ZoneEgressDeleteSuccessResponse.yaml"
+    '404':
+      $ref: "../components/responses/NotFound.yaml"
+  tags:
+    - ZoneEgress
 get:
   operationId: getZoneEgress
   summary: Returns ZoneEgress entity
@@ -37,22 +54,5 @@ put:
       $ref: "../components/responses/ZoneEgressCreateOrUpdateSuccessResponse.yaml"
     '201':
       $ref: "../components/responses/ZoneEgressCreateOrUpdateSuccessResponse.yaml"
-  tags:
-    - ZoneEgress
-delete:
-  operationId: deleteZoneEgress
-  summary: Deletes ZoneEgress entity
-  parameters:
-    - name: name
-      in: path
-      description: name of the ZoneEgress
-      required: true
-      schema:
-        type: string
-  responses:
-    '200':
-      $ref: "../components/responses/ZoneEgressDeleteSuccessResponse.yaml"
-    '404':
-      $ref: "../components/responses/NotFound.yaml"
   tags:
     - ZoneEgress

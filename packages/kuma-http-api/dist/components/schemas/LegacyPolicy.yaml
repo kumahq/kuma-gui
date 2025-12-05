@@ -1,4 +1,3 @@
-description: Successful response
 type: object
 properties:
   type:
@@ -33,10 +32,6 @@ properties:
     properties:
       targetRef:
         $ref: "./MeshAccessLogItem.yaml#/properties/spec/properties/targetRef"
-content:
-  application/json:
-    schema:
-      $ref: "MeshAccessLogItem.yaml"
 required:
   - type
   - name
