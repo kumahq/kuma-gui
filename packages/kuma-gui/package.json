@@ -25,7 +25,7 @@
     "openapi-fetch": "^0.15.0",
     "pretty-bytes": "^7.1.0",
     "set.prototype.difference": "^1.1.7",
-    "shiki": "^3.17.0",
+    "shiki": "^3.19.0",
     "urlpattern-polyfill": "^10.1.0",
     "vue": "^3.5.25",
     "vue-github-button": "^3.1.3",
