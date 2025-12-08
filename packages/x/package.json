@@ -12,8 +12,8 @@
     "help": "make help"
   },
   "dependencies": {
-    "@kong-ui-public/app-layout": "^4.10.4",
-    "@kong/kongponents": "^9.48.0",
+    "@kong-ui-public/app-layout": "^4.10.8",
+    "@kong/kongponents": "^9.48.3",
     "@kong/icons": "^1.41.0",
     "shiki": "^3.17.0",
     "@vueuse/core": "^14.1.0",
