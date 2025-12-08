@@ -1,10 +1,12 @@
+# get the specific constraint/version being used by kumahq/config
+# from that package's data, concat the realpath plus the bin path
 resolve/bin: PACKAGE?=$(BIN)
 resolve/bin:
-	@cd $(KUMAHQ_CONFIG) && \
-		npm pkg get --workspaces=false dependencies["$(PACKAGE)"] | tr -d '"' | xargs -I{} \
-			npm query --package-lock-only --expect-result-count 1 "[name=\"$(PACKAGE)\"]:semver({})" | \
-				node -e \
-					"const { resolve } = require('path'); const json = JSON.parse(fs.readFileSync(0, 'utf8'))[0]; console.log(resolve(json.realpath, json.bin['$(BIN)'] ?? json.bin))"
+	@cd $(NPM_WORKSPACE_ROOT) && \
+		npm ls $(PACKAGE) --json | \
+			jq -r '.dependencies["@kumahq/config"].dependencies["$(PACKAGE)"].version' | xargs -I{} \
+				npm query --package-lock-only --expect-result-count 1 "[name=\"$(PACKAGE)\"]:semver({})" | \
+					jq -r '.[0] | .realpath as $$realpath | (.bin["$(BIN)"] // .bin) | $$realpath + "/" + .'
 
 
 .PHONY: check/postinstall
