@@ -38,12 +38,6 @@
       "dependencyDashboardApproval": true
     },
     {
-      "groupName": "github-actions",
-      "matchManagers": [
-        "github-actions"
-      ]
-    },
-    {
       "groupName": "patch",
       "matchUpdateTypes": [
         "patch"
@@ -96,6 +90,12 @@
         "minor"
       ],
       "minimumReleaseAge": "0"
+    },
+    {
+      "groupName": "github-actions",
+      "matchManagers": [
+        "github-actions"
+      ]
     }
   ]
 }
