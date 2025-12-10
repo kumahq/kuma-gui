@@ -38,26 +38,6 @@
       "dependencyDashboardApproval": true
     },
     {
-      "groupName": "patch",
-      "matchUpdateTypes": [
-        "patch"
-      ],
-      "minimumReleaseAge": "3 days"
-    },
-    {
-      "groupName": "minor",
-      "matchUpdateTypes": [
-        "minor"
-      ],
-      "minimumReleaseAge": "3 days"
-    },
-    {
-      "matchUpdateTypes": [
-        "major"
-      ],
-      "minimumReleaseAge": "3 days"
-    },
-    {
       "matchPackageNames": [
         "npm",
         "escape-string-regexp"
@@ -70,32 +50,6 @@
         "node"
       ],
       "dependencyDashboardApproval": true
-    },
-    {
-      "groupName": "@kong patches",
-      "matchPackageNames": [
-        "@kong**/**"
-      ],
-      "matchUpdateTypes": [
-        "patch"
-      ],
-      "minimumReleaseAge": "0"
-    },
-    {
-      "groupName": "@kong minors",
-      "matchPackageNames": [
-        "@kong**/**"
-      ],
-      "matchUpdateTypes": [
-        "minor"
-      ],
-      "minimumReleaseAge": "0"
-    },
-    {
-      "groupName": "github-actions",
-      "matchManagers": [
-        "github-actions"
-      ]
     }
   ]
 }
