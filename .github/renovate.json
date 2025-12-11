@@ -3,10 +3,10 @@
   "extends": [
     "config:recommended",
     ":semanticCommits",
-    "Kong/public-shared-renovate//base/github-actions"
+    "Kong/public-shared-renovate//base/github-actions",
+    "Kong/public-shared-renovate//base/javascript"
   ],
   "dependencyDashboard": true,
-  "rangeStrategy": "bump",
   "printConfig": true,
   "labels": [
     "dependencies",
