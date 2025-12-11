@@ -30,6 +30,7 @@
   "vulnerabilityAlerts": {
     "enabled": true
   },
+  "prCreation": "not-pending",
   "packageRules": [
     {
       "matchUpdateTypes": [
