@@ -29,6 +29,8 @@ paths:
     $ref: 'paths/meshes_{mesh}_dataplanes_{name}__outbounds_{outboundkri}__routes_{routekri}__policies.yaml'
   '/meshes/{mesh}/{policyType}/{policyName}/_resources/dataplanes':
     $ref: 'paths/meshes_{mesh}_{policyType}_{policyName}__resources_dataplanes.yaml'
+  '/meshes/{mesh}/meshservices/{name}/_dataplanes':
+    $ref: 'paths/meshes_{mesh}_meshservices_{name}__dataplanes.yaml'
   '/meshes/{mesh}/{serviceType}/{serviceName}/_hostnames':
     $ref: 'paths/meshes_{mesh}_{serviceType}_{serviceName}__hostnames.yaml'
   '/_kri/{kri}':
