@@ -25,9 +25,6 @@ properties:
   spec:
     description: Spec is the specification of the Kuma MeshMetric resource.
     type: object
-    default:
-      default:
-        backends: []
     properties:
       default:
         description: MeshMetric configuration.
@@ -247,6 +244,9 @@ properties:
               type: string
         required:
           - kind
+    default:
+      default:
+        backends: []
   creationTime:
     description: Time at which the resource was created
     type: string
@@ -264,3 +264,4 @@ required:
   - name
   - spec
 x-request: true
+

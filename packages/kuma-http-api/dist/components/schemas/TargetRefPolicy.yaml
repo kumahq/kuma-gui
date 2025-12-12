@@ -36,8 +36,9 @@ properties:
     description: Spec is the specification of the Kuma Policy resource.
     properties:
       targetRef:
-        $ref: "./MeshAccessLogItem.yaml#/properties/spec/properties/targetRef"
+        $ref: ./MeshAccessLogItem.yaml#/properties/spec/properties/targetRef
 required:
   - type
   - name
   - spec
+

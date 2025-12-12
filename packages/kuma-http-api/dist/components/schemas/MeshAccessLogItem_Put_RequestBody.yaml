@@ -40,13 +40,6 @@ properties:
                 backends:
                   type: array
                   items:
-                    required:
-                      - type
-                    type: object
-                    default:
-                      type: File
-                      file:
-                        path: ''
                     properties:
                       type:
                         type: string
@@ -54,6 +47,13 @@ properties:
                           - Tcp
                           - File
                           - OpenTelemetry
+                    required:
+                      - type
+                    type: object
+                    default:
+                      type: File
+                      file:
+                        path: ''
                     oneOf:
                       - title: TCP
                         type: object
@@ -65,11 +65,13 @@ properties:
                           type:
                             const: Tcp
                           tcp:
+                            description: TCPBackend defines a TCP logging backend.
+                            type: object
                             properties:
                               address:
                                 description: Address of the TCP logging backend
                                 type: string
-                                example: '127.0.0.1:5000'
+                                example: 127.0.0.1:5000
                                 minLength: 1
                               format:
                                 description: |-
@@ -77,37 +79,125 @@ properties:
                                   https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
                                 type: object
                                 properties:
-                                  json:
-                                    type: array
-                                    items:
-                                      properties:
-                                        key:
-                                          type: string
-                                        value:
-                                          type: string
-                                      required:
-                                        - key
-                                        - value
-                                      type: object
-                                    example:
-                                      - key: start_time
-                                        value: '%START_TIME%'
-                                      - key: bytes_received
-                                        value: '%BYTES_RECEIVED%'
                                   omitEmptyValues:
                                     type: boolean
                                     default: false
-                                  plain:
-                                    type: string
-                                    example: '[%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST%'
                                   type:
                                     type: string
                                     enum:
                                       - Plain
                                       - Json
-                                readOnly: true
                                 required:
                                   - type
+                                oneOf:
+                                  - title: JSON
+                                    type: object
+                                    default:
+                                      type: Json
+                                      json: []
+                                    properties:
+                                      type:
+                                        const: Json
+                                      json:
+                                        type: array
+                                        items:
+                                          properties:
+                                            key:
+                                              type: string
+                                            value:
+                                              type: string
+                                          required:
+                                            - key
+                                            - value
+                                          type: object
+                                        example:
+                                          - key: start_time
+                                            value: '%START_TIME%'
+                                          - key: bytes_received
+                                            value: '%BYTES_RECEIVED%'
+                                  - title: Plain
+                                    type: object
+                                    default:
+                                      type: Plain
+                                      plain: '[%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST%'
+                                    properties:
+                                      type:
+                                        const: Plain
+                                      plain:
+                                        type: string
+                                        example: '[%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST%'
+                                  - title: JSON
+                                    type: object
+                                    default:
+                                      type: Json
+                                      json: []
+                                    properties:
+                                      type:
+                                        const: Json
+                                      json:
+                                        type: array
+                                        items:
+                                          properties:
+                                            key:
+                                              type: string
+                                            value:
+                                              type: string
+                                          required:
+                                            - key
+                                            - value
+                                          type: object
+                                        example:
+                                          - key: start_time
+                                            value: '%START_TIME%'
+                                          - key: bytes_received
+                                            value: '%BYTES_RECEIVED%'
+                                  - title: Plain
+                                    type: object
+                                    default:
+                                      type: Plain
+                                      plain: '[%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST%'
+                                    properties:
+                                      type:
+                                        const: Plain
+                                      plain:
+                                        type: string
+                                        example: '[%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST%'
+                                  - title: JSON
+                                    type: object
+                                    default:
+                                      type: Json
+                                      json: []
+                                    properties:
+                                      type:
+                                        const: Json
+                                      json:
+                                        type: array
+                                        items:
+                                          properties:
+                                            key:
+                                              type: string
+                                            value:
+                                              type: string
+                                          required:
+                                            - key
+                                            - value
+                                          type: object
+                                        example:
+                                          - key: start_time
+                                            value: '%START_TIME%'
+                                          - key: bytes_received
+                                            value: '%BYTES_RECEIVED%'
+                                  - title: Plain
+                                    type: object
+                                    default:
+                                      type: Plain
+                                      plain: '[%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST%'
+                                    properties:
+                                      type:
+                                        const: Plain
+                                      plain:
+                                        type: string
+                                        example: '[%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST%'
                             required:
                               - address
                       - title: File
@@ -129,37 +219,125 @@ properties:
                                   https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
                                 type: object
                                 properties:
-                                  json:
-                                    type: array
-                                    items:
-                                      properties:
-                                        key:
-                                          type: string
-                                        value:
-                                          type: string
-                                      required:
-                                        - key
-                                        - value
-                                      type: object
-                                    example:
-                                      - key: start_time
-                                        value: '%START_TIME%'
-                                      - key: bytes_received
-                                        value: '%BYTES_RECEIVED%'
                                   omitEmptyValues:
                                     type: boolean
                                     default: false
-                                  plain:
-                                    type: string
-                                    example: '[%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST%'
                                   type:
                                     type: string
                                     enum:
                                       - Plain
                                       - Json
-                                readOnly: true
                                 required:
                                   - type
+                                oneOf:
+                                  - title: JSON
+                                    type: object
+                                    default:
+                                      type: Json
+                                      json: []
+                                    properties:
+                                      type:
+                                        const: Json
+                                      json:
+                                        type: array
+                                        items:
+                                          properties:
+                                            key:
+                                              type: string
+                                            value:
+                                              type: string
+                                          required:
+                                            - key
+                                            - value
+                                          type: object
+                                        example:
+                                          - key: start_time
+                                            value: '%START_TIME%'
+                                          - key: bytes_received
+                                            value: '%BYTES_RECEIVED%'
+                                  - title: Plain
+                                    type: object
+                                    default:
+                                      type: Plain
+                                      plain: '[%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST%'
+                                    properties:
+                                      type:
+                                        const: Plain
+                                      plain:
+                                        type: string
+                                        example: '[%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST%'
+                                  - title: JSON
+                                    type: object
+                                    default:
+                                      type: Json
+                                      json: []
+                                    properties:
+                                      type:
+                                        const: Json
+                                      json:
+                                        type: array
+                                        items:
+                                          properties:
+                                            key:
+                                              type: string
+                                            value:
+                                              type: string
+                                          required:
+                                            - key
+                                            - value
+                                          type: object
+                                        example:
+                                          - key: start_time
+                                            value: '%START_TIME%'
+                                          - key: bytes_received
+                                            value: '%BYTES_RECEIVED%'
+                                  - title: Plain
+                                    type: object
+                                    default:
+                                      type: Plain
+                                      plain: '[%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST%'
+                                    properties:
+                                      type:
+                                        const: Plain
+                                      plain:
+                                        type: string
+                                        example: '[%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST%'
+                                  - title: JSON
+                                    type: object
+                                    default:
+                                      type: Json
+                                      json: []
+                                    properties:
+                                      type:
+                                        const: Json
+                                      json:
+                                        type: array
+                                        items:
+                                          properties:
+                                            key:
+                                              type: string
+                                            value:
+                                              type: string
+                                          required:
+                                            - key
+                                            - value
+                                          type: object
+                                        example:
+                                          - key: start_time
+                                            value: '%START_TIME%'
+                                          - key: bytes_received
+                                            value: '%BYTES_RECEIVED%'
+                                  - title: Plain
+                                    type: object
+                                    default:
+                                      type: Plain
+                                      plain: '[%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST%'
+                                    properties:
+                                      type:
+                                        const: Plain
+                                      plain:
+                                        type: string
+                                        example: '[%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST%'
                               path:
                                 description: Path to a file that logs will be written to
                                 type: string
@@ -177,6 +355,8 @@ properties:
                           type:
                             const: OpenTelemetry
                           openTelemetry:
+                            description: Defines an OpenTelemetry logging backend.
+                            type: object
                             properties:
                               attributes:
                                 description: |-
@@ -196,7 +376,6 @@ properties:
                                 example:
                                   - key: mesh
                                     value: '%KUMA_MESH%'
-                                readOnly: true
                               body:
                                 description: |-
                                   Body is a raw string or an OTLP any value as described at
@@ -213,7 +392,7 @@ properties:
                               endpoint:
                                 description: Endpoint of OpenTelemetry collector. An empty port defaults to 4317.
                                 type: string
-                                example: 'otel-collector:4317'
+                                example: otel-collector:4317
                                 minLength: 1
                             required:
                               - endpoint
@@ -298,13 +477,6 @@ properties:
                 backends:
                   type: array
                   items:
-                    required:
-                      - type
-                    type: object
-                    default:
-                      type: File
-                      file:
-                        path: ''
                     properties:
                       type:
                         type: string
@@ -312,6 +484,13 @@ properties:
                           - Tcp
                           - File
                           - OpenTelemetry
+                    required:
+                      - type
+                    type: object
+                    default:
+                      type: File
+                      file:
+                        path: ''
                     oneOf:
                       - title: TCP
                         type: object
@@ -323,11 +502,13 @@ properties:
                           type:
                             const: Tcp
                           tcp:
+                            description: TCPBackend defines a TCP logging backend.
+                            type: object
                             properties:
                               address:
                                 description: Address of the TCP logging backend
                                 type: string
-                                example: '127.0.0.1:5000'
+                                example: 127.0.0.1:5000
                                 minLength: 1
                               format:
                                 description: |-
@@ -335,37 +516,125 @@ properties:
                                   https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
                                 type: object
                                 properties:
-                                  json:
-                                    type: array
-                                    items:
-                                      properties:
-                                        key:
-                                          type: string
-                                        value:
-                                          type: string
-                                      required:
-                                        - key
-                                        - value
-                                      type: object
-                                    example:
-                                      - key: start_time
-                                        value: '%START_TIME%'
-                                      - key: bytes_received
-                                        value: '%BYTES_RECEIVED%'
                                   omitEmptyValues:
                                     type: boolean
                                     default: false
-                                  plain:
-                                    type: string
-                                    example: '[%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST%'
                                   type:
                                     type: string
                                     enum:
                                       - Plain
                                       - Json
-                                readOnly: true
                                 required:
                                   - type
+                                oneOf:
+                                  - title: JSON
+                                    type: object
+                                    default:
+                                      type: Json
+                                      json: []
+                                    properties:
+                                      type:
+                                        const: Json
+                                      json:
+                                        type: array
+                                        items:
+                                          properties:
+                                            key:
+                                              type: string
+                                            value:
+                                              type: string
+                                          required:
+                                            - key
+                                            - value
+                                          type: object
+                                        example:
+                                          - key: start_time
+                                            value: '%START_TIME%'
+                                          - key: bytes_received
+                                            value: '%BYTES_RECEIVED%'
+                                  - title: Plain
+                                    type: object
+                                    default:
+                                      type: Plain
+                                      plain: '[%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST%'
+                                    properties:
+                                      type:
+                                        const: Plain
+                                      plain:
+                                        type: string
+                                        example: '[%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST%'
+                                  - title: JSON
+                                    type: object
+                                    default:
+                                      type: Json
+                                      json: []
+                                    properties:
+                                      type:
+                                        const: Json
+                                      json:
+                                        type: array
+                                        items:
+                                          properties:
+                                            key:
+                                              type: string
+                                            value:
+                                              type: string
+                                          required:
+                                            - key
+                                            - value
+                                          type: object
+                                        example:
+                                          - key: start_time
+                                            value: '%START_TIME%'
+                                          - key: bytes_received
+                                            value: '%BYTES_RECEIVED%'
+                                  - title: Plain
+                                    type: object
+                                    default:
+                                      type: Plain
+                                      plain: '[%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST%'
+                                    properties:
+                                      type:
+                                        const: Plain
+                                      plain:
+                                        type: string
+                                        example: '[%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST%'
+                                  - title: JSON
+                                    type: object
+                                    default:
+                                      type: Json
+                                      json: []
+                                    properties:
+                                      type:
+                                        const: Json
+                                      json:
+                                        type: array
+                                        items:
+                                          properties:
+                                            key:
+                                              type: string
+                                            value:
+                                              type: string
+                                          required:
+                                            - key
+                                            - value
+                                          type: object
+                                        example:
+                                          - key: start_time
+                                            value: '%START_TIME%'
+                                          - key: bytes_received
+                                            value: '%BYTES_RECEIVED%'
+                                  - title: Plain
+                                    type: object
+                                    default:
+                                      type: Plain
+                                      plain: '[%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST%'
+                                    properties:
+                                      type:
+                                        const: Plain
+                                      plain:
+                                        type: string
+                                        example: '[%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST%'
                             required:
                               - address
                       - title: File
@@ -387,37 +656,125 @@ properties:
                                   https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
                                 type: object
                                 properties:
-                                  json:
-                                    type: array
-                                    items:
-                                      properties:
-                                        key:
-                                          type: string
-                                        value:
-                                          type: string
-                                      required:
-                                        - key
-                                        - value
-                                      type: object
-                                    example:
-                                      - key: start_time
-                                        value: '%START_TIME%'
-                                      - key: bytes_received
-                                        value: '%BYTES_RECEIVED%'
                                   omitEmptyValues:
                                     type: boolean
                                     default: false
-                                  plain:
-                                    type: string
-                                    example: '[%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST%'
                                   type:
                                     type: string
                                     enum:
                                       - Plain
                                       - Json
-                                readOnly: true
                                 required:
                                   - type
+                                oneOf:
+                                  - title: JSON
+                                    type: object
+                                    default:
+                                      type: Json
+                                      json: []
+                                    properties:
+                                      type:
+                                        const: Json
+                                      json:
+                                        type: array
+                                        items:
+                                          properties:
+                                            key:
+                                              type: string
+                                            value:
+                                              type: string
+                                          required:
+                                            - key
+                                            - value
+                                          type: object
+                                        example:
+                                          - key: start_time
+                                            value: '%START_TIME%'
+                                          - key: bytes_received
+                                            value: '%BYTES_RECEIVED%'
+                                  - title: Plain
+                                    type: object
+                                    default:
+                                      type: Plain
+                                      plain: '[%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST%'
+                                    properties:
+                                      type:
+                                        const: Plain
+                                      plain:
+                                        type: string
+                                        example: '[%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST%'
+                                  - title: JSON
+                                    type: object
+                                    default:
+                                      type: Json
+                                      json: []
+                                    properties:
+                                      type:
+                                        const: Json
+                                      json:
+                                        type: array
+                                        items:
+                                          properties:
+                                            key:
+                                              type: string
+                                            value:
+                                              type: string
+                                          required:
+                                            - key
+                                            - value
+                                          type: object
+                                        example:
+                                          - key: start_time
+                                            value: '%START_TIME%'
+                                          - key: bytes_received
+                                            value: '%BYTES_RECEIVED%'
+                                  - title: Plain
+                                    type: object
+                                    default:
+                                      type: Plain
+                                      plain: '[%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST%'
+                                    properties:
+                                      type:
+                                        const: Plain
+                                      plain:
+                                        type: string
+                                        example: '[%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST%'
+                                  - title: JSON
+                                    type: object
+                                    default:
+                                      type: Json
+                                      json: []
+                                    properties:
+                                      type:
+                                        const: Json
+                                      json:
+                                        type: array
+                                        items:
+                                          properties:
+                                            key:
+                                              type: string
+                                            value:
+                                              type: string
+                                          required:
+                                            - key
+                                            - value
+                                          type: object
+                                        example:
+                                          - key: start_time
+                                            value: '%START_TIME%'
+                                          - key: bytes_received
+                                            value: '%BYTES_RECEIVED%'
+                                  - title: Plain
+                                    type: object
+                                    default:
+                                      type: Plain
+                                      plain: '[%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST%'
+                                    properties:
+                                      type:
+                                        const: Plain
+                                      plain:
+                                        type: string
+                                        example: '[%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST%'
                               path:
                                 description: Path to a file that logs will be written to
                                 type: string
@@ -435,6 +792,8 @@ properties:
                           type:
                             const: OpenTelemetry
                           openTelemetry:
+                            description: Defines an OpenTelemetry logging backend.
+                            type: object
                             properties:
                               attributes:
                                 description: |-
@@ -454,7 +813,6 @@ properties:
                                 example:
                                   - key: mesh
                                     value: '%KUMA_MESH%'
-                                readOnly: true
                               body:
                                 description: |-
                                   Body is a raw string or an OTLP any value as described at
@@ -471,7 +829,7 @@ properties:
                               endpoint:
                                 description: Endpoint of OpenTelemetry collector. An empty port defaults to 4317.
                                 type: string
-                                example: 'otel-collector:4317'
+                                example: otel-collector:4317
                                 minLength: 1
                             required:
                               - endpoint
@@ -561,13 +919,6 @@ properties:
                 backends:
                   type: array
                   items:
-                    required:
-                      - type
-                    type: object
-                    default:
-                      type: File
-                      file:
-                        path: ''
                     properties:
                       type:
                         type: string
@@ -575,6 +926,13 @@ properties:
                           - Tcp
                           - File
                           - OpenTelemetry
+                    required:
+                      - type
+                    type: object
+                    default:
+                      type: File
+                      file:
+                        path: ''
                     oneOf:
                       - title: TCP
                         type: object
@@ -586,11 +944,13 @@ properties:
                           type:
                             const: Tcp
                           tcp:
+                            description: TCPBackend defines a TCP logging backend.
+                            type: object
                             properties:
                               address:
                                 description: Address of the TCP logging backend
                                 type: string
-                                example: '127.0.0.1:5000'
+                                example: 127.0.0.1:5000
                                 minLength: 1
                               format:
                                 description: |-
@@ -598,37 +958,125 @@ properties:
                                   https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
                                 type: object
                                 properties:
-                                  json:
-                                    type: array
-                                    items:
-                                      properties:
-                                        key:
-                                          type: string
-                                        value:
-                                          type: string
-                                      required:
-                                        - key
-                                        - value
-                                      type: object
-                                    example:
-                                      - key: start_time
-                                        value: '%START_TIME%'
-                                      - key: bytes_received
-                                        value: '%BYTES_RECEIVED%'
                                   omitEmptyValues:
                                     type: boolean
                                     default: false
-                                  plain:
-                                    type: string
-                                    example: '[%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST%'
                                   type:
                                     type: string
                                     enum:
                                       - Plain
                                       - Json
-                                readOnly: true
                                 required:
                                   - type
+                                oneOf:
+                                  - title: JSON
+                                    type: object
+                                    default:
+                                      type: Json
+                                      json: []
+                                    properties:
+                                      type:
+                                        const: Json
+                                      json:
+                                        type: array
+                                        items:
+                                          properties:
+                                            key:
+                                              type: string
+                                            value:
+                                              type: string
+                                          required:
+                                            - key
+                                            - value
+                                          type: object
+                                        example:
+                                          - key: start_time
+                                            value: '%START_TIME%'
+                                          - key: bytes_received
+                                            value: '%BYTES_RECEIVED%'
+                                  - title: Plain
+                                    type: object
+                                    default:
+                                      type: Plain
+                                      plain: '[%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST%'
+                                    properties:
+                                      type:
+                                        const: Plain
+                                      plain:
+                                        type: string
+                                        example: '[%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST%'
+                                  - title: JSON
+                                    type: object
+                                    default:
+                                      type: Json
+                                      json: []
+                                    properties:
+                                      type:
+                                        const: Json
+                                      json:
+                                        type: array
+                                        items:
+                                          properties:
+                                            key:
+                                              type: string
+                                            value:
+                                              type: string
+                                          required:
+                                            - key
+                                            - value
+                                          type: object
+                                        example:
+                                          - key: start_time
+                                            value: '%START_TIME%'
+                                          - key: bytes_received
+                                            value: '%BYTES_RECEIVED%'
+                                  - title: Plain
+                                    type: object
+                                    default:
+                                      type: Plain
+                                      plain: '[%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST%'
+                                    properties:
+                                      type:
+                                        const: Plain
+                                      plain:
+                                        type: string
+                                        example: '[%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST%'
+                                  - title: JSON
+                                    type: object
+                                    default:
+                                      type: Json
+                                      json: []
+                                    properties:
+                                      type:
+                                        const: Json
+                                      json:
+                                        type: array
+                                        items:
+                                          properties:
+                                            key:
+                                              type: string
+                                            value:
+                                              type: string
+                                          required:
+                                            - key
+                                            - value
+                                          type: object
+                                        example:
+                                          - key: start_time
+                                            value: '%START_TIME%'
+                                          - key: bytes_received
+                                            value: '%BYTES_RECEIVED%'
+                                  - title: Plain
+                                    type: object
+                                    default:
+                                      type: Plain
+                                      plain: '[%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST%'
+                                    properties:
+                                      type:
+                                        const: Plain
+                                      plain:
+                                        type: string
+                                        example: '[%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST%'
                             required:
                               - address
                       - title: File
@@ -650,37 +1098,125 @@ properties:
                                   https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
                                 type: object
                                 properties:
-                                  json:
-                                    type: array
-                                    items:
-                                      properties:
-                                        key:
-                                          type: string
-                                        value:
-                                          type: string
-                                      required:
-                                        - key
-                                        - value
-                                      type: object
-                                    example:
-                                      - key: start_time
-                                        value: '%START_TIME%'
-                                      - key: bytes_received
-                                        value: '%BYTES_RECEIVED%'
                                   omitEmptyValues:
                                     type: boolean
                                     default: false
-                                  plain:
-                                    type: string
-                                    example: '[%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST%'
                                   type:
                                     type: string
                                     enum:
                                       - Plain
                                       - Json
-                                readOnly: true
                                 required:
                                   - type
+                                oneOf:
+                                  - title: JSON
+                                    type: object
+                                    default:
+                                      type: Json
+                                      json: []
+                                    properties:
+                                      type:
+                                        const: Json
+                                      json:
+                                        type: array
+                                        items:
+                                          properties:
+                                            key:
+                                              type: string
+                                            value:
+                                              type: string
+                                          required:
+                                            - key
+                                            - value
+                                          type: object
+                                        example:
+                                          - key: start_time
+                                            value: '%START_TIME%'
+                                          - key: bytes_received
+                                            value: '%BYTES_RECEIVED%'
+                                  - title: Plain
+                                    type: object
+                                    default:
+                                      type: Plain
+                                      plain: '[%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST%'
+                                    properties:
+                                      type:
+                                        const: Plain
+                                      plain:
+                                        type: string
+                                        example: '[%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST%'
+                                  - title: JSON
+                                    type: object
+                                    default:
+                                      type: Json
+                                      json: []
+                                    properties:
+                                      type:
+                                        const: Json
+                                      json:
+                                        type: array
+                                        items:
+                                          properties:
+                                            key:
+                                              type: string
+                                            value:
+                                              type: string
+                                          required:
+                                            - key
+                                            - value
+                                          type: object
+                                        example:
+                                          - key: start_time
+                                            value: '%START_TIME%'
+                                          - key: bytes_received
+                                            value: '%BYTES_RECEIVED%'
+                                  - title: Plain
+                                    type: object
+                                    default:
+                                      type: Plain
+                                      plain: '[%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST%'
+                                    properties:
+                                      type:
+                                        const: Plain
+                                      plain:
+                                        type: string
+                                        example: '[%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST%'
+                                  - title: JSON
+                                    type: object
+                                    default:
+                                      type: Json
+                                      json: []
+                                    properties:
+                                      type:
+                                        const: Json
+                                      json:
+                                        type: array
+                                        items:
+                                          properties:
+                                            key:
+                                              type: string
+                                            value:
+                                              type: string
+                                          required:
+                                            - key
+                                            - value
+                                          type: object
+                                        example:
+                                          - key: start_time
+                                            value: '%START_TIME%'
+                                          - key: bytes_received
+                                            value: '%BYTES_RECEIVED%'
+                                  - title: Plain
+                                    type: object
+                                    default:
+                                      type: Plain
+                                      plain: '[%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST%'
+                                    properties:
+                                      type:
+                                        const: Plain
+                                      plain:
+                                        type: string
+                                        example: '[%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST%'
                               path:
                                 description: Path to a file that logs will be written to
                                 type: string
@@ -698,6 +1234,8 @@ properties:
                           type:
                             const: OpenTelemetry
                           openTelemetry:
+                            description: Defines an OpenTelemetry logging backend.
+                            type: object
                             properties:
                               attributes:
                                 description: |-
@@ -717,7 +1255,6 @@ properties:
                                 example:
                                   - key: mesh
                                     value: '%KUMA_MESH%'
-                                readOnly: true
                               body:
                                 description: |-
                                   Body is a raw string or an OTLP any value as described at
@@ -734,7 +1271,7 @@ properties:
                               endpoint:
                                 description: Endpoint of OpenTelemetry collector. An empty port defaults to 4317.
                                 type: string
-                                example: 'otel-collector:4317'
+                                example: otel-collector:4317
                                 minLength: 1
                             required:
                               - endpoint
@@ -827,3 +1364,4 @@ required:
   - name
   - spec
 x-request: true
+
