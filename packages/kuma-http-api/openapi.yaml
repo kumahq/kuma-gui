@@ -4,7 +4,7 @@ info:
   description: Kuma API
   version: v1alpha1
   x-ref-schema-name: DataplaneOverview
-  x-oas-source: kumahq/kuma@6f0920844fa520497499f58330fb39751ce16119
+  x-oas-source: kumahq/kuma@43d7c1eed406c93882a3c20637d2d327fd471031
 paths:
   /:
     get:
