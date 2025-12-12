@@ -3,10 +3,11 @@
   "extends": [
     "config:recommended",
     ":semanticCommits",
-    "Kong/public-shared-renovate//base/github-actions"
+    "Kong/public-shared-renovate//base/github-actions",
+    "Kong/public-shared-renovate//base/javascript"
   ],
   "dependencyDashboard": true,
-  "rangeStrategy": "bump",
+  "printConfig": true,
   "labels": [
     "dependencies",
     "renovate-bot"
@@ -30,32 +31,13 @@
   "vulnerabilityAlerts": {
     "enabled": true
   },
+  "prCreation": "not-pending",
   "packageRules": [
     {
       "matchUpdateTypes": [
         "lockFileMaintenance"
       ],
       "dependencyDashboardApproval": true
-    },
-    {
-      "groupName": "patch",
-      "matchUpdateTypes": [
-        "patch"
-      ],
-      "minimumReleaseAge": "3 days"
-    },
-    {
-      "groupName": "minor",
-      "matchUpdateTypes": [
-        "minor"
-      ],
-      "minimumReleaseAge": "3 days"
-    },
-    {
-      "matchUpdateTypes": [
-        "major"
-      ],
-      "minimumReleaseAge": "3 days"
     },
     {
       "matchPackageNames": [
@@ -70,32 +52,6 @@
         "node"
       ],
       "dependencyDashboardApproval": true
-    },
-    {
-      "groupName": "@kong patches",
-      "matchPackageNames": [
-        "@kong**/**"
-      ],
-      "matchUpdateTypes": [
-        "patch"
-      ],
-      "minimumReleaseAge": "0"
-    },
-    {
-      "groupName": "@kong minors",
-      "matchPackageNames": [
-        "@kong**/**"
-      ],
-      "matchUpdateTypes": [
-        "minor"
-      ],
-      "minimumReleaseAge": "0"
-    },
-    {
-      "groupName": "github-actions",
-      "matchManagers": [
-        "github-actions"
-      ]
     }
   ]
 }
