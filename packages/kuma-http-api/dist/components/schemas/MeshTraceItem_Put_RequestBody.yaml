@@ -25,9 +25,6 @@ properties:
   spec:
     description: Spec is the specification of the Kuma MeshTrace resource.
     type: object
-    default:
-      default:
-        backends: []
     properties:
       default:
         description: MeshTrace configuration.
@@ -42,7 +39,7 @@ properties:
               array for now.
             type: array
             items:
-              description: 'Only one of zipkin, datadog or openTelemetry can be used.'
+              description: Only one of zipkin, datadog or openTelemetry can be used.
               properties:
                 datadog:
                   description: Datadog backend configuration.
@@ -71,7 +68,7 @@ properties:
                     endpoint:
                       description: Address of OpenTelemetry collector.
                       type: string
-                      example: 'otel-collector:4317'
+                      example: otel-collector:4317
                       minLength: 1
                   required:
                     - endpoint
@@ -258,6 +255,9 @@ properties:
               type: string
         required:
           - kind
+    default:
+      default:
+        backends: []
   creationTime:
     description: Time at which the resource was created
     type: string
@@ -275,3 +275,4 @@ required:
   - name
   - spec
 x-request: true
+

@@ -207,7 +207,7 @@ properties:
                                         type: string
                                         maxLength: 256
                                         minLength: 1
-                                        pattern: '^[a-z0-9!#$%&''*+\-.^_\x60|~]+$'
+                                        pattern: ^[a-z0-9!#$%&'*+\-.^_\x60|~]+$
                                       value:
                                         type: string
                                     required:
@@ -231,7 +231,7 @@ properties:
                                         type: string
                                         maxLength: 256
                                         minLength: 1
-                                        pattern: '^[a-z0-9!#$%&''*+\-.^_\x60|~]+$'
+                                        pattern: ^[a-z0-9!#$%&'*+\-.^_\x60|~]+$
                                       value:
                                         type: string
                                     required:
@@ -339,7 +339,7 @@ properties:
                                   type: string
                                   maxLength: 253
                                   minLength: 1
-                                  pattern: '^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$'
+                                  pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$
                                 path:
                                   description: |-
                                     Path defines parameters used to modify the path of the incoming request.
@@ -397,7 +397,7 @@ properties:
                                         type: string
                                         maxLength: 256
                                         minLength: 1
-                                        pattern: '^[a-z0-9!#$%&''*+\-.^_\x60|~]+$'
+                                        pattern: ^[a-z0-9!#$%&'*+\-.^_\x60|~]+$
                                       value:
                                         type: string
                                     required:
@@ -421,7 +421,7 @@ properties:
                                         type: string
                                         maxLength: 256
                                         minLength: 1
-                                        pattern: '^[a-z0-9!#$%&''*+\-.^_\x60|~]+$'
+                                        pattern: ^[a-z0-9!#$%&'*+\-.^_\x60|~]+$
                                       value:
                                         type: string
                                     required:
@@ -453,7 +453,7 @@ properties:
                                   type: string
                                   maxLength: 253
                                   minLength: 1
-                                  pattern: '^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$'
+                                  pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$
                                 path:
                                   description: Path defines a path rewrite.
                                   type: object
@@ -493,7 +493,7 @@ properties:
                                 type: string
                                 maxLength: 256
                                 minLength: 1
-                                pattern: '^[a-z0-9!#$%&''*+\-.^_\x60|~]+$'
+                                pattern: ^[a-z0-9!#$%&'*+\-.^_\x60|~]+$
                               type:
                                 description: Type specifies how to match against the value of the header.
                                 type: string
@@ -654,3 +654,4 @@ required:
   - name
   - spec
 x-request: true
+

@@ -60,7 +60,7 @@ properties:
                   type: object
                   properties:
                     max:
-                      description: 'Max defines maximum supported version. One of `TLSAuto`, `TLS10`, `TLS11`, `TLS12`, `TLS13`.'
+                      description: Max defines maximum supported version. One of `TLSAuto`, `TLS10`, `TLS11`, `TLS12`, `TLS13`.
                       type: string
                       default: TLSAuto
                       enum:
@@ -70,7 +70,7 @@ properties:
                         - TLS12
                         - TLS13
                     min:
-                      description: 'Min defines minimum supported version. One of `TLSAuto`, `TLS10`, `TLS11`, `TLS12`, `TLS13`.'
+                      description: Min defines minimum supported version. One of `TLSAuto`, `TLS10`, `TLS11`, `TLS12`, `TLS13`.
                       type: string
                       default: TLSAuto
                       enum:
@@ -179,7 +179,7 @@ properties:
                   type: object
                   properties:
                     max:
-                      description: 'Max defines maximum supported version. One of `TLSAuto`, `TLS10`, `TLS11`, `TLS12`, `TLS13`.'
+                      description: Max defines maximum supported version. One of `TLSAuto`, `TLS10`, `TLS11`, `TLS12`, `TLS13`.
                       type: string
                       default: TLSAuto
                       enum:
@@ -189,7 +189,7 @@ properties:
                         - TLS12
                         - TLS13
                     min:
-                      description: 'Min defines minimum supported version. One of `TLSAuto`, `TLS10`, `TLS11`, `TLS12`, `TLS13`.'
+                      description: Min defines minimum supported version. One of `TLSAuto`, `TLS10`, `TLS11`, `TLS12`, `TLS13`.
                       type: string
                       default: TLSAuto
                       enum:
@@ -285,3 +285,4 @@ required:
   - name
   - spec
 x-request: true
+

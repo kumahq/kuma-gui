@@ -1,9 +1,14 @@
 OPENAPI_MAKEFILE := $(lastword $(MAKEFILE_LIST))
+OPENAPI_MAKEFILE_DIR := $(dir $(abspath $(OPENAPI_MAKEFILE)))
+OPENAPI_BIN_DIR := $(dir $(abspath $(OPENAPI_MAKEFILE_DIR)))bin
+
+NODE:=node
+OPENAPI_OVERLAY:=$(NODE) $(OPENAPI_BIN_DIR)/openapi-overlay.ts
 
 OPENAPI_TS ?= $(shell $(MAKE) resolve/bin BIN=openapi-typescript)
 OPENAPI_FORMAT ?= $(shell $(MAKE) resolve/bin BIN=openapi-format)
 
-OVERLAY_SRC_FILES := $(shell find ./src -name "*.overlay.yaml" -type f)
+OVERLAY_SRC_FILES := $(shell find ./src -name "*.overlay.yaml" -type f | sort)
 OVERLAY_OUTPUT_FILES := $(patsubst ./src/%,./dist/%,$(OVERLAY_SRC_FILES:.overlay.yaml=.yaml))
 
 YAML_SRC_FILES := $(shell find ./src -name "*.yaml" -not -name "*.overlay.yaml" -type f)
@@ -14,7 +19,7 @@ index.d.ts: openapi.yaml
 	@$(OPENAPI_TS) $< > $@
 
 openapi.yaml: OPENAPI_SHA?=unknown
-openapi.yaml: openapi.overlay.tmpl.yaml generated/openapi.yaml $(OVERLAY_OUTPUT_FILES) $(YAML_OUTPUT_FILES) dist/paths/.yaml
+openapi.yaml: openapi.overlay.tmpl.yaml generated/openapi.yaml $(YAML_OUTPUT_FILES) $(OVERLAY_OUTPUT_FILES) dist/paths/.yaml
 	@echo "Overlaying final $(basename $@).overlay$(suffix $@) to $@..."
 	@cat $(basename $@).overlay.tmpl$(suffix $@) | sed "s/\$${GIT_SHA}/$(OPENAPI_SHA)/g" > $(basename $@).overlay$(suffix $@)
 	@$(OPENAPI_FORMAT) \
@@ -26,11 +31,8 @@ openapi.yaml: openapi.overlay.tmpl.yaml generated/openapi.yaml $(OVERLAY_OUTPUT_
 $(OVERLAY_OUTPUT_FILES): dist/%.yaml: src/%.overlay.yaml
 	@echo "Overlaying $< to $@..."
 	@mkdir -p $(dir $@)
-	@$(OPENAPI_FORMAT) \
-		--keepComments \
-		--no-bundle \
-		--overlayFile $< \
-		--output $@
+	@$(OPENAPI_OVERLAY) \
+		--input $< > $@
 
 $(YAML_OUTPUT_FILES): dist/%.yaml: src/%.yaml
 	@echo "Copying $< to $@..."

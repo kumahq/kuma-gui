@@ -25,9 +25,6 @@ properties:
   spec:
     description: Spec is the specification of the Kuma MeshPassthrough resource.
     type: object
-    default:
-      default:
-        passthroughMode: None
     properties:
       default:
         description: MeshPassthrough configuration.
@@ -54,7 +51,7 @@ properties:
                     - http2
                     - mysql
                 type:
-                  description: 'Type of the match, one of `Domain`, `IP` or `CIDR` is available.'
+                  description: Type of the match, one of `Domain`, `IP` or `CIDR` is available.
                   type: string
                   enum:
                     - Domain
@@ -141,6 +138,9 @@ properties:
               type: string
         required:
           - kind
+    default:
+      default:
+        passthroughMode: None
   creationTime:
     description: Time at which the resource was created
     type: string
@@ -158,3 +158,4 @@ required:
   - name
   - spec
 x-request: true
+
