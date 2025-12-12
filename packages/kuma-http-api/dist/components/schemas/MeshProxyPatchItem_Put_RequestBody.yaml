@@ -25,9 +25,6 @@ properties:
   spec:
     description: Spec is the specification of the Kuma MeshProxyPatch resource.
     type: object
-    default:
-      default:
-        appendModifications: []
     properties:
       default:
         description: |-
@@ -53,7 +50,7 @@ properties:
                         description: JsonPatchBlock is one json patch operation block.
                         properties:
                           from:
-                            description: 'From is a jsonpatch from string, used by move and copy operations.'
+                            description: From is a jsonpatch from string, used by move and copy operations.
                             type: string
                           op:
                             description: Op is a jsonpatch operation string.
@@ -125,7 +122,7 @@ properties:
                         description: JsonPatchBlock is one json patch operation block.
                         properties:
                           from:
-                            description: 'From is a jsonpatch from string, used by move and copy operations.'
+                            description: From is a jsonpatch from string, used by move and copy operations.
                             type: string
                           op:
                             description: Op is a jsonpatch operation string.
@@ -154,7 +151,7 @@ properties:
                           description: Name of the listener to match.
                           type: string
                         listenerTags:
-                          description: 'Listener tags available in Listener#Metadata#FilterMetadata[io.kuma.tags]'
+                          description: Listener tags available in Listener#Metadata#FilterMetadata[io.kuma.tags]
                           type: object
                           additionalProperties:
                             type: string
@@ -206,7 +203,7 @@ properties:
                         description: JsonPatchBlock is one json patch operation block.
                         properties:
                           from:
-                            description: 'From is a jsonpatch from string, used by move and copy operations.'
+                            description: From is a jsonpatch from string, used by move and copy operations.
                             type: string
                           op:
                             description: Op is a jsonpatch operation string.
@@ -252,7 +249,7 @@ properties:
                             For example MeshTrace plugin can create Cluster with "mesh-trace" origin.
                           type: string
                         tags:
-                          description: 'Tags available in Listener#Metadata#FilterMetadata[io.kuma.tags]'
+                          description: Tags available in Listener#Metadata#FilterMetadata[io.kuma.tags]
                           type: object
                           additionalProperties:
                             type: string
@@ -281,7 +278,7 @@ properties:
                         description: JsonPatchBlock is one json patch operation block.
                         properties:
                           from:
-                            description: 'From is a jsonpatch from string, used by move and copy operations.'
+                            description: From is a jsonpatch from string, used by move and copy operations.
                             type: string
                           op:
                             description: Op is a jsonpatch operation string.
@@ -310,7 +307,7 @@ properties:
                           description: Name of the listener to match.
                           type: string
                         listenerTags:
-                          description: 'Listener tags available in Listener#Metadata#FilterMetadata[io.kuma.tags]'
+                          description: Listener tags available in Listener#Metadata#FilterMetadata[io.kuma.tags]
                           type: object
                           additionalProperties:
                             type: string
@@ -364,7 +361,7 @@ properties:
                         description: JsonPatchBlock is one json patch operation block.
                         properties:
                           from:
-                            description: 'From is a jsonpatch from string, used by move and copy operations.'
+                            description: From is a jsonpatch from string, used by move and copy operations.
                             type: string
                           op:
                             description: Op is a jsonpatch operation string.
@@ -492,6 +489,9 @@ properties:
           - kind
     required:
       - default
+    default:
+      default:
+        appendModifications: []
   creationTime:
     description: Time at which the resource was created
     type: string
@@ -509,3 +509,4 @@ required:
   - name
   - spec
 x-request: true
+

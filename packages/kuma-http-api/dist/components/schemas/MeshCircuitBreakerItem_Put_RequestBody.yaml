@@ -248,7 +248,7 @@ properties:
                               type: integer
                               format: int32
                     disabled:
-                      description: 'When set to true, outlierDetection configuration won''t take any effect'
+                      description: When set to true, outlierDetection configuration won't take any effect
                       type: boolean
                     healthyPanicThreshold:
                       description: |-
@@ -565,7 +565,7 @@ properties:
                               type: integer
                               format: int32
                     disabled:
-                      description: 'When set to true, outlierDetection configuration won''t take any effect'
+                      description: When set to true, outlierDetection configuration won't take any effect
                       type: boolean
                     healthyPanicThreshold:
                       description: |-
@@ -680,12 +680,6 @@ properties:
                 Default is a configuration specific to the group of destinations
                 referenced in 'targetRef'
               type: object
-              default:
-                connectionLimits:
-                  maxConnections: 2
-                  maxPendingRequests: 8
-                  maxRetries: 2
-                  maxRequests: 2
               properties:
                 connectionLimits:
                   description: |-
@@ -898,7 +892,7 @@ properties:
                               type: integer
                               format: int32
                     disabled:
-                      description: 'When set to true, outlierDetection configuration won''t take any effect'
+                      description: When set to true, outlierDetection configuration won't take any effect
                       type: boolean
                     healthyPanicThreshold:
                       description: |-
@@ -927,6 +921,12 @@ properties:
                         errors. If set to true the following configuration parameters are taken
                         into account: detectors.localOriginFailures.consecutive
                       type: boolean
+              default:
+                connectionLimits:
+                  maxConnections: 2
+                  maxPendingRequests: 8
+                  maxRetries: 2
+                  maxRequests: 2
             targetRef:
               description: |-
                 TargetRef is a reference to the resource that represents a group of
@@ -1019,3 +1019,4 @@ required:
   - name
   - spec
 x-request: true
+

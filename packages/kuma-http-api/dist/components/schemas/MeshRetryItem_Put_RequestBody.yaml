@@ -165,7 +165,7 @@ properties:
                                 type: string
                                 maxLength: 256
                                 minLength: 1
-                                pattern: '^[a-z0-9!#$%&''*+\-.^_\x60|~]+$'
+                                pattern: ^[a-z0-9!#$%&'*+\-.^_\x60|~]+$
                             required:
                               - format
                               - name
@@ -291,7 +291,7 @@ properties:
                                 type: string
                                 maxLength: 256
                                 minLength: 1
-                                pattern: '^[a-z0-9!#$%&''*+\-.^_\x60|~]+$'
+                                pattern: ^[a-z0-9!#$%&'*+\-.^_\x60|~]+$
                             required:
                               - format
                               - name
@@ -313,7 +313,7 @@ properties:
                             type: string
                             maxLength: 256
                             minLength: 1
-                            pattern: '^[a-z0-9!#$%&''*+\-.^_\x60|~]+$'
+                            pattern: ^[a-z0-9!#$%&'*+\-.^_\x60|~]+$
                           type:
                             description: Type specifies how to match against the value of the header.
                             type: string
@@ -348,7 +348,7 @@ properties:
                             type: string
                             maxLength: 256
                             minLength: 1
-                            pattern: '^[a-z0-9!#$%&''*+\-.^_\x60|~]+$'
+                            pattern: ^[a-z0-9!#$%&'*+\-.^_\x60|~]+$
                           type:
                             description: Type specifies how to match against the value of the header.
                             type: string
@@ -500,3 +500,4 @@ required:
   - name
   - spec
 x-request: true
+
