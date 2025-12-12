@@ -54,7 +54,7 @@ kuma/docs/generated/openapi.yaml:
 		git fetch --depth 1 origin $(GIT_SHA); \
 		git checkout $(GIT_SHA)
 
-types/clean:
+types/clean: ## Remove all build artifacts and re-clone upstream using the version specified in ./openapi.yaml#x-oas-source
 	@echo "Removing build artifacts and cloned kuma repository at..."
 	@echo "./kuma ./generated" \
 		| xargs -n1
