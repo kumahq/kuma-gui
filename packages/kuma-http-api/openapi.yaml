@@ -4,7 +4,7 @@ info:
   description: Kuma API
   version: v1alpha1
   x-ref-schema-name: DataplaneOverview
-  x-oas-source: kumahq/kuma@5a5158c136136f0d07893957b9f2655fceab0ddb
+  x-oas-source: kumahq/kuma@6f0920844fa520497499f58330fb39751ce16119
 paths:
   /:
     get:
@@ -337,6 +337,53 @@ paths:
           schema:
             type: string
           example: retry-all
+        - name: size
+          in: query
+          description: The max number of items to return
+          required: false
+          schema:
+            type: integer
+        - name: offset
+          in: query
+          description: The offset of result
+          required: false
+          schema:
+            type: integer
+        - name: name
+          in: query
+          description: A sub string to filter resources by name
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/InspectDataplanesForPolicyResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/Internal'
+      tags:
+        - Inspect
+  '/meshes/{mesh}/meshservices/{name}/_dataplanes':
+    get:
+      operationId: inspect-meshservices-dataplanes
+      summary: Returns dataplanes matched by a MeshService
+      description: Returns dataplanes matched by a MeshService
+      parameters:
+        - name: mesh
+          in: path
+          description: The mesh the service is part of
+          required: true
+          schema:
+            type: string
+          example: default
+        - name: name
+          in: path
+          description: The name of the service
+          required: true
+          schema:
+            type: string
+          example: redis
         - name: size
           in: query
           description: The max number of items to return
@@ -14753,6 +14800,46 @@ components:
                   origin:
                     type: string
                 type: object
+            conditions:
+              description: Conditions is an array of current conditions
+              type: array
+              items:
+                properties:
+                  message:
+                    description: |-
+                      message is a human readable message indicating details about the transition.
+                      This may be an empty string.
+                    type: string
+                    maxLength: 32768
+                  reason:
+                    description: |-
+                      reason contains a programmatic identifier indicating the reason for the condition's last transition.
+                      Producers of specific condition types may define expected values and meanings for this field,
+                      and whether the values are considered a guaranteed API.
+                      The value should be a CamelCase string.
+                      This field may not be empty.
+                    type: string
+                    maxLength: 1024
+                    minLength: 1
+                    pattern: '^[A-Za-z]([A-Za-z0-9_,:]*[A-Za-z0-9_])?$'
+                  status:
+                    description: 'status of the condition, one of True, False, Unknown.'
+                    type: string
+                    enum:
+                      - 'True'
+                      - 'False'
+                      - Unknown
+                  type:
+                    description: type of condition in CamelCase or in foo.example.com/CamelCase.
+                    type: string
+                    maxLength: 316
+                    pattern: '^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$'
+                required:
+                  - message
+                  - reason
+                  - status
+                  - type
+                type: object
             hostnameGenerators:
               description: Status of hostnames generator applied on this resource
               type: array
@@ -15111,7 +15198,10 @@ components:
                 type: object
               minItems: 1
             origin:
-              description: Origin specifies whether the resource was created from a MeshIdentity.
+              description: |-
+                Origin specifies whether the resource was created from a MeshIdentity.
+
+                Deprecated: use Status.Origin instead
               type: object
               properties:
                 kri:
@@ -15135,6 +15225,18 @@ components:
           type: string
           format: date-time
           example: '0001-01-01T00:00:00Z'
+          readOnly: true
+        status:
+          description: Status is the current status of the Kuma MeshTrust resource.
+          type: object
+          properties:
+            origin:
+              description: Origin specifies whether the resource was created from a MeshIdentity.
+              type: object
+              properties:
+                kri:
+                  description: Resource identifier
+                  type: string
           readOnly: true
       required:
         - type

@@ -244,6 +244,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/meshes/{mesh}/meshservices/{name}/_dataplanes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Returns dataplanes matched by a MeshService
+         * @description Returns dataplanes matched by a MeshService
+         */
+        get: operations["inspect-meshservices-dataplanes"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/meshes/{mesh}/{serviceType}/{serviceName}/_hostnames": {
         parameters: {
             query?: never;
@@ -9341,6 +9361,29 @@ export interface components {
                     };
                     origin?: string;
                 }[];
+                /** @description Conditions is an array of current conditions */
+                conditions?: {
+                    /**
+                     * @description message is a human readable message indicating details about the transition.
+                     *     This may be an empty string.
+                     */
+                    message: string;
+                    /**
+                     * @description reason contains a programmatic identifier indicating the reason for the condition's last transition.
+                     *     Producers of specific condition types may define expected values and meanings for this field,
+                     *     and whether the values are considered a guaranteed API.
+                     *     The value should be a CamelCase string.
+                     *     This field may not be empty.
+                     */
+                    reason: string;
+                    /**
+                     * @description status of the condition, one of True, False, Unknown.
+                     * @enum {string}
+                     */
+                    status: "True" | "False" | "Unknown";
+                    /** @description type of condition in CamelCase or in foo.example.com/CamelCase. */
+                    type: string;
+                }[];
                 /** @description Status of hostnames generator applied on this resource */
                 hostnameGenerators?: {
                     /** @description Conditions is an array of hostname generator conditions. */
@@ -9547,7 +9590,11 @@ export interface components {
                      */
                     type: "Pem";
                 }[];
-                /** @description Origin specifies whether the resource was created from a MeshIdentity. */
+                /**
+                 * @description Origin specifies whether the resource was created from a MeshIdentity.
+                 *
+                 *     Deprecated: use Status.Origin instead
+                 */
                 origin?: {
                     /** @description Resource identifier */
                     kri?: string;
@@ -9567,6 +9614,14 @@ export interface components {
              * @example 0001-01-01T00:00:00Z
              */
             readonly modificationTime?: string;
+            /** @description Status is the current status of the Kuma MeshTrust resource. */
+            readonly status?: {
+                /** @description Origin specifies whether the resource was created from a MeshIdentity. */
+                origin?: {
+                    /** @description Resource identifier */
+                    kri?: string;
+                };
+            };
         };
         WorkloadItem: {
             /**
@@ -16581,6 +16636,38 @@ export interface operations {
                  * @example retry-all
                  */
                 policyName: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["InspectDataplanesForPolicyResponse"];
+            400: components["responses"]["BadRequest"];
+            500: components["responses"]["Internal"];
+        };
+    };
+    "inspect-meshservices-dataplanes": {
+        parameters: {
+            query?: {
+                /** @description The max number of items to return */
+                size?: number;
+                /** @description The offset of result */
+                offset?: number;
+                /** @description A sub string to filter resources by name */
+                name?: string;
+            };
+            header?: never;
+            path: {
+                /**
+                 * @description The mesh the service is part of
+                 * @example default
+                 */
+                mesh: string;
+                /**
+                 * @description The name of the service
+                 * @example redis
+                 */
+                name: string;
             };
             cookie?: never;
         };
