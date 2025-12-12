@@ -42,25 +42,6 @@ actions:
       lastCertificateRegeneration:
         type: string
 
-  - target: '$.components.schemas.MeshItem.properties'
-    update:
-      creationTime:
-        type: string
-      modificationTime:
-        type: string
-
-  # numbers to string enums
-  - target: '$.components.schemas.MeshItem.properties.meshServices.properties.mode.oneOf'
-    remove: true
-  - target: '$.components.schemas.MeshItem.properties.meshServices.properties.mode'
-    update:
-      type: string
-      enum:
-        - Disabled
-        - Everywhere
-        - ReachableBackends
-        - Exclusive
-
   ### requestBodies: any schema marked with x-request is a request body
 
   # delete readOnly properties from original OpenAPI completely for request bodies
