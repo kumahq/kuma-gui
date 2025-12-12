@@ -52,7 +52,10 @@ properties:
           type: object
         minItems: 1
       origin:
-        description: Origin specifies whether the resource was created from a MeshIdentity.
+        description: |-
+          Origin specifies whether the resource was created from a MeshIdentity.
+
+          Deprecated: use Status.Origin instead
         type: object
         properties:
           kri:
@@ -76,6 +79,18 @@ properties:
     type: string
     format: date-time
     example: '0001-01-01T00:00:00Z'
+    readOnly: true
+  status:
+    description: Status is the current status of the Kuma MeshTrust resource.
+    type: object
+    properties:
+      origin:
+        description: Origin specifies whether the resource was created from a MeshIdentity.
+        type: object
+        properties:
+          kri:
+            description: Resource identifier
+            type: string
     readOnly: true
 required:
   - type
