@@ -88,9 +88,12 @@ properties:
     type: object
     properties:
       mode:
-        oneOf:
-          - type: string
-          - type: integer
+        type: string
+        enum:
+          - Disabled
+          - Everywhere
+          - ReachableBackends
+          - Exclusive
   metrics:
     description: |-
       Configuration for metrics collected and exposed by dataplanes.
@@ -265,6 +268,10 @@ properties:
         description: Name of the default backend
         type: string
   type:
+    type: string
+  creationTime:
+    type: string
+  modificationTime:
     type: string
 required:
   - type
