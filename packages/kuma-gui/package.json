@@ -1,6 +1,6 @@
 {
   "name": "@kumahq/kuma-gui",
-  "version": "2.13.0",
+  "version": "2.14.0",
   "private": true,
   "description": "Kuma Manager",
   "author": "Kong",
@@ -39,20 +39,16 @@
     "@kumahq/kuma-http-api": "*",
     "@modyfi/vite-plugin-yaml": "^1.1.1",
     "@types/js-yaml": "^4.0.9",
-    "@types/markdown-it": "^14.1.2",
     "@types/semver": "^7.7.1",
     "@vitejs/plugin-vue": "^6.0.2",
     "@vue/test-utils": "^2.4.6",
     "cypress": "^15.7.1",
     "dotenv": "^17.2.3",
-    "gray-matter": "^4.0.3",
     "jsdom": "^27.2.0",
-    "markdown-it": "^14.1.0",
     "msw": "^2.12.4",
     "sass": "^1.94.2",
     "vite": "^7.2.6",
     "vite-svg-loader": "^5.1.0",
-    "vitepress": "^2.0.0-alpha.15",
     "vitest": "^4.0.15"
   },
   "browserslist": [
