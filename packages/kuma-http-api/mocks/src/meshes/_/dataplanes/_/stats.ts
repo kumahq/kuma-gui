@@ -6,6 +6,7 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
   const nspace = parts.at(-1) ?? ''
 
   const isUnifiedResourceNamingEnabled = env('KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED', '') === 'true'
+  const isSpireEnabled = env('KUMA_DATAPLANE_TLS_ISSUED_MESHIDENTITY', '') === 'true'
   // use seed to sync the ports in stats.ts with the ports in _overview.ts
   fake.kuma.seed(name as string)
   const inboundCount = parseInt(env('KUMA_DATAPLANEINBOUND_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
@@ -672,8 +673,12 @@ tcp.${service}.${direction}_cx_rx_bytes_total: ${fake.number.int(minMax)}`
     body: `${outbounds}
 ${inbounds}
 ${passthrough}
-${stats()}`,
+${stats()}${isSpireEnabled ? `\n${spireStats({ service: services[0] })}` : ''}`,
   }
+}
+
+function spireStats({ service }: Record<string, string>) {
+  return `cluster.${service}.ssl.certificate.spiffe://default.local-zone.mesh.local/ns/kuma-demo/sa/default.expiration_unix_time_seconds: ${Date.now() / 1000 + 7200}`
 }
 
 function stats() {
