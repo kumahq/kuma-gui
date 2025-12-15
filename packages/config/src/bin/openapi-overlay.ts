@@ -42,12 +42,14 @@ const walk = <T>(obj: T, options: WalkOptions = {}): T => {
   }, {} as Record<string, unknown>) as T
 }
 
+// mirror the CLI args we want from
+// https://github.com/thim81/openapi-format?tab=readme-ov-file#openapi-format-cli-options
 const opts = {
   keepComments: true,
   bundle: false,
 }
 
-const __ = process.argv.reduce((prev, flag, i, arr) => {
+const flags = process.argv.reduce((prev, flag, i, arr) => {
   const val = () => arr[i + 1]
   switch (true) {
     case flag === '--input':
@@ -63,11 +65,11 @@ const __ = process.argv.reduce((prev, flag, i, arr) => {
 (async () => {
   // eslint-disable-next-line no-useless-catch
   try {
-    if (__.input.length === 0) {
+    if (flags.input.length === 0) {
       throw new Error('Please provide a path with --input path')
     }
 
-    const filepath = resolve(process.cwd(), __.input)
+    const filepath = resolve(process.cwd(), flags.input)
     if (!exists(filepath)) {
       throw new Error(`${filepath} does not exist`)
     }
