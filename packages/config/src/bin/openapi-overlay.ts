@@ -82,7 +82,7 @@ const __ = process.argv.reduce((prev, flag, i, arr) => {
     })
 
     // dereference any remaining non-private refs before applying the overlay
-    // hence these $refs are deferenced in the overlay file itself
+    // hence these $refs are dereferenced in the overlay file itself
     const dereferenced = await openapiFormat.parseString(
       YAML.stringify(await $RefParser.dereference(filepath, hiddenRefs, {})),
       opts,
