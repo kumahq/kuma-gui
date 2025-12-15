@@ -28,6 +28,9 @@
     "./tsconfig/browser": "./tsconfig/browser.json",
     "./tsconfig/node": "./tsconfig/node.json"
   },
+  "devDependencies": {
+    "@types/markdown-it": "^14.1.2"
+  },
   "dependencies": {
     "@badeball/cypress-cucumber-preprocessor": "^24.0.0",
     "@bahmutov/cypress-esbuild-preprocessor": "^2.2.8",
@@ -35,7 +38,6 @@
     "@eslint/js": "^9.39.1",
     "@stylistic/eslint-plugin": "^5.6.1",
     "@stylistic/stylelint-plugin": "^4.0.0",
-    "@types/markdown-it": "^14.1.2",
     "@vue/eslint-config-typescript": "^14.6.0",
     "@vue/tsconfig": "^0.8.1",
     "cypress": "^15.7.1",
@@ -57,6 +59,7 @@
     "js-yaml": "^4.1.1",
     "lint-staged": "^16.2.7",
     "lockfile-lint": "^4.14.1",
+    "markdown-it": "^14.1.0",
     "openapi-format": "^1.29.0",
     "openapi-typescript": "^7.10.1",
     "stylelint": "^16.26.1",

@@ -15,12 +15,6 @@ build/preview:
 			--mode preview \
 			build
 
-.PHONY: build/docs
-build/docs: VITEPRESS ?= $(shell $(MAKE) resolve/bin BIN=vitepress)
-build/docs:
-	@$(VITEPRESS) \
-		build
-
 .PHONY: deploy/test
 deploy/test:
 	@rm -rf gui
