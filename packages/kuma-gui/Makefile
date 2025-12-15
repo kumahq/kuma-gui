@@ -41,9 +41,6 @@ lint/css: .lint/css ## Dev: Run lint checks on styles in .css, .scss and .vue fi
 .PHONY: run
 run: .run ## Dev: run local development instance of the GUI. If you are working on the GUI then you are probably looking for this.
 
-.PHONY: run/docs
-run/docs: .run/docs ## Dev: run local instance of the GUI docs, either just for reference or contributing.
-
 .PHONY: run/e2e
 run/e2e: .run/e2e ## Dev: run local instance of production build (used for e2e testing)
 
