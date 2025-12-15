@@ -179,7 +179,7 @@
   }
 
   :where(p, td, dd, li) a:where(:hover, :focus) {
-    text-decoration: underline
+    text-decoration: underline;
   }
 
   /* icons */
