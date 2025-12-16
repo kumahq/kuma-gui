@@ -1,3 +1,4 @@
+description: 'MeshRetry configures automatic retry behavior for failed requests to improve service reliability. It supports configurable retry conditions, limits, timeouts, and backoff strategies for HTTP, gRPC, and TCP traffic, helping services recover from transient failures.'
 type: object
 properties:
   type:
