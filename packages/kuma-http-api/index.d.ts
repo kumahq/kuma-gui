@@ -9940,54 +9940,6 @@ export interface components {
                                     type?: "Plain";
                                     /** @example [%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST% */
                                     plain?: string;
-                                } | {
-                                    /** @constant */
-                                    type?: "Json";
-                                    /**
-                                     * @example [
-                                     *       {
-                                     *         "key": "start_time",
-                                     *         "value": "%START_TIME%"
-                                     *       },
-                                     *       {
-                                     *         "key": "bytes_received",
-                                     *         "value": "%BYTES_RECEIVED%"
-                                     *       }
-                                     *     ]
-                                     */
-                                    json?: {
-                                        key: string;
-                                        value: string;
-                                    }[];
-                                } | {
-                                    /** @constant */
-                                    type?: "Plain";
-                                    /** @example [%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST% */
-                                    plain?: string;
-                                } | {
-                                    /** @constant */
-                                    type?: "Json";
-                                    /**
-                                     * @example [
-                                     *       {
-                                     *         "key": "start_time",
-                                     *         "value": "%START_TIME%"
-                                     *       },
-                                     *       {
-                                     *         "key": "bytes_received",
-                                     *         "value": "%BYTES_RECEIVED%"
-                                     *       }
-                                     *     ]
-                                     */
-                                    json?: {
-                                        key: string;
-                                        value: string;
-                                    }[];
-                                } | {
-                                    /** @constant */
-                                    type?: "Plain";
-                                    /** @example [%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST% */
-                                    plain?: string;
                                 });
                             };
                         } | {
@@ -10005,54 +9957,6 @@ export interface components {
                                     /** @enum {string} */
                                     type: "Plain" | "Json";
                                 } & ({
-                                    /** @constant */
-                                    type?: "Json";
-                                    /**
-                                     * @example [
-                                     *       {
-                                     *         "key": "start_time",
-                                     *         "value": "%START_TIME%"
-                                     *       },
-                                     *       {
-                                     *         "key": "bytes_received",
-                                     *         "value": "%BYTES_RECEIVED%"
-                                     *       }
-                                     *     ]
-                                     */
-                                    json?: {
-                                        key: string;
-                                        value: string;
-                                    }[];
-                                } | {
-                                    /** @constant */
-                                    type?: "Plain";
-                                    /** @example [%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST% */
-                                    plain?: string;
-                                } | {
-                                    /** @constant */
-                                    type?: "Json";
-                                    /**
-                                     * @example [
-                                     *       {
-                                     *         "key": "start_time",
-                                     *         "value": "%START_TIME%"
-                                     *       },
-                                     *       {
-                                     *         "key": "bytes_received",
-                                     *         "value": "%BYTES_RECEIVED%"
-                                     *       }
-                                     *     ]
-                                     */
-                                    json?: {
-                                        key: string;
-                                        value: string;
-                                    }[];
-                                } | {
-                                    /** @constant */
-                                    type?: "Plain";
-                                    /** @example [%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST% */
-                                    plain?: string;
-                                } | {
                                     /** @constant */
                                     type?: "Json";
                                     /**
@@ -10219,54 +10123,6 @@ export interface components {
                                     type?: "Plain";
                                     /** @example [%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST% */
                                     plain?: string;
-                                } | {
-                                    /** @constant */
-                                    type?: "Json";
-                                    /**
-                                     * @example [
-                                     *       {
-                                     *         "key": "start_time",
-                                     *         "value": "%START_TIME%"
-                                     *       },
-                                     *       {
-                                     *         "key": "bytes_received",
-                                     *         "value": "%BYTES_RECEIVED%"
-                                     *       }
-                                     *     ]
-                                     */
-                                    json?: {
-                                        key: string;
-                                        value: string;
-                                    }[];
-                                } | {
-                                    /** @constant */
-                                    type?: "Plain";
-                                    /** @example [%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST% */
-                                    plain?: string;
-                                } | {
-                                    /** @constant */
-                                    type?: "Json";
-                                    /**
-                                     * @example [
-                                     *       {
-                                     *         "key": "start_time",
-                                     *         "value": "%START_TIME%"
-                                     *       },
-                                     *       {
-                                     *         "key": "bytes_received",
-                                     *         "value": "%BYTES_RECEIVED%"
-                                     *       }
-                                     *     ]
-                                     */
-                                    json?: {
-                                        key: string;
-                                        value: string;
-                                    }[];
-                                } | {
-                                    /** @constant */
-                                    type?: "Plain";
-                                    /** @example [%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST% */
-                                    plain?: string;
                                 });
                             };
                         } | {
@@ -10284,54 +10140,6 @@ export interface components {
                                     /** @enum {string} */
                                     type: "Plain" | "Json";
                                 } & ({
-                                    /** @constant */
-                                    type?: "Json";
-                                    /**
-                                     * @example [
-                                     *       {
-                                     *         "key": "start_time",
-                                     *         "value": "%START_TIME%"
-                                     *       },
-                                     *       {
-                                     *         "key": "bytes_received",
-                                     *         "value": "%BYTES_RECEIVED%"
-                                     *       }
-                                     *     ]
-                                     */
-                                    json?: {
-                                        key: string;
-                                        value: string;
-                                    }[];
-                                } | {
-                                    /** @constant */
-                                    type?: "Plain";
-                                    /** @example [%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST% */
-                                    plain?: string;
-                                } | {
-                                    /** @constant */
-                                    type?: "Json";
-                                    /**
-                                     * @example [
-                                     *       {
-                                     *         "key": "start_time",
-                                     *         "value": "%START_TIME%"
-                                     *       },
-                                     *       {
-                                     *         "key": "bytes_received",
-                                     *         "value": "%BYTES_RECEIVED%"
-                                     *       }
-                                     *     ]
-                                     */
-                                    json?: {
-                                        key: string;
-                                        value: string;
-                                    }[];
-                                } | {
-                                    /** @constant */
-                                    type?: "Plain";
-                                    /** @example [%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST% */
-                                    plain?: string;
-                                } | {
                                     /** @constant */
                                     type?: "Json";
                                     /**
@@ -10496,54 +10304,6 @@ export interface components {
                                     type?: "Plain";
                                     /** @example [%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST% */
                                     plain?: string;
-                                } | {
-                                    /** @constant */
-                                    type?: "Json";
-                                    /**
-                                     * @example [
-                                     *       {
-                                     *         "key": "start_time",
-                                     *         "value": "%START_TIME%"
-                                     *       },
-                                     *       {
-                                     *         "key": "bytes_received",
-                                     *         "value": "%BYTES_RECEIVED%"
-                                     *       }
-                                     *     ]
-                                     */
-                                    json?: {
-                                        key: string;
-                                        value: string;
-                                    }[];
-                                } | {
-                                    /** @constant */
-                                    type?: "Plain";
-                                    /** @example [%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST% */
-                                    plain?: string;
-                                } | {
-                                    /** @constant */
-                                    type?: "Json";
-                                    /**
-                                     * @example [
-                                     *       {
-                                     *         "key": "start_time",
-                                     *         "value": "%START_TIME%"
-                                     *       },
-                                     *       {
-                                     *         "key": "bytes_received",
-                                     *         "value": "%BYTES_RECEIVED%"
-                                     *       }
-                                     *     ]
-                                     */
-                                    json?: {
-                                        key: string;
-                                        value: string;
-                                    }[];
-                                } | {
-                                    /** @constant */
-                                    type?: "Plain";
-                                    /** @example [%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST% */
-                                    plain?: string;
                                 });
                             };
                         } | {
@@ -10561,54 +10321,6 @@ export interface components {
                                     /** @enum {string} */
                                     type: "Plain" | "Json";
                                 } & ({
-                                    /** @constant */
-                                    type?: "Json";
-                                    /**
-                                     * @example [
-                                     *       {
-                                     *         "key": "start_time",
-                                     *         "value": "%START_TIME%"
-                                     *       },
-                                     *       {
-                                     *         "key": "bytes_received",
-                                     *         "value": "%BYTES_RECEIVED%"
-                                     *       }
-                                     *     ]
-                                     */
-                                    json?: {
-                                        key: string;
-                                        value: string;
-                                    }[];
-                                } | {
-                                    /** @constant */
-                                    type?: "Plain";
-                                    /** @example [%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST% */
-                                    plain?: string;
-                                } | {
-                                    /** @constant */
-                                    type?: "Json";
-                                    /**
-                                     * @example [
-                                     *       {
-                                     *         "key": "start_time",
-                                     *         "value": "%START_TIME%"
-                                     *       },
-                                     *       {
-                                     *         "key": "bytes_received",
-                                     *         "value": "%BYTES_RECEIVED%"
-                                     *       }
-                                     *     ]
-                                     */
-                                    json?: {
-                                        key: string;
-                                        value: string;
-                                    }[];
-                                } | {
-                                    /** @constant */
-                                    type?: "Plain";
-                                    /** @example [%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST% */
-                                    plain?: string;
-                                } | {
                                     /** @constant */
                                     type?: "Json";
                                     /**
