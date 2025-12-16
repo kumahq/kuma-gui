@@ -1,0 +1,72 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    ":semanticCommits",
+    "Kong/public-shared-renovate//base/github-actions",
+    "Kong/public-shared-renovate//base/javascript"
+  ],
+  "dependencyDashboard": true,
+  "printConfig": true,
+  "labels": [
+    "dependencies",
+    "renovate-bot"
+  ],
+  "prHourlyLimit": 0,
+  "baseBranchPatterns": [
+    "master"
+  ],
+  "lockFileMaintenance": {
+    "enabled": true,
+    "recreateWhen": "always",
+    "rebaseWhen": "behind-base-branch"
+  },
+  "postUpdateOptions": [
+    "npmDedupe"
+  ],
+  "osvVulnerabilityAlerts": true,
+  "vulnerabilityAlerts": {
+    "enabled": true
+  },
+  "prCreation": "not-pending",
+  "packageRules": [
+    {
+      "matchUpdateTypes": [
+        "lockFileMaintenance"
+      ],
+      "dependencyDashboardApproval": true
+    },
+    {
+      "matchPackageNames": [
+        "npm",
+        "escape-string-regexp"
+      ],
+      "enabled": false
+    },
+    {
+      "groupName": "node",
+      "matchPackageNames": [
+        "node"
+      ],
+      "dependencyDashboardApproval": true
+    },
+    {
+      "description": [
+        "Disable grouping of minor and patch updates for non-0.x packages",
+        "inherited from base config `Kong/public-shared-renovate//base/javascript`"
+      ],
+      "matchCategories": [
+        "js"
+      ],
+      "matchPackageNames": [
+        "*"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "matchCurrentVersion": "!/^0/",
+      "enabled": false
+    }
+  ]
+}
