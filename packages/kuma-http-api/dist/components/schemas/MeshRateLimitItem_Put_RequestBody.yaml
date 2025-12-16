@@ -66,7 +66,7 @@ properties:
                                         type: string
                                         maxLength: 256
                                         minLength: 1
-                                        pattern: '^[a-z0-9!#$%&''*+\-.^_\x60|~]+$'
+                                        pattern: ^[a-z0-9!#$%&'*+\-.^_\x60|~]+$
                                       value:
                                         type: string
                                     required:
@@ -85,7 +85,7 @@ properties:
                                         type: string
                                         maxLength: 256
                                         minLength: 1
-                                        pattern: '^[a-z0-9!#$%&''*+\-.^_\x60|~]+$'
+                                        pattern: ^[a-z0-9!#$%&'*+\-.^_\x60|~]+$
                                       value:
                                         type: string
                                     required:
@@ -249,7 +249,7 @@ properties:
                                         type: string
                                         maxLength: 256
                                         minLength: 1
-                                        pattern: '^[a-z0-9!#$%&''*+\-.^_\x60|~]+$'
+                                        pattern: ^[a-z0-9!#$%&'*+\-.^_\x60|~]+$
                                       value:
                                         type: string
                                     required:
@@ -268,7 +268,7 @@ properties:
                                         type: string
                                         maxLength: 256
                                         minLength: 1
-                                        pattern: '^[a-z0-9!#$%&''*+\-.^_\x60|~]+$'
+                                        pattern: ^[a-z0-9!#$%&'*+\-.^_\x60|~]+$
                                       value:
                                         type: string
                                     required:
@@ -436,7 +436,7 @@ properties:
                                         type: string
                                         maxLength: 256
                                         minLength: 1
-                                        pattern: '^[a-z0-9!#$%&''*+\-.^_\x60|~]+$'
+                                        pattern: ^[a-z0-9!#$%&'*+\-.^_\x60|~]+$
                                       value:
                                         type: string
                                     required:
@@ -455,7 +455,7 @@ properties:
                                         type: string
                                         maxLength: 256
                                         minLength: 1
-                                        pattern: '^[a-z0-9!#$%&''*+\-.^_\x60|~]+$'
+                                        pattern: ^[a-z0-9!#$%&'*+\-.^_\x60|~]+$
                                       value:
                                         type: string
                                     required:
@@ -601,3 +601,4 @@ required:
   - name
   - spec
 x-request: true
+
