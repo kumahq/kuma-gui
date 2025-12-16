@@ -171,6 +171,19 @@
 <style lang="scss" scoped>
 :deep(> *) {
   & {
+    --x-anchor-text-color: #{$kui-color-text-primary};
+  }
+
+  a {
+    color: var(--x-anchor-text-color);
+  }
+
+  :where(p, td, dd, li) a:where(:hover, :focus) {
+    text-decoration: underline;
+  }
+
+  /* icons */
+  & {
     --icon-wifi-tethering-glyph: url('@/assets/images/icon-wifi-tethering.svg?inline');
     --icon-home-glyph: url('@/assets/images/navigation/icon-home.svg?inline');
     --icon-zone-glyph: url('@/assets/images/zone.svg?inline');

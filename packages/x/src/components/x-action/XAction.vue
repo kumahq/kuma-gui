@@ -272,7 +272,7 @@ watch(() => props.to, (val) => {
 button.x-action-appearance-anchor,
 button.x-action-appearance-anchor span {
   text-decoration: none;
-  color: $kui-color-text-primary;
+  color: var(--x-anchor-text-color);
 }
 
 button.x-action-appearance-anchor:hover span,

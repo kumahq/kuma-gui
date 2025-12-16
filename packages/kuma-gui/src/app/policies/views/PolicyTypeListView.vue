@@ -23,8 +23,9 @@
           :src="uri(sources, '/policy-types', {})"
           v-slot="{ data, error }"
         >
-          <div
-            class="policy-list-content"
+          <XLayout
+            variant="x-stack"
+            size="large"
           >
             <XCard
               class="policy-type-list"
@@ -47,47 +48,53 @@
                     :items="data!.policyTypes"
                     v-slot="{ items }"
                   >
-                    <template
-                      v-for="current in [items.find(policyType => policyType.path === route.params.policyPath)]"
-                      :key="current"
-                    >
-                      <div
-                        v-for="(policyType, i) in items"
-                        :key="policyType.path"
-                        class="policy-type-link-wrapper"
-                        :class="{
-                          'policy-type-link-wrapper--is-active': current && current.path === policyType.path,
-                        }"
+                    <ul>
+                      <template
+                        v-for="current in [items.find(policyType => policyType.path === route.params.policyPath)]"
+                        :key="current"
                       >
-                        <XAction
-                          class="policy-type-link"
-                          :to="{
-                            name: 'policy-list-view',
-                            params: {
-                              mesh: route.params.mesh,
-                              policyPath: policyType.path,
-                            },
-                          }"
-                          :data-testid="`policy-type-link-${policyType.name}`"
-                          @vue:mounted="(vNode) => {
-                            if(route.params.policyPath.length === 0 && i === 0 && vNode.props?.to) {
-                              route.replace(vNode.props.to)
-                            }
+                        <li
+                          v-for="(policyType, i) in items"
+                          :key="policyType.path"
+                          :class="{
+                            'active': current && current.path === policyType.path,
                           }"
                         >
-                          {{ policyType.name }}
-                        </XAction>
-
-                        <div class="policy-count">
-                          {{ meshInsight?.policies?.[policyType.name]?.total ?? 0 }}
-                        </div>
-                      </div>
-                    </template>
+                          <XAction
+                            :to="{
+                              name: 'policy-list-view',
+                              params: {
+                                mesh: route.params.mesh,
+                                policyPath: policyType.path,
+                              },
+                            }"
+                            :data-testid="`policy-type-link-${policyType.name}`"
+                            @vue:mounted="(vNode) => {
+                              if(route.params.policyPath.length === 0 && i === 0 && vNode.props?.to) {
+                                route.replace(vNode.props.to)
+                              }
+                            }"
+                          >
+                            <XLayout
+                              variant="x-stack"
+                              justify="between"
+                            >
+                              <span>
+                                {{ policyType.name }}
+                              </span>
+                              <span>
+                                {{ meshInsight?.policies?.[policyType.name]?.total ?? 0 }}
+                              </span>
+                            </XLayout>
+                          </XAction>
+                        </li>
+                      </template>
+                    </ul>
                   </DataCollection>
                 </template>
               </DataLoader>
             </XCard>
-            <div class="policy-list">
+            <div>
               <RouterView v-slot="{ Component }">
                 <component
                   :is="Component"
@@ -95,59 +102,41 @@
                 />
               </RouterView>
             </div>
-          </div>
+          </XLayout>
         </DataSource>
       </DataSource>
     </AppView>
   </RouteView>
 </template>
-
 <script lang="ts" setup>
 import { sources as meshSources } from '@/app/meshes/sources'
 import { sources } from '@/app/policies/sources'
 </script>
-<style lang="scss">
-.policy-type-link {
-  color: currentColor;
-  flex-grow: 1;
-  padding: $kui-space-40 $kui-space-60;
-}
-
-</style>
 <style lang="scss" scoped>
-.policy-list-content {
-  display: flex;
-  gap: $kui-space-80;
-}
-
 .policy-type-list {
   position: sticky;
   top: calc(var(--AppHeaderHeight) + $kui-space-70);
   align-self: flex-start;
   max-width: 500px;
 }
-
-.policy-list {
-  flex-grow: 1;
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
-.policy-type-link-wrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: $kui-space-60;
-}
-
-.policy-type-link-wrapper--is-active {
-  background-color: $kui-color-background-primary-weakest;
-}
-
-.policy-type-link-wrapper:not(.policy-type-link-wrapper--is-active) {
+li :deep(a) {
+  display: block;
   color: $kui-color-text-neutral;
+  padding: $kui-space-40 $kui-space-60;
+  text-decoration: none;
+  :hover, :focus {
+    span:first-of-type {
+      text-decoration: underline;
+    }
+  }
 }
-
-.policy-count {
-  text-align: right;
-  padding-right: $kui-space-60;
+li.active :deep(a) {
+  background-color: $kui-color-background-primary-weakest;
+  color: currentColor;
 }
-
 </style>
