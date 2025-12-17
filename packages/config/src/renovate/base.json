@@ -52,8 +52,8 @@
     },
     {
       "description": [
-        "Disable grouping of minor and patch updates for non-0.x packages",
-        "inherited from base config `Kong/public-shared-renovate//base/javascript`"
+        " Disable grouping of minor and patch updates for non-0.x packages",
+        " inherited from base config `Kong/public-shared-renovate//base/javascript`"
       ],
       "matchCategories": [
         "js"
@@ -67,6 +67,16 @@
       ],
       "matchCurrentVersion": "!/^0/",
       "groupName": null
+    },
+    {
+      "description": [
+        "Reduce `minimumReleaseAge` for internal toolings"
+      ],
+      "matchPackageNames": [
+        "@kong**/**",
+        "kumahq/**"
+      ],
+      "minimumReleaseAge": "2 hours"
     }
   ]
 }
