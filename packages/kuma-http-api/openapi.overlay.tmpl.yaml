@@ -48,6 +48,13 @@ actions:
   - target: '$..[?(@["x-request"])].properties..[?(@.readOnly)]'
     remove: true
 
+  - target: '$..[?(@["x-request"])].properties..[?(@["x-kubernetes-int-or-string"])]'
+    update:
+      type: string
+  - target: '$..[?(@["x-request"])].properties..[?(@["x-kubernetes-int-or-string"])].anyOf'
+    remove: true
+
+
   # from in any spec/policy is deprecated
   - target: '$..[?(@["x-request"])].properties.spec..from'
     update:

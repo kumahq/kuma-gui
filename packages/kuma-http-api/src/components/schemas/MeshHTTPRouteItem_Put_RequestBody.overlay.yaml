@@ -18,3 +18,95 @@ actions:
     update:
       default:
         rules: []
+  # backendRefs are targetRefs
+  - target: '$..backendRefs.items'
+    update:
+      x-kuma-type: TargetRef
+
+  # rules.default.filters should be oneOf
+  - target: '$..filters.items.properties.requestHeaderModifier'
+    remove: true
+  - target: '$..filters.items.properties.requestMirror'
+    remove: true
+  - target: '$..filters.items.properties.requestRedirect'
+    remove: true
+  - target: '$..filters.items.properties.responseHeaderModifier'
+    remove: true
+  - target: '$..filters.items.properties.urlRewrite'
+    remove: true
+
+  - target: '$..filters.items'
+    update:
+      default:
+        type: RequestHeaderModifier
+      oneOf:
+        - type: object
+          default:
+            type: RequestHeaderModifier
+            roundRobin: {}
+          properties:
+            type: { const: RequestHeaderModifier }
+            requestHeaderModifier:
+              $ref: !!oas-overlay/dereference '../../../generated/components/schemas/MeshHTTPRouteItem.yaml#/properties/spec/properties/to/items/properties/rules/items/properties/default/properties/filters/items/properties/requestHeaderModifier'
+        - type: object
+          default:
+            type: ResponseHeaderModifier
+            responseHeaderModifier: {}
+          properties:
+            type: { const: ResponseHeaderModifier }
+            responseHeaderModifier:
+              $ref: !!oas-overlay/dereference '../../../generated/components/schemas/MeshHTTPRouteItem.yaml#/properties/spec/properties/to/items/properties/rules/items/properties/default/properties/filters/items/properties/responseHeaderModifier'
+        - type: object
+          default:
+            type: RequestRedirect
+            responseHeaderModifier: {}
+          properties:
+            type: { const: RequestRedirect }
+            requestRedirect:
+              $ref: !!oas-overlay/dereference '../../../generated/components/schemas/MeshHTTPRouteItem.yaml#/properties/spec/properties/to/items/properties/rules/items/properties/default/properties/filters/items/properties/requestRedirect'
+        - type: object
+          default:
+            type: URLRewrite
+            urlRewrite: {}
+          properties:
+            type: { const: URLRewrite }
+            urlRewrite:
+              $ref: !!oas-overlay/dereference '../../../generated/components/schemas/MeshHTTPRouteItem.yaml#/properties/spec/properties/to/items/properties/rules/items/properties/default/properties/filters/items/properties/urlRewrite'
+        - type: object
+          default:
+            type: RequestMirror
+            requestMirror: {}
+          properties:
+            type: { const: RequestMirror }
+            requestMirror:
+              $ref: !!oas-overlay/dereference '../../../generated/components/schemas/MeshHTTPRouteItem.yaml#/properties/spec/properties/to/items/properties/rules/items/properties/default/properties/filters/items/properties/requestMirror'
+
+  # rules[].default.filters[].requestRedirect.path should be oneOf
+  - target: '$..filters.items.oneOf[2].properties.requestRedirect.properties.path.properties.replaceFullPath'
+    remove: true
+  - target: '$..filters.items.oneOf[2].properties.requestRedirect.properties.path.properties.replacePrefixMatch'
+    remove: true
+
+  - target: '$..filters.items.oneOf[2].properties.requestRedirect.properties.path'
+    update:
+      default:
+        type: ReplaceFullPath
+        replaceFullPath: ''
+      oneOf:
+        - type: object
+          default:
+            type: ReplaceFullPath
+            replaceFullPath: ''
+          properties:
+            type: { const: ReplaceFullPath }
+            replaceFullPath:
+              $ref: !!oas-overlay/dereference '../../../generated/components/schemas/MeshHTTPRouteItem.yaml#/properties/spec/properties/to/items/properties/rules/items/properties/default/properties/filters/items/properties/requestRedirect/properties/path/properties/replaceFullPath'
+        - type: object
+          default:
+            type: ReplacePrefixMatch
+            replacePrefixMatch: ''
+          properties:
+            type: { const: ReplacePrefixMatch }
+            replacePrefixMatch:
+              $ref: !!oas-overlay/dereference '../../../generated/components/schemas/MeshHTTPRouteItem.yaml#/properties/spec/properties/to/items/properties/rules/items/properties/default/properties/filters/items/properties/requestRedirect/properties/path/properties/replaceFullPath'
+

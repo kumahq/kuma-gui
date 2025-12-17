@@ -55,8 +55,7 @@ properties:
                       file:
                         path: ''
                     oneOf:
-                      - title: TCP
-                        type: object
+                      - type: object
                         default:
                           type: Tcp
                           tcp:
@@ -90,8 +89,7 @@ properties:
                                 required:
                                   - type
                                 oneOf:
-                                  - title: JSON
-                                    type: object
+                                  - type: object
                                     default:
                                       type: Json
                                       json: []
@@ -115,8 +113,7 @@ properties:
                                             value: '%START_TIME%'
                                           - key: bytes_received
                                             value: '%BYTES_RECEIVED%'
-                                  - title: Plain
-                                    type: object
+                                  - type: object
                                     default:
                                       type: Plain
                                       plain: '[%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST%'
@@ -128,8 +125,7 @@ properties:
                                         example: '[%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST%'
                             required:
                               - address
-                      - title: File
-                        type: object
+                      - type: object
                         default:
                           type: File
                           file:
@@ -158,8 +154,7 @@ properties:
                                 required:
                                   - type
                                 oneOf:
-                                  - title: JSON
-                                    type: object
+                                  - type: object
                                     default:
                                       type: Json
                                       json: []
@@ -183,8 +178,7 @@ properties:
                                             value: '%START_TIME%'
                                           - key: bytes_received
                                             value: '%BYTES_RECEIVED%'
-                                  - title: Plain
-                                    type: object
+                                  - type: object
                                     default:
                                       type: Plain
                                       plain: '[%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST%'
@@ -201,8 +195,7 @@ properties:
                                 minLength: 1
                             required:
                               - path
-                      - title: OpenTelemetry
-                        type: object
+                      - type: object
                         default:
                           type: OpenTelemetry
                           openTelemetry:
@@ -348,8 +341,7 @@ properties:
                       file:
                         path: ''
                     oneOf:
-                      - title: TCP
-                        type: object
+                      - type: object
                         default:
                           type: Tcp
                           tcp:
@@ -383,8 +375,7 @@ properties:
                                 required:
                                   - type
                                 oneOf:
-                                  - title: JSON
-                                    type: object
+                                  - type: object
                                     default:
                                       type: Json
                                       json: []
@@ -408,8 +399,7 @@ properties:
                                             value: '%START_TIME%'
                                           - key: bytes_received
                                             value: '%BYTES_RECEIVED%'
-                                  - title: Plain
-                                    type: object
+                                  - type: object
                                     default:
                                       type: Plain
                                       plain: '[%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST%'
@@ -421,8 +411,7 @@ properties:
                                         example: '[%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST%'
                             required:
                               - address
-                      - title: File
-                        type: object
+                      - type: object
                         default:
                           type: File
                           file:
@@ -451,8 +440,7 @@ properties:
                                 required:
                                   - type
                                 oneOf:
-                                  - title: JSON
-                                    type: object
+                                  - type: object
                                     default:
                                       type: Json
                                       json: []
@@ -476,8 +464,7 @@ properties:
                                             value: '%START_TIME%'
                                           - key: bytes_received
                                             value: '%BYTES_RECEIVED%'
-                                  - title: Plain
-                                    type: object
+                                  - type: object
                                     default:
                                       type: Plain
                                       plain: '[%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST%'
@@ -494,8 +481,7 @@ properties:
                                 minLength: 1
                             required:
                               - path
-                      - title: OpenTelemetry
-                        type: object
+                      - type: object
                         default:
                           type: OpenTelemetry
                           openTelemetry:
@@ -646,8 +632,7 @@ properties:
                       file:
                         path: ''
                     oneOf:
-                      - title: TCP
-                        type: object
+                      - type: object
                         default:
                           type: Tcp
                           tcp:
@@ -681,8 +666,7 @@ properties:
                                 required:
                                   - type
                                 oneOf:
-                                  - title: JSON
-                                    type: object
+                                  - type: object
                                     default:
                                       type: Json
                                       json: []
@@ -706,8 +690,7 @@ properties:
                                             value: '%START_TIME%'
                                           - key: bytes_received
                                             value: '%BYTES_RECEIVED%'
-                                  - title: Plain
-                                    type: object
+                                  - type: object
                                     default:
                                       type: Plain
                                       plain: '[%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST%'
@@ -719,8 +702,7 @@ properties:
                                         example: '[%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST%'
                             required:
                               - address
-                      - title: File
-                        type: object
+                      - type: object
                         default:
                           type: File
                           file:
@@ -749,8 +731,7 @@ properties:
                                 required:
                                   - type
                                 oneOf:
-                                  - title: JSON
-                                    type: object
+                                  - type: object
                                     default:
                                       type: Json
                                       json: []
@@ -774,8 +755,7 @@ properties:
                                             value: '%START_TIME%'
                                           - key: bytes_received
                                             value: '%BYTES_RECEIVED%'
-                                  - title: Plain
-                                    type: object
+                                  - type: object
                                     default:
                                       type: Plain
                                       plain: '[%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST%'
@@ -792,8 +772,7 @@ properties:
                                 minLength: 1
                             required:
                               - path
-                      - title: OpenTelemetry
-                        type: object
+                      - type: object
                         default:
                           type: OpenTelemetry
                           openTelemetry:

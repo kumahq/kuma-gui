@@ -129,22 +129,28 @@ components:
 http:
   api:
     property:
-      modificationTime: Modified
-      creationTime: Created
+      id: ID
+      json: JSON
+      tcp: TCP
+      http: HTTP
+      http2: HTTP2
+      grpc: gRPC
       tls: TLS
       mtls: mTLS
       mTLS: mTLS
-      id: ID
+      cds: CDS
+      eds: EDS
+      lds: LDS
+      rds: RDS
+      openTelemetry: OpenTelemetry
+      modificationTime: Modified
+      creationTime: Created
       globalInstanceId: Global instance ID
       controlPlaneInstanceId: CP instance ID
       zoneInstanceId: Zone leader instance ID
       connectTime: Connected
       disconnectTime: Disconnected
       version: Version
-      cds: CDS
-      eds: EDS
-      lds: LDS
-      rds: RDS
       responsesSent: Responses sent
       responsesAcknowledged: Responses acknowledged
       responsesRejected: Responses rejected

@@ -181,6 +181,7 @@ properties:
                           required:
                             - kind
                           type: object
+                          x-kuma-type: TargetRef
                 required:
                   - default
                 type: object

@@ -22,3 +22,7 @@ actions:
         targetRef:
           kind: MeshService
         rules: []
+
+  - target: '$..backendRefs.items'
+    update:
+      x-kuma-type: TargetRef
