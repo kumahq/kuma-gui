@@ -76,7 +76,8 @@
         "@kong**/**",
         "kumahq/**"
       ],
-      "minimumReleaseAge": "2 hours"
+      "minimumReleaseAge": "2 hours",
+      "minimumReleaseAgeBehaviour": "timestamp-optional"
     }
   ]
 }
