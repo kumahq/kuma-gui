@@ -36,7 +36,7 @@
     "@badeball/cypress-cucumber-preprocessor": "^24.0.0",
     "@bahmutov/cypress-esbuild-preprocessor": "^2.2.8",
     "@cucumber/gherkin-utils": "^10.0.0",
-    "@eslint/js": "^9.39.1",
+    "@eslint/js": "^9.39.2",
     "@stylistic/eslint-plugin": "^5.6.1",
     "@stylistic/stylelint-plugin": "^4.0.0",
     "@vue/eslint-config-typescript": "^14.6.0",
