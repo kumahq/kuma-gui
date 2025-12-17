@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "@kumahq/config": "*",
-    "@vitejs/plugin-vue": "^6.0.2",
+    "@vitejs/plugin-vue": "^6.0.3",
     "@vue/test-utils": "^2.4.6",
     "vite": "^7.2.7",
     "vitest": "^4.0.15"
