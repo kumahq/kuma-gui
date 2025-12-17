@@ -19,7 +19,7 @@
     "@vueuse/core": "^14.1.0",
     "@vue/shared": "^3.5.25",
     "vue-global-events": "^3.0.1",
-    "vue-router": "^4.6.3"
+    "vue-router": "^4.6.4"
   },
   "devDependencies": {
     "@kumahq/config": "*",
