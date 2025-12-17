@@ -41,8 +41,7 @@ actions:
         file:
           path: ''
       oneOf:
-        - title: TCP
-          type: object
+        - type: object
           default:
             type: Tcp
             tcp:
@@ -51,8 +50,7 @@ actions:
             type: { const: Tcp }
             tcp:
               $ref: !!oas-overlay/dereference '../../../generated/components/schemas/MeshAccessLogItem.yaml#/properties/spec/properties/to/items/properties/default/properties/backends/items/properties/tcp'
-        - title: File
-          type: object
+        - type: object
           default:
             type: File
             file:
@@ -61,9 +59,7 @@ actions:
             type: { const: File }
             file:
               $ref: !!oas-overlay/dereference '../../../generated/components/schemas/MeshAccessLogItem.yaml#/properties/spec/properties/to/items/properties/default/properties/backends/items/properties/file'
-
-        - title: OpenTelemetry
-          type: object
+        - type: object
           default:
             type: OpenTelemetry
             openTelemetry:
@@ -83,8 +79,7 @@ actions:
     update:
       # plain/json should be oneOf
       oneOf:
-        - title: JSON
-          type: object
+        - type: object
           default:
             type: Json
             json: []
@@ -92,8 +87,7 @@ actions:
             type: { const: Json }
             json:
               $ref: !!oas-overlay/dereference '../../../generated/components/schemas/MeshAccessLogItem.yaml#/properties/spec/properties/to/items/properties/default/properties/backends/items/properties/tcp/properties/format/properties/json'
-        - title: Plain
-          type: object
+        - type: object
           default:
             type: Plain
             plain: '[%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST%'
@@ -104,8 +98,7 @@ actions:
   - target: '$..backends.items.oneOf[1].properties.file.properties.format'
     update:
       oneOf:
-        - title: JSON
-          type: object
+        - type: object
           default:
             type: Json
             json: []
@@ -113,8 +106,7 @@ actions:
             type: { const: Json }
             json:
               $ref: !!oas-overlay/dereference '../../../generated/components/schemas/MeshAccessLogItem.yaml#/properties/spec/properties/to/items/properties/default/properties/backends/items/properties/file/properties/format/properties/json'
-        - title: Plain
-          type: object
+        - type: object
           default:
             type: Plain
             plain: '[%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST%'

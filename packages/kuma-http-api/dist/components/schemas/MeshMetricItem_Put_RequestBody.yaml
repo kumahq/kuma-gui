@@ -57,46 +57,6 @@ properties:
             type: array
             items:
               properties:
-                openTelemetry:
-                  description: OpenTelemetry backend configuration
-                  type: object
-                  properties:
-                    endpoint:
-                      description: Endpoint for OpenTelemetry collector
-                      type: string
-                    refreshInterval:
-                      description: RefreshInterval defines how frequent metrics should be pushed to collector
-                      type: string
-                  required:
-                    - endpoint
-                prometheus:
-                  description: Prometheus backend configuration.
-                  type: object
-                  properties:
-                    clientId:
-                      description: ClientId of the Prometheus backend. Needed when using MADS for DP discovery.
-                      type: string
-                    path:
-                      description: Path on which a dataplane should expose HTTP endpoint with Prometheus metrics.
-                      type: string
-                      default: /metrics
-                    port:
-                      description: Port on which a dataplane should expose HTTP endpoint with Prometheus metrics.
-                      type: integer
-                      format: int32
-                      default: 5670
-                    tls:
-                      description: Configuration of TLS for prometheus listener.
-                      type: object
-                      properties:
-                        mode:
-                          description: Configuration of TLS for Prometheus listener.
-                          type: string
-                          default: Disabled
-                          enum:
-                            - Disabled
-                            - ProvidedTLS
-                            - ActiveMTLSBackend
                 type:
                   description: Type of the backend that will be used to collect metrics. At the moment only Prometheus backend is available.
                   type: string
@@ -106,6 +66,63 @@ properties:
               required:
                 - type
               type: object
+              default:
+                type: Prometheus
+              oneOf:
+                - type: object
+                  default:
+                    type: Prometheus
+                    prometheus: {}
+                  properties:
+                    type:
+                      const: Prometheus
+                    prometheus:
+                      description: Prometheus backend configuration.
+                      type: object
+                      properties:
+                        clientId:
+                          description: ClientId of the Prometheus backend. Needed when using MADS for DP discovery.
+                          type: string
+                        path:
+                          description: Path on which a dataplane should expose HTTP endpoint with Prometheus metrics.
+                          type: string
+                          default: /metrics
+                        port:
+                          description: Port on which a dataplane should expose HTTP endpoint with Prometheus metrics.
+                          type: integer
+                          format: int32
+                          default: 5670
+                        tls:
+                          description: Configuration of TLS for prometheus listener.
+                          type: object
+                          properties:
+                            mode:
+                              description: Configuration of TLS for Prometheus listener.
+                              type: string
+                              default: Disabled
+                              enum:
+                                - Disabled
+                                - ProvidedTLS
+                                - ActiveMTLSBackend
+                - type: object
+                  default:
+                    type: OpenTelemetry
+                    openTelemetry: {}
+                  properties:
+                    type:
+                      const: OpenTelemetry
+                    openTelemetry:
+                      description: OpenTelemetry backend configuration
+                      type: object
+                      properties:
+                        endpoint:
+                          description: Endpoint for OpenTelemetry collector
+                          type: string
+                        refreshInterval:
+                          description: RefreshInterval defines how frequent metrics should be pushed to collector
+                          type: string
+                      required:
+                        - endpoint
           sidecar:
             description: Sidecar metrics collection configuration
             type: object
