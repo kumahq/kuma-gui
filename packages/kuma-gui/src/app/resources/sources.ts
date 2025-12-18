@@ -3,7 +3,6 @@ import createClient from 'openapi-fetch'
 import { MeshIdentity } from './data/MeshIdentity'
 import { MeshTrust } from './data/MeshTrust'
 import { defineSources } from '@/app/application'
-import { Kri } from '@/app/kuma/kri'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import type { paths, components } from '@kumahq/kuma-http-api'
 
