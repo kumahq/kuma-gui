@@ -198,6 +198,7 @@
                       </template>
                       <template #origin="{ row: item }">
                         <XAction
+                          v-if="item.spec.origin.kri.length > 0"
                           :to="{
                             name: 'mesh-identity-summary-view',
                             params: {

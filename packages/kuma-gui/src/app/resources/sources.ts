@@ -5,7 +5,7 @@ import { MeshTrust } from './data/MeshTrust'
 import { defineSources } from '@/app/application'
 import { Kri } from '@/app/kuma/kri'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
-import type { paths } from '@kumahq/kuma-http-api'
+import type { paths, components } from '@kumahq/kuma-http-api'
 
 export const sources = (api: KumaApi) => {
   const http = createClient<paths>({
@@ -29,29 +29,25 @@ export const sources = (api: KumaApi) => {
 
     '/meshidentities/:mid': async (params) => {
       const { mid } = params
-      const { mesh = '', name = '' } = Kri.fromString(mid)
   
-      const res = await http.GET('/meshes/{mesh}/meshidentities/{name}', {
+      const res = await http.GET('/_kri/{kri}', {
         params: {
           path: {
-            mesh,
-            name,
+            kri: mid,
           },
         },
       })
   
-      return MeshIdentity.fromObject(res.data!)
+      return MeshIdentity.fromObject(res.data as components['schemas']['MeshIdentityItem'])
     },
 
     '/meshidentities/:mid/as/kubernetes': async (params) => {
       const { mid } = params
-      const { mesh = '', name = '' } = Kri.fromString(mid)
   
-      const res = await http.GET('/meshes/{mesh}/meshidentities/{name}', {
+      const res = await http.GET('/_kri/{kri}', {
         params: {
           path: {
-            mesh,
-            name,
+            kri: mid,
           },
           // @ts-ignore
           query: {
