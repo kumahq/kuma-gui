@@ -1,11 +1,11 @@
 import { Kri } from '@/app/kuma/kri'
 import type { components } from '@kumahq/kuma-http-api'
 
-type PartialMeshIdentityList = components['responses']['MeshIdentityList']['content']['application/json']
-type PartialMeshIdentity = components['schemas']['MeshIdentityItem']
+export type KumaMeshIdentityList = components['responses']['MeshIdentityList']['content']['application/json']
+export type KumaMeshIdentity = components['schemas']['MeshIdentityItem']
 
 export const MeshIdentity = {
-  fromObject: (item: PartialMeshIdentity) => {
+  fromObject: (item: KumaMeshIdentity) => {
     return {
       kri: Kri.toString({ shortName: 'mid', mesh: item.mesh, name: item.name}),
       ...item,
@@ -13,7 +13,7 @@ export const MeshIdentity = {
     }
   },
 
-  fromCollection: (collection: PartialMeshIdentityList) => {
+  fromCollection: (collection: KumaMeshIdentityList) => {
     return {
       ...collection,
       items: collection.items?.map((item) => MeshIdentity.fromObject(item)) ?? [],
