@@ -9900,18 +9900,87 @@ export interface components {
                         } & ({
                             /** @constant */
                             type?: "Tcp";
+                            /** @description TCPBackend defines a TCP logging backend. */
                             tcp?: {
                                 /**
                                  * @description Address of the TCP logging backend
                                  * @example 127.0.0.1:5000
                                  */
                                 address: string;
+                                /**
+                                 * @description Format of access logs. Placeholders available on
+                                 *     https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
+                                 */
+                                format?: {
+                                    /** @default false */
+                                    omitEmptyValues: boolean;
+                                    /** @enum {string} */
+                                    type: "Plain" | "Json";
+                                } & ({
+                                    /** @constant */
+                                    type?: "Json";
+                                    /**
+                                     * @example [
+                                     *       {
+                                     *         "key": "start_time",
+                                     *         "value": "%START_TIME%"
+                                     *       },
+                                     *       {
+                                     *         "key": "bytes_received",
+                                     *         "value": "%BYTES_RECEIVED%"
+                                     *       }
+                                     *     ]
+                                     */
+                                    json?: {
+                                        key: string;
+                                        value: string;
+                                    }[];
+                                } | {
+                                    /** @constant */
+                                    type?: "Plain";
+                                    /** @example [%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST% */
+                                    plain?: string;
+                                });
                             };
                         } | {
                             /** @constant */
                             type?: "File";
                             /** @description FileBackend defines configuration for file based access logs */
                             file?: {
+                                /**
+                                 * @description Format of access logs. Placeholders available on
+                                 *     https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
+                                 */
+                                format?: {
+                                    /** @default false */
+                                    omitEmptyValues: boolean;
+                                    /** @enum {string} */
+                                    type: "Plain" | "Json";
+                                } & ({
+                                    /** @constant */
+                                    type?: "Json";
+                                    /**
+                                     * @example [
+                                     *       {
+                                     *         "key": "start_time",
+                                     *         "value": "%START_TIME%"
+                                     *       },
+                                     *       {
+                                     *         "key": "bytes_received",
+                                     *         "value": "%BYTES_RECEIVED%"
+                                     *       }
+                                     *     ]
+                                     */
+                                    json?: {
+                                        key: string;
+                                        value: string;
+                                    }[];
+                                } | {
+                                    /** @constant */
+                                    type?: "Plain";
+                                    /** @example [%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST% */
+                                    plain?: string;
+                                });
                                 /**
                                  * @description Path to a file that logs will be written to
                                  * @example /tmp/access.log
@@ -9921,7 +9990,22 @@ export interface components {
                         } | {
                             /** @constant */
                             type?: "OpenTelemetry";
+                            /** @description Defines an OpenTelemetry logging backend. */
                             openTelemetry?: {
+                                /**
+                                 * @description Attributes can contain placeholders available on
+                                 *     https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
+                                 * @example [
+                                 *       {
+                                 *         "key": "mesh",
+                                 *         "value": "%KUMA_MESH%"
+                                 *       }
+                                 *     ]
+                                 */
+                                attributes?: {
+                                    key: string;
+                                    value: string;
+                                }[];
                                 /**
                                  * @description Body is a raw string or an OTLP any value as described at
                                  *     https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/logs/data-model.md#field-body
@@ -9999,18 +10083,87 @@ export interface components {
                         } & ({
                             /** @constant */
                             type?: "Tcp";
+                            /** @description TCPBackend defines a TCP logging backend. */
                             tcp?: {
                                 /**
                                  * @description Address of the TCP logging backend
                                  * @example 127.0.0.1:5000
                                  */
                                 address: string;
+                                /**
+                                 * @description Format of access logs. Placeholders available on
+                                 *     https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
+                                 */
+                                format?: {
+                                    /** @default false */
+                                    omitEmptyValues: boolean;
+                                    /** @enum {string} */
+                                    type: "Plain" | "Json";
+                                } & ({
+                                    /** @constant */
+                                    type?: "Json";
+                                    /**
+                                     * @example [
+                                     *       {
+                                     *         "key": "start_time",
+                                     *         "value": "%START_TIME%"
+                                     *       },
+                                     *       {
+                                     *         "key": "bytes_received",
+                                     *         "value": "%BYTES_RECEIVED%"
+                                     *       }
+                                     *     ]
+                                     */
+                                    json?: {
+                                        key: string;
+                                        value: string;
+                                    }[];
+                                } | {
+                                    /** @constant */
+                                    type?: "Plain";
+                                    /** @example [%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST% */
+                                    plain?: string;
+                                });
                             };
                         } | {
                             /** @constant */
                             type?: "File";
                             /** @description FileBackend defines configuration for file based access logs */
                             file?: {
+                                /**
+                                 * @description Format of access logs. Placeholders available on
+                                 *     https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
+                                 */
+                                format?: {
+                                    /** @default false */
+                                    omitEmptyValues: boolean;
+                                    /** @enum {string} */
+                                    type: "Plain" | "Json";
+                                } & ({
+                                    /** @constant */
+                                    type?: "Json";
+                                    /**
+                                     * @example [
+                                     *       {
+                                     *         "key": "start_time",
+                                     *         "value": "%START_TIME%"
+                                     *       },
+                                     *       {
+                                     *         "key": "bytes_received",
+                                     *         "value": "%BYTES_RECEIVED%"
+                                     *       }
+                                     *     ]
+                                     */
+                                    json?: {
+                                        key: string;
+                                        value: string;
+                                    }[];
+                                } | {
+                                    /** @constant */
+                                    type?: "Plain";
+                                    /** @example [%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST% */
+                                    plain?: string;
+                                });
                                 /**
                                  * @description Path to a file that logs will be written to
                                  * @example /tmp/access.log
@@ -10020,7 +10173,22 @@ export interface components {
                         } | {
                             /** @constant */
                             type?: "OpenTelemetry";
+                            /** @description Defines an OpenTelemetry logging backend. */
                             openTelemetry?: {
+                                /**
+                                 * @description Attributes can contain placeholders available on
+                                 *     https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
+                                 * @example [
+                                 *       {
+                                 *         "key": "mesh",
+                                 *         "value": "%KUMA_MESH%"
+                                 *       }
+                                 *     ]
+                                 */
+                                attributes?: {
+                                    key: string;
+                                    value: string;
+                                }[];
                                 /**
                                  * @description Body is a raw string or an OTLP any value as described at
                                  *     https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/logs/data-model.md#field-body
@@ -10096,18 +10264,87 @@ export interface components {
                         } & ({
                             /** @constant */
                             type?: "Tcp";
+                            /** @description TCPBackend defines a TCP logging backend. */
                             tcp?: {
                                 /**
                                  * @description Address of the TCP logging backend
                                  * @example 127.0.0.1:5000
                                  */
                                 address: string;
+                                /**
+                                 * @description Format of access logs. Placeholders available on
+                                 *     https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
+                                 */
+                                format?: {
+                                    /** @default false */
+                                    omitEmptyValues: boolean;
+                                    /** @enum {string} */
+                                    type: "Plain" | "Json";
+                                } & ({
+                                    /** @constant */
+                                    type?: "Json";
+                                    /**
+                                     * @example [
+                                     *       {
+                                     *         "key": "start_time",
+                                     *         "value": "%START_TIME%"
+                                     *       },
+                                     *       {
+                                     *         "key": "bytes_received",
+                                     *         "value": "%BYTES_RECEIVED%"
+                                     *       }
+                                     *     ]
+                                     */
+                                    json?: {
+                                        key: string;
+                                        value: string;
+                                    }[];
+                                } | {
+                                    /** @constant */
+                                    type?: "Plain";
+                                    /** @example [%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST% */
+                                    plain?: string;
+                                });
                             };
                         } | {
                             /** @constant */
                             type?: "File";
                             /** @description FileBackend defines configuration for file based access logs */
                             file?: {
+                                /**
+                                 * @description Format of access logs. Placeholders available on
+                                 *     https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
+                                 */
+                                format?: {
+                                    /** @default false */
+                                    omitEmptyValues: boolean;
+                                    /** @enum {string} */
+                                    type: "Plain" | "Json";
+                                } & ({
+                                    /** @constant */
+                                    type?: "Json";
+                                    /**
+                                     * @example [
+                                     *       {
+                                     *         "key": "start_time",
+                                     *         "value": "%START_TIME%"
+                                     *       },
+                                     *       {
+                                     *         "key": "bytes_received",
+                                     *         "value": "%BYTES_RECEIVED%"
+                                     *       }
+                                     *     ]
+                                     */
+                                    json?: {
+                                        key: string;
+                                        value: string;
+                                    }[];
+                                } | {
+                                    /** @constant */
+                                    type?: "Plain";
+                                    /** @example [%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST% */
+                                    plain?: string;
+                                });
                                 /**
                                  * @description Path to a file that logs will be written to
                                  * @example /tmp/access.log
@@ -10117,7 +10354,22 @@ export interface components {
                         } | {
                             /** @constant */
                             type?: "OpenTelemetry";
+                            /** @description Defines an OpenTelemetry logging backend. */
                             openTelemetry?: {
+                                /**
+                                 * @description Attributes can contain placeholders available on
+                                 *     https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
+                                 * @example [
+                                 *       {
+                                 *         "key": "mesh",
+                                 *         "value": "%KUMA_MESH%"
+                                 *       }
+                                 *     ]
+                                 */
+                                attributes?: {
+                                    key: string;
+                                    value: string;
+                                }[];
                                 /**
                                  * @description Body is a raw string or an OTLP any value as described at
                                  *     https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/logs/data-model.md#field-body
@@ -10409,7 +10661,7 @@ export interface components {
                                      *     success_rate_standard_deviation_factor).
                                      *     Either int or decimal represented as string.
                                      */
-                                    standardDeviationFactor?: number | string;
+                                    standardDeviationFactor?: string;
                                 };
                                 /**
                                  * @description In the default mode (outlierDetection.splitExternalAndLocalErrors is
@@ -10441,7 +10693,7 @@ export interface components {
                              *     the default is 50%. To disable panic mode, set to 0%.
                              *     Either int or decimal represented as string.
                              */
-                            healthyPanicThreshold?: number | string;
+                            healthyPanicThreshold?: string;
                             /**
                              * @description The time interval between ejection analysis sweeps. This can result in
                              *     both new ejections and hosts being returned to service.
@@ -10686,7 +10938,7 @@ export interface components {
                                      *     success_rate_standard_deviation_factor).
                                      *     Either int or decimal represented as string.
                                      */
-                                    standardDeviationFactor?: number | string;
+                                    standardDeviationFactor?: string;
                                 };
                                 /**
                                  * @description In the default mode (outlierDetection.splitExternalAndLocalErrors is
@@ -10718,7 +10970,7 @@ export interface components {
                              *     the default is 50%. To disable panic mode, set to 0%.
                              *     Either int or decimal represented as string.
                              */
-                            healthyPanicThreshold?: number | string;
+                            healthyPanicThreshold?: string;
                             /**
                              * @description The time interval between ejection analysis sweeps. This can result in
                              *     both new ejections and hosts being returned to service.
@@ -10972,7 +11224,7 @@ export interface components {
                                      *     success_rate_standard_deviation_factor).
                                      *     Either int or decimal represented as string.
                                      */
-                                    standardDeviationFactor?: number | string;
+                                    standardDeviationFactor?: string;
                                 };
                                 /**
                                  * @description In the default mode (outlierDetection.splitExternalAndLocalErrors is
@@ -11004,7 +11256,7 @@ export interface components {
                              *     the default is 50%. To disable panic mode, set to 0%.
                              *     Either int or decimal represented as string.
                              */
-                            healthyPanicThreshold?: number | string;
+                            healthyPanicThreshold?: string;
                             /**
                              * @description The time interval between ejection analysis sweeps. This can result in
                              *     both new ejections and hosts being returned to service.
@@ -11126,7 +11378,7 @@ export interface components {
                                  * @description Percentage of requests on which abort will be injected, has to be
                                  *     either int or decimal represented as string.
                                  */
-                                percentage: number | string;
+                                percentage: string;
                             };
                             /** @description Delay defines configuration of delaying a response from a destination */
                             delay?: {
@@ -11134,7 +11386,7 @@ export interface components {
                                  * @description Percentage of requests on which delay will be injected, has to be
                                  *     either int or decimal represented as string.
                                  */
-                                percentage: number | string;
+                                percentage: string;
                                 /** @description The duration during which the response will be delayed */
                                 value: string;
                             };
@@ -11152,7 +11404,7 @@ export interface components {
                                  * @description Percentage of requests on which response bandwidth limit will be
                                  *     either int or decimal represented as string.
                                  */
-                                percentage: number | string;
+                                percentage: string;
                             };
                         }[];
                     };
@@ -11214,7 +11466,7 @@ export interface components {
                                  * @description Percentage of requests on which abort will be injected, has to be
                                  *     either int or decimal represented as string.
                                  */
-                                percentage: number | string;
+                                percentage: string;
                             };
                             /** @description Delay defines configuration of delaying a response from a destination */
                             delay?: {
@@ -11222,7 +11474,7 @@ export interface components {
                                  * @description Percentage of requests on which delay will be injected, has to be
                                  *     either int or decimal represented as string.
                                  */
-                                percentage: number | string;
+                                percentage: string;
                                 /** @description The duration during which the response will be delayed */
                                 value: string;
                             };
@@ -11240,7 +11492,7 @@ export interface components {
                                  * @description Percentage of requests on which response bandwidth limit will be
                                  *     either int or decimal represented as string.
                                  */
-                                percentage: number | string;
+                                percentage: string;
                             };
                         }[];
                     };
@@ -11316,7 +11568,7 @@ export interface components {
                                  * @description Percentage of requests on which abort will be injected, has to be
                                  *     either int or decimal represented as string.
                                  */
-                                percentage: number | string;
+                                percentage: string;
                             };
                             /** @description Delay defines configuration of delaying a response from a destination */
                             delay?: {
@@ -11324,7 +11576,7 @@ export interface components {
                                  * @description Percentage of requests on which delay will be injected, has to be
                                  *     either int or decimal represented as string.
                                  */
-                                percentage: number | string;
+                                percentage: string;
                                 /** @description The duration during which the response will be delayed */
                                 value: string;
                             };
@@ -11342,7 +11594,7 @@ export interface components {
                                  * @description Percentage of requests on which response bandwidth limit will be
                                  *     either int or decimal represented as string.
                                  */
-                                percentage: number | string;
+                                percentage: string;
                             };
                         }[];
                     };
@@ -11523,7 +11775,12 @@ export interface components {
                                 /** @default 1 */
                                 weight: number;
                             }[];
-                            filters?: {
+                            filters?: ({
+                                /** @enum {string} */
+                                type: "RequestHeaderModifier" | "ResponseHeaderModifier" | "RequestRedirect" | "URLRewrite" | "RequestMirror";
+                            } & ({
+                                /** @constant */
+                                type?: "RequestHeaderModifier";
                                 /**
                                  * @description Only one action is supported per header name.
                                  *     Configuration to set or add multiple values for a header must use RFC 7230
@@ -11540,6 +11797,98 @@ export interface components {
                                         value: string;
                                     }[];
                                 };
+                            } | {
+                                /** @constant */
+                                type?: "ResponseHeaderModifier";
+                                /**
+                                 * @description Only one action is supported per header name.
+                                 *     Configuration to set or add multiple values for a header must use RFC 7230
+                                 *     header value formatting, separating each value with a comma.
+                                 */
+                                responseHeaderModifier?: {
+                                    add?: {
+                                        name: string;
+                                        value: string;
+                                    }[];
+                                    remove?: string[];
+                                    set?: {
+                                        name: string;
+                                        value: string;
+                                    }[];
+                                };
+                            } | {
+                                /** @constant */
+                                type?: "RequestRedirect";
+                                requestRedirect?: {
+                                    /**
+                                     * @description PreciseHostname is the fully qualified domain name of a network host. This
+                                     *     matches the RFC 1123 definition of a hostname with 1 notable exception that
+                                     *     numeric IP addresses are not allowed.
+                                     *
+                                     *     Note that as per RFC1035 and RFC1123, a *label* must consist of lower case
+                                     *     alphanumeric characters or '-', and must start and end with an alphanumeric
+                                     *     character. No other punctuation is allowed.
+                                     */
+                                    hostname?: string;
+                                    /**
+                                     * @description Path defines parameters used to modify the path of the incoming request.
+                                     *     The modified path is then used to construct the location header.
+                                     *     When empty, the request path is used as-is.
+                                     * @default {
+                                     *       "type": "ReplaceFullPath",
+                                     *       "replaceFullPath": ""
+                                     *     }
+                                     */
+                                    path: {
+                                        /** @enum {string} */
+                                        type: "ReplaceFullPath" | "ReplacePrefixMatch";
+                                    } & ({
+                                        /** @constant */
+                                        type?: "ReplaceFullPath";
+                                        replaceFullPath?: string;
+                                    } | {
+                                        /** @constant */
+                                        type?: "ReplacePrefixMatch";
+                                        replacePrefixMatch?: string;
+                                    });
+                                    /**
+                                     * Format: int32
+                                     * @description Port is the port to be used in the value of the `Location`
+                                     *     header in the response.
+                                     *     When empty, port (if specified) of the request is used.
+                                     */
+                                    port?: number;
+                                    /** @enum {string} */
+                                    scheme?: "http" | "https";
+                                    /**
+                                     * @description StatusCode is the HTTP status code to be used in response.
+                                     * @default 302
+                                     * @enum {integer}
+                                     */
+                                    statusCode: 301 | 302 | 303 | 307 | 308;
+                                };
+                            } | {
+                                /** @constant */
+                                type?: "URLRewrite";
+                                urlRewrite?: {
+                                    /**
+                                     * @description HostToBackendHostname rewrites the hostname to the hostname of the
+                                     *     upstream host. This option is only available when targeting MeshGateways.
+                                     */
+                                    hostToBackendHostname?: boolean;
+                                    /** @description Hostname is the value to be used to replace the host header value during forwarding. */
+                                    hostname?: string;
+                                    /** @description Path defines a path rewrite. */
+                                    path?: {
+                                        replaceFullPath?: string;
+                                        replacePrefixMatch?: string;
+                                        /** @enum {string} */
+                                        type: "ReplaceFullPath" | "ReplacePrefixMatch";
+                                    };
+                                };
+                            } | {
+                                /** @constant */
+                                type?: "RequestMirror";
                                 requestMirror?: {
                                     /** @description BackendRef defines where to forward traffic. */
                                     backendRef: {
@@ -11596,81 +11945,9 @@ export interface components {
                                      * @description Percentage of requests to mirror. If not specified, all requests
                                      *     to the target cluster will be mirrored.
                                      */
-                                    percentage?: number | string;
+                                    percentage?: string;
                                 };
-                                requestRedirect?: {
-                                    /**
-                                     * @description PreciseHostname is the fully qualified domain name of a network host. This
-                                     *     matches the RFC 1123 definition of a hostname with 1 notable exception that
-                                     *     numeric IP addresses are not allowed.
-                                     *
-                                     *     Note that as per RFC1035 and RFC1123, a *label* must consist of lower case
-                                     *     alphanumeric characters or '-', and must start and end with an alphanumeric
-                                     *     character. No other punctuation is allowed.
-                                     */
-                                    hostname?: string;
-                                    /**
-                                     * @description Path defines parameters used to modify the path of the incoming request.
-                                     *     The modified path is then used to construct the location header.
-                                     *     When empty, the request path is used as-is.
-                                     */
-                                    path?: {
-                                        replaceFullPath?: string;
-                                        replacePrefixMatch?: string;
-                                        /** @enum {string} */
-                                        type: "ReplaceFullPath" | "ReplacePrefixMatch";
-                                    };
-                                    /**
-                                     * Format: int32
-                                     * @description Port is the port to be used in the value of the `Location`
-                                     *     header in the response.
-                                     *     When empty, port (if specified) of the request is used.
-                                     */
-                                    port?: number;
-                                    /** @enum {string} */
-                                    scheme?: "http" | "https";
-                                    /**
-                                     * @description StatusCode is the HTTP status code to be used in response.
-                                     * @default 302
-                                     * @enum {integer}
-                                     */
-                                    statusCode: 301 | 302 | 303 | 307 | 308;
-                                };
-                                /**
-                                 * @description Only one action is supported per header name.
-                                 *     Configuration to set or add multiple values for a header must use RFC 7230
-                                 *     header value formatting, separating each value with a comma.
-                                 */
-                                responseHeaderModifier?: {
-                                    add?: {
-                                        name: string;
-                                        value: string;
-                                    }[];
-                                    remove?: string[];
-                                    set?: {
-                                        name: string;
-                                        value: string;
-                                    }[];
-                                };
-                                /** @enum {string} */
-                                type: "RequestHeaderModifier" | "ResponseHeaderModifier" | "RequestRedirect" | "URLRewrite" | "RequestMirror";
-                                urlRewrite?: {
-                                    /**
-                                     * @description HostToBackendHostname rewrites the hostname to the hostname of the
-                                     *     upstream host. This option is only available when targeting MeshGateways.
-                                     */
-                                    hostToBackendHostname?: boolean;
-                                    /** @description Hostname is the value to be used to replace the host header value during forwarding. */
-                                    hostname?: string;
-                                    /** @description Path defines a path rewrite. */
-                                    path?: {
-                                        replaceFullPath?: string;
-                                        replacePrefixMatch?: string;
-                                        /** @enum {string} */
-                                        type: "ReplaceFullPath" | "ReplacePrefixMatch";
-                                    };
-                                };
-                            }[];
+                            }))[];
                         };
                         /**
                          * @description Matches describes how to match HTTP requests this rule should be applied
@@ -11871,7 +12148,7 @@ export interface components {
                          *     Deprecated: the setting has been moved to MeshCircuitBreaker policy,
                          *     please use MeshCircuitBreaker policy instead.
                          */
-                        healthyPanicThreshold?: number | string;
+                        healthyPanicThreshold?: string;
                         /**
                          * Format: int32
                          * @description Number of consecutive healthy checks before considering a host healthy.
@@ -12139,8 +12416,26 @@ export interface components {
                             /** @enum {string} */
                             type: "Header" | "Cookie" | "Connection" | "SourceIP" | "QueryParameter" | "FilterState";
                         }[];
-                        /** @description LoadBalancer allows to specify load balancing algorithm. */
-                        loadBalancer?: {
+                        /**
+                         * @description LoadBalancer allows to specify load balancing algorithm.
+                         * @default {
+                         *       "type": "RoundRobin"
+                         *     }
+                         */
+                        loadBalancer: {
+                            /** @enum {string} */
+                            type: "RoundRobin" | "LeastRequest" | "RingHash" | "Random" | "Maglev";
+                        } & ({
+                            /** @constant */
+                            type?: "RoundRobin";
+                            /**
+                             * @description RoundRobin is a load balancing algorithm that distributes requests
+                             *     across available upstream hosts in round-robin order.
+                             */
+                            roundRobin?: Record<string, never>;
+                        } | {
+                            /** @constant */
+                            type?: "LeastRequest";
                             /**
                              * @description LeastRequest selects N random available hosts as specified in 'choiceCount' (2 by default)
                              *     and picks the host which has the fewest active requests
@@ -12153,7 +12448,7 @@ export interface components {
                                  *     value, the more forcefully it reduces the load balancing weight of endpoints that are
                                  *     actively serving requests.
                                  */
-                                activeRequestBias?: number | string;
+                                activeRequestBias?: string;
                                 /**
                                  * Format: int32
                                  * @description ChoiceCount is the number of random healthy hosts from which the host with
@@ -12162,78 +12457,9 @@ export interface components {
                                  */
                                 choiceCount?: number;
                             };
-                            /**
-                             * @description Maglev implements consistent hashing to upstream hosts. Maglev can be used as
-                             *     a drop in replacement for the ring hash load balancer any place in which
-                             *     consistent hashing is desired.
-                             */
-                            maglev?: {
-                                /**
-                                 * @description HashPolicies specify a list of request/connection properties that are used to calculate a hash.
-                                 *     These hash policies are executed in the specified order. If a hash policy has the “terminal” attribute
-                                 *     set to true, and there is already a hash generated, the hash is returned immediately,
-                                 *     ignoring the rest of the hash policy list.
-                                 */
-                                hashPolicies?: {
-                                    connection?: {
-                                        /** @description Hash on source IP address. */
-                                        sourceIP?: boolean;
-                                    };
-                                    cookie?: {
-                                        /** @description The name of the cookie that will be used to obtain the hash key. */
-                                        name: string;
-                                        /** @description The name of the path for the cookie. */
-                                        path?: string;
-                                        /** @description If specified, a cookie with the TTL will be generated if the cookie is not present. */
-                                        ttl?: string;
-                                    };
-                                    filterState?: {
-                                        /**
-                                         * @description The name of the Object in the per-request filterState, which is
-                                         *     an Envoy::Hashable object. If there is no data associated with the key,
-                                         *     or the stored object is not Envoy::Hashable, no hash will be produced.
-                                         */
-                                        key: string;
-                                    };
-                                    header?: {
-                                        /** @description The name of the request header that will be used to obtain the hash key. */
-                                        name: string;
-                                    };
-                                    queryParameter?: {
-                                        /**
-                                         * @description The name of the URL query parameter that will be used to obtain the hash key.
-                                         *     If the parameter is not present, no hash will be produced. Query parameter names
-                                         *     are case-sensitive.
-                                         */
-                                        name: string;
-                                    };
-                                    /**
-                                     * @description Terminal is a flag that short-circuits the hash computing. This field provides
-                                     *     a ‘fallback’ style of configuration: “if a terminal policy doesn’t work, fallback
-                                     *     to rest of the policy list”, it saves time when the terminal policy works.
-                                     *     If true, and there is already a hash computed, ignore rest of the list of hash polices.
-                                     */
-                                    terminal?: boolean;
-                                    /** @enum {string} */
-                                    type: "Header" | "Cookie" | "Connection" | "SourceIP" | "QueryParameter" | "FilterState";
-                                }[];
-                                /**
-                                 * Format: int32
-                                 * @description The table size for Maglev hashing. Maglev aims for “minimal disruption”
-                                 *     rather than an absolute guarantee. Minimal disruption means that when
-                                 *     the set of upstream hosts change, a connection will likely be sent
-                                 *     to the same upstream as it was before. Increasing the table size reduces
-                                 *     the amount of disruption. The table size must be prime number limited to 5000011.
-                                 *     If it is not specified, the default is 65537.
-                                 */
-                                tableSize?: number;
-                            };
-                            /**
-                             * @description Random selects a random available host. The random load balancer generally
-                             *     performs better than round-robin if no health checking policy is configured.
-                             *     Random selection avoids bias towards the host in the set that comes after a failed host.
-                             */
-                            random?: Record<string, never>;
+                        } | {
+                            /** @constant */
+                            type?: "RingHash";
                             /**
                              * @description RingHash  implements consistent hashing to upstream hosts. Each host is mapped
                              *     onto a circle (the “ring”) by hashing its address; each request is then routed
@@ -12253,39 +12479,7 @@ export interface components {
                                  *     set to true, and there is already a hash generated, the hash is returned immediately,
                                  *     ignoring the rest of the hash policy list.
                                  */
-                                hashPolicies?: {
-                                    connection?: {
-                                        /** @description Hash on source IP address. */
-                                        sourceIP?: boolean;
-                                    };
-                                    cookie?: {
-                                        /** @description The name of the cookie that will be used to obtain the hash key. */
-                                        name: string;
-                                        /** @description The name of the path for the cookie. */
-                                        path?: string;
-                                        /** @description If specified, a cookie with the TTL will be generated if the cookie is not present. */
-                                        ttl?: string;
-                                    };
-                                    filterState?: {
-                                        /**
-                                         * @description The name of the Object in the per-request filterState, which is
-                                         *     an Envoy::Hashable object. If there is no data associated with the key,
-                                         *     or the stored object is not Envoy::Hashable, no hash will be produced.
-                                         */
-                                        key: string;
-                                    };
-                                    header?: {
-                                        /** @description The name of the request header that will be used to obtain the hash key. */
-                                        name: string;
-                                    };
-                                    queryParameter?: {
-                                        /**
-                                         * @description The name of the URL query parameter that will be used to obtain the hash key.
-                                         *     If the parameter is not present, no hash will be produced. Query parameter names
-                                         *     are case-sensitive.
-                                         */
-                                        name: string;
-                                    };
+                                hashPolicies?: ({
                                     /**
                                      * @description Terminal is a flag that short-circuits the hash computing. This field provides
                                      *     a ‘fallback’ style of configuration: “if a terminal policy doesn’t work, fallback
@@ -12295,7 +12489,54 @@ export interface components {
                                     terminal?: boolean;
                                     /** @enum {string} */
                                     type: "Header" | "Cookie" | "Connection" | "SourceIP" | "QueryParameter" | "FilterState";
-                                }[];
+                                } & ({
+                                    /** @constant */
+                                    type?: "Header";
+                                    header?: {
+                                        /** @description The name of the request header that will be used to obtain the hash key. */
+                                        name: string;
+                                    };
+                                } | {
+                                    /** @constant */
+                                    type?: "Cookie";
+                                    header?: {
+                                        /** @description The name of the cookie that will be used to obtain the hash key. */
+                                        name: string;
+                                        /** @description The name of the path for the cookie. */
+                                        path?: string;
+                                        /** @description If specified, a cookie with the TTL will be generated if the cookie is not present. */
+                                        ttl?: string;
+                                    };
+                                } | {
+                                    /** @constant */
+                                    type?: "Connection";
+                                    connection?: {
+                                        /** @description Hash on source IP address. */
+                                        sourceIP?: boolean;
+                                    };
+                                } | {
+                                    /** @constant */
+                                    type?: "QueryParameter";
+                                    queryParameter?: {
+                                        /**
+                                         * @description The name of the URL query parameter that will be used to obtain the hash key.
+                                         *     If the parameter is not present, no hash will be produced. Query parameter names
+                                         *     are case-sensitive.
+                                         */
+                                        name: string;
+                                    };
+                                } | {
+                                    /** @constant */
+                                    type?: "FilterState";
+                                    filterState?: {
+                                        /**
+                                         * @description The name of the Object in the per-request filterState, which is
+                                         *     an Envoy::Hashable object. If there is no data associated with the key,
+                                         *     or the stored object is not Envoy::Hashable, no hash will be produced.
+                                         */
+                                        key: string;
+                                    };
+                                }))[];
                                 /**
                                  * Format: int32
                                  * @description Maximum hash ring size. Defaults to 8M entries, and limited to 8M entries,
@@ -12310,14 +12551,100 @@ export interface components {
                                  */
                                 minRingSize?: number;
                             };
+                        } | {
+                            /** @constant */
+                            type?: "Random";
                             /**
-                             * @description RoundRobin is a load balancing algorithm that distributes requests
-                             *     across available upstream hosts in round-robin order.
+                             * @description Random selects a random available host. The random load balancer generally
+                             *     performs better than round-robin if no health checking policy is configured.
+                             *     Random selection avoids bias towards the host in the set that comes after a failed host.
                              */
-                            roundRobin?: Record<string, never>;
-                            /** @enum {string} */
-                            type: "RoundRobin" | "LeastRequest" | "RingHash" | "Random" | "Maglev";
-                        };
+                            random?: Record<string, never>;
+                        } | {
+                            /** @constant */
+                            type?: "Maglev";
+                            /**
+                             * @description Maglev implements consistent hashing to upstream hosts. Maglev can be used as
+                             *     a drop in replacement for the ring hash load balancer any place in which
+                             *     consistent hashing is desired.
+                             */
+                            maglev?: {
+                                /**
+                                 * @description HashPolicies specify a list of request/connection properties that are used to calculate a hash.
+                                 *     These hash policies are executed in the specified order. If a hash policy has the “terminal” attribute
+                                 *     set to true, and there is already a hash generated, the hash is returned immediately,
+                                 *     ignoring the rest of the hash policy list.
+                                 */
+                                hashPolicies?: ({
+                                    /**
+                                     * @description Terminal is a flag that short-circuits the hash computing. This field provides
+                                     *     a ‘fallback’ style of configuration: “if a terminal policy doesn’t work, fallback
+                                     *     to rest of the policy list”, it saves time when the terminal policy works.
+                                     *     If true, and there is already a hash computed, ignore rest of the list of hash polices.
+                                     */
+                                    terminal?: boolean;
+                                    /** @enum {string} */
+                                    type: "Header" | "Cookie" | "Connection" | "SourceIP" | "QueryParameter" | "FilterState";
+                                } & ({
+                                    /** @constant */
+                                    type?: "Header";
+                                    header?: {
+                                        /** @description The name of the request header that will be used to obtain the hash key. */
+                                        name: string;
+                                    };
+                                } | {
+                                    /** @constant */
+                                    type?: "Cookie";
+                                    header?: {
+                                        /** @description The name of the cookie that will be used to obtain the hash key. */
+                                        name: string;
+                                        /** @description The name of the path for the cookie. */
+                                        path?: string;
+                                        /** @description If specified, a cookie with the TTL will be generated if the cookie is not present. */
+                                        ttl?: string;
+                                    };
+                                } | {
+                                    /** @constant */
+                                    type?: "Connection";
+                                    connection?: {
+                                        /** @description Hash on source IP address. */
+                                        sourceIP?: boolean;
+                                    };
+                                } | {
+                                    /** @constant */
+                                    type?: "QueryParameter";
+                                    queryParameter?: {
+                                        /**
+                                         * @description The name of the URL query parameter that will be used to obtain the hash key.
+                                         *     If the parameter is not present, no hash will be produced. Query parameter names
+                                         *     are case-sensitive.
+                                         */
+                                        name: string;
+                                    };
+                                } | {
+                                    /** @constant */
+                                    type?: "FilterState";
+                                    filterState?: {
+                                        /**
+                                         * @description The name of the Object in the per-request filterState, which is
+                                         *     an Envoy::Hashable object. If there is no data associated with the key,
+                                         *     or the stored object is not Envoy::Hashable, no hash will be produced.
+                                         */
+                                        key: string;
+                                    };
+                                }))[];
+                                /**
+                                 * Format: int32
+                                 * @description The table size for Maglev hashing. Maglev aims for “minimal disruption”
+                                 *     rather than an absolute guarantee. Minimal disruption means that when
+                                 *     the set of upstream hosts change, a connection will likely be sent
+                                 *     to the same upstream as it was before. Increasing the table size reduces
+                                 *     the amount of disruption. The table size must be prime number limited to 5000011.
+                                 *     If it is not specified, the default is 65537.
+                                 */
+                                tableSize?: number;
+                            };
+                        });
                         /** @description LocalityAwareness contains configuration for locality aware load balancing. */
                         localityAwareness?: {
                             /**
@@ -12352,7 +12679,7 @@ export interface components {
                                  *     Default 50
                                  */
                                 failoverThreshold?: {
-                                    percentage: number | string;
+                                    percentage: string;
                                 };
                             };
                             /**
@@ -12477,14 +12804,15 @@ export interface components {
                         port: number;
                     }[];
                     /** @description Backends list that will be used to collect metrics. */
-                    backends?: {
-                        /** @description OpenTelemetry backend configuration */
-                        openTelemetry?: {
-                            /** @description Endpoint for OpenTelemetry collector */
-                            endpoint: string;
-                            /** @description RefreshInterval defines how frequent metrics should be pushed to collector */
-                            refreshInterval?: string;
-                        };
+                    backends?: ({
+                        /**
+                         * @description Type of the backend that will be used to collect metrics. At the moment only Prometheus backend is available.
+                         * @enum {string}
+                         */
+                        type: "Prometheus" | "OpenTelemetry";
+                    } & ({
+                        /** @constant */
+                        type?: "Prometheus";
                         /** @description Prometheus backend configuration. */
                         prometheus?: {
                             /** @description ClientId of the Prometheus backend. Needed when using MADS for DP discovery. */
@@ -12510,12 +12838,17 @@ export interface components {
                                 mode: "Disabled" | "ProvidedTLS" | "ActiveMTLSBackend";
                             };
                         };
-                        /**
-                         * @description Type of the backend that will be used to collect metrics. At the moment only Prometheus backend is available.
-                         * @enum {string}
-                         */
-                        type: "Prometheus" | "OpenTelemetry";
-                    }[];
+                    } | {
+                        /** @constant */
+                        type?: "OpenTelemetry";
+                        /** @description OpenTelemetry backend configuration */
+                        openTelemetry?: {
+                            /** @description Endpoint for OpenTelemetry collector */
+                            endpoint: string;
+                            /** @description RefreshInterval defines how frequent metrics should be pushed to collector */
+                            refreshInterval?: string;
+                        };
+                    }))[];
                     /** @description Sidecar metrics collection configuration */
                     sidecar?: {
                         /**
@@ -14488,34 +14821,12 @@ export interface components {
                      *     reasons explained in MADR 009-tracing-policy this has to be a one element
                      *     array for now.
                      */
-                    backends?: {
-                        /** @description Datadog backend configuration. */
-                        datadog?: {
-                            /**
-                             * @description Determines if datadog service name should be split based on traffic
-                             *     direction and destination. For example, with `splitService: true` and a
-                             *     `backend` service that communicates with a couple of databases, you would
-                             *     get service names like `backend_INBOUND`, `backend_OUTBOUND_db1`, and
-                             *     `backend_OUTBOUND_db2` in Datadog.
-                             * @default false
-                             */
-                            splitService: boolean;
-                            /**
-                             * @description Address of Datadog collector, only host and port are allowed (no paths,
-                             *     fragments etc.)
-                             */
-                            url: string;
-                        };
-                        /** @description OpenTelemetry backend configuration. */
-                        openTelemetry?: {
-                            /**
-                             * @description Address of OpenTelemetry collector.
-                             * @example otel-collector:4317
-                             */
-                            endpoint: string;
-                        };
+                    backends?: ({
                         /** @enum {string} */
                         type: "Zipkin" | "Datadog" | "OpenTelemetry";
+                    } & ({
+                        /** @constant */
+                        type?: "Zipkin";
                         /** @description Zipkin backend configuration. */
                         zipkin?: {
                             /**
@@ -14540,7 +14851,38 @@ export interface components {
                             /** @description Address of Zipkin collector. */
                             url: string;
                         };
-                    }[];
+                    } | {
+                        /** @constant */
+                        type?: "Datadog";
+                        /** @description Datadog backend configuration. */
+                        datadog?: {
+                            /**
+                             * @description Determines if datadog service name should be split based on traffic
+                             *     direction and destination. For example, with `splitService: true` and a
+                             *     `backend` service that communicates with a couple of databases, you would
+                             *     get service names like `backend_INBOUND`, `backend_OUTBOUND_db1`, and
+                             *     `backend_OUTBOUND_db2` in Datadog.
+                             * @default false
+                             */
+                            splitService: boolean;
+                            /**
+                             * @description Address of Datadog collector, only host and port are allowed (no paths,
+                             *     fragments etc.)
+                             */
+                            url: string;
+                        };
+                    } | {
+                        /** @constant */
+                        type?: "OpenTelemetry";
+                        /** @description OpenTelemetry backend configuration. */
+                        openTelemetry?: {
+                            /**
+                             * @description Address of OpenTelemetry collector.
+                             * @example otel-collector:4317
+                             */
+                            endpoint: string;
+                        };
+                    }))[];
                     /**
                      * @description Sampling configuration.
                      *     Sampling is the process by which a decision is made on whether to
@@ -14554,7 +14896,7 @@ export interface components {
                          *     Either int or decimal represented as string.
                          *     If not specified then the default value is 100.
                          */
-                        client?: number | string;
+                        client?: string;
                         /**
                          * @description Target percentage of requests will be traced
                          *     after all other sampling checks have been applied (client, force tracing,
@@ -14567,7 +14909,7 @@ export interface components {
                          *     Either int or decimal represented as string.
                          *     If not specified then the default value is 100.
                          */
-                        overall?: number | string;
+                        overall?: string;
                         /**
                          * @description Target percentage of requests that will be randomly selected for trace
                          *     generation, if not requested by the client or not forced.
@@ -14576,7 +14918,7 @@ export interface components {
                          *     Either int or decimal represented as string.
                          *     If not specified then the default value is 100.
                          */
-                        random?: number | string;
+                        random?: string;
                     };
                     /**
                      * @description Custom tags configuration. You can add custom tags to traces based on

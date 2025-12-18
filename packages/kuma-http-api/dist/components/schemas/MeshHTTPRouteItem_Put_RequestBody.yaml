@@ -188,250 +188,11 @@ properties:
                           required:
                             - kind
                           type: object
+                          x-kuma-type: TargetRef
                       filters:
                         type: array
                         items:
                           properties:
-                            requestHeaderModifier:
-                              description: |-
-                                Only one action is supported per header name.
-                                Configuration to set or add multiple values for a header must use RFC 7230
-                                header value formatting, separating each value with a comma.
-                              type: object
-                              properties:
-                                add:
-                                  type: array
-                                  items:
-                                    properties:
-                                      name:
-                                        type: string
-                                        maxLength: 256
-                                        minLength: 1
-                                        pattern: '^[a-z0-9!#$%&''*+\-.^_\x60|~]+$'
-                                      value:
-                                        type: string
-                                    required:
-                                      - name
-                                      - value
-                                    type: object
-                                  maxItems: 16
-                                  x-kubernetes-list-map-keys:
-                                    - name
-                                  x-kubernetes-list-type: map
-                                remove:
-                                  type: array
-                                  items:
-                                    type: string
-                                  maxItems: 16
-                                set:
-                                  type: array
-                                  items:
-                                    properties:
-                                      name:
-                                        type: string
-                                        maxLength: 256
-                                        minLength: 1
-                                        pattern: '^[a-z0-9!#$%&''*+\-.^_\x60|~]+$'
-                                      value:
-                                        type: string
-                                    required:
-                                      - name
-                                      - value
-                                    type: object
-                                  maxItems: 16
-                                  x-kubernetes-list-map-keys:
-                                    - name
-                                  x-kubernetes-list-type: map
-                            requestMirror:
-                              type: object
-                              properties:
-                                backendRef:
-                                  description: BackendRef defines where to forward traffic.
-                                  type: object
-                                  properties:
-                                    kind:
-                                      description: Kind of the referenced resource
-                                      type: string
-                                      enum:
-                                        - Mesh
-                                        - MeshSubset
-                                        - MeshGateway
-                                        - MeshService
-                                        - MeshExternalService
-                                        - MeshMultiZoneService
-                                        - MeshServiceSubset
-                                        - MeshHTTPRoute
-                                        - Dataplane
-                                    labels:
-                                      description: |-
-                                        Labels are used to select group of MeshServices that match labels. Either Labels or
-                                        Name and Namespace can be used.
-                                      type: object
-                                      additionalProperties:
-                                        type: string
-                                    mesh:
-                                      description: Mesh is reserved for future use to identify cross mesh resources.
-                                      type: string
-                                    name:
-                                      description: |-
-                                        Name of the referenced resource. Can only be used with kinds: `MeshService`,
-                                        `MeshServiceSubset` and `MeshGatewayRoute`
-                                      type: string
-                                    namespace:
-                                      description: |-
-                                        Namespace specifies the namespace of target resource. If empty only resources in policy namespace
-                                        will be targeted.
-                                      type: string
-                                    port:
-                                      description: Port is only supported when this ref refers to a real MeshService object
-                                      type: integer
-                                      format: int32
-                                    proxyTypes:
-                                      description: |-
-                                        ProxyTypes specifies the data plane types that are subject to the policy. When not specified,
-                                        all data plane types are targeted by the policy.
-                                      type: array
-                                      items:
-                                        enum:
-                                          - Sidecar
-                                          - Gateway
-                                        type: string
-                                    sectionName:
-                                      description: |-
-                                        SectionName is used to target specific section of resource.
-                                        For example, you can target port from MeshService.ports[] by its name. Only traffic to this port will be affected.
-                                      type: string
-                                    tags:
-                                      description: |-
-                                        Tags used to select a subset of proxies by tags. Can only be used with kinds
-                                        `MeshSubset` and `MeshServiceSubset`
-                                      type: object
-                                      additionalProperties:
-                                        type: string
-                                    weight:
-                                      type: integer
-                                      default: 1
-                                      minimum: 0
-                                  required:
-                                    - kind
-                                percentage:
-                                  description: |-
-                                    Percentage of requests to mirror. If not specified, all requests
-                                    to the target cluster will be mirrored.
-                                  anyOf:
-                                    - type: integer
-                                    - type: string
-                                  x-kubernetes-int-or-string: true
-                              required:
-                                - backendRef
-                            requestRedirect:
-                              type: object
-                              properties:
-                                hostname:
-                                  description: |-
-                                    PreciseHostname is the fully qualified domain name of a network host. This
-                                    matches the RFC 1123 definition of a hostname with 1 notable exception that
-                                    numeric IP addresses are not allowed.
-
-                                    Note that as per RFC1035 and RFC1123, a *label* must consist of lower case
-                                    alphanumeric characters or '-', and must start and end with an alphanumeric
-                                    character. No other punctuation is allowed.
-                                  type: string
-                                  maxLength: 253
-                                  minLength: 1
-                                  pattern: '^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$'
-                                path:
-                                  description: |-
-                                    Path defines parameters used to modify the path of the incoming request.
-                                    The modified path is then used to construct the location header.
-                                    When empty, the request path is used as-is.
-                                  type: object
-                                  properties:
-                                    replaceFullPath:
-                                      type: string
-                                    replacePrefixMatch:
-                                      type: string
-                                    type:
-                                      type: string
-                                      enum:
-                                        - ReplaceFullPath
-                                        - ReplacePrefixMatch
-                                  required:
-                                    - type
-                                port:
-                                  description: |-
-                                    Port is the port to be used in the value of the `Location`
-                                    header in the response.
-                                    When empty, port (if specified) of the request is used.
-                                  type: integer
-                                  format: int32
-                                  maximum: 65535
-                                  minimum: 1
-                                scheme:
-                                  type: string
-                                  enum:
-                                    - http
-                                    - https
-                                statusCode:
-                                  description: StatusCode is the HTTP status code to be used in response.
-                                  type: integer
-                                  default: 302
-                                  enum:
-                                    - 301
-                                    - 302
-                                    - 303
-                                    - 307
-                                    - 308
-                            responseHeaderModifier:
-                              description: |-
-                                Only one action is supported per header name.
-                                Configuration to set or add multiple values for a header must use RFC 7230
-                                header value formatting, separating each value with a comma.
-                              type: object
-                              properties:
-                                add:
-                                  type: array
-                                  items:
-                                    properties:
-                                      name:
-                                        type: string
-                                        maxLength: 256
-                                        minLength: 1
-                                        pattern: '^[a-z0-9!#$%&''*+\-.^_\x60|~]+$'
-                                      value:
-                                        type: string
-                                    required:
-                                      - name
-                                      - value
-                                    type: object
-                                  maxItems: 16
-                                  x-kubernetes-list-map-keys:
-                                    - name
-                                  x-kubernetes-list-type: map
-                                remove:
-                                  type: array
-                                  items:
-                                    type: string
-                                  maxItems: 16
-                                set:
-                                  type: array
-                                  items:
-                                    properties:
-                                      name:
-                                        type: string
-                                        maxLength: 256
-                                        minLength: 1
-                                        pattern: '^[a-z0-9!#$%&''*+\-.^_\x60|~]+$'
-                                      value:
-                                        type: string
-                                    required:
-                                      - name
-                                      - value
-                                    type: object
-                                  maxItems: 16
-                                  x-kubernetes-list-map-keys:
-                                    - name
-                                  x-kubernetes-list-type: map
                             type:
                               type: string
                               enum:
@@ -440,38 +201,334 @@ properties:
                                 - RequestRedirect
                                 - URLRewrite
                                 - RequestMirror
-                            urlRewrite:
-                              type: object
-                              properties:
-                                hostToBackendHostname:
-                                  description: |-
-                                    HostToBackendHostname rewrites the hostname to the hostname of the
-                                    upstream host. This option is only available when targeting MeshGateways.
-                                  type: boolean
-                                hostname:
-                                  description: Hostname is the value to be used to replace the host header value during forwarding.
-                                  type: string
-                                  maxLength: 253
-                                  minLength: 1
-                                  pattern: '^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$'
-                                path:
-                                  description: Path defines a path rewrite.
-                                  type: object
-                                  properties:
-                                    replaceFullPath:
-                                      type: string
-                                    replacePrefixMatch:
-                                      type: string
-                                    type:
-                                      type: string
-                                      enum:
-                                        - ReplaceFullPath
-                                        - ReplacePrefixMatch
-                                  required:
-                                    - type
                           required:
                             - type
                           type: object
+                          default:
+                            type: RequestHeaderModifier
+                          oneOf:
+                            - type: object
+                              default:
+                                type: RequestHeaderModifier
+                                roundRobin: {}
+                              properties:
+                                type:
+                                  const: RequestHeaderModifier
+                                requestHeaderModifier:
+                                  description: |-
+                                    Only one action is supported per header name.
+                                    Configuration to set or add multiple values for a header must use RFC 7230
+                                    header value formatting, separating each value with a comma.
+                                  type: object
+                                  properties:
+                                    add:
+                                      type: array
+                                      items:
+                                        properties:
+                                          name:
+                                            type: string
+                                            maxLength: 256
+                                            minLength: 1
+                                            pattern: ^[a-z0-9!#$%&'*+\-.^_\x60|~]+$
+                                          value:
+                                            type: string
+                                        required:
+                                          - name
+                                          - value
+                                        type: object
+                                      maxItems: 16
+                                      x-kubernetes-list-map-keys:
+                                        - name
+                                      x-kubernetes-list-type: map
+                                    remove:
+                                      type: array
+                                      items:
+                                        type: string
+                                      maxItems: 16
+                                    set:
+                                      type: array
+                                      items:
+                                        properties:
+                                          name:
+                                            type: string
+                                            maxLength: 256
+                                            minLength: 1
+                                            pattern: ^[a-z0-9!#$%&'*+\-.^_\x60|~]+$
+                                          value:
+                                            type: string
+                                        required:
+                                          - name
+                                          - value
+                                        type: object
+                                      maxItems: 16
+                                      x-kubernetes-list-map-keys:
+                                        - name
+                                      x-kubernetes-list-type: map
+                            - type: object
+                              default:
+                                type: ResponseHeaderModifier
+                                responseHeaderModifier: {}
+                              properties:
+                                type:
+                                  const: ResponseHeaderModifier
+                                responseHeaderModifier:
+                                  description: |-
+                                    Only one action is supported per header name.
+                                    Configuration to set or add multiple values for a header must use RFC 7230
+                                    header value formatting, separating each value with a comma.
+                                  type: object
+                                  properties:
+                                    add:
+                                      type: array
+                                      items:
+                                        properties:
+                                          name:
+                                            type: string
+                                            maxLength: 256
+                                            minLength: 1
+                                            pattern: ^[a-z0-9!#$%&'*+\-.^_\x60|~]+$
+                                          value:
+                                            type: string
+                                        required:
+                                          - name
+                                          - value
+                                        type: object
+                                      maxItems: 16
+                                      x-kubernetes-list-map-keys:
+                                        - name
+                                      x-kubernetes-list-type: map
+                                    remove:
+                                      type: array
+                                      items:
+                                        type: string
+                                      maxItems: 16
+                                    set:
+                                      type: array
+                                      items:
+                                        properties:
+                                          name:
+                                            type: string
+                                            maxLength: 256
+                                            minLength: 1
+                                            pattern: ^[a-z0-9!#$%&'*+\-.^_\x60|~]+$
+                                          value:
+                                            type: string
+                                        required:
+                                          - name
+                                          - value
+                                        type: object
+                                      maxItems: 16
+                                      x-kubernetes-list-map-keys:
+                                        - name
+                                      x-kubernetes-list-type: map
+                            - type: object
+                              default:
+                                type: RequestRedirect
+                                responseHeaderModifier: {}
+                              properties:
+                                type:
+                                  const: RequestRedirect
+                                requestRedirect:
+                                  type: object
+                                  properties:
+                                    hostname:
+                                      description: |-
+                                        PreciseHostname is the fully qualified domain name of a network host. This
+                                        matches the RFC 1123 definition of a hostname with 1 notable exception that
+                                        numeric IP addresses are not allowed.
+
+                                        Note that as per RFC1035 and RFC1123, a *label* must consist of lower case
+                                        alphanumeric characters or '-', and must start and end with an alphanumeric
+                                        character. No other punctuation is allowed.
+                                      type: string
+                                      maxLength: 253
+                                      minLength: 1
+                                      pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$
+                                    path:
+                                      description: |-
+                                        Path defines parameters used to modify the path of the incoming request.
+                                        The modified path is then used to construct the location header.
+                                        When empty, the request path is used as-is.
+                                      type: object
+                                      properties:
+                                        type:
+                                          type: string
+                                          enum:
+                                            - ReplaceFullPath
+                                            - ReplacePrefixMatch
+                                      required:
+                                        - type
+                                      default:
+                                        type: ReplaceFullPath
+                                        replaceFullPath: ''
+                                      oneOf:
+                                        - type: object
+                                          default:
+                                            type: ReplaceFullPath
+                                            replaceFullPath: ''
+                                          properties:
+                                            type:
+                                              const: ReplaceFullPath
+                                            replaceFullPath:
+                                              type: string
+                                        - type: object
+                                          default:
+                                            type: ReplacePrefixMatch
+                                            replacePrefixMatch: ''
+                                          properties:
+                                            type:
+                                              const: ReplacePrefixMatch
+                                            replacePrefixMatch:
+                                              type: string
+                                    port:
+                                      description: |-
+                                        Port is the port to be used in the value of the `Location`
+                                        header in the response.
+                                        When empty, port (if specified) of the request is used.
+                                      type: integer
+                                      format: int32
+                                      maximum: 65535
+                                      minimum: 1
+                                    scheme:
+                                      type: string
+                                      enum:
+                                        - http
+                                        - https
+                                    statusCode:
+                                      description: StatusCode is the HTTP status code to be used in response.
+                                      type: integer
+                                      default: 302
+                                      enum:
+                                        - 301
+                                        - 302
+                                        - 303
+                                        - 307
+                                        - 308
+                            - type: object
+                              default:
+                                type: URLRewrite
+                                urlRewrite: {}
+                              properties:
+                                type:
+                                  const: URLRewrite
+                                urlRewrite:
+                                  type: object
+                                  properties:
+                                    hostToBackendHostname:
+                                      description: |-
+                                        HostToBackendHostname rewrites the hostname to the hostname of the
+                                        upstream host. This option is only available when targeting MeshGateways.
+                                      type: boolean
+                                    hostname:
+                                      description: Hostname is the value to be used to replace the host header value during forwarding.
+                                      type: string
+                                      maxLength: 253
+                                      minLength: 1
+                                      pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$
+                                    path:
+                                      description: Path defines a path rewrite.
+                                      type: object
+                                      properties:
+                                        replaceFullPath:
+                                          type: string
+                                        replacePrefixMatch:
+                                          type: string
+                                        type:
+                                          type: string
+                                          enum:
+                                            - ReplaceFullPath
+                                            - ReplacePrefixMatch
+                                      required:
+                                        - type
+                            - type: object
+                              default:
+                                type: RequestMirror
+                                requestMirror: {}
+                              properties:
+                                type:
+                                  const: RequestMirror
+                                requestMirror:
+                                  type: object
+                                  properties:
+                                    backendRef:
+                                      description: BackendRef defines where to forward traffic.
+                                      type: object
+                                      properties:
+                                        kind:
+                                          description: Kind of the referenced resource
+                                          type: string
+                                          enum:
+                                            - Mesh
+                                            - MeshSubset
+                                            - MeshGateway
+                                            - MeshService
+                                            - MeshExternalService
+                                            - MeshMultiZoneService
+                                            - MeshServiceSubset
+                                            - MeshHTTPRoute
+                                            - Dataplane
+                                        labels:
+                                          description: |-
+                                            Labels are used to select group of MeshServices that match labels. Either Labels or
+                                            Name and Namespace can be used.
+                                          type: object
+                                          additionalProperties:
+                                            type: string
+                                        mesh:
+                                          description: Mesh is reserved for future use to identify cross mesh resources.
+                                          type: string
+                                        name:
+                                          description: |-
+                                            Name of the referenced resource. Can only be used with kinds: `MeshService`,
+                                            `MeshServiceSubset` and `MeshGatewayRoute`
+                                          type: string
+                                        namespace:
+                                          description: |-
+                                            Namespace specifies the namespace of target resource. If empty only resources in policy namespace
+                                            will be targeted.
+                                          type: string
+                                        port:
+                                          description: Port is only supported when this ref refers to a real MeshService object
+                                          type: integer
+                                          format: int32
+                                        proxyTypes:
+                                          description: |-
+                                            ProxyTypes specifies the data plane types that are subject to the policy. When not specified,
+                                            all data plane types are targeted by the policy.
+                                          type: array
+                                          items:
+                                            enum:
+                                              - Sidecar
+                                              - Gateway
+                                            type: string
+                                        sectionName:
+                                          description: |-
+                                            SectionName is used to target specific section of resource.
+                                            For example, you can target port from MeshService.ports[] by its name. Only traffic to this port will be affected.
+                                          type: string
+                                        tags:
+                                          description: |-
+                                            Tags used to select a subset of proxies by tags. Can only be used with kinds
+                                            `MeshSubset` and `MeshServiceSubset`
+                                          type: object
+                                          additionalProperties:
+                                            type: string
+                                        weight:
+                                          type: integer
+                                          default: 1
+                                          minimum: 0
+                                      required:
+                                        - kind
+                                    percentage:
+                                      description: |-
+                                        Percentage of requests to mirror. If not specified, all requests
+                                        to the target cluster will be mirrored.
+                                      anyOf:
+                                        - type: integer
+                                        - type: string
+                                      x-kubernetes-int-or-string: true
+                                  required:
+                                    - backendRef
                   matches:
                     description: |-
                       Matches describes how to match HTTP requests this rule should be applied
@@ -493,7 +550,7 @@ properties:
                                 type: string
                                 maxLength: 256
                                 minLength: 1
-                                pattern: '^[a-z0-9!#$%&''*+\-.^_\x60|~]+$'
+                                pattern: ^[a-z0-9!#$%&'*+\-.^_\x60|~]+$
                               type:
                                 description: Type specifies how to match against the value of the header.
                                 type: string
@@ -654,3 +711,4 @@ required:
   - name
   - spec
 x-request: true
+

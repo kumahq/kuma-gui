@@ -22,3 +22,122 @@ actions:
         targetRef:
           kind: MeshService
         default: {}
+
+  # loadBalancer.type should be oneOf
+  - target: '$..loadBalancer.properties.roundRobin'
+    remove: true
+  - target: '$..loadBalancer.properties.leastRequest'
+    remove: true
+  - target: '$..loadBalancer.properties.ringHash'
+    remove: true
+  - target: '$..loadBalancer.properties.random'
+    remove: true
+  - target: '$..loadBalancer.properties.maglev'
+    remove: true
+
+  - target: '$..loadBalancer'
+    update:
+      default:
+        type: RoundRobin
+      oneOf:
+        - type: object
+          default:
+            type: RoundRobin
+            roundRobin: {}
+          properties:
+            type: { const: RoundRobin }
+            roundRobin:
+              $ref: !!oas-overlay/dereference '../../../generated/components/schemas/MeshLoadBalancingStrategyItem.yaml#/properties/spec/properties/to/items/properties/default/properties/loadBalancer/properties/roundRobin'
+        - type: object
+          default:
+            type: LeastRequest
+            leastRequest: {}
+          properties:
+            type: { const: LeastRequest }
+            leastRequest:
+              $ref: !!oas-overlay/dereference '../../../generated/components/schemas/MeshLoadBalancingStrategyItem.yaml#/properties/spec/properties/to/items/properties/default/properties/loadBalancer/properties/leastRequest'
+        - type: object
+          default:
+            type: RingHash
+            ringHash: {}
+          properties:
+            type: { const: RingHash }
+            ringHash:
+              $ref: !!oas-overlay/dereference '../../../generated/components/schemas/MeshLoadBalancingStrategyItem.yaml#/properties/spec/properties/to/items/properties/default/properties/loadBalancer/properties/ringHash'
+        - type: object
+          default:
+            type: Random
+            random: {}
+          properties:
+            type: { const: Random }
+            random:
+              $ref: !!oas-overlay/dereference '../../../generated/components/schemas/MeshLoadBalancingStrategyItem.yaml#/properties/spec/properties/to/items/properties/default/properties/loadBalancer/properties/random'
+        - type: object
+          default:
+            type: Maglev
+            maglev: {}
+          properties:
+            type: { const: Maglev }
+            maglev:
+              $ref: !!oas-overlay/dereference '../../../generated/components/schemas/MeshLoadBalancingStrategyItem.yaml#/properties/spec/properties/to/items/properties/default/properties/loadBalancer/properties/maglev'
+
+  # rules[].default.filters[].requestRedirect.path should be oneOf
+  # loadBalancer..hashPolicies should be oneOf
+  - target: '$..loadBalancer..hashPolicies.items.properties.header'
+    remove: true
+  - target: '$..loadBalancer..hashPolicies.items.properties.cookie'
+    remove: true
+  - target: '$..loadBalancer..hashPolicies.items.properties.connection'
+    remove: true
+  - target: '$..loadBalancer..hashPolicies.items.properties.queryParameter'
+    remove: true
+  - target: '$..loadBalancer..hashPolicies.items.properties.filterState'
+    remove: true
+
+  - target: '$..loadBalancer..hashPolicies.items'
+    update:
+      default:
+        type: Header
+        header: {}
+      oneOf:
+        - type: object
+          default:
+            type: Header
+            header: {}
+          properties:
+            type: { const: Header }
+            header:
+              $ref: !!oas-overlay/dereference '../../../generated/components/schemas/MeshLoadBalancingStrategyItem.yaml#/properties/spec/properties/to/items/properties/default/properties/loadBalancer/properties/ringHash/properties/hashPolicies/items/properties/header'
+        - type: object
+          default:
+            type: Cookie
+            header: {}
+          properties:
+            type: { const: Cookie }
+            header:
+              $ref: !!oas-overlay/dereference '../../../generated/components/schemas/MeshLoadBalancingStrategyItem.yaml#/properties/spec/properties/to/items/properties/default/properties/loadBalancer/properties/ringHash/properties/hashPolicies/items/properties/cookie'
+        - type: object
+          default:
+            type: Connection
+            connection: {}
+          properties:
+            type: { const: Connection }
+            connection:
+              $ref: !!oas-overlay/dereference '../../../generated/components/schemas/MeshLoadBalancingStrategyItem.yaml#/properties/spec/properties/to/items/properties/default/properties/loadBalancer/properties/ringHash/properties/hashPolicies/items/properties/connection'
+        - type: object
+          default:
+            type: QueryParameter
+            queryParameter: {}
+          properties:
+            type: { const: QueryParameter }
+            queryParameter:
+              $ref: !!oas-overlay/dereference '../../../generated/components/schemas/MeshLoadBalancingStrategyItem.yaml#/properties/spec/properties/to/items/properties/default/properties/loadBalancer/properties/ringHash/properties/hashPolicies/items/properties/queryParameter'
+        - type: object
+          default:
+            type: FilterState
+            filterState: {}
+          properties:
+            type: { const: FilterState }
+            filterState:
+              $ref: !!oas-overlay/dereference '../../../generated/components/schemas/MeshLoadBalancingStrategyItem.yaml#/properties/spec/properties/to/items/properties/default/properties/loadBalancer/properties/ringHash/properties/hashPolicies/items/properties/filterState'
+

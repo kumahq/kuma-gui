@@ -127,7 +127,7 @@ properties:
                             description: The name of the path for the cookie.
                             type: string
                           ttl:
-                            description: 'If specified, a cookie with the TTL will be generated if the cookie is not present.'
+                            description: If specified, a cookie with the TTL will be generated if the cookie is not present.
                             type: string
                         required:
                           - name
@@ -187,258 +187,6 @@ properties:
                   description: LoadBalancer allows to specify load balancing algorithm.
                   type: object
                   properties:
-                    leastRequest:
-                      description: |-
-                        LeastRequest selects N random available hosts as specified in 'choiceCount' (2 by default)
-                        and picks the host which has the fewest active requests
-                      type: object
-                      properties:
-                        activeRequestBias:
-                          description: |-
-                            ActiveRequestBias refers to dynamic weights applied when hosts have varying load
-                            balancing weights. A higher value here aggressively reduces the weight of endpoints
-                            that are currently handling active requests. In essence, the higher the ActiveRequestBias
-                            value, the more forcefully it reduces the load balancing weight of endpoints that are
-                            actively serving requests.
-                          anyOf:
-                            - type: integer
-                            - type: string
-                          x-kubernetes-int-or-string: true
-                        choiceCount:
-                          description: |-
-                            ChoiceCount is the number of random healthy hosts from which the host with
-                            the fewest active requests will be chosen. Defaults to 2 so that Envoy performs
-                            two-choice selection if the field is not set.
-                          type: integer
-                          format: int32
-                          minimum: 2
-                    maglev:
-                      description: |-
-                        Maglev implements consistent hashing to upstream hosts. Maglev can be used as
-                        a drop in replacement for the ring hash load balancer any place in which
-                        consistent hashing is desired.
-                      type: object
-                      properties:
-                        hashPolicies:
-                          description: |-
-                            HashPolicies specify a list of request/connection properties that are used to calculate a hash.
-                            These hash policies are executed in the specified order. If a hash policy has the “terminal” attribute
-                            set to true, and there is already a hash generated, the hash is returned immediately,
-                            ignoring the rest of the hash policy list.
-                          type: array
-                          items:
-                            properties:
-                              connection:
-                                type: object
-                                properties:
-                                  sourceIP:
-                                    description: Hash on source IP address.
-                                    type: boolean
-                              cookie:
-                                type: object
-                                properties:
-                                  name:
-                                    description: The name of the cookie that will be used to obtain the hash key.
-                                    type: string
-                                    minLength: 1
-                                  path:
-                                    description: The name of the path for the cookie.
-                                    type: string
-                                  ttl:
-                                    description: 'If specified, a cookie with the TTL will be generated if the cookie is not present.'
-                                    type: string
-                                required:
-                                  - name
-                              filterState:
-                                type: object
-                                properties:
-                                  key:
-                                    description: |-
-                                      The name of the Object in the per-request filterState, which is
-                                      an Envoy::Hashable object. If there is no data associated with the key,
-                                      or the stored object is not Envoy::Hashable, no hash will be produced.
-                                    type: string
-                                    minLength: 1
-                                required:
-                                  - key
-                              header:
-                                type: object
-                                properties:
-                                  name:
-                                    description: The name of the request header that will be used to obtain the hash key.
-                                    type: string
-                                    minLength: 1
-                                required:
-                                  - name
-                              queryParameter:
-                                type: object
-                                properties:
-                                  name:
-                                    description: |-
-                                      The name of the URL query parameter that will be used to obtain the hash key.
-                                      If the parameter is not present, no hash will be produced. Query parameter names
-                                      are case-sensitive.
-                                    type: string
-                                    minLength: 1
-                                required:
-                                  - name
-                              terminal:
-                                description: |-
-                                  Terminal is a flag that short-circuits the hash computing. This field provides
-                                  a ‘fallback’ style of configuration: “if a terminal policy doesn’t work, fallback
-                                  to rest of the policy list”, it saves time when the terminal policy works.
-                                  If true, and there is already a hash computed, ignore rest of the list of hash polices.
-                                type: boolean
-                              type:
-                                type: string
-                                enum:
-                                  - Header
-                                  - Cookie
-                                  - Connection
-                                  - SourceIP
-                                  - QueryParameter
-                                  - FilterState
-                            required:
-                              - type
-                            type: object
-                        tableSize:
-                          description: |-
-                            The table size for Maglev hashing. Maglev aims for “minimal disruption”
-                            rather than an absolute guarantee. Minimal disruption means that when
-                            the set of upstream hosts change, a connection will likely be sent
-                            to the same upstream as it was before. Increasing the table size reduces
-                            the amount of disruption. The table size must be prime number limited to 5000011.
-                            If it is not specified, the default is 65537.
-                          type: integer
-                          format: int32
-                          maximum: 5000011
-                          minimum: 1
-                    random:
-                      description: |-
-                        Random selects a random available host. The random load balancer generally
-                        performs better than round-robin if no health checking policy is configured.
-                        Random selection avoids bias towards the host in the set that comes after a failed host.
-                      type: object
-                    ringHash:
-                      description: |-
-                        RingHash  implements consistent hashing to upstream hosts. Each host is mapped
-                        onto a circle (the “ring”) by hashing its address; each request is then routed
-                        to a host by hashing some property of the request, and finding the nearest
-                        corresponding host clockwise around the ring.
-                      type: object
-                      properties:
-                        hashFunction:
-                          description: |-
-                            HashFunction is a function used to hash hosts onto the ketama ring.
-                            The value defaults to XX_HASH. Available values – XX_HASH, MURMUR_HASH_2.
-                          type: string
-                          enum:
-                            - XXHash
-                            - MurmurHash2
-                        hashPolicies:
-                          description: |-
-                            HashPolicies specify a list of request/connection properties that are used to calculate a hash.
-                            These hash policies are executed in the specified order. If a hash policy has the “terminal” attribute
-                            set to true, and there is already a hash generated, the hash is returned immediately,
-                            ignoring the rest of the hash policy list.
-                          type: array
-                          items:
-                            properties:
-                              connection:
-                                type: object
-                                properties:
-                                  sourceIP:
-                                    description: Hash on source IP address.
-                                    type: boolean
-                              cookie:
-                                type: object
-                                properties:
-                                  name:
-                                    description: The name of the cookie that will be used to obtain the hash key.
-                                    type: string
-                                    minLength: 1
-                                  path:
-                                    description: The name of the path for the cookie.
-                                    type: string
-                                  ttl:
-                                    description: 'If specified, a cookie with the TTL will be generated if the cookie is not present.'
-                                    type: string
-                                required:
-                                  - name
-                              filterState:
-                                type: object
-                                properties:
-                                  key:
-                                    description: |-
-                                      The name of the Object in the per-request filterState, which is
-                                      an Envoy::Hashable object. If there is no data associated with the key,
-                                      or the stored object is not Envoy::Hashable, no hash will be produced.
-                                    type: string
-                                    minLength: 1
-                                required:
-                                  - key
-                              header:
-                                type: object
-                                properties:
-                                  name:
-                                    description: The name of the request header that will be used to obtain the hash key.
-                                    type: string
-                                    minLength: 1
-                                required:
-                                  - name
-                              queryParameter:
-                                type: object
-                                properties:
-                                  name:
-                                    description: |-
-                                      The name of the URL query parameter that will be used to obtain the hash key.
-                                      If the parameter is not present, no hash will be produced. Query parameter names
-                                      are case-sensitive.
-                                    type: string
-                                    minLength: 1
-                                required:
-                                  - name
-                              terminal:
-                                description: |-
-                                  Terminal is a flag that short-circuits the hash computing. This field provides
-                                  a ‘fallback’ style of configuration: “if a terminal policy doesn’t work, fallback
-                                  to rest of the policy list”, it saves time when the terminal policy works.
-                                  If true, and there is already a hash computed, ignore rest of the list of hash polices.
-                                type: boolean
-                              type:
-                                type: string
-                                enum:
-                                  - Header
-                                  - Cookie
-                                  - Connection
-                                  - SourceIP
-                                  - QueryParameter
-                                  - FilterState
-                            required:
-                              - type
-                            type: object
-                        maxRingSize:
-                          description: |-
-                            Maximum hash ring size. Defaults to 8M entries, and limited to 8M entries,
-                            but can be lowered to further constrain resource use.
-                          type: integer
-                          format: int32
-                          maximum: 8000000
-                          minimum: 1
-                        minRingSize:
-                          description: |-
-                            Minimum hash ring size. The larger the ring is (that is,
-                            the more hashes there are for each provided host) the better the request distribution
-                            will reflect the desired weights. Defaults to 1024 entries, and limited to 8M entries.
-                          type: integer
-                          format: int32
-                          maximum: 8000000
-                          minimum: 1
-                    roundRobin:
-                      description: |-
-                        RoundRobin is a load balancing algorithm that distributes requests
-                        across available upstream hosts in round-robin order.
-                      type: object
                     type:
                       type: string
                       enum:
@@ -449,6 +197,374 @@ properties:
                         - Maglev
                   required:
                     - type
+                  default:
+                    type: RoundRobin
+                  oneOf:
+                    - type: object
+                      default:
+                        type: RoundRobin
+                        roundRobin: {}
+                      properties:
+                        type:
+                          const: RoundRobin
+                        roundRobin:
+                          description: |-
+                            RoundRobin is a load balancing algorithm that distributes requests
+                            across available upstream hosts in round-robin order.
+                          type: object
+                    - type: object
+                      default:
+                        type: LeastRequest
+                        leastRequest: {}
+                      properties:
+                        type:
+                          const: LeastRequest
+                        leastRequest:
+                          description: |-
+                            LeastRequest selects N random available hosts as specified in 'choiceCount' (2 by default)
+                            and picks the host which has the fewest active requests
+                          type: object
+                          properties:
+                            activeRequestBias:
+                              description: |-
+                                ActiveRequestBias refers to dynamic weights applied when hosts have varying load
+                                balancing weights. A higher value here aggressively reduces the weight of endpoints
+                                that are currently handling active requests. In essence, the higher the ActiveRequestBias
+                                value, the more forcefully it reduces the load balancing weight of endpoints that are
+                                actively serving requests.
+                              anyOf:
+                                - type: integer
+                                - type: string
+                              x-kubernetes-int-or-string: true
+                            choiceCount:
+                              description: |-
+                                ChoiceCount is the number of random healthy hosts from which the host with
+                                the fewest active requests will be chosen. Defaults to 2 so that Envoy performs
+                                two-choice selection if the field is not set.
+                              type: integer
+                              format: int32
+                              minimum: 2
+                    - type: object
+                      default:
+                        type: RingHash
+                        ringHash: {}
+                      properties:
+                        type:
+                          const: RingHash
+                        ringHash:
+                          description: |-
+                            RingHash  implements consistent hashing to upstream hosts. Each host is mapped
+                            onto a circle (the “ring”) by hashing its address; each request is then routed
+                            to a host by hashing some property of the request, and finding the nearest
+                            corresponding host clockwise around the ring.
+                          type: object
+                          properties:
+                            hashFunction:
+                              description: |-
+                                HashFunction is a function used to hash hosts onto the ketama ring.
+                                The value defaults to XX_HASH. Available values – XX_HASH, MURMUR_HASH_2.
+                              type: string
+                              enum:
+                                - XXHash
+                                - MurmurHash2
+                            hashPolicies:
+                              description: |-
+                                HashPolicies specify a list of request/connection properties that are used to calculate a hash.
+                                These hash policies are executed in the specified order. If a hash policy has the “terminal” attribute
+                                set to true, and there is already a hash generated, the hash is returned immediately,
+                                ignoring the rest of the hash policy list.
+                              type: array
+                              items:
+                                properties:
+                                  terminal:
+                                    description: |-
+                                      Terminal is a flag that short-circuits the hash computing. This field provides
+                                      a ‘fallback’ style of configuration: “if a terminal policy doesn’t work, fallback
+                                      to rest of the policy list”, it saves time when the terminal policy works.
+                                      If true, and there is already a hash computed, ignore rest of the list of hash polices.
+                                    type: boolean
+                                  type:
+                                    type: string
+                                    enum:
+                                      - Header
+                                      - Cookie
+                                      - Connection
+                                      - SourceIP
+                                      - QueryParameter
+                                      - FilterState
+                                required:
+                                  - type
+                                type: object
+                                default:
+                                  type: Header
+                                  header: {}
+                                oneOf:
+                                  - type: object
+                                    default:
+                                      type: Header
+                                      header: {}
+                                    properties:
+                                      type:
+                                        const: Header
+                                      header:
+                                        type: object
+                                        properties:
+                                          name:
+                                            description: The name of the request header that will be used to obtain the hash key.
+                                            type: string
+                                            minLength: 1
+                                        required:
+                                          - name
+                                  - type: object
+                                    default:
+                                      type: Cookie
+                                      header: {}
+                                    properties:
+                                      type:
+                                        const: Cookie
+                                      header:
+                                        type: object
+                                        properties:
+                                          name:
+                                            description: The name of the cookie that will be used to obtain the hash key.
+                                            type: string
+                                            minLength: 1
+                                          path:
+                                            description: The name of the path for the cookie.
+                                            type: string
+                                          ttl:
+                                            description: If specified, a cookie with the TTL will be generated if the cookie is not present.
+                                            type: string
+                                        required:
+                                          - name
+                                  - type: object
+                                    default:
+                                      type: Connection
+                                      connection: {}
+                                    properties:
+                                      type:
+                                        const: Connection
+                                      connection:
+                                        type: object
+                                        properties:
+                                          sourceIP:
+                                            description: Hash on source IP address.
+                                            type: boolean
+                                  - type: object
+                                    default:
+                                      type: QueryParameter
+                                      queryParameter: {}
+                                    properties:
+                                      type:
+                                        const: QueryParameter
+                                      queryParameter:
+                                        type: object
+                                        properties:
+                                          name:
+                                            description: |-
+                                              The name of the URL query parameter that will be used to obtain the hash key.
+                                              If the parameter is not present, no hash will be produced. Query parameter names
+                                              are case-sensitive.
+                                            type: string
+                                            minLength: 1
+                                        required:
+                                          - name
+                                  - type: object
+                                    default:
+                                      type: FilterState
+                                      filterState: {}
+                                    properties:
+                                      type:
+                                        const: FilterState
+                                      filterState:
+                                        type: object
+                                        properties:
+                                          key:
+                                            description: |-
+                                              The name of the Object in the per-request filterState, which is
+                                              an Envoy::Hashable object. If there is no data associated with the key,
+                                              or the stored object is not Envoy::Hashable, no hash will be produced.
+                                            type: string
+                                            minLength: 1
+                                        required:
+                                          - key
+                            maxRingSize:
+                              description: |-
+                                Maximum hash ring size. Defaults to 8M entries, and limited to 8M entries,
+                                but can be lowered to further constrain resource use.
+                              type: integer
+                              format: int32
+                              maximum: 8000000
+                              minimum: 1
+                            minRingSize:
+                              description: |-
+                                Minimum hash ring size. The larger the ring is (that is,
+                                the more hashes there are for each provided host) the better the request distribution
+                                will reflect the desired weights. Defaults to 1024 entries, and limited to 8M entries.
+                              type: integer
+                              format: int32
+                              maximum: 8000000
+                              minimum: 1
+                    - type: object
+                      default:
+                        type: Random
+                        random: {}
+                      properties:
+                        type:
+                          const: Random
+                        random:
+                          description: |-
+                            Random selects a random available host. The random load balancer generally
+                            performs better than round-robin if no health checking policy is configured.
+                            Random selection avoids bias towards the host in the set that comes after a failed host.
+                          type: object
+                    - type: object
+                      default:
+                        type: Maglev
+                        maglev: {}
+                      properties:
+                        type:
+                          const: Maglev
+                        maglev:
+                          description: |-
+                            Maglev implements consistent hashing to upstream hosts. Maglev can be used as
+                            a drop in replacement for the ring hash load balancer any place in which
+                            consistent hashing is desired.
+                          type: object
+                          properties:
+                            hashPolicies:
+                              description: |-
+                                HashPolicies specify a list of request/connection properties that are used to calculate a hash.
+                                These hash policies are executed in the specified order. If a hash policy has the “terminal” attribute
+                                set to true, and there is already a hash generated, the hash is returned immediately,
+                                ignoring the rest of the hash policy list.
+                              type: array
+                              items:
+                                properties:
+                                  terminal:
+                                    description: |-
+                                      Terminal is a flag that short-circuits the hash computing. This field provides
+                                      a ‘fallback’ style of configuration: “if a terminal policy doesn’t work, fallback
+                                      to rest of the policy list”, it saves time when the terminal policy works.
+                                      If true, and there is already a hash computed, ignore rest of the list of hash polices.
+                                    type: boolean
+                                  type:
+                                    type: string
+                                    enum:
+                                      - Header
+                                      - Cookie
+                                      - Connection
+                                      - SourceIP
+                                      - QueryParameter
+                                      - FilterState
+                                required:
+                                  - type
+                                type: object
+                                default:
+                                  type: Header
+                                  header: {}
+                                oneOf:
+                                  - type: object
+                                    default:
+                                      type: Header
+                                      header: {}
+                                    properties:
+                                      type:
+                                        const: Header
+                                      header:
+                                        type: object
+                                        properties:
+                                          name:
+                                            description: The name of the request header that will be used to obtain the hash key.
+                                            type: string
+                                            minLength: 1
+                                        required:
+                                          - name
+                                  - type: object
+                                    default:
+                                      type: Cookie
+                                      header: {}
+                                    properties:
+                                      type:
+                                        const: Cookie
+                                      header:
+                                        type: object
+                                        properties:
+                                          name:
+                                            description: The name of the cookie that will be used to obtain the hash key.
+                                            type: string
+                                            minLength: 1
+                                          path:
+                                            description: The name of the path for the cookie.
+                                            type: string
+                                          ttl:
+                                            description: If specified, a cookie with the TTL will be generated if the cookie is not present.
+                                            type: string
+                                        required:
+                                          - name
+                                  - type: object
+                                    default:
+                                      type: Connection
+                                      connection: {}
+                                    properties:
+                                      type:
+                                        const: Connection
+                                      connection:
+                                        type: object
+                                        properties:
+                                          sourceIP:
+                                            description: Hash on source IP address.
+                                            type: boolean
+                                  - type: object
+                                    default:
+                                      type: QueryParameter
+                                      queryParameter: {}
+                                    properties:
+                                      type:
+                                        const: QueryParameter
+                                      queryParameter:
+                                        type: object
+                                        properties:
+                                          name:
+                                            description: |-
+                                              The name of the URL query parameter that will be used to obtain the hash key.
+                                              If the parameter is not present, no hash will be produced. Query parameter names
+                                              are case-sensitive.
+                                            type: string
+                                            minLength: 1
+                                        required:
+                                          - name
+                                  - type: object
+                                    default:
+                                      type: FilterState
+                                      filterState: {}
+                                    properties:
+                                      type:
+                                        const: FilterState
+                                      filterState:
+                                        type: object
+                                        properties:
+                                          key:
+                                            description: |-
+                                              The name of the Object in the per-request filterState, which is
+                                              an Envoy::Hashable object. If there is no data associated with the key,
+                                              or the stored object is not Envoy::Hashable, no hash will be produced.
+                                            type: string
+                                            minLength: 1
+                                        required:
+                                          - key
+                            tableSize:
+                              description: |-
+                                The table size for Maglev hashing. Maglev aims for “minimal disruption”
+                                rather than an absolute guarantee. Minimal disruption means that when
+                                the set of upstream hosts change, a connection will likely be sent
+                                to the same upstream as it was before. Increasing the table size reduces
+                                the amount of disruption. The table size must be prime number limited to 5000011.
+                                If it is not specified, the default is 65537.
+                              type: integer
+                              format: int32
+                              maximum: 5000011
+                              minimum: 1
                 localityAwareness:
                   description: LocalityAwareness contains configuration for locality aware load balancing.
                   type: object
@@ -628,3 +744,4 @@ required:
   - name
   - spec
 x-request: true
+

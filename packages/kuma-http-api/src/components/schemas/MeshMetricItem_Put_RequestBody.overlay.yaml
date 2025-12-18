@@ -15,3 +15,32 @@ actions:
       default:
         default:
           backends: []
+  # Update all backends.items locations using recursive descent
+  # loadBalancer.type should be oneOf
+  - target: '$..backends.items.properties.prometheus'
+    remove: true
+  - target: '$..backends.items.properties.openTelemetry'
+    remove: true
+
+  - target: '$..backends.items'
+    update:
+      default:
+        type: Prometheus
+      oneOf:
+        - type: object
+          default:
+            type: Prometheus
+            prometheus: {}
+          properties:
+            type: { const: Prometheus }
+            prometheus:
+              $ref: !!oas-overlay/dereference '../../../generated/components/schemas/MeshMetricItem.yaml#/properties/spec/properties/default/properties/backends/items/properties/prometheus'
+        - type: object
+          default:
+            type: OpenTelemetry
+            openTelemetry: {}
+          properties:
+            type: { const: OpenTelemetry }
+            openTelemetry:
+              $ref: !!oas-overlay/dereference '../../../generated/components/schemas/MeshMetricItem.yaml#/properties/spec/properties/default/properties/backends/items/properties/openTelemetry'
+

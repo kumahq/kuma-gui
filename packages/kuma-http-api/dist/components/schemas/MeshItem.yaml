@@ -65,8 +65,8 @@ properties:
             conf:
               type: object
               oneOf:
-                - $ref: "FileLoggingBackendConfig.yaml"
-                - $ref: "TcpLoggingBackendConfig.yaml"
+                - $ref: FileLoggingBackendConfig.yaml
+                - $ref: TcpLoggingBackendConfig.yaml
             format:
               description: |-
                 Format of access logs. Placeholders available on
@@ -113,9 +113,9 @@ properties:
             conf:
               type: object
               oneOf:
-                - $ref: "PrometheusMetricsBackendConfig.yaml"
+                - $ref: PrometheusMetricsBackendConfig.yaml
             name:
-              description: 'Name of the backend, can be then used in Mesh.metrics.enabledBackend'
+              description: Name of the backend, can be then used in Mesh.metrics.enabledBackend
               type: string
             type:
               description: Type of the backend (Kuma ships with 'prometheus')
@@ -139,8 +139,8 @@ properties:
             conf:
               type: object
               oneOf:
-                - $ref: "ProvidedCertificateAuthorityConfig.yaml"
-                - $ref: "BuiltinCertificateAuthorityConfig.yaml"
+                - $ref: ProvidedCertificateAuthorityConfig.yaml
+                - $ref: BuiltinCertificateAuthorityConfig.yaml
             dpCert:
               description: Dataplane certificate settings
               type: object
@@ -193,7 +193,7 @@ properties:
         description: Name of the enabled backend
         type: string
       skipValidation:
-        description: 'If enabled, skips CA validation.'
+        description: If enabled, skips CA validation.
         type: boolean
   name:
     type: string
@@ -248,8 +248,8 @@ properties:
             conf:
               type: object
               oneOf:
-                - $ref: "DatadogTracingBackendConfig.yaml"
-                - $ref: "ZipkinTracingBackendConfig.yaml"
+                - $ref: DatadogTracingBackendConfig.yaml
+                - $ref: ZipkinTracingBackendConfig.yaml
             name:
               description: |-
                 Name of the backend, can be then used in Mesh.tracing.defaultBackend or in
@@ -276,3 +276,4 @@ properties:
 required:
   - type
   - name
+

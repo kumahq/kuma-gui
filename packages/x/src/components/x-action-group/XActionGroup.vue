@@ -76,7 +76,6 @@ const slots = defineSlots()
   border-bottom: $kui-border-width-10 solid;
   padding: $kui-space-30 $kui-space-50;
   font-weight: $kui-font-weight-semibold;
-  text-decoration: none;
 }
 
 .x-action-group.expanded :deep(> .active) {
