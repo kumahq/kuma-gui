@@ -1,10 +1,12 @@
 import createClient from 'openapi-fetch'
 
 import { MeshIdentity } from './data/MeshIdentity'
+import type { KumaMeshIdentity } from './data/MeshIdentity'
 import { MeshTrust } from './data/MeshTrust'
+import type { KumaMeshTrust } from './data/MeshTrust'
 import { defineSources } from '@/app/application'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
-import type { paths, components } from '@kumahq/kuma-http-api'
+import type { paths } from '@kumahq/kuma-http-api'
 
 export const sources = (api: KumaApi) => {
   const http = createClient<paths>({
@@ -37,7 +39,7 @@ export const sources = (api: KumaApi) => {
         },
       })
   
-      return MeshIdentity.fromObject(res.data as components['schemas']['MeshIdentityItem'])
+      return MeshIdentity.fromObject(res.data as KumaMeshIdentity)
     },
 
     '/meshidentities/:mid/as/kubernetes': async (params) => {
@@ -83,7 +85,7 @@ export const sources = (api: KumaApi) => {
         },
       })
   
-      return MeshTrust.fromObject(res.data as components['schemas']['MeshTrustItem'])
+      return MeshTrust.fromObject(res.data as KumaMeshTrust)
     },
 
     '/meshtrusts/:mtrust/as/kubernetes': async (params) => {
