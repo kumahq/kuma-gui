@@ -96,6 +96,7 @@ export const sources = (api: KumaApi) => {
       }
 
       return {
+        $meta: connections.$meta,
         passthrough,
         inbounds,
         outbounds,
