@@ -26,6 +26,7 @@ http.admin.connections_accepted_per_socket_event: P0(nan,1) P25(nan,1.025) P50(n
 http.127.0.0.1.borken_due_to_ip_but_never_happens: 0
 not_http_or_tcp_as_root.service_with_underscores_8080.numbers: 0
 cluster.self_inbound_dp_http.circuit_breakers.default.cx_open: 1
+cluster.localhost_9090.ssl.certificate.spiffe://default.local-zone.mesh.local/ns/kuma-demo/sa/default.expiration_unix_time_seconds: 1765820805
 `)
       expect(actual).toStrictEqual(expected)
     })
@@ -35,6 +36,11 @@ describe('ConnectionCollection', () => {
   describe('fromObject', () => {
     test('it works', () => {
       const expected = {
+        $meta: {
+          tls: {
+            certificateExpirationTime: 1765820805000,
+          },
+        },
         listener: {
           '10.244.0.11_8081': {
             tcp: {},
@@ -59,7 +65,21 @@ describe('ConnectionCollection', () => {
               type: '',
               zone: '',
             },
-            tcp: {},
+            tcp: {
+              ssl: {
+                certificate: {
+                  'spiffe://default': {
+                    'local-zone': {
+                      mesh: {
+                        'local/ns/kuma-demo/sa/default': {
+                          expiration_unix_time_seconds: 1765820805,
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
             grpc: {
               0: 12,
               request_message_count: 12,
@@ -139,6 +159,19 @@ function statsAsJSON() {
           response_message_count: 12,
           success: 12,
           total: 12,
+        },
+        ssl: {
+          certificate: {
+            'spiffe://default': {
+              'local-zone': {
+                mesh: {
+                  'local/ns/kuma-demo/sa/default': {
+                    expiration_unix_time_seconds: 1765820805,
+                  },
+                },
+              },
+            },
+          },
         },
       },
       self_inbound_dp_http: {
