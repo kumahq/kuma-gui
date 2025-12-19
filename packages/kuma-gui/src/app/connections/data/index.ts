@@ -1,4 +1,5 @@
 import { get } from '@/app/application'
+import { findDeep } from '@/app/application/utilities'
 
 const protocols = ['http', 'tcp'] as const
 const appProtocols = ['http', 'tcp', 'grpc'] as const
@@ -7,6 +8,7 @@ const appProtocols = ['http', 'tcp', 'grpc'] as const
 const trailingPortRe = /_\d{1,5}\./
 const trailingPortRe2 = /_\d{1,5}/
 const meshServiceRe = /_(mz|m|ext){1}svc_\d{1,5}(-[a-z0-9]+)?$/
+const spiffeCertRe = /spiffe:\/\//
 
 const isNonZero = (val: unknown) => parseInt(String(val), 10) > 0
 
@@ -220,7 +222,13 @@ export const ConnectionCollection = {
       'meshtrace_opentelemetry',
     ].some(item => key.startsWith(item))))
 
+    const spiffeCertificateExpirationTime = findDeep<number>(findDeep(item, spiffeCertRe), 'expiration_unix_time_seconds')
     return {
+      $meta: {
+        tls: {
+          certificateExpirationTime: spiffeCertificateExpirationTime ? spiffeCertificateExpirationTime * 1000 : undefined,
+        },
+      },
       listener,
       cluster: withoutInternals,
     }
@@ -267,8 +275,8 @@ const parse = (lines: string): Record<string, any> => {
       return item
     },
   ).reduce((prev, item) => {
-    // split the `key: values` on the `:` and normalize the value
-    const [key, ...value] = item.trim().split(':')
+    // split the `key: values` on the `: ` and normalize the value
+    const [key, ...value] = item.trim().split(/:\s/)
     const val = ((val) => {
       try {
         return JSON.parse(val)
