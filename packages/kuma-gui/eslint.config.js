@@ -17,7 +17,6 @@ const config = [
   {
     ignores: [
       'public/mockServiceWorker.js',
-      '.vitepress',
     ],
   },
 ]
