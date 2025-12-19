@@ -108,7 +108,7 @@
                         name: 'builtin-gateway-detail-view',
                         params: {
                           mesh: item.mesh,
-                          gateway: item.name,
+                          gateway: item.id,
                         },
                       }"
                     >
