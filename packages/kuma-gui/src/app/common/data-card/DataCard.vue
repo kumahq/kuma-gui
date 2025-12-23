@@ -2,7 +2,7 @@
   <XCard
     class="data-card"
   >
-    <dl>
+    <XDl>
       <div class="card">
         <dt class="title">
           <slot name="title" />
@@ -11,7 +11,7 @@
           <slot name="default" />
         </dd>
       </div>
-    </dl>
+    </XDl>
   </XCard>
 </template>
 <style lang="scss" scoped>
@@ -26,9 +26,7 @@
   overflow: hidden;
 }
 .card,
-.body,
-.body > :deep(dl),
-.body > :deep(dl) > div {
+.body {
   display: flex;
   flex-wrap: wrap;
   gap: $kui-space-40;
@@ -54,11 +52,5 @@
   > dd  {
     color: $kui-color-text;
   }
-  > dt::after {
-    display: inline;
-    /*[lang="en"]*/
-    content: ': ';
-  }
 }
-
 </style>

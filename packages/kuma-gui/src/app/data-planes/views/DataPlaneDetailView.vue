@@ -482,6 +482,7 @@
                                 <ConnectionCard
                                   data-testid="dataplane-inbound"
                                   :protocol="item.protocol"
+                                  :port="item.port"
                                   :port-name="inbound?.portName"
                                   :traffic="traffic?.inbounds[item.stat_prefix]"
                                   data-actionable
@@ -544,7 +545,7 @@
                                       },
                                     }"
                                   >
-                                    {{ item.proxyResourceName }}
+                                    :{{ item.port }}
                                   </XAction>
                                 </ConnectionCard>
                               </template>
@@ -614,6 +615,7 @@
                                 data-testid="dataplane-outbound"
                                 :protocol="outbound.protocol"
                                 :traffic="traffic?.outbounds[outbound.kri]"
+                                :kri="outbound.kri"
                                 data-actionable
                               >
                                 <template #state>
@@ -665,8 +667,40 @@
                                     },
                                   }"
                                 >
-                                  {{ outbound.proxyResourceName }}
+                                  {{ Kri.fromString(outbound.proxyResourceName).name }}
                                 </XAction>
+                                <template #body>
+                                  <XDl
+                                    v-for="kri in [Kri.fromString(outbound.proxyResourceName)]"
+                                    :key="typeof kri"
+                                    variant="x-stack"
+                                  >
+                                    <div>
+                                      <dt>Mesh</dt>
+                                      <dd>
+                                        {{ kri.mesh }}
+                                      </dd>
+                                    </div>
+                                    <div>
+                                      <dt>Zone</dt>
+                                      <dd>
+                                        {{ kri.zone }}
+                                      </dd>
+                                    </div>
+                                    <div>
+                                      <dt>Namespace</dt>
+                                      <dd>
+                                        {{ kri.namespace }}
+                                      </dd>
+                                    </div>
+                                    <div>
+                                      <dt>Port</dt>
+                                      <dd>
+                                        {{ kri.sectionName }}
+                                      </dd>
+                                    </div>
+                                  </XDl>
+                                </template>
                               </ConnectionCard>
                             </template>
                           </XLayout>
@@ -730,6 +764,7 @@ import ConnectionGroup from '@/app/connections/components/connection-traffic/Con
 import ConnectionTraffic from '@/app/connections/components/connection-traffic/ConnectionTraffic.vue'
 import { sources as connectionSources } from '@/app/connections/sources'
 import type { DataplaneOverview } from '@/app/data-planes/data'
+import { Kri } from '@/app/kuma'
 import type { Mesh } from '@/app/meshes/data'
 import type { DataplanePolicies } from '@/app/policies/data/DataplanePolicies'
 import { sources as policySources } from '@/app/policies/sources'

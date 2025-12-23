@@ -101,7 +101,6 @@ common:
       Unavailable: danger
       partially_degraded: warning
 
-
 components:
   status-badge:
     tooltip:
