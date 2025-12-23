@@ -2,7 +2,7 @@
   <XCard
     class="data-card"
   >
-    <XDl>
+    <dl>
       <div class="card">
         <dt class="title">
           <slot name="title" />
@@ -11,7 +11,7 @@
           <slot name="default" />
         </dd>
       </div>
-    </XDl>
+    </dl>
   </XCard>
 </template>
 <style lang="scss" scoped>

@@ -25,14 +25,43 @@
               </XBadge>
             </td>
           </tr>
-          <tr>
-            <th scope="row">
-              Port
-            </th>
-            <td>
-              {{ props.data.port }}
-            </td>
-          </tr>
+          <template
+            v-for="kri in [Kri.fromString(props.data.kri)]"
+            :key="typeof kri"
+          >
+            <tr>
+              <th scope="row">
+                Mesh
+              </th>
+              <td>
+                {{ kri.mesh }}
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">
+                Zone
+              </th>
+              <td>
+                {{ kri.zone }}
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">
+                Namespace
+              </th>
+              <td>
+                {{ kri.namespace }}
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">
+                Port
+              </th>
+              <td>
+                {{ props.data.port }}
+              </td>
+            </tr>
+          </template>
         </XTable>
         <XLayout
           v-if="props.data"
