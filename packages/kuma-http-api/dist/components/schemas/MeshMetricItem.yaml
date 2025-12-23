@@ -1,3 +1,4 @@
+description: 'MeshMetric enables collection and export of service mesh metrics. It configures sidecar and application metrics scraping, allows customization of which metrics are published, and supports exporting to Prometheus or OpenTelemetry backends for monitoring and observability.'
 type: object
 properties:
   type:
