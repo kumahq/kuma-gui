@@ -58,7 +58,7 @@
                 Port
               </th>
               <td>
-                {{ props.data.port }}
+                {{ `${props.data.port}${props.data.portName ? ` (${props.data.portName})` : ''}` }}
               </td>
             </tr>
           </template>
