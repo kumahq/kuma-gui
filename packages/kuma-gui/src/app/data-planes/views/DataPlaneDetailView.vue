@@ -482,7 +482,6 @@
                                 <ConnectionCard
                                   data-testid="dataplane-inbound"
                                   :protocol="item.protocol"
-                                  :port="item.port"
                                   :port-name="inbound?.portName"
                                   :traffic="traffic?.inbounds[item.stat_prefix]"
                                   data-actionable
@@ -696,7 +695,7 @@
                                     <div>
                                       <dt>Port</dt>
                                       <dd>
-                                        {{ kri.sectionName }}
+                                        {{ `${outbound.port}${outbound.portName ? ` (${outbound.portName})` : ''}` }}
                                       </dd>
                                     </div>
                                   </XDl>
