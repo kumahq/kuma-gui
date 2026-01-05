@@ -672,7 +672,6 @@
                                   <XDl
                                     v-for="kri in [Kri.fromString(outbound.proxyResourceName)]"
                                     :key="typeof kri"
-                                    variant="x-stack"
                                   >
                                     <div>
                                       <dt>Mesh</dt>
@@ -680,13 +679,13 @@
                                         {{ kri.mesh }}
                                       </dd>
                                     </div>
-                                    <div>
+                                    <div v-if="kri.zone.length > 0">
                                       <dt>Zone</dt>
                                       <dd>
                                         {{ kri.zone }}
                                       </dd>
                                     </div>
-                                    <div>
+                                    <div v-if="kri.namespace.length > 0">
                                       <dt>Namespace</dt>
                                       <dd>
                                         {{ kri.namespace }}

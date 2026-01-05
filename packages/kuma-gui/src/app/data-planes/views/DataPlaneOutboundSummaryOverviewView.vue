@@ -37,7 +37,7 @@
                 {{ kri.mesh }}
               </td>
             </tr>
-            <tr>
+            <tr v-if="kri.zone.length > 0">
               <th scope="row">
                 Zone
               </th>
@@ -45,7 +45,7 @@
                 {{ kri.zone }}
               </td>
             </tr>
-            <tr>
+            <tr v-if="kri.namespace.length > 0">
               <th scope="row">
                 Namespace
               </th>
