@@ -9,6 +9,7 @@ Feature: mesh / dataplanes / warnings
       | unsupported-envoy-warning       | [data-testid^='notification-data-planes.notifications.envoy-dp-incompatible']           |
       | unsupported-zone-warning        | [data-testid^='notification-data-planes.notifications.dp-zone-cp-incompatible']         |
       | networking-transparent-proxying | [data-testid^='notification-data-planes.notifications.networking-transparent-proxying'] |
+      | dataplane-offline               | [data-testid^='notification-data-planes.notifications.dataplane-offline']               |
     And the environment
       """
       KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: true
@@ -136,3 +137,19 @@ Feature: mesh / dataplanes / warnings
       """
     When I visit the "/meshes/default/data-planes/dpp-1/overview" URL
     Then the "$networking-transparent-proxying" element exists
+
+  Scenario: Dataplane offline notification
+    And the URL "/meshes/default/dataplanes/dpp-1/_overview" responds with
+      """
+      body:
+        dataplane:
+          networking:
+            outbound: !!js/undefined
+            inbound: !!js/undefined
+        dataplaneInsight:
+          connectedSubscription: !!js/undefined
+          metadata:
+            features: !!js/undefined
+      """
+    When I visit the "/meshes/default/data-planes/dpp-1/overview" URL
+    Then the "$dataplane-offline" element exists
