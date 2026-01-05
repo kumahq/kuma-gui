@@ -39,9 +39,17 @@
     },
     {
       "matchPackageNames": [
+        "npm",
         "escape-string-regexp"
       ],
       "enabled": false
+    },
+    {
+      "groupName": "node",
+      "matchPackageNames": [
+        "node"
+      ],
+      "dependencyDashboardApproval": true
     },
     {
       "description": [
@@ -71,29 +79,6 @@
       ],
       "minimumReleaseAge": "2 hours",
       "minimumReleaseAgeBehaviour": "timestamp-optional"
-    },
-    {
-      "groupName": "node minors and patches",
-      "matchPackageNames": [
-        "node",
-        "npm"
-      ],
-      "matchUpdateTypes": [
-        "minor",
-        "patch"
-      ],
-      "dependencyDashboardApproval": true
-    },
-    {
-      "groupName": "node majors",
-      "matchPackageNames": [
-        "node",
-        "npm"
-      ],
-      "matchUpdateTypes": [
-        "major"
-      ],
-      "dependencyDashboardApproval": true
     },
     {
       "matchCategories": [
