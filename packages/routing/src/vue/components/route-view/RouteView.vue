@@ -57,32 +57,25 @@
   </div>
 </template>
 <script lang="ts" setup generic="T extends Record<string, string | number | boolean | typeof Number | typeof String | typeof Boolean> = {}">
+import { useUri } from '@kumahq/data'
 import { DataSink, DataSource } from '@kumahq/data/vue'
 import { computed, provide, inject, ref, watch, onBeforeUnmount, reactive, useAttrs } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
-import { ROUTE_VIEW_PARENT, ROUTE_VIEW_ROOT } from '.'
-import { useCan, useI18n, uniqueId, useEnv, get , useUri } from '../../index'
+import { ROUTE_VIEW_PARENT, ROUTE_VIEW_ROOT } from '..'
+import { sources } from '../../../sources'
 import {
+  get,
+  uniqueId,
   urlParam,
   normalizeUrlParam,
   cleanQuery,
   createAttrsSetter,
   createTitleSetter,
-} from '../../utilities'
-import { sources } from '@/app/me/sources'
-import type { Ref } from 'vue'
+} from '../../../utilities'
+import { useCan, useI18n, useEnv } from '../../index'
+import type { RouteViewService } from '../index'
 import type { RouteRecordRaw, RouteLocationNormalizedLoaded, RouteLocationAsRelativeGeneric } from 'vue-router'
-
-
-export type RouteView = {
-  name: string
-  from: Ref
-  addTitle: (item: string, sym: symbol) => void
-  removeTitle: (sym: symbol) => void
-  addAttrs: (item: Partial<Record<string, string>>, sym: symbol) => void
-  removeAttrs: (sym: symbol) => void
-}
 
 type StringNamedRouteRecordRaw = RouteRecordRaw & {
   name: string
@@ -287,7 +280,7 @@ const routerGo = (to: RouteLocationAsRelativeGeneric & { delta: number }) => {
   routeReplace(args)
 }
 
-const hasRoot: RouteView | undefined = inject(ROUTE_VIEW_ROOT, undefined)
+const hasRoot: RouteViewService | undefined = inject(ROUTE_VIEW_ROOT, undefined)
 if (!hasRoot) {
   // use the default title if we are the topmost RouteView
   setTitle(t('components.route-view.title', { name: t('common.product.name') }))
@@ -302,7 +295,7 @@ if (!hasRoot) {
 // add RouteTitle's parent
 provide(ROUTE_VIEW_PARENT, routeView)
 //
-const root: RouteView = hasRoot || routeView
+const root: RouteViewService = hasRoot || routeView
 
 watch(() => props.attrs, (attrs) => {
   if (Object.keys(attrs).length > 0) {

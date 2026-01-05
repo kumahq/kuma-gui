@@ -16,6 +16,7 @@
     "@kong/kongponents": "^9.48.4",
     "@kumahq/container": "*",
     "@kumahq/data": "*",
+    "@kumahq/routing": "*",
     "@kumahq/settings": "*",
     "@kumahq/x": "*",
     "@vueuse/core": "^14.1.0",
