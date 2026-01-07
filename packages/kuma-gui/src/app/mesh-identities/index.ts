@@ -1,6 +1,5 @@
 import { token } from '@kumahq/container'
 
-import { routes } from './routes'
 import { sources } from './sources'
 import type { ServiceDefinition } from '@kumahq/container'
 
@@ -15,12 +14,6 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       ],
       labels: [
         app.sources,
-      ],
-    }],
-    [token('mesh-identities.routes'), {
-      service: () => routes,
-      labels: [
-        app.exports,
       ],
     }],
   ]
