@@ -35,10 +35,8 @@
 const props = withDefaults(defineProps<{
   total: number
   online?: number
-  description?: string
 }>(), {
   online: undefined,
-  description: undefined,
 })
 const slots = defineSlots()
 </script>
