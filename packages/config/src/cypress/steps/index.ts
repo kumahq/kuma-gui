@@ -301,7 +301,9 @@ export async function setupSteps<TMock extends BaseMock, TClient extends BaseCli
   // Example: Then the "[data-testid-root='mesh-app']" element exists but the "$warning" element doesn't exist
   Then(/^the "(.*)" element[s]? exist[s]? but the "(.*)" element[s]?( don't | doesn't | )exist[s]?$/, function (existingSelector: string, nonExistingSelector: string, assertion: string) {
     // First, assert that the "existing" element exists (ensures page is loaded)
-    $(existingSelector).should('exist')
+    $(existingSelector, {
+      ...timeout(false),
+    }).should('exist')
     
     // Then, assert that the "non-existing" element doesn't exist
     const negative = assertion !== ' '
