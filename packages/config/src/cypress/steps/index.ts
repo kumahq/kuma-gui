@@ -304,7 +304,7 @@ export async function setupSteps<TMock extends BaseMock, TClient extends BaseCli
     $(existingSelector, {
       ...timeout(false),
     }).should('exist')
-    
+
     // Then, assert that the "non-existing" element doesn't exist
     const negative = assertion !== ' '
     const prefix = negative ? 'not.' : ''
