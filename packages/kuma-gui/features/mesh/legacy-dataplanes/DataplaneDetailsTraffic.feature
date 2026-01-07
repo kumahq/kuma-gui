@@ -44,8 +44,7 @@ Feature: mesh / dataplanes / DataplaneDetailsTraffic
       """
     When I visit the "/meshes/default/data-planes/dpp-1-name-of-dataplane/overview" URL
     Then the "$detail-view" element contains "dpp-1-name-of-dataplane"
-    And the "$traffic" element exists
-    And the "$outbounds" element doesn't exist
+    And the "$traffic" element exists but the "$outbounds" element doesn't exist
     When I click the "$inactiveToggle" element
     Then the "$outbounds" element exists
 

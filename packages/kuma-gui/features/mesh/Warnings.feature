@@ -24,4 +24,4 @@ Feature: mesh / warnings
             mode: Exclusive
         """
       When I visit the "/meshes/default/overview" URL
-      Then the "$mesh-service-activation" element doesn't exists
+      Then the "[data-testid-root='mesh-app']" element exists but the "$mesh-service-activation" element doesn't exist

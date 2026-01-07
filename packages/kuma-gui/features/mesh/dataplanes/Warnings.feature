@@ -51,7 +51,7 @@ Feature: mesh / dataplanes / warnings
             lastCertificateRegeneration: 3021-10-03T12:40:13Z
       """
     When I visit the "/meshes/default/data-planes/dpp-1/overview" URL
-    Then the "$expired-cert-warning" element doesn't exist
+    Then the "[data-testid-root='mesh-app']" element exists but the "$expired-cert-warning" element doesn't exist
 
   Scenario: With no mTLS a certificate warning isn't shown
     Given the URL "/meshes/default/dataplanes/dpp-1/_overview" responds with
@@ -61,7 +61,7 @@ Feature: mesh / dataplanes / warnings
           mTLS: !!js/undefined
       """
     When I visit the "/meshes/default/data-planes/dpp-1/overview" URL
-    Then the "$expired-cert-warning" element doesn't exist
+    Then the "[data-testid-root='mesh-app']" element exists but the "$expired-cert-warning" element doesn't exist
 
   Scenario: Unsupported zone warning is shown
     Given the environment
