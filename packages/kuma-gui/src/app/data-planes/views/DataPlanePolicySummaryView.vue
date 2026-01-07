@@ -85,7 +85,6 @@
                 language="yaml"
                 :code="data.yaml"
                 is-searchable
-                :show-k8s-copy-button="false"
                 :query="route.params.codeSearch"
                 :is-filter-mode="route.params.codeFilter"
                 :is-reg-exp-mode="route.params.codeRegExp"
@@ -108,7 +107,6 @@
                   data-testid="codeblock-yaml-k8s"
                   language="yaml"
                   :code="yaml"
-                  :show-k8s-copy-button="false"
                   is-searchable
                   :query="route.params.codeSearch"
                   :is-filter-mode="route.params.codeFilter"
