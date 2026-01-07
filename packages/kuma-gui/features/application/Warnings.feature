@@ -19,4 +19,4 @@ Feature: application / warnings
       KUMA_STORE_TYPE: postgres
       """
     When I visit the "/" URL
-    Then the "$memory-store-type-warning" element doesn't exist
+    Then the "[data-testid-root='mesh-app']" element exists but the "$memory-store-type-warning" element doesn't exist

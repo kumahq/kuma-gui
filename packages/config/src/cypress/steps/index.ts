@@ -296,6 +296,19 @@ export async function setupSteps<TMock extends BaseMock, TClient extends BaseCli
     }).should(`${prefix}exist`)
   })
 
+  Then(/^the "(.*)" element[s]? exist[s]? but the "(.*)" element[s]?( don't | doesn't | )exist[s]?$/, function (existingSelector: string, nonExistingSelector: string, assertion: string) {
+    // First, assert that the "existing" element exists (ensures page is loaded)
+    $(existingSelector).should('exist')
+    
+    // Then, assert that the "non-existing" element doesn't exist
+    const negative = assertion !== ' '
+    const prefix = negative ? 'not.' : ''
+
+    $(nonExistingSelector, {
+      ...timeout(negative),
+    }).should(`${prefix}exist`)
+  })
+
   Then(/^the "(.*)" element[s]?( isn't | aren't | is | are )(checked|disabled)$/, (selector: string, assertion: string, booleanAttribute: string) => {
     const negative = !['is', 'are'].includes(assertion.trim())
     const prefix = negative ? 'not.' : ''

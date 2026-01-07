@@ -73,7 +73,7 @@ Feature: zones / warnings
           type: kubernetes
       """
     When I visit the "<URL>" URL
-    Then the "$warning-zone-memory" element doesn't exist
+    Then the "[data-testid-root='mesh-app']" element exists but the "$warning-zone-memory" element doesn't exist
 
     Examples:
       | URL                       |
