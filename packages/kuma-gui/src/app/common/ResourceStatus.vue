@@ -13,7 +13,7 @@
           <div class="status">
             <template v-if="typeof props.online !== 'undefined'">
               <span
-                :class="{ ['text-neutral']: props.online !== props.total }"
+                :class="{ 'text-neutral': props.online !== props.total }"
               >{{ props.online }}</span><span class="status-separator">/</span>
             </template><span>{{ props.total }}</span>
           </div>
