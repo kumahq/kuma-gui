@@ -49,28 +49,29 @@
               }]"
               :key="typeof labels"
             >
-              <DefinitionCard
+              <XDl
                 v-if="Object.keys(labels).length"
-                layout="horizontal"
+                variant="x-stack"
               >
-                <template #title>
-                  {{ t('http.api.property.tags') }}
-                </template>
-
-                <template #body>
-                  <XLayout
-                    type="separated"
-                    truncate
-                  >
-                    <XBadge
-                      v-for="([label, value], index) in Object.entries(labels)"
-                      :key="`${label}${value}${index}`"
+                <div>
+                  <dt>
+                    {{ t('http.api.property.tags') }}
+                  </dt>
+                  <dd>
+                    <XLayout
+                      type="separated"
+                      truncate
                     >
-                      {{ label }}:{{ value }}
-                    </XBadge>
-                  </XLayout>
-                </template>
-              </DefinitionCard>
+                      <XBadge
+                        v-for="([label, value], index) in Object.entries(labels)"
+                        :key="`${label}${value}${index}`"
+                      >
+                        {{ label }}:{{ value }}
+                      </XBadge>
+                    </XLayout>
+                  </dd>
+                </div>
+              </XDl>
             </template>
           </XAboutCard>
 
@@ -152,5 +153,4 @@
 <script lang="ts" setup>
 import { sources } from '../sources'
 import { YAML } from '@/app/application'
-import DefinitionCard from '@/app/common/DefinitionCard.vue'
 </script>

@@ -1,20 +1,18 @@
 <template>
-  <DefinitionCard>
-    <template
+  <div>
+    <dt
       v-if="slots.icon"
-      #icon
     >
       <slot name="icon" />
-    </template>
+    </dt>
 
-    <template
+    <dt
       v-if="slots.title"
-      #title
     >
       <slot name="title" />
-    </template>
+    </dt>
 
-    <template #body>
+    <dd>
       <XLayout
         type="separated"
       >
@@ -36,13 +34,11 @@
 
         <slot name="body" />
       </XLayout>
-    </template>
-  </DefinitionCard>
+    </dd>
+  </div>
 </template>
 
 <script lang="ts" setup>
-import DefinitionCard from './DefinitionCard.vue'
-
 const props = withDefaults(defineProps<{
   total: number
   online?: number

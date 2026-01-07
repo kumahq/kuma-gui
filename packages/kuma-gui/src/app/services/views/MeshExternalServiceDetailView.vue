@@ -18,88 +18,69 @@
           :created="props.data.creationTime"
           :modified="props.data.modificationTime"
         >
-          <DefinitionCard
-            v-if="props.data.namespace.length > 0"
-            layout="horizontal"
-          >
-            <template
-              #title
+          <XDl variant="x-stack">
+            <div
+              v-if="props.data.namespace.length > 0"
             >
-              {{ t('http.api.property.namespace') }}
-            </template>
-
-            <template
-              #body
+              <dt>
+                {{ t('http.api.property.namespace') }}
+              </dt>
+              <dd>
+                <XBadge appearance="decorative">
+                  {{ props.data.namespace }}
+                </XBadge>
+              </dd>
+            </div>
+            <div
+              v-if="can('use zones') && props.data.zone"
             >
-              <XBadge appearance="decorative">
-                {{ props.data.namespace }}
-              </XBadge>
-            </template>
-          </DefinitionCard>
-          <DefinitionCard
-            v-if="can('use zones') && props.data.zone"
-            layout="horizontal"
-          >
-            <template
-              #title
+              <dt>
+                {{ t('http.api.property.zone') }}
+              </dt>
+              <dd>
+                <XBadge appearance="decorative">
+                  <XAction
+                    :to="{
+                      name: 'zone-cp-detail-view',
+                      params: {
+                        zone: props.data.zone,
+                      },
+                    }"
+                  >
+                    {{ props.data.zone }}
+                  </XAction>
+                </XBadge>
+              </dd>
+            </div>
+            <div
+              v-if="data.spec.match"
+              class="port"
             >
-              {{ t('http.api.property.zone') }}
-            </template>
-            <template
-              #body
+              <dt>
+                {{ t('http.api.property.port') }}
+              </dt>
+              <dd>
+                <KumaPort
+                  :port="data.spec.match"
+                />
+              </dd>
+            </div>
+            <div
+              v-if="data.spec.match"
+              class="tls"
             >
-              <XBadge appearance="decorative">
-                <XAction
-                  :to="{
-                    name: 'zone-cp-detail-view',
-                    params: {
-                      zone: props.data.zone,
-                    },
-                  }"
+              <dt>
+                {{ t('http.api.property.tls') }}
+              </dt>
+              <dd>
+                <XBadge
+                  :appearance="data.spec.tls?.enabled ? 'success' : 'neutral'"
                 >
-                  {{ props.data.zone }}
-                </XAction>
-              </XBadge>
-            </template>
-          </DefinitionCard>
-          <DefinitionCard
-            v-if="data.spec.match"
-            layout="horizontal"
-            class="port"
-          >
-            <template
-              #title
-            >
-              {{ t('http.api.property.port') }}
-            </template>
-            <template
-              #body
-            >
-              <KumaPort
-                :port="data.spec.match"
-              />
-            </template>
-          </DefinitionCard>
-          <DefinitionCard
-            v-if="data.spec.match"
-            layout="horizontal"
-            class="tls"
-          >
-            <template
-              #title
-            >
-              {{ t('http.api.property.tls') }}
-            </template>
-            <template
-              #body
-            >
-              <XBadge
-                :appearance="data.spec.tls?.enabled ? 'success' : 'neutral'"
-              >
-                {{ data.spec.tls?.enabled ? 'Enabled' : 'Disabled' }}
-              </XBadge>
-            </template>
-          </DefinitionCard>
+                  {{ data.spec.tls?.enabled ? 'Enabled' : 'Disabled' }}
+                </XBadge>
+              </dd>
+            </div>
+          </XDl>
         </XAboutCard>
 
 
@@ -240,7 +221,7 @@
 import type { MeshExternalService } from '../data'
 import { YAML } from '@/app/application'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
-import DefinitionCard from '@/app/common/DefinitionCard.vue'
+
 import { sources as servicesSources } from '@/app/services/sources'
 
 const props = defineProps<{

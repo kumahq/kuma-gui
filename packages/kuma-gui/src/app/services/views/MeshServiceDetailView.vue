@@ -21,116 +21,102 @@
           :created="props.data.creationTime"
           :modified="props.data.modificationTime"
         >
-          <DefinitionCard layout="horizontal">
-            <template #title>
-              {{ t('http.api.property.state') }}
-            </template>
-
-            <template #body>
-              <XBadge
-                :appearance="props.data.spec.state === 'Available' ? 'success' : 'danger'"
-              >
-                {{ props.data.spec.state }}
-              </XBadge>
-            </template>
-          </DefinitionCard>
-          <DefinitionCard
-            v-if="props.data.namespace.length > 0"
-            layout="horizontal"
-          >
-            <template #title>
-              {{ t('http.api.property.namespace') }}
-            </template>
-
-            <template #body>
-              <XBadge appearance="decorative">
-                {{ props.data.namespace }}
-              </XBadge>
-            </template>
-          </DefinitionCard>
-          <DefinitionCard
-            v-if="can('use zones') && props.data.zone"
-            layout="horizontal"
-          >
-            <template
-              #title
-            >
-              {{ t('http.api.property.zone') }}
-            </template>
-            <template
-              #body
-            >
-              <XBadge appearance="decorative">
-                <XAction
-                  :to="{
-                    name: 'zone-cp-detail-view',
-                    params: {
-                      zone: props.data.zone,
-                    },
-                  }"
+          <XDl variant="x-stack">
+            <div>
+              <dt>
+                {{ t('http.api.property.state') }}
+              </dt>
+              <dd>
+                <XBadge
+                  :appearance="props.data.spec.state === 'Available' ? 'success' : 'danger'"
                 >
-                  {{ props.data.zone }}
-                </XAction>
-              </XBadge>
-            </template>
-          </DefinitionCard>
-          <DefinitionCard layout="horizontal">
-            <template
-              #title
+                  {{ props.data.spec.state }}
+                </XBadge>
+              </dd>
+            </div>
+            <div
+              v-if="props.data.namespace.length > 0"
             >
-              {{ t('http.api.property.ports') }}
-            </template>
-            <template
-              #body
+              <dt>
+                {{ t('http.api.property.namespace') }}
+              </dt>
+              <dd>
+                <XBadge appearance="decorative">
+                  {{ props.data.namespace }}
+                </XBadge>
+              </dd>
+            </div>
+            <div
+              v-if="can('use zones') && props.data.zone"
             >
-              <template v-if="props.data.spec.ports.length">
-                <XLayout
-                  type="separated"
-                  truncate
-                >
-                  <KumaPort
-                    v-for="connection in props.data.spec.ports"
-                    :key="connection.port"
-                    :port="{
-                      ...connection,
-                      targetPort: undefined,
+              <dt>
+                {{ t('http.api.property.zone') }}
+              </dt>
+              <dd>
+                <XBadge appearance="decorative">
+                  <XAction
+                    :to="{
+                      name: 'zone-cp-detail-view',
+                      params: {
+                        zone: props.data.zone,
+                      },
                     }"
-                  />
-                </XLayout>
-              </template>
-              <template v-else>
-                {{ t('common.detail.none') }}
-              </template>
-            </template>
-          </DefinitionCard>
-          <DefinitionCard layout="horizontal">
-            <template
-              #title
-            >
-              {{ t('http.api.property.selector') }}
-            </template>
-            <template
-              #body
-            >
-              <template v-if="Object.keys(props.data.spec.selector.dataplaneTags).length">
-                <XLayout
-                  type="separated"
-                  truncate
-                >
-                  <XBadge
-                    v-for="(value, key) in props.data.spec.selector.dataplaneTags"
-                    :key="`${key}:${value}`"
-                    appearance="info"
                   >
-                    {{ key }}:{{ value }}
-                  </XBadge>
-                </XLayout>
-              </template>
-              <template v-else>
-                {{ t('common.detail.none') }}
-              </template>
-            </template>
-          </DefinitionCard>
+                    {{ props.data.zone }}
+                  </XAction>
+                </XBadge>
+              </dd>
+            </div>
+            <div>
+              <dt>
+                {{ t('http.api.property.ports') }}
+              </dt>
+              <dd>
+                <template v-if="props.data.spec.ports.length">
+                  <XLayout
+                    type="separated"
+                    truncate
+                  >
+                    <KumaPort
+                      v-for="connection in props.data.spec.ports"
+                      :key="connection.port"
+                      :port="{
+                        ...connection,
+                        targetPort: undefined,
+                      }"
+                    />
+                  </XLayout>
+                </template>
+                <template v-else>
+                  {{ t('common.detail.none') }}
+                </template>
+              </dd>
+            </div>
+            <div>
+              <dt>
+                {{ t('http.api.property.selector') }}
+              </dt>
+              <dd>
+                <template v-if="Object.keys(props.data.spec.selector.dataplaneTags).length">
+                  <XLayout
+                    type="separated"
+                    truncate
+                  >
+                    <XBadge
+                      v-for="(value, key) in props.data.spec.selector.dataplaneTags"
+                      :key="`${key}:${value}`"
+                      appearance="info"
+                    >
+                      {{ key }}:{{ value }}
+                    </XBadge>
+                  </XLayout>
+                </template>
+                <template v-else>
+                  {{ t('common.detail.none') }}
+                </template>
+              </dd>
+            </div>
+          </XDl>
         </XAboutCard>
 
         <XCard>
@@ -469,7 +455,7 @@
 <script lang="ts" setup>
 import type { MeshService } from '../data'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
-import DefinitionCard from '@/app/common/DefinitionCard.vue'
+
 import ResourceStatus from '@/app/common/ResourceStatus.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import { sources } from '@/app/data-planes/sources'

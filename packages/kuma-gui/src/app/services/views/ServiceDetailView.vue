@@ -30,45 +30,43 @@
             :created="data.creationTime"
             :modified="data.modificationTime"
           >
-            <DefinitionCard layout="horizontal">
-              <template #title>
-                {{ t('http.api.property.status') }}
-              </template>
+            <XDl variant="x-stack">
+              <div>
+                <dt>
+                  {{ t('http.api.property.status') }}
+                </dt>
+                <dd>
+                  <StatusBadge :status="data.status" />
+                </dd>
+              </div>
+              <div>
+                <dt>
+                  {{ t('http.api.property.address') }}
+                </dt>
+                <dd>
+                  <template v-if="data.addressPort">
+                    <XCopyButton
+                      variant="badge"
+                      format="default"
+                      :text="data.addressPort"
+                    />
+                  </template>
 
-              <template #body>
-                <StatusBadge :status="data.status" />
-              </template>
-            </DefinitionCard>
+                  <template v-else>
+                    {{ t('common.detail.none') }}
+                  </template>
+                </dd>
+              </div>
 
-            <DefinitionCard layout="horizontal">
-              <template #title>
-                {{ t('http.api.property.address') }}
-              </template>
-
-              <template #body>
-                <template v-if="data.addressPort">
-                  <XCopyButton
-                    variant="badge"
-                    format="default"
-                    :text="data.addressPort"
-                  />
+              <ResourceStatus
+                :online="data.dataplanes?.online ?? 0"
+                :total="data.dataplanes?.total ?? 0"
+              >
+                <template #title>
+                  {{ t('http.api.property.dataPlaneProxies') }}
                 </template>
-
-                <template v-else>
-                  {{ t('common.detail.none') }}
-                </template>
-              </template>
-            </DefinitionCard>
-
-            <ResourceStatus
-              layout="horizontal"
-              :online="data.dataplanes?.online ?? 0"
-              :total="data.dataplanes?.total ?? 0"
-            >
-              <template #title>
-                {{ t('http.api.property.dataPlaneProxies') }}
-              </template>
-            </ResourceStatus>
+              </ResourceStatus>
+            </XDl>
           </XAboutCard>
         </DataLoader>
 
@@ -273,9 +271,8 @@
 <script lang="ts" setup>
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
-import DefinitionCard from '@/app/common/DefinitionCard.vue'
-import ResourceStatus from '@/app/common/ResourceStatus.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
+import ResourceStatus from '@/app/common/ResourceStatus.vue'
 import { sources as dataplaneSources } from '@/app/data-planes/sources'
 </script>
 

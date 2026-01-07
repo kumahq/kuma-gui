@@ -18,61 +18,57 @@
           :created="props.data.creationTime"
           :modified="props.data.modificationTime"
         >
-          <DefinitionCard layout="horizontal">
-            <template
-              #title
-            >
-              {{ t('http.api.property.ports') }}
-            </template>
-            <template #body>
-              <template v-if="props.data.spec.ports.length">
-                <XLayout
-                  type="separated"
-                  truncate
-                >
-                  <KumaPort
-                    v-for="connection in props.data.spec.ports"
-                    :key="connection.port"
-                    :port="{
-                      ...connection,
-                      targetPort: undefined,
-                    }"
-                  />
-                </XLayout>
-              </template>
-              <template v-else>
-                {{ t('common.detail.none') }}
-              </template>
-            </template>
-          </DefinitionCard>
-          <DefinitionCard layout="horizontal">
-            <template
-              #title
-            >
-              {{ t('http.api.property.selector') }}
-            </template>
-            <template
-              #body
-            >
-              <template v-if="Object.keys(data.spec.selector.meshService.matchLabels ?? {}).length">
-                <XLayout
-                  type="separated"
-                  truncate
-                >
-                  <XBadge
-                    v-for="(value, key) in data.spec.selector.meshService.matchLabels"
-                    :key="`${key}:${value}`"
-                    appearance="info"
+          <XDl variant="x-stack">
+            <div>
+              <dt>
+                {{ t('http.api.property.ports') }}
+              </dt>
+              <dd>
+                <template v-if="props.data.spec.ports.length">
+                  <XLayout
+                    type="separated"
+                    truncate
                   >
-                    {{ key }}:{{ value }}
-                  </XBadge>
-                </XLayout>
-              </template>
-              <template v-else>
-                {{ t('common.detail.none') }}
-              </template>
-            </template>
-          </DefinitionCard>
+                    <KumaPort
+                      v-for="connection in props.data.spec.ports"
+                      :key="connection.port"
+                      :port="{
+                        ...connection,
+                        targetPort: undefined,
+                      }"
+                    />
+                  </XLayout>
+                </template>
+                <template v-else>
+                  {{ t('common.detail.none') }}
+                </template>
+              </dd>
+            </div>
+            <div>
+              <dt>
+                {{ t('http.api.property.selector') }}
+              </dt>
+              <dd>
+                <template v-if="Object.keys(data.spec.selector.meshService.matchLabels ?? {}).length">
+                  <XLayout
+                    type="separated"
+                    truncate
+                  >
+                    <XBadge
+                      v-for="(value, key) in data.spec.selector.meshService.matchLabels"
+                      :key="`${key}:${value}`"
+                      appearance="info"
+                    >
+                      {{ key }}:{{ value }}
+                    </XBadge>
+                  </XLayout>
+                </template>
+                <template v-else>
+                  {{ t('common.detail.none') }}
+                </template>
+              </dd>
+            </div>
+          </XDl>
         </XAboutCard>
 
         <XCard>
@@ -211,7 +207,6 @@
 import type { MeshMultiZoneService } from '../data'
 import { YAML } from '@/app/application'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
-import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import { sources as servicesSources } from '@/app/services/sources'
 
 const props = defineProps<{
