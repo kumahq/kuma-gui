@@ -49,7 +49,9 @@
                   </template>
                 </dd>
               </div>
+            </XDl>
 
+            <XDl variant="x-stack">
               <ResourceStatus
                 :online="data.dataplanes?.online ?? 0"
                 :total="data.dataplanes?.total ?? 0"
