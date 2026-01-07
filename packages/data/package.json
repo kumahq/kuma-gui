@@ -16,8 +16,7 @@
     }
   },
   "dependencies": {
-    "path-to-regexp": "^8.3.0",
-    "urlpattern-polyfill": "^10.1.0"
+    "path-to-regexp": "^8.3.0"
   },
   "optionalDependencies": {
     "vue": "^3.5.25"
