@@ -1,4 +1,4 @@
-import { meshIdentityRoutes } from '../resources/routes'
+import { routes as meshIdentityRoutes } from '../mesh-identities/routes'
 import { routes as connections, networking } from '@/app/connections/routes'
 import { routes as subscriptions } from '@/app/subscriptions/routes'
 import type { RouteRecordRaw } from 'vue-router'
