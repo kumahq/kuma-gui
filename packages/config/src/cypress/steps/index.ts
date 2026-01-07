@@ -287,13 +287,13 @@ export async function setupSteps<TMock extends BaseMock, TClient extends BaseCli
     $(selector).should('have.length', count)
   })
 
-  Then(/^the "(.*)" element[s]?( don't | doesn't | )exist[s]?$/, function (selector: string, assertion: string) {
-    const negative = assertion !== ' '
-    const prefix = negative ? 'not.' : ''
-
+  Then(/^the "(.*)" element[s]? exist[s]?$/, function (selector: string) {
+    // This step only supports positive assertions ("element exists")
+    // For negative assertions ("element doesn't exist"), use the double assertion step:
+    // Then the "$element1" element exists but the "$element2" element doesn't exist
     $(selector, {
-      ...timeout(negative),
-    }).should(`${prefix}exist`)
+      ...timeout(false),
+    }).should('exist')
   })
 
   // Double assertion step: ensures page is loaded before checking non-existence
