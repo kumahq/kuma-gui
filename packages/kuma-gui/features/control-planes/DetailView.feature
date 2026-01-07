@@ -132,8 +132,8 @@ Feature: control-planes / DetailView
       """
     When I visit the "/" URL
     Then the page title contains "Overview"
-    And the "[data-testid='zone-control-planes-status']" element doesn't exist
-    And the "$zone-control-planes-details" element doesn't exist
+    And the "[data-testid-root='mesh-app']" element exists but the "[data-testid='zone-control-planes-status']" element doesn't exist
+    And the "[data-testid-root='mesh-app']" element exists but the "$zone-control-planes-details" element doesn't exist
 
   Scenario: Shows expected content in federated mode
     Given the environment
