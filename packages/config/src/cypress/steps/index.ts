@@ -296,6 +296,9 @@ export async function setupSteps<TMock extends BaseMock, TClient extends BaseCli
     }).should(`${prefix}exist`)
   })
 
+  // Double assertion step: ensures page is loaded before checking non-existence
+  // This prevents false positives where an assertion passes before elements have loaded
+  // Example: Then the "[data-testid-root='mesh-app']" element exists but the "$warning" element doesn't exist
   Then(/^the "(.*)" element[s]? exist[s]? but the "(.*)" element[s]?( don't | doesn't | )exist[s]?$/, function (existingSelector: string, nonExistingSelector: string, assertion: string) {
     // First, assert that the "existing" element exists (ensures page is loaded)
     $(existingSelector).should('exist')
