@@ -54,7 +54,7 @@ Feature: zones / item
       | Online    |
       | dpToken   |
     And the "$detail-view" element contains "Jul 28, 2020, 4:18 PM"
-    And the "$version-outdated" element doesn't exist
+    And the "[data-testid-root='mesh-app']" element exists but the "$version-outdated" element doesn't exist
 
   Scenario: Outdated versions are highlighted
     And the URL "/zones/zone-cp-1/_overview" responds with
