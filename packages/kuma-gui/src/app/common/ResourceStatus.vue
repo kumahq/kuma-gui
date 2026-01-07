@@ -1,14 +1,7 @@
 <template>
   <div>
-    <dt
-      v-if="slots.icon"
-    >
+    <dt>
       <slot name="icon" />
-    </dt>
-
-    <dt
-      v-if="slots.title"
-    >
       <slot name="title" />
     </dt>
 

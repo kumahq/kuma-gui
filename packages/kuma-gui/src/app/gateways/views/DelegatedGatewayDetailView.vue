@@ -259,8 +259,8 @@
 
 <script lang="ts" setup>
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
-import StatusBadge from '@/app/common/StatusBadge.vue'
 import ResourceStatus from '@/app/common/ResourceStatus.vue'
+import StatusBadge from '@/app/common/StatusBadge.vue'
 import { sources } from '@/app/data-planes/sources'
 import type { ServiceInsightSource } from '@/app/services/sources'
 </script>

@@ -271,8 +271,8 @@
 <script lang="ts" setup>
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
-import StatusBadge from '@/app/common/StatusBadge.vue'
 import ResourceStatus from '@/app/common/ResourceStatus.vue'
+import StatusBadge from '@/app/common/StatusBadge.vue'
 import { sources as dataplaneSources } from '@/app/data-planes/sources'
 </script>
 
