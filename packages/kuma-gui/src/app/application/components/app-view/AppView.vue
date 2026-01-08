@@ -144,11 +144,11 @@
 
 <script lang="ts" setup>
 import { KongIcon } from '@kong/icons'
-import { nextTick , provide, inject, watch, ref, onBeforeUnmount } from 'vue'
+import { ROUTE_VIEW_PARENT } from '@kumahq/routing/vue'
+import { nextTick , provide, inject, watch, ref, onBeforeUnmount , useId } from 'vue'
 
-import { ROUTE_VIEW_PARENT } from '../route-view/index'
-import type { RouteView } from '../route-view/RouteView.vue'
-import { uniqueId } from '@/app/application'
+
+import type { RouteViewService } from '@kumahq/routing/vue'
 type AppView = {
   addBreadcrumbs: (items: BreadcrumbItem[], sym: symbol) => void
   removeBreadcrumbs: (sym: symbol) => void
@@ -173,8 +173,8 @@ const props = withDefaults(defineProps<{
 })
 const slots = defineSlots()
 
-const id = uniqueId('app-view')
-const routeView = inject<RouteView>(ROUTE_VIEW_PARENT)!
+const id = useId()
+const routeView = inject<RouteViewService>(ROUTE_VIEW_PARENT)!
 
 const summary: string = inject('app-summary-view', '')
 provide('app-summary-view', '')
