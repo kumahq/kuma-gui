@@ -12,7 +12,6 @@
     "dependencies",
     "renovate-bot"
   ],
-  "prHourlyLimit": 0,
   "baseBranchPatterns": [
     "master"
   ],
@@ -24,11 +23,13 @@
   "postUpdateOptions": [
     "npmDedupe"
   ],
+  "prHourlyLimit": 0,
+  "prConcurrentLimit": 0,
+  "prCreation": "not-pending",
   "osvVulnerabilityAlerts": true,
   "vulnerabilityAlerts": {
     "enabled": true
   },
-  "prCreation": "not-pending",
   "packageRules": [
     {
       "matchUpdateTypes": [
@@ -78,6 +79,15 @@
       ],
       "minimumReleaseAge": "2 hours",
       "minimumReleaseAgeBehaviour": "timestamp-optional"
+    },
+    {
+      "matchCategories": [
+        "js"
+      ],
+      "matchDepTypes": [
+        "engines"
+      ],
+      "rangeStrategy": "bump"
     }
   ]
 }

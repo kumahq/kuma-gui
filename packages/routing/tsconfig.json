@@ -1,0 +1,11 @@
+{
+  "$schema": "https://schemastore.org/tsconfig.json",
+  "extends": "@kumahq/config/tsconfig/browser",
+  "include": [
+    "**/*.ts",
+    "**/*.vue"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

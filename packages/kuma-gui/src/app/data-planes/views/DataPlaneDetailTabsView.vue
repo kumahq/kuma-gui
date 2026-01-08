@@ -49,6 +49,15 @@
             {{ t(`http.api.value.${props.data.status}`) }}
           </XBadge>
         </XLayout>
+        <XNotification
+          :notify="props.data.status === 'offline'"
+          data-testid="warning-dataplane-offline"
+          :uri="`data-planes.notifications.dataplane-offline.${props.data.id}`"
+        >
+          <XI18n
+            path="data-planes.notifications.dataplane-offline"
+          />
+        </XNotification>
       </template>
       <template
         #actions

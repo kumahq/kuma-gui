@@ -1,6 +1,7 @@
 import { token, createInjections } from '@kumahq/container'
 import { create, destroy, DataSourcePool } from '@kumahq/data'
 import Data, { DataLoader, DataSink, DataSource } from '@kumahq/data/vue'
+import Routing, { RouteTitle, RouteView } from '@kumahq/routing/vue'
 import can from '@kumahq/settings/can'
 import env from '@kumahq/settings/env'
 import { XEmptyState } from '@kumahq/x'
@@ -11,8 +12,6 @@ import difference from 'set.prototype.difference'
 
 import AppView from './components/app-view/AppView.vue'
 import DataCollection from './components/data-collection/DataCollection.vue'
-import RouteTitle from './components/route-view/RouteTitle.vue'
-import RouteView from './components/route-view/RouteView.vue'
 import locales from './locales/en-us/index.yaml'
 import { routes } from './routes'
 import I18n from './services/i18n/I18n'
@@ -47,6 +46,21 @@ type Sources = ConstructorParameters<typeof DataSourcePool>[0]
 
 type Token = ReturnType<typeof token>
 
+export interface Abilities { }
+export type Can = Abilities['can']
+
+export interface Environment { }
+export type Env = Environment['env']
+
+declare module '@kumahq/routing' {
+  interface Dependencies {
+    can: Abilities['can']
+    env: Environment['env']
+    i18n: {
+      t: ReturnType<typeof I18n>['t']
+    }
+  }
+}
 declare module 'vue' {
   export interface GlobalComponents {
     AppView: typeof AppView
@@ -61,11 +75,8 @@ declare module 'vue' {
     $routeName?: string
   }
 }
-export interface Abilities { }
-export type Can = Abilities['can']
 
-export interface Environment { }
-export type Env = Environment['env']
+
 
 // @TODO ideally we don't want people using env defaults in the application, whereas they are needed in mocks
 // type EnvKeys = Parameters<Env> extends [infer Key, any?] ? Key : never
@@ -87,7 +98,7 @@ const $ = {
   getDataSourceCacheKeyPrefix: token<() => string>('data.getDataSourceCacheKeyPrefix'),
   errorHandler: token<(e: Error) => void>('application.error.handler'),
 
-  i18n: token<ReturnType<typeof I18n>>('i18n'),
+  i18n: token<{t: ReturnType<typeof I18n>['t']}>('i18n'),
   enUs: token('i18n.locale.enUs'),
 
   storage: token<ReturnType<typeof storage>>('application.storage'),
@@ -135,13 +146,17 @@ const addRouteName = (item: RouteRecordRaw) => {
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   return [
     [token('application.plugins'), {
-      service: (dataSourcePool) => {
+      service: (dataSourcePool, can, env, i18n) => {
         return [
           [Data, { dataSourcePool }],
+          [Routing, { can, env, i18n }],
         ]
       },
       arguments: [
         $.dataSourcePool,
+        $.can,
+        $.env,
+        $.i18n,
       ],
       labels: [
         app.plugins,
@@ -222,6 +237,11 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
         $.features,
       ],
     }],
+
+    [$.features, {
+      service: () => [],
+    }],
+
     [$.env, {
       service: env,
       arguments: [
@@ -277,4 +297,4 @@ export const [
   $.i18n,
   $.DataEmptyState,
 )
-export { uniqueId, YAML, get } from './utilities'
+export { YAML, get } from './utilities'

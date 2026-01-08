@@ -26,6 +26,8 @@ data-planes:
       In order to communicate to other services in the mesh, make sure to define <a target="_blank" href="{KUMA_DOCS_URL}/production/dp-config/dpp-on-universal">outbounds</a>.
     abnormal-traffic-stats: !!text/markdown |
       Abnormal traffic stats detected. Investigate the traffic patterns of individually marked inbounds and outbounds.
+    dataplane-offline: !!text/markdown |
+      The dataplane is offline, so we either cannot retrieve any information or the information currently displayed may be out of date.
 
   x-empty-state:
     title: There are no data planes present
