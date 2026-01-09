@@ -4,7 +4,7 @@ Feature: application / warnings
     Given the CSS selectors
       | Alias                     | Selector                                                              |
       | memory-store-type-warning | [data-testid='notification-main-overview.notifications.store-memory'] |
-      | content                   | [data-testid-root='control-plane-detail-view']                        |
+      | content                   | [data-testid='control-plane-detail-view']                             |
 
   Scenario: Using the memory store type shows a warning
     Given the environment
