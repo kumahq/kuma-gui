@@ -56,23 +56,23 @@
     </DataSource>
   </div>
 </template>
-<script lang="ts" setup generic="T extends Record<string, string | number | boolean | typeof Number | typeof String | typeof Boolean> = {}">
+<script lang="ts" setup generic="T extends Record<string, URLParamDefinition> = {}">
 import { useUri } from '@kumahq/data'
 import { DataSink, DataSource } from '@kumahq/data/vue'
-import { computed, provide, inject, ref, watch, onBeforeUnmount, reactive, useAttrs } from 'vue'
+import { computed, provide, inject, ref, watch, onBeforeUnmount, reactive, useAttrs, useId } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 import { ROUTE_VIEW_PARENT, ROUTE_VIEW_ROOT } from '..'
-import { sources } from '../../../sources'
 import {
   get,
-  uniqueId,
   urlParam,
   normalizeUrlParam,
-  cleanQuery,
+  mergeQuery,
   createAttrsSetter,
   createTitleSetter,
-} from '../../../utilities'
+} from '../../../index'
+import type { URLParamDefinition, URLParamNormalized } from '../../../index'
+import { sources } from '../../../sources'
 import { useCan, useI18n, useEnv } from '../../index'
 import type { RouteViewService } from '../index'
 import type { RouteRecordRaw, RouteLocationNormalizedLoaded, RouteLocationAsRelativeGeneric } from 'vue-router'
@@ -80,24 +80,8 @@ import type { RouteRecordRaw, RouteLocationNormalizedLoaded, RouteLocationAsRela
 type StringNamedRouteRecordRaw = RouteRecordRaw & {
   name: string
 }
-
-const win = window
-const env = useEnv()
-const can = useCan()
-const uri = useUri()
-
-let resolve: (resolved: object) => void
-const meResponse = new Promise((r) => {
-  resolve = r
-})
-
-const htmlAttrs = useAttrs()
-const { t } = useI18n()
-const route = useRoute()
-const router = useRouter()
-const sym = Symbol('route-view')
-
-type PrimitiveParams = Record<string, string | number | boolean>
+type SupportedAttrs = Parameters<typeof setAttrs>[0][number]
+type PrimitiveParams = Record<string, URLParamNormalized>
 type Params = {
   [P in keyof T]:
   T[P] extends NumberConstructor ? number :
@@ -106,29 +90,63 @@ type Params = {
         T[P]
 }
 
+const win = window
+const env = useEnv()
+const can = useCan()
+const uri = useUri()
+const htmlAttrs = useAttrs()
+const { t } = useI18n()
+const route = useRoute()
+const router = useRouter()
+const sym = Symbol('route-view')
+
 const setTitle = createTitleSetter(document)
 const setAttrs = createAttrsSetter(document.documentElement)
-type SupportedAttrs = Parameters<typeof setAttrs>[0][number]
 
 const props = withDefaults(defineProps<{
+  /**
+   * The route name that corresponds to this view in the router configuration
+   */
   name: string
+  /**
+   * HTML attributes to be applied to the document root element (currently only
+   * `class` is supported)
+   */
   attrs?: SupportedAttrs
+  /**
+   * URL parameters used in this Route. Values can either default values for
+   * the route parameter, for example the default page=1, or if there shouldn't
+   * be a default you should provie the type contructor for type inference.
+   *
+   * @example
+   * ```vue
+   * {
+   *   page: 1,
+   *   size: Number,
+   *   search: '',
+   * }
+   * ```
+   */
   params?: T
 }>(), {
   attrs: (): SupportedAttrs => ({}),
   params: () => { return {} as T },
 })
-const _id = uniqueId(props.name)
+const _id = useId()
 class UniqueId {
   static toString() {
     return _id
   }
 
   toString() {
-    return uniqueId(props.name)
+    return useId()
   }
 }
 
+let resolve: (resolved: object) => void
+const meResponse = new Promise((r) => {
+  resolve = r
+})
 const name = computed(() => props.name)
 const submit = ref((_args: any) => {})
 const title = ref<HTMLDivElement | null>(null)
@@ -218,7 +236,7 @@ watch(() => {
   if(Object.keys(_params).length > 0) {
     // we only want query params here
     router.replace({
-      query: cleanQuery(_params, route.query),
+      query: mergeQuery(route.query, _params),
     })
   }
   redirected.value = true
@@ -252,7 +270,7 @@ const routeUpdate = (params: Partial<PrimitiveParams>): void => {
 }
 const routerPush = (params: Partial<PrimitiveParams>) => {
   router.push({
-    query: cleanQuery(params, route.query),
+    query: mergeQuery(route.query, params),
   })
   newParams = {}
 }
