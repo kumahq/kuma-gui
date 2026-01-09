@@ -3,6 +3,7 @@ Feature: zones / warnings
   Background:
     Given the CSS selectors
       | Alias                    | Selector                                                                  |
+      | detail                   | [data-testid='zone-cp-detail-tabs-view']                                  |
       | warning-no-subscriptions | [data-testid='warning-no-subscriptions']                                  |
       | warning-zone-memory      | [data-testid^='notification-zone-cps.notifications.store-memory']         |
       | zone-cp-table-row        | [data-testid='zone-cp-collection'] tbody tr                               |
@@ -73,7 +74,7 @@ Feature: zones / warnings
           type: kubernetes
       """
     When I visit the "<URL>" URL
-    Then the "$warning-zone-memory" element doesn't exist
+    Then the "$detail" element exists but the "$warning-zone-memory" element doesn't exist
 
     Examples:
       | URL                       |

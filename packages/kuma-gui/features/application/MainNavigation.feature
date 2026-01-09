@@ -10,20 +10,31 @@ Feature: application / MainNavigation
       | zone-egresses-nav  | [data-testid='zone-egresses-navigator'] a  |
       | configuration-nav  | [data-testid='configuration-navigator'] a  |
 
-  Scenario Outline: The navigation shows the correct nav for <Mode>
+  Scenario Outline: The navigation shows <Element> exists for <Mode>
     Given the environment
       """
       KUMA_MODE: <Mode>
       """
     When I visit the "/" URL
-    Then the "<Element>" element <ExistsAssertion>
+    Then the "<Element>" element exists
 
     Examples:
-      | Element            | Mode   | ExistsAssertion |
-      | $zones-nav         | global | exists          |
-      | $zone-egresses-nav | global | doesn't exist   |
-      | $zones-nav         | zone   | doesn't exist   |
-      | $zone-egresses-nav | zone   | exists          |
+      | Element            | Mode   |
+      | $zones-nav         | global |
+      | $zone-egresses-nav | zone   |
+
+  Scenario Outline: The navigation shows <Element> doesn't exist for <Mode>
+    Given the environment
+      """
+      KUMA_MODE: <Mode>
+      """
+    When I visit the "/" URL
+    Then the "$meshes-nav" element exists but the "<Element>" element doesn't exist
+
+    Examples:
+      | Element            | Mode   |
+      | $zone-egresses-nav | global |
+      | $zones-nav         | zone   |
 
   Scenario Outline: Visiting the "<Title>" page
     Given the URL "/mesh-insights/default" responds with

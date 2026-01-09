@@ -3,6 +3,7 @@ Feature: mesh / dataplanes / warnings
   Background:
     Given the CSS selectors
       | Alias                           | Selector                                                                                |
+      | detail-view                     | [data-testid='data-plane-detail-view']                                                  |
       | expires-soon-cert-warning       | [data-testid^='notification-data-planes.notifications.certificate-expires-soon']        |
       | expired-cert-warning            | [data-testid^='notification-data-planes.notifications.certificate-expired']             |
       | unsupported-kuma-warning        | [data-testid^='notification-data-planes.notifications.dp-cp-incompatible']              |
@@ -51,7 +52,7 @@ Feature: mesh / dataplanes / warnings
             lastCertificateRegeneration: 3021-10-03T12:40:13Z
       """
     When I visit the "/meshes/default/data-planes/dpp-1/overview" URL
-    Then the "$expired-cert-warning" element doesn't exist
+    Then the "$detail-view" element exists but the "$expired-cert-warning" element doesn't exist
 
   Scenario: With no mTLS a certificate warning isn't shown
     Given the URL "/meshes/default/dataplanes/dpp-1/_overview" responds with
@@ -61,7 +62,7 @@ Feature: mesh / dataplanes / warnings
           mTLS: !!js/undefined
       """
     When I visit the "/meshes/default/data-planes/dpp-1/overview" URL
-    Then the "$expired-cert-warning" element doesn't exist
+    Then the "$detail-view" element exists but the "$expired-cert-warning" element doesn't exist
 
   Scenario: Unsupported zone warning is shown
     Given the environment

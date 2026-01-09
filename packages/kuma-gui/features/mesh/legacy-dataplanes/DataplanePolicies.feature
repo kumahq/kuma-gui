@@ -316,7 +316,6 @@ Feature: Dataplane policies
       Then the "$summary-slideout-container" element exists
       And the "$summary-slideout-container [data-testid='slideout-title']" element exists
       And the "$summary-slideout-container [data-testid='slideout-title'] h2 a" element contains "the-other-http-route"
-
     Scenario: Policies tab has expected content (inbound rules & partial from rules)
       Given the environment
         """
@@ -325,7 +324,16 @@ Feature: Dataplane policies
         KUMA_DATAPLANE_TO_RULE_COUNT: 0
         KUMA_DATAPLANE_INBOUND_RULE_COUNT: 1
         KUMA_DATAPLANE_FROM_RULE_COUNT: 1
+        KUMA_RESOURCE_COUNT: 1
         """
+    And the URL "/_resources" responds with
+      ```
+        body:
+          resources:
+            - name: MeshHTTPRoute
+              policy:
+                isFromAsRules: false
+      ```
       And the URL "/meshes/default/dataplanes/dataplane-1/_rules" responds with
         """
         body:
@@ -343,9 +351,8 @@ Feature: Dataplane policies
                       kuma.io/service: foo
         """
       When I visit the "/meshes/default/data-planes/dataplane-1/policies" URL
-      Then the "$to-rule-item-content" element doesn't exist
-      And the "$from-rule-item" element doesn't exist
-      And the "$inbound-rule-item" element exists
+      Then the "$inbound-rule-item" element exists but the "$to-rule-item-content" element doesn't exist
+      And the "$from-rule-item" element exists
 
   Rule: Standard proxy
 
@@ -362,9 +369,8 @@ Feature: Dataplane policies
         KUMA_MODE: global
         """
       When I visit the "/meshes/default/data-planes/dataplane-1/policies" URL
-      Then the "$to-rules" element exists
-      And the "$legacy-sidecar-policies" element doesn't exist
-      And the "$legacy-gateway-policies" element doesn't exist
+      Then the "$to-rules" element exists but the "$legacy-sidecar-policies" element doesn't exist
+      And the "$to-rules" element exists but the "$legacy-gateway-policies" element doesn't exist
 
     Scenario: Non-federated shows the rules and only sidecar legacy content
       Given the environment
@@ -373,8 +379,7 @@ Feature: Dataplane policies
         """
       When I visit the "/meshes/default/data-planes/dataplane-1/policies" URL
       Then the "$to-rules" element exists
-      And the "$legacy-sidecar-policies" element exists
-      And the "$legacy-gateway-policies" element doesn't exist
+      And the "$legacy-sidecar-policies" element exists but the "$legacy-gateway-policies" element doesn't exist
 
   Rule: Delegated gateway
 
@@ -391,9 +396,8 @@ Feature: Dataplane policies
         KUMA_MODE: global
         """
       When I visit the "/meshes/default/data-planes/dataplane-1/policies" URL
-      Then the "$to-rules" element exists
-      And the "$legacy-sidecar-policies" element doesn't exist
-      And the "$legacy-gateway-policies" element doesn't exist
+      Then the "$to-rules" element exists but the "$legacy-sidecar-policies" element doesn't exist
+      And the "$to-rules" element exists but the "$legacy-gateway-policies" element doesn't exist
     # We repeat the same test as the one before but with an omitted so we can test
     # an omitted gateway.type. If we ever stop folks accessing gateway.type and rely on the
     # data layer unit test for this instead, we can remove this test.
@@ -412,9 +416,8 @@ Feature: Dataplane policies
                 type: !!js/undefined
         """
       When I visit the "/meshes/default/data-planes/dataplane-1/policies" URL
-      Then the "$to-rules" element exists
-      And the "$legacy-sidecar-policies" element doesn't exist
-      And the "$legacy-gateway-policies" element doesn't exist
+      Then the "$to-rules" element exists but the "$legacy-sidecar-policies" element doesn't exist
+      And the "$to-rules" element exists but the "$legacy-gateway-policies" element doesn't exist
 
     Scenario: Non-federated shows the rules and only sidecar-like (i.e. delegated) gateway legacy content
       Given the environment
@@ -423,8 +426,7 @@ Feature: Dataplane policies
         """
       When I visit the "/meshes/default/data-planes/dataplane-1/policies" URL
       Then the "$to-rules" element exists
-      And the "$legacy-sidecar-policies" element exists
-      And the "$legacy-gateway-policies" element doesn't exist
+      And the "$legacy-sidecar-policies" element exists but the "$legacy-gateway-policies" element doesn't exist
 
   Rule: Built-in gateway
 
@@ -441,9 +443,8 @@ Feature: Dataplane policies
         KUMA_MODE: global
         """
       When I visit the "/meshes/default/data-planes/dataplane-gateway_builtin-1/policies" URL
-      Then the "$to-rules" element exists
-      And the "$legacy-sidecar-policies" element doesn't exist
-      And the "$legacy-gateway-policies" element doesn't exist
+      Then the "$to-rules" element exists but the "$legacy-sidecar-policies" element doesn't exist
+      And the "$to-rules" element exists but the "$legacy-gateway-policies" element doesn't exist
 
     Scenario: Non-federated shows the rules and only builtin gateway legacy content
       Given the environment
@@ -452,5 +453,4 @@ Feature: Dataplane policies
         """
       When I visit the "/meshes/default/data-planes/dataplane-gateway-builtin-1/policies" URL
       Then the "$to-rules" element exists
-      And the "$legacy-sidecar-policies" element doesn't exist
-      And the "$legacy-gateway-policies" element exists
+      And the "$legacy-gateway-policies" element exists but the "$legacy-sidecar-policies" element doesn't exist

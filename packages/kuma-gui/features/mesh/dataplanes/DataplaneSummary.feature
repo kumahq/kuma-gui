@@ -34,12 +34,12 @@ Feature: Dataplane summary
     Then the "$summary" element exists
     And the "$summary" element contains "test-data-plane-1"
     When I click the "$close-summary-button" element
-    Then the "$summary" element doesn't exist
+    Then the "$item" element exists but the "$summary" element doesn't exist
     When I navigate "back"
     Then the "$summary" element exists
     And the "$summary" element contains "test-data-plane-1"
     When I navigate "forward"
-    Then the "$summary" element doesn't exist
+    Then the "$item" element exists but the "$summary" element doesn't exist
 
   Scenario: Summary has expected content
     When I visit the "/meshes/default/data-planes" URL
@@ -65,8 +65,7 @@ Feature: Dataplane summary
     When I click the "$select-preference" element
     When I click the "[data-testid='select-item-universal'] button" element
     Then the URL contains "format=universal"
-    And the "[data-testid='k-code-block']" element exists
-    And the "$structured-view" element doesn't exists
+    And the "[data-testid='k-code-block']" element exists but the "$structured-view" element doesn't exist
     When I click the "$select-preference" element
     When I click the "[data-testid='select-item-structured'] button" element
     Then the URL contains "format=structured"
