@@ -31,7 +31,7 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
         shortName: fake.helpers.arrayElement(['msvc', 'mzsvc', 'extsvc']),
         mesh,
         namespace: nspace,
-        name: displayName,
+        name: fake.word.noun(),
         sectionName: fake.helpers.arrayElement([String(port), undefined]),
       }),
     }

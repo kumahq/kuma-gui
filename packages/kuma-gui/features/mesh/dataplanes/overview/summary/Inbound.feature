@@ -50,7 +50,7 @@ Feature: mesh / dataplanes / overview / summary / Inbound
       """
     When I visit the "/meshes/default/data-planes/service-less/overview/inbound/self_inbound_http/overview" URL
     And the "$summary" element exists
-    And the "$summary" element contains "Inbound: self_inbound_http"
+    And the "$summary" element contains "Inbound :12345"
     And the "$summary" element contains "HTTP"
     And the "$inbound-policies-rule" element contains "MeshFaultInjection"
     And the "$inbound-policies-rule" element contains "kri_mfi_default_pigsty_jury_innovation_appliance"

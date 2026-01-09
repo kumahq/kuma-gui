@@ -34,21 +34,23 @@
     </template>
 
     <template v-if="props.portName">
-      <dl>
+      <XDl>
         <div>
           <dt>Name</dt>
           <dd>
             {{ props.portName }}
           </dd>
         </div>
-      </dl>
+      </XDl>
     </template>
+
+    <slot name="body" />
 
     <template
       v-if="props.traffic"
     >
       <!-- rx and tx are purposefully reversed in all the below to rx=tx and tx=rx here due to the direction of the traffic (downstream) -->
-      <dl>
+      <XDl>
         <template
           v-if="props.protocol === 'passthrough'"
         >
@@ -154,7 +156,7 @@
             <dd>{{ formatBytes(props.traffic.tcp?.[`${props.direction}_cx_rx_bytes_total`]) }}</dd>
           </div>
         </template>
-      </dl>
+      </XDl>
     </template>
     <template v-else>
       <XProgress

@@ -37,7 +37,7 @@ Feature: mesh / dataplanes / overview / summary / Outbound
       """
     When I visit the "/meshes/default/data-planes/service-less/overview/outbound/kri_dp_default_numeric_kuma-system_service-less_httpport/overview" URL
     And the "$summary" element exists
-    And the "$summary" element contains "Outbound: kri_dp_default_numeric_kuma-system_service-less_httpport"
+    And the "$summary" element contains "Outbound service-less"
     And the "$summary" element contains "HTTP"
     And the "$outbound-policies-rule" element contains "MeshFaultInjection"
     And the "$outbound-policies-rule" element contains "kri_mfi_default_pigsty_jury_innovation_appliance"
