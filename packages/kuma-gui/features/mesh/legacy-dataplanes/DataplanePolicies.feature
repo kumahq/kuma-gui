@@ -316,7 +316,6 @@ Feature: Dataplane policies
       Then the "$summary-slideout-container" element exists
       And the "$summary-slideout-container [data-testid='slideout-title']" element exists
       And the "$summary-slideout-container [data-testid='slideout-title'] h2 a" element contains "the-other-http-route"
-
     Scenario: Policies tab has expected content (inbound rules & partial from rules)
       Given the environment
         """
@@ -325,7 +324,16 @@ Feature: Dataplane policies
         KUMA_DATAPLANE_TO_RULE_COUNT: 0
         KUMA_DATAPLANE_INBOUND_RULE_COUNT: 1
         KUMA_DATAPLANE_FROM_RULE_COUNT: 1
+        KUMA_RESOURCE_COUNT: 1
         """
+    And the URL "/_resources" responds with
+      ```
+        body:
+          resources:
+            - name: MeshHTTPRoute
+              policy:
+                isFromAsRules: false
+      ```
       And the URL "/meshes/default/dataplanes/dataplane-1/_rules" responds with
         """
         body:
@@ -344,6 +352,7 @@ Feature: Dataplane policies
         """
       When I visit the "/meshes/default/data-planes/dataplane-1/policies" URL
       Then the "$inbound-rule-item" element exists but the "$to-rule-item-content" element doesn't exist
+      And the "$from-rule-item" element exists
 
   Rule: Standard proxy
 
