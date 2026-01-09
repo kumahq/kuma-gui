@@ -27,12 +27,12 @@ Feature: Zone Egress summary
     Then the "$summary" element exists
     And the "$summary" element contains "zone-egress-1"
     When I click the "$close-summary-button" element
-    Then the "[data-testid-root='mesh-app']" element exists but the "$summary" element doesn't exist
+    Then the "$item" element exists but the "$summary" element doesn't exist
     When I navigate "back"
     Then the "$summary" element exists
     And the "$summary" element contains "zone-egress-1"
     When I navigate "forward"
-    Then the "[data-testid-root='mesh-app']" element exists but the "$summary" element doesn't exist
+    Then the "$item" element exists but the "$summary" element doesn't exist
 
   Scenario: Summary URL goes to page with open summary
     Given the environment

@@ -29,7 +29,7 @@ Feature: application / MainNavigation
       KUMA_MODE: <Mode>
       """
     When I visit the "/" URL
-    Then the "[data-testid-root='mesh-app']" element exists but the "<Element>" element doesn't exist
+    Then the "$meshes-nav" element exists but the "<Element>" element doesn't exist
 
     Examples:
       | Element            | Mode   |

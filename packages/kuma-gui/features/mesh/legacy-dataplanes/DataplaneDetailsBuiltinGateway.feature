@@ -63,7 +63,7 @@ Feature: Dataplane details for built-in gateway
       |       193.107.134.106 |
       | kuma.io/protocol:http |
       | kuma.io/zone:zone-1   |
-    And the "[data-testid-root='mesh-app']" element exists but the "$warnings" element doesn't exist
+    And the "$detail-view" element exists but the "$warnings" element doesn't exist
 
   Scenario: Policies tab has expected content
     Given the environment

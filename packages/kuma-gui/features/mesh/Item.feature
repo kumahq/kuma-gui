@@ -10,6 +10,7 @@ Feature: mesh / item
       | select-environment | [data-testid='select-input']                                    |
       | mtls-warning       | [data-testid^='notification-meshes.notifications.mtls-warning'] |
       | mtrust-section     | [data-testid='mesh-trusts-listing']                             |
+      | mesh-detail        | [data-testid='mesh-detail-view']                                |
 
   Scenario: /mesh-insights/* isn't a 404
     Given the URL "/mesh-insights/default" responds with
@@ -64,7 +65,7 @@ Feature: mesh / item
         mtls: <mtls>
       """
     When I visit the "/meshes/default/overview" URL
-    Then the "[data-testid-root='mesh-app']" element exists but the "$mtls-warning" element doesn't exist
+    Then the "$mesh-detail" element exists but the "$mtls-warning" element doesn't exist
 
     Examples:
       | Scenario                   | midCount | mtls           |
@@ -85,4 +86,4 @@ Feature: mesh / item
       KUMA_MESHTRUST_COUNT: 0
       """
     When I visit the "/meshes/default/overview" URL
-    Then the "[data-testid-root='mesh-app']" element exists but the "$mtrust-section" element doesn't exist
+    Then the "$mesh-detail" element exists but the "$mtrust-section" element doesn't exist

@@ -4,6 +4,7 @@ Feature: mesh / warnings
     Given the CSS selectors
       | Alias                   | Selector                                                                   |
       | mesh-service-activation | [data-testid^='notification-meshes.notifications.mesh-service-activation'] |
+      | mesh-detail             | [data-testid='mesh-detail-view']                                           |
 
   Rule: MeshService activation
 
@@ -24,4 +25,4 @@ Feature: mesh / warnings
             mode: Exclusive
         """
       When I visit the "/meshes/default/overview" URL
-      Then the "[data-testid-root='mesh-app']" element exists but the "$mesh-service-activation" element doesn't exist
+      Then the "$mesh-detail" element exists but the "$mesh-service-activation" element doesn't exist

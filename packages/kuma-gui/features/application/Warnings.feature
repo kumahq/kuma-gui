@@ -4,6 +4,7 @@ Feature: application / warnings
     Given the CSS selectors
       | Alias                     | Selector                                                              |
       | memory-store-type-warning | [data-testid='notification-main-overview.notifications.store-memory'] |
+      | content                   | [data-testid-root='control-plane-detail-view']                        |
 
   Scenario: Using the memory store type shows a warning
     Given the environment
@@ -19,4 +20,4 @@ Feature: application / warnings
       KUMA_STORE_TYPE: postgres
       """
     When I visit the "/" URL
-    Then the "[data-testid-root='mesh-app']" element exists but the "$memory-store-type-warning" element doesn't exist
+    Then the "$content" element exists but the "$memory-store-type-warning" element doesn't exist
