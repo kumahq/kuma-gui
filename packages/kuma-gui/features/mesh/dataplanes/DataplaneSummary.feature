@@ -34,12 +34,12 @@ Feature: Dataplane summary
     Then the "$summary" element exists
     And the "$summary" element contains "test-data-plane-1"
     When I click the "$close-summary-button" element
-    Then the "$summary" element doesn't exist
+    Then the "[data-testid-root='mesh-app']" element exists but the "$summary" element doesn't exist
     When I navigate "back"
     Then the "$summary" element exists
     And the "$summary" element contains "test-data-plane-1"
     When I navigate "forward"
-    Then the "$summary" element doesn't exist
+    Then the "[data-testid-root='mesh-app']" element exists but the "$summary" element doesn't exist
 
   Scenario: Summary has expected content
     When I visit the "/meshes/default/data-planes" URL

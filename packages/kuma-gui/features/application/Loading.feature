@@ -12,4 +12,4 @@ Feature: application / loading
       """
     When I visit the "/meshes" URL
     Then the "$collection-loading" element exists
-    Then the "$collection-loading" element doesn't exist
+    Then the "[data-testid-root='mesh-app']" element exists but the "$collection-loading" element doesn't exist

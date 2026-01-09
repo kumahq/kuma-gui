@@ -26,12 +26,12 @@ Feature: Policy summary
     Then the "$summary" element exists
     And the "$summary" element contains "mfi-1"
     When I click the "$close-summary-button" element
-    Then the "$summary" element doesn't exist
+    Then the "[data-testid-root='mesh-app']" element exists but the "$summary" element doesn't exist
     When I navigate "back"
     Then the "$summary" element exists
     And the "$summary" element contains "mfi-1"
     When I navigate "forward"
-    Then the "$summary" element doesn't exist
+    Then the "[data-testid-root='mesh-app']" element exists but the "$summary" element doesn't exist
 
   Scenario: Summary URL goes to page with open summary
     Given the environment
