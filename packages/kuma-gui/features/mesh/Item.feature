@@ -40,7 +40,20 @@ Feature: mesh / item
     Then the "$config-k8s" element exists
     And the URL contains "?environment=k8s"
 
-  Scenario Outline: With <Scenario> the mTLS warning <Exists>
+  Scenario: With no MeshIdentity and no mtls the mTLS warning exists
+    Given the environment
+      """
+      KUMA_MESHIDENTITY_COUNT: 0
+      """
+    And the URL "/meshes/default" responds with
+      """
+      body:
+        mtls: !!js/undefined
+      """
+    When I visit the "/meshes/default/overview" URL
+    Then the "$mtls-warning" element exists
+
+  Scenario Outline: With <Scenario> the mTLS warning doesn't exist
     Given the environment
       """
       KUMA_MESHIDENTITY_COUNT: <midCount>
@@ -51,23 +64,25 @@ Feature: mesh / item
         mtls: <mtls>
       """
     When I visit the "/meshes/default/overview" URL
-    Then the "$mtls-warning" element <Exists>
+    Then the "[data-testid-root='mesh-app']" element exists but the "$mtls-warning" element doesn't exist
 
     Examples:
-      | Scenario                    | Exists        | midCount | mtls           |
-      | no MeshIdentity and no mtls | exists        |        0 | !!js/undefined |
-      | a MeshIdentity and no mtls  | doesn't exist |        1 | !!js/undefined |
-      | no MeshIdentity but mtls    | doesn't exist |        0 |                |
+      | Scenario                   | midCount | mtls           |
+      | a MeshIdentity and no mtls |        1 | !!js/undefined |
+      | no MeshIdentity but mtls   |        0 |                |
 
-  Scenario Outline: With <Scenario> the MeshTrust section <Exists>
+  Scenario: With at least one MeshTrust the MeshTrust section exists
     Given the environment
       """
-      KUMA_MESHTRUST_COUNT: <mtrustCount>
+      KUMA_MESHTRUST_COUNT: 1
       """
     When I visit the "/meshes/default/overview" URL
-    Then the "$mtrust-section" element <Exists>
+    Then the "$mtrust-section" element exists
 
-    Examples:
-      | Scenario               | Exists        | mtrustCount |
-      | no MeshTrust           | doesn't exist |           0 |
-      | at least one MeshTrust | exists        |           1 |
+  Scenario: With no MeshTrust the MeshTrust section doesn't exist
+    Given the environment
+      """
+      KUMA_MESHTRUST_COUNT: 0
+      """
+    When I visit the "/meshes/default/overview" URL
+    Then the "[data-testid-root='mesh-app']" element exists but the "$mtrust-section" element doesn't exist
