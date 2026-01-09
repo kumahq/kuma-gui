@@ -55,7 +55,7 @@ export const legacyDataplaneRoutes = (): RouteRecordRaw[] => {
         {
           path: 'policies',
           name: 'data-plane-policies-view',
-          component: () => import('@/app/data-planes/views/DataPlanePoliciesView.vue'),
+          component: () => import('@/app/legacy-data-planes/views/DataPlanePoliciesView.vue'),
           children: [
             {
               path: ':policyPath/:policy',
