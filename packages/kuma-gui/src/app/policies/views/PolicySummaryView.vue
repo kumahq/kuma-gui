@@ -103,7 +103,6 @@
                   language="yaml"
                   :code="item.yaml"
                   is-searchable
-                  :show-k8s-copy-button="false"
                   :query="route.params.codeSearch"
                   :is-filter-mode="route.params.codeFilter"
                   :is-reg-exp-mode="route.params.codeRegExp"
@@ -127,7 +126,6 @@
                     language="yaml"
                     :code="yaml"
                     is-searchable
-                    :show-k8s-copy-button="false"
                     :query="route.params.codeSearch"
                     :is-filter-mode="route.params.codeFilter"
                     :is-reg-exp-mode="route.params.codeRegExp"

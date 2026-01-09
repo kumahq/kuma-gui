@@ -119,7 +119,6 @@
                 data-testid="codeblock-yaml-universal"
                 language="yaml"
                 :code="YAML.stringify(item.$raw)"
-                :show-k8s-copy-button="false"
                 is-searchable
                 :query="route.params.codeSearch"
                 :is-filter-mode="route.params.codeFilter"
@@ -141,7 +140,6 @@
                   data-testid="codeblock-yaml-k8s"
                   language="yaml"
                   :code="YAML.stringify(k8sConfig)"
-                  :show-k8s-copy-button="false"
                   is-searchable
                   :query="route.params.codeSearch"
                   :is-filter-mode="route.params.codeFilter"

@@ -47,7 +47,6 @@
               data-testid="codeblock-yaml-universal"
               language="yaml"
               :code="props.data.yaml"
-              :show-k8s-copy-button="false"
               is-searchable
               :query="route.params.codeSearch"
               :is-filter-mode="route.params.codeFilter"
@@ -71,7 +70,6 @@
                 data-testid="codeblock-yaml-k8s"
                 language="yaml"
                 :code="yaml"
-                :show-k8s-copy-button="false"
                 is-searchable
                 :query="route.params.codeSearch"
                 :is-filter-mode="route.params.codeFilter"
