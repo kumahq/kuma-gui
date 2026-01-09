@@ -163,11 +163,10 @@ export function createEslintConfig(
       '@stylistic/type-annotation-spacing': ['error', {
         before: false,
         after: true,
-        overrides: {
-          arrow: {
-            before: true,
-          },
-        },
+      }],
+      '@stylistic/arrow-spacing': ['error', {
+        before: true,
+        after: true,
       }],
       '@stylistic/member-delimiter-style': ['error', {
         singleline: {
