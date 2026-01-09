@@ -59,7 +59,7 @@ const slots = defineSlots()
 .resource-status-title {
   display: flex;
   align-items: center;
-  gap: unset;
+  gap: 0;
 
   &::after {
     content: ": ";
