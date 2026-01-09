@@ -163,6 +163,9 @@ export function createEslintConfig(
       '@stylistic/type-annotation-spacing': ['error', {
         before: false,
         after: true,
+        overrides: {
+          arrow: 'ignore',
+        },
       }],
       '@stylistic/arrow-spacing': ['error', {
         before: true,
