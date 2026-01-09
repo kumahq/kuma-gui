@@ -1,11 +1,14 @@
 <template>
-  <div>
-    <dt>
+  <div class="resource-status">
+    <div
+      v-if="slots.icon || slots.title"
+      class="resource-status-title"
+    >
       <slot name="icon" />
       <slot name="title" />
-    </dt>
+    </div>
 
-    <dd>
+    <div class="resource-status-content">
       <XLayout
         type="separated"
       >
@@ -27,7 +30,7 @@
 
         <slot name="body" />
       </XLayout>
-    </dd>
+    </div>
   </div>
 </template>
 
@@ -42,13 +45,44 @@ const slots = defineSlots()
 </script>
 
 <style lang="scss" scoped>
+.resource-status {
+  display: flex;
+  gap: $kui-space-40;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.resource-status-title {
+  display: flex;
+  align-items: center;
+  gap: unset;
+
+  &::after {
+    content: ": ";
+    display: inline;
+  }
+}
+
+.resource-status-content {
+  display: flex;
+  align-items: flex-start;
+  font-weight: $kui-font-weight-bold;
+}
+
 .text-neutral {
   color: #{$kui-color-text-neutral};
 }
+
 .description {
   font-weight: $kui-font-weight-regular;
   font-size: $kui-font-size-20;
   display: flex;
   gap: $kui-space-20;
+}
+</style>
+
+<style lang="scss">
+.resource-status-content > * {
+  min-width: 0;
 }
 </style>
