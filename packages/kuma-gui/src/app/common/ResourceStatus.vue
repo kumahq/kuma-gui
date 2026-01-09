@@ -3,12 +3,16 @@
     <div
       v-if="slots.icon || slots.title"
       class="resource-status-title"
+      role="term"
     >
       <slot name="icon" />
       <slot name="title" />
     </div>
 
-    <div class="resource-status-content">
+    <div
+      class="resource-status-content"
+      role="definition"
+    >
       <XLayout
         type="separated"
       >
@@ -67,6 +71,10 @@ const slots = defineSlots()
   display: flex;
   align-items: flex-start;
   font-weight: $kui-font-weight-bold;
+
+  & > :deep(*) {
+    min-width: 0;
+  }
 }
 
 .text-neutral {
@@ -78,11 +86,5 @@ const slots = defineSlots()
   font-size: $kui-font-size-20;
   display: flex;
   gap: $kui-space-20;
-}
-</style>
-
-<style lang="scss">
-.resource-status-content > * {
-  min-width: 0;
 }
 </style>
