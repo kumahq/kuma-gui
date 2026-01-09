@@ -288,30 +288,12 @@ export async function setupSteps<TMock extends BaseMock, TClient extends BaseCli
   })
 
   Then(/^the "(.*)" element[s]? exist[s]?$/, function (selector: string) {
-    // This step only supports positive assertions ("element exists")
-    // For negative assertions ("element doesn't exist"), use the double assertion step:
-    // Then the "$element1" element exists but the "$element2" element doesn't exist
-    $(selector, {
-      ...timeout(false),
-    }).should('exist')
+    $(selector).should('exist')
   })
 
-  // Double assertion step: ensures page is loaded before checking non-existence
-  // This prevents false positives where an assertion passes before elements have loaded
-  // Example: Then the "[data-testid-root='mesh-app']" element exists but the "$warning" element doesn't exist
-  Then(/^the "(.*)" element[s]? exist[s]? but the "(.*)" element[s]?( don't | doesn't | )exist[s]?$/, function (existingSelector: string, nonExistingSelector: string, assertion: string) {
-    // First, assert that the "existing" element exists (ensures page is loaded)
-    $(existingSelector, {
-      ...timeout(false),
-    }).should('exist')
-
-    // Then, assert that the "non-existing" element doesn't exist
-    const negative = assertion !== ' '
-    const prefix = negative ? 'not.' : ''
-
-    $(nonExistingSelector, {
-      ...timeout(negative),
-    }).should(`${prefix}exist`)
+  Then(/^the "(.*)" element[s]? exist[s]? but the "(.*)" (elements don't exist|element doesn't exist)$/, function (exists: string, notexists: string, assertion: string) {
+    $(exists).should('exist')
+    $(notexists, { timeout: negativeTimeout }).should('not.exist')
   })
 
   Then(/^the "(.*)" element[s]?( isn't | aren't | is | are )(checked|disabled)$/, (selector: string, assertion: string, booleanAttribute: string) => {
