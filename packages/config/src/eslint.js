@@ -167,10 +167,6 @@ export function createEslintConfig(
           arrow: 'ignore',
         },
       }],
-      '@stylistic/arrow-spacing': ['error', {
-        before: true,
-        after: true,
-      }],
       '@stylistic/member-delimiter-style': ['error', {
         singleline: {
           delimiter: 'comma',
