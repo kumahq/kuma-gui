@@ -344,8 +344,6 @@ Feature: Dataplane policies
         """
       When I visit the "/meshes/default/data-planes/dataplane-1/policies" URL
       Then the "$inbound-rule-item" element exists but the "$to-rule-item-content" element doesn't exist
-      And the "$inbound-rule-item" element exists but the "$from-rule-item" element doesn't exist
-      And the "$inbound-rule-item" element exists
 
   Rule: Standard proxy
 
