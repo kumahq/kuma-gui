@@ -26,8 +26,8 @@ Feature: Configuration: Detail view content
 
   Scenario: Stores code search value in URL
     When I visit the "/configuration" URL
-    Then the "$details" element exists but the "$code-block-regexp-mode-button[aria-pressed='true']" element doesn't exist
-    And the "$details" element exists but the "$code-block-filter-mode-button[aria-pressed='true']" element doesn't exist
+    Then the "[data-testid-root='mesh-app']" element exists but the "$code-block-regexp-mode-button[aria-pressed='true']" element doesn't exist
+    And the "[data-testid-root='mesh-app']" element exists but the "$code-block-filter-mode-button[aria-pressed='true']" element doesn't exist
     When I "input" "(groups|users)" into the "$code-block-search-input" element
     Then the URL contains "/configuration?codeSearch=(groups%257Cusers)"
     When I click the "$code-block-regexp-mode-button" element

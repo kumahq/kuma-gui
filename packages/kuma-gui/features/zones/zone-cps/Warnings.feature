@@ -9,7 +9,6 @@ Feature: zones / warnings
       | warning-trigger          | $zone-cp-table-row:nth-child(1) [data-testid="warning"]                   |
       | warning-memory           | $zone-cp-table-row:nth-child(1) [data-testid="warning-store-memory"]      |
       | notification-nack        | [data-testid^='notification-zone-cps.notifications.global-nack-response'] |
-      | detail-view              | [data-testid='zone-cp-detail-view']                                       |
     And the environment
       """
       KUMA_ZONE_COUNT: 1
@@ -74,7 +73,7 @@ Feature: zones / warnings
           type: kubernetes
       """
     When I visit the "<URL>" URL
-    Then the "$detail-view" element exists but the "$warning-zone-memory" element doesn't exist
+    Then the "[data-testid-root='mesh-app']" element exists but the "$warning-zone-memory" element doesn't exist
 
     Examples:
       | URL                       |

@@ -29,7 +29,7 @@ Feature: mesh / item
         Status-Code: 404
       """
     When I visit the "/meshes/default/overview" URL
-    Then the "$service-count" element exists but the "$error" element doesn't exist
+    Then the "[data-testid-root='mesh-app']" element exists but the "$error" element doesn't exist
     And the "$service-count" element contains "0"
 
   Scenario: Shows config with format based on environment
