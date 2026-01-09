@@ -3,8 +3,10 @@ Feature: control-planes / DetailView
   Background:
     Given the CSS selectors
       | Alias                       | Selector                                    |
-      | zone-control-planes-details | [data-testid='zone-control-planes-details'] |
+      | zone-control-planes-details | [data-testid='zone-control-planes-status']  |
+      | zone-control-planes-status  | [data-testid='zone-control-planes-details'] |
       | meshes-details              | [data-testid='meshes-details']              |
+      | meshes-status              | [data-testid='meshes-status']              |
     And the environment
       """
       KUMA_MESH_COUNT: 3
@@ -132,8 +134,8 @@ Feature: control-planes / DetailView
       """
     When I visit the "/" URL
     Then the page title contains "Overview"
-    And the "[data-testid-root='mesh-app']" element exists but the "[data-testid='zone-control-planes-status']" element doesn't exist
-    And the "[data-testid-root='mesh-app']" element exists but the "$zone-control-planes-details" element doesn't exist
+    And the "$meshes-status" element exists but the "$zone-control-planes-status" element doesn't exist
+    And the "$meshes-status" element exists but the "$zone-control-planes-details" element doesn't exist
 
   Scenario: Shows expected content in federated mode
     Given the environment
