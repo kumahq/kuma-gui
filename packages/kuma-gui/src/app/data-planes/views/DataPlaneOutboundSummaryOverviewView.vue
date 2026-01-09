@@ -25,6 +25,16 @@
               </XBadge>
             </td>
           </tr>
+          <tr>
+            <th scope="row">
+              KRI
+            </th>
+            <td>
+              <XCopyButton
+                :text="props.data.kri"
+              />
+            </td>
+          </tr>
           <template
             v-for="kri in [Kri.fromString(props.data.kri)]"
             :key="typeof kri"
