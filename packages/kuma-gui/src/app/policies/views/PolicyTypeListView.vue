@@ -41,7 +41,7 @@
                     // legacy policies are those that aren't targetRef and are also in use
                     return !item.policy.isTargetRef && (meshInsight.policies?.[item.name]?.total ?? 0) > 0
                   })]"
-                  :key="legacy"
+                  :key="typeof legacy"
                 >
                   <DataCollection
                     :predicate="typeof meshInsight?.policies === 'undefined' ? undefined : (item) => legacy.length > 0 || item.policy.isTargetRef"

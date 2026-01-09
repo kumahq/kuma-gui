@@ -222,7 +222,7 @@
                         <!-- so we replace this with `` if we find it to get the service name for linking -->
                         <template
                           v-for="_hash in [/-([a-f0-9]){16}$/]"
-                          :key="_hash"
+                          :key="typeof _hash"
                         >
                           <XLayout
                             type="stack"
