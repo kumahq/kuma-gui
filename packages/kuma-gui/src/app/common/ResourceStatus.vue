@@ -1,20 +1,18 @@
 <template>
-  <DefinitionCard>
-    <template
-      v-if="slots.icon"
-      #icon
+  <div class="resource-status">
+    <div
+      v-if="slots.icon || slots.title"
+      class="resource-status-title"
+      role="term"
     >
       <slot name="icon" />
-    </template>
-
-    <template
-      v-if="slots.title"
-      #title
-    >
       <slot name="title" />
-    </template>
+    </div>
 
-    <template #body>
+    <div
+      class="resource-status-content"
+      role="definition"
+    >
       <XLayout
         type="separated"
       >
@@ -22,7 +20,7 @@
           <div class="status">
             <template v-if="typeof props.online !== 'undefined'">
               <span
-                :class="{ ['text-neutral']: props.online !== props.total }"
+                :class="{ 'text-neutral': props.online !== props.total }"
               >{{ props.online }}</span><span class="status-separator">/</span>
             </template><span>{{ props.total }}</span>
           </div>
@@ -36,28 +34,53 @@
 
         <slot name="body" />
       </XLayout>
-    </template>
-  </DefinitionCard>
+    </div>
+  </div>
 </template>
 
 <script lang="ts" setup>
-import DefinitionCard from './DefinitionCard.vue'
-
 const props = withDefaults(defineProps<{
   total: number
   online?: number
-  description?: string
 }>(), {
   online: undefined,
-  description: undefined,
 })
 const slots = defineSlots()
 </script>
 
 <style lang="scss" scoped>
+.resource-status {
+  display: flex;
+  gap: $kui-space-40;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.resource-status-title {
+  display: flex;
+  align-items: center;
+  gap: 0;
+
+  &::after {
+    content: ": ";
+    display: inline;
+  }
+}
+
+.resource-status-content {
+  display: flex;
+  align-items: flex-start;
+  font-weight: $kui-font-weight-bold;
+
+  & > :deep(*) {
+    min-width: 0;
+  }
+}
+
 .text-neutral {
   color: #{$kui-color-text-neutral};
 }
+
 .description {
   font-weight: $kui-font-weight-regular;
   font-size: $kui-font-size-20;
