@@ -1,4 +1,5 @@
-import { meshIdentityRoutes, meshTrustRoutes } from '../resources/routes'
+import { routes as meshIdentityRoutes } from '../mesh-identities/routes'
+import { routes as meshTrustRoutes } from '../mesh-trusts/routes'
 import type { RouteRecordRaw } from 'vue-router'
 
 export type SplitRouteRecordRaw = {

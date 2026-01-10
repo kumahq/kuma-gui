@@ -1,16 +1,16 @@
 <template>
   <RouteView
-    name="mesh-trust-summary-view"
+    :name="props.routeName"
     :params="{
       mesh: '',
-      mtrust: '',
+      mid: '',
       environment: String,
     }"
     v-slot="{ route, t, uri }"
   >
     <DataLoader
-      :src="uri(sources, '/meshtrusts/:mtrust', {
-        mtrust: route.params.mtrust,
+      :src="uri(sources, '/meshidentities/:mid', {
+        mid: route.params.mid,
       })"
       v-slot="{ data }"
     >
@@ -52,8 +52,8 @@
         </template>
         <template v-else>
           <DataLoader
-            :src="uri(sources, '/meshtrusts/:mtrust/as/kubernetes', {
-              mtrust: route.params.mtrust,
+            :src="uri(sources, '/meshidentities/:mid/as/kubernetes', {
+              mid: route.params.mid,
             })"
             v-slot="{ data: k8sYaml }"
           >
@@ -69,8 +69,14 @@
 </template>
 
 <script lang="ts" setup>
+import type { MeshIdentity } from '../data/MeshIdentity'
 import { YAML } from '@/app/application'
-import { sources } from '@/app/resources/sources'
+import { sources } from '@/app/mesh-identities/sources'
+
+const props = defineProps<{
+  meshIdentities: MeshIdentity[]
+  routeName: string
+}>()
 </script>
 <style scoped>
 h2::before {
