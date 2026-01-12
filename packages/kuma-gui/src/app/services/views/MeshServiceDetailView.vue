@@ -455,7 +455,6 @@
 <script lang="ts" setup>
 import type { MeshService } from '../data'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
-
 import ResourceStatus from '@/app/common/ResourceStatus.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import { sources } from '@/app/data-planes/sources'

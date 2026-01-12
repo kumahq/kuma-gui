@@ -57,17 +57,19 @@
                   </template>
                 </dd>
               </div>
-            </XDl>
-
-            <XDl variant="x-stack">
-              <ResourceStatus
-                :online="data.dataplanes?.online ?? 0"
-                :total="data.dataplanes?.total ?? 0"
-              >
-                <template #title>
+              <div>
+                <dt>
                   {{ t('http.api.property.dataPlaneProxies') }}
-                </template>
-              </ResourceStatus>
+                </dt>
+                <dd
+                  v-for="[online, total] in [[data.dataplanes?.online ?? 0, data.dataplanes?.total ?? 0]]"
+                  :key="typeof online"
+                >
+                  <component :is="online !== total ? 'strong' : 'span'">
+                    {{ online ?? 0 }}/{{ total ?? 0 }}
+                  </component>
+                </dd>
+              </div>
             </XDl>
           </XAboutCard>
         </DataLoader>
@@ -273,7 +275,6 @@
 <script lang="ts" setup>
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
-import ResourceStatus from '@/app/common/ResourceStatus.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import { sources as dataplaneSources } from '@/app/data-planes/sources'
 </script>

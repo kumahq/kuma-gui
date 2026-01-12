@@ -221,7 +221,6 @@
 import type { MeshExternalService } from '../data'
 import { YAML } from '@/app/application'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
-
 import { sources as servicesSources } from '@/app/services/sources'
 
 const props = defineProps<{
