@@ -22,75 +22,84 @@
               :prefix="props.i18nPrefix"
               path=".routes.item.subscriptions.description"
             />
-            <AppCollection
-              :headers="[
-                { ...me.get('headers.connection'), label: '&nbsp;', key: 'connection' },
-                { ...me.get('headers.instanceId'), label: t('.routes.item.subscriptions.instanceId', null, { defaultMessage: t('http.api.property.instanceId') }), key: 'instanceId' },
-                { ...me.get('headers.version'), label: t('http.api.property.version'), key: 'version' },
-                { ...me.get('headers.connected'), label: t('http.api.property.connected'), key: 'connected' },
-                { ...me.get('headers.disconnected'), label: t('http.api.property.disconnected'), key: 'disconnected' },
-                { ...me.get('headers.responses'), label: t('subscriptions.routes.item.headers.stat'), key: 'responses' },
-              ]"
-              :is-selected-row="item => item.id === route.params.subscription"
-              :items="[...props.subscriptions].reverse()"
-              @resize="me.set"
+            <DataLoader
+              :data="[props.subscriptions]"
+              variant="list"
             >
               <template
-                #connection="{ row: item }"
+                v-if="props.subscriptions && !(props.subscriptions instanceof Error)"
               >
-                <template
-                  v-for="connection in [item.connectTime && !item.disconnectTime ? 'healthy' : 'unhealthy'] as const"
-                  :key="`${connection}`"
+                <AppCollection
+                  :headers="[
+                    { ...me.get('headers.connection'), label: '&nbsp;', key: 'connection' },
+                    { ...me.get('headers.instanceId'), label: t('.routes.item.subscriptions.instanceId', null, { defaultMessage: t('http.api.property.instanceId') }), key: 'instanceId' },
+                    { ...me.get('headers.version'), label: t('http.api.property.version'), key: 'version' },
+                    { ...me.get('headers.connected'), label: t('http.api.property.connected'), key: 'connected' },
+                    { ...me.get('headers.disconnected'), label: t('http.api.property.disconnected'), key: 'disconnected' },
+                    { ...me.get('headers.responses'), label: t('subscriptions.routes.item.headers.stat'), key: 'responses' },
+                  ]"
+                  :is-selected-row="item => item.id === route.params.subscription"
+                  :items="[...props.subscriptions].reverse()"
+                  @resize="me.set"
                 >
-                  <XIcon :name="connection">
-                    {{ t(`common.connection.${connection}`) }}
-                  </XIcon>
-                </template>
+                  <template
+                    #connection="{ row: item }"
+                  >
+                    <template
+                      v-for="connection in [item.connectTime && !item.disconnectTime ? 'healthy' : 'unhealthy'] as const"
+                      :key="`${connection}`"
+                    >
+                      <XIcon :name="connection">
+                        {{ t(`common.connection.${connection}`) }}
+                      </XIcon>
+                    </template>
+                  </template>
+                  <template
+                    #instanceId="{ row: item }"
+                  >
+                    <XAction
+                      data-action
+                      :to="{
+                        name: `${props.routePrefix}-subscription-summary-view`,
+                        params: {
+                          subscription: item.id,
+                        },
+                      }"
+                    >
+                      {{ item.instance.id || '-' }}
+                    </XAction>
+                  </template>
+                  <template
+                    #version="{ row: item }"
+                  >
+                    {{ item.instance.version || '-' }}
+                  </template>
+                  <template
+                    #connected="{ row: item }"
+                  >
+                    {{ t('common.formats.datetime', { value: Date.parse(item.connectTime ?? '') }) }}
+                  </template>
+                  <template
+                    #disconnected="{ row: item }"
+                  >
+                    <template
+                      v-if="item.disconnectTime"
+                    >
+                      {{ t('common.formats.datetime', { value: Date.parse(item.disconnectTime) }) }}
+                    </template>
+                  </template>
+                  <template
+                    #responses="{ row: item }"
+                  >
+                    <template
+                      v-for="responses in [item.status?.total ?? {}]"
+                    >
+                      {{ responses.responsesSent }}/{{ responses.responsesAcknowledged }}
+                    </template>
+                  </template>
+                </AppCollection>
               </template>
-              <template
-                #instanceId="{ row: item }"
-              >
-                <XAction
-                  data-action
-                  :to="{
-                    name: `${props.routePrefix}-subscription-summary-view`,
-                    params: {
-                      subscription: item.id,
-                    },
-                  }"
-                >
-                  {{ item.instance.id || '-' }}
-                </XAction>
-              </template>
-              <template
-                #version="{ row: item }"
-              >
-                {{ item.instance.version || '-' }}
-              </template>
-              <template
-                #connected="{ row: item }"
-              >
-                {{ t('common.formats.datetime', { value: Date.parse(item.connectTime ?? '') }) }}
-              </template>
-              <template
-                #disconnected="{ row: item }"
-              >
-                <template
-                  v-if="item.disconnectTime"
-                >
-                  {{ t('common.formats.datetime', { value: Date.parse(item.disconnectTime) }) }}
-                </template>
-              </template>
-              <template
-                #responses="{ row: item }"
-              >
-                <template
-                  v-for="responses in [item.status?.total ?? {}]"
-                >
-                  {{ responses.responsesSent }}/{{ responses.responsesAcknowledged }}
-                </template>
-              </template>
-            </AppCollection>
+            </DataLoader>
           </XLayout>
         </XCard>
       </AppView>
@@ -100,7 +109,7 @@
         v-slot="child"
       >
         <XDrawer
-          v-if="child.route.name !== route.name"
+          v-if="child.route.name !== route.name && !(props.subscriptions instanceof Error)"
           width="670px"
           @close="function () {
             route.replace({
@@ -126,6 +135,6 @@ const props = defineProps<{
   // TODO: temporary until we can infer it from the meta.module
   routePrefix: string
   i18nPrefix: string
-  subscriptions: Subscription[]
+  subscriptions: Subscription[] | Error | undefined
 }>()
 </script>
