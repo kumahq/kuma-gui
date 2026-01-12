@@ -6,14 +6,13 @@
     }"
     v-slot="{ route, t, uri }"
   >
-    <DataLoader
+    <DataSource
       :src="uri(sources, `/zone-cps/:name`, {
         name: route.params.zone,
       })"
-      v-slot="{ data: [data] }"
+      v-slot="{ data, error, result }"
     >
       <AppView
-        v-if="data"
         :breadcrumbs="[
           {
             to: {
@@ -24,36 +23,38 @@
         ]"
       >
         <template #title>
-          <XLayout
-            variant="y-stack"
-            size="small"
+          <DataLoader
+            :data="[data]"
+            variant="header"
+            v-slot="{ data: [zone] }"
           >
-            <XLayout variant="separated">
-              <template
-                v-for="env in [(['kubernetes', 'universal'] as const).find(env => env === data.zoneInsight.environment) ?? 'kubernetes']"
-                :key="env"
-              >
-                <XIcon
-                  :name="env"
-                  :size="KUI_ICON_SIZE_50"
-                >
-                  {{ t(`common.product.environment.${env}`) }}
-                </XIcon>
-              </template>
-              <h1>
-                <XCopyButton :text="data.name">
-                  <RouteTitle
-                    :title="t('zone-cps.routes.item.title', { name: data.name })"
-                  />
-                </XCopyButton>
-              </h1>
-            </XLayout>
-            <XBadge
-              :appearance="t(`common.status.appearance.${data.state}`, undefined, { defaultMessage: 'neutral' })"
+            <XLayout
+              variant="y-stack"
+              size="small"
             >
-              {{ t(`http.api.value.${data.state}`) }}
-            </XBadge>
-          </XLayout>
+              <XLayout variant="separated">
+                <template
+                  v-for="env in [(['kubernetes', 'universal'] as const).find(env => env === zone.zoneInsight.environment) ?? 'kubernetes']"
+                  :key="env"
+                >
+                  <XIcon
+                    :name="env"
+                    :size="KUI_ICON_SIZE_50"
+                  >
+                    {{ t(`common.product.environment.${env}`) }}
+                  </XIcon>
+                </template>
+                <h1>
+                  <XCopyButton :text="zone.name" />
+                </h1>
+              </XLayout>
+              <XBadge
+                :appearance="t(`common.status.appearance.${zone.state}`, undefined, { defaultMessage: 'neutral' })"
+              >
+                {{ t(`http.api.value.${zone.state}`) }}
+              </XBadge>
+            </XLayout>
+          </DataLoader>
         </template>
 
         <template
@@ -95,12 +96,12 @@
         <RouterView v-slot="child">
           <component
             :is="child.Component"
-            :data="data"
-            :subscriptions="data.zoneInsight.subscriptions"
+            :data="result"
+            :subscriptions="error ?? data?.zoneInsight.subscriptions"
           />
         </RouterView>
       </AppView>
-    </DataLoader>
+    </DataSource>
   </RouteView>
 </template>
 
