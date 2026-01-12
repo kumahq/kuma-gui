@@ -1,6 +1,7 @@
 <template>
   <XI18n v-slot="{ t }">
     <div
+      class="container"
       data-testid="x-error-state"
     >
       <KEmptyState
@@ -101,6 +102,9 @@ const modal = inject('x-modal', undefined)
 </script>
 
 <style lang="scss" scoped>
+.container {
+  width: 100%;
+}
 .detail {
   display: flex;
   flex-flow: column;

@@ -9,7 +9,7 @@
   >
     <DataSource
       :src="uri(sources, '/control-plane/outdated/:version', {
-        version: props.data.zoneInsight.version?.kumaCp?.version ?? '-',
+        version: props.data && 'zoneInsight' in props.data ? props.data?.zoneInsight.version?.kumaCp?.version ?? '-' : '-',
       })"
       v-slot="{ data: version }"
     >
@@ -17,54 +17,56 @@
         :docs="t('zones.href.docs.cta')"
         :notifications="true"
       >
-        <template
-          v-for="{ bool, key, params } in [
-            {
-              bool: props.data.zoneInsight.store === 'memory',
-              key: 'store-memory',
-            },
-            {
-              bool: !props.data.zoneInsight.version?.kumaCp?.kumaCpGlobalCompatible,
-              key: 'global-cp-incompatible',
-              params: {
-                zoneCpVersion: props.data.zoneInsight.version?.kumaCp?.version ?? '-',
-                globalCpVersion: version?.version ?? '',
+        <template v-if="props.data && 'zoneInsight' in props.data">
+          <template
+            v-for="{ bool, key, params } in [
+              {
+                bool: 'zoneInsight' in props.data && props.data.zoneInsight.store === 'memory',
+                key: 'store-memory',
               },
-            },
-            {
-              bool: (props.data.zoneInsight.connectedSubscription?.status.total.responsesRejected ?? 0) > 0,
-              key: 'global-nack-response',
-            },
-          ]"
-          :key="key"
-        >
-          <XNotification
-            :notify="bool"
-            :data-testid="`warning-${key}`"
-            :uri="`zone-cps.notifications.${key}.${props.data.id}`"
+              {
+                bool: 'zoneInsight' in props.data && !props.data.zoneInsight.version?.kumaCp?.kumaCpGlobalCompatible,
+                key: 'global-cp-incompatible',
+                params: {
+                  zoneCpVersion: props.data.zoneInsight.version?.kumaCp?.version ?? '-',
+                  globalCpVersion: version?.version ?? '',
+                },
+              },
+              {
+                bool: (props.data.zoneInsight.connectedSubscription?.status.total.responsesRejected ?? 0) > 0,
+                key: 'global-nack-response',
+              },
+            ]"
+            :key="key"
           >
-            <XI18n
-              :path="`zone-cps.notifications.${key}`"
-              :params="Object.fromEntries(Object.entries(params ?? {}))"
+            <XNotification
+              :notify="bool"
+              :data-testid="`warning-${key}`"
+              :uri="`zone-cps.notifications.${key}.${props.data!.id}`"
             >
-              <template
-                v-if="key === 'global-nack-response'"
-                #link
+              <XI18n
+                :path="`zone-cps.notifications.${key}`"
+                :params="Object.fromEntries(Object.entries(params ?? {}))"
               >
-                <XAction
-                  data-action
-                  :to="{
-                    name: 'zone-cp-subscription-summary-view',
-                    params: {
-                      subscription: props.data.zoneInsight.connectedSubscription?.id,
-                    },
-                  }"
+                <template
+                  v-if="key === 'global-nack-response'"
+                  #link
                 >
-                  zone control plane summary
-                </XAction>
-              </template>
-            </XI18n>
-          </XNotification>
+                  <XAction
+                    data-action
+                    :to="{
+                      name: 'zone-cp-subscription-summary-view',
+                      params: {
+                        subscription: props.data!.zoneInsight.connectedSubscription?.id,
+                      },
+                    }"
+                  >
+                    zone control plane summary
+                  </XAction>
+                </template>
+              </XI18n>
+            </XNotification>
+          </template>
         </template>
         <XLayout
           data-testid="detail-view-details"
@@ -72,133 +74,139 @@
         >
           <XAboutCard
             :title="t('zone-cps.detail.about.title')"
-            :created="props.data.creationTime"
-            :modified="props.data.modificationTime"
+            :created="props.data && 'creationTime' in props.data ? props.data.creationTime : undefined"
+            :modified="props.data && 'modificationTime' in props.data ? props.data.modificationTime : undefined"
             class="about-section"
           >
-            <XLayout>
-              <XDl variant="x-stack">
-                <div>
-                  <dt>
-                    {{ t('http.api.property.status') }}
-                  </dt>
-                  <dd>
-                    <StatusBadge :status="props.data.state" />
-                  </dd>
-                </div>
-                <div
-                  :class="{
-                    version: true,
-                    outdated: version?.outdated,
-                  }"
-                >
-                  <dt>
-                    {{ t('zone-cps.routes.item.version') }}
-                  </dt>
-                  <dd>
-                    <XLayout type="separated">
-                      <XBadge
-                        :appearance="version?.outdated === true ? 'warning' : 'decorative'"
-                      >
-                        {{ props.data.zoneInsight.version?.kumaCp?.version ?? '—' }}
-                      </XBadge>
-                      <template
-                        v-if="version?.outdated === true"
-                      >
-                        <XIcon
-                          name="info"
-                        >
-                          <XI18n
-                            path="zone-cps.routes.item.version_warning"
-                          />
-                        </XIcon>
-                      </template>
-                    </XLayout>
-                  </dd>
-                </div>
-                <div>
-                  <dt>
-                    {{ t('http.api.property.type') }}
-                  </dt>
-                  <dd>
-                    <XBadge appearance="decorative">
-                      {{ t(`common.product.environment.${props.data.zoneInsight.environment || 'unknown'}`) }}
-                    </XBadge>
-                  </dd>
-                </div>
-                <div>
-                  <dt>
-                    {{ t('zone-cps.routes.item.authentication_type') }}
-                  </dt>
-                  <dd>
-                    <XBadge appearance="decorative">
-                      {{ props.data.zoneInsight.authenticationType || t('common.not_applicable') }}
-                    </XBadge>
-                  </dd>
-                </div>
-              </XDl>
-
+            <DataLoader
+              :data="[props.data]"
+            >
               <XLayout
-                v-if="props.data.zoneInsight.subscriptions.length > 0"
-                data-testid="about-zone-cp-subscriptions"
-                class="about-subsection"
+                v-if="props.data && !(props.data instanceof Error)"
               >
-                <XLayout type="separated">
-                  <h3>{{ t('zone-cps.routes.item.subscriptions.title') }}</h3>
-                  <XAction
-                    data-action
-                    appearance="anchor"
-                    :to="{
-                      name: 'zone-cp-subscriptions-list-view',
+                <XDl variant="x-stack">
+                  <div>
+                    <dt>
+                      {{ t('http.api.property.status') }}
+                    </dt>
+                    <dd>
+                      <StatusBadge :status="props.data.state" />
+                    </dd>
+                  </div>
+                  <div
+                    :class="{
+                      version: true,
+                      outdated: version?.outdated,
                     }"
                   >
-                    ({{ t('zone-cps.routes.item.subscriptions.show-details') }})
-                  </XAction>
-                </XLayout>
-                <template
-                  v-for="subscription in [props.data.zoneInsight.connectedSubscription]"
-                  :key="typeof subscription"
+                    <dt>
+                      {{ t('zone-cps.routes.item.version') }}
+                    </dt>
+                    <dd>
+                      <XLayout type="separated">
+                        <XBadge
+                          :appearance="version?.outdated === true ? 'warning' : 'decorative'"
+                        >
+                          {{ props.data!.zoneInsight.version?.kumaCp?.version ?? '—' }}
+                        </XBadge>
+                        <template
+                          v-if="version?.outdated === true"
+                        >
+                          <XIcon
+                            name="info"
+                          >
+                            <XI18n
+                              path="zone-cps.routes.item.version_warning"
+                            />
+                          </XIcon>
+                        </template>
+                      </XLayout>
+                    </dd>
+                  </div>
+                  <div>
+                    <dt>
+                      {{ t('http.api.property.type') }}
+                    </dt>
+                    <dd>
+                      <XBadge appearance="decorative">
+                        {{ t(`common.product.environment.${props.data!.zoneInsight.environment || 'unknown'}`) }}
+                      </XBadge>
+                    </dd>
+                  </div>
+                  <div>
+                    <dt>
+                      {{ t('zone-cps.routes.item.authentication_type') }}
+                    </dt>
+                    <dd>
+                      <XBadge appearance="decorative">
+                        {{ props.data!.zoneInsight.authenticationType || t('common.not_applicable') }}
+                      </XBadge>
+                    </dd>
+                  </div>
+                </XDl>
+
+                <XLayout
+                  v-if="props.data!.zoneInsight.subscriptions.length > 0"
+                  data-testid="about-zone-cp-subscriptions"
+                  class="about-subsection"
                 >
-                  <template v-if="!subscription?.disconnectTime && subscription?.connectTime">
-                    <XDl variant="x-stack">
-                      <div>
-                        <dt>
-                          {{ t('zone-cps.routes.item.subscriptions.connected') }}
-                        </dt>
-                        <dd>
-                          <XBadge appearance="neutral">
-                            {{ t('common.formats.datetime', { value: Date.parse(subscription.connectTime) }) }}
-                          </XBadge>
-                        </dd>
-                      </div>
-                      <div>
-                        <dt>
-                          {{ t('zone-cps.routes.item.subscriptions.instanceId') }}
-                        </dt>
-                        <dd>
-                          <XBadge appearance="info">
-                            {{ subscription.zoneInstanceId }}
-                          </XBadge>
-                        </dd>
-                      </div>
-                      <div>
-                        <dt>
-                          {{ t('zone-cps.routes.item.subscriptions.version') }}
-                        </dt>
-                        <dd>
-                          <XBadge appearance="info">
-                            {{ subscription.version?.kumaCp.version ?? t('common.unknown') }}
-                          </XBadge>
-                        </dd>
-                      </div>
-                    </XDl>
+                  <XLayout type="separated">
+                    <h3>{{ t('zone-cps.routes.item.subscriptions.title') }}</h3>
+                    <XAction
+                      data-action
+                      appearance="anchor"
+                      :to="{
+                        name: 'zone-cp-subscriptions-list-view',
+                      }"
+                    >
+                      ({{ t('zone-cps.routes.item.subscriptions.show-details') }})
+                    </XAction>
+                  </XLayout>
+                  <template
+                    v-for="subscription in [props.data!.zoneInsight.connectedSubscription]"
+                    :key="typeof subscription"
+                  >
+                    <template v-if="!subscription?.disconnectTime && subscription?.connectTime">
+                      <XDl variant="x-stack">
+                        <div>
+                          <dt>
+                            {{ t('zone-cps.routes.item.subscriptions.connected') }}
+                          </dt>
+                          <dd>
+                            <XBadge appearance="neutral">
+                              {{ t('common.formats.datetime', { value: Date.parse(subscription.connectTime) }) }}
+                            </XBadge>
+                          </dd>
+                        </div>
+                        <div>
+                          <dt>
+                            {{ t('zone-cps.routes.item.subscriptions.instanceId') }}
+                          </dt>
+                          <dd>
+                            <XBadge appearance="info">
+                              {{ subscription.zoneInstanceId }}
+                            </XBadge>
+                          </dd>
+                        </div>
+                        <div>
+                          <dt>
+                            {{ t('zone-cps.routes.item.subscriptions.version') }}
+                          </dt>
+                          <dd>
+                            <XBadge appearance="info">
+                              {{ subscription.version?.kumaCp.version ?? t('common.unknown') }}
+                            </XBadge>
+                          </dd>
+                        </div>
+                      </XDl>
+                    </template>
+                    <template v-else>
+                      <XI18n path="zone-cps.routes.item.subscriptions.disconnected" />
+                    </template>
                   </template>
-                  <template v-else>
-                    <XI18n path="zone-cps.routes.item.subscriptions.disconnected" />
-                  </template>
-                </template>
+                </XLayout>
               </XLayout>
-            </XLayout>
+            </DataLoader>
           </XAboutCard>
         </XLayout>
       </AppView>
@@ -212,7 +220,7 @@ import StatusBadge from '@/app/common/StatusBadge.vue'
 import { sources } from '@/app/control-planes/sources'
 
 const props = defineProps<{
-  data: ZoneOverview
+  data: ZoneOverview | Error | undefined
 }>()
 </script>
 <style lang="scss" scoped>

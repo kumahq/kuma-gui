@@ -76,7 +76,6 @@ const props = withDefaults(defineProps<{
   src: '' as any,
   loader: true,
   variant: 'default',
-
 })
 
 type Data = NonNullable<TypeOf<T>>
