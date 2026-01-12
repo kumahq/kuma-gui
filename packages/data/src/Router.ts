@@ -1,4 +1,3 @@
-import { URLPattern } from 'urlpattern-polyfill'
 const dataUriProtocol = 'data:'
 export default class Router<T> {
   routes: Map<URLPattern, T> = new Map()

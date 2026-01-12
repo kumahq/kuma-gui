@@ -19,10 +19,12 @@
           </slot>
         </template>
 
-        <XLayout class="detail">
+        <XLayout
+          class="detail"
+        >
           <slot name="message">
             <p>{{ props.error.detail || t('common.error_state.detail') }}</p>
-        
+
             <XDl variant="x-stack">
               <div v-if="props.error.status">
                 <dt>{{ t('http.api.property.status') }}</dt>
@@ -63,7 +65,7 @@
           >
             <slot>
               <p>
-                {{ t('common.error_state.api_error', { status: (props.error.status ?? 0).toString(), title: props.error.detail }) }}
+                {{ typeof props.error.status !== 'undefined' ? t('common.error_state.api_error', { status: props.error.status.toString(), title: props.error.detail}) : props.error.toString() }}
               </p>
               <ul
                 v-if="props.error.invalid_parameters?.length"

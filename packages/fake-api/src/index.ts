@@ -1,5 +1,3 @@
-import { URLPattern } from 'urlpattern-polyfill'
-
 export type RestRequest = {
   method: string
   params: Record<string, string | readonly string[]>

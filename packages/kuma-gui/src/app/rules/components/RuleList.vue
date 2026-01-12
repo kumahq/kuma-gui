@@ -29,7 +29,7 @@
         <template #accordion-content>
           <template
             v-for="hasMatchers in [items.some((item) => item.matchers.length > 0)]"
-            :key="hasMatchers"
+            :key="typeof hasMatchers"
           >
             <div class="policy-list">
               <AppCollection

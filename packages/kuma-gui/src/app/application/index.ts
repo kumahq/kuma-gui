@@ -5,10 +5,6 @@ import Routing, { RouteTitle, RouteView } from '@kumahq/routing/vue'
 import can from '@kumahq/settings/can'
 import env from '@kumahq/settings/env'
 import { XEmptyState } from '@kumahq/x'
-// @ts-ignore TS comes with a Object.groupBy declaration but not a polyfill
-import groupBy from 'object.groupby'
-// @ts-ignore TS comes with a set.prototype.difference declaration but not a polyfill
-import difference from 'set.prototype.difference'
 
 import AppView from './components/app-view/AppView.vue'
 import DataCollection from './components/data-collection/DataCollection.vue'
@@ -25,22 +21,6 @@ export { runInDebug } from './utilities'
 export { defineSources, ValidationError, useUri } from '@kumahq/data'
 export { useDataSourcePool } from '@kumahq/data/vue'
 export type { DataSourceResponse, TypeOf } from '@kumahq/data'
-
-// temporary simple "JSON data only" structuredClone polyfill for cloning JSON
-// data
-// TODO(jc): delete this once we get to 2025
-if (!('structuredClone' in globalThis)) {
-  globalThis.structuredClone = <T>(obj: T): T => {
-    return JSON.parse(JSON.stringify(obj))
-  }
-}
-// temporary Object.groupBy polyfill
-// TODO(jc): delete this once we get to 2026
-groupBy.shim()
-
-// temporary Set.prototype.difference polyfill
-// TODO(jc): delete this once we get to 2026
-difference.shim()
 
 type Sources = ConstructorParameters<typeof DataSourcePool>[0]
 
