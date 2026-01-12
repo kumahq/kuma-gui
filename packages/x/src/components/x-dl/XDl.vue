@@ -31,7 +31,7 @@ dl.variant-x-stack {
   :deep(div) {
     gap: $kui-space-30;
   }
-  :deep(dt) {
+  :has(dd) :deep(dt) {
     display: flex;
     align-items: baseline;
     &::after {
