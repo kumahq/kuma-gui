@@ -544,7 +544,7 @@
                                       },
                                     }"
                                   >
-                                    {{ item.proxyResourceName }}
+                                    :{{ item.port }}
                                   </XAction>
                                 </ConnectionCard>
                               </template>
@@ -614,6 +614,7 @@
                                 data-testid="dataplane-outbound"
                                 :protocol="outbound.protocol"
                                 :traffic="traffic?.outbounds[outbound.kri]"
+                                :kri="outbound.kri"
                                 data-actionable
                               >
                                 <template #state>
@@ -665,8 +666,39 @@
                                     },
                                   }"
                                 >
-                                  {{ outbound.proxyResourceName }}
+                                  {{ Kri.fromString(outbound.proxyResourceName).name }}
                                 </XAction>
+                                <template #body>
+                                  <XDl
+                                    v-for="kri in [Kri.fromString(outbound.proxyResourceName)]"
+                                    :key="typeof kri"
+                                  >
+                                    <div>
+                                      <dt>Mesh</dt>
+                                      <dd>
+                                        {{ kri.mesh }}
+                                      </dd>
+                                    </div>
+                                    <div v-if="kri.zone.length > 0">
+                                      <dt>Zone</dt>
+                                      <dd>
+                                        {{ kri.zone }}
+                                      </dd>
+                                    </div>
+                                    <div v-if="kri.namespace.length > 0">
+                                      <dt>Namespace</dt>
+                                      <dd>
+                                        {{ kri.namespace }}
+                                      </dd>
+                                    </div>
+                                    <div>
+                                      <dt>Port</dt>
+                                      <dd>
+                                        {{ `${outbound.port}${outbound.portName ? ` (${outbound.portName})` : ''}` }}
+                                      </dd>
+                                    </div>
+                                  </XDl>
+                                </template>
                               </ConnectionCard>
                             </template>
                           </XLayout>
@@ -730,6 +762,7 @@ import ConnectionGroup from '@/app/connections/components/connection-traffic/Con
 import ConnectionTraffic from '@/app/connections/components/connection-traffic/ConnectionTraffic.vue'
 import { sources as connectionSources } from '@/app/connections/sources'
 import type { DataplaneOverview } from '@/app/data-planes/data'
+import { Kri } from '@/app/kuma'
 import type { Mesh } from '@/app/meshes/data'
 import type { DataplanePolicies } from '@/app/policies/data/DataplanePolicies'
 import { sources as policySources } from '@/app/policies/sources'

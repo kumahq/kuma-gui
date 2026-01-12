@@ -21,7 +21,7 @@
           <template #title>
             <XLayout size="small">
               <h2>
-                {{ props.routeName.includes('inbound') ? 'Inbound' : 'Outbound' }}: {{ route.params.connection }}
+                {{ props.routeName.includes('inbound') ? `Inbound ${'port' in items[0] ? `:${items[0].port}` : route.params.connection}` : `Outbound ${Kri.fromString(route.params.connection).name}` }}
               </h2>
               <template v-if="'state' in items[0]">
                 <XBadge
@@ -70,6 +70,7 @@
 
 <script lang="ts" generic="T extends { proxyResourceName: string }" setup>
 import type { DataplaneNetworking, DataplaneOverview } from '@/app/data-planes/data/'
+import { Kri } from '@/app/kuma'
 
 const props = defineProps<{
   data?: T[]

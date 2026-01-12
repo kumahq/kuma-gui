@@ -27,12 +27,51 @@
           </tr>
           <tr>
             <th scope="row">
-              Port
+              KRI
             </th>
             <td>
-              {{ props.data.port }}
+              <XCopyButton
+                :text="props.data.kri"
+              />
             </td>
           </tr>
+          <template
+            v-for="kri in [Kri.fromString(props.data.kri)]"
+            :key="typeof kri"
+          >
+            <tr>
+              <th scope="row">
+                Mesh
+              </th>
+              <td>
+                {{ kri.mesh }}
+              </td>
+            </tr>
+            <tr v-if="kri.zone.length > 0">
+              <th scope="row">
+                Zone
+              </th>
+              <td>
+                {{ kri.zone }}
+              </td>
+            </tr>
+            <tr v-if="kri.namespace.length > 0">
+              <th scope="row">
+                Namespace
+              </th>
+              <td>
+                {{ kri.namespace }}
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">
+                Port
+              </th>
+              <td>
+                {{ `${props.data.port}${props.data.portName ? ` (${props.data.portName})` : ''}` }}
+              </td>
+            </tr>
+          </template>
         </XTable>
         <XLayout
           v-if="props.data"

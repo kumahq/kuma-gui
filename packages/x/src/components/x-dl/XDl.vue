@@ -9,9 +9,11 @@
 </template>
 <script lang="ts" setup>
 
-const props = defineProps<{
-  variant: 'x-stack'
-}>()
+const props = withDefaults(defineProps<{
+  variant?: 'x-stack'
+}>(), {
+  variant: 'x-stack',
+})
 </script>
 
 <style lang="scss" scoped>
@@ -26,12 +28,14 @@ dl.variant-x-stack {
     row-gap: $kui-space-30;
     column-gap: $kui-space-70;
   }
-  :deep(dd:first-of-type) {
+  :deep(div) {
+    gap: $kui-space-30;
+  }
+  :has(dd) :deep(dt) {
     display: flex;
     align-items: baseline;
-    &::before {
+    &::after {
       content: ":";
-      margin-right: $kui-space-30;
     }
   }
 }
