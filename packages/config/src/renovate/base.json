@@ -25,7 +25,6 @@
   ],
   "prHourlyLimit": 0,
   "prConcurrentLimit": 0,
-  "prCreation": "not-pending",
   "osvVulnerabilityAlerts": true,
   "vulnerabilityAlerts": {
     "enabled": true
