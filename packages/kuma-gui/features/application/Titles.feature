@@ -33,6 +33,8 @@ Feature: application / titles
       | /meshes/default/data-planes/data-plane-name/overview         | data-plane-name     |
       | /meshes/default/policies/circuit-breakers                    | Policies            |
       | /meshes/default/policies/circuit-breakers/program-0/overview | program-0           |
+      | /hostname-generators                                         | HostnameGenerators  |
+      | /hostname-generators/hg-name/overview                        | hg-name             |
 
   Scenario Outline: Visiting the "<Title>" page in "zone" Mode
     Given the environment
