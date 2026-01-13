@@ -28,35 +28,33 @@
             :created="data.creationTime"
             :modified="data.modificationTime"
           >
-            <DefinitionCard layout="horizontal">
-              <template #title>
-                {{ t('http.api.property.address') }}
-              </template>
-
-              <template #body>
-                <XCopyButton
-                  variant="badge"
-                  format="default"
-                  :text="data.networking.address"
-                />
-              </template>
-            </DefinitionCard>
-
-            <DefinitionCard
-              v-if="data.tags"
-              layout="horizontal"
-            >
-              <template #title>
-                {{ t('http.api.property.tags') }}
-              </template>
-
-              <template #body>
-                <TagList
-                  :tags="data.tags"
-                  should-truncate
-                />
-              </template>
-            </DefinitionCard>
+            <XDl variant="x-stack">
+              <div>
+                <dt>
+                  {{ t('http.api.property.address') }}
+                </dt>
+                <dd>
+                  <XCopyButton
+                    variant="badge"
+                    format="default"
+                    :text="data.networking.address"
+                  />
+                </dd>
+              </div>
+              <div
+                v-if="data.tags"
+              >
+                <dt>
+                  {{ t('http.api.property.tags') }}
+                </dt>
+                <dd>
+                  <TagList
+                    :tags="data.tags"
+                    should-truncate
+                  />
+                </dd>
+              </div>
+            </XDl>
           </XAboutCard>
 
           <XCard>
@@ -140,6 +138,5 @@
 <script lang="ts" setup>
 import { sources } from '../sources'
 import { YAML } from '@/app/application'
-import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import TagList from '@/app/common/TagList.vue'
 </script>

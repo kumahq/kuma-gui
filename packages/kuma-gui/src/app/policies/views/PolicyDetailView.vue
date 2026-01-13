@@ -18,77 +18,63 @@
         :created="props.data.creationTime"
         :modified="props.data.modificationTime"
       >
-        <DefinitionCard layout="horizontal">
-          <template
-            #title
+        <XDl variant="x-stack">
+          <div>
+            <dt>
+              {{ t('http.api.property.type') }}
+            </dt>
+            <dd>
+              <XBadge appearance="decorative">
+                {{ props.data.type }}
+              </XBadge>
+            </dd>
+          </div>
+          <div
+            v-if="props.data.namespace.length > 0"
           >
-            {{ t('http.api.property.type') }}
-          </template>
-          <template
-            #body
+            <dt>
+              {{ t('http.api.property.namespace') }}
+            </dt>
+            <dd>
+              <XBadge appearance="decorative">
+                {{ props.data.namespace }}
+              </XBadge>
+            </dd>
+          </div>
+          <div
+            v-if="can('use zones') && props.data.zone"
           >
-            <XBadge appearance="decorative">
-              {{ props.data.type }}
-            </XBadge>
-          </template>
-        </DefinitionCard>
-        <DefinitionCard
-          v-if="props.data.namespace.length > 0"
-          layout="horizontal"
-        >
-          <template
-            #title
+            <dt>
+              {{ t('http.api.property.zone') }}
+            </dt>
+            <dd>
+              <XBadge appearance="decorative">
+                <XAction
+                  :to="{
+                    name: 'zone-cp-detail-view',
+                    params: {
+                      zone: props.data.zone,
+                    },
+                  }"
+                >
+                  {{ props.data.zone }}
+                </XAction>
+              </XBadge>
+            </dd>
+          </div>
+          <div
+            v-if="props.data.spec"
           >
-            {{ t('http.api.property.namespace') }}
-          </template>
-          <template
-            #body
-          >
-            <XBadge appearance="decorative">
-              {{ props.data.namespace }}
-            </XBadge>
-          </template>
-        </DefinitionCard>
-        <DefinitionCard
-          v-if="can('use zones') && props.data.zone"
-          layout="horizontal"
-        >
-          <template
-            #title
-          >
-            {{ t('http.api.property.zone') }}
-          </template>
-          <template
-            #body
-          >
-            <XBadge appearance="decorative">
-              <XAction
-                :to="{
-                  name: 'zone-cp-detail-view',
-                  params: {
-                    zone: props.data.zone,
-                  },
-                }"
-              >
-                {{ props.data.zone }}
-              </XAction>
-            </XBadge>
-          </template>
-        </DefinitionCard>
-        <DefinitionCard
-          v-if="props.data.spec"
-          layout="horizontal"
-        >
-          <template #title>
-            {{ t('http.api.property.targetRef') }}
-          </template>
-
-          <template #body>
-            <KumaTargetRef
-              :target-ref="props.data.spec?.targetRef"
-            />
-          </template>
-        </DefinitionCard>
+            <dt>
+              {{ t('http.api.property.targetRef') }}
+            </dt>
+            <dd>
+              <KumaTargetRef
+                :target-ref="props.data.spec?.targetRef"
+              />
+            </dd>
+          </div>
+        </XDl>
       </XAboutCard>
 
       <XCard>
@@ -212,7 +198,6 @@
 import type { Policy } from '../data'
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
-import DefinitionCard from '@/app/common/DefinitionCard.vue'
 
 const props = defineProps<{
   data: Policy
