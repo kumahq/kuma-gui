@@ -9,10 +9,14 @@
   >
     <DataSource
       :src="uri(sources, '/control-plane/outdated/:version', {
-        version: props.data && 'zoneInsight' in props.data ? props.data?.zoneInsight.version?.kumaCp?.version ?? '-' : '-',
+        version: props.data && 'zoneInsight' in props.data ? props.data.zoneInsight.version?.kumaCp?.version ?? '-' : '-',
       })"
       v-slot="{ data: version }"
     >
+      <RouteTitle
+        :render="false"
+        :title="t('zone-cps.routes.item.title', { name: props.data?.name })"
+      />
       <AppView
         :docs="t('zones.href.docs.cta')"
         :notifications="true"

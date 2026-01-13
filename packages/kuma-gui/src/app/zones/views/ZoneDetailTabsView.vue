@@ -40,11 +40,7 @@
                 </XIcon>
               </template>
               <h1>
-                <XCopyButton :text="data.name">
-                  <RouteTitle
-                    :title="t('zone-cps.routes.item.title', { name: data.name })"
-                  />
-                </XCopyButton>
+                <XCopyButton :text="data.name" />
               </h1>
             </XLayout>
             <XBadge
