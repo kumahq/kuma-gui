@@ -35,8 +35,7 @@ Feature: MeshMultiZoneService summary
       When I click the "$select-preference" element
       When I click the "[data-testid='select-item-universal'] button" element
       Then the URL contains "format=universal"
-      And the "[data-testid='k-code-block']" element exists
-      And the "$structured-view" element doesn't exists
+      And the "[data-testid='k-code-block']" element exists but the "$structured-view" element doesn't exist
       When I click the "$select-preference" element
       When I click the "[data-testid='select-item-structured'] button" element
       Then the URL contains "format=structured"

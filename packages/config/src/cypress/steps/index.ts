@@ -287,13 +287,13 @@ export async function setupSteps<TMock extends BaseMock, TClient extends BaseCli
     $(selector).should('have.length', count)
   })
 
-  Then(/^the "(.*)" element[s]?( don't | doesn't | )exist[s]?$/, function (selector: string, assertion: string) {
-    const negative = assertion !== ' '
-    const prefix = negative ? 'not.' : ''
+  Then(/^the "(.*)" element[s]? exist[s]?$/, function (selector: string) {
+    $(selector).should('exist')
+  })
 
-    $(selector, {
-      ...timeout(negative),
-    }).should(`${prefix}exist`)
+  Then(/^the "(.*)" element[s]? exist[s]? but the "(.*)" (elements don't exist|element doesn't exist)$/, function (exists: string, notexists: string, assertion: string) {
+    $(exists).should('exist')
+    $(notexists, { timeout: negativeTimeout }).should('not.exist')
   })
 
   Then(/^the "(.*)" element[s]?( isn't | aren't | is | are )(checked|disabled)$/, (selector: string, assertion: string, booleanAttribute: string) => {

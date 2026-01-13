@@ -166,8 +166,7 @@ Feature: mesh / policies / index
             total: 2
       """
     When I visit the "/meshes/default/policies/meshfaultinjections" URL
-    Then the "[data-testid='policy-type-link-MeshFaultInjection']" element exists
-    And the "[data-testid='policy-type-link-FaultInjection']" element doesn't exist
+    Then the "[data-testid='policy-type-link-MeshFaultInjection']" element exists but the "[data-testid='policy-type-link-FaultInjection']" element doesn't exist
 
   Scenario: Shows legacy policy types if there are any legacy policies applied
     Given the URL "/mesh-insights/default" responds with

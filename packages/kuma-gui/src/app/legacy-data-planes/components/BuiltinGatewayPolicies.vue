@@ -128,9 +128,9 @@
 </template>
 
 <script lang="ts" setup>
-import type { MeshGatewayDataplane } from '../data'
 import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
+import type { MeshGatewayDataplane } from '@/app/data-planes/data'
 import type { PolicyResourceType } from '@/app/policies/data'
 
 const props = defineProps<{
