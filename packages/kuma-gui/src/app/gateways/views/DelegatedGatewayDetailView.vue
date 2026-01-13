@@ -57,9 +57,11 @@
                   v-for="[online, total] in [[data.dataplanes?.online ?? 0, data.dataplanes?.total ?? 0]]"
                   :key="typeof online"
                 >
-                  <component :is="online !== total ? 'strong' : 'span'">
+                  <XBadge
+                    :appearance="online === 0 ? 'danger' : online !== total ? 'warning' : 'success'"
+                  >
                     {{ online ?? 0 }}/{{ total ?? 0 }}
-                  </component>
+                  </XBadge>
                 </dd>
               </div>
             </XDl>
