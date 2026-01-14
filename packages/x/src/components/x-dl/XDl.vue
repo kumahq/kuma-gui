@@ -10,25 +10,18 @@
 <script lang="ts" setup>
 
 const props = withDefaults(defineProps<{
-  variant?: 'x-stack'
+  variant?: 'x-stack' | 'y-stack'
 }>(), {
   variant: 'x-stack',
 })
 </script>
 
 <style lang="scss" scoped>
-/* variants */
-dl.variant-x-stack {
-  &, :deep(div) {
+/* currently all variants are of the form `key: value` */
+dl {
+  :deep(> div) {
     display: flex;
     align-items: baseline;
-  }
-  & {
-    flex-wrap: wrap;
-    row-gap: $kui-space-30;
-    column-gap: $kui-space-70;
-  }
-  :deep(div) {
     gap: $kui-space-30;
   }
   :has(dd) :deep(dt) {
@@ -37,6 +30,18 @@ dl.variant-x-stack {
     &::after {
       content: ":";
     }
+  }
+}
+/* variants */
+dl.variant-x-stack {
+  & {
+    display: flex;
+    align-items: baseline;
+  }
+  & {
+    flex-wrap: wrap;
+    row-gap: $kui-space-30;
+    column-gap: $kui-space-70;
   }
 }
 </style>

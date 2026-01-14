@@ -1,14 +1,20 @@
 <template>
   <component
     :is="props.type === 'separated' && props.truncate ? KTruncate : 'div'"
-    :class="['x-layout', variant, props.size, props.justify]"
+    :class="['x-layout', variant, props.size, justify]"
   >
     <slot name="default" />
   </component>
 </template>
 <script lang="ts" setup>
 import { KTruncate } from '@kong/kongponents'
-import { computed } from 'vue'
+import { computed, inject } from 'vue'
+
+import type { XTable } from '../'
+
+type XComponent<T extends abstract new (...args: any) => any> = {
+  props: InstanceType<T>['$props']
+}
 
 const props = withDefaults(defineProps<{
   variant?: '' | 'x-stack' | 'y-stack' | 'separated' | 'columns'
@@ -21,12 +27,13 @@ const props = withDefaults(defineProps<{
   variant: '',
   type: 'stack',
   size: 'normal',
-  justify: 'start',
+  justify: 'start', // when inside a kv table default is `end`, see below
   truncate: false,
 })
-const variant = computed(() => {
-  return props.variant.length > 0 ? props.variant : (props.type === 'stack' ? 'y-stack' : props.type)
-})
+const table = inject<XComponent<typeof XTable>>('x-table')
+const variant = computed(() => props.variant.length > 0 ? props.variant : (props.type === 'stack' ? 'y-stack' : props.type))
+const justify = computed(() => table?.props.variant !== 'kv' ? props.justify : 'end')
+
 </script>
 <style lang="scss" scoped>
 .y-stack.large > * + * {
