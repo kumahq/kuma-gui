@@ -13,6 +13,7 @@ import { services as legacyDataplanes } from '@/app/legacy-data-planes'
 import { services as policies } from '@/app/policies'
 import { services as rules } from '@/app/rules'
 import { services as servicesModule } from '@/app/services'
+import { services as workloads } from '@/app/workloads'
 import type { ServiceDefinition } from '@kumahq/container'
 import type { RouteRecordRaw } from 'vue-router'
 
@@ -51,7 +52,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
         return [
           (item: RouteRecordRaw) => {
             if (item.name === 'control-plane-root-view') {
-              item.children = (item.children ?? []).concat(routes(r[0], r[1], r[2], r[3]))
+              item.children = (item.children ?? []).concat(routes(r[0], r[1], r[2], r[3], r[4]))
             }
           },
         ]
@@ -76,6 +77,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
     ...legacyDataplanes(mesh),
     ...policies(mesh),
     ...rules(mesh),
+    ...workloads(mesh),
   ]
 }
 export const TOKENS = $

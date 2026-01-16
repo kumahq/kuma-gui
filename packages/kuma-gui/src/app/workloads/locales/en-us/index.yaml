@@ -1,0 +1,28 @@
+workloads:
+  href:
+    docs:
+      workload: '{KUMA_DOCS_URL}/resources/workload?{KUMA_UTM_QUERY_PARAMS}'
+  routes:
+    item:
+      breadcrumbs: Workloads
+      title: "{name}"
+      navigation:
+        workload-detail-view: Overview
+        workload-config-view: Config
+      about:
+        title: About this Workload
+        labels: Labels
+      dataplaneProxies:
+        title: Dataplane Proxies
+      format: Format
+      formats:
+        k8s: Kubernetes
+        universal: Universal
+    items:
+      title: Workloads
+      intro: Workload resources represent a logical grouping of data plane proxies that share the same workload identifier.
+      headers:
+        name: Name
+        namespace: Namespace
+        dpps: DP proxies (connected / healthy / total)
+        actions: Actions
