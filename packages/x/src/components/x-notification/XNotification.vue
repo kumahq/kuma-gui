@@ -17,14 +17,6 @@
       :name="`${provider.uri}-${props.uri}`"
     />
   </template>
-  <template v-if="provider && props.type === 'toast' && props.notify && toastMessage.length > 0">
-    {{
-      provider.toaster.open({
-        appearance: props.variant,
-        message: toastMessage,
-      }) 
-    }}
-  </template>
 </template>
 <script lang="ts" setup>
 import { computed, h, inject, onBeforeUnmount, onMounted, ref, render, watch } from 'vue'
@@ -76,6 +68,21 @@ watch(() => {
     }
   }
 })
+
+/**
+ * Watch for toast notifications to open them via the provider's toaster.
+ */
+watch(() => {
+  return provider && props.type === 'toast' && props.notify && toastMessage.value.length > 0
+}, (shouldToast) => {
+  if(!shouldToast) return
+
+  provider?.toaster.open({
+    appearance: props.variant,
+    message: toastMessage.value,
+  })
+}, { immediate: true })
+
 if(slots.default) {
   onMounted(() => {
     if(typeof provider !== 'undefined' && props.type === 'banner') {
