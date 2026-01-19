@@ -27,12 +27,14 @@ const props = withDefaults(defineProps<{
   variant: '',
   type: 'stack',
   size: 'normal',
-  justify: 'start', // when inside a kv table default is `end`, see below
+  // @ts-ignore because we need  to apply a runtime default depending on the variant
+  justify: '',
   truncate: false,
 })
 const table = inject<XComponent<typeof XTable>>('x-table')
 const variant = computed(() => props.variant.length > 0 ? props.variant : (props.type === 'stack' ? 'y-stack' : props.type))
-const justify = computed(() => table?.props.variant !== 'kv' ? props.justify : 'end')
+// when inside a kv table default is `end`, otherwise its `start`
+const justify = computed(() => table?.props.variant !== 'kv' ? props.justify || 'start' : props.justify || 'end')
 
 </script>
 <style lang="scss" scoped>
