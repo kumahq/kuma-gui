@@ -75,9 +75,9 @@ watch(() => {
 watch(() => {
   return provider && props.type === 'toast' && props.notify && toastMessage.value.length > 0
 }, (shouldToast) => {
-  if(!shouldToast) return
+  if(!shouldToast || typeof provider === 'undefined') return
 
-  provider?.toaster.open({
+  provider.toaster.open({
     appearance: props.variant,
     message: toastMessage.value,
   })
