@@ -12,7 +12,7 @@
     "help": "make help"
   },
   "dependencies": {
-    "brandi": "^5.0.0",
+    "brandi": "^5.1.0",
     "deepmerge": "^4.3.1"
   },
   "devDependencies": {
