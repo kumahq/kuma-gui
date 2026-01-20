@@ -21,7 +21,7 @@
     "help": "make help"
   },
   "optionalDependencies": {
-    "@faker-js/faker": "^10.1.0",
+    "@faker-js/faker": "^10.2.0",
     "deepmerge": "^4.3.1"
   },
   "devDependencies": {
