@@ -76,6 +76,9 @@ table.variant-kv {
       + td {
         font-weight: $kui-font-weight-bold;
         text-align: right;
+        li {
+          list-style-type: none;
+        }
       }
     }
   }
