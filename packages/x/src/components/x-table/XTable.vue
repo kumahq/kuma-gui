@@ -1,13 +1,22 @@
 <template>
-  <table
-    :class="{
-      [`variant-${props.variant}`]: true,
-    }"
+  <XProvider
+    name="x-table"
+    :service="{ props }"
   >
-    <slot name="default" />
-  </table>
+    <table
+      v-bind="attrs"
+      :class="{
+        [`variant-${props.variant}`]: true,
+      }"
+    >
+      <slot name="default" />
+    </table>
+  </XProvider>
 </template>
 <script lang="ts" setup>
+import { useAttrs } from 'vue'
+
+const attrs = useAttrs()
 
 const props = defineProps<{
   variant: 'kv'
@@ -66,6 +75,10 @@ table.variant-kv {
       }
       + td {
         font-weight: $kui-font-weight-bold;
+        text-align: right;
+        li {
+          list-style-type: none;
+        }
       }
     }
   }
