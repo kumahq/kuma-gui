@@ -45,10 +45,14 @@
             :created="data?.creationTime"
             :modified="data?.modificationTime"
           >
+          <!-- :data="[data]"
+          :errors="[error]" -->
             <DataLoader
-              :data="[data]"
-              :errors="[error]"
+              :src="uri(sources, '/hostname-generators', {
+              }, { size: 50, page: 1})"
+              v-slot="{ data: foo }"
             >
+              {{ console.log('foo', foo) }}
               <template v-if="typeof data !== 'undefined'">
                 <template
                   v-for="labels in [{
