@@ -2,6 +2,7 @@
   <slot
     :data="message"
     :error="error"
+    :result="error ?? message"
     :refresh="refresh"
   />
   <span v-bind="attrs" />
