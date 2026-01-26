@@ -10,7 +10,7 @@
       :src="uri(sources, `/zone-cps/:name`, {
         name: route.params.zone,
       })"
-      v-slot="{ data, error }"
+      v-slot="{ data, error, result }"
     >
       <AppView
         :breadcrumbs="[
@@ -95,7 +95,7 @@
         <RouterView v-slot="child">
           <component
             :is="child.Component"
-            :data="error ?? data"
+            :data="result"
             :subscriptions="error ?? data?.zoneInsight.subscriptions"
           />
         </RouterView>
