@@ -37,7 +37,6 @@
           @change="getEgresses"
         />
         <XI18n
-          v-if="data?.items.length"
           path="zone-cps.routes.items.intro"
           default-path="common.i18n.ignore-error"
         />

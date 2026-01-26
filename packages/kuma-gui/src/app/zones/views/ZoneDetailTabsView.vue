@@ -6,14 +6,13 @@
     }"
     v-slot="{ route, t, uri }"
   >
-    <DataLoader
+    <DataSource
       :src="uri(sources, `/zone-cps/:name`, {
         name: route.params.zone,
       })"
-      v-slot="{ data }"
+      v-slot="{ data, error }"
     >
       <AppView
-        v-if="data"
         :breadcrumbs="[
           {
             to: {
@@ -24,7 +23,10 @@
         ]"
       >
         <template #title>
-          <XLayout size="small">
+          <XLayout
+            v-if="typeof data !== 'undefined'"
+            size="small"
+          >
             <XLayout type="separated">
               <template
                 v-for="env in [(['kubernetes', 'universal'] as const).find(env => env === data.zoneInsight.environment) ?? 'kubernetes']"
@@ -38,11 +40,7 @@
                 </XIcon>
               </template>
               <h1>
-                <XCopyButton :text="data.name">
-                  <RouteTitle
-                    :title="t('zone-cps.routes.item.title', { name: data.name })"
-                  />
-                </XCopyButton>
+                <XCopyButton :text="data.name" />
               </h1>
             </XLayout>
             <XBadge
@@ -51,12 +49,17 @@
               {{ t(`http.api.value.${data.state}`) }}
             </XBadge>
           </XLayout>
+          <XProgress
+            v-else
+            variant="line"
+          />
         </template>
 
         <template
           #actions
         >
           <ZoneActionGroup
+            v-if="typeof data !== 'undefined'"
             :item="data"
             @change="() => route.replace({ name: 'zone-cp-list-view' })"
           >
@@ -92,12 +95,12 @@
         <RouterView v-slot="child">
           <component
             :is="child.Component"
-            :data="data"
-            :subscriptions="data.zoneInsight.subscriptions"
+            :data="error ?? data"
+            :subscriptions="error ?? data?.zoneInsight.subscriptions"
           />
         </RouterView>
       </AppView>
-    </DataLoader>
+    </DataSource>
   </RouteView>
 </template>
 
