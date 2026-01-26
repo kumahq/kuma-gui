@@ -11,7 +11,7 @@
       :src="uri(sources, '/workloads/:wl', {
         wl: route.params.wl,
       })"
-      v-slot="{ data, error }"
+      v-slot="{ data, result }"
     >
       <AppView
         :breadcrumbs="[
@@ -80,7 +80,7 @@
         >
           <component
             :is="Component"
-            :data="error ?? data"
+            :data="result"
           />
         </RouterView>
       </AppView>
