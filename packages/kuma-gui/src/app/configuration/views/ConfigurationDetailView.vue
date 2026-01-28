@@ -29,7 +29,42 @@
       <XCard>
         <DataLoader
           :src="uri(sources, `/config`, {})"
-          v-slot="{ data }"
+          :data="[{ foo: 'data' }, { bar: 'baz' }] as const"
+          v-slot="{ data } /* The inferred type here should be like [NonNullable<TypeOf<T>>, ...K[]] */"
+        >
+          <XCodeBlock
+            data-testid="code-block-configuration"
+            language="json"
+            :code="JSON.stringify(data, null, 2)"
+            is-searchable
+            :query="route.params.codeSearch"
+            :is-filter-mode="route.params.codeFilter"
+            :is-reg-exp-mode="route.params.codeRegExp"
+            @query-change="route.update({ codeSearch: $event })"
+            @filter-mode-change="route.update({ codeFilter: $event })"
+            @reg-exp-mode-change="route.update({ codeRegExp: $event })"
+          />
+        </DataLoader>
+        <DataLoader
+          :src="uri(sources, `/config`, {})"
+          v-slot="{ data } /* The inferred type here should be like NonNullable<TypeOf<T>> */"
+        >
+          <XCodeBlock
+            data-testid="code-block-configuration"
+            language="json"
+            :code="JSON.stringify(data, null, 2)"
+            is-searchable
+            :query="route.params.codeSearch"
+            :is-filter-mode="route.params.codeFilter"
+            :is-reg-exp-mode="route.params.codeRegExp"
+            @query-change="route.update({ codeSearch: $event })"
+            @filter-mode-change="route.update({ codeFilter: $event })"
+            @reg-exp-mode-change="route.update({ codeRegExp: $event })"
+          />
+        </DataLoader>
+        <DataLoader
+          :data="[{ foo: 'data' }, { bar: 'baz' }] as const"
+          v-slot="{ data } /* The inferred type here should be like K[] */"
         >
           <XCodeBlock
             data-testid="code-block-configuration"
