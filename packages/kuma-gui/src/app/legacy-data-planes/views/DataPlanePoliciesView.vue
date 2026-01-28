@@ -28,13 +28,13 @@
               mesh: route.params.mesh,
               dataplane: route.params.proxy,
             })"
-            :data="[policyTypesData]"
+            :data="[policyTypesData] as const"
             :errors="[policyTypesError]"
-            v-slot="{ data: rulesData }"
+            v-slot="{ data: [rulesData] }"
           >
             <!-- show an empty state if we have no rules at all -->
             <DataCollection
-              :items="rulesData!.rules"
+              :items="rulesData.rules"
             >
               <!-- for proxy and to rules, display if we have any -->
               <template
@@ -42,7 +42,7 @@
                 :key="ruleType"
               >
                 <DataCollection
-                  :items="rulesData!.rules"
+                  :items="rulesData.rules"
                   :predicate="(item) => item.ruleType === ruleType"
                   :comparator="(a, b) => a.type.localeCompare(b.type)"
                   :empty="false"
@@ -66,7 +66,7 @@
               <!-- otherwise, for from rules, group by inbound port and display if we have any -->
               <!-- filter rules that are being represented as inboundRules (isFromAsRules) -->
               <DataCollection
-                :items="rulesData!.rules"
+                :items="rulesData.rules"
                 :predicate="(item) => item.ruleType === 'from' && !Boolean(policyTypes[item.type]?.policy.isFromAsRules)"
                 :comparator="(a, b) => a.type.localeCompare(b.type)"
                 :empty="false"
@@ -98,7 +98,7 @@
               </DataCollection>
 
               <DataCollection
-                :items="rulesData!.inboundRules"
+                :items="rulesData.inboundRules"
                 :comparator="(a, b) => a.type.localeCompare(b.type)"
                 :empty="false"
                 v-slot="{ items }"
@@ -137,12 +137,11 @@
               <template v-if="props.data.dataplaneType === 'builtin'">
                 <DataLoader
                   :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.proxy}/gateway-dataplane-policies`"
-                  :data="[policyTypesData]"
+                  :data="[policyTypesData] as const"
                   :errors="[policyTypesError]"
-                  v-slot="{ data: gatewayDataplane }: MeshGatewayDataplaneSource"
+                  v-slot="{ data: [gatewayDataplane] }: { data: [NonNullable<MeshGatewayDataplaneSource['data']>, NonNullable<typeof policyTypesData>] }"
                 >
                   <DataCollection
-                    v-if="gatewayDataplane"
                     :items="gatewayDataplane.routePolicies"
                     :empty="false"
                   >
@@ -166,13 +165,13 @@
               <template v-else>
                 <DataLoader
                   :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.proxy}/sidecar-dataplane-policies`"
-                  :data="[policyTypesData]"
+                  :data="[policyTypesData] as const"
                   :errors="[policyTypesError]"
-                  v-slot="{ data: sidecarDataplaneData }: SidecarDataplaneCollectionSource"
+                  v-slot="{ data: [sidecarDataplaneData] }: { data: [NonNullable<SidecarDataplaneCollectionSource['data']>, NonNullable<typeof policyTypesData>] }"
                 >
                   <DataCollection
                     :empty="false"
-                    :items="sidecarDataplaneData!.policyTypeEntries"
+                    :items="sidecarDataplaneData.policyTypeEntries"
                     :predicate="(item) => policyTypes[item.type]?.policy.isTargetRef === false"
                     v-slot="{ items }"
                   >

@@ -10,7 +10,7 @@
     >
       <slot
         name="error"
-        :data="srcData as TypeOf<T>"
+        :data="allData as Data"
         :error="allErrors[0]"
         :refresh="props.src !== '' ? refresh : () => {}"
       >
@@ -21,11 +21,11 @@
       </slot>
     </template>
     <template
-      v-else-if="allData.length === 0 || allData.every(item => typeof item !== 'undefined')"
+      v-else-if="typeof allData !== 'undefined'"
     >
       <slot
         name="default"
-        :data="srcData as NonNullable<TypeOf<T>>"
+        :data="allData as Data"
         :error="srcError"
         :refresh="props.src !== '' ? refresh : () => {}"
       />
@@ -40,7 +40,7 @@
         :refresh="props.src !== '' ? refresh : () => {}"
       >
         <XProgress
-          v-if="props.data.length > 0 || props.src !== ''"
+          v-if="(props.data ?? []).length > 0 || props.src !== ''"
           v-bind="$attrs"
           :variant="props.variant === 'default' ? 'legacy' : props.variant"
         />
@@ -48,7 +48,7 @@
       <slot
         v-else
         name="default"
-        :data="srcData as NonNullable<TypeOf<T>>"
+        :data="undefined as unknown as Data"
         :error="srcError"
         :refresh="props.src !== '' ? refresh : () => {}"
       />
@@ -58,28 +58,65 @@
 <script lang="ts" generic="T extends string | {
   toString(): string
   typeOf(): any
-}, K" setup
+} = never, K extends unknown[] = never" setup
 >
 import { computed, ref, provide } from 'vue'
 
 import type { TypeOf } from '../../../'
 
 const props = withDefaults(defineProps<{
-  data?: K[]
-  errors?: (Error | undefined)[]
   src?: T
+  data?: K
+  errors?: (Error | undefined)[]
   loader?: boolean
   variant?: 'default' | 'list' | 'spinner'
 }>(), {
-  errors: () => [],
-  data: () => [],
-  src: '' as any,
+  errors: undefined,
+  data: undefined,
+  src: undefined,
   loader: true,
   variant: 'default',
-
 })
 
-type Data = NonNullable<TypeOf<T>>
+const srcData = ref<unknown>(undefined)
+const srcError = ref<Error | undefined>(undefined)
+
+const allData = computed(() => {
+  const data = (props.data ?? []).filter(item => !(item instanceof Error)) as K
+  if (data.length > 0 && typeof srcData.value === 'undefined') {
+    return data
+  }
+  if (data.length === 0 && typeof srcData.value !== 'undefined') {
+    return srcData.value as NonNullable<TypeOf<T>>
+  }
+  if (data.length > 0 && typeof srcData.value !== 'undefined') {
+    return [srcData.value as NonNullable<TypeOf<T>>, ...data]
+  }
+  return undefined
+})
+
+const allErrors = computed(() => {
+  const dataErrors = (props.data ?? []).filter(item => item instanceof Error) as Error[]
+  const errors = typeof srcError.value === 'undefined' ? props.errors : ([srcError.value] as (Error | undefined)[]).concat(props.errors)
+  return [...(errors ?? [])].concat(dataErrors).filter(<T>(item: T): item is NonNullable<T> => Boolean(item))
+})
+
+type RemoveUndefined<T extends any[]> = {
+  [K in keyof T]: Exclude<T[K], undefined>
+}
+
+type InferredDataType<TSrc, TData extends any[]> = 
+  [TSrc] extends [never]
+    ? [TData] extends [never]
+      ? undefined
+      : RemoveUndefined<TData>
+    : [TData] extends [never]
+      ? NonNullable<TSrc>
+      : TData extends [...infer Items]
+        ? [NonNullable<TSrc>, ...RemoveUndefined<Items>]
+        : undefined
+
+type Data = InferredDataType<TypeOf<T>, K>
 
 defineSlots<{
   default(props: {
@@ -106,24 +143,6 @@ defineSlots<{
 
 provide('data-loader', {
   props,
-})
-
-
-const srcData = ref<unknown>(undefined)
-const srcError = ref<Error | undefined>(undefined)
-
-const allData = computed(() => {
-  const data = props.data.filter(item => !(item instanceof Error))
-  if (props.src !== '') {
-    return [srcData.value as unknown].concat(data)
-  }
-  return data
-})
-
-const allErrors = computed(() => {
-  const dataErrors = props.data.filter(item => item instanceof Error)
-  const errors = typeof srcError.value === 'undefined' ? props.errors : ([srcError.value] as (Error | undefined)[]).concat(props.errors)
-  return errors.concat(dataErrors).filter(<T>(item: T): item is NonNullable<T> => Boolean(item))
 })
 
 </script>

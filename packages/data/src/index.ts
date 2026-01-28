@@ -41,7 +41,7 @@ const AsyncGeneratorFunction = Object.getPrototypeOf(async function* () { }).con
 const isAsyncGeneratorFunction = (fn: unknown): fn is AsyncGeneratorFunction => {
   return fn instanceof AsyncGeneratorFunction
 }
-class TypedString<T = unknown> {
+export class TypedString<T = unknown> {
   constructor(
     protected str: string,
   ) { }
