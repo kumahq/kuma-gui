@@ -5,6 +5,8 @@ import Routing, { RouteTitle, RouteView } from '@kumahq/routing/vue'
 import can from '@kumahq/settings/can'
 import env from '@kumahq/settings/env'
 import { XEmptyState } from '@kumahq/x'
+// @ts-ignore TS comes with a set.prototype.difference declaration but not a polyfill
+import difference from 'set.prototype.difference'
 
 import AppView from './components/app-view/AppView.vue'
 import DataCollection from './components/data-collection/DataCollection.vue'
@@ -21,6 +23,10 @@ export { runInDebug } from './utilities'
 export { defineSources, ValidationError, useUri } from '@kumahq/data'
 export { useDataSourcePool } from '@kumahq/data/vue'
 export type { DataSourceResponse, TypeOf } from '@kumahq/data'
+
+// temporary Set.prototype.difference polyfill
+// TODO: delete this once we get to 2027 (or baseline widely available)
+difference.shim()
 
 type Sources = ConstructorParameters<typeof DataSourcePool>[0]
 
