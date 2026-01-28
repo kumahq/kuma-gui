@@ -174,6 +174,20 @@
       background-color: var(--icon-color, var(--icon-color-workload, currentColor));
     }
   }
+  @keyframes icon-mesh-identity {
+    100% {
+      -webkit-mask-image: var(--icon-policy-glyph);
+      mask-image: var(--icon-policy-glyph);
+      background-color: var(--icon-color, var(--icon-color-policy, currentColor));
+    }
+  }
+  @keyframes icon-mesh-trust {
+    100% {
+      -webkit-mask-image: var(--icon-policy-glyph);
+      mask-image: var(--icon-policy-glyph);
+      background-color: var(--icon-color, var(--icon-color-policy, currentColor));
+    }
+  }
 </style>
 <style lang="scss" scoped>
 :deep(> *) {
@@ -226,6 +240,8 @@
     --icon-zone-egress: icon-zone-egress;
     --icon-configuration: icon-configuration;
     --icon-workload: icon-workload;
+    --icon-mesh-identity: icon-mesh-identity;
+    --icon-mesh-trust: icon-mesh-trust;
     /**
     * @deprecated
     */

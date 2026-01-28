@@ -109,8 +109,3 @@ const props = defineProps<{
   items: WorkloadItem[]
 }>()
 </script>
-<style scoped>
-h2::before {
-  --icon-before: url('@/assets/images/linked-services-icon.svg?inline') !important;
-}
-</style>
