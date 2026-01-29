@@ -23,6 +23,7 @@ workloads:
       intro: Workload resources represent a logical grouping of data plane proxies that share the same workload identifier.
       headers:
         name: Name
+        zone: Zone
         namespace: Namespace
         dpps: DP proxies (connected / healthy / total)
         actions: Actions

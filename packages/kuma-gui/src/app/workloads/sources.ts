@@ -14,16 +14,18 @@ export const sources = (api: KumaApi) => {
     '/meshes/:mesh/workloads': async (params) => {
       const { mesh, size } = params
       const offset = size * (params.page - 1)
+      const search = Workload.search(params.search)
 
       const res = await http.GET('/meshes/{mesh}/workloads', {
         params: {
           path: {
             mesh,
           },
-        },
-        query: {
-          size,
-          offset,
+          query: {
+            size,
+            offset,
+            ...search,
+          },
         },
       })
 

@@ -9,7 +9,7 @@ Feature: mesh / workloads / index
 
   Scenario: The Workload listing table has the correct columns
     When I visit the "/meshes/default/workloads" URL
-    Then the "$table-header" element exists 4 times
+    Then the "$table-header" element exists 5 times
 
   Scenario: The Workload listing has the expected content
     Given the environment
@@ -26,6 +26,7 @@ Feature: mesh / workloads / index
           labels:
             k8s.kuma.io/namespace: kuma-demo
             kuma.io/display-name: workload-1
+            kuma.io/zone: default
           status:
             dataplaneProxies:
               connected: 1
@@ -38,4 +39,5 @@ Feature: mesh / workloads / index
       | Value      |
       | workload-1 |
       | kuma-demo  |
+      | default    |
       |  1 / 1 / 1 |

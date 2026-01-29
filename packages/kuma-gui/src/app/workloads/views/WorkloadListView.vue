@@ -7,7 +7,7 @@
       mesh: '',
       s: '',
     }"
-    v-slot="{ route, me, uri, t }"
+    v-slot="{ route, me, uri, can, t }"
   >
     <RouteTitle
       :render="false"
@@ -31,67 +31,93 @@
         v-slot="{ data, error }"
       >
         <XCard>
-          <DataLoader
-            :data="[data]"
-            :errors="[error]"
-            variant="list"
+          <XLayout
+            variant="y-stack"
           >
-            <AppCollection
-              v-if="typeof data !== 'undefined'"
-              :items="data.items"
-              type="workload" 
-              :headers="[
-                { ...me.get('headers.name'), label: t('workloads.routes.items.headers.name'), key: 'name' },
-                { ...me.get('headers.namespace'), label: t('workloads.routes.items.headers.namespace'), key: 'namespace' },
-                { ...me.get('headers.status'), label: t('workloads.routes.items.headers.dpps'), key: 'dpps' },
-                { ...me.get('headers.actions'), label: t('workloads.routes.items.headers.actions'), key: 'actions', hideLabel: true },
-              ]"
+            <search>
+              <form
+                class="search-form"
+                @submit.prevent
+              >
+                <XSearch
+                  class="search-field"
+                  :keys="['name', 'namespace', ...(can('use zones') ? ['zone'] : []), 'label']"
+                  :value="route.params.s"
+                  @change="(s) => route.update({ page: 1, s })"
+                />
+              </form>
+            </search>
+            <DataLoader
+              :data="[data]"
+              :errors="[error]"
+              variant="list"
             >
-              <template #name="{ row: item }">
-                <XAction
-                  data-action
-                  class="name-link"
-                  :title="item.name"
-                  :to="{
-                    name: 'workload-summary-view',
-                    params: {
-                      wl: item.kri,
-                    },
-                    query: {
-                      page: route.params.page,
-                      size: route.params.size,
-                      s: route.params.s,
-                    },
-                  }"
+              <DataCollection
+                v-if="typeof data !== 'undefined'"
+                :items="data.items"
+                :total="data.total"
+                :page="route.params.page"
+                :page-size="route.params.size"
+                @change="route.update"
+              >
+                <AppCollection
+                  :items="data.items"
+                  type="workload" 
+                  :headers="[
+                    { ...me.get('headers.name'), label: t('workloads.routes.items.headers.name'), key: 'name' },
+                    { ...me.get('headers.namespace'), label: t('workloads.routes.items.headers.namespace'), key: 'namespace' },
+                    ...(can('use zones') ? [{ ...me.get('headers.zone'), label: t('workloads.routes.items.headers.zone'), key: 'zone' }] : []),
+                    { ...me.get('headers.status'), label: t('workloads.routes.items.headers.dpps'), key: 'dpps' },
+                    { ...me.get('headers.actions'), label: t('workloads.routes.items.headers.actions'), key: 'actions', hideLabel: true },
+                  ]"
                 >
-                  {{ item.name }}
-                </XAction>
-              </template>
-              <template #namespace="{ row: item }">
-                {{ item.namespace }}
-              </template>
-              <template #dpps="{ row: item }">
-                {{ item.dataplaneProxies.connected }} /
-                {{ item.dataplaneProxies.healthy }} /
-                {{ item.dataplaneProxies.total }}
-              </template>
+                  <template #name="{ row: item }">
+                    <XAction
+                      data-action
+                      class="name-link"
+                      :title="item.name"
+                      :to="{
+                        name: 'workload-summary-view',
+                        params: {
+                          wl: item.kri,
+                        },
+                        query: {
+                          page: route.params.page,
+                          size: route.params.size,
+                          s: route.params.s,
+                        },
+                      }"
+                    >
+                      {{ item.name }}
+                    </XAction>
+                  </template>
+                  <template #namespace="{ row: item }">
+                    {{ item.namespace }}
+                  </template>
+                  <template #dpps="{ row: item }">
+                    {{ item.dataplaneProxies.connected }} /
+                    {{ item.dataplaneProxies.healthy }} /
+                    {{ item.dataplaneProxies.total }}
+                  </template>
 
-              <template #actions="{ row: item }">
-                <XActionGroup>
-                  <XAction
-                    :to="{
-                      name: 'workload-detail-view',
-                      params: {
-                        wl: item.kri,
-                      },
-                    }"
-                  >
-                    {{ t('common.collection.actions.view') }}
-                  </XAction>
-                </XActionGroup>
-              </template>
-            </AppCollection>
-          </DataLoader>
+                  <template #actions="{ row: item }">
+                    <XActionGroup>
+                      <XAction
+                        :to="{
+                          name: 'workload-detail-view',
+                          params: {
+                            wl: item.kri,
+                          },
+                        }"
+                      >
+                        {{ t('common.collection.actions.view') }}
+                      </XAction>
+                    </XActionGroup>
+                  </template>
+                </AppCollection>
+              </DataCollection>
+            </DataLoader>
+          </XLayout>
         </XCard>
 
         <RouterView
@@ -127,3 +153,8 @@
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import { sources } from '@/app/workloads/sources'
 </script>
+<style scoped>
+.search-field {
+  width: 100%;
+}
+</style>

@@ -1,10 +1,15 @@
 import { Kri } from '@/app/kuma'
+import { Resource } from '@/app/resources/data/Resource'
 import type { components } from '@kumahq/kuma-http-api'
 
 export type KumaWorkloadItem = components['schemas']['WorkloadItem']
 export type KumaWorkloadCollection = components['responses']['WorkloadList']['content']['application/json']
 
 export const Workload = {
+  search(query: string) {
+    return Resource.search(query)
+  },
+  
   fromObject: (workload: KumaWorkloadItem) => {
     const name = workload.labels?.['kuma.io/display-name'] ?? workload.name
     const namespace = workload.labels?.['k8s.kuma.io/namespace'] ?? ''
