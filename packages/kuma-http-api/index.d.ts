@@ -2224,6 +2224,8 @@ export interface components {
                      *     this port.
                      */
                     port?: number;
+                    /** @description Protocol of the service (tcp, http, grpc, etc). */
+                    protocol?: string;
                     /**
                      * @description Address of the service that requests will be forwarded to.
                      *     Defaults to 'inbound.address', since Kuma DP should be deployed next
@@ -8556,6 +8558,8 @@ export interface components {
                          *     this port.
                          */
                         port?: number;
+                        /** @description Protocol of the service (tcp, http, grpc, etc). */
+                        protocol?: string;
                         /**
                          * @description Address of the service that requests will be forwarded to.
                          *     Defaults to 'inbound.address', since Kuma DP should be deployed next
@@ -9504,6 +9508,11 @@ export interface components {
                     targetPort?: number | string;
                 }[];
                 selector?: {
+                    dataplaneLabels?: {
+                        matchLabels?: {
+                            [key: string]: string;
+                        };
+                    };
                     dataplaneRef?: {
                         name?: string;
                     };
