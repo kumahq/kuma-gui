@@ -15,13 +15,7 @@ export const Workload = {
     const namespace = workload.labels?.['k8s.kuma.io/namespace'] ?? ''
     const zone = workload.labels?.['kuma.io/zone'] ?? ''
     const mesh = workload.mesh ?? workload.labels?.['kuma.io/mesh'] ?? ''
-    const dataplaneProxies = ((proxies: Partial<{ total: number, connected: number, healthy: number }>) => {
-      return {
-        total: proxies.total ?? 0,
-        connected: proxies.connected ?? 0,
-        healthy: proxies.healthy ?? 0,
-      }
-    })(workload.status?.dataplaneProxies ?? {})
+    const { total = 0, connected = 0, healthy = 0 } = workload.status?.dataplaneProxies ?? {}
 
     return {
       ...workload,
@@ -32,19 +26,27 @@ export const Workload = {
       namespace,
       zone,
       mesh,
-      status: ((proxies: { total: number, connected: number, healthy: number }) => {
-        switch(true) {
-          case proxies.total > 0 && proxies.total === proxies.healthy && proxies.total === proxies.connected:
-            return 'online' as const
-          case proxies.total > 0 && (proxies.total !== proxies.connected || proxies.total !== proxies.healthy):
-            return 'partially_degraded' as const
-          case proxies.total === 0:
-            return 'disabled' as const
-          default:
-            return 'offline' as const
-        }
-      })(dataplaneProxies),
-      dataplaneProxies,
+      status: {
+        ...workload.status,
+        state: (() => {
+          switch(true) {
+            case total > 0 && total === healthy && total === connected:
+              return 'online' as const
+            case total > 0 && (total !== connected || total !== healthy):
+              return 'partially_degraded' as const
+            case total === 0:
+              return 'disabled' as const
+            default:
+              return 'offline' as const
+          }
+        })(),
+        dataplaneProxies: {
+          ...workload.status?.dataplaneProxies,
+          total,
+          connected,
+          healthy,
+        },
+      },
       $raw: workload,
     }
   },

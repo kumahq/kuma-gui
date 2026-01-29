@@ -29,9 +29,9 @@
                 <dt>{{ t('http.api.property.status') }}</dt>
                 <dd>
                   <XBadge
-                    :appearance="t(`common.status.appearance.${props.data.status}`, undefined, { defaultMessage: 'neutral' })"
+                    :appearance="t(`common.status.appearance.${props.data.status.state}`, undefined, { defaultMessage: 'neutral' })"
                   >
-                    {{ t(`http.api.value.${props.data.status}`) }}
+                    {{ t(`http.api.value.${props.data.status.state}`) }}
                   </XBadge>
                 </dd>
               </div>

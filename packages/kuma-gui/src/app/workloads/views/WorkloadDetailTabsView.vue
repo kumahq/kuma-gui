@@ -52,9 +52,9 @@
               />
             </h1>
             <XBadge
-              :appearance="t(`common.status.appearance.${data.status}`, undefined, { defaultMessage: 'neutral' })"
+              :appearance="t(`common.status.appearance.${data.status.state}`, undefined, { defaultMessage: 'neutral' })"
             >
-              {{ t(`http.api.value.${data.status}`) }}
+              {{ t(`http.api.value.${data.status.state}`) }}
             </XBadge>
           </XLayout>
         </template>

@@ -95,9 +95,9 @@
                     {{ item.namespace }}
                   </template>
                   <template #dpps="{ row: item }">
-                    {{ item.dataplaneProxies.connected }} /
-                    {{ item.dataplaneProxies.healthy }} /
-                    {{ item.dataplaneProxies.total }}
+                    {{ item.status.dataplaneProxies.connected }} /
+                    {{ item.status.dataplaneProxies.healthy }} /
+                    {{ item.status.dataplaneProxies.total }}
                   </template>
 
                   <template #actions="{ row: item }">
