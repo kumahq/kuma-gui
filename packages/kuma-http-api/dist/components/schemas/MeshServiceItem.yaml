@@ -70,6 +70,13 @@ properties:
       selector:
         type: object
         properties:
+          dataplaneLabels:
+            type: object
+            properties:
+              matchLabels:
+                type: object
+                additionalProperties:
+                  type: string
           dataplaneRef:
             type: object
             properties:
