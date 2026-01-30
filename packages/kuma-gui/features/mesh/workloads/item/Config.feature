@@ -3,7 +3,6 @@ Feature: mesh / workloads / item / config
   Background:
     Given the CSS selectors
       | Alias              | Selector                                     |
-      | config-view        | [data-testid='workload-config-view']         |
       | config-universal   | [data-testid='codeblock-yaml-universal']     |
       | config-k8s         | [data-testid='codeblock-yaml-k8s']           |
       | select-environment | [data-testid='select-input']                 |
@@ -31,7 +30,6 @@ Feature: mesh / workloads / item / config
             total: 1
       """
     When I visit the "/meshes/default/workloads/kri_wl_default_z1_ns1_workload-1_/config" URL
-    Then the "$config-view" element exists
     And the "$config-universal" element exists
     And the "$config-universal" element contains "name: workload-1"
     And the "$config-universal" element contains "mesh: default"
