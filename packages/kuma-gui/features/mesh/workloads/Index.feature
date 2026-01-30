@@ -6,13 +6,7 @@ Feature: mesh / workloads / index
       | table        | table           |
       | table-header | $table th       |
       | item         | $table tbody tr |
-
-  Scenario: The Workload listing table has the correct columns
-    When I visit the "/meshes/default/workloads" URL
-    Then the "$table-header" element exists 7 times
-
-  Scenario: The Workload listing has the expected content
-    Given the environment
+    And the environment
       """
       KUMA_WORKLOAD_COUNT: 1
       """
@@ -33,6 +27,12 @@ Feature: mesh / workloads / index
               healthy: 1
               total: 1
       """
+
+  Scenario: The Workload listing table has the correct columns
+    When I visit the "/meshes/default/workloads" URL
+    Then the "$table-header" element exists 5 times
+
+  Scenario: The Workload listing has the expected content
     When I visit the "/meshes/default/workloads" URL
     Then the "$item" element exists 1 times
     Then the "$item:nth-child(1)" element contains

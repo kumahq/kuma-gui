@@ -3,6 +3,7 @@ import type { components } from '@kumahq/kuma-http-api'
 
 export default ({ fake, env, pager }: Dependencies): ResponseHandler => (req) => {
   const { mesh } = req.params as Record<string, string>
+  const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
   const { offset, total, next, pageTotal } = pager(
     env('KUMA_WORKLOAD_COUNT', `${fake.number.int({ min: 1, max: 100 })}`),
     req,
@@ -31,7 +32,7 @@ export default ({ fake, env, pager }: Dependencies): ResponseHandler => (req) =>
           modificationTime: fake.date.between({ from: creationTime, to: Date.now() }).toISOString(),
           labels: {
             'kuma.io/display-name': name,
-            'k8s.kuma.io/namespace': namespace,
+            ...(k8s && { 'k8s.kuma.io/namespace': namespace }),
             'kuma.io/mesh': mesh,
             'kuma.io/zone': zone,
             'kuma.io/origin': fake.helpers.arrayElement(['zone', 'global']),

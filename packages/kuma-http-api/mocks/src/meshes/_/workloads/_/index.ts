@@ -1,7 +1,7 @@
 import type { Dependencies, ResponseHandler } from '#mocks'
 import type { components } from '@kumahq/kuma-http-api'
 
-export default ({ fake }: Dependencies): ResponseHandler => (req) => {
+export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
   const kri = req.params.kri as string | undefined
   const [
     mesh = req.params.mesh as string,
@@ -9,6 +9,7 @@ export default ({ fake }: Dependencies): ResponseHandler => (req) => {
     namespace = fake.word.noun(),
     name = req.params.name as string,
   ] = kri?.split('_') ?? []
+  const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
 
   const creationTime = fake.date.past()
 
@@ -26,7 +27,7 @@ export default ({ fake }: Dependencies): ResponseHandler => (req) => {
       modificationTime: fake.date.between({ from: creationTime, to: Date.now() }).toISOString(),
       labels: {
         'kuma.io/display-name': name,
-        'k8s.kuma.io/namespace': namespace,
+        ...(k8s && { 'k8s.kuma.io/namespace': namespace }),
         'kuma.io/mesh': mesh,
         'kuma.io/zone': zone,
         'kuma.io/origin': fake.helpers.arrayElement(['zone', 'global']),
