@@ -30,20 +30,6 @@ Feature: mesh / workloads / item / config
             healthy: 1
             total: 1
       """
-    And the URL "/meshes/default/workloads/kri_wl_default_z1_ns1_workload-1_/as/kubernetes" responds with
-      """
-      body:
-        apiVersion: kuma.io/v1alpha1
-        kind: Workload
-        metadata:
-          name: workload-1
-          namespace: kuma-demo
-          labels:
-            kuma.io/display-name: workload-1
-        spec:
-          networking:
-            address: 10.244.0.10
-      """
     When I visit the "/meshes/default/workloads/kri_wl_default_z1_ns1_workload-1_/config" URL
     Then the "$config-view" element exists
     And the "$config-universal" element exists
@@ -53,9 +39,11 @@ Feature: mesh / workloads / item / config
     And the URL contains "?environment=universal"
 
   Scenario: Shows config with format based on environment
-    Given the URL "/_kri/kri_wl_default_z1_ns1_workload-1_" responds with
+    Given the URL "/_kri/kri_wl_default_z1_ns1_workload-1_?format=kubernetes" responds with
       """
       body:
+        apiVersion: kuma.io/v1alpha1
+        kind: Workload
         name: workload-1
         kri: kri_wl_default_z1_ns1_workload-1_
         mesh: default
@@ -67,20 +55,6 @@ Feature: mesh / workloads / item / config
             connected: 1
             healthy: 1
             total: 1
-      """
-    And the URL "/meshes/default/workloads/kri_wl_default_z1_ns1_workload-1_/as/kubernetes" responds with
-      """
-      body:
-        apiVersion: kuma.io/v1alpha1
-        kind: Workload
-        metadata:
-          name: workload-1
-          namespace: kuma-demo
-          labels:
-            kuma.io/display-name: workload-1
-        spec:
-          networking:
-            address: 10.244.0.10
       """
     When I visit the "/meshes/default/workloads/kri_wl_default_z1_ns1_workload-1_/config" URL
     Then the "$config-universal" element exists
