@@ -167,6 +167,27 @@
       background-image: var(--icon-virtualoutbound-glyph);
     }
   }
+  @keyframes icon-workload {
+    100% {
+      -webkit-mask-image: var(--icon-workload-glyph);
+      mask-image: var(--icon-workload-glyph);
+      background-color: var(--icon-color, var(--icon-color-workload, currentColor));
+    }
+  }
+  @keyframes icon-mesh-identity {
+    100% {
+      -webkit-mask-image: var(--icon-policy-glyph);
+      mask-image: var(--icon-policy-glyph);
+      background-color: var(--icon-color, var(--icon-color-policy, currentColor));
+    }
+  }
+  @keyframes icon-mesh-trust {
+    100% {
+      -webkit-mask-image: var(--icon-policy-glyph);
+      mask-image: var(--icon-policy-glyph);
+      background-color: var(--icon-color, var(--icon-color-policy, currentColor));
+    }
+  }
 </style>
 <style lang="scss" scoped>
 :deep(> *) {
@@ -195,6 +216,7 @@
     --icon-dataplane-delegated-glyph: url('@/assets/images/gateway.svg?inline');
     --icon-subscription-glyph: url('@/assets/images/subscriptions.svg?inline');
     --icon-policy-glyph: url('@/assets/images/policy.svg?inline');
+    --icon-workload-glyph: url('@/assets/images/linked-services-icon.svg?inline');
     /* legacy */
     --icon-circuitbreaker-glyph: url('@/assets/images/policies/CircuitBreaker.png');
     --icon-faultinjection-glyph: url('@/assets/images/policies/FaultInjection.png');
@@ -217,6 +239,9 @@
     --icon-mesh: icon-mesh;
     --icon-zone-egress: icon-zone-egress;
     --icon-configuration: icon-configuration;
+    --icon-workload: icon-workload;
+    --icon-mesh-identity: icon-mesh-identity;
+    --icon-mesh-trust: icon-mesh-trust;
     /**
     * @deprecated
     */

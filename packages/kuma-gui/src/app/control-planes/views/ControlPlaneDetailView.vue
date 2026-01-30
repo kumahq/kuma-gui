@@ -24,11 +24,11 @@
         >
           <DataSource
             :src="uri(ControlPlaneSources, '/global-insight', {})"
-            v-slot="{ data, error }"
+            v-slot="{ result }"
           >
             <ControlPlaneStatus
               :can-use-zones="can('use zones')"
-              :global-insight="error ?? data"
+              :global-insight="result"
               :resources="resources"
             />
           </DataSource>

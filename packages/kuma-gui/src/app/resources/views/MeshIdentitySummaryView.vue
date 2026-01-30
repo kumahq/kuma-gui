@@ -16,7 +16,11 @@
     >
       <AppView>
         <template #title>
-          <h2>{{ data.name }}</h2>
+          <h2
+            v-icon-start="'mesh-identity'"
+          >
+            {{ data.name }}
+          </h2>
         </template>
         <XLayout
           type="separated"
@@ -78,8 +82,3 @@ const props = defineProps<{
   routeName: string
 }>()
 </script>
-<style scoped>
-h2::before {
-  --icon-before: url('@/assets/images/policy.svg?inline') !important;
-}
-</style>

@@ -6,7 +6,7 @@ Feature: control-planes / DetailView
       | zone-control-planes-details | [data-testid='zone-control-planes-status']  |
       | zone-control-planes-status  | [data-testid='zone-control-planes-details'] |
       | meshes-details              | [data-testid='meshes-details']              |
-      | meshes-status              | [data-testid='meshes-status']              |
+      | meshes-status               | [data-testid='meshes-status']               |
     And the environment
       """
       KUMA_MESH_COUNT: 3
