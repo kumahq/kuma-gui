@@ -1,3 +1,4 @@
+import { routes as dataPlanes } from '@/app/legacy-data-planes/routes'
 import type { RouteRecordRaw } from 'vue-router'
 
 export const routes = () => {
@@ -12,6 +13,7 @@ export const routes = () => {
             name: 'workload-detail-view',
             path: 'overview',
             component: () => import('@/app/workloads/views/WorkloadDetailView.vue'),
+            children: dataPlanes().summary('workload'),
           },
           {
             name: 'workload-config-view',

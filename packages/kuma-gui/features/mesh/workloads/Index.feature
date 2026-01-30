@@ -9,7 +9,7 @@ Feature: mesh / workloads / index
 
   Scenario: The Workload listing table has the correct columns
     When I visit the "/meshes/default/workloads" URL
-    Then the "$table-header" element exists 5 times
+    Then the "$table-header" element exists 7 times
 
   Scenario: The Workload listing has the expected content
     Given the environment

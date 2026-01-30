@@ -6,8 +6,10 @@
       wl: '',
       page: 1,
       size: Number,
+      proxy: '',
+      s: '',
     }"
-    v-slot="{ route, t, uri, me }"
+    v-slot="{ route, t, uri, me, can }"
   >
     <RouteTitle
       :render="false"
@@ -77,72 +79,198 @@
       </XAboutCard>
 
       <XCard>
-        <slot name="title">
-          <h2>
-            {{ t('workloads.routes.item.dataplaneProxies.title') }}
-          </h2>
-        </slot>
-        <DataLoader
-          :src="uri(dataplaneSources, `/meshes/:mesh/dataplanes/of/:type`, {
-            mesh: route.params.mesh,
-            type: 'standard',
-          }, {
-            page: route.params.page,
-            size: route.params.size,
-            search: `kuma.io/workload:${Kri.fromString(route.params.wl).name}`,
-          })"
-          variant="list"
-          v-slot="{ data: dataPlanes }"
+        <XLayout
+          variant="y-stack"
         >
-          <DataCollection
-            :items="dataPlanes.items"
-            :total="dataPlanes.total"
-            :page="route.params.page"
-            :page-size="route.params.size"
-            @change="route.update"
-          >
-            <AppCollection
-              class="data-plane-collection"
-              data-testid="data-plane-collection"
-              :headers="[
-                { ...me.get('headers.name'), label: 'Name', key: 'name' },
-                { ...me.get('headers.namespace'), label: 'Namespace', key: 'namespace' },
-                { ...me.get('headers.status'), label: 'Status', key: 'status' },
-              ]"
-              :items="dataPlanes.items"
-              @resize="me.set"
+          <slot name="title">
+            <h2>
+              {{ t('workloads.routes.item.dataplaneProxies.title') }}
+            </h2>
+          </slot>
+          <search>
+            <form
+              class="search-form"
+              @submit.prevent
             >
-              <template #name="{ row: item }">
-                <XAction
-                  data-action
-                  class="name-link"
-                  :title="item.name"
-                  :to="{
-                    name: 'data-plane-detail-view',
+              <XSearch
+                class="search-field"
+                :keys="['name', 'tag', 'label']"
+                :value="route.params.s"
+                @change="(s) => route.update({ page: 1, s })"
+              />
+            </form>
+          </search>
+          <DataLoader
+            :src="uri(dataplaneSources, `/meshes/:mesh/dataplanes/of/:type`, {
+              mesh: route.params.mesh,
+              type: 'standard',
+            }, {
+              page: route.params.page,
+              size: route.params.size,
+              search: `${route.params.s} kuma.io/workload:${Kri.fromString(route.params.wl).name}`,
+            })"
+            variant="list"
+            v-slot="{ data: dataPlanes }"
+          >
+            <DataCollection
+              :items="dataPlanes.items"
+              :total="dataPlanes.total"
+              :page="route.params.page"
+              :page-size="route.params.size"
+              @change="route.update"
+            >
+              <AppCollection
+                class="data-plane-collection"
+                data-testid="data-plane-collection"
+                :headers="[
+                  { ...me.get('headers.name'), label: 'Name', key: 'name' },
+                  { ...me.get('headers.namespace'), label: 'Namespace', key: 'namespace' },
+                  ...(can('use zones') ? [{ ...me.get('headers.zone'), label: 'Zone', key: 'zone' }] : []),
+                  { ...me.get('headers.certificate'), label: 'Certificate info', key: 'certificate' },
+                  { ...me.get('headers.status'), label: 'Status', key: 'status' },
+                  { ...me.get('headers.warnings'), label: 'Warnings', key: 'warnings', hideLabel: true },
+                  { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
+                ]"
+                :items="dataPlanes.items"
+                @resize="me.set"
+              >
+                <template #name="{ row: item }">
+                  <XAction
+                    data-action
+                    class="name-link"
+                    :title="item.name"
+                    :to="{
+                      name: 'workload-data-plane-summary-view',
+                      params: {
+                        mesh: item.mesh,
+                        proxy: item.id,
+                      },
+                    }"
+                  >
+                    {{ item.name }}
+                  </XAction>
+                </template>
+
+                <template #namespace="{ row: item }">
+                  {{ item.namespace }}
+                </template>
+
+                <template #zone="{ row }">
+                  <XAction
+                    v-if="row.zone"
+                    :to="{
+                      name: 'zone-cp-detail-view',
+                      params: {
+                        zone: row.zone,
+                      },
+                    }"
+                  >
+                    {{ row.zone }}
+                  </XAction>
+
+                  <template v-else>
+                    {{ t('common.collection.none') }}
+                  </template>
+                </template>
+
+                <template #certificate="{ row }">
+                  <template v-if="row.dataplaneInsight.mTLS?.certificateExpirationTime">
+                    {{ t('common.formats.datetime', { value: Date.parse(row.dataplaneInsight.mTLS.certificateExpirationTime) }) }}
+                  </template>
+
+                  <template v-else>
+                    {{ t('data-planes.components.data-plane-list.certificate.none') }}
+                  </template>
+                </template>
+
+                <template #status="{ row }">
+                  <XBadge
+                    :appearance="t(`common.status.appearance.${row.status}`, undefined, { defaultMessage: 'neutral' })"
+                  >
+                    {{ t(`http.api.value.${row.status}`) }}
+                  </XBadge>
+                </template>
+
+                <template #warnings="{ row: item }">
+                  <template
+                    v-for="warnings in [[
+                      {
+                        bool: item.dataplaneInsight.version?.kumaDp?.kumaCpCompatible === false || item.dataplaneInsight.version?.envoy?.kumaDpCompatible === false,
+                        key: 'dp-cp-incompatible',
+                      },
+                      {
+                        bool: item.isCertExpiresSoon,
+                        key: 'certificate-expires-soon',
+                      },
+                      {
+                        bool: item.isCertExpired,
+                        key: 'certificate-expired',
+                      },
+                    ].filter(({ bool }) => bool)]"
+                    :key="typeof warnings"
+                  >
+                    <XIcon
+                      v-if="warnings.length > 0"
+                      name="warning"
+                      data-testid="warning"
+                    >
+                      <ul>
+                        <li
+                          v-for="{ key } in warnings"
+                          :key="key"
+                          :data-testid="`warning-${key}`"
+                        >
+                          {{ t(`data-planes.routes.items.warnings.${key}`) }}
+                        </li>
+                      </ul>
+                    </XIcon>
+                    <template v-else>
+                      {{ t('common.collection.none') }}
+                    </template>
+                  </template>
+                </template>
+
+                <template #actions="{ row: item }">
+                  <XActionGroup>
+                    <XAction
+                      :to="{
+                        name: 'data-plane-detail-view',
+                        params: {
+                          proxy: item.id,
+                        },
+                      }"
+                    >
+                      {{ t('common.collection.actions.view') }}
+                    </XAction>
+                  </XActionGroup>
+                </template>
+              </AppCollection>
+              <RouterView
+                v-if="route.params.proxy"
+                v-slot="child"
+              >
+                <XDrawer
+                  @close="route.replace({
+                    name: route.name,
                     params: {
-                      mesh: item.mesh,
-                      proxy: item.id,
+                      mesh: route.params.mesh,
                     },
-                  }"
+                    query: {
+                      page: route.params.page,
+                      size: route.params.size,
+                    },
+                  })"
                 >
-                  {{ item.name }}
-                </XAction>
-              </template>
-
-              <template #namespace="{ row: item }">
-                {{ item.namespace }}
-              </template>
-
-              <template #status="{ row }">
-                <XBadge
-                  :appearance="t(`common.status.appearance.${row.status}`, undefined, { defaultMessage: 'neutral' })"
-                >
-                  {{ t(`http.api.value.${row.status}`) }}
-                </XBadge>
-              </template>
-            </AppCollection>
-          </DataCollection>
-        </DataLoader>
+                  <component
+                    :is="child.Component"
+                    v-if="typeof dataPlanes !== 'undefined'"
+                    :items="dataPlanes.items"
+                  />
+                </XDrawer>
+              </RouterView>
+            </DataCollection>
+          </DataLoader>
+        </XLayout>
       </XCard>
     </AppView>
   </RouteView>
@@ -156,3 +284,8 @@ const props = defineProps<{
   data: WorkloadItem | Error | undefined
 }>()
 </script>
+<style scoped lang="scss">
+.search-field {
+  width: 100%;
+}
+</style>

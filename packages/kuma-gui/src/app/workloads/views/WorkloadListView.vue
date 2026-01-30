@@ -153,7 +153,7 @@
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import { sources } from '@/app/workloads/sources'
 </script>
-<style scoped>
+<style scoped lang="scss">
 .search-field {
   width: 100%;
 }
