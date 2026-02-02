@@ -47,7 +47,7 @@ export default ({ fake, env, pager }: Dependencies): ResponseHandler => (req) =>
                 healthy: isHealthy ? totalDataplaneProxies : fake.number.int({ min: 0, max: totalDataplaneProxies - 1 }),
                 total: totalDataplaneProxies,
               }
-            })(fake.number.int({ min: 1, max: 10 })),
+            })(fake.number.int({ min: 0, max: 10 })),
           },
         }
       }),

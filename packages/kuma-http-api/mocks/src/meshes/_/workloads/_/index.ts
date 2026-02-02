@@ -42,7 +42,7 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
             healthy: isHealthy ? totalDataplaneProxies : fake.number.int({ min: 0, max: totalDataplaneProxies - 1 }),
             total: totalDataplaneProxies,
           }
-        })(fake.number.int({ min: 1, max: 10 })),
+        })(fake.number.int({ min: 0, max: 10 })),
       },
     } satisfies components['schemas']['WorkloadItem'],
   }

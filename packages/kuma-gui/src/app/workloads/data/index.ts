@@ -30,14 +30,14 @@ export const Workload = {
         ...workload.status,
         state: (() => {
           switch(true) {
-            case total > 0 && total === healthy && total === connected:
-              return 'online' as const
-            case total > 0 && (total !== connected || total !== healthy):
-              return 'partially_degraded' as const
             case total === 0:
               return 'disabled' as const
-            default:
+            case connected === 0 || healthy === 0:
               return 'offline' as const
+            case total === connected && total === healthy:
+              return 'online' as const
+            default:
+              return 'partially_degraded' as const
           }
         })(),
         dataplaneProxies: {
