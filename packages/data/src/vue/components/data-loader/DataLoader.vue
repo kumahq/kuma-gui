@@ -83,7 +83,7 @@ const srcError = ref<Error | undefined>(undefined)
 
 const allData = computed(() => {
   const data = (props.data ?? []).filter(item => !(item instanceof Error)) as K
-  if(!data.every(item => typeof item !== 'undefined')) {
+  if(!data.every(item => typeof item !== 'undefined') || (props.src && typeof srcData.value === 'undefined')) {
     return undefined
   }
   if (data.length > 0 && typeof srcData.value === 'undefined') {
