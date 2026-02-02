@@ -21,7 +21,7 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
       }),
       type: 'Workload',
       mesh,
-      kri: fake.kuma.kri({ shortName: 'wl', mesh }),
+      kri: fake.kuma.kri({ shortName: 'wl', mesh, zone, namespace, name }),
       name,
       creationTime: creationTime.toISOString(),
       modificationTime: fake.date.between({ from: creationTime, to: Date.now() }).toISOString(),
