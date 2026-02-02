@@ -38,8 +38,8 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
         dataplaneProxies: ((totalDataplaneProxies: number) => {
           const isHealthy = fake.datatype.boolean()
           return {
-            connected: isHealthy ? totalDataplaneProxies : fake.number.int({ min: 0, max: totalDataplaneProxies - 1 }),
-            healthy: isHealthy ? totalDataplaneProxies : fake.number.int({ min: 0, max: totalDataplaneProxies - 1 }),
+            connected: isHealthy ? totalDataplaneProxies : fake.number.int({ min: 0, max: Math.max(totalDataplaneProxies - 1, 0) }),
+            healthy: isHealthy ? totalDataplaneProxies : fake.number.int({ min: 0, max: Math.max(totalDataplaneProxies - 1, 0) }),
             total: totalDataplaneProxies,
           }
         })(fake.number.int({ min: 0, max: 10 })),

@@ -7,7 +7,7 @@ export default ({ fake, env, pager }: Dependencies): ResponseHandler => (req) =>
   const { offset, total, next, pageTotal } = pager(
     env('KUMA_WORKLOAD_COUNT', `${fake.number.int({ min: 1, max: 100 })}`),
     req,
-    `/meshes/${mesh}/dataplanes/_overview`,
+    `/meshes/${mesh}/workloads`,
   )
 
   return {
@@ -43,8 +43,8 @@ export default ({ fake, env, pager }: Dependencies): ResponseHandler => (req) =>
             dataplaneProxies: ((totalDataplaneProxies: number) => {
               const isHealthy = fake.datatype.boolean()
               return {
-                connected: isHealthy ? totalDataplaneProxies : fake.number.int({ min: 0, max: totalDataplaneProxies - 1 }),
-                healthy: isHealthy ? totalDataplaneProxies : fake.number.int({ min: 0, max: totalDataplaneProxies - 1 }),
+                connected: isHealthy ? totalDataplaneProxies : fake.number.int({ min: 0, max: Math.max(totalDataplaneProxies - 1, 0) }),
+                healthy: isHealthy ? totalDataplaneProxies : fake.number.int({ min: 0, max: Math.max(totalDataplaneProxies - 1, 0) }),
                 total: totalDataplaneProxies,
               }
             })(fake.number.int({ min: 0, max: 10 })),
