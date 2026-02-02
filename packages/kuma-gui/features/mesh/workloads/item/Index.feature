@@ -4,6 +4,10 @@ Feature: mesh / workloads / item / index
     Given the CSS selectors
       | Alias      | Selector                                   |
       | config-tab | [data-testid='workload-config-view-tab'] a |
+    And the environment
+      """
+      KUMA_ENVIRONMENT: kubernetes
+      """
     And the URL "/_kri/kri_wl_default_z1_ns1_workload-1_" responds with
       """
       body:
