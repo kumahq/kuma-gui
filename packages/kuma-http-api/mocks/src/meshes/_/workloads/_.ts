@@ -17,7 +17,7 @@ export default ({ fake, env, pager }: Dependencies): ResponseHandler => (req) =>
       next,
       items: Array.from({ length: pageTotal }).map((_, index) => {
         const name = `${fake.word.noun()}-${offset + index + 1}`
-        const namespace = fake.word.noun()
+        const namespace = k8s ? fake.word.noun() : ''
         const zone = fake.word.noun()
         const creationTime = fake.date.past()
         return {

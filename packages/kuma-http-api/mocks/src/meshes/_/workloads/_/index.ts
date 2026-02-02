@@ -3,13 +3,13 @@ import type { components } from '@kumahq/kuma-http-api'
 
 export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
   const kri = req.params.kri as string | undefined
+  const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
   const [
     mesh = req.params.mesh as string,
     zone = fake.word.noun(),
-    namespace = fake.word.noun(),
+    namespace = k8s ? fake.word.noun() : '',
     name = req.params.name as string,
   ] = kri?.split('_') ?? []
-  const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
 
   const creationTime = fake.date.past()
 
