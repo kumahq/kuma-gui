@@ -116,34 +116,34 @@
                   </template>
                 </AppCollection>
               </DataCollection>
+
+              <RouterView
+                v-slot="child"
+              >
+                <XDrawer
+                  v-if="route.name !== child.route.name"
+                  @close="route.replace({
+                    name: route.name,
+                    params: {
+                      mesh: route.params.mesh,
+                    },
+                    query: {
+                      page: route.params.page,
+                      size: route.params.size,
+                      s: route.params.s,
+                    },
+                  })"
+                >
+                  <component
+                    :is="child.Component"
+                    v-if="typeof data !== 'undefined'"
+                    :items="data.items"
+                  />
+                </XDrawer>
+              </RouterView>
             </DataLoader>
           </XLayout>
         </XCard>
-
-        <RouterView
-          v-slot="child"
-        >
-          <XDrawer
-            v-if="route.name !== child.route.name"
-            @close="route.replace({
-              name: route.name,
-              params: {
-                mesh: route.params.mesh,
-              },
-              query: {
-                page: route.params.page,
-                size: route.params.size,
-                s: route.params.s,
-              },
-            })"
-          >
-            <component
-              :is="child.Component"
-              v-if="typeof data !== 'undefined'"
-              :items="data.items"
-            />
-          </XDrawer>
-        </RouterView>
       </DataSource>
     </AppView>
   </RouteView>
