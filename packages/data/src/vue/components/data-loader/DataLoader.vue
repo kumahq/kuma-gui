@@ -58,7 +58,7 @@
 <script lang="ts" generic="T extends string | {
   toString(): string
   typeOf(): any
-} = never, K extends unknown[] = never" setup
+} = never, const K extends unknown[] = never" setup
 >
 import { computed, ref, provide } from 'vue'
 
