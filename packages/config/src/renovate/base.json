@@ -81,7 +81,8 @@
     },
     {
       "description": [
-        "Disable renovate for @kong-ui-public/app-layout"
+        " Disable:",
+        " @kong-ui-public/app-layout: downstream conflicts due to pinned versions"
       ],
       "matchPackageNames": [
         "@kong-ui-public/app-layout"
