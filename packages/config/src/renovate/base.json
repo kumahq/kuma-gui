@@ -80,6 +80,15 @@
       "minimumReleaseAgeBehaviour": "timestamp-optional"
     },
     {
+      "description": [
+        "Disable renovate for @kong-ui-public/app-layout"
+      ],
+      "matchPackageNames": [
+        "@kong-ui-public/app-layout"
+      ],
+      "enabled": false
+    },
+    {
       "matchCategories": [
         "js"
       ],
