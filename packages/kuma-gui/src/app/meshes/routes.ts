@@ -11,6 +11,7 @@ export const routes = (
   gateways: SplitRouteRecordRaw,
   dataplanes: SplitRouteRecordRaw,
   policies: SplitRouteRecordRaw,
+  workloads: SplitRouteRecordRaw,
 ): RouteRecordRaw[] => {
   return [
     {
@@ -46,6 +47,7 @@ export const routes = (
                   ],
                 },
                 ...services.items(),
+                ...workloads.items(),
                 ...gateways.items(),
                 ...dataplanes.items(),
                 ...policies.items(),
@@ -55,6 +57,7 @@ export const routes = (
             ...gateways.item(),
             ...dataplanes.item(),
             ...policies.item(),
+            ...workloads.item(),
           ],
         },
       ],

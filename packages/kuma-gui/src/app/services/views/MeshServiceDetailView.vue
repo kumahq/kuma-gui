@@ -279,7 +279,7 @@
               }, {
                 page: route.params.page,
                 size: route.params.size,
-                search: `${route.params.s}${can('use zones') ? ` zone:${props.data.zone}`: ''}`,
+                search: `${route.params.s}${can('use zones') && props.data.zone.length > 0 ? ` zone:${props.data.zone}`: ''}`,
               })"
               variant="list"
               v-slot="{ data: dataplanes }"

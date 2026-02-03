@@ -53,6 +53,7 @@ meshes:
         gateway-list-tabs-view: Gateways
         data-plane-list-view: Data plane proxies
         policy-list-index-view: Policies
+        workload-list-view: Workloads
       overview: 'Overview'
       about:
         title: About this mesh
