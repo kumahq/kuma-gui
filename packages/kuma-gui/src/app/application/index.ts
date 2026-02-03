@@ -12,6 +12,7 @@ import locales from './locales/en-us/index.yaml'
 import { routes } from './routes'
 import I18n from './services/i18n/I18n'
 import storage from './services/storage'
+import { difference } from '@/app/application/polyfills/Set.prototype.difference'
 import { services as kuma } from '@/app/kuma'
 import type { ServiceDefinition } from '@kumahq/container'
 import type { Component } from 'vue'
@@ -21,6 +22,10 @@ export { runInDebug } from './utilities'
 export { defineSources, ValidationError, useUri } from '@kumahq/data'
 export { useDataSourcePool } from '@kumahq/data/vue'
 export type { DataSourceResponse, TypeOf } from '@kumahq/data'
+
+// temporary Set.prototype.difference polyfill
+// TODO: delete this once we get to 2027 (or baseline widely available)
+difference.getPolyfill()
 
 type Sources = ConstructorParameters<typeof DataSourcePool>[0]
 
