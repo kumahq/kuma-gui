@@ -76,13 +76,11 @@
       "description": [
         " Disable:",
         " - `@kong-ui-public/app-layout`: downstream conflicts due to pinned versions",
-        " - `escape-string-regexp`: need to stick with current version because of esm vs cjs",
-        " - `npm`: handled separately below"
+        " - `escape-string-regexp`: need to stick with current version because of esm vs cjs"
       ],
       "matchPackageNames": [
         "@kong-ui-public/app-layout",
-        "escape-string-regexp",
-        "npm"
+        "escape-string-regexp"
       ],
       "enabled": false
     },
@@ -91,9 +89,10 @@
         "npm"
       ],
       "matchUpdateTypes": [
-        "patch"
+        "major",
+        "minor"
       ],
-      "enabled": true
+      "enabled": false
     },
     {
       "matchCategories": [
