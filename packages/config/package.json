@@ -59,7 +59,7 @@
     "husky": "^9.1.7",
     "js-yaml": "^4.1.1",
     "lint-staged": "^16.2.7",
-    "lockfile-lint": "^4.14.1",
+    "lockfile-lint": "^5.0.0",
     "markdown-it": "^14.1.0",
     "openapi-format": "^1.29.3",
     "openapi-typescript": "^7.10.1",
