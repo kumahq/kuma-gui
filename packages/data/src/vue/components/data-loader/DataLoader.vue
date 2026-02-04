@@ -1,6 +1,6 @@
 <template>
   <DataSource
-    :src="props.src as T"
+    :src="props.src ?? '' as T"
     @change="(data: TypeOf<T>) => srcData = data"
     @error="(e: Error) => srcError = e"
     v-slot="{ refresh }"
@@ -12,7 +12,7 @@
         name="error"
         :data="allData as typeof allData"
         :error="allErrors[0]"
-        :refresh="props.src !== '' ? refresh : () => {}"
+        :refresh="typeof props.src !== 'undefined' ? refresh : () => {}"
       >
         <XErrorState
           v-bind="$attrs"
@@ -28,7 +28,7 @@
         name="default"
         :data="allData as Data"
         :error="srcError"
-        :refresh="props.src !== '' ? refresh : () => {}"
+        :refresh="typeof props.src !== 'undefined' ? refresh : () => {}"
       />
     </template>
 
@@ -38,10 +38,10 @@
         name="connecting"
         :data="undefined"
         :error="srcError"
-        :refresh="props.src !== '' ? refresh : () => {}"
+        :refresh="typeof props.src !== 'undefined' ? refresh : () => {}"
       >
         <XProgress
-          v-if="(props.data ?? []).length > 0 || props.src !== ''"
+          v-if="(props.data ?? []).length > 0 || typeof props.src !== 'undefined'"
           v-bind="$attrs"
           :variant="props.variant === 'default' ? 'legacy' : props.variant"
         />
@@ -51,7 +51,7 @@
         name="default"
         :data="undefined as unknown as Data"
         :error="srcError"
-        :refresh="props.src !== '' ? refresh : () => {}"
+        :refresh="typeof props.src !== 'undefined' ? refresh : () => {}"
       />
     </template>
   </DataSource>
@@ -64,6 +64,7 @@
 import { computed, ref, provide } from 'vue'
 
 import type { NonNullableArray, TypeOf } from '../../../'
+import DataSource from '../data-source/DataSource.vue'
 
 const props = withDefaults(defineProps<{
   src?: T
