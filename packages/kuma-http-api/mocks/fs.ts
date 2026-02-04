@@ -88,6 +88,8 @@ import _44 from './src/meshes/_/traffic-routes'
 import _45 from './src/meshes/_/traffic-traces'
 import _46 from './src/meshes/_/traffic-traces/_'
 import _47 from './src/meshes/_/virtual-outbounds'
+import _400 from './src/meshes/_/workloads/_'
+import _401 from './src/meshes/_/workloads/_/index'
 import _2 from './src/policies'
 import _126 from './src/zone-ingresses/_'
 import _48 from './src/zone-ingresses/_/_overview'
@@ -224,6 +226,9 @@ export const fs = {
   // hostnamegenerators
   '/hostnamegenerators': _200,
   '/hostnamegenerators/:name': _201,
+  // workloads
+  '/meshes/:mesh/workloads': _400,
+  '/meshes/:mesh/workloads/:name': _401,
   /**
    * KRI
    * On top of a fully generic KRI handler below we rewire semi-generic KRI paths to respective handlers
@@ -253,6 +258,8 @@ export const fs = {
   '/_kri/kri_ze_:kri': _127,
   // ZoneIngress
   '/_kri/kri_zi_:kri': _126,
-  // generic kri
+  // Workload
+  '/_kri/kri_wl_:kri': _401,
+  // generic kri -> catches anything that is not matched above
   '/_kri/:kri': _999,
 }

@@ -16,7 +16,11 @@
     >
       <AppView>
         <template #title>
-          <h2>{{ data.name }}</h2>
+          <h2
+            v-icon-start="'mesh-trust'"
+          >
+            {{ data.name }}
+          </h2>
         </template>
         <XLayout
           type="separated"
@@ -72,8 +76,3 @@
 import { YAML } from '@/app/application'
 import { sources } from '@/app/resources/sources'
 </script>
-<style scoped>
-h2::before {
-  --icon-before: url('@/assets/images/policy.svg?inline') !important;
-}
-</style>

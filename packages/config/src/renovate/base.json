@@ -37,13 +37,6 @@
       "dependencyDashboardApproval": true
     },
     {
-      "matchPackageNames": [
-        "npm",
-        "escape-string-regexp"
-      ],
-      "enabled": false
-    },
-    {
       "groupName": "node",
       "matchPackageNames": [
         "node"
@@ -78,6 +71,28 @@
       ],
       "minimumReleaseAge": "2 hours",
       "minimumReleaseAgeBehaviour": "timestamp-optional"
+    },
+    {
+      "description": [
+        " Disable:",
+        " - `@kong-ui-public/app-layout`: downstream conflicts due to pinned versions",
+        " - `escape-string-regexp`: need to stick with current version because of esm vs cjs"
+      ],
+      "matchPackageNames": [
+        "@kong-ui-public/app-layout",
+        "escape-string-regexp"
+      ],
+      "enabled": false
+    },
+    {
+      "matchPackageNames": [
+        "npm"
+      ],
+      "matchUpdateTypes": [
+        "major",
+        "minor"
+      ],
+      "enabled": false
     },
     {
       "matchCategories": [
