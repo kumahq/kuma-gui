@@ -62,7 +62,7 @@
 >
 import { computed, ref, provide } from 'vue'
 
-import type { TypeOf } from '../../../'
+import type { NonNullableArray, TypeOf } from '../../../'
 
 const props = withDefaults(defineProps<{
   src?: T
@@ -104,19 +104,15 @@ const allErrors = computed(() => {
   return [...(errors ?? [])].concat(dataErrors).filter(<T>(item: T): item is NonNullable<T> => Boolean(item))
 })
 
-type RemoveUndefined<T extends any[]> = {
-  [K in keyof T]: Exclude<T[K], undefined>
-}
-
 type InferredDataType<TSrc, TData extends any[]> = 
   [TSrc] extends [never]
     ? [TData] extends [never]
       ? undefined
-      : RemoveUndefined<TData>
+      : NonNullableArray<TData>
     : [TData] extends [never]
       ? NonNullable<TSrc>
       : TData extends [...infer Items]
-        ? [NonNullable<TSrc>, ...RemoveUndefined<Items>]
+        ? [NonNullable<TSrc>, ...NonNullableArray<Items>]
         : undefined
 
 type Data = InferredDataType<TypeOf<T>, K>

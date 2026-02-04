@@ -137,9 +137,9 @@
               <template v-if="props.data.dataplaneType === 'builtin'">
                 <DataLoader
                   :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.proxy}/gateway-dataplane-policies`"
-                  :data="[policyTypesData] as const"
+                  :data="[policyTypesData]"
                   :errors="[policyTypesError]"
-                  v-slot="{ data: [gatewayDataplane] }: { data: [NonNullable<MeshGatewayDataplaneSource['data']>, NonNullable<typeof policyTypesData>] }"
+                  v-slot="{ data: [gatewayDataplane] }: DataLoaderResponse<MeshGatewayDataplaneSource, [typeof policyTypesData]">"
                 >
                   <DataCollection
                     :items="gatewayDataplane.routePolicies"
@@ -218,13 +218,14 @@
 </template>
 <script lang="ts" setup>
 import BuiltinGatewayPolicies from '../components/BuiltinGatewayPolicies.vue'
-import type { DataplaneOverview } from '@/app/data-planes/data'
+import type { DataplaneOverview, MeshGatewayDataplane } from '@/app/data-planes/data'
 import type { MeshGatewayDataplaneSource, SidecarDataplaneCollectionSource } from '@/app/data-planes/sources'
 import PolicyTypeEntryList from '@/app/policies/components/PolicyTypeEntryList.vue'
 import type { PolicyResourceType } from '@/app/policies/data'
 import { sources as policySources } from '@/app/policies/sources'
 import RuleList from '@/app/rules/components/RuleList.vue'
 import { sources } from '@/app/rules/sources'
+import type { DataLoaderResponse } from '@kumahq/data'
 
 const props = defineProps<{
   data: DataplaneOverview
