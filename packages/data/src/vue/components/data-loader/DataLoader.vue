@@ -106,6 +106,7 @@ const allErrors = computed(() => {
   return [...(errors ?? [])].concat(dataErrors).filter(<T>(item: T): item is NonNullable<T> => Boolean(item))
 })
 
+// We need to prevent distributive conditional types here (i.e. therefore wrapping TSrc in [] and others)
 type InferredDataType<TSrc, TData extends any[]> = 
   [TSrc] extends [never]
     ? [TData] extends [never]
