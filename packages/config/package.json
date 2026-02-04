@@ -32,7 +32,7 @@
     "@types/markdown-it": "^14.1.2"
   },
   "dependencies": {
-    "@apidevtools/json-schema-ref-parser": "^15.2.1",
+    "@apidevtools/json-schema-ref-parser": "^15.2.2",
     "@badeball/cypress-cucumber-preprocessor": "^24.0.0",
     "@bahmutov/cypress-esbuild-preprocessor": "^2.2.8",
     "@cucumber/gherkin-utils": "^11.0.0",
