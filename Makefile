@@ -20,8 +20,12 @@ clean: .clean ## Dev: Remove all `node_modules` recursively
 .PHONY: install
 install: .install ## Dev: Install all dependencies
 
+# additionally check that all kong packages are only installed once
 .PHONY: lint
 lint: .lint/js .lint/lock ## Dev: Run lint checks on the workspace root only. Note: individual sub projects have their own `make lint`
+	@npm query --package-lock-only '[name^="@kong"]' \
+		| jq -r '[.[].name] | unique | .[]' | xargs -I{} \
+			$(MAKE) node/deps/singleton PACKAGE={}
 
 .PHONY: bump
 bump:
