@@ -10,7 +10,7 @@
     >
       <slot
         name="error"
-        :data="allData as Data"
+        :data="allData as typeof allData"
         :error="allErrors[0]"
         :refresh="props.src !== '' ? refresh : () => {}"
       >
@@ -20,6 +20,7 @@
         />
       </slot>
     </template>
+
     <template
       v-else-if="typeof allData !== 'undefined'"
     >
@@ -129,12 +130,12 @@ defineSlots<{
     refresh: () => void
   }): any
   error(props: {
-    data: Data
+    data: typeof allData.value
     error: Error | undefined
     refresh: () => void
   }): any
   disconnected(props: {
-    data: Data
+    data: typeof allData.value
     error: Error | undefined
     refresh: () => void
   }): any
