@@ -90,13 +90,5 @@ export const sources = (env: Env, api: KumaApi) => {
 
       return GlobalInsight.fromObject(res.data!)
     },
-
-    '/foo': async () => {
-      return { foo: 'foo' }
-    },
-
-    '/bar': async () => {
-      return { bar: 'bar' }
-    },
   })
 }

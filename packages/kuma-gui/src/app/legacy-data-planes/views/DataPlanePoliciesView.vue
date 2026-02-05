@@ -28,7 +28,7 @@
               mesh: route.params.mesh,
               dataplane: route.params.proxy,
             })"
-            :data="[policyTypesData] as const"
+            :data="[policyTypesData]"
             :errors="[policyTypesError]"
             v-slot="{ data: [rulesData] }"
           >
@@ -165,7 +165,7 @@
               <template v-else>
                 <DataLoader
                   :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.proxy}/sidecar-dataplane-policies`"
-                  :data="[policyTypesData] as const"
+                  :data="[policyTypesData]"
                   :errors="[policyTypesError]"
                   v-slot="{ data: [sidecarDataplaneData] }: DataLoaderResponse<SidecarDataplaneCollectionSource, [typeof policyTypesData]>"
                 >
