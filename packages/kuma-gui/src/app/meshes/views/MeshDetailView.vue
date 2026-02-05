@@ -224,11 +224,59 @@
                     class="columns-with-borders"
                   >
                     <ResourceStatus
+                      v-if="props.mesh.meshServices.mode === 'Exclusive'"
+                      :total="data?.resources.MeshServiceGeneric.total ?? 0"
+                      data-testid="services-status"
+                    >
+                      <template #title>
+                        {{ t('meshes.detail.services') }}
+                      </template>
+                    </ResourceStatus>
+                    <ResourceStatus
+                      v-else-if="props.mesh.meshServices.mode === 'Disabled'"
                       :total="data?.services.total ?? 0"
                       data-testid="services-status"
                     >
                       <template #title>
                         {{ t('meshes.detail.services') }}
+                      </template>
+                    </ResourceStatus>
+                    <ResourceStatus
+                      v-else
+                      :total="data?.resources.MeshService.total ?? 0"
+                      data-testid="mesh-services-status"
+                    >
+                      <template #title>
+                        {{ t('meshes.detail.services') }}
+                      </template>
+
+                      <template
+                        v-if="data?.resources.MeshService.total && data?.services.total > 0"
+                        #description
+                      >
+                        {{ t('meshes.detail.mesh_services') }}
+                      </template>
+
+                      <template
+                        v-if="data?.resources.MeshServiceGeneric.total && data?.services.internal > 0"
+                        #body
+                      >
+                        <ResourceStatus
+                          :total="data?.services.total"
+                          data-testid="services-status"
+                        >
+                          <template #description>
+                            {{ t('meshes.detail.services') }}
+
+                            <XIcon
+                              name="info"
+                            >
+                              <XI18n
+                                path="meshes.detail.infos.services"
+                              />
+                            </XIcon>
+                          </template>
+                        </ResourceStatus>
                       </template>
                     </ResourceStatus>
 
