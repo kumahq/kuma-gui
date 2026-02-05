@@ -136,10 +136,13 @@
               <!-- builtin gateways have different data/visuals than other types of dataplanes -->
               <template v-if="props.data.dataplaneType === 'builtin'">
                 <DataLoader
-                  :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.proxy}/gateway-dataplane-policies`"
+                  :src="uri(dataplaneSources, '/meshes/:mesh/dataplanes/:name/gateway-dataplane-policies', {
+                    mesh: route.params.mesh,
+                    name: route.params.proxy,
+                  })"
                   :data="[policyTypesData]"
                   :errors="[policyTypesError]"
-                  v-slot="{ data: [gatewayDataplane] }: DataLoaderResponse<MeshGatewayDataplaneSource, [typeof policyTypesData]>"
+                  v-slot="{ data: [gatewayDataplane] }"
                 >
                   <DataCollection
                     :items="gatewayDataplane.routePolicies"
@@ -164,10 +167,13 @@
               <!-- anything but builtin gateways -->
               <template v-else>
                 <DataLoader
-                  :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.proxy}/sidecar-dataplane-policies`"
+                  :src="uri(dataplaneSources, '/meshes/:mesh/dataplanes/:name/sidecar-dataplane-policies', {
+                    mesh: route.params.mesh,
+                    name: route.params.proxy,
+                  })"
                   :data="[policyTypesData]"
                   :errors="[policyTypesError]"
-                  v-slot="{ data: [sidecarDataplaneData] }: DataLoaderResponse<SidecarDataplaneCollectionSource, [typeof policyTypesData]>"
+                  v-slot="{ data: [sidecarDataplaneData] }"
                 >
                   <DataCollection
                     :empty="false"
@@ -219,13 +225,12 @@
 <script lang="ts" setup>
 import BuiltinGatewayPolicies from '../components/BuiltinGatewayPolicies.vue'
 import type { DataplaneOverview } from '@/app/data-planes/data'
-import type { MeshGatewayDataplaneSource, SidecarDataplaneCollectionSource } from '@/app/data-planes/sources'
+import { sources as dataplaneSources } from '@/app/data-planes/sources'
 import PolicyTypeEntryList from '@/app/policies/components/PolicyTypeEntryList.vue'
 import type { PolicyResourceType } from '@/app/policies/data'
 import { sources as policySources } from '@/app/policies/sources'
 import RuleList from '@/app/rules/components/RuleList.vue'
 import { sources } from '@/app/rules/sources'
-import type { DataLoaderResponse } from '@kumahq/data'
 
 const props = defineProps<{
   data: DataplaneOverview

@@ -16,7 +16,6 @@ export type NonNullableArray<T extends unknown[]> = {
 
 /**
  * Only use if `DataLoader` itself can't infer the type, i.e. because provided `:src` is a `string`.
- * We need to prevent distributive conditional types here (i.e. therefore wrapping TData in [] and others)
  */
 export type DataLoaderResponse<TSrcResponse extends DataSourceResponse<unknown>, TData extends unknown[] = never> = {
   data: [TData] extends [never] ? NonNullable<TSrcResponse['data']> : NonNullableArray<[TSrcResponse['data'], ...TData]>
