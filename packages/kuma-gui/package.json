@@ -19,7 +19,7 @@
     "@kumahq/routing": "*",
     "@kumahq/settings": "*",
     "@kumahq/x": "*",
-    "@vueuse/core": "^14.1.0",
+    "@vueuse/core": "^14.2.0",
     "deepmerge": "^4.3.1",
     "js-yaml": "^4.1.1",
     "openapi-fetch": "^0.15.0",
