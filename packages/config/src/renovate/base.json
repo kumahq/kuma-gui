@@ -31,12 +31,20 @@
   },
   "packageRules": [
     {
+      "description": [
+        " Deletes and recreates the package-lock, should only be done at the beginning",
+        " of a release cycle therefore requires manual approval via the dashboard"
+      ],
       "matchUpdateTypes": [
         "lockFileMaintenance"
       ],
       "dependencyDashboardApproval": true
     },
     {
+      "description": [
+        " Upgrades node, should only be for security issues or done at the beginning",
+        " of a release cycle therefore requires manual approval via the dashboard"
+      ],
       "groupName": "node",
       "matchPackageNames": [
         "node"
@@ -85,16 +93,10 @@
       "enabled": false
     },
     {
-      "matchPackageNames": [
-        "npm"
+      "description": [
+        " Makes removate bump engines as well as nvmrc when upgrading node",
+        " see https://github.com/kumahq/kuma-gui/pull/4460"
       ],
-      "matchUpdateTypes": [
-        "major",
-        "minor"
-      ],
-      "enabled": false
-    },
-    {
       "matchCategories": [
         "js"
       ],
