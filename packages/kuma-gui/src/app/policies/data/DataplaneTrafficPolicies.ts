@@ -27,6 +27,12 @@ export const DataplaneInboundPolicies = {
   fromObject: (item: InboundPolicyConf) => {
     return {
       ...item,
+      rules: item.rules.map((rule) => {
+        return {
+          ...rule,
+          kri: rule.kri ?? '',
+        }
+      }),
     }
   },
 

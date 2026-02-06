@@ -110,7 +110,7 @@
                     data-testid="inbound-policies-rules"
                   >
                     <template
-                      v-for="({ rules, kind, origins }) in policiesData?.policies || []"
+                      v-for="({ rules, kind }) in policiesData?.policies || []"
                       :key="kind"
                     >
                       <XCard>
@@ -123,71 +123,59 @@
                             </span>
                           </template>
                           <template #accordion-content>
-                            <XTable
-                              variant="kv"
-                            >
-                              <template
+                            <XLayout variant="y-stack">
+                              <XTable
                                 v-for="item in rules"
-                                :key="item"
+                                :key="item.kri"
+                                variant="kv"
                               >
-                                <template
-                                  v-if="origins.length > 0"
-                                >
-                                  <tr>
-                                    <th scope="row">
-                                      Origin policies
-                                    </th>
-                                    <td>
-                                      <ul>
-                                        <li
-                                          v-for="origin in origins"
-                                          :key="origin.kri"
-                                        >
-                                          <template
-                                            v-for="kri in [Kri.fromString(origin.kri)]"
-                                            :key="typeof kri"
-                                          >
-                                            <XAction
-                                              v-if="policyTypes[kind]"
-                                              :to="{
-                                                name: 'policy-detail-view',
-                                                params: {
-                                                  mesh: kri.mesh,
-                                                  policyPath: policyTypes[kind]![0].path,
-                                                  policy: origin.kri,
-                                                },
-                                              }"
-                                            >
-                                              {{ origin.kri }}
-                                            </XAction>
-                                            <template
-                                              v-else
-                                            >
-                                              {{ origin.kri }}
-                                            </template>
-                                          </template>
-                                        </li>
-                                      </ul>
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <td colspan="2">
-                                      <XLayout
-                                        type="stack"
-                                        size="small"
+                                <tr>
+                                  <th scope="row">
+                                    Policy origin
+                                  </th>
+                                  <td>
+                                    <template
+                                      v-for="kri in [Kri.fromString(item.kri)]"
+                                      :key="typeof kri"
+                                    >
+                                      <XAction
+                                        v-if="policyTypes[kind] && Kri.isKriString(item.kri)"
+                                        :to="{
+                                          name: 'policy-detail-view',
+                                          params: {
+                                            mesh: kri.mesh,
+                                            policyPath: policyTypes[kind]![0].path,
+                                            policy: item.kri,
+                                          },
+                                        }"
                                       >
-                                        <span>Config</span>
-                                        <XCodeBlock
-                                          :code="YAML.stringify(item.conf)"
-                                          language="yaml"
-                                          :show-copy-button="false"
-                                        />
-                                      </XLayout>
-                                    </td>
-                                  </tr>
-                                </template>
-                              </template>
-                            </XTable>
+                                        {{ item.kri }}
+                                      </XAction>
+                                      <template
+                                        v-else
+                                      >
+                                        {{ item.kri }}
+                                      </template>
+                                    </template>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td colspan="2">
+                                    <XLayout
+                                      type="stack"
+                                      size="small"
+                                    >
+                                      <span>Config</span>
+                                      <XCodeBlock
+                                        :code="YAML.stringify(item.conf)"
+                                        language="yaml"
+                                        :show-copy-button="false"
+                                      />
+                                    </XLayout>
+                                  </td>
+                                </tr>
+                              </XTable>
+                            </XLayout>
                           </template>
                         </AccordionItem>
                       </XCard>
