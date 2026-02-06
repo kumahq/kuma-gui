@@ -94,7 +94,7 @@
     },
     {
       "description": [
-        " Makes removate bump engines as well as nvmrc when upgrading node",
+        " Makes renovate bump engines as well as nvmrc when upgrading node",
         " see https://github.com/kumahq/kuma-gui/pull/4460"
       ],
       "matchCategories": [
