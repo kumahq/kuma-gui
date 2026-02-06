@@ -5,6 +5,7 @@ Feature: mesh / item
       | Alias              | Selector                                                        |
       | error              | [data-testid="error-state"]                                     |
       | service-count      | [data-testid="services-status"]                                 |
+      | mesh-service-count | [data-testid="mesh-services-status"]                            |
       | config-universal   | [data-testid='codeblock-yaml-universal']                        |
       | config-k8s         | [data-testid='codeblock-yaml-k8s']                              |
       | select-environment | [data-testid='select-input']                                    |
@@ -12,15 +13,53 @@ Feature: mesh / item
       | mtrust-section     | [data-testid='mesh-trusts-listing']                             |
       | mesh-detail        | [data-testid='mesh-detail-view']                                |
 
-  Scenario: /mesh-insights/* isn't a 404
+  Scenario Outline: /mesh-insights/* isn't a 404 and meshService.mode is <Scenario>
     Given the URL "/mesh-insights/default" responds with
       """
       body:
+        resources:
+          MeshService:
+            total: <MeshServiceCount>
+          MeshExternalService:
+            total: <MeshServiceCount>
+          MeshMultiZoneService:
+            total: <MeshServiceCount>
         services:
-          total: 11
+          total: <ServiceCount>
+      """
+    And the URL "/meshes/default" responds with
+      """
+      body:
+        meshServices:
+          mode: <Scenario>
       """
     When I visit the "/meshes/default/overview" URL
-    And the "$service-count" element contains "11"
+    And the "$service-count" element contains "<Total>"
+
+    Examples:
+      | Scenario  | ServiceCount | MeshServiceCount | Total |
+      | Exclusive |           10 |               11 |    33 |
+      | Disabled  |           10 |               11 |    10 |
+
+  Scenario: /mesh-insights/* isn't a 404 and meshService.mode is Everywhere
+    Given the URL "/mesh-insights/default" responds with
+      """
+      body:
+        resources:
+          MeshService:
+            total: 11
+        services:
+          total: 10
+      """
+    And the URL "/meshes/default" responds with
+      """
+      body:
+        meshServices:
+          mode: Everywhere
+      """
+    When I visit the "/meshes/default/overview" URL
+    And the "$service-count" element contains "10"
+    And the "$mesh-service-count" element contains "11"
 
   Scenario: /mesh-insights/* is a 404
     Given the URL "/mesh-insights/default" responds with
@@ -30,7 +69,7 @@ Feature: mesh / item
       """
     When I visit the "/meshes/default/overview" URL
     Then the "$mesh-detail" element exists but the "$error" element doesn't exist
-    And the "$service-count" element contains "0"
+    And the "[data-testid*='services-status']" element contains "0"
 
   Scenario: Shows config with format based on environment
     When I visit the "/meshes/default/overview" URL

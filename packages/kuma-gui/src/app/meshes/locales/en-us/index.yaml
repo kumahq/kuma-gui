@@ -82,6 +82,10 @@ meshes:
     docs: *meshes.docs.href
   detail:
     services: 'Services'
+    mesh_services: 'MeshServices'
+    infos:
+      services: !!text/markdown |
+        There is a mix of traditional services and Mesh*Services in this mesh. Consider migrating to MeshServices to get the most out of your mesh by setting mode to `Exclusive`.
     data_plane_proxies: 'Data plane proxies'
     policies: 'Policies'
     enabled: 'Enabled'
