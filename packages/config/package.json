@@ -21,6 +21,9 @@
     "./vite": {
       "import": "./src/vite/index.ts"
     },
+    "./vite/modules": {
+      "types": "./src/vite/plugins/modules.d.ts"
+    },
     "./utils": {
       "import": "./src/utils/index.ts"
     },

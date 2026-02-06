@@ -36,7 +36,6 @@
     "@kumahq/config": "*",
     "@kumahq/fake-api": "*",
     "@kumahq/kuma-http-api": "*",
-    "@modyfi/vite-plugin-yaml": "^1.1.1",
     "@types/js-yaml": "^4.0.9",
     "@types/semver": "^7.7.1",
     "@vitejs/plugin-vue": "^6.0.4",
