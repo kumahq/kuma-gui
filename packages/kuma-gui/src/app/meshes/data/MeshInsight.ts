@@ -3,6 +3,13 @@ import type { components } from '@kumahq/kuma-http-api'
 
 type PartialMeshInsightCollection = components['schemas']['MeshInsightCollection']
 type PartialMeshInsight = components['schemas']['MeshInsight']
+type MeshInsightsResources = Record<string, { total: number }>
+  & Record<
+    | 'MeshService'
+    | 'MeshExternalService'
+    | 'MeshMultiZoneService'
+    | 'MeshServiceGeneric',
+    { total: number }>
 
 const MeshInsightDataplaneStatistics = {
   fromObject({
@@ -50,9 +57,33 @@ export const MeshInsight = {
       policies: Object.fromEntries(Object.entries(item?.policies ?? {}).map(([key, value]) => [key, {
         total: value.total ?? 0,
       }])),
-      resources: Object.fromEntries(Object.entries(item?.resources ?? {}).map(([key, value]) => [key, {
-        total: value.total ?? 0,
-      }])),
+      resources: {
+        ...Object.fromEntries(Object.entries(item?.resources ?? {}).map(([key, value]) => [key, {
+          total: value.total ?? 0,
+        }])),
+        ...(() => {
+          const meshServices = {
+            MeshService: {
+              ...item.resources?.MeshService,
+              total: item.resources?.MeshService?.total ?? 0,
+            },
+            MeshExternalService: {
+              ...item.resources?.MeshExternalService,
+              total: item.resources?.MeshExternalService?.total ?? 0,
+            },
+            MeshMultiZoneService: {
+              ...item.resources?.MeshMultiZoneService,
+              total: item.resources?.MeshMultiZoneService?.total ?? 0,
+            },
+          }
+          return {
+            ...meshServices,
+            MeshServiceGeneric: {
+              total: meshServices.MeshService.total + meshServices.MeshExternalService.total + meshServices.MeshMultiZoneService.total,
+            },
+          }
+        })(),
+      } satisfies MeshInsightsResources as MeshInsightsResources,
     }
   },
 

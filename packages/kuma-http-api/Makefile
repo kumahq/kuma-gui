@@ -1,7 +1,7 @@
 # Please keep this file free of actual scripts
 # It should only be used for adding "non-dot" aliases and documentation
 
-SHELL := /usr/bin/env bash
+SHELL := /usr/bin/env bash -o pipefail
 
 NPM_WORKSPACE_ROOT := $(shell npm prefix)
 KUMAHQ_CONFIG := $(NPM_WORKSPACE_ROOT)/$(shell cat $(NPM_WORKSPACE_ROOT)/package-lock.json | jq -r '.packages | to_entries[] | select(.value.name == "@kumahq/config") | .key')
