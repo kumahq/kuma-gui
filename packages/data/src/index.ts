@@ -9,6 +9,19 @@ export type DataSourceResponse<T> = {
   error: Error | undefined
   refresh: () => void
 }
+
+export type NonNullableArray<T extends unknown[]> = {
+  [K in keyof T]: NonNullable<T[K]>
+}
+
+/**
+ * Only use if `DataLoader` itself can't infer the type, i.e. because provided `:src` is a `string`.
+ */
+export type DataLoaderResponse<TSrcResponse extends DataSourceResponse<unknown>, TData extends unknown[] = never> = {
+  data: [TData] extends [never] ? NonNullable<TSrcResponse['data']> : NonNullableArray<[TSrcResponse['data'], ...TData]>
+  error?: TSrcResponse['error']
+}
+
 export type PaginationParams = {
   size: number
   page: number
@@ -41,7 +54,7 @@ const AsyncGeneratorFunction = Object.getPrototypeOf(async function* () { }).con
 const isAsyncGeneratorFunction = (fn: unknown): fn is AsyncGeneratorFunction => {
   return fn instanceof AsyncGeneratorFunction
 }
-class TypedString<T = unknown> {
+export class TypedString<T = unknown> {
   constructor(
     protected str: string,
   ) { }
