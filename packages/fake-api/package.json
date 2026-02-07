@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "deepmerge": "^4.3.1",
-    "msw": "^2.12.7",
+    "msw": "^2.12.8",
     "path-to-regexp": "^8.3.0",
     "urlpattern-polyfill": "^10.1.0"
   },
