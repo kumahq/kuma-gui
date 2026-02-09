@@ -94,6 +94,20 @@
                   <template #namespace="{ row: item }">
                     {{ item.namespace }}
                   </template>
+                  <template #zone="{ row: item }">
+                    <XAction
+                      v-if="item.zone"
+                      :to="{
+                        name: 'zone-cp-detail-view',
+                        params: {
+                          zone: item.zone,
+                        },
+                      }"
+                    >
+                      {{ item.zone }}
+                    </XAction>
+                    <span v-else>—</span>
+                  </template>
                   <template #dpps="{ row: item }">
                     {{ item.status.dataplaneProxies.connected }} /
                     {{ item.status.dataplaneProxies.healthy }} /
