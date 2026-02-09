@@ -57,7 +57,7 @@
                       </XBadge>
                     </dd>
                   </div>
-                  <div v-if="can('use zones')">
+                  <div v-if="can('use zones') && data.zone">
                     <dt>
                       {{ t('http.api.property.zone') }}
                     </dt>
