@@ -48,6 +48,10 @@ Feature: mesh / item
         resources:
           MeshService:
             total: 11
+          MeshExternalService:
+            total: 0
+          MeshMultiZoneService:
+            total: 0
         services:
           total: 10
       """
