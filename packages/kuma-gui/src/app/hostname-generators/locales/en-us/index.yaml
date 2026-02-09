@@ -20,6 +20,7 @@ hostname-generators:
       breadcrumbs: HostnameGenerators
       config: Configuration
       format: Format
+      labels: Labels
       formats:
         universal: Universal
         k8s: Kubernetes

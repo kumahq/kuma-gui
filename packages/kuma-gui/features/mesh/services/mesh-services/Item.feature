@@ -9,6 +9,21 @@ Feature: mesh / mesh-services / item
       | config-k8s         | [data-testid='codeblock-yaml-k8s']             |
       | select-environment | [data-testid='select-input']                   |
       | identities         | [data-testid='mesh-service-identities']        |
+      | about-section      | [data-testid='mesh-service-about-section']     |
+    And the URL "/meshes/default/meshservices/item-1" responds with
+      """
+      body:
+          labels:
+            k8s.kuma.io/namespace: kuma-demo
+            kuma.io/origin: zone
+            kuma.io/zone: zone-1
+      """
+
+  Scenario: The about section has the expected content
+    When I visit the "/meshes/default/services/mesh-services/item-1/overview" URL
+    Then the "$about-section" element exists
+    And the "$about-section" element contains "kuma-demo"
+    And the "$about-section" element contains "kuma.io/origin:zone"
 
   Scenario: The dataplane table exists
     Given the environment

@@ -53,10 +53,10 @@
               </div>
 
               <template
-                v-for="labels in [Object.entries(props.data.labels).filter(([key]) => !['display-name', 'zone', 'namespace'].find((partial) => key.includes(partial)))]"
+                v-for="labels in [Object.entries(props.data.labels).filter(([key]) => !['display-name', 'zone', 'namespace', 'mesh'].find((partial) => key.includes(partial)))]"
                 :key="typeof labels"
               >
-                <div>
+                <div v-if="labels.length">
                   <dt>{{ t('workloads.routes.item.about.labels') }}</dt>
                   <dd>
                     <XLayout
@@ -67,7 +67,7 @@
                         v-for="[key, value] in labels"
                         :key="key"
                       >
-                        {{ key }}: {{ value }}
+                        {{ key }}:{{ value }}
                       </XBadge>
                     </XLayout>
                   </dd>

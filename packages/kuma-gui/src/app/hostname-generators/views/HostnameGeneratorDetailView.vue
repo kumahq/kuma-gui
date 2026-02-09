@@ -8,7 +8,7 @@
       codeRegExp: false,
       environment: String,
     }"
-    v-slot="{ route, t, uri }"
+    v-slot="{ route, t, uri, can }"
   >
     <RouteTitle
       :title="t('hostname-generators.routes.items.title')"
@@ -40,39 +40,100 @@
             :title="t('hostname-generators.routes.item.about.title')"
             :created="data.creationTime"
             :modified="data.modificationTime"
+            data-testid="hostname-generator-about-section"
           >
-            <template
-              v-for="labels in [{
-                ...data.spec.selector.meshService.matchLabels,
-                ...data.spec.selector.meshExternalService.matchLabels,
-                ...data.spec.selector.meshMultiZoneService.matchLabels,
-              }]"
-              :key="typeof labels"
+            <XLayout
+              variant="y-stack"
             >
-              <XDl
-                v-if="Object.keys(labels).length"
-                variant="x-stack"
-              >
-                <div>
-                  <dt>
-                    {{ t('http.api.property.tags') }}
-                  </dt>
-                  <dd>
-                    <XLayout
-                      type="separated"
-                      truncate
-                    >
-                      <XBadge
-                        v-for="([label, value], index) in Object.entries(labels)"
-                        :key="`${label}${value}${index}`"
-                      >
-                        {{ label }}:{{ value }}
+              <XLayout>
+                <XDl>
+                  <div>
+                    <dt>
+                      {{ t('http.api.property.namespace') }}
+                    </dt>
+                    <dd>
+                      <XBadge>
+                        {{ data.namespace }}
                       </XBadge>
-                    </XLayout>
-                  </dd>
-                </div>
+                    </dd>
+                  </div>
+                  <div v-if="can('use zones')">
+                    <dt>
+                      {{ t('http.api.property.zone') }}
+                    </dt>
+                    <dd>
+                      <XAction
+                        :to="{
+                          name: 'zone-cp-detail-view',
+                          params: {
+                            zone: data.zone,
+                          },
+                        }"
+                      >
+                        <XBadge>
+                          {{ data.zone }}
+                        </XBadge>
+                      </XAction>
+                    </dd>
+                  </div>
+                </XDl>
+              </XLayout>
+              <template
+                v-for="labels in [{
+                  ...data.spec.selector.meshService.matchLabels,
+                  ...data.spec.selector.meshExternalService.matchLabels,
+                  ...data.spec.selector.meshMultiZoneService.matchLabels,
+                }]"
+                :key="typeof labels"
+              >
+                <XDl
+                  v-if="Object.keys(labels).length"
+                  variant="x-stack"
+                >
+                  <div>
+                    <dt>
+                      {{ t('http.api.property.match') }}
+                    </dt>
+                    <dd>
+                      <XLayout
+                        type="separated"
+                        truncate
+                      >
+                        <XBadge
+                          v-for="([label, value], index) in Object.entries(labels)"
+                          :key="`${label}${value}${index}`"
+                        >
+                          {{ label }}:{{ value }}
+                        </XBadge>
+                      </XLayout>
+                    </dd>
+                  </div>
+                </XDl>
+              </template>
+              <XDl>
+                <template
+                  v-for="labels in [Object.entries(data.labels).filter(([key, value]) => value.length && !['display-name', 'zone', 'namespace'].find((partial) => key.includes(partial)))]"
+                  :key="typeof labels"
+                >
+                  <div v-if="labels.length">
+                    <dt>{{ t('hostname-generators.routes.item.labels') }}</dt>
+                    <dd>
+                      <XLayout
+                        variant="x-stack"
+                        truncate
+                      >
+                        <XBadge
+                          v-for="[key, value] in labels"
+                          :key="key"
+                        >
+                          {{ key }}:{{ value }}
+                        </XBadge>
+                      </XLayout>
+                    </dd>
+                  </div>
+                </template>
               </XDl>
-            </template>
+            </XLayout>
           </XAboutCard>
 
           <XCard>

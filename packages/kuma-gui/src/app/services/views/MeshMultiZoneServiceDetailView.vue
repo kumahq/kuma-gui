@@ -17,6 +17,7 @@
           :title="t('services.mesh-multi-zone-service.about.title')"
           :created="props.data.creationTime"
           :modified="props.data.modificationTime"
+          data-testid="mesh-multi-zone-service-about-section"
         >
           <XDl variant="x-stack">
             <div>
@@ -68,6 +69,28 @@
                 </template>
               </dd>
             </div>
+
+            <template
+              v-for="labels in [Object.entries(data.labels).filter(([key, value]) => value.length && !['display-name', 'zone', 'namespace', 'service-name', 'mesh'].find((partial) => key.includes(partial)))]"
+              :key="typeof labels"
+            >
+              <div v-if="labels.length > 0">
+                <dt>{{ t('services.routes.item.labels') }}</dt>
+                <dd>
+                  <XLayout
+                    variant="x-stack"
+                    truncate
+                  >
+                    <XBadge
+                      v-for="[key, value] in labels"
+                      :key="key"
+                    >
+                      {{ key }}:{{ value }}
+                    </XBadge>
+                  </XLayout>
+                </dd>
+              </div>
+            </template>
           </XDl>
         </XAboutCard>
 

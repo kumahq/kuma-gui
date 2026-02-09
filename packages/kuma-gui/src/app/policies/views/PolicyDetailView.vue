@@ -17,6 +17,7 @@
         :title="t('policies.detail.about.title')"
         :created="props.data.creationTime"
         :modified="props.data.modificationTime"
+        data-testid="policy-about-section"
       >
         <XDl variant="x-stack">
           <div>
@@ -48,18 +49,18 @@
               {{ t('http.api.property.zone') }}
             </dt>
             <dd>
-              <XBadge appearance="decorative">
-                <XAction
-                  :to="{
-                    name: 'zone-cp-detail-view',
-                    params: {
-                      zone: props.data.zone,
-                    },
-                  }"
-                >
+              <XAction
+                :to="{
+                  name: 'zone-cp-detail-view',
+                  params: {
+                    zone: props.data.zone,
+                  },
+                }"
+              >
+                <XBadge appearance="decorative">
                   {{ props.data.zone }}
-                </XAction>
-              </XBadge>
+                </XBadge>
+              </XAction>
             </dd>
           </div>
           <div
@@ -74,6 +75,28 @@
               />
             </dd>
           </div>
+
+          <template
+            v-for="labels in [Object.entries(data.labels).filter(([key, value]) => value?.length && !['display-name', 'zone', 'namespace', 'mesh'].find((partial) => key.includes(partial)))]"
+            :key="typeof labels"
+          >
+            <div v-if="labels.length">
+              <dt>{{ t('policies.routes.item.labels') }}</dt>
+              <dd>
+                <XLayout
+                  variant="x-stack"
+                  truncate
+                >
+                  <XBadge
+                    v-for="[key, value] in labels"
+                    :key="key"
+                  >
+                    {{ key }}:{{ value }}
+                  </XBadge>
+                </XLayout>
+              </dd>
+            </div>
+          </template>
         </XDl>
       </XAboutCard>
 
