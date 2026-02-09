@@ -7,8 +7,7 @@
     "packages/*"
   ],
   "overrides": {
-    "js-yaml": "^4.1.1",
-    "glob": "^13.0.1"
+    "js-yaml": "^4.1.1"
   },
   "devDependencies": {
     "@kumahq/config": "*"
