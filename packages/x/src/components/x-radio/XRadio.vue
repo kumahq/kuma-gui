@@ -1,6 +1,6 @@
 <template>
   <KRadio
-    v-model="modelValue"
+    v-model="model"
     :class="{
       'variant-card': props.card,
     }"
@@ -27,14 +27,14 @@ import { useAttrs } from 'vue'
 
 import type { RadioModelValue } from '@kong/kongponents'
 
+
+const model = defineModel<RadioModelValue>({ required: true })
 const props = withDefaults(defineProps<{
-  modelValue: RadioModelValue
   selectedValue: RadioModelValue
   card?: boolean
 }>(), {
   card: false,
 })
-const { modelValue } = props
 const slots = defineSlots()
 const attrs = useAttrs()
 
