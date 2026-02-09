@@ -41,7 +41,17 @@
               <div v-if="props.data.zone.length">
                 <dt>{{ t('http.api.property.zone') }}</dt>
                 <dd>
-                  <XBadge>{{ props.data.zone }}</XBadge>
+                  <XAction
+                    v-if="props.data.zone"
+                    :to="{
+                      name: 'zone-cp-detail-view',
+                      params: {
+                        zone: props.data.zone,
+                      },
+                    }"
+                  >
+                    <XBadge>{{ props.data.zone }}</XBadge>
+                  </XAction>
                 </dd>
               </div>
 
