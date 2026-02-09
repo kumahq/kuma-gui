@@ -243,7 +243,7 @@
                     </ResourceStatus>
                     <ResourceStatus
                       v-else
-                      :total="data?.resources.MeshService.total ?? 0"
+                      :total="data?.resources.MeshServiceGeneric.total ?? 0"
                       data-testid="mesh-services-status"
                     >
                       <template #title>
@@ -251,18 +251,18 @@
                       </template>
 
                       <template
-                        v-if="data?.resources.MeshService.total && data?.services.total > 0"
+                        v-if="data?.resources.MeshServiceGeneric.total && data?.services.total > 0"
                         #description
                       >
                         {{ t('meshes.detail.mesh_services') }}
                       </template>
 
                       <template
-                        v-if="data?.resources.MeshServiceGeneric.total && data?.services.internal > 0"
+                        v-if="data?.resources.MeshServiceGeneric.total && data?.services.total > 0"
                         #body
                       >
                         <ResourceStatus
-                          :total="data?.services.total"
+                          :total="data?.services.total ?? 0"
                           data-testid="services-status"
                         >
                           <template #description>
