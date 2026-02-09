@@ -26,6 +26,7 @@ export { default as XNotificationHub } from './x-notification/XNotificationHub.v
 export { default as XProgress } from './x-progress/XProgress.vue'
 export { default as XPrompt } from './x-prompt/XPrompt.vue'
 export { default as XProvider } from './x-provider/XProvider.vue'
+export { default as XRadio } from './x-radio/XRadio.vue'
 export { default as XSearch } from './x-search/XSearch.vue'
 export { default as XSelect } from './x-select/XSelect.vue'
 export { default as XTable } from './x-table/XTable.vue'
