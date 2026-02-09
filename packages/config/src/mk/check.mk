@@ -25,10 +25,10 @@ check/node:
 		echo "https://nodejs.org/en/download" ; \
 		exit 1; \
 	)
-	@if npm ls -g "npm@$(NPM_VERSION)" | grep "empty" > /dev/null; then \
-		echo "Make sure npm@$(NPM_VERSION) is installed. Try npm install -g npm@$(NPM_VERSION)"; \
-		exit 1; \
-	fi
+	@npm ls -g "npm@$(NPM_VERSION)" > /dev/null 2>&1 || ( \
+			echo "Make sure npm@$(NPM_VERSION) is installed. Try npm install -g npm@$(NPM_VERSION)"; \
+			exit 1; \
+	)
 
 
 .PHONY: .lint

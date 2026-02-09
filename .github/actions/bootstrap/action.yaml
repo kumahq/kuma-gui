@@ -12,6 +12,12 @@ runs:
     - uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
       with:
         node-version-file: '.nvmrc'
+    # install npm dependent on the root package engines entry for npm
+    # we always expect that entry to be there and syncs and is synced by with renovate
+    - shell: bash
+      run: |
+        npm install -g npm@$(cat ${{ github.workspace }}/package.json | jq -r '.engines.npm' )
+        npm -v
     - uses: actions/cache@8b402f58fbc84540c8b491a91e594a4576fec3d7 # v5.0.2
       id: cache
       with:
@@ -21,7 +27,7 @@ runs:
         # if you ever want to ignore or rebuild the cache you can temporarily
         # remove the restore-keys related comments here also see
         # https://github.com/actions/cache/blob/main/tips-and-workarounds.md#update-a-cache
-        key: ${{ runner.os }}-bootstrap-cache-${{ hashFiles('**/package-lock.json') }} #-${{ github.run_id }}
+        key: ${{ runner.os }}-bootstrap-cache-${{ hashFiles('**/package-lock.json', '**/package.json') }} #-${{ github.run_id }}
         # restore-keys: |
         #   ${{ runner.os }}-bootstrap-cache-${{ hashFiles('**/package-lock.json') }}
 
