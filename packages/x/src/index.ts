@@ -1,6 +1,5 @@
 import {
   KPop,
-  KRadio,
   KLabel,
   KCodeBlock,
 } from '@kong/kongponents'
@@ -38,6 +37,7 @@ import {
   XProgress,
   XPrompt,
   XProvider,
+  XRadio,
   XSearch,
   XSelect,
   XTable,
@@ -59,7 +59,7 @@ const components = [
   ['XCard', XCard],
   ['XLabel', KLabel],
   ['XPop', KPop],
-  ['XRadio', KRadio],
+  ['XRadio', XRadio],
   //
   ['XAction', XAction],
   ['XActionGroup', XActionGroup],
@@ -113,7 +113,7 @@ declare module 'vue' {
     XCard: typeof XCard
     XLabel: typeof KLabel
     XPop: typeof KPop
-    XRadio: typeof KRadio
+    XRadio: typeof XRadio
     //
     XAlert: typeof XAlert
     XAnonymous: typeof XAnonymous
