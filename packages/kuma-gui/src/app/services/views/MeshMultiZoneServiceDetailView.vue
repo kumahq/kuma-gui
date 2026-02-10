@@ -84,6 +84,7 @@
                     <XBadge
                       v-for="[key, value] in labels"
                       :key="key"
+                      :appearance="key.includes('kuma.io') ? 'info' : 'decorative'"
                     >
                       {{ key }}:{{ value }}
                     </XBadge>
