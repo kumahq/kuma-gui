@@ -30,11 +30,11 @@
             })"
             :data="[policyTypesData]"
             :errors="[policyTypesError]"
-            v-slot="{ data: rulesData }"
+            v-slot="{ data: [rulesData] }"
           >
             <!-- show an empty state if we have no rules at all -->
             <DataCollection
-              :items="rulesData!.rules"
+              :items="rulesData.rules"
             >
               <!-- for proxy and to rules, display if we have any -->
               <template
@@ -42,7 +42,7 @@
                 :key="ruleType"
               >
                 <DataCollection
-                  :items="rulesData!.rules"
+                  :items="rulesData.rules"
                   :predicate="(item) => item.ruleType === ruleType"
                   :comparator="(a, b) => a.type.localeCompare(b.type)"
                   :empty="false"
@@ -66,7 +66,7 @@
               <!-- otherwise, for from rules, group by inbound port and display if we have any -->
               <!-- filter rules that are being represented as inboundRules (isFromAsRules) -->
               <DataCollection
-                :items="rulesData!.rules"
+                :items="rulesData.rules"
                 :predicate="(item) => item.ruleType === 'from' && !Boolean(policyTypes[item.type]?.policy.isFromAsRules)"
                 :comparator="(a, b) => a.type.localeCompare(b.type)"
                 :empty="false"
@@ -98,7 +98,7 @@
               </DataCollection>
 
               <DataCollection
-                :items="rulesData!.inboundRules"
+                :items="rulesData.inboundRules"
                 :comparator="(a, b) => a.type.localeCompare(b.type)"
                 :empty="false"
                 v-slot="{ items }"
@@ -136,13 +136,15 @@
               <!-- builtin gateways have different data/visuals than other types of dataplanes -->
               <template v-if="props.data.dataplaneType === 'builtin'">
                 <DataLoader
-                  :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.proxy}/gateway-dataplane-policies`"
+                  :src="uri(dataplaneSources, '/meshes/:mesh/dataplanes/:name/gateway-dataplane-policies', {
+                    mesh: route.params.mesh,
+                    name: route.params.proxy,
+                  })"
                   :data="[policyTypesData]"
                   :errors="[policyTypesError]"
-                  v-slot="{ data: gatewayDataplane }: MeshGatewayDataplaneSource"
+                  v-slot="{ data: [gatewayDataplane] }"
                 >
                   <DataCollection
-                    v-if="gatewayDataplane"
                     :items="gatewayDataplane.routePolicies"
                     :empty="false"
                   >
@@ -165,14 +167,17 @@
               <!-- anything but builtin gateways -->
               <template v-else>
                 <DataLoader
-                  :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.proxy}/sidecar-dataplane-policies`"
+                  :src="uri(dataplaneSources, '/meshes/:mesh/dataplanes/:name/sidecar-dataplane-policies', {
+                    mesh: route.params.mesh,
+                    name: route.params.proxy,
+                  })"
                   :data="[policyTypesData]"
                   :errors="[policyTypesError]"
-                  v-slot="{ data: sidecarDataplaneData }: SidecarDataplaneCollectionSource"
+                  v-slot="{ data: [sidecarDataplaneData] }"
                 >
                   <DataCollection
                     :empty="false"
-                    :items="sidecarDataplaneData!.policyTypeEntries"
+                    :items="sidecarDataplaneData.policyTypeEntries"
                     :predicate="(item) => policyTypes[item.type]?.policy.isTargetRef === false"
                     v-slot="{ items }"
                   >
@@ -220,7 +225,7 @@
 <script lang="ts" setup>
 import BuiltinGatewayPolicies from '../components/BuiltinGatewayPolicies.vue'
 import type { DataplaneOverview } from '@/app/data-planes/data'
-import type { MeshGatewayDataplaneSource, SidecarDataplaneCollectionSource } from '@/app/data-planes/sources'
+import { sources as dataplaneSources } from '@/app/data-planes/sources'
 import PolicyTypeEntryList from '@/app/policies/components/PolicyTypeEntryList.vue'
 import type { PolicyResourceType } from '@/app/policies/data'
 import { sources as policySources } from '@/app/policies/sources'
