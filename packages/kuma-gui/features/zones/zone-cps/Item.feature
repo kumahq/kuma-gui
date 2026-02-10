@@ -8,11 +8,23 @@ Feature: zones / item
       | config-view            | [data-testid='zone-cp-config-view']                |
       | status-circuit-breaker | [data-testid='subscription-status-CircuitBreaker'] |
       | version-outdated       | .version.outdated                                  |
+      | about-section          | [data-testid='zone-about-section']                 |
     And the environment
       """
       KUMA_MODE: global
       KUMA_SUBSCRIPTION_COUNT: 1
       """
+    And the URL "/zones/zone-cp-1/_overview" responds with
+      """
+      body:
+        labels:
+          kuma.io/display-name: default
+      """
+
+  Scenario: The about section has the expected content
+    When I visit the "zones/zone-cp-1/overview" URL
+    Then the "$about-section" element exists
+    And the "$about-section" element contains "kuma.io/display-name:default"
 
   Scenario: Detail view has expected content
     # We always use the final subscription

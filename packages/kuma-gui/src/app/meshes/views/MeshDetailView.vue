@@ -62,6 +62,7 @@
                   :created="props.mesh.creationTime"
                   :modified="props.mesh.modificationTime"
                   class="about-section"
+                  data-testid="mesh-about-section"
                 >
                   <XDl
                     variant="x-stack"
@@ -146,6 +147,28 @@
                         </XLayout>
                       </dd>
                     </div>
+
+                    <template
+                      v-for="labels in [Object.entries(props.mesh.labels)]"
+                      :key="typeof labels"
+                    >
+                      <div v-if="labels.length > 0">
+                        <dt>{{ t('services.routes.item.labels') }}</dt>
+                        <dd>
+                          <XLayout
+                            variant="x-stack"
+                            truncate
+                          >
+                            <XBadge
+                              v-for="[key, value] in labels"
+                              :key="key"
+                            >
+                              {{ key }}:{{ value }}
+                            </XBadge>
+                          </XLayout>
+                        </dd>
+                      </div>
+                    </template>
                   </XDl>
                 </XAboutCard>
 

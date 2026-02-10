@@ -77,10 +77,10 @@
           </div>
 
           <template
-            v-for="labels in [Object.entries(data.labels).filter(([key, value]) => value?.length && !['display-name', 'zone', 'namespace', 'mesh'].find((partial) => key.includes(partial)))]"
+            v-for="labels in [Object.entries(props.data.labels)]"
             :key="typeof labels"
           >
-            <div v-if="labels.length">
+            <div v-if="labels.length > 0">
               <dt>{{ t('policies.routes.item.labels') }}</dt>
               <dd>
                 <XLayout

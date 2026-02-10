@@ -53,10 +53,10 @@
               </div>
 
               <template
-                v-for="labels in [Object.entries(props.data.labels).filter(([key]) => !['display-name', 'zone', 'namespace', 'mesh'].find((partial) => key.includes(partial)))]"
+                v-for="labels in [Object.entries(props.data.labels)]"
                 :key="typeof labels"
               >
-                <div v-if="labels.length">
+                <div v-if="labels.length > 0">
                   <dt>{{ t('workloads.routes.item.about.labels') }}</dt>
                   <dd>
                     <XLayout

@@ -14,6 +14,7 @@
         :created="props.data.creationTime"
         :modified="props.data.modificationTime"
         class="about-section"
+        data-testid="zone-ingress-about-section"
       >
         <XLayout>
           <XDl variant="x-stack">
@@ -77,6 +78,28 @@
                 </template>
               </dd>
             </div>
+
+            <template
+              v-for="labels in [Object.entries(props.data.labels)]"
+              :key="typeof labels"
+            >
+              <div v-if="labels.length > 0">
+                <dt>{{ t('services.routes.item.labels') }}</dt>
+                <dd>
+                  <XLayout
+                    variant="x-stack"
+                    truncate
+                  >
+                    <XBadge
+                      v-for="[key, value] in labels"
+                      :key="key"
+                    >
+                      {{ key }}:{{ value }}
+                    </XBadge>
+                  </XLayout>
+                </dd>
+              </div>
+            </template>
           </XDl>
 
 
