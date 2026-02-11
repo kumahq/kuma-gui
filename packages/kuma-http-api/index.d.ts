@@ -1585,6 +1585,8 @@ export interface components {
             hasToTargetRef: boolean;
             /** @description indicates that this policy can be used as an inbound policy */
             hasFromTargetRef: boolean;
+            /** @description indicates that the policy has a rules targetRef field for matching */
+            hasRulesTargetRef: boolean;
             /** @description If set to `true`, performs a backward compatibility conversion from the deprecated 'from' array to the new 'rules' array. This ensures older policies remain functional under the updated schema. */
             isFromAsRules: boolean;
         };

@@ -50,7 +50,6 @@ Feature: control-planes / DetailView
   Scenario: Shows expected content
     Given the environment
       """
-      KUMA_RESOURCE_COUNT: 100
       KUMA_ACTIVE_RESOURCE_COUNT: 0
       """
     And the URL "/global-insight" responds with
