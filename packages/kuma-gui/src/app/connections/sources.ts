@@ -2,6 +2,9 @@ import type { DataSourceResponse } from '@/app/application'
 import { defineSources } from '@/app/application'
 import { Stat, ConnectionCollection } from '@/app/connections/data/'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
+import type { paths } from '@kumahq/kuma-http-api'
+import createClient from 'openapi-fetch'
+import { ConnectionXdsConfig } from './data/ConnectionXdsConfig'
 
 export type StatsSource = DataSourceResponse<{
   inbounds: Record<string, any>
@@ -42,6 +45,10 @@ const filter = (data: Record<string, unknown>, cb: (key: string, arr: unknown[])
   }
 }
 export const sources = (api: KumaApi) => {
+  const http = createClient<paths>({
+    baseUrl: '',
+    fetch: api.client.fetch,
+  })
   return defineSources({
     '/connections/stats/for/:proxyType/:name/:mesh/:socketAddress': async (params) => {
       const { name, mesh, socketAddress, proxyType } = params
@@ -160,6 +167,7 @@ export const sources = (api: KumaApi) => {
 
     '/connections/xds/for/:proxyType/:name/:mesh/outbound/:outbound/endpoints/:endpoints': async (params) => {
       const { name, mesh, outbound, endpoints, proxyType } = params
+      console.log("🚀 ~ sources ~ outbound:", outbound)
 
       const res = await (() => {
         switch (proxyType) {
@@ -187,7 +195,7 @@ export const sources = (api: KumaApi) => {
         }
       })()
 
-      return filter(res, (key: string, arr: unknown[]) => {
+      const filtered = filter(res, (key: string, arr: unknown[]) => {
         switch (key) {
           case 'dynamic_listeners':
             // this one won't work yet see
@@ -203,6 +211,8 @@ export const sources = (api: KumaApi) => {
         }
         return []
       })
+      console.log("🚀 ~ sources ~ filtered:", )
+      return ConnectionXdsConfig.fromCollection(filtered)
     },
     '/connections/xds/for/:proxyType/:name/:mesh/inbound/:inbound': async (params) => {
       const { name, mesh, inbound, proxyType } = params

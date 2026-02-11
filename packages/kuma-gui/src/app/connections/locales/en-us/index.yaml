@@ -16,3 +16,7 @@ connections:
         xds: 'XDS configuration'
         stats: 'Stats'
         clusters: 'Clusters'
+      format: Format
+      formats:
+        structured: 'Structured'
+        yaml: 'YAML'
