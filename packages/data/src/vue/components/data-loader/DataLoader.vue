@@ -34,7 +34,6 @@
 
     <template v-else>
       <slot
-        v-if="props.loader"
         name="connecting"
         :data="undefined"
         :error="srcError"
@@ -45,14 +44,14 @@
           v-bind="$attrs"
           :variant="props.variant === 'default' ? 'legacy' : props.variant"
         />
+        <slot
+          v-else
+          name="default"
+          :data="undefined as unknown as Data"
+          :error="srcError"
+          :refresh="typeof props.src !== 'undefined' ? refresh : () => {}"
+        />
       </slot>
-      <slot
-        v-else
-        name="default"
-        :data="undefined as unknown as Data"
-        :error="srcError"
-        :refresh="typeof props.src !== 'undefined' ? refresh : () => {}"
-      />
     </template>
   </DataSource>
 </template>
@@ -70,13 +69,11 @@ const props = withDefaults(defineProps<{
   src?: T
   data?: K
   errors?: (Error | undefined)[]
-  loader?: boolean
   variant?: 'default' | 'list' | 'spinner'
 }>(), {
   errors: undefined,
   data: undefined,
   src: undefined,
-  loader: true,
   variant: 'default',
 })
 
