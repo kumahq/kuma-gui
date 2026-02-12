@@ -15,7 +15,6 @@
         },
       }"
       :danger="props.appearance === 'danger' ? true : false"
-      @click="emit('click')"
     >
       <slot name="default" />
     </KDropdownItem>
@@ -133,7 +132,6 @@
       v-bind="$attrs"
       :appearance="props.appearance as ButtonAppearance"
       :size="props.size"
-      @click="emit('click')"
     >
       <template
         v-if="['create', 'refresh', 'progress'].includes(props.action)"
@@ -157,7 +155,6 @@
       :class="`x-action-appearance-${props.appearance}`"
       data-testid="x-action"
       v-bind="$attrs"
-      @click="emit('click')"
     >
       <template
         v-if="['docs'].includes(props.action)"
@@ -194,9 +191,6 @@ type BooleanLocationQueryRaw = Record<string | number, BooleanLocationQueryValue
 type RouteLocationRawWithBooleanQuery = Omit<RouteLocationNamedRaw, 'query'> & {
   query?: BooleanLocationQueryRaw
 }
-const emit = defineEmits<{
-  (event: 'click'): Event
-}>()
 
 defineSlots<{
   default(props: {

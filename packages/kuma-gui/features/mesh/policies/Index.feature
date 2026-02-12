@@ -18,7 +18,6 @@ Feature: mesh / policies / index
       """
       KUMA_MODE: global
       KUMA_CIRCUITBREAKER_COUNT: 2
-      KUMA_RESOURCE_COUNT: 3
       """
     And the URL "/meshes/default/circuit-breakers" responds with
       """
@@ -38,39 +37,6 @@ Feature: mesh / policies / index
           MeshFaultInjection:
             total: 10
       """
-    And the URL "/_resources" responds with
-      ```
-        body:
-          resources:
-            - name: CircuitBreaker
-              includeInFederation: true
-              path: circuit-breakers
-              pluralDisplayName: CircuitBreakers
-              policy:
-                hasFromTargetRef: false
-                hasToTargetRef: false
-                isFromAsRules: false
-                isTargetRef: false
-            - name: FaultInjection
-              includeInFederation: true
-              path: fault-injections
-              pluralDisplayName: FaultInjections
-              policy:
-                hasFromTargetRef: true
-                hasToTargetRef: false
-                isFromAsRules: false
-                isTargetRef: false
-            - name: MeshFaultInjection
-              includeInFederation: false
-              path: meshfaultinjections
-              pluralDisplayName: MeshFaultInjections
-              policy:
-                isTargetRef: true
-                hasToTargetRef: true
-                hasFromTargetRef: false
-                isFromAsRules: false
-      ```
-
   Scenario: Visiting `/policies` redirects
     When I visit the "/meshes/default/policies" URL
     And the "$item:nth-child(1)" element contains
