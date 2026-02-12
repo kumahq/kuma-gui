@@ -76,9 +76,11 @@ jobs:
         with:
           ref: ${{ env.SHA }}
 
-      - uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
+
+      - uses: ./.github/actions/bootstrap/
         with:
-          node-version-file: '.nvmrc'
+          install-cmd: |
+            make install
 
       - run: |
           make -C ${{ matrix.package.path }} build

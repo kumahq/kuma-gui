@@ -1,6 +1,6 @@
 <template>
   <DataSource
-    :src="props.src as T"
+    :src="props.src ?? '' as T"
     @change="(data: TypeOf<T>) => srcData = data"
     @error="(e: Error) => srcError = e"
     v-slot="{ refresh }"
@@ -10,9 +10,9 @@
     >
       <slot
         name="error"
-        :data="srcData as TypeOf<T>"
+        :data="allData as typeof allData"
         :error="allErrors[0]"
-        :refresh="props.src !== '' ? refresh : () => {}"
+        :refresh="typeof props.src !== 'undefined' ? refresh : () => {}"
       >
         <XErrorState
           v-bind="$attrs"
@@ -20,14 +20,15 @@
         />
       </slot>
     </template>
+
     <template
-      v-else-if="allData.length === 0 || allData.every(item => typeof item !== 'undefined')"
+      v-else-if="typeof allData !== 'undefined'"
     >
       <slot
         name="default"
-        :data="srcData as NonNullable<TypeOf<T>>"
+        :data="allData as Data"
         :error="srcError"
-        :refresh="props.src !== '' ? refresh : () => {}"
+        :refresh="typeof props.src !== 'undefined' ? refresh : () => {}"
       />
     </template>
 
@@ -37,10 +38,10 @@
         name="connecting"
         :data="undefined"
         :error="srcError"
-        :refresh="props.src !== '' ? refresh : () => {}"
+        :refresh="typeof props.src !== 'undefined' ? refresh : () => {}"
       >
         <XProgress
-          v-if="props.data.length > 0 || props.src !== ''"
+          v-if="(props.data ?? []).length > 0 || typeof props.src !== 'undefined'"
           v-bind="$attrs"
           :variant="props.variant === 'default' ? 'legacy' : props.variant"
         />
@@ -48,9 +49,9 @@
       <slot
         v-else
         name="default"
-        :data="srcData as NonNullable<TypeOf<T>>"
+        :data="undefined as unknown as Data"
         :error="srcError"
-        :refresh="props.src !== '' ? refresh : () => {}"
+        :refresh="typeof props.src !== 'undefined' ? refresh : () => {}"
       />
     </template>
   </DataSource>
@@ -58,28 +59,66 @@
 <script lang="ts" generic="T extends string | {
   toString(): string
   typeOf(): any
-}, K" setup
+} = never, const K extends unknown[] = never" setup
 >
 import { computed, ref, provide } from 'vue'
 
-import type { TypeOf } from '../../../'
+import type { NonNullableArray, TypeOf } from '../../../'
+import DataSource from '../data-source/DataSource.vue'
 
 const props = withDefaults(defineProps<{
-  data?: K[]
-  errors?: (Error | undefined)[]
   src?: T
+  data?: K
+  errors?: (Error | undefined)[]
   loader?: boolean
   variant?: 'default' | 'list' | 'spinner'
 }>(), {
-  errors: () => [],
-  data: () => [],
-  src: '' as any,
+  errors: undefined,
+  data: undefined,
+  src: undefined,
   loader: true,
   variant: 'default',
-
 })
 
-type Data = NonNullable<TypeOf<T>>
+const srcData = ref<unknown>(undefined)
+const srcError = ref<Error | undefined>(undefined)
+
+const allData = computed(() => {
+  const data = (props.data ?? []).filter(item => !(item instanceof Error)) as K
+  if(!data.every(item => typeof item !== 'undefined') || (props.src && typeof srcData.value === 'undefined')) {
+    return undefined
+  }
+  if (data.length > 0 && typeof srcData.value === 'undefined') {
+    return data
+  }
+  if (data.length === 0 && typeof srcData.value !== 'undefined') {
+    return srcData.value as NonNullable<TypeOf<T>>
+  }
+  if (data.length > 0 && typeof srcData.value !== 'undefined') {
+    return [srcData.value as NonNullable<TypeOf<T>>, ...data]
+  }
+  return undefined
+})
+
+const allErrors = computed(() => {
+  const dataErrors = (props.data ?? []).filter(item => item instanceof Error) as Error[]
+  const errors = typeof srcError.value === 'undefined' ? props.errors : ([srcError.value] as (Error | undefined)[]).concat(props.errors)
+  return [...(errors ?? [])].concat(dataErrors).filter(<T>(item: T): item is NonNullable<T> => Boolean(item))
+})
+
+// We need to prevent distributive conditional types here (i.e. therefore wrapping TSrc in [] and others)
+type InferredDataType<TSrc, TData extends any[]> = 
+  [TSrc] extends [never]
+    ? [TData] extends [never]
+      ? undefined
+      : NonNullableArray<TData>
+    : [TData] extends [never]
+      ? NonNullable<TSrc>
+      : TData extends [...infer Items]
+        ? [NonNullable<TSrc>, ...NonNullableArray<Items>]
+        : undefined
+
+type Data = InferredDataType<TypeOf<T>, K>
 
 defineSlots<{
   default(props: {
@@ -93,12 +132,12 @@ defineSlots<{
     refresh: () => void
   }): any
   error(props: {
-    data: Data
+    data: typeof allData.value
     error: Error | undefined
     refresh: () => void
   }): any
   disconnected(props: {
-    data: Data
+    data: typeof allData.value
     error: Error | undefined
     refresh: () => void
   }): any
@@ -106,24 +145,6 @@ defineSlots<{
 
 provide('data-loader', {
   props,
-})
-
-
-const srcData = ref<unknown>(undefined)
-const srcError = ref<Error | undefined>(undefined)
-
-const allData = computed(() => {
-  const data = props.data.filter(item => !(item instanceof Error))
-  if (props.src !== '') {
-    return [srcData.value as unknown].concat(data)
-  }
-  return data
-})
-
-const allErrors = computed(() => {
-  const dataErrors = props.data.filter(item => item instanceof Error)
-  const errors = typeof srcError.value === 'undefined' ? props.errors : ([srcError.value] as (Error | undefined)[]).concat(props.errors)
-  return errors.concat(dataErrors).filter(<T>(item: T): item is NonNullable<T> => Boolean(item))
 })
 
 </script>

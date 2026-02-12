@@ -34,6 +34,7 @@ Feature: mesh / dataplanes / overview / summary / Inbound
                   delay: 
                     percentage: 10
                     fixedDelay: 100ms
+                kri: kri_mfi_default_pigsty_jury_innovation_appliance
             origins:
               - kri: kri_mfi_default_pigsty_jury_innovation_appliance
       """
@@ -75,6 +76,8 @@ Feature: mesh / dataplanes / overview / summary / Inbound
       body:
         policies:
           - kind: MeshFaultInjection
+            rules:
+              - kri: kri_mfi_default_pigsty_jury_the-policy-name_appliance
             origins:
               - kri: kri_mfi_default_pigsty_jury_the-policy-name_appliance
       """
@@ -90,5 +93,5 @@ Feature: mesh / dataplanes / overview / summary / Inbound
                   kuma.io/protocol: http
       """
     When I visit the "/meshes/default/data-planes/service-less/overview/inbound/self_inbound_http/overview" URL
-    Then I click on the "$inbound-policies-rule ul:first-of-type li:first-of-type a:first-of-type" element
+    Then I click on the "$inbound-policies-rule table tr:first-of-type td a" element
     Then the URL contains "/gui/meshes/default/policies/meshfaultinjections/kri_mfi_default_pigsty_jury_the-policy-name_appliance/overview/overview"

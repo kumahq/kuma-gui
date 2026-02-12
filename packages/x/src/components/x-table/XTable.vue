@@ -31,24 +31,10 @@ table {
   text-align: left;
   vertical-align: top;
 }
-:deep(thead tr) {
-  th {
-    border-block-end: $kui-border-width-10 solid $kui-color-border;
-  }
-}
 :deep(tr) {
   th, td {
     padding-block-start: $kui-space-40;
     padding-block-end: $kui-space-40;
-  }
-}
-table:not(.variant-kv) {
-  :deep(tbody tr), table :deep(> tr) {
-    &:not(:first-child) {
-      th, td {
-        border-block-start: $kui-border-width-10 solid $kui-color-border;
-      }
-    }
   }
 }
 
@@ -59,13 +45,16 @@ table.variant-kv {
       text-align: right;
     }
   }
-  :deep(tbody tr), :deep(> tr) {
+  :deep(thead tr) {
+    border-block-end: $kui-border-width-10 solid $kui-color-border;
+  }
+  :deep(tr):not(:first-child) {
+    border-block-start: $kui-border-width-10 solid $kui-color-border;
+  }
+  :deep(tr) {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    &:not(:first-child) {
-      border-block-start: $kui-border-width-10 solid $kui-color-border;
-    }
     td:only-child {
       width: 100%;
     }

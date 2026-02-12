@@ -63,6 +63,7 @@
                 <template #name="{ row: item }">
                   <XCopyButton :text="item.name">
                     <XAction
+                      data-action
                       :to="{
                         name: 'delegated-gateway-detail-view',
                         params: {

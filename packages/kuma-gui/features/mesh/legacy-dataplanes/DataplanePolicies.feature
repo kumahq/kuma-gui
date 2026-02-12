@@ -23,7 +23,6 @@ Feature: Dataplane policies
       | summary-slideout-container         | [data-testid='summary'] [data-testid='slideout-container']            |
     And the environment
       """
-        KUMA_RESOURCE_COUNT: 100
         KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: false
       """
 
@@ -107,13 +106,12 @@ Feature: Dataplane policies
         KUMA_DATAPLANE_TO_RULE_COUNT: 3
         KUMA_DATAPLANE_FROM_RULE_COUNT: 1
         KUMA_DATAPLANE_INBOUND_RULE_COUNT: 0
-        KUMA_RESOURCE_COUNT: 1
         """
       And the URL "/meshes/default/dataplanes/dataplane-1/_rules" responds with
         """
         body:
           rules:
-            - type: MeshTimeout
+            - type: MeshTrace
               fromRules:
                 - inbound:
                     port: 8080
@@ -130,7 +128,7 @@ Feature: Dataplane policies
                       origin:
                         - mesh: default
                           name: default
-                          type: MeshTimeout
+                          type: MeshTrace
                       conf:
                         connectionTimeout: 20s
                         idleTimeout: 20s
@@ -146,7 +144,7 @@ Feature: Dataplane policies
                       origin:
                         - mesh: default
                           name: override
-                          type: MeshTimeout
+                          type: MeshTrace
                       conf:
                         connectionTimeout: 20s
                         idleTimeout: 20s
@@ -162,7 +160,7 @@ Feature: Dataplane policies
                       origin:
                         - mesh: default
                           name: default
-                          type: MeshTimeout
+                          type: MeshTrace
                       conf:
                         connectionTimeout: 20s
                         idleTimeout: 20s
@@ -176,10 +174,10 @@ Feature: Dataplane policies
                   origin:
                     - mesh: default
                       name: default
-                      type: MeshTimeout
+                      type: MeshTrace
                     - mesh: default
                       name: override
-                      type: MeshTimeout
+                      type: MeshTrace
                   conf:
                     connectionTimeout: 2s
                     idleTimeout: 20s
@@ -192,10 +190,10 @@ Feature: Dataplane policies
                   origin:
                     - mesh: default
                       name: default
-                      type: MeshTimeout
+                      type: MeshTrace
                     - mesh: default
                       name: override
-                      type: MeshTimeout
+                      type: MeshTrace
                   conf:
                     connectionTimeout: 2s
                     idleTimeout: 20s
@@ -211,23 +209,15 @@ Feature: Dataplane policies
                   origin:
                     - mesh: default
                       name: default
-                      type: MeshTimeout
+                      type: MeshTrace
                   conf:
                     connectionTimeout: 2s
                     idleTimeout: 20s
                     http:
                       requestTimeout: 10s
         """
-      And the URL "/_resources" responds with
-        """
-        body:
-          resources:
-            - name: MeshTimeout
-              policy:
-                isFromAsRules: false
-        """
       When I visit the "/meshes/default/data-planes/dataplane-1/policies" URL
-      Then the "$policies-view" element contains "MeshTimeout"
+      Then the "$policies-view" element contains "MeshTrace"
       When I click the "$to-rule-item:nth-child(1) [data-testid='accordion-item-button']" element
       Then the "$to-rule-item:nth-child(1)" element contains "kuma.io/service:foo"
       And the "$to-rule-item:nth-child(1)" element contains "kuma.io/service:bar"
@@ -325,16 +315,7 @@ Feature: Dataplane policies
         KUMA_DATAPLANE_TO_RULE_COUNT: 0
         KUMA_DATAPLANE_INBOUND_RULE_COUNT: 1
         KUMA_DATAPLANE_FROM_RULE_COUNT: 1
-        KUMA_RESOURCE_COUNT: 1
         """
-      And the URL "/_resources" responds with
-        ```
-          body:
-            resources:
-              - name: MeshHTTPRoute
-                policy:
-                  isFromAsRules: false
-        ```
       And the URL "/meshes/default/dataplanes/dataplane-1/_rules" responds with
         """
         body:
