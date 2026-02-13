@@ -102,10 +102,19 @@ const data = computed(() => {
   return typeof props.data === 'undefined' ? allData.value[0] : allData.value
 })
 
+// all errors, including potentially the src error in index zero.
+// undefineds are filtered out allowing allErrors.length checks
 const allErrors = computed(() => {
-  const dataErrors = (props.data ?? []).filter(item => item instanceof Error) as Error[]
-  const errors = typeof srcError.value === 'undefined' ? props.errors : ([srcError.value] as (Error | undefined)[]).concat(props.errors)
-  return [...(errors ?? []), ...dataErrors].filter(<T>(item: T): item is NonNullable<T> => Boolean(item))
+  // gather everything that can be erroneous
+  const propsErrors = props.errors ?? []
+  const dataErrors = (props.data ?? []).filter((item) => item instanceof Error) as Error[]
+  const srcErrors = typeof props.src === 'undefined' ? [] : [srcError.value]
+  // squeeze it all together
+  return [
+    ...srcErrors,
+    ...dataErrors,
+    ...propsErrors,
+  ].filter((item) => !!item)
 })
 
 const state = computed<'error' | 'connecting' | 'default'>(() => {
