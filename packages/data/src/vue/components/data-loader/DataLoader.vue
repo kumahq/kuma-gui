@@ -10,7 +10,7 @@
     >
       <slot
         name="error"
-        :data="allData"
+        :data="data as Data"
         :error="allErrors[0]"
         :refresh="typeof props.src !== 'undefined' ? refresh : () => {}"
       >
@@ -40,7 +40,7 @@
     >
       <slot
         name="default"
-        :data="allData as Data"
+        :data="data as NonNullableData<Data>"
         :error="srcError"
         :refresh="typeof props.src !== 'undefined' ? refresh : () => {}"
       />
@@ -54,7 +54,7 @@
 >
 import { computed, ref, provide } from 'vue'
 
-import type { NonNullableArray, TypeOf } from '../../../'
+import type { NonNullableArray, NullableArray, TypeOf } from '../../../'
 import DataSource from '../data-source/DataSource.vue'
 
 // We need to prevent distributive conditional types here (i.e. therefore wrapping TSrc in [] and others)
@@ -62,13 +62,14 @@ type InferredDataType<TSrc, TData extends any[]> =
   [TSrc] extends [never]
     ? [TData] extends [never]
       ? undefined
-      : NonNullableArray<TData>
+      : NullableArray<TData>
     : [TData] extends [never]
-      ? NonNullable<TSrc>
+      ? TSrc | undefined
       : TData extends [...infer Items]
-        ? [NonNullable<TSrc>, ...NonNullableArray<Items>]
+        ? NullableArray<[TSrc, ...Items]>
         : undefined
 
+type NonNullableData<T> = T extends [...infer U] ? NonNullableArray<U> : NonNullable<T>
 type Data = InferredDataType<TypeOf<T>, K>
 
 const props = withDefaults(defineProps<{
@@ -88,13 +89,17 @@ provide('data-loader', {
   props,
 })
 
-const srcData = ref<unknown>()
+const srcData = ref<TypeOf<T> | undefined>()
 const srcError = ref<Error | undefined>()
 
 const allData = computed(() => {
-  const propsData = (props.data ?? []).filter(item => !(item instanceof Error))
-  const data = typeof props.src === 'undefined' ? propsData : [srcData.value].concat(propsData)
+  const propsData = (props.data ?? []).filter(item => !(item instanceof Error)) as K
+  const data = typeof props.src === 'undefined' ? propsData : [srcData.value, ...propsData]
   return data
+})
+
+const data = computed(() => {
+  return typeof props.data === 'undefined' ? allData.value[0] : allData.value
 })
 
 const allErrors = computed(() => {
@@ -116,7 +121,7 @@ const state = computed<'error' | 'connecting' | 'default'>(() => {
 
 defineSlots<{
   default(props: {
-    data: Data
+    data: NonNullableData<Data>
     error: Error | undefined
     refresh: () => void
   }): any
@@ -125,9 +130,8 @@ defineSlots<{
     error: Error | undefined
     refresh: () => void
   }): any
-  // TODO: construct a proper type alias for `typeof`
   error(props: {
-    data: typeof allData.value
+    data: Data
     error: Error | undefined
     refresh: () => void
   }): any
