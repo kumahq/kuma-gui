@@ -8,7 +8,7 @@ workloads:
       title: "{name}"
       navigation:
         workload-detail-view: Overview
-        workload-config-view: Config
+        workload-config-view: YAML
       about:
         title: About this Workload
         labels: Labels
