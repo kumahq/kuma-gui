@@ -74,7 +74,6 @@ type Data = InferredDataType<TypeOf<T>, K>
 
 const props = withDefaults(defineProps<{
   src?: T
-  // TODO: check wether we can use `K[]` here instead of plain `K` to make it more clear that `data` is an array
   data?: K // (K | undefined)[]
   errors?: (Error | undefined)[]
   variant?: 'default' | 'list' | 'spinner'
