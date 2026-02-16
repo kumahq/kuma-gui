@@ -109,15 +109,13 @@ provide('data-loader', {
 
 const srcData = ref<TypeOf<T> | undefined>()
 const srcError = ref<Error | undefined>()
-
+  
+// all data, including potentially the src data in index zero.
+// all elements can be undefined which means its still connecting
 const allData = computed(() => {
   const propsData = (props.data ?? []).filter(item => !(item instanceof Error)) as K
   const data = typeof props.src === 'undefined' ? propsData : [srcData.value, ...propsData]
   return data
-})
-
-const data = computed(() => {
-  return typeof props.data === 'undefined' ? allData.value[0] : allData.value
 })
 
 // all errors, including potentially the src error in index zero.
@@ -133,6 +131,10 @@ const allErrors = computed(() => {
     ...dataErrors,
     ...propsErrors,
   ].filter((item) => !!item)
+})
+
+const data = computed(() => {
+  return typeof props.data === 'undefined' ? allData.value[0] : allData.value
 })
 
 const state = computed<'error' | 'connecting' | 'default'>(() => {
