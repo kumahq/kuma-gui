@@ -85,6 +85,24 @@ const props = withDefaults(defineProps<{
   variant: 'default',
 })
 
+defineSlots<{
+  default(props: {
+    data: NonNullableData<Data>
+    error: Error | undefined
+    refresh: () => void
+  }): any
+  connecting(props: {
+    data: undefined
+    error: Error | undefined
+    refresh: () => void
+  }): any
+  error(props: {
+    data: Data
+    error: Error | undefined
+    refresh: () => void
+  }): any
+}>()
+
 provide('data-loader', {
   props,
 })
@@ -127,23 +145,5 @@ const state = computed<'error' | 'connecting' | 'default'>(() => {
       return 'default' as const
   }
 })
-
-defineSlots<{
-  default(props: {
-    data: NonNullableData<Data>
-    error: Error | undefined
-    refresh: () => void
-  }): any
-  connecting(props: {
-    data: undefined
-    error: Error | undefined
-    refresh: () => void
-  }): any
-  error(props: {
-    data: Data
-    error: Error | undefined
-    refresh: () => void
-  }): any
-}>()
 
 </script>
