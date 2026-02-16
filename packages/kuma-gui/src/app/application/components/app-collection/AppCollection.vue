@@ -139,16 +139,19 @@ onMounted(rewrite)
 .app-collection {
   isolation: isolate;
 }
-.app-collection :deep(td a[data-action]) {
-  color: inherit;
-  font-weight: $kui-font-weight-semibold;
-  text-decoration: none;
+.app-collection :deep(td :is(a, button)[data-action]) {
+  &, > * {
+    color: inherit;
+    font-weight: $kui-font-weight-semibold;
+    text-decoration: none;
+  }
 }
 
 .app-collection :deep(td:first-child li a) {
   color: $kui-color-text-primary;
   font-weight: $kui-font-weight-regular;
 }
+
 
 .app-collection :deep(td:first-child li a:hover) {
   text-decoration: underline;
