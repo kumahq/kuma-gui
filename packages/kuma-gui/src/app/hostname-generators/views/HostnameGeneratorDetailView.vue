@@ -112,7 +112,7 @@
               </template>
               <XDl>
                 <template
-                  v-for="labels in [Object.entries(data.labels).filter(([key, value]) => value.length && !['display-name', 'zone', 'namespace'].find((partial) => key.includes(partial)))]"
+                  v-for="labels in [Object.entries(data.labels)]"
                   :key="typeof labels"
                 >
                   <div v-if="labels.length">
@@ -125,7 +125,7 @@
                         <XBadge
                           v-for="[key, value] in labels"
                           :key="key"
-                          :appearance="key.includes('kuma.io') ? 'info' : 'decorative'"
+                          :appearance="key.includes('.kuma.io/') ? 'info' : 'decorative'"
                         >
                           {{ key }}:{{ value }}
                         </XBadge>

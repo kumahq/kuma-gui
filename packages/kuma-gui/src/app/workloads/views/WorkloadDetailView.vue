@@ -70,13 +70,13 @@
                   <dt>{{ t('workloads.routes.item.about.labels') }}</dt>
                   <dd>
                     <XLayout
-                      variant="x-stack"
+                      variant="separated"
                       truncate
                     >
                       <XBadge
                         v-for="[key, value] in labels"
                         :key="key"
-                        :appearance="key.includes('kuma.io') ? 'info' : 'decorative'"
+                        :appearance="key.includes('.kuma.io/') ? 'info' : 'decorative'"
                       >
                         {{ key }}:{{ value }}
                       </XBadge>
