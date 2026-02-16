@@ -142,7 +142,7 @@ const state = computed<'error' | 'connecting' | 'default'>(() => {
   switch(true) {
     case allErrors.value.length > 0:
       return 'error' as const
-    case (typeof props.src !== 'undefined' || typeof props.data !== 'undefined') && allData.value.some(item => typeof item === 'undefined'):
+    case allData.value.some(item => typeof item === 'undefined'):
       return 'connecting' as const
     default:
       return 'default' as const
