@@ -63,7 +63,7 @@
                   <dt>{{ t('services.routes.item.labels') }}</dt>
                   <dd>
                     <XLayout
-                      variant="x-stack"
+                      variant="separated"
                       truncate
                     >
                       <XBadge
