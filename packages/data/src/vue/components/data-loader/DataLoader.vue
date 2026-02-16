@@ -136,6 +136,8 @@ const data = computed(() => {
   return typeof props.data === 'undefined' ? allData.value[0] : allData.value
 })
 
+// The state will only ever be connecting if either props.src or props.data is set.
+// In any other case the state will only be error or default.
 const state = computed<'error' | 'connecting' | 'default'>(() => {
   switch(true) {
     case allErrors.value.length > 0:
