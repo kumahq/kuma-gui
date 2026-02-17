@@ -21,6 +21,9 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
       type: 'Mesh',
       creationTime: '2020-06-19T12:18:02.097986-04:00',
       modificationTime: '2020-07-19T12:18:02.097986-04:00',
+      labels: {
+        'kuma.io/display-name': name,
+      },
       meshServices: {
         mode: env('KUMA_MESHSERVICE_MODE', 'Everywhere'),
       },

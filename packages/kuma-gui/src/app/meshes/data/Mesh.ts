@@ -7,6 +7,7 @@ export const Mesh = {
       ...item,
       id: item.name,
       config: item,
+      labels: item.labels ?? {},
       meshServices: ((item = {}) => {
         return {
           ...item,

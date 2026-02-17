@@ -1,6 +1,6 @@
 <template>
   <component
-    :is="props.type === 'separated' && props.truncate ? KTruncate : 'div'"
+    :is="(props.type === 'separated' || variant === 'separated') && props.truncate ? KTruncate : 'div'"
     :class="['x-layout', variant, props.size, justify]"
   >
     <slot name="default" />

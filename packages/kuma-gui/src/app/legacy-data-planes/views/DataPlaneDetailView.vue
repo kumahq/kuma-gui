@@ -100,6 +100,7 @@
             :created="props.data.creationTime"
             :modified="props.data.modificationTime"
             class="about-section"
+            data-testid="dataplane-about-section"
           >
             <DataLoader :data="[traffic]">
               <XLayout>
@@ -204,6 +205,34 @@
                       />
                     </dd>
                   </div>
+
+                  <template
+                    v-for="labels in [Object.entries(props.data.labels)]"
+                    :key="typeof labels"
+                  >
+                    <div v-if="labels.length > 0">
+                      <dt>{{ t('data-planes.routes.item.labels') }}</dt>
+                      <dd>
+                        <XLayout
+                          variant="separated"
+                          truncate
+                        >
+                          <template
+                            v-for="kumaRe in [/^(.+\.)?kuma\.io\//]"
+                            :key="typeof kumaRe"
+                          >
+                            <XBadge
+                              v-for="[key, value] in labels"
+                              :key="key"
+                              :appearance="kumaRe.test(key) ? 'info' : 'decorative'"
+                            >
+                              {{ key }}:{{ value }}
+                            </XBadge>
+                          </template>
+                        </XLayout>
+                      </dd>
+                    </div>
+                  </template>
                 </XDl>
 
                 <XLayout

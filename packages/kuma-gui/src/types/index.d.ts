@@ -341,6 +341,7 @@ export interface Entity {
 
 export interface MeshEntity extends Entity {
   mesh: string
+  labels?: Record<string, string>
 }
 
 /**

@@ -9,6 +9,7 @@ policies:
       breadcrumbs: Policies
       config: Configuration
       format: Format
+      labels: Labels
       formats:
         yaml: YAML
         structured: Structured

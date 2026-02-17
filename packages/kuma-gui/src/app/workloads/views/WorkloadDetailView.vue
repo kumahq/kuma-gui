@@ -63,22 +63,28 @@
               </div>
 
               <template
-                v-for="labels in [Object.entries(props.data.labels).filter(([key]) => !['display-name', 'zone', 'namespace'].find((partial) => key.includes(partial)))]"
+                v-for="labels in [Object.entries(props.data.labels)]"
                 :key="typeof labels"
               >
-                <div>
+                <div v-if="labels.length > 0">
                   <dt>{{ t('workloads.routes.item.about.labels') }}</dt>
                   <dd>
                     <XLayout
-                      variant="x-stack"
+                      variant="separated"
                       truncate
                     >
-                      <XBadge
-                        v-for="[key, value] in labels"
-                        :key="key"
+                      <template
+                        v-for="kumaRe in [/^(.+\.)?kuma\.io\//]"
+                        :key="typeof kumaRe"
                       >
-                        {{ key }}: {{ value }}
-                      </XBadge>
+                        <XBadge
+                          v-for="[key, value] in labels"
+                          :key="key"
+                          :appearance="kumaRe.test(key) ? 'info' : 'decorative'"
+                        >
+                          {{ key }}:{{ value }}
+                        </XBadge>
+                      </template>
                     </XLayout>
                   </dd>
                 </div>
