@@ -149,13 +149,18 @@
                         variant="separated"
                         truncate
                       >
-                        <XBadge
-                          v-for="[key, value] in labels"
-                          :key="key"
-                          :appearance="/\.?kuma\.io\//.test(key) ? 'info' : 'decorative'"
+                        <template
+                          v-for="kumaRe in [/^(.+\.)?kuma\.io\//]"
+                          :key="typeof kumaRe"
                         >
-                          {{ key }}:{{ value }}
-                        </XBadge>
+                          <XBadge
+                            v-for="[key, value] in labels"
+                            :key="key"
+                            :appearance="kumaRe.test(key) ? 'info' : 'decorative'"
+                          >
+                            {{ key }}:{{ value }}
+                          </XBadge>
+                        </template>
                       </XLayout>
                     </dd>
                   </div>
