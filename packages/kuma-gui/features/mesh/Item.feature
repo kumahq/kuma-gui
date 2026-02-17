@@ -12,6 +12,18 @@ Feature: mesh / item
       | mtls-warning       | [data-testid^='notification-meshes.notifications.mtls-warning'] |
       | mtrust-section     | [data-testid='mesh-trusts-listing']                             |
       | mesh-detail        | [data-testid='mesh-detail-view']                                |
+      | about-section      | [data-testid='mesh-about-section']                              |
+    And the URL "/meshes/default" responds with
+      """
+      body:
+        labels:
+          kuma.io/display-name: default
+      """
+
+  Scenario: The about section has the expected content
+    When I visit the "meshes/default/overview" URL
+    Then the "$about-section" element exists
+    And the "$about-section" element contains "kuma.io/display-name:default"
 
   Scenario Outline: /mesh-insights/* isn't a 404 and meshService.mode is <Scenario>
     Given the URL "/mesh-insights/default" responds with

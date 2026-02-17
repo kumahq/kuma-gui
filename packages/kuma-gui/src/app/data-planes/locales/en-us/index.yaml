@@ -146,6 +146,7 @@ data-planes:
         version: Version
         disconnected: There are no active connections to a control plane instance. Check the details for more information.
       policies: Policies
+      labels: Labels
     items:
       title: Data plane proxies
       intro: !!text/markdown |

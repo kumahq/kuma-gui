@@ -11,11 +11,23 @@ Feature: zones / egresses / item
       | config-universal   | [data-testid='codeblock-yaml-universal']      |
       | config-k8s         | [data-testid='codeblock-yaml-k8s']            |
       | select-environment | [data-testid='select-input']                  |
+      | about-section      | [data-testid='zone-egress-about-section']     |
     And the environment
       """
       KUMA_MODE: global
       KUMA_SUBSCRIPTION_COUNT: 2
       """
+    And the URL "/zoneegresses/item-1/_overview" responds with
+      """
+      body:
+        labels:
+          kuma.io/display-name: default
+      """
+
+  Scenario: The about section has the expected content
+    When I visit the "zones/zone-cp-1/egresses/item-1/overview" URL
+    Then the "$about-section" element exists
+    And the "$about-section" element contains "kuma.io/display-name:default"
 
   Scenario: Detail view has expected content
     And the URL "/zoneegresses/item-1/_overview" responds with

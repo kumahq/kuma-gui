@@ -24,6 +24,7 @@ Feature: mesh / workloads / item / overview
         labels:
           k8s.kuma.io/namespace: kuma-demo
           kuma.io/display-name: workload-1
+          kuma.io/origin: zone
         status:
           dataplaneProxies:
             connected: 1
@@ -42,6 +43,7 @@ Feature: mesh / workloads / item / overview
     When I visit the "/meshes/default/workloads/kri_wl_default_z1_ns1_workload-1_/overview" URL
     Then the "$about-section" element exists
     And the "$about-section" element contains "z1"
+    And the "$about-section" element contains "kuma.io/origin:zone"
 
   Scenario: The dataplane list shows related dataplanes to this workload
     Given the environment

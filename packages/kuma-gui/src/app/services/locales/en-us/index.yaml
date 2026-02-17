@@ -26,6 +26,7 @@ services:
         universal: Universal
         k8s: Kubernetes
         structured: Structured
+      labels: Labels
     items:
       title: Services
       navigation:

@@ -17,6 +17,7 @@
         :title="t('policies.detail.about.title')"
         :created="props.data.creationTime"
         :modified="props.data.modificationTime"
+        data-testid="policy-about-section"
       >
         <XDl variant="x-stack">
           <div>
@@ -48,18 +49,18 @@
               {{ t('http.api.property.zone') }}
             </dt>
             <dd>
-              <XBadge appearance="decorative">
-                <XAction
-                  :to="{
-                    name: 'zone-cp-detail-view',
-                    params: {
-                      zone: props.data.zone,
-                    },
-                  }"
-                >
+              <XAction
+                :to="{
+                  name: 'zone-cp-detail-view',
+                  params: {
+                    zone: props.data.zone,
+                  },
+                }"
+              >
+                <XBadge appearance="decorative">
                   {{ props.data.zone }}
-                </XAction>
-              </XBadge>
+                </XBadge>
+              </XAction>
             </dd>
           </div>
           <div
@@ -74,6 +75,34 @@
               />
             </dd>
           </div>
+
+          <template
+            v-for="labels in [Object.entries(props.data.labels)]"
+            :key="typeof labels"
+          >
+            <div v-if="labels.length > 0">
+              <dt>{{ t('policies.routes.item.labels') }}</dt>
+              <dd>
+                <XLayout
+                  variant="separated"
+                  truncate
+                >
+                  <template
+                    v-for="kumaRe in [/^(.+\.)?kuma\.io\//]"
+                    :key="typeof kumaRe"
+                  >
+                    <XBadge
+                      v-for="[key, value] in labels"
+                      :key="key"
+                      :appearance="kumaRe.test(key) ? 'info' : 'decorative'"
+                    >
+                      {{ key }}:{{ value }}
+                    </XBadge>
+                  </template>
+                </XLayout>
+              </dd>
+            </div>
+          </template>
         </XDl>
       </XAboutCard>
 
