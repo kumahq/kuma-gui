@@ -214,7 +214,7 @@ const props = defineProps<{
 
 <style lang="scss" scoped>
 .ip span {
-  font-size: $kui-font-size-30;
+  font-size: var(--x-font-size-30);
 }
 
 .name-link {

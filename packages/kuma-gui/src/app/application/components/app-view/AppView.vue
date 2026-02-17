@@ -240,14 +240,14 @@ onBeforeUnmount(() => {
 }
 .is-fullscreen {
   .app-view-title-bar {
-    padding: $kui-space-80 $kui-space-90;
-    border-bottom: $kui-border-width-10 solid $kui-color-border;
+    padding: var(--x-space-80) var(--x-space-90);
+    border-bottom: var(--x-border-width-10) solid var(--x-color-border);
   }
   .app-view-title-bar h1 {
-    margin-left: $kui-space-40;
-    padding-left: $kui-space-40;
-    border-left: $kui-border-width-10 solid $kui-color-border;
-    font-size: $kui-font-size-60;
+    margin-left: var(--x-space-40);
+    padding-left: var(--x-space-40);
+    border-left: var(--x-border-width-10) solid var(--x-color-border);
+    font-size: var(--x-font-size-60);
   }
 }
 .k-tabs + .route-view > .app-view .app-view-title-bar {
@@ -257,7 +257,7 @@ onBeforeUnmount(() => {
 
 <style lang="scss" scoped>
 .app-view {
-  font-size: $kui-font-size-30;
+  font-size: var(--x-font-size-30);
 }
 .app-view-title-bar {
   display: flex;
@@ -273,13 +273,13 @@ onBeforeUnmount(() => {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  gap: $kui-space-60;
+  gap: var(--x-space-60);
 }
 .notifications {
   padding: 0;
 }
 .notifications li {
-  margin-left: $kui-space-60;
+  margin-left: var(--x-space-60);
 }
 .notifications li:only-child {
   list-style-type: none;

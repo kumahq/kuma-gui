@@ -45,14 +45,14 @@ const props = defineProps<{
 .status {
   align-items: center;
   white-space: nowrap;
-  font-weight: $kui-font-weight-medium;
+  font-weight: var(--x-font-weight-medium);
 }
 
 .status::before {
   content: '';
   display: inline-block;
   vertical-align: middle;
-  margin-right: $kui-space-20;
+  margin-right: var(--x-space-20);
   border: 4px solid currentColor;
   border-radius: 50%;
 }

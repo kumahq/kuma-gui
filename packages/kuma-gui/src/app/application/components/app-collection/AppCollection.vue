@@ -142,14 +142,14 @@ onMounted(rewrite)
 .app-collection :deep(td :is(a, button)[data-action]) {
   &, > * {
     color: inherit;
-    font-weight: $kui-font-weight-semibold;
+    font-weight: var(--x-font-weight-semibold);
     text-decoration: none;
   }
 }
 
 .app-collection :deep(td:first-child li a) {
-  color: $kui-color-text-primary;
-  font-weight: $kui-font-weight-regular;
+  color: var(--x-color-text-primary);
+  font-weight: var(--x-font-weight-regular);
 }
 
 
@@ -164,6 +164,6 @@ onMounted(rewrite)
 }
 
 .app-collection .is-selected {
-  background-color: $kui-color-background-neutral-weakest;
+  background-color: var(--x-color-background-neutral-weakest);
 }
 </style>

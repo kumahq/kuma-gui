@@ -340,15 +340,15 @@ const _route = useRoute()
 }
 
 .about-subsection {
-  border-top: $kui-border-width-10 solid $kui-color-border;
-  padding-top: $kui-space-70;
+  border-top: var(--x-border-width-10) solid var(--x-color-border);
+  padding-top: var(--x-space-70);
 }
 
 :deep(.about-section .about-section-content) {
   display: block !important;
 
   h3 {
-    color: $kui-color-text;
+    color: var(--x-color-text);
   }
 }
 </style>

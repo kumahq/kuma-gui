@@ -116,7 +116,7 @@ html.dark,
   position: sticky;
   z-index: 4;
   top: var(--app-view-content-top, var(--AppHeaderHeight, 0));
-  background-color: $kui-color-background-inverse;
+  background-color: var(--x-color-background)-inverse;
 }
 
 :deep(.highlighted-code-block) {

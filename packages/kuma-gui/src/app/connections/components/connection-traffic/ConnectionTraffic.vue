@@ -23,11 +23,11 @@ import DataCard from '@/app/common/data-card/DataCard.vue'
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: $kui-space-40;
+  gap: var(--x-space-40);
 }
 .actions {
   display: flex;
-  gap: $kui-space-40;
+  gap: var(--x-space-40);
   position: absolute;
   right: 0;
 }
@@ -35,7 +35,7 @@ import DataCard from '@/app/common/data-card/DataCard.vue'
   border: 0;
 }
 .header :deep(.title) {
-  font-size: $kui-font-size-20;
+  font-size: var(--x-font-size-20);
 }
 .header > :deep(dt) {
   display: flex;
@@ -44,7 +44,7 @@ import DataCard from '@/app/common/data-card/DataCard.vue'
 .header :deep(.body dt)  {
   &::before {
     display: inline-block;
-    margin-right: $kui-space-20;
+    margin-right: var(--x-space-20);
     border: 4px solid;
     border-radius: 50%;
   }
@@ -55,7 +55,7 @@ import DataCard from '@/app/common/data-card/DataCard.vue'
   }
   &.outbounds::before {
     content: '';
-    border-color: $kui-color-border-primary-weak;
+    border-color: var(--x-color-border-primary-weak);
   }
 
 }

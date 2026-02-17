@@ -56,12 +56,12 @@ const slots = defineSlots()
 
 <style lang="scss" scoped>
 .text-neutral {
-  color: #{$kui-color-text-neutral};
+  color: #{var(--x-color-text-neutral)};
 }
 .description {
-  font-weight: $kui-font-weight-regular;
-  font-size: $kui-font-size-20;
+  font-weight: var(--x-font-weight-regular);
+  font-size: var(--x-font-size-20);
   display: flex;
-  gap: $kui-space-20;
+  gap: var(--x-space-20);
 }
 </style>

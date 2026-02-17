@@ -107,7 +107,7 @@ function end(element: Element) {
 <style lang="scss" scoped>
 .accordion-item {
   position: relative;
-  border-bottom: $kui-border-width-10 solid $kui-color-border;
+  border-bottom: var(--x-border-width-10) solid var(--x-color-border);
 }
 
 .accordion-item:last-child {
@@ -132,9 +132,9 @@ function end(element: Element) {
   display: block;
   width: 100%;
   text-align: left;
-  padding-top: $kui-space-40;
-  padding-bottom: $kui-space-40;
-  padding-right: $kui-space-60;
+  padding-top: var(--x-space-40);
+  padding-bottom: var(--x-space-40);
+  padding-right: var(--x-space-60);
 
   &::after {
     position: absolute;
@@ -150,13 +150,13 @@ function end(element: Element) {
 }
 
 .active .accordion-item-header::after {
-  margin-left: $kui-space-50;
+  margin-left: var(--x-space-50);
   transform: rotate(-180deg) translateY(-50%);
   top: calc(50% - 4px);
 }
 
 .accordion-item-content {
-  padding-top: $kui-space-40;
-  padding-bottom: $kui-space-40;
+  padding-top: var(--x-space-40);
+  padding-bottom: var(--x-space-40);
 }
 </style>

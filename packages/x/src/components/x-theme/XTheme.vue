@@ -357,4 +357,95 @@
     margin-left: var(--icon-space-before);
   }
 }
+
+/* Kong Design Token Migrations */
+:deep(> *) {
+  /* Spacing */
+  --x-space-10: #{$kui-space-10};
+  --x-space-20: #{$kui-space-20};
+  --x-space-30: #{$kui-space-30};
+  --x-space-40: #{$kui-space-40};
+  --x-space-50: #{$kui-space-50};
+  --x-space-60: #{$kui-space-60};
+  --x-space-70: #{$kui-space-70};
+  --x-space-80: #{$kui-space-80};
+  --x-space-90: #{$kui-space-90};
+  --x-space-100: #{$kui-space-100};
+  --x-space-110: #{$kui-space-110};
+
+  /* Colors */
+  --x-color-border: #{$kui-color-border};
+  --x-color-text: #{$kui-color-text};
+  --x-color-text-neutral: #{$kui-color-text-neutral};
+  --x-color-background: #{$kui-color-background};
+  --x-color-background-neutral: #{$kui-color-background-neutral};
+  --x-color-background-neutral-weak: #{$kui-color-background-neutral-weak};
+  --x-color-background-neutral-weaker: #{$kui-color-background-neutral-weaker};
+  --x-color-background-neutral-weakest: #{$kui-color-background-neutral-weakest};
+  --x-color-background-primary-weakest: #{$kui-color-background-primary-weakest};
+  --x-color-background-danger-weakest: #{$kui-color-background-danger-weakest};
+  --x-color-background-decorative-purple-weakest: #{$kui-color-background-decorative-purple-weakest};
+  --x-color-text-primary: #{$kui-color-text-primary};
+  --x-color-text-danger: #{$kui-color-text-danger};
+  --x-color-text-disabled: #{$kui-color-text-disabled};
+  --x-color-text-inverse: #{$kui-color-text-inverse};
+  --x-color-text-success: #{$kui-color-text-success};
+  --x-color-text-warning: #{$kui-color-text-warning};
+  --x-color-text-decorative-purple: #{$kui-color-text-decorative-purple};
+  --x-color-border-neutral-weak: #{$kui-color-border-neutral-weak};
+  --x-color-border-primary: #{$kui-color-border-primary};
+  --x-color-border-primary-weak: #{$kui-color-border-primary-weak};
+  --x-color-border-danger-weak: #{$kui-color-border-danger-weak};
+
+  /* Typography - Font Sizes */
+  --x-font-size-20: #{$kui-font-size-20};
+  --x-font-size-30: #{$kui-font-size-30};
+  --x-font-size-40: #{$kui-font-size-40};
+  --x-font-size-50: #{$kui-font-size-50};
+  --x-font-size-60: #{$kui-font-size-60};
+  --x-font-size-70: #{$kui-font-size-70};
+
+  /* Typography - Font Weights */
+  --x-font-weight-regular: #{$kui-font-weight-regular};
+  --x-font-weight-medium: #{$kui-font-weight-medium};
+  --x-font-weight-semibold: #{$kui-font-weight-semibold};
+  --x-font-weight-bold: #{$kui-font-weight-bold};
+
+  /* Typography - Font Families */
+  --x-font-family-text: #{$kui-font-family-text};
+  --x-font-family-code: #{$kui-font-family-code};
+
+  /* Typography - Line Heights */
+  --x-line-height-20: #{$kui-line-height-20};
+  --x-line-height-30: #{$kui-line-height-30};
+  --x-line-height-40: #{$kui-line-height-40};
+
+  /* Borders - Width */
+  --x-border-width-10: #{$kui-border-width-10};
+  --x-border-width-20: #{$kui-border-width-20};
+
+  /* Borders - Radius */
+  --x-border-radius-10: #{$kui-border-radius-10};
+  --x-border-radius-20: #{$kui-border-radius-20};
+  --x-border-radius-30: #{$kui-border-radius-30};
+  --x-border-radius-40: #{$kui-border-radius-40};
+  --x-border-radius-round: #{$kui-border-radius-round};
+  --x-border-radius-circle: #{$kui-border-radius-circle};
+
+  /* Shadows */
+  --x-shadow: #{$kui-shadow};
+  --x-shadow-border: #{$kui-shadow-border};
+  --x-shadow-focus: #{$kui-shadow-focus};
+
+  /* Icons */
+  --x-icon-size-30: #{$kui-icon-size-30};
+  --x-icon-size-40: #{$kui-icon-size-40};
+  --x-icon-size-50: #{$kui-icon-size-50};
+
+  /* Animation */
+  --x-animation-duration-20: #{$kui-animation-duration-20};
+
+  /* Navigation */
+  --x-navigation-color-selected: #{$kui-navigation-color-selected};
+}
 </style>

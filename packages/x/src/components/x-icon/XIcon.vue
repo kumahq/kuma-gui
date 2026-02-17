@@ -116,13 +116,13 @@ const props = withDefaults(defineProps<{
 </script>
 <style lang="scss" scoped>
 .x-icon-mesh-icon {
-  --meshIconColor: #{$kui-color-text-decorative-aqua};
+  --meshIconColor: #{var(--x-color-text)-decorative-aqua};
 }
 .x-icon-icon {
   --warningIconColor: #ffa600;
 }
 .x-icon-icon {
-  --dangerIconColor: #{$kui-color-text-danger};
+  --dangerIconColor: #{var(--x-color-text-danger)};
 }
 .x-icon-policy-role-producer-icon,
 .x-icon-policy-role-consumer-icon,
@@ -160,10 +160,10 @@ const props = withDefaults(defineProps<{
 </style>
 <style lang="scss">
 [id^='-x-icon-tooltip'] ul {
-  padding-left: $kui-space-60;
+  padding-left: var(--x-space-60);
 }
 [id^='-x-icon-tooltip'] ul li:first-child:last-child {
-  margin-left: calc(0px - $kui-space-60);
+  margin-left: calc(0px - var(--x-space-60));
   list-style-type: none;
 }
 </style>

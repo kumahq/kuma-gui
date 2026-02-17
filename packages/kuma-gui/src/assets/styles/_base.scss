@@ -7,7 +7,7 @@
 }
 
 :root {
-  font-size: $kui-font-size-40;
+  font-size: var(--x-font-size-40);
 }
 
 body,
@@ -23,9 +23,9 @@ h6 {
 body {
   margin: 0;
   tab-size: 2;
-  color: $kui-color-text;
-  font-family: $kui-font-family-text;
-  font-weight: $kui-font-weight-regular;
+  color: var(--x-color-text);
+  font-family: var(--x-font-family-text);
+  font-weight: var(--x-font-weight-regular);
 }
 
 
@@ -53,36 +53,36 @@ h3,
 h4,
 h5,
 h6 {
-  font-weight: $kui-font-weight-bold;
+  font-weight: var(--x-font-weight-bold);
 }
 
 h1 {
-  font-size: $kui-font-size-70;
+  font-size: var(--x-font-size-70);
 }
 
 h2 {
-  font-size: $kui-font-size-40;
+  font-size: var(--x-font-size-40);
 }
 
 h3 {
-  font-size: $kui-font-size-40;
+  font-size: var(--x-font-size-40);
 }
 
 h4 {
-  font-size: $kui-font-size-30;
+  font-size: var(--x-font-size-30);
 }
 
 h5 {
-  font-size: $kui-font-size-30;
+  font-size: var(--x-font-size-30);
 }
 
 h6 {
-  font-size: $kui-font-size-30;
+  font-size: var(--x-font-size-30);
 }
 
 ul,
 ol {
-  padding-left: $kui-space-80;
+  padding-left: var(--x-space-80);
 }
 
 h2,
@@ -94,7 +94,7 @@ p,
 ul,
 ol {
   &:not(:first-child) {
-    margin-top: $kui-space-50;
+    margin-top: var(--x-space-50);
   }
 }
 
@@ -103,7 +103,7 @@ p:empty {
 }
 
 dl p:not(:first-child) {
-  margin-top: $kui-space-10;
+  margin-top: var(--x-space-10);
 }
 
 a {
@@ -112,7 +112,7 @@ a {
 
 b,
 strong {
-  font-weight: $kui-font-weight-semibold;
+  font-weight: var(--x-font-weight-semibold);
 }
 
 small {
@@ -176,22 +176,22 @@ button {
 
 input {
   appearance: none;
-  border: $kui-border-width-10 solid $kui-color-border;
+  border: var(--x-border-width-10) solid var(--x-color-border);
   border-radius: 3px;
   font: inherit;
   margin: 0;
-  padding: $kui-space-40;
+  padding: var(--x-space-40);
   color: currentColor;
-  background-color: $kui-color-background;
+  background-color: var(--x-color-background);
 }
 
 select {
   appearance: none;
-  border: $kui-border-width-10 solid $kui-color-border;
+  border: var(--x-border-width-10) solid var(--x-color-border);
   border-radius: 3px;
-  font-size: $kui-font-size-40;
+  font-size: var(--x-font-size-40);
   padding: 10px 30px 10px 13px;
-  background-color: $kui-color-background;
+  background-color: var(--x-color-background);
   background-image: url('@/assets/images/chevron-down.svg?url');
   background-position: calc(100% - 13px) 50%;
   background-repeat: no-repeat;

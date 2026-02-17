@@ -468,7 +468,7 @@ const props = defineProps<{
 
 <style lang="scss" scoped>
 .ip span {
-  font-size: $kui-font-size-30;
+  font-size: var(--x-font-size-30);
 }
 search {
   width: 100%;
@@ -476,8 +476,8 @@ search {
   justify-content: flex-end;
   align-items: stretch;
   flex-wrap: wrap;
-  gap: $kui-space-70;
-  margin-bottom: $kui-space-70;
+  gap: var(--x-space-70);
+  margin-bottom: var(--x-space-70);
 }
 
 .search-form {

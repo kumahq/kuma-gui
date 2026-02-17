@@ -72,7 +72,7 @@ const items = computed(() => {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: $kui-space-40;
+  gap: var(--x-space-40);
 }
 
 .k-select :deep(.k-label) {

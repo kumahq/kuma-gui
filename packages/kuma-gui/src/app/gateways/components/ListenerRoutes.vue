@@ -315,8 +315,8 @@ function triggerAction(event: Event) {
 
 <style lang="scss" scoped>
 .listener-routes-card {
-  border: 1px solid $kui-color-border;
-  border-radius: $kui-border-radius-20;
+  border: 1px solid var(--x-color-border);
+  border-radius: var(--x-border-radius-20);
 }
 
 .listener-routes {
@@ -325,37 +325,37 @@ function triggerAction(event: Event) {
 }
 
 .column + .column {
-  border-left: 1px solid $kui-color-border;
+  border-left: 1px solid var(--x-color-border);
 }
 
 .header {
-  padding: $kui-space-60 $kui-space-60 $kui-space-40 $kui-space-60;
-  border-bottom: 1px solid $kui-color-border;
+  padding: var(--x-space-60) var(--x-space-60) var(--x-space-40) var(--x-space-60);
+  border-bottom: 1px solid var(--x-color-border);
 }
 
 .title {
-  font-size: $kui-font-size-40;
-  line-height: $kui-line-height-30;
+  font-size: var(--x-font-size-40);
+  line-height: var(--x-line-height-30);
 }
 
 .count {
-  color: $kui-color-text-neutral-strong;
-  margin-top: $kui-space-20;
+  color: var(--x-color-text-neutral)-strong;
+  margin-top: var(--x-space-20);
 }
 
 .content {
-  padding: $kui-space-60;
+  padding: var(--x-space-60);
 }
 
 .listener-list>*+*,
 .to-rule-list>*+* {
-  margin-top: $kui-space-60;
+  margin-top: var(--x-space-60);
 }
 
 .card {
-  padding: $kui-space-50;
-  border: 1px solid $kui-color-border;
-  border-radius: $kui-border-radius-20;
+  padding: var(--x-space-50);
+  border: 1px solid var(--x-color-border);
+  border-radius: var(--x-border-radius-20);
   box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.08);
 }
 
@@ -364,32 +364,32 @@ function triggerAction(event: Event) {
 }
 
 .listener-card.active {
-  border-color: $kui-color-border-primary;
+  border-color: var(--x-color-border-primary);
 }
 
 .route-card-title {
-  font-size: $kui-font-size-30;
-  line-height: $kui-line-height-30;
+  font-size: var(--x-font-size-30);
+  line-height: var(--x-line-height-30);
 }
 
 .list {
   display: inline-flex;
   flex-wrap: wrap;
-  gap: $kui-space-40;
+  gap: var(--x-space-40);
   align-items: baseline;
 }
 
 .rule {
-  padding: $kui-space-40;
-  border: $kui-border-width-10 solid $kui-color-border;
-  border-radius: $kui-border-radius-10;
+  padding: var(--x-space-40);
+  border: var(--x-border-width-10) solid var(--x-color-border);
+  border-radius: var(--x-border-radius-10);
 }
 
 .definition-list {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  gap: $kui-space-40 $kui-space-50;
+  gap: var(--x-space-40) var(--x-space-50);
 }
 
 .definition-list:where(:not(.definition-list--horizontal)) {
@@ -406,6 +406,6 @@ function triggerAction(event: Event) {
 }
 
 .text-neutral {
-  color: $kui-color-text-neutral;
+  color: var(--x-color-text-neutral);
 }
 </style>

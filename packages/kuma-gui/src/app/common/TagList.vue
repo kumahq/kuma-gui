@@ -103,14 +103,14 @@ function getRoute(tag: LabelValue): RouteLocationNamedRaw | undefined {
   [data-kv-owner$='.kuma.io'],
   [data-kv-owner^='kuma.io']
 )) {
-  background-color: $kui-color-background-neutral-weaker !important;
-  color: $kui-color-text-neutral-strong !important;
+  background-color: var(--x-color-background-neutral-weaker) !important;
+  color: var(--x-color-text-neutral)-strong !important;
 }
 
 .tag-list {
   display: inline-flex;
   flex-wrap: wrap;
-  gap: $kui-space-40;
+  gap: var(--x-space-40);
 }
 
 .tag-list--align-right,
@@ -125,9 +125,9 @@ function getRoute(tag: LabelValue): RouteLocationNamedRaw | undefined {
   text-decoration: underline;
 }
 .tag :deep(span.label) {
-  font-weight: $kui-font-weight-regular;
+  font-weight: var(--x-font-weight-regular);
 }
 .tag :deep(span.value) {
-  font-weight: $kui-font-weight-semibold;
+  font-weight: var(--x-font-weight-semibold);
 }
 </style>

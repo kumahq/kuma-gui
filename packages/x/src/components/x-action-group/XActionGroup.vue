@@ -71,32 +71,32 @@ const slots = defineSlots()
 }
 
 .x-action-group.expanded :deep(> *) {
-  border-color: $kui-color-border-primary-weak;
-  border-top: $kui-border-width-10 solid;
-  border-bottom: $kui-border-width-10 solid;
-  padding: $kui-space-30 $kui-space-50;
-  font-weight: $kui-font-weight-semibold;
+  border-color: var(--x-color-border-primary-weak);
+  border-top: var(--x-border-width-10) solid;
+  border-bottom: var(--x-border-width-10) solid;
+  padding: var(--x-space-30) var(--x-space-50);
+  font-weight: var(--x-font-weight-semibold);
 }
 
 .x-action-group.expanded :deep(> .active) {
-  border-color: $kui-color-border-primary-strong;
-  background-color: $kui-color-background-primary-weakest;
+  border-color: var(--x-color-border-primary)-strong;
+  background-color: var(--x-color-background-primary-weakest);
 }
 
 .x-action-group.expanded :deep(> * + *) {
-  border-left: $kui-border-width-10 solid;
+  border-left: var(--x-border-width-10) solid;
 }
 
 .x-action-group.expanded :deep(> *:first-child) {
-  border-left: $kui-border-width-10 solid;
-  border-top-left-radius: $kui-border-radius-30;
-  border-bottom-left-radius: $kui-border-radius-30;
+  border-left: var(--x-border-width-10) solid;
+  border-top-left-radius: var(--x-border-radius-30);
+  border-bottom-left-radius: var(--x-border-radius-30);
 }
 
 .x-action-group.expanded :deep(> *:last-child) {
-  border-right: $kui-border-width-10 solid;
-  border-top-right-radius: $kui-border-radius-30;
-  border-bottom-right-radius: $kui-border-radius-30;
+  border-right: var(--x-border-width-10) solid;
+  border-top-right-radius: var(--x-border-radius-30);
+  border-bottom-right-radius: var(--x-border-radius-30);
 }
 
 .x-action-group :deep(.popover-container) {
