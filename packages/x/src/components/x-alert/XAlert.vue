@@ -30,7 +30,7 @@ const attrs = useAttrs()
 </script>
 <style lang="scss" scoped>
 :deep(.k-button.primary) {
-  color: $kui-color-text-inverse !important;
+  color: var(--x-color-text-inverse) !important;
 }
 :deep(.x-action-appearance-anchor),
 :deep(a:not([class])) {

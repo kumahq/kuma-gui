@@ -204,17 +204,17 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: $kui-space-80;
-  padding-right: $kui-space-80;
-  padding-left: $kui-space-80;
-  border-bottom: $kui-border-width-10 solid $kui-color-border;
-  background-color: $kui-color-background;
+  gap: var(--x-space-80);
+  padding-right: var(--x-space-80);
+  padding-left: var(--x-space-80);
+  border-bottom: var(--x-border-width-10) solid var(--x-color-border);
+  background-color: var(--x-color-background);
 }
 
 .horizontal-list {
   display: flex;
   align-items: center;
-  gap: $kui-space-80;
+  gap: var(--x-space-80);
 }
 // This wrapping element is necessary. It ensures that the sidebar can participate in a grid or flex container.
 .app-sidebar {
@@ -230,18 +230,18 @@ nav {
   bottom: 0;
   left: 0;
   overflow-y: auto;
-  padding: $kui-space-40 $kui-space-40 $kui-space-80 $kui-space-40;
-  border-right: $kui-border-width-10 solid $kui-color-border;
-  background-color:  $kui-color-background;
+  padding: var(--x-space-40) var(--x-space-40) var(--x-space-80) var(--x-space-40);
+  border-right: var(--x-border-width-10) solid var(--x-color-border);
+  background-color:  var(--x-color-background);
   display: flex;
   flex-flow: column nowrap;
 }
 
 .navigation-separator {
-  width: calc(100% - 2 * $kui-space-40);
-  margin: $kui-space-80 $kui-space-40;
+  width: calc(100% - 2 * var(--x-space-40));
+  margin: var(--x-space-80) var(--x-space-40);
   height: 1px;
-  background-color: $kui-color-border;
+  background-color: var(--x-color-border);
 }
 
 nav ul {
@@ -250,19 +250,19 @@ nav ul {
   margin: unset;
 }
 nav :deep(.app-navigator) + .app-navigator {
-  margin-top: $kui-space-20;
+  margin-top: var(--x-space-20);
 }
 nav :deep(.app-navigator) > a {
   width: 100%;
   display: inline-block;
-  padding: $kui-space-40 $kui-space-60 $kui-space-40 $kui-space-70;
+  padding: var(--x-space-40) var(--x-space-60) var(--x-space-40) var(--x-space-70);
   border-radius: 5px;
   text-decoration: none;
   color: currentColor;
-  font-size: $kui-font-size-40;
+  font-size: var(--x-font-size-40);
   &:hover,
   &:is(.is-active) {
-    background-color: $kui-color-background-neutral-weaker;
+    background-color: var(--x-color-background-neutral-weaker);
   }
 }
 
@@ -271,7 +271,7 @@ nav :deep(.app-navigator) > a {
 }
 .app-status {
   margin-top: 0;
-  color: $kui-color-text-neutral;
+  color: var(--x-color-text-neutral);
 }
 .app-status--desktop {
   display: none;
@@ -294,14 +294,14 @@ nav :deep(.app-navigator) > a {
   }
   .upgrade-alert {
     // Uses smaller paddings for this particular alert.
-    padding: $kui-space-20 $kui-space-40;
-    font-size: $kui-font-size-30;
+    padding: var(--x-space-20) var(--x-space-40);
+    font-size: var(--x-font-size-30);
   }
 
   .upgrade-alert {
     display: flex;
     align-items: center;
-    gap: $kui-space-50;
+    gap: var(--x-space-50);
   }
 }
 </style>

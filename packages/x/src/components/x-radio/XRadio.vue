@@ -43,27 +43,27 @@ const attrs = useAttrs()
 <style lang="scss" scoped>
 .variant-card {
   :not(.checked) :deep(.card-content-wrapper) {
-    color: $kui-color-text !important;
+    color: var(--x-color-text) !important;
   }
 
   :deep(.card-content-wrapper) {
     & {
-      font-family: $kui-font-family-text;
-      font-size: $kui-font-size-30;
-      font-weight: $kui-font-weight-semibold;
-      line-height: $kui-line-height-30;
+      font-family: var(--x-font-family-text);
+      font-size: var(--x-font-size-30);
+      font-weight: var(--x-font-weight-semibold);
+      line-height: var(--x-line-height-30);
     }
 
     header {
-      margin-bottom: $kui-space-20;
+      margin-bottom: var(--x-space-20);
     }
 
     p {
-      color: $kui-color-text-neutral;
-      font-family: $kui-font-family-text;
-      font-size: $kui-font-size-20;
-      font-weight: $kui-font-weight-regular;
-      line-height: $kui-line-height-20;
+      color: var(--x-color-text-neutral);
+      font-family: var(--x-font-family-text);
+      font-size: var(--x-font-size-20);
+      font-weight: var(--x-font-weight-regular);
+      line-height: var(--x-line-height-20);
     }
   }
 }

@@ -86,17 +86,17 @@ const props = defineProps<{
 .match {
   display: flex;
   flex-wrap: wrap;
-  gap: $kui-space-50;
+  gap: var(--x-space-50);
 }
 
 .list {
   display: inline-flex;
   flex-wrap: wrap;
-  gap: $kui-space-40;
+  gap: var(--x-space-40);
   align-items: baseline;
 }
 
 .text-neutral {
-  color: $kui-color-text-neutral;
+  color: var(--x-color-text-neutral);
 }
 </style>

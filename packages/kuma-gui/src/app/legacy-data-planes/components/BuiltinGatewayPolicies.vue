@@ -141,7 +141,7 @@ const props = defineProps<{
 
 <style lang="scss" scoped>
 .policies-list {
-  padding: $kui-space-50;
+  padding: var(--x-space-50);
 }
 
 .dataplane-policy-header {
@@ -154,14 +154,14 @@ const props = defineProps<{
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: $kui-space-40;
+  gap: var(--x-space-40);
 }
 </style>
 
 <style lang="scss">
 .mesh-gateway-policy-list .accordion-item-header {
   padding-left: 0;
-  padding-top: $kui-space-40;
-  padding-bottom: $kui-space-40;
+  padding-top: var(--x-space-40);
+  padding-bottom: var(--x-space-40);
 }
 </style>

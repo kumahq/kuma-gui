@@ -92,10 +92,10 @@ watch(() => slots, () => {
   border-radius: inherit;
   color: inherit;
   outline: inherit;
-  padding: $kui-space-30 $kui-space-50;
+  padding: var(--x-space-30) var(--x-space-50);
 }
 :deep(.tab-link) > *:focus-visible {
-  background-color: $kui-color-background-neutral-weaker;
-  box-shadow: $kui-shadow-focus;
+  background-color: var(--x-color-background-neutral-weaker);
+  box-shadow: var(--x-shadow-focus);
 }
 </style>
