@@ -388,7 +388,8 @@
     --x-color-border-primary-weak: #{$kui-color-border-primary-weak};
 
     /* color-text */
-    --x-color-green-40: #{$kui-color-green-40};
+    /* TODO(jc): This border color is in the design but doesn't seem to be in @kong/design-tokens */
+    --x-color-green-40: #00D6A4; // #{$kui-color-green-40};
     --x-color-text: #{$kui-color-text};
     --x-color-text-danger: #{$kui-color-text-danger};
     --x-color-text-decorative-aqua: #{$kui-color-text-decorative-aqua};
