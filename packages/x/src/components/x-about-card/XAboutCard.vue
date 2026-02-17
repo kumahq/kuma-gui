@@ -37,7 +37,7 @@ const attrs = useAttrs()
 <style lang="scss" scoped>
 :deep(.about-section-content) {
   * {
-    font-size: $kui-font-size-20;
+    font-size: var(--x-font-size-20);
   }
 }
 </style>

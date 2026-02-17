@@ -137,13 +137,13 @@ const props = defineProps<{
 
 .policy-type-heading {
   font-size: inherit;
-  font-weight: $kui-font-weight-regular;
+  font-weight: var(--x-font-weight-regular);
 }
 
 .policy-list {
   display: flex;
   flex-direction: column;
-  gap: $kui-space-40;
+  gap: var(--x-space-40);
 }
 
 .policy-type-table {
@@ -191,15 +191,15 @@ const props = defineProps<{
 }
 
 .matcher__not {
-  color: $kui-color-text-danger;
+  color: var(--x-color-text-danger);
 }
 
 .matcher__and {
-  font-weight: $kui-font-weight-semibold;
+  font-weight: var(--x-font-weight-semibold);
 }
 
 .matcher__not,
 .matcher__term {
-  font-family: $kui-font-family-code;
+  font-family: var(--x-font-family-code);
 }
 </style>

@@ -247,40 +247,40 @@ watch(() => props.value, () => {
 .container {
   width: 100%;
   position: relative;
-  font-family: $kui-font-family-code;
+  font-family: var(--x-font-family-code);
   position: relative;
   display: inline-flex;
   vertical-align: middle;
   cursor: text;
   outline: none;
   align-items: center;
-  font-size: $kui-font-size-30;
-  border-radius: $kui-border-radius-20;
-  box-shadow: $kui-shadow-border;
-  transition: box-shadow $kui-animation-duration-20 ease-in-out;
-  padding: $kui-space-40 $kui-space-50 $kui-space-40 $kui-space-100;
-  color: $kui-color-text;
+  font-size: var(--x-font-size-30);
+  border-radius: var(--x-border-radius-20);
+  box-shadow: var(--x-shadow-border);
+  transition: box-shadow var(--x-animation-duration-20) ease-in-out;
+  padding: var(--x-space-40) var(--x-space-50) var(--x-space-40) var(--x-space-100);
+  color: var(--x-color-text);
 
   &:hover {
-    box-shadow: $kui-shadow-border-primary-weak;
+    box-shadow: var(--x-shadow-border-primary-weak);
   }
   &:focus-within {
-    box-shadow: $kui-shadow-border-primary, $kui-shadow-focus;
+    box-shadow: var(--x-shadow-border-primary), var(--x-shadow-focus);
   }
 }
 
 .icon-wrapper {
   position: absolute;
-  left: $kui-space-50;
-  color: $kui-color-background-primary;
+  left: var(--x-space-50);
+  color: var(--x-color-background-primary);
   height: 100%;
   display: flex;
   align-items: center;
 }
 
 :deep(.icon) {
-  height: $kui-icon-size-40 !important;
-  width: $kui-icon-size-40 !important;
+  height: var(--x-icon-size-40) !important;
+  width: var(--x-icon-size-40) !important;
 }
 
 .input-container {
@@ -303,13 +303,13 @@ watch(() => props.value, () => {
   flex: 1;
 
   span {
-    padding: $kui-space-10 0px;
+    padding: var(--x-space-10) 0px;
 
     &.highlight {
       background: #f0f4f7;
-      border-radius: $kui-border-radius-20;
+      border-radius: var(--x-border-radius-20);
       &.invalid {
-        background: $kui-color-background-warning-weak;
+        background: var(--x-color-background-warning-weak);
       }
     }
   }
@@ -343,8 +343,8 @@ input {
   background: transparent;
   border: 0;
   outline: none;
-  caret-color: $kui-color-text;
-  line-height: $kui-font-size-70;
+  caret-color: var(--x-color-text);
+  line-height: var(--x-font-size-70);
 }
 
 .dropdown {
@@ -367,23 +367,23 @@ input {
   }
 
   .dropdown-item {
-    color: $kui-color-text-neutral;
-    font-family: $kui-font-family-code;
-    padding: $kui-space-50 $kui-space-60;
-    font-size: $kui-font-size-30;
+    color: var(--x-color-text-neutral);
+    font-family: var(--x-font-family-code);
+    padding: var(--x-space-50) var(--x-space-60);
+    font-size: var(--x-font-size-30);
 
     &:not(:first-child) {
-      border-top: $kui-border-width-10 solid $kui-color-border;
+      border-top: var(--x-border-width-10) solid var(--x-color-border);
     }
 
     .filter-block {
       display: flex;
-      gap: $kui-space-40;
+      gap: var(--x-space-40);
       flex-flow: row wrap;
     }
 
     p {
-      line-height: $kui-line-height-40;
+      line-height: var(--x-line-height-40);
     }
 
     dl {
@@ -391,20 +391,20 @@ input {
     }
     
     strong, b {
-      color: $kui-color-text;
+      color: var(--x-color-text);
     }
   }
 
   .bg-neutral-weakest {
-    background-color: $kui-color-background-neutral-weakest;
+    background-color: var(--x-color-background-neutral-weakest);
   }
 
   .text-important {
-    color: $kui-color-text;
+    color: var(--x-color-text);
   }
 }
 
 :deep(.k-badge) {
-  font-family: $kui-font-family-code;
+  font-family: var(--x-font-family-code);
 }
 </style>

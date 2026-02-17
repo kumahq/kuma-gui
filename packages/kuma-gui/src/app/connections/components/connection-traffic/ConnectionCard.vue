@@ -189,16 +189,16 @@ const props = withDefaults(defineProps<{
 <style lang="scss" scoped>
 .aside {
   float: right;
-  margin-bottom: $kui-space-40;
-  margin-left: $kui-space-40;
+  margin-bottom: var(--x-space-40);
+  margin-left: var(--x-space-40);
 }
 .title {
   float: left;
-  font-size: $kui-font-size-40;
+  font-size: var(--x-font-size-40);
   display: flex;
   align-items: center;
   flex: 1 1 auto;
-  gap: $kui-space-40;
+  gap: var(--x-space-40);
 }
 .protocol {
   align-self: start;

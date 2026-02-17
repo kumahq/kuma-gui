@@ -116,13 +116,13 @@ const props = withDefaults(defineProps<{
 </script>
 <style lang="scss" scoped>
 .x-icon-mesh-icon {
-  --meshIconColor: #{$kui-color-text-decorative-aqua};
+  --meshIconColor: var(--x-color-text-decorative-aqua);
 }
 .x-icon-icon {
   --warningIconColor: #ffa600;
 }
 .x-icon-icon {
-  --dangerIconColor: #{$kui-color-text-danger};
+  --dangerIconColor: var(--x-color-text-danger);
 }
 .x-icon-policy-role-producer-icon,
 .x-icon-policy-role-consumer-icon,

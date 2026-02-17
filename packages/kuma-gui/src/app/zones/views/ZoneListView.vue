@@ -290,7 +290,7 @@ const getEgresses = (data: {items: ZoneEgressOverview[]}) => {
 }
 .app-collection :deep(td:nth-child(2) a) {
   color: inherit;
-  font-weight: $kui-font-weight-semibold;
+  font-weight: var(--x-font-weight-semibold);
   text-decoration: none;
 }
 .search-field {

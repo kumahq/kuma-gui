@@ -60,6 +60,6 @@ const change = computed(() => {
   z-index: 1;
 }
 :deep(.x-icon-search-icon) {
-  color: $kui-color-text-primary !important;
+  color: var(--x-color-text-primary) !important;
 }
 </style>

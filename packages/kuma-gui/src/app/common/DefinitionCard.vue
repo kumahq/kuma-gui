@@ -32,7 +32,7 @@ const slots = defineSlots()
 <style lang="scss" scoped>
 .definition-card {
   display: flex;
-  gap: $kui-space-40;
+  gap: var(--x-space-40);
 }
 
 .definition-card--horizontal {
@@ -56,18 +56,18 @@ const slots = defineSlots()
 .definition-card-title {
   display: flex;
   align-items: center;
-  gap: $kui-space-40;
+  gap: var(--x-space-40);
 }
 
 .definition-card-container {
   display: flex;
   align-items: flex-start;
-  font-weight: $kui-font-weight-bold;
+  font-weight: var(--x-font-weight-bold);
 }
 
 .definition-card--vertical .definition-card-container {
   flex-grow: 1;
-  font-size: $kui-font-size-60;
+  font-size: var(--x-font-size-60);
 }
 </style>
 

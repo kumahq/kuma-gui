@@ -282,12 +282,12 @@ header {
   display: flow-root;
 }
 header > * {
-  margin-bottom: $kui-space-40;
+  margin-bottom: var(--x-space-40);
 }
 header > div {
   float: right;
   display: flex;
-  gap: $kui-space-40;
+  gap: var(--x-space-40);
   align-items: flex-start;
 }
 header > h3 {
@@ -300,8 +300,8 @@ search form {
   justify-content: flex-end;
   align-items: stretch;
   flex-wrap: wrap;
-  gap: $kui-space-70;
-  margin-bottom: $kui-space-70;
+  gap: var(--x-space-70);
+  margin-bottom: var(--x-space-70);
 }
 .app-collection:deep(:is(th, td):nth-child(1)) {
   padding-right: 0 !important;

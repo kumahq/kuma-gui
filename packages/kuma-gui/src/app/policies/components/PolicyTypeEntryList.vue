@@ -138,17 +138,17 @@ function getCellAttributes({ headerKey }: any): Record<string, string> {
 <style lang="scss" scoped>
 .policy-type-heading {
   font-size: inherit;
-  font-weight: $kui-font-weight-regular;
+  font-weight: var(--x-font-weight-regular);
 }
 
 .policy-list {
   display: flex;
   flex-direction: column;
-  gap: $kui-space-40;
+  gap: var(--x-space-40);
 }
 
 .tag-list {
   display: flex;
-  margin-top: $kui-space-20;
+  margin-top: var(--x-space-20);
 }
 </style>

@@ -81,13 +81,13 @@ const routeTarget = computed<Omit<RouteLocationNamedRaw, 'query'> | null>(() => 
   display: inline-flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: $kui-space-40;
+  gap: var(--x-space-40);
 }
 
 .weight {
   display: inline-flex;
   align-items: center;
-  gap: $kui-space-20;
-  color: $kui-color-text-neutral;
+  gap: var(--x-space-20);
+  color: var(--x-color-text-neutral);
 }
 </style>
