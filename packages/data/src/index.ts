@@ -14,6 +14,10 @@ export type NonNullableArray<T extends unknown[]> = {
   [K in keyof T]: NonNullable<T[K]>
 }
 
+export type NullableArray<T extends unknown[]> = {
+  [K in keyof T]: T[K] | undefined
+}
+
 /**
  * Only use if `DataLoader` itself can't infer the type, i.e. because provided `:src` is a `string`.
  */
