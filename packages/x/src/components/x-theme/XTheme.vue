@@ -444,8 +444,5 @@
 
   /* Animation */
   --x-animation-duration-20: #{$kui-animation-duration-20};
-
-  /* Navigation */
-  --x-navigation-color-selected: #{$kui-navigation-color-selected};
 }
 </style>

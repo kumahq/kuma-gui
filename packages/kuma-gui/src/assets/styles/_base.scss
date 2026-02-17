@@ -23,11 +23,10 @@ h6 {
 body {
   margin: 0;
   tab-size: 2;
-  color: var(--x-color-text);
-  font-family: var(--x-font-family-text);
-  font-weight: var(--x-font-weight-regular);
+  color: $kui-color-text; // var(--x-color-text);
+  font-family: $kui-font-family-text; // var(--x-font-family-text);
+  font-weight: $kui-font-weight-regular; // var(--x-font-weight-regular);
 }
-
 
 blockquote,
 dl,
