@@ -20,8 +20,7 @@ export const services = <T extends Record<string, Token>>(app: T): ServiceDefini
     service: () => {
       // these are only fed to the mocks
       return {
-        KUMA_API_URL: () => Cypress.env('VITE_KUMA_API_SERVER_URL'),
-        KUMA_VERSION_URL: () => Cypress.env('VITE_VERSION_URL'),
+        KUMA_API_URL: () => Cypress.env('KUMA_API_URL'),
       }
     },
     labels: [

@@ -19,7 +19,7 @@ export const vars = (config: HtmlVars) => {
     KUMA_ENVIRONMENT: () => config.environment,
     KUMA_STORE_TYPE: () => config.storeType,
     //
-    KUMA_VERSION_URL: () => import.meta.env.VITE_VERSION_URL,
+    KUMA_VERSION_URL: () => 'https://kuma.io/latest_version',
   }
 }
 declare module '@/app/application' {
