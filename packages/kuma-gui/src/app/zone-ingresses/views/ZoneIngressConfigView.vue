@@ -18,7 +18,7 @@
       <XCard>
         <XLayout>
           <XLayout
-            type="separated"
+            variant="separated"
             justify="end"
           >
             <div

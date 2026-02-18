@@ -37,7 +37,7 @@
                 appearance="info"
               >
                 <XLayout
-                  type="separated"
+                  variant="separated"
                 >
                   <p>
                     {{ t('common.product.name') }} update available
@@ -141,7 +141,7 @@
         class="app-main-content"
       >
         <XLayout
-          type="stack"
+          variant="y-stack"
         >
           <div>
             <slot name="default" />

@@ -64,7 +64,7 @@
             <XLayout>
               <header>
                 <XLayout
-                  type="separated"
+                  variant="separated"
                   size="max"
                 >
                   <h3>
@@ -97,7 +97,7 @@
 
             <template v-if="route.params.format === 'structured'">
               <XLayout
-                type="stack"
+                variant="y-stack"
                 size="large"
                 data-testid="structured-view"
               >
@@ -153,7 +153,7 @@
 
                 <XLayout
                   v-if="item.dataplane.networking.gateway"
-                  type="stack"
+                  variant="y-stack"
                 >
                   <h3>{{ t('data-planes.routes.item.gateway') }}</h3>
 

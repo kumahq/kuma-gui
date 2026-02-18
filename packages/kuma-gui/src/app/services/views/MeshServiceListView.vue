@@ -129,7 +129,7 @@
                   #ports="{ row: item }"
                 >
                   <XLayout
-                    type="separated"
+                    variant="separated"
                     truncate
                   >
                     <KumaPort
