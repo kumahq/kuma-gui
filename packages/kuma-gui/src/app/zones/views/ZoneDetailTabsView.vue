@@ -10,7 +10,7 @@
       :src="uri(sources, `/zone-cps/:name`, {
         name: route.params.zone,
       })"
-      v-slot="{ data }"
+      v-slot="{ data: [data] }"
     >
       <AppView
         v-if="data"

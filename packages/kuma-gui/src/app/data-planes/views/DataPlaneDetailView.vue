@@ -90,7 +90,9 @@
             class="about-section"
             data-testid="dataplane-about-section"
           >
-            <DataLoader :data="[traffic]">
+            <DataLoader
+              :data="[traffic]"
+            >
               <XLayout>
                 <XDl
                   variant="x-stack"

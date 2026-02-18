@@ -15,7 +15,7 @@
       <XLayout type="stack">
         <DataLoader
           :src="`/meshes/${route.params.mesh}/service-insights/${route.params.service}`"
-          v-slot="{ data }: ServiceInsightSource"
+          v-slot="{ data: [data] }: DataLoaderResponse<ServiceInsightSource>"
         >
           <XAboutCard
             v-if="data"
@@ -95,7 +95,7 @@
               size: route.params.size,
             })"
             variant="list"
-            v-slot="{ data: dataplanesData }"
+            v-slot="{ data: [dataplanesData] }"
           >
             <DataCollection
               type="data-planes"
@@ -268,6 +268,7 @@ import AppCollection from '@/app/application/components/app-collection/AppCollec
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import { sources } from '@/app/data-planes/sources'
 import type { ServiceInsightSource } from '@/app/services/sources'
+import type { DataLoaderResponse } from '@kumahq/data'
 </script>
 
 <style lang="scss" scoped>

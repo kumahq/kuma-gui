@@ -43,7 +43,7 @@
               ].join(' '),
             })"
             variant="list"
-            v-slot="{ data: dataplanesData }"
+            v-slot="{ data: [dataplanesData] }"
           >
             <DataCollection
               type="data-planes"

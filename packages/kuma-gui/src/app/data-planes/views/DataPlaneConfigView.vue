@@ -50,7 +50,7 @@
                 mesh: route.params.mesh,
                 name: route.params.proxy,
               })"
-              v-slot="{ data }"
+              v-slot="{ data: [data] }"
             >
               <XCodeBlock
                 data-testid="codeblock-yaml-universal"
@@ -72,7 +72,7 @@
                 mesh: route.params.mesh,
                 name: route.params.proxy,
               })"
-              v-slot="{ data: k8sConfig }"
+              v-slot="{ data: [k8sConfig] }"
             >
               <XCodeBlock
                 data-testid="codeblock-yaml-k8s"

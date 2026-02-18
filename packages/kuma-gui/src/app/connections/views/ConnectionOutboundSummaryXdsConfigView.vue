@@ -28,7 +28,7 @@
           proxyType: ({ ingresses: 'zone-ingress', egresses: 'zone-egress'})[route.params.proxyType] ?? 'dataplane',
           mesh: route.params.mesh || '*',
         })"
-        v-slot="{ data, refresh }"
+        v-slot="{ data: [data], refresh }"
       >
         <XLayout
           variant="action-group"

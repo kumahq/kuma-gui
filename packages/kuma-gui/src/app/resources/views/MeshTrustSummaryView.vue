@@ -12,7 +12,7 @@
       :src="uri(sources, '/meshtrusts/:mtrust', {
         mtrust: route.params.mtrust,
       })"
-      v-slot="{ data }"
+      v-slot="{ data: [data] }"
     >
       <AppView>
         <template #title>
@@ -59,7 +59,7 @@
             :src="uri(sources, '/meshtrusts/:mtrust/as/kubernetes', {
               mtrust: route.params.mtrust,
             })"
-            v-slot="{ data: k8sYaml }"
+            v-slot="{ data: [k8sYaml] }"
           >
             <XCodeBlock
               language="yaml"

@@ -64,7 +64,7 @@
                 path: route.params.policyPath,
                 name: route.params.policy,
               })"
-              v-slot="{ data: yaml }"
+              v-slot="{ data: [yaml] }"
             >
               <XCodeBlock
                 data-testid="codeblock-yaml-k8s"

@@ -23,7 +23,7 @@
           name: route.params.proxy,
           mesh: route.params.mesh || '*',
         })"
-        v-slot="{ data: clusters, refresh }"
+        v-slot="{ data: [clusters], refresh }"
       >
         <template
           v-for="prefix in [route.params.connection]"

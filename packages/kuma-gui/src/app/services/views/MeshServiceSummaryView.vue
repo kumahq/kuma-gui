@@ -184,7 +184,7 @@
                   mesh: route.params.mesh,
                   name: route.params.service,
                 })"
-                v-slot="{ data: k8sConfig }"
+                v-slot="{ data: [k8sConfig] }"
               >
                 <XCodeBlock
                   data-testid="codeblock-yaml-k8s"

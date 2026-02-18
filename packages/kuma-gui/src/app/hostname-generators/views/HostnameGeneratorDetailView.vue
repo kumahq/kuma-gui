@@ -19,7 +19,7 @@
       :src="uri(sources, '/hostname-generators/:name', {
         name: route.params.name,
       })"
-      v-slot="{ data }"
+      v-slot="{ data: [data] }"
     >
       <AppView :docs="t('hostname-generators.href.docs')">
         <template #title>
@@ -191,7 +191,7 @@
                   :src="uri(sources, '/hostname-generators/:name/as/kubernetes', {
                     name: route.params.name,
                   })"
-                  v-slot="{ data: k8sConfig }"
+                  v-slot="{ data: [k8sConfig] }"
                 >
                   <XCodeBlock
                     data-testid="codeblock-yaml-k8s"

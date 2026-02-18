@@ -126,7 +126,7 @@
               serviceName: route.params.service,
             })"
             variant="list"
-            v-slot="{ data: hostnames }"
+            v-slot="{ data: [hostnames] }"
           >
             <DataCollection
               type="hostnames"
@@ -221,7 +221,7 @@
             <template v-else>
               <DataLoader
                 :src="`/meshes/${props.data.mesh}/mesh-external-service/${props.data.id}/as/kubernetes`"
-                v-slot="{ data: k8sConfig }"
+                v-slot="{ data: [k8sConfig] }"
               >
                 <XCodeBlock
                   data-testid="codeblock-yaml-k8s"

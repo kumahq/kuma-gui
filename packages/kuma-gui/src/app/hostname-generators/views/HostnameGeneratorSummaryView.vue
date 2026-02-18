@@ -134,7 +134,7 @@
                 :src="uri(sources, '/hostname-generators/:name/as/kubernetes', {
                   name: route.params.name,
                 })"
-                v-slot="{ data: k8sConfig }"
+                v-slot="{ data: [k8sConfig] }"
               >
                 <XCodeBlock
                   data-testid="codeblock-yaml-k8s"
