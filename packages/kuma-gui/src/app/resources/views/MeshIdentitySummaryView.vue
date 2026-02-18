@@ -12,7 +12,7 @@
       :src="uri(sources, '/meshidentities/:mid', {
         mid: route.params.mid,
       })"
-      v-slot="{ data }"
+      v-slot="{ data: [data] }"
     >
       <AppView>
         <template #title>
@@ -59,7 +59,7 @@
             :src="uri(sources, '/meshidentities/:mid/as/kubernetes', {
               mid: route.params.mid,
             })"
-            v-slot="{ data: k8sYaml }"
+            v-slot="{ data: [k8sYaml] }"
           >
             <XCodeBlock
               language="yaml"

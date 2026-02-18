@@ -26,7 +26,7 @@
           proxyType: ({ ingresses: 'zone-ingress', egresses: 'zone-egress'})[route.params.proxyType] ?? 'dataplane',
           mesh: route.params.mesh || '*',
         })"
-        v-slot="{ data: raw, refresh }"
+        v-slot="{ data: [raw], refresh }"
       >
         <XCodeBlock
           language="json"

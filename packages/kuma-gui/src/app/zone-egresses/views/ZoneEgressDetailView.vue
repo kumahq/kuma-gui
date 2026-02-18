@@ -160,7 +160,7 @@
             socketAddress: props.data.zoneEgress.socketAddress,
             proxyType: 'zone-egress',
           })"
-          v-slot="{ data: traffic, refresh }"
+          v-slot="{ data: [traffic], refresh }"
         >
           <XCard>
             <XLayout

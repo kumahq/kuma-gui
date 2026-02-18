@@ -14,7 +14,7 @@
           name: route.params.mesh,
         },
       )"
-      v-slot="{ data: mesh }"
+      v-slot="{ data: [mesh] }"
     >
       <AppView>
         <RouterView

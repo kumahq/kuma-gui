@@ -12,7 +12,7 @@
         mesh: route.params.mesh,
         name: route.params.proxy,
       })"
-      v-slot="{ data }"
+      v-slot="{ data: [data] }"
     >
       <DataPlaneRouteGuard
         :data="data"

@@ -86,7 +86,7 @@
                 :src="uri(sources, '/workloads/:wl/as/kubernetes', {
                   wl: route.params.wl,
                 })"
-                v-slot="{ data: k8sYaml }"
+                v-slot="{ data: [k8sYaml] }"
               >
                 <XCodeBlock
                   language="yaml"

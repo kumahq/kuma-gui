@@ -49,7 +49,7 @@
               :src="uri(sources, `/zone-ingresses/:name`, {
                 name: route.params.proxy,
               })"
-              v-slot="{ data }"
+              v-slot="{ data: [data] }"
             >
               <XCodeBlock
                 data-testid="codeblock-yaml-universal"
@@ -71,7 +71,7 @@
               :src="uri(sources, `/zone-ingresses/:name/as/kubernetes`, {
                 name: route.params.proxy,
               })"
-              v-slot="{ data: k8sConfig }"
+              v-slot="{ data: [k8sConfig] }"
             >
               <XCodeBlock
                 data-testid="codeblock-yaml-k8s"

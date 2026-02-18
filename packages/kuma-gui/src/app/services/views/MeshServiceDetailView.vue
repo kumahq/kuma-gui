@@ -159,7 +159,7 @@
               serviceName: route.params.service,
             })"
             variant="list"
-            v-slot="{ data: hostnames }"
+            v-slot="{ data: [hostnames] }"
           >
             <DataCollection
               type="hostnames"
@@ -310,7 +310,7 @@
                 search: `${route.params.s}${can('use zones') && props.data.zone.length > 0 ? ` zone:${props.data.zone}`: ''}`,
               })"
               variant="list"
-              v-slot="{ data: dataplanes }"
+              v-slot="{ data: [dataplanes] }"
             >
               <DataCollection
                 type="data-planes"

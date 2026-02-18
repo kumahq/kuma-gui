@@ -24,7 +24,7 @@
           mesh: route.params.mesh || '*',
           socketAddress: props.networking.inboundAddress,
         })"
-        v-slot="{ data: stats, refresh }"
+        v-slot="{ data: [stats], refresh }"
       >
         <DataCollection
           :items="stats.raw.split('\n')"

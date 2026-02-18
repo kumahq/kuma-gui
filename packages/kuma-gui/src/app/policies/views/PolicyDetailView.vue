@@ -121,7 +121,7 @@
             size: route.params.size,
           })"
           variant="list"
-          v-slot="{ data: dataplanes }"
+          v-slot="{ data: [dataplanes] }"
         >
           <DataCollection
             type="data-planes"
