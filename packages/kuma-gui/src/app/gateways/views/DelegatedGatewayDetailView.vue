@@ -12,7 +12,7 @@
     v-slot="{ can, route, t, me, uri }"
   >
     <AppView>
-      <XLayout type="stack">
+      <XLayout variant="y-stack">
         <DataLoader
           :src="`/meshes/${route.params.mesh}/service-insights/${route.params.service}`"
           v-slot="{ data }: ServiceInsightSource"

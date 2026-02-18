@@ -9,7 +9,7 @@
     v-slot="{ t, route, uri }"
   >
     <AppView>
-      <XLayout type="stack">
+      <XLayout variant="y-stack">
         <XAboutCard
           :title="t('zone-egresses.routes.item.about.title')"
           :created="props.data.creationTime"
@@ -89,7 +89,7 @@
               data-testid="about-zone-egress-subscriptions"
               class="about-subsection"
             >
-              <XLayout type="separated">
+              <XLayout variant="separated">
                 <h3>{{ t('zone-egresses.routes.item.subscriptions.title') }}</h3>
                 <XAction
                   data-action
@@ -168,7 +168,7 @@
             >
               <ConnectionTraffic>
                 <XLayout
-                  type="stack"
+                  variant="y-stack"
                   size="small"
                 >
                   <DataCollection
@@ -254,7 +254,7 @@
                           :key="typeof _hash"
                         >
                           <XLayout
-                            type="stack"
+                            variant="y-stack"
                             size="small"
                           >
                             <template

@@ -16,7 +16,7 @@
       </template>
 
       <XLayout
-        type="stack"
+        variant="y-stack"
       >
         <DataSource
           :src="uri(PolicySources, '/policy-types', {})"

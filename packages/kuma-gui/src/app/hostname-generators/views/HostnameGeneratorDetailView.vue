@@ -34,7 +34,7 @@
           </h1>
         </template>
         <XLayout
-          type="stack"
+          variant="y-stack"
         >
           <XAboutCard
             :title="t('hostname-generators.routes.item.about.title')"
@@ -96,7 +96,7 @@
                     </dt>
                     <dd>
                       <XLayout
-                        type="separated"
+                        variant="separated"
                         truncate
                       >
                         <XBadge
@@ -145,7 +145,7 @@
           <XCard>
             <XLayout>
               <XLayout
-                type="separated"
+                variant="separated"
                 justify="end"
               >
                 <div

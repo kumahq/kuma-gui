@@ -1,6 +1,6 @@
 <template>
   <XLayout
-    type="stack"
+    variant="y-stack"
   >
     <slot name="header" />
     <template v-if="props.format === 'structured'">

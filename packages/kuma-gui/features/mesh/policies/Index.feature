@@ -37,6 +37,7 @@ Feature: mesh / policies / index
           MeshFaultInjection:
             total: 10
       """
+
   Scenario: Visiting `/policies` redirects
     When I visit the "/meshes/default/policies" URL
     And the "$item:nth-child(1)" element contains

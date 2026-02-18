@@ -114,7 +114,7 @@
             data-testid="about-zone-ingress-subscriptions"
             class="about-subsection"
           >
-            <XLayout type="separated">
+            <XLayout variant="separated">
               <h3>{{ t('zone-ingresses.routes.item.subscriptions.title') }}</h3>
               <XAction
                 data-action
@@ -192,7 +192,7 @@
           >
             <ConnectionTraffic>
               <XLayout
-                type="stack"
+                variant="y-stack"
                 size="small"
               >
                 <DataCollection
@@ -279,7 +279,7 @@
                         :key="typeof _hash"
                       >
                         <XLayout
-                          type="stack"
+                          variant="y-stack"
                           size="small"
                         >
                           <template

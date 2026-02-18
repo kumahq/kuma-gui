@@ -23,14 +23,14 @@
             v-slot="hub"
           >
             <XLayout
-              type="stack"
+              variant="y-stack"
               size="small"
             >
               <aside
                 v-if="hub?.notifications?.size > 0"
               >
                 <XLayout
-                  type="stack"
+                  variant="y-stack"
                 >
                   <template
                     v-for="[variant, value] in hub.notifications"
@@ -77,7 +77,7 @@
                 }"
               >
                 <XLayout
-                  type="stack"
+                  variant="y-stack"
                 >
                   <header
                     v-if="slots.title || slots.actions"

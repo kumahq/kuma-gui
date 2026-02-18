@@ -9,7 +9,7 @@
     v-slot="{ t, route, uri }"
   >
     <AppView>
-      <XLayout type="stack">
+      <XLayout variant="y-stack">
         <XTable
           variant="kv"
         >
@@ -75,7 +75,7 @@
         </XTable>
         <XLayout
           v-if="props.data"
-          type="stack"
+          variant="y-stack"
           size="small"
         >
           <h3>Policies</h3>
@@ -163,7 +163,7 @@
                               <tr>
                                 <td colspan="2">
                                   <XLayout
-                                    type="stack"
+                                    variant="y-stack"
                                     size="small"
                                   >
                                     <span>Config</span>

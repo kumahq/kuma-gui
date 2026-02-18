@@ -25,11 +25,11 @@
           </template>
 
           <XLayout
-            type="stack"
+            variant="y-stack"
           >
             <header>
               <XLayout
-                type="separated"
+                variant="separated"
                 justify="end"
               >
                 <XSelect
@@ -52,7 +52,7 @@
 
             <template v-if="route.params.output === 'structured'">
               <XLayout
-                type="stack"
+                variant="y-stack"
                 data-testid="structured-view"
               >
                 <XTable
@@ -101,7 +101,7 @@
                     #default="{ items }"
                   >
                     <XLayout
-                      type="stack"
+                      variant="y-stack"
                     >
                       <slot name="default" />
                       <template

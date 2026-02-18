@@ -17,7 +17,7 @@
         />
 
         <XCard data-testid="subscriptions-listing">
-          <XLayout type="stack">
+          <XLayout variant="y-stack">
             <XI18n
               :prefix="props.i18nPrefix"
               path=".routes.item.subscriptions.description"

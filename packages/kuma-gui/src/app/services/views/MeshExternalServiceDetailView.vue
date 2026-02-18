@@ -12,7 +12,7 @@
     v-slot="{ route, can, t, uri, me }"
   >
     <AppView>
-      <XLayout type="stack">
+      <XLayout variant="y-stack">
         <XAboutCard
           :title="t('services.mesh-external-service.about.title')"
           :created="props.data.creationTime"
@@ -150,7 +150,7 @@
                   </b>
                 </template>
                 <template #zones="{ row: item }">
-                  <XLayout type="separated">
+                  <XLayout variant="separated">
                     <XBadge
                       v-for="(zone, index) of item.zones"
                       :key="index"
@@ -177,7 +177,7 @@
         <XCard>
           <XLayout>
             <XLayout
-              type="separated"
+              variant="separated"
               justify="end"
             >
               <div

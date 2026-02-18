@@ -92,7 +92,7 @@
         </template>
 
         <XLayout
-          type="stack"
+          variant="y-stack"
           data-testid="dataplane-details"
         >
           <XAboutCard
@@ -113,7 +113,7 @@
                     </dt>
                     <dd>
                       <XLayout
-                        type="separated"
+                        variant="separated"
                       >
                         <StatusBadge :status="props.data.status" />
                         <DataCollection
@@ -328,7 +328,7 @@
                           </dt>
                           <dd>
                             <XLayout
-                              type="separated"
+                              variant="separated"
                               truncate
                             >
                               <XBadge
@@ -351,7 +351,7 @@
                   data-testid="about-dataplane-subscriptions"
                   class="about-subsection"
                 >
-                  <XLayout type="separated">
+                  <XLayout variant="separated">
                     <h3>{{ t('data-planes.routes.item.subscriptions.title') }}</h3>
                     <XAction
                       appearance="anchor"
@@ -425,7 +425,7 @@
                   #title
                 >
                   <XLayout
-                    type="separated"
+                    variant="separated"
                   >
                     <XIcon
                       name="inbound"
@@ -484,7 +484,7 @@
                         #default="{ items: _inbounds }"
                       >
                         <XLayout
-                          type="stack"
+                          variant="y-stack"
                           size="small"
                         >
                           <template
@@ -608,7 +608,7 @@
                 <template
                   #title
                 >
-                  <XLayout type="separated">
+                  <XLayout variant="separated">
                     <XIcon name="outbound" />
                     <span>Outbounds</span>
                   </XLayout>
@@ -668,7 +668,7 @@
                             :key="typeof hash"
                           >
                             <XLayout
-                              type="stack"
+                              variant="y-stack"
                               size="small"
                             >
                               <template

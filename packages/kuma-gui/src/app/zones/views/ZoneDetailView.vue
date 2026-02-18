@@ -68,7 +68,7 @@
         </template>
         <XLayout
           data-testid="detail-view-details"
-          type="stack"
+          variant="y-stack"
         >
           <XAboutCard
             :title="t('zone-cps.detail.about.title')"
@@ -97,7 +97,7 @@
                     {{ t('zone-cps.routes.item.version') }}
                   </dt>
                   <dd>
-                    <XLayout type="separated">
+                    <XLayout variant="separated">
                       <XBadge
                         :appearance="version?.outdated === true ? 'warning' : 'decorative'"
                       >
@@ -172,7 +172,7 @@
                 data-testid="about-zone-cp-subscriptions"
                 class="about-subsection"
               >
-                <XLayout type="separated">
+                <XLayout variant="separated">
                   <h3>{{ t('zone-cps.routes.item.subscriptions.title') }}</h3>
                   <XAction
                     data-action

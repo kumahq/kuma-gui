@@ -64,11 +64,11 @@
             </template>
 
             <XLayout
-              type="stack"
+              variant="y-stack"
             >
               <header>
                 <XLayout
-                  type="separated"
+                  variant="separated"
                   size="max"
                 >
                   <h3>

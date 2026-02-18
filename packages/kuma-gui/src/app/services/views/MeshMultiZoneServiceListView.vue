@@ -88,7 +88,7 @@
                   #ports="{ row: item }"
                 >
                   <XLayout
-                    type="separated"
+                    variant="separated"
                     truncate
                   >
                     <KumaPort
@@ -105,7 +105,7 @@
                   #labels="{ row: item }"
                 >
                   <XLayout
-                    type="separated"
+                    variant="separated"
                     truncate
                   >
                     <XBadge

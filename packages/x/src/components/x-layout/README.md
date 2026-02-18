@@ -9,10 +9,10 @@ usage inline instead of relying on global styles/class names.
 
 <Story>
   <XLayout
-    type="stack"
+    variant="y-stack"
   >
     <XLayout
-      type="separated"
+      variant="separated"
     >
       <XBadge>This</XBadge>
       <XBadge>Is</XBadge>
@@ -25,7 +25,7 @@ usage inline instead of relying on global styles/class names.
       <XBadge>separated</XBadge>
     </XLayout>
     <XLayout
-      type="stack"
+      variant="y-stack"
     >
       <XCard>This is the first card in a stack</XCard>
       <XCard>This is the second card in a stack</XCard>
@@ -40,7 +40,7 @@ usage inline instead of relying on global styles/class names.
 <Story height="200">
   <div style="width: 200px;">
     <XLayout
-      type="separated"
+      variant="separated"
       truncate
     >
       <XBadge v-for="tag in ['foo', 'bar', 'baz', 'qux', 'quux', 'quz', 'quuz']">{{ tag }}</XBadge>
