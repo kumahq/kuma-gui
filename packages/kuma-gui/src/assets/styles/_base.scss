@@ -6,9 +6,6 @@
   box-sizing: border-box;
 }
 
-:root {
-  font-size: $kui-font-size-40;
-}
 
 body,
 h1,
@@ -23,9 +20,6 @@ h6 {
 body {
   margin: 0;
   tab-size: 2;
-  color: $kui-color-text; // var(--x-color-text);
-  font-family: $kui-font-family-text; // var(--x-font-family-text);
-  font-weight: $kui-font-weight-regular; // var(--x-font-weight-regular);
 }
 
 
