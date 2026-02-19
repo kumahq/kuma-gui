@@ -1,6 +1,6 @@
 <template>
   <component
-    :is="variant === 'separated' && props.truncate ? KTruncate : 'div'"
+    :is="props.variant === 'separated' && props.truncate ? KTruncate : 'div'"
     :class="['x-layout', variant, props.size, justify]"
   >
     <slot name="default" />
@@ -17,19 +17,17 @@ type XComponent<T extends abstract new (...args: any) => any> = {
 }
 
 const props = withDefaults(defineProps<{
-  variant?: '' | 'x-stack' | 'y-stack' | 'separated' | 'columns'
+  variant: 'x-stack' | 'y-stack' | 'separated' | 'columns'
   size?: 'small' | 'normal' | 'large' | 'max'
   justify?: 'start' | 'around' | 'between' | 'end'
   truncate?: boolean
 }>(), {
-  variant: '',
   size: 'normal',
   // @ts-ignore because we need  to apply a runtime default depending on the variant
   justify: '',
   truncate: false,
 })
 const table = inject<XComponent<typeof XTable>>('x-table')
-const variant = computed(() => props.variant)
 // when inside a kv table default is `end`, otherwise its `start`
 const justify = computed(() => table?.props.variant !== 'kv' ? props.justify || 'start' : props.justify || 'end')
 
