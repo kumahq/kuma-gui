@@ -188,7 +188,7 @@
       >
         <XCard>
           <XLayout
-            type="columns"
+            variant="columns"
           >
             <ConnectionTraffic>
               <XLayout

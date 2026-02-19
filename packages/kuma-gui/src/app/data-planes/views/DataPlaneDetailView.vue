@@ -93,9 +93,7 @@
             <DataLoader
               :data="[traffic]"
             >
-              <XLayout
-                variant="y-stack"
-              >
+              <XLayout>
                 <XDl
                   variant="x-stack"
                 >
@@ -229,9 +227,9 @@
 
                 <XLayout
                   v-if="props.data.dataplaneInsight.mTLS"
-                  variant="y-stack"
                   data-testid="dataplane-mtls"
                   class="about-subsection"
+                  variant="y-stack"
                   size="small"
                 >
                   <h3>{{ t('data-planes.routes.item.mtls.title') }}</h3>

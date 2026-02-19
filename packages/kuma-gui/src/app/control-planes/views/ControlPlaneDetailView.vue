@@ -34,7 +34,7 @@
           </DataSource>
         </DataSource>
         <XLayout
-          type="columns"
+          variant="columns"
         >
           <XCard
             v-if="can('use zones')"
