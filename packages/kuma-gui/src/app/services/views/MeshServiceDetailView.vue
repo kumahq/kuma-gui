@@ -248,7 +248,7 @@
           </template>
 
           <XLayout
-            type="columns"
+            variant="columns"
             class="columns-with-borders"
           >
             <ResourceStatus

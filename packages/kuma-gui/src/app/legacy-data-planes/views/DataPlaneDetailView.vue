@@ -418,7 +418,7 @@
             data-testid="dataplane-traffic"
           >
             <XLayout
-              type="columns"
+              variant="columns"
             >
               <ConnectionTraffic>
                 <template

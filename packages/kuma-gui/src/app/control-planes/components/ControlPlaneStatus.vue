@@ -10,7 +10,7 @@
     >
       <XLayout
         v-if="props.globalInsight && !(props.globalInsight instanceof Error)"
-        type="columns"
+        variant="columns"
         class="columns-with-borders"
       >
         <ResourceStatus
