@@ -2,6 +2,10 @@
   <template
     v-if="props.path.length > 0"
   >
+    <!-- only text from `safeT` is passed to v-html -->
+    <!-- text from `safeT` is pre-escaped using Vue's escapeHtml -->
+    <!-- and is therefore safe enough to pass to v-html  -->
+
     <!-- eslint-disable vue/no-v-html -->
     <div
       class="x-i18n"
