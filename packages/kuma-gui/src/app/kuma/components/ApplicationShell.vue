@@ -162,29 +162,17 @@ const env = useEnv()
 const { t } = useI18n()
 
 </script>
-<style lang="scss">
-html.is-fullscreen {
-  .application-shell > header {
-    display: none;
-  }
-  .application-shell > .app-content-container > nav {
-    display: none;
-  }
-  .application-shell > .app-content-container > .app-notifications {
-    display: none;
-  }
-}
-html.no-navigation {
-  .application-shell > .app-content-container .app-sidebar > nav {
-    display: none;
-  }
-}
-</style>
-
 <style lang="scss" scoped>
+.application-shell {
+  --AppHeaderHeight: 60px;
+  --AppSidebarWidth: 240px;
+  --AppContentPadding: var(--x-space-80);
+  --x-drawer-offset-top: var(--AppHeaderHeight);
+
+}
 .app-content-container {
+  display: grid;
   padding-top: var(--AppHeaderHeight, initial);
-  display: var(--AppDisplay);
   // Note: `minmax(0, 1fr)` is used because `1fr` implies `minmax(auto, 1fr)` which will allow grid items to grow beyond their container's size.
   grid-template-columns: var(--AppSidebarWidth) minmax(0, 1fr);
 }
