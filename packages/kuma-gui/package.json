@@ -22,7 +22,7 @@
     "@vueuse/core": "^14.2.1",
     "deepmerge": "^4.3.1",
     "js-yaml": "^4.1.1",
-    "openapi-fetch": "^0.15.0",
+    "openapi-fetch": "^0.17.0",
     "pretty-bytes": "^7.1.0",
     "shiki": "^3.22.0",
     "urlpattern-polyfill": "^10.1.0",
