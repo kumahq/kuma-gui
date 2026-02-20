@@ -119,7 +119,7 @@ const props = withDefaults(defineProps<{
   --meshIconColor: var(--x-color-text-decorative-aqua);
 }
 .x-icon-icon {
-  --warningIconColor: #ffa600;
+  --warningIconColor: var(--x-color-background-warning-weak);
 }
 .x-icon-icon {
   --dangerIconColor: var(--x-color-text-danger);

@@ -387,7 +387,8 @@
   --x-color-border-primary-weak: #{$kui-color-border-primary-weak};
 
   /* color-text */
-  /* TODO(jc): This border color is in the design but doesn't seem to be in @kong/design-tokens */
+  /* TODO(jc): This border color is in the design but doesn't seem to be exported from @kong/design-tokens */
+  /* https://github.com/Kong/design-tokens/blob/5b2d82048cdc48cd3d6a4d186b33ecdb22f134f2/tokens/alias/color/index.json#L185 */
   --x-color-green-40: #00D6A4; // #{$kui-color-green-40};
   --x-color-text: #{$kui-color-text};
   --x-color-text-danger: #{$kui-color-text-danger};
@@ -444,6 +445,10 @@
   --x-space-90: #{$kui-space-90};
   --x-space-100: #{$kui-space-100};
   --x-space-110: #{$kui-space-110};
+
+  /* component specific */
+  /* kong/design-token grays are either too light or too dark i.e. we need weaker-than-weak-but-not-weakest */
+  --x-search-color-token-background: #f0f4f7;
 }
 :deep(> *) {
   font-size: var(--x-font-size-40);
