@@ -33,6 +33,9 @@ export const Resource = {
       const [k, v = ''] = curr.split(kvSeparatorRegex).map((item) => item.trim())
       const [key, value] = v.length === 0 ? [defaultKey, k] : [k, v]
 
+      // default accumulator tags/labels to {} incase we haven't already set those
+      const { tags = {}, labels = {} } = acc
+
       switch(true) {
         // Use defaultKey  as the key for single words, i.e. "foo" or "bar"
         // i.e. when the key is actually the value
@@ -54,7 +57,7 @@ export const Resource = {
           return {
             ...acc,
             tags: {
-              ...(typeof acc.tags !== 'string' ? acc.tags ?? {} : {}),
+              ...tags,
               [shortFilters[k] ?? k]: v,
             },
           }
@@ -67,13 +70,17 @@ export const Resource = {
           return {
             ...acc,
             labels: {
-              ...(typeof acc.labels !== 'string' ? acc.labels ?? {} : {}),
+              ...labels,
               [shortFilters[k] ?? k]: v,
             },
           }
         }
       }
-    }, {} as Record<string, string | Record<string, string>>)
+    }, {} as {
+      labels?: Record<string, string>
+      tags?: Record<string, string>
+      [key: string]: string | Record<string, string> | undefined
+    })
 
 
   },
@@ -84,6 +91,6 @@ export const Resource = {
       ...rest,
       ...(Object.keys(labels).length > 0 ? Object.fromEntries(Object.entries(labels).map(([key, value]) => [`filter[labels.${key}]`, value])) : {}),
       ...(Object.keys(tags).length > 0 ? { tag: Object.entries(tags).map(([key, value]) => `${key}${value.length > 0 ? `:${value}` : ''}`) }: {}),
-    }
+    } as typeof rest & { tag?: string[] }
   },
 }
