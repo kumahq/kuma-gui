@@ -55,10 +55,10 @@
                 </XAction>
               </h2>
             </template>
-            <XLayout type="stack">
+            <XLayout variant="y-stack">
               <header>
                 <XLayout
-                  type="separated"
+                  variant="separated"
                   size="max"
                 >
                   <h3>
@@ -149,7 +149,7 @@
                     </th>
                     <td>
                       <XLayout
-                        type="separated"
+                        variant="separated"
                         justify="end"
                       >
                         <template
@@ -188,7 +188,7 @@
                     </th>
                     <td>
                       <XLayout
-                        type="separated"
+                        variant="separated"
                         justify="end"
                       >
                         <XBadge

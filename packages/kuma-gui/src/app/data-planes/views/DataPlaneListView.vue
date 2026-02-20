@@ -137,7 +137,7 @@
               <template #services="{ row }">
                 <XLayout
                   v-if="row.services.length > 0"
-                  type="separated"
+                  variant="separated"
                   truncate
                 >
                   <div

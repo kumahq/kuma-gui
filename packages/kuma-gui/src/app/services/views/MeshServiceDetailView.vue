@@ -15,7 +15,7 @@
     v-slot="{ can, route, t, uri, me }"
   >
     <AppView>
-      <XLayout type="stack">
+      <XLayout variant="y-stack">
         <XAboutCard
           :title="t('services.mesh-service.about.title')"
           :created="props.data.creationTime"
@@ -75,7 +75,7 @@
               <dd>
                 <template v-if="props.data.spec.ports.length">
                   <XLayout
-                    type="separated"
+                    variant="separated"
                     truncate
                   >
                     <KumaPort
@@ -100,7 +100,7 @@
               <dd>
                 <template v-if="Object.keys(props.data.spec.selector.dataplaneTags).length">
                   <XLayout
-                    type="separated"
+                    variant="separated"
                     truncate
                   >
                     <XBadge
@@ -183,7 +183,7 @@
                   </b>
                 </template>
                 <template #zones="{ row: item }">
-                  <XLayout type="separated">
+                  <XLayout variant="separated">
                     <XBadge
                       v-for="(zone, index) of item.zones"
                       :key="index"
@@ -231,7 +231,7 @@
               </b>
             </template>
             <template #type="{ row: item }">
-              <XLayout type="separated">
+              <XLayout variant="separated">
                 <XBadge
                   appearance="decorative"
                 >
@@ -248,7 +248,7 @@
           </template>
 
           <XLayout
-            type="columns"
+            variant="columns"
             class="columns-with-borders"
           >
             <ResourceStatus

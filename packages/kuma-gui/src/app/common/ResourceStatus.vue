@@ -16,7 +16,7 @@
 
     <template #body>
       <XLayout
-        type="separated"
+        variant="separated"
       >
         <div>
           <div class="status">

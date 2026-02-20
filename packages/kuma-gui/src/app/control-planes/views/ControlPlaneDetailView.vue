@@ -16,7 +16,7 @@
       </template>
 
       <XLayout
-        type="stack"
+        variant="y-stack"
       >
         <DataSource
           :src="uri(PolicySources, '/policy-types', {})"
@@ -34,7 +34,7 @@
           </DataSource>
         </DataSource>
         <XLayout
-          type="columns"
+          variant="columns"
         >
           <XCard
             v-if="can('use zones')"

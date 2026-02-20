@@ -23,7 +23,7 @@
           </h2>
         </template>
         <XLayout
-          type="separated"
+          variant="separated"
           justify="end"
         >
           <div
