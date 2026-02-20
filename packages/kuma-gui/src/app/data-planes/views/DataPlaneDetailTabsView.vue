@@ -33,7 +33,10 @@
         v-if="data"
         #title
       >
-        <XLayout size="small">
+        <XLayout
+          variant="y-stack"
+          size="small"
+        >
           <h1>
             <XCopyButton
               :text="props.data.name"

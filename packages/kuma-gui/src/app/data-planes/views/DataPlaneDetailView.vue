@@ -91,7 +91,9 @@
             data-testid="dataplane-about-section"
           >
             <DataLoader :data="[traffic]">
-              <XLayout>
+              <XLayout
+                variant="y-stack"
+              >
                 <XDl
                   variant="x-stack"
                 >
@@ -225,12 +227,16 @@
 
                 <XLayout
                   v-if="props.data.dataplaneInsight.mTLS"
+                  variant="y-stack"
                   data-testid="dataplane-mtls"
                   class="about-subsection"
                   size="small"
                 >
                   <h3>{{ t('data-planes.routes.item.mtls.title') }}</h3>
-                  <XLayout size="small">
+                  <XLayout
+                    variant="y-stack"
+                    size="small"
+                  >
                     <template
                       v-for="mTLS in [props.data.dataplaneInsight.mTLS]"
                       :key="typeof mTLS"
@@ -336,6 +342,7 @@
 
                 <XLayout
                   v-if="props.data.dataplaneInsight.subscriptions.length > 0"
+                  variant="y-stack"
                   data-testid="about-dataplane-subscriptions"
                   class="about-subsection"
                 >
@@ -408,6 +415,7 @@
                 >
                   <XLayout
                     v-if="resources?.policies.length"
+                    variant="y-stack"
                     data-testid="about-dataplane-policies"
                     class="about-subsection"
                   >

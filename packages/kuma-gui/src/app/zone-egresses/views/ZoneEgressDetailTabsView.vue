@@ -49,6 +49,7 @@
         >
           <XLayout
             v-if="data"
+            variant="y-stack"
             size="small"
           >
             <h1>

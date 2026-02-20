@@ -24,7 +24,7 @@
           })"
           v-slot="{ data }"
         >
-          <XLayout>
+          <XLayout variant="y-stack">
             <XLayout
               variant="separated"
               justify="end"

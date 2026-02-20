@@ -67,8 +67,8 @@
           </XNotification>
         </template>
         <XLayout
-          data-testid="detail-view-details"
           variant="y-stack"
+          data-testid="detail-view-details"
         >
           <XAboutCard
             :title="t('zone-cps.detail.about.title')"
@@ -77,7 +77,7 @@
             class="about-section"
             data-testid="zone-about-section"
           >
-            <XLayout>
+            <XLayout variant="y-stack">
               <XDl variant="x-stack">
                 <div>
                   <dt>
@@ -169,6 +169,7 @@
 
               <XLayout
                 v-if="props.data.zoneInsight.subscriptions.length > 0"
+                variant="y-stack"
                 data-testid="about-zone-cp-subscriptions"
                 class="about-subsection"
               >

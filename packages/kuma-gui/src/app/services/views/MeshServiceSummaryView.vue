@@ -22,7 +22,10 @@
           <template
             #title
           >
-            <XLayout size="small">
+            <XLayout
+              variant="y-stack"
+              size="small"
+            >
               <h2>
                 <XAction
                   :to="{

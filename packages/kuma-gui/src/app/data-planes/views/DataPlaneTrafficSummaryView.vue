@@ -19,7 +19,10 @@
       >
         <AppView>
           <template #title>
-            <XLayout size="small">
+            <XLayout
+              variant="y-stack"
+              size="small"
+            >
               <h2>
                 {{ props.routeName.includes('inbound') ? `Inbound ${'port' in items[0] ? `:${items[0].port}` : route.params.connection}` : `Outbound ${Kri.fromString(route.params.connection).name}` }}
               </h2>
