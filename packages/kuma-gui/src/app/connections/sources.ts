@@ -167,7 +167,6 @@ export const sources = (api: KumaApi) => {
 
     '/connections/xds/for/:proxyType/:name/:mesh/outbound/:outbound/endpoints/:endpoints': async (params) => {
       const { name, mesh, outbound, endpoints, proxyType } = params
-      console.log("🚀 ~ sources ~ outbound:", outbound)
 
       const res = await (() => {
         switch (proxyType) {
@@ -211,7 +210,6 @@ export const sources = (api: KumaApi) => {
         }
         return []
       })
-      console.log("🚀 ~ sources ~ filtered:", )
       return ConnectionXdsConfig.fromCollection(filtered)
     },
     '/connections/xds/for/:proxyType/:name/:mesh/inbound/:inbound': async (params) => {

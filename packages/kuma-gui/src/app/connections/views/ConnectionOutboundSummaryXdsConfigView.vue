@@ -10,6 +10,7 @@
       connection: '',
       includeEds: false,
       format: String,
+      concise: Boolean,
     }"
     :name="props.routeName"
     v-slot="{ t, route, uri }"
@@ -56,9 +57,14 @@
           justify="end"
         >
           <XCheckbox
+            :checked="route.params.concise"
+            :label="t('connections.concise')"
+            @change="(value) => route.update({ concise: value })"
+          />
+          <XCheckbox
             :checked="route.params.includeEds"
             :label="t('connections.include_endpoints')"
-            @change="(value) => route.update({ includeEds: value})"
+            @change="(value) => route.update({ includeEds: value })"
           />
           <XAction
             action="refresh"
@@ -69,60 +75,10 @@
           </XAction>
         </XLayout>
 
-        <template v-if="route.params.format === 'structured'">
-          <AccordionList>
-                <XLayout
-                  variant="y-stack"
-                >
-            <template
-              v-for="config in data.configs"
-              :key="typeof config"
-            >
-              <template
-                v-for="[key, value] in Object.entries(config.$structured as Record<string, unknown>)"
-                :key="key"
-              >
-                <XCard>
-                  <AccordionItem>
-                    <template #accordion-header>
-                      {{ key }}
-                    </template>
-
-                    <template #accordion-content>
-                      <template v-if="Array.isArray(value)">
-                        <template
-                          v-for="(item, index) in value"
-                          :key="index"
-                        >
-                          <XLayout
-                            variant="y-stack"
-                          >
-                          <template
-                            v-for="[k, v] in Object.entries(item)"
-                            :key="k"
-                          >
-                            <XCodeBlock
-                              language="json"
-                              :code="JSON.stringify({ [k]: v }, null, 2)"
-                            />
-                          </template>
-                          </XLayout>
-                        </template>
-
-                      </template>
-                    </template>
-                  </AccordionItem>
-                </XCard>
-              </template>
-            </template>
-          </XLayout>
-          </AccordionList>
-        </template>
         <XCodeBlock
-          v-else
-          language="json"
-          :code="JSON.stringify(data.$raw, null, 2)"
+          language="yaml"
           is-searchable
+          :code="YAML.stringify(route.params.concise ? data.$concise : data.$raw)"
           :query="route.params.codeSearch"
           :is-filter-mode="route.params.codeFilter"
           :is-reg-exp-mode="route.params.codeRegExp"
@@ -138,6 +94,7 @@
 import AccordionList from '@/app/common/AccordionList.vue';
 import { sources } from '../sources'
 import AccordionItem from '@/app/common/AccordionItem.vue';
+import { YAML } from '@/app/application';
 const props = defineProps<{
   routeName: string
 }>()

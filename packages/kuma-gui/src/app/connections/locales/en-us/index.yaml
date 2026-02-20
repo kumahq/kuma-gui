@@ -9,6 +9,7 @@ activeOutbounds:
     title: No active outbounds
 connections:
   include_endpoints: Include endpoints
+  concise: Concise
   routes:
     item:
       navigation:
