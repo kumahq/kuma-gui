@@ -52,6 +52,18 @@ describe('Resource.search', () => {
       },
     ],
     [
+      'tag:version',
+      {
+        tag: ['version'],
+      },
+    ],
+    [
+      'tag:namespace tag:zone tag:kuma.io/service',
+      {
+        tag: ['k8s.kuma.io/namespace', 'kuma.io/zone', 'kuma.io/service'],
+      },
+    ],
+    [
       'tag:namespace:foo tag:zone:bar tag:kuma.io/service:baz',
       {
         tag: ['k8s.kuma.io/namespace:foo', 'kuma.io/zone:bar', 'kuma.io/service:baz'],
