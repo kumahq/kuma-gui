@@ -21,8 +21,8 @@ export type NullableArray<T extends unknown[]> = {
 /**
  * Only use if `DataLoader` itself can't infer the type, i.e. because provided `:src` is a `string`.
  */
-export type DataLoaderResponse<TSrcResponse extends DataSourceResponse<unknown>, TData extends unknown[] = never> = {
-  data: [TData] extends [never] ? NonNullable<TSrcResponse['data']> : NonNullableArray<[TSrcResponse['data'], ...TData]>
+export type DataLoaderResponse<TSrcResponse extends DataSourceResponse<unknown> = never, TData extends unknown[] = []> = {
+  data: TSrcResponse extends never ? NonNullableArray<[...TData]> : NonNullableArray<[TSrcResponse['data'], ...TData]>
   error?: TSrcResponse['error']
 }
 

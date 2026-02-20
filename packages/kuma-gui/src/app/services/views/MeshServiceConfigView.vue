@@ -59,7 +59,7 @@
           <template v-else>
             <DataLoader
               :src="`/meshes/${props.data.mesh}/mesh-service/${props.data.id}/as/kubernetes`"
-              v-slot="{ data: k8sConfig }"
+              v-slot="{ data: [k8sConfig] }"
             >
               <XCodeBlock
                 data-testid="codeblock-yaml-k8s"

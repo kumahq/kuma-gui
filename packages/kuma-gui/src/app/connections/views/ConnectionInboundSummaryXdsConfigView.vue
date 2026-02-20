@@ -24,7 +24,7 @@
           inbound: 'stat_prefix' in props.data ? props.data.stat_prefix : `${props.data.port}`,
           proxyType: ({ ingresses: 'zone-ingress', egresses: 'zone-egress'})[route.params.proxyType] ?? 'dataplane',
         })"
-        v-slot="{ data: raw, refresh }"
+        v-slot="{ data: [raw], refresh }"
       >
         <XCodeBlock
           language="json"

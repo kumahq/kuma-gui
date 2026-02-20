@@ -64,7 +64,7 @@
                 size: 10,
               })"
               variant="list"
-              v-slot="{ data }"
+              v-slot="{ data: [data] }"
             >
               <ZoneControlPlanesList
                 data-testid="zone-control-planes-details"
@@ -100,7 +100,7 @@
                 size: 10,
               })"
               variant="list"
-              v-slot="{ data }"
+              v-slot="{ data: [data] }"
             >
               <MeshInsightsList
                 data-testid="meshes-details"
