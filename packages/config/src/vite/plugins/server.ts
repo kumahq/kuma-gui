@@ -23,7 +23,12 @@ type ServerOptions = {
 type CspDirective = 'default-src' | 'script-src' | 'script-src-elem' | 'img-src' | 'style-src' | 'connect-src'
 
 const cwd = process.cwd()
-const read = async (path: string) => (await readFile(`${cwd}/${path}`)).toString()
+const read = async (path: string) => {
+  if (path.includes('..')) {
+    throw new Error('Invalid file path, contains ..')
+  }
+  return (await readFile(`${cwd}/${path}`)).toString()
+}
 const version = JSON.parse((await read('./package.json'))).version
 
 export const defaultKumaHtmlVars = {
