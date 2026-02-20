@@ -6,7 +6,7 @@
     :has-overlay="false"
     visible
     :max-width="props.width"
-    offset-top="var(--app-slideout-offset-top, 0)"
+    offset-top="var(--x-drawer-offset-top, 0)"
     data-testid="summary"
     @close="emit('close')"
   >
