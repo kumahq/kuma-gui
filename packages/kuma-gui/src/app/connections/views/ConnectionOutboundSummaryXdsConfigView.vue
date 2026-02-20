@@ -10,7 +10,7 @@
       connection: '',
       includeEds: false,
       format: String,
-      concise: Boolean,
+      expanded: false,
     }"
     :name="props.routeName"
     v-slot="{ t, route, uri }"
@@ -57,9 +57,9 @@
           justify="end"
         >
           <XCheckbox
-            :checked="route.params.concise"
-            :label="t('connections.concise')"
-            @change="(value) => route.update({ concise: value })"
+            :checked="route.params.expanded"
+            :label="t('connections.expanded')"
+            @change="(value) => route.update({ expanded: value })"
           />
           <XCheckbox
             :checked="route.params.includeEds"
@@ -78,7 +78,7 @@
         <XCodeBlock
           language="yaml"
           is-searchable
-          :code="YAML.stringify(route.params.concise ? data.$concise : data.$raw)"
+          :code="YAML.stringify(route.params.expanded ? data.$raw : data.$concise)"
           :query="route.params.codeSearch"
           :is-filter-mode="route.params.codeFilter"
           :is-reg-exp-mode="route.params.codeRegExp"
