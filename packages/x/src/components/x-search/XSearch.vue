@@ -51,7 +51,7 @@
         </div>
       </XI18n>
     </div>
-    
+
     <template #content>
       <XI18n v-slot="{ t }">
         <div class="dropdown-item">
@@ -306,7 +306,7 @@ watch(() => props.value, () => {
     padding: var(--x-space-10) 0px;
 
     &.highlight {
-      background: #f0f4f7;
+      background: var(--x-search-color-token-background);
       border-radius: var(--x-border-radius-20);
       &.invalid {
         background: var(--x-color-background-warning-weak);
@@ -389,7 +389,7 @@ input {
     dl {
       display: inline-flex;
     }
-    
+
     strong, b {
       color: var(--x-color-text);
     }
