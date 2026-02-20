@@ -44,6 +44,7 @@
           />
           <XLayout
             v-else
+            variant="y-stack"
             size="small"
           >
             <h1>

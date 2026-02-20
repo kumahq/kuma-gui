@@ -333,7 +333,7 @@
                         </dt>
                         <dd>
                           <XLayout
-                            variant="separated"
+                            type="separated"
                             truncate
                           >
                             <XBadge
@@ -491,7 +491,7 @@
                         #default="{ items: _inbounds }"
                       >
                         <XLayout
-                          variant="stack"
+                          variant="y-stack"
                           size="small"
                         >
                           <template

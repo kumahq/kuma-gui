@@ -27,7 +27,10 @@
           >
             <AppView>
               <template #title>
-                <XLayout size="small">
+                <XLayout
+                  variant="y-stack"
+                  size="small"
+                >
                   <h2
                     v-icon-start="{name: kind, size: '60', default: 'policy'}"
                   >

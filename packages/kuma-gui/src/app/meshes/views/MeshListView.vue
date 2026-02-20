@@ -41,7 +41,7 @@
         </XTeleportTemplate>
 
         <XCard>
-          <XLayout>
+          <XLayout variant="y-stack">
             <search>
               <form @submit.prevent>
                 <XSearch

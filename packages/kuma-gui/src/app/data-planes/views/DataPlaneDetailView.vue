@@ -93,7 +93,9 @@
             <DataLoader
               :data="[traffic]"
             >
-              <XLayout>
+              <XLayout
+                variant="y-stack"
+              >
                 <XDl
                   variant="x-stack"
                 >
@@ -342,9 +344,9 @@
 
                 <XLayout
                   v-if="props.data.dataplaneInsight.subscriptions.length > 0"
-                  variant="y-stack"
                   data-testid="about-dataplane-subscriptions"
                   class="about-subsection"
+                  variant="y-stack"
                 >
                   <XLayout
                     variant="separated"

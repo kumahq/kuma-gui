@@ -36,7 +36,10 @@
         >
           <AppView>
             <template #title>
-              <XLayout size="small">
+              <XLayout
+                variant="y-stack"
+                size="small"
+              >
                 <h2
                   v-icon-start="`dataplane-${item.dataplaneType}`"
                 >
@@ -61,7 +64,7 @@
               </XLayout>
             </template>
 
-            <XLayout>
+            <XLayout variant="y-stack">
               <header>
                 <XLayout
                   variant="separated"
@@ -190,6 +193,7 @@
                   v-slot="{ items : inbounds }"
                 >
                   <XLayout
+                    variant="y-stack"
                     data-testid="dataplane-inbounds"
                   >
                     <h3>{{ t('data-planes.routes.item.inbounds') }}</h3>
@@ -197,6 +201,7 @@
                     <XLayout
                       v-for="(inbound, index) in inbounds"
                       :key="index"
+                      variant="y-stack"
                       class="inbound"
                     >
                       <h4 v-if="inbound.tags['kuma.io/service']">
@@ -260,12 +265,14 @@
                   v-slot="{ items: outbounds }"
                 >
                   <XLayout
+                    variant="y-stack"
                     data-testid="dataplane-outbounds"
                   >
                     <h3>{{ t('data-planes.routes.item.outbounds') }}</h3>
                     <XLayout
                       v-for="(outbound, index) in outbounds"
                       :key="index"
+                      variant="y-stack"
                       class="inbound"
                       size="small"
                     >

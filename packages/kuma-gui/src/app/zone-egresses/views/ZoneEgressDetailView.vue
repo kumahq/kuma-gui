@@ -17,7 +17,7 @@
           class="about-section"
           data-testid="zone-egress-about-section"
         >
-          <XLayout>
+          <XLayout variant="y-stack">
             <XDl variant="x-stack">
               <div>
                 <dt>
@@ -86,6 +86,7 @@
 
             <XLayout
               v-if="props.data.zoneEgressInsight.subscriptions.length > 0"
+              variant="y-stack"
               data-testid="about-zone-egress-subscriptions"
               class="about-subsection"
             >

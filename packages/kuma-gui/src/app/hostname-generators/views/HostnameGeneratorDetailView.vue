@@ -45,7 +45,7 @@
             <XLayout
               variant="y-stack"
             >
-              <XLayout>
+              <XLayout variant="y-stack">
                 <XDl>
                   <div>
                     <dt>
@@ -143,7 +143,7 @@
           </XAboutCard>
 
           <XCard>
-            <XLayout>
+            <XLayout variant="y-stack">
               <XLayout
                 variant="separated"
                 justify="end"

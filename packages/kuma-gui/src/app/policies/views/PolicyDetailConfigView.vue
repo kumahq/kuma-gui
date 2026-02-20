@@ -14,7 +14,7 @@
   >
     <AppView>
       <XCard>
-        <XLayout>
+        <XLayout variant="y-stack">
           <XLayout
             variant="separated"
             justify="end"

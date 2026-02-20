@@ -13,7 +13,7 @@
       :docs="t('delegated-gateways.href.docs')"
     >
       <XCard>
-        <XLayout>
+        <XLayout variant="y-stack">
           <search>
             <form
               @submit.prevent
