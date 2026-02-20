@@ -276,7 +276,7 @@ button.x-action-appearance-anchor:focus span {
 .action-docs {
   display: flex;
   align-items: center;
-  gap: $kui-space-20;
+  gap: var(--x-space-20);
 }
 
 </style>

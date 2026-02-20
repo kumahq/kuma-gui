@@ -23,22 +23,22 @@ const props = defineProps<{
 </script>
 <style lang="scss" scoped>
 .rule-matchers {
-  font-weight: $kui-font-weight-regular;
+  font-weight: var(--x-font-weight-regular);
 }
 abbr {
   text-decoration: none;
 }
 .not {
-  color: $kui-color-text-danger;
+  color: var(--x-color-text-danger);
 }
 
 .and {
-  font-weight: $kui-font-weight-semibold;
+  font-weight: var(--x-font-weight-semibold);
 }
 
 .not,
 .term {
-  font-family: $kui-font-family-code;
+  font-family: var(--x-font-family-code);
 }
 
 </style>

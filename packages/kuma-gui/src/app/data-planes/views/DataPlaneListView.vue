@@ -335,13 +335,13 @@ search {
   justify-content: flex-end;
   align-items: stretch;
   flex-wrap: wrap;
-  margin-bottom: $kui-space-70;
+  margin-bottom: var(--x-space-70);
 }
 
 .search-form {
   display: flex;
   width: 100%;
-  gap: $kui-space-70;
+  gap: var(--x-space-70);
 }
 
 .search-field {
