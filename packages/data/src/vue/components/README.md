@@ -141,7 +141,8 @@ required to access `data` or `error` which use a non-union type.
       v-slot="{ data: [meshes, zones] }"
     >
       We won't see this until the data is completely loaded
-      {{ data.items.length }}
+      {{ meshes.items.length }}
+      {{ zones.items.length }}
     </DataLoader>
   </DataSource>
 </DataSource>
