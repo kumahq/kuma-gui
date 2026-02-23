@@ -160,10 +160,10 @@ const props = withDefaults(defineProps<{
 </style>
 <style lang="scss">
 [id^='-x-icon-tooltip'] ul {
-  padding-left: $kui-space-60;
+  padding-left: var(--x-space-60);
 }
 [id^='-x-icon-tooltip'] ul li:first-child:last-child {
-  margin-left: calc(0px - $kui-space-60);
+  margin-left: calc(0px - var(--x-space-60));
   list-style-type: none;
 }
 </style>
