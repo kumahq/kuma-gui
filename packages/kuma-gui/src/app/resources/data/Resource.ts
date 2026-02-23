@@ -52,7 +52,7 @@ export const Resource = {
           }
         // support old style tags, explicitly used `tag:key:value`
         // TODO: this will need to be optional
-        case ['tag', 'tags'].includes(key): {
+        case ['tag'].includes(key): {
           const [k, v = ''] = value.split(kvSeparatorRegex)
           return {
             ...acc,
@@ -66,7 +66,7 @@ export const Resource = {
         // it into a label
         default: {
           // explicitly used `label:key:value` or, if not, it was just `key:value`
-          const [k, v = ''] = ['label', 'labels'].includes(key) ? value.split(kvSeparatorRegex) : [key, value]
+          const [k, v = ''] = ['label'].includes(key) ? value.split(kvSeparatorRegex) : [key, value]
           return {
             ...acc,
             labels: {
