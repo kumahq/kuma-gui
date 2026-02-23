@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "@apidevtools/json-schema-ref-parser": "^15.2.2",
-    "@badeball/cypress-cucumber-preprocessor": "^24.0.0",
+    "@badeball/cypress-cucumber-preprocessor": "^24.0.1",
     "@bahmutov/cypress-esbuild-preprocessor": "^2.2.8",
     "@cucumber/gherkin-utils": "^11.0.0",
     "@eslint/js": "^9.39.2",
