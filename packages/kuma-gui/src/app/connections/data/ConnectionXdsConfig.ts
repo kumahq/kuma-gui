@@ -59,7 +59,7 @@ export const policyAffectedKeys = [
   'trace_context_propagation',
   // meshtrafficpermission
   'rbac',
-  'transport_socket'
+  'transport_socket',
 ]
 
 export const ConnectionXdsConfig = {
@@ -67,7 +67,7 @@ export const ConnectionXdsConfig = {
    * Traverses a given tree and filters out only the specified keys,
    * while preserving the original structure of the tree.
    */
-  toConcise: (item: unknown, keys: string[]) => {
+  toFiltered: (item: unknown, keys: string[]) => {
     /**
      * Tracks all the elements found by their keys nested in their subtree.
      */
@@ -88,7 +88,7 @@ export const ConnectionXdsConfig = {
               // rebuilds the subtree to the found element bottom up
               const found = path.toReversed().reduce((acc, curr) => {
                 return {
-                  [curr.key]: curr.type === 'array' ? [acc] : acc
+                  [curr.key]: curr.type === 'array' ? [acc] : acc,
                 }
               }, { [key]: value })
               results.push(found)
@@ -134,7 +134,7 @@ export const ConnectionXdsConfig = {
         })
         
         return Array.from(mergedItems.values())
-      }
+      },
     })
   },
 
@@ -142,7 +142,7 @@ export const ConnectionXdsConfig = {
     return {
       ...item,
       $raw: item,
-      $concise: ConnectionXdsConfig.toConcise(item, policyAffectedKeys),
+      $filtered: ConnectionXdsConfig.toFiltered(item, policyAffectedKeys),
     }
-  }
+  },
 }

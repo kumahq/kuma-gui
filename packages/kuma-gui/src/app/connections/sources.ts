@@ -1,10 +1,8 @@
+import { ConnectionXdsConfig } from './data/ConnectionXdsConfig'
 import type { DataSourceResponse } from '@/app/application'
 import { defineSources } from '@/app/application'
 import { Stat, ConnectionCollection } from '@/app/connections/data/'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
-import type { paths } from '@kumahq/kuma-http-api'
-import createClient from 'openapi-fetch'
-import { ConnectionXdsConfig } from './data/ConnectionXdsConfig'
 
 export type StatsSource = DataSourceResponse<{
   inbounds: Record<string, any>
@@ -45,10 +43,6 @@ const filter = (data: Record<string, unknown>, cb: (key: string, arr: unknown[])
   }
 }
 export const sources = (api: KumaApi) => {
-  const http = createClient<paths>({
-    baseUrl: '',
-    fetch: api.client.fetch,
-  })
   return defineSources({
     '/connections/stats/for/:proxyType/:name/:mesh/:socketAddress': async (params) => {
       const { name, mesh, socketAddress, proxyType } = params
@@ -203,10 +197,13 @@ export const sources = (api: KumaApi) => {
             return arr.filter(item => prop(item, 'name') && (item.name === `outbound:${outbound}` || item.name === outbound))
           case 'dynamic_active_clusters':
             // dynamic_active_clusters[].cluster.name === outbound
-            return arr.filter(item => prop(item, 'cluster') && prop(item.cluster, 'name') && item.cluster?.name === outbound)
-          case 'dynamic_endpoint_configs':
+            return arr.filter(item => prop(item, 'cluster') && ((prop(item.cluster, 'name') && (item.cluster.name === outbound) || (prop(item.cluster, 'alt_stat_name') && item.cluster.alt_stat_name === outbound))))
+          case 'dynamic_endpoint_configs': {
+            // prefixed outbound is i.e. `default:demo-app_kuma-demo_zone-1_msvc_5050` instead of `default_demo-app_kuma-demo_zone-1_msvc_5050`
+            const prefixedOutbound = `${outbound.split('_')[0]}:${outbound.split('_').slice(1).join('_')}`
             // dynamic_endpoint_configs[].endpoint_config.cluster_name === outbound
-            return arr.filter(item => prop(item, 'endpoint_config') && prop(item.endpoint_config, 'cluster_name') && item.endpoint_config?.cluster_name === outbound)
+            return arr.filter(item => prop(item, 'endpoint_config') && prop(item.endpoint_config, 'cluster_name') && (item.endpoint_config?.cluster_name === outbound || item.endpoint_config?.cluster_name === prefixedOutbound))
+          }
         }
         return []
       })

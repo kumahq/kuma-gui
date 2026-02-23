@@ -30,28 +30,6 @@
         })"
         v-slot="{ data, refresh }"
       >
-        <template
-          v-for="options in [['structured', 'yaml']]"
-          :key="typeof options"
-        >
-          <XSelect
-            :label="t('connections.routes.item.format')"
-            :selected="route.params.format"
-            @change="(value) => {
-              route.update({ format: value })
-            }"
-            @vue:before-mount="$event?.props?.selected && options.includes($event.props.selected) && $event.props.selected !== route.params.format && route.update({ format: $event.props.selected })"
-          >
-            <template
-              v-for="value in options"
-              :key="value"
-              #[`${value}-option`]
-            >
-              {{ t(`connections.routes.item.formats.${value}`) }}
-            </template>
-          </XSelect>
-        </template>
-
         <XLayout
           variant="separated"
           justify="end"
@@ -78,7 +56,7 @@
         <XCodeBlock
           language="yaml"
           is-searchable
-          :code="YAML.stringify(route.params.expanded ? data.$raw : data.$concise)"
+          :code="YAML.stringify(route.params.expanded ? data.$raw : data.$filtered)"
           :query="route.params.codeSearch"
           :is-filter-mode="route.params.codeFilter"
           :is-reg-exp-mode="route.params.codeRegExp"
@@ -91,10 +69,8 @@
   </RouteView>
 </template>
 <script lang="ts" setup>
-import AccordionList from '@/app/common/AccordionList.vue';
 import { sources } from '../sources'
-import AccordionItem from '@/app/common/AccordionItem.vue';
-import { YAML } from '@/app/application';
+import { YAML } from '@/app/application'
 const props = defineProps<{
   routeName: string
 }>()
