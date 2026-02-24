@@ -14,6 +14,10 @@ export const sources = (api: KumaApi) => {
     fetch: api.client.fetch,
   })
   return defineSources({
+    '/resources': async () => {
+      return (await http.GET('/_resources')).data!
+    },
+
     '/meshes/:mesh/meshidentities': async (params) => {
       const { mesh } = params
   
