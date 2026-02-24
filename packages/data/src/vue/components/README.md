@@ -98,7 +98,7 @@ therefore `?`/`data?` is not needed.
   <AppView>
     <DataLoader
       :src="uri(sources, '/mesh-insights')"
-      v-slot="{ data }"
+      v-slot="{ data: [data] }"
     >
       We won't see this until the data is completely loaded
       {{ data.items.length }}
@@ -177,6 +177,8 @@ required to access `data` or `error` which use a non-union type.
 This approach gives you a very easy way to achieve the basics but also the
 flexibility to decompose things down when you need more complex functionality
 or access to lower level information.
+The order of the returned data in the the data slot-prop is the same as the provided source and data.
+If there is a source set it's always the first entry followed by the entries of the data prop.
 
 ## Creating new URIs/sources
 
@@ -202,7 +204,7 @@ the result of this Promise".
 ```vue
 <DataLoader
   :src="`/mesh/${'default'}`"
-  v-slot="{ data }"
+  v-slot="{ data: [data] }"
 >
   Name: {{ data.name }} <== "default"
   Creation Time: {{ data.creationTime }}
