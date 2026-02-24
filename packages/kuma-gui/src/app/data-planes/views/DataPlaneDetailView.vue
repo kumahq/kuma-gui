@@ -80,7 +80,7 @@
         </template>
 
         <XLayout
-          type="stack"
+          variant="y-stack"
           data-testid="dataplane-details"
         >
           <XAboutCard
@@ -91,7 +91,9 @@
             data-testid="dataplane-about-section"
           >
             <DataLoader :data="[traffic]">
-              <XLayout>
+              <XLayout
+                variant="y-stack"
+              >
                 <XDl
                   variant="x-stack"
                 >
@@ -101,7 +103,7 @@
                     </dt>
                     <dd>
                       <XLayout
-                        type="separated"
+                        variant="separated"
                       >
                         <StatusBadge :status="props.data.status" />
                         <DataCollection
@@ -225,12 +227,16 @@
 
                 <XLayout
                   v-if="props.data.dataplaneInsight.mTLS"
+                  variant="y-stack"
                   data-testid="dataplane-mtls"
                   class="about-subsection"
                   size="small"
                 >
                   <h3>{{ t('data-planes.routes.item.mtls.title') }}</h3>
-                  <XLayout size="small">
+                  <XLayout
+                    variant="y-stack"
+                    size="small"
+                  >
                     <template
                       v-for="mTLS in [props.data.dataplaneInsight.mTLS]"
                       :key="typeof mTLS"
@@ -316,7 +322,7 @@
                           </dt>
                           <dd>
                             <XLayout
-                              type="separated"
+                              variant="separated"
                               truncate
                             >
                               <XBadge
@@ -336,10 +342,11 @@
 
                 <XLayout
                   v-if="props.data.dataplaneInsight.subscriptions.length > 0"
+                  variant="y-stack"
                   data-testid="about-dataplane-subscriptions"
                   class="about-subsection"
                 >
-                  <XLayout type="separated">
+                  <XLayout variant="separated">
                     <h3>{{ t('data-planes.routes.item.subscriptions.title') }}</h3>
                     <XAction
                       appearance="anchor"
@@ -408,13 +415,14 @@
                 >
                   <XLayout
                     v-if="resources?.policies.length"
+                    variant="y-stack"
                     data-testid="about-dataplane-policies"
                     class="about-subsection"
                   >
                     <h3>{{ t('data-planes.routes.item.policies') }}</h3>
 
                     <XLayout
-                      type="separated"
+                      variant="separated"
                     >
                       <template
                         v-for="policy in resources?.policies"
@@ -469,14 +477,14 @@
                 :data="[dataplaneLayout, traffic]"
               >
                 <XLayout
-                  type="columns"
+                  variant="columns"
                 >
                   <ConnectionTraffic>
                     <template
                       #title
                     >
                       <XLayout
-                        type="separated"
+                        variant="separated"
                       >
                         <XIcon
                           name="inbound"
@@ -497,7 +505,7 @@
                           data-testid="dataplane-inbounds"
                         >
                           <XLayout
-                            type="stack"
+                            variant="y-stack"
                             size="small"
                           >
                             <template
@@ -602,7 +610,7 @@
                     <template
                       #title
                     >
-                      <XLayout type="separated">
+                      <XLayout variant="separated">
                         <XIcon name="outbound" />
                         <span>Outbounds</span>
                       </XLayout>
@@ -632,7 +640,7 @@
                           data-testid="dataplane-outbounds"
                         >
                           <XLayout
-                            type="stack"
+                            variant="y-stack"
                             size="small"
                           >
                             <template

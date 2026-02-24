@@ -22,7 +22,7 @@
         default-path="common.i18n.ignore-error"
       />
       <XCard>
-        <XLayout>
+        <XLayout variant="y-stack">
           <search>
             <form
               @submit.prevent

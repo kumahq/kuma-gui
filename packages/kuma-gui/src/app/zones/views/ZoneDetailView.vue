@@ -67,8 +67,8 @@
           </XNotification>
         </template>
         <XLayout
+          variant="y-stack"
           data-testid="detail-view-details"
-          type="stack"
         >
           <XAboutCard
             :title="t('zone-cps.detail.about.title')"
@@ -77,7 +77,7 @@
             class="about-section"
             data-testid="zone-about-section"
           >
-            <XLayout>
+            <XLayout variant="y-stack">
               <XDl variant="x-stack">
                 <div>
                   <dt>
@@ -97,7 +97,7 @@
                     {{ t('zone-cps.routes.item.version') }}
                   </dt>
                   <dd>
-                    <XLayout type="separated">
+                    <XLayout variant="separated">
                       <XBadge
                         :appearance="version?.outdated === true ? 'warning' : 'decorative'"
                       >
@@ -169,10 +169,11 @@
 
               <XLayout
                 v-if="props.data.zoneInsight.subscriptions.length > 0"
+                variant="y-stack"
                 data-testid="about-zone-cp-subscriptions"
                 class="about-subsection"
               >
-                <XLayout type="separated">
+                <XLayout variant="separated">
                   <h3>{{ t('zone-cps.routes.item.subscriptions.title') }}</h3>
                   <XAction
                     data-action

@@ -18,7 +18,7 @@
       :docs="t('services.mesh-service.href.docs')"
     >
       <XCard>
-        <XLayout>
+        <XLayout variant="y-stack">
           <search>
             <form
               @submit.prevent
@@ -129,7 +129,7 @@
                   #ports="{ row: item }"
                 >
                   <XLayout
-                    type="separated"
+                    variant="separated"
                     truncate
                   >
                     <KumaPort

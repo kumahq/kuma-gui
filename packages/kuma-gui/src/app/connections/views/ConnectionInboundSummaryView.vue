@@ -22,7 +22,10 @@
     >
       <AppView>
         <template #title>
-          <XLayout size="small">
+          <XLayout
+            variant="y-stack"
+            size="small"
+          >
             <h2>
               Inbound {{ route.params.connection.replace('localhost', '').replace('_', ':') }}
             </h2>

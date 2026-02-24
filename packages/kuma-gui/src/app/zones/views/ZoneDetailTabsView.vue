@@ -24,8 +24,11 @@
         ]"
       >
         <template #title>
-          <XLayout size="small">
-            <XLayout type="separated">
+          <XLayout
+            variant="y-stack"
+            size="small"
+          >
+            <XLayout variant="separated">
               <template
                 v-for="env in [(['kubernetes', 'universal'] as const).find(env => env === data.zoneInsight.environment) ?? 'kubernetes']"
                 :key="env"

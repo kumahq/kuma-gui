@@ -16,9 +16,9 @@
     />
     <AppView>
       <XCard>
-        <XLayout>
+        <XLayout variant="y-stack">
           <XLayout
-            type="separated"
+            variant="separated"
             justify="end"
           >
             <div

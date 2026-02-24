@@ -100,7 +100,7 @@
             :invalid-filters="invalidFilters"
           >
             <div>
-              <XLayout type="separated">
+              <XLayout variant="separated">
                 <XIcon name="warning" />
                 {{ t('common.validation.invalid.filter.title') }}:
               </XLayout>

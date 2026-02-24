@@ -41,7 +41,7 @@
     <XLayout
       v-else
       class="data-collection"
-      type="stack"
+      variant="y-stack"
     >
       <div>
         <slot

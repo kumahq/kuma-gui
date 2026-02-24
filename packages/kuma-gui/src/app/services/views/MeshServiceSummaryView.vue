@@ -22,7 +22,10 @@
           <template
             #title
           >
-            <XLayout size="small">
+            <XLayout
+              variant="y-stack"
+              size="small"
+            >
               <h2>
                 <XAction
                   :to="{
@@ -48,11 +51,11 @@
           </template>
 
           <XLayout
-            type="stack"
+            variant="y-stack"
           >
             <header>
               <XLayout
-                type="separated"
+                variant="separated"
                 size="max"
               >
                 <h3>
@@ -127,7 +130,7 @@
                   </th>
                   <td>
                     <XLayout
-                      type="separated"
+                      variant="separated"
                       truncate
                     >
                       <KumaPort
@@ -147,7 +150,7 @@
                   </th>
                   <td>
                     <XLayout
-                      type="separated"
+                      variant="separated"
                       truncate
                     >
                       <XBadge

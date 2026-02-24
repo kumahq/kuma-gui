@@ -20,6 +20,7 @@
         </template>
 
         <XLayout
+          variant="y-stack"
           class="detail"
         >
           <slot name="message">

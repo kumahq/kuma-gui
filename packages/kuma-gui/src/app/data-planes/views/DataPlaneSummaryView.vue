@@ -36,7 +36,10 @@
         >
           <AppView>
             <template #title>
-              <XLayout size="small">
+              <XLayout
+                variant="y-stack"
+                size="small"
+              >
                 <h2
                   v-icon-start="`dataplane-${item.dataplaneType}`"
                 >
@@ -61,10 +64,10 @@
               </XLayout>
             </template>
 
-            <XLayout>
+            <XLayout variant="y-stack">
               <header>
                 <XLayout
-                  type="separated"
+                  variant="separated"
                   size="max"
                 >
                   <h3>
@@ -97,7 +100,7 @@
 
             <template v-if="route.params.format === 'structured'">
               <XLayout
-                type="stack"
+                variant="y-stack"
                 size="large"
                 data-testid="structured-view"
               >
@@ -153,7 +156,7 @@
 
                 <XLayout
                   v-if="item.dataplane.networking.gateway"
-                  type="stack"
+                  variant="y-stack"
                 >
                   <h3>{{ t('data-planes.routes.item.gateway') }}</h3>
 
@@ -190,6 +193,7 @@
                   v-slot="{ items : inbounds }"
                 >
                   <XLayout
+                    variant="y-stack"
                     data-testid="dataplane-inbounds"
                   >
                     <h3>{{ t('data-planes.routes.item.inbounds') }}</h3>
@@ -197,6 +201,7 @@
                     <XLayout
                       v-for="(inbound, index) in inbounds"
                       :key="index"
+                      variant="y-stack"
                       class="inbound"
                     >
                       <h4 v-if="inbound.tags['kuma.io/service']">
@@ -260,12 +265,14 @@
                   v-slot="{ items: outbounds }"
                 >
                   <XLayout
+                    variant="y-stack"
                     data-testid="dataplane-outbounds"
                   >
                     <h3>{{ t('data-planes.routes.item.outbounds') }}</h3>
                     <XLayout
                       v-for="(outbound, index) in outbounds"
                       :key="index"
+                      variant="y-stack"
                       class="inbound"
                       size="small"
                     >

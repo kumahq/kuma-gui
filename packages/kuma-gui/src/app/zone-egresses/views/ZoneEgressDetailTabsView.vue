@@ -49,6 +49,7 @@
         >
           <XLayout
             v-if="data"
+            variant="y-stack"
             size="small"
           >
             <h1>
@@ -136,7 +137,7 @@
                       #footer-actions
                     >
                       <XLayout
-                        type="separated"
+                        variant="separated"
                       >
                         <XDownload
                           @start="toggle"

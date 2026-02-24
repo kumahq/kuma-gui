@@ -16,7 +16,7 @@
         class="about-section"
         data-testid="zone-ingress-about-section"
       >
-        <XLayout>
+        <XLayout variant="y-stack">
           <XDl variant="x-stack">
             <div>
               <dt>
@@ -111,10 +111,11 @@
 
           <XLayout
             v-if="props.data.zoneIngressInsight.subscriptions.length > 0"
+            variant="y-stack"
             data-testid="about-zone-ingress-subscriptions"
             class="about-subsection"
           >
-            <XLayout type="separated">
+            <XLayout variant="separated">
               <h3>{{ t('zone-ingresses.routes.item.subscriptions.title') }}</h3>
               <XAction
                 data-action
@@ -188,11 +189,11 @@
       >
         <XCard>
           <XLayout
-            type="columns"
+            variant="columns"
           >
             <ConnectionTraffic>
               <XLayout
-                type="stack"
+                variant="y-stack"
                 size="small"
               >
                 <DataCollection
@@ -279,7 +280,7 @@
                         :key="typeof _hash"
                       >
                         <XLayout
-                          type="stack"
+                          variant="y-stack"
                           size="small"
                         >
                           <template

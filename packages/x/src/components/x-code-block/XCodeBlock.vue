@@ -1,8 +1,8 @@
 <template>
-  <XLayout type="stack">
+  <XLayout variant="y-stack">
     <template v-if="slots['primary-actions']">
       <XLayout
-        type="separated"
+        variant="separated"
         justify="end"
       >
         <slot name="primary-actions" />

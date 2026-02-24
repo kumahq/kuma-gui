@@ -3,7 +3,7 @@
     appearance="neutral"
   >
     <XLayout
-      type="separated"
+      variant="separated"
     >
       <XDl
         variant="x-stack"
