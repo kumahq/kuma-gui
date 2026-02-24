@@ -731,9 +731,7 @@
                                         </dd>
                                       </div>
                                       <div>
-                                        <dt>
-                                          Type
-                                        </dt>
+                                        <dt>Type</dt>
                                         <dd v-if="!(resourceTypes instanceof Error)">
                                           {{ resourceTypes?.resources.find((resource) => resource.shortName === kri.shortName)?.name ?? kri.shortName }}
                                         </dd>

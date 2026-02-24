@@ -53,8 +53,8 @@ Feature: mesh / dataplanes / connections / Traffic
     And the "$outbound" element contains "Mesh default"
     And the "$outbound" element contains "Zone scenario"
     And the "$outbound" element contains "Namespace kuma-system"
-    And the "$outbound" element contains "service-less"
     And the "$outbound" element contains "Type MeshService"
+    And the "$outbound" element contains "service-less"
 
   Scenario: Abnormal traffic stats are detected
     Given the URL "/meshes/default/dataplanes/service-less/_layout" responds with
