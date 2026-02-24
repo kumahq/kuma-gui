@@ -50,6 +50,7 @@ const justify = computed(() => table?.props.variant !== 'kv' ? props.justify || 
 .x-stack {
   display: flex;
   width: 100%;
+  align-items: center;
   flex-wrap: nowrap;
 }
 .separated:not(.k-truncate) {

@@ -30,6 +30,29 @@
         })"
         v-slot="{ data, refresh }"
       >
+        <XLayout
+          variant="x-stack"
+          justify="end"
+        >
+          <XCheckbox
+            :checked="route.params.expanded"
+            :label="t('connections.expanded')"
+            @change="(value) => route.update({ expanded: value })"
+          />
+          <XCheckbox
+            :checked="route.params.includeEds"
+            :label="t('connections.include_endpoints')"
+            @change="(value) => route.update({ includeEds: value })"
+          />
+          <XAction
+            action="refresh"
+            appearance="primary"
+            @click="refresh"
+          >
+            {{ t('common.refresh') }}
+          </XAction>
+        </XLayout>
+
         <XCodeBlock
           language="yaml"
           is-searchable
@@ -40,27 +63,7 @@
           @query-change="route.update({ codeSearch: $event })"
           @filter-mode-change="route.update({ codeFilter: $event })"
           @reg-exp-mode-change="route.update({ codeRegExp: $event })"
-        >
-          <template #primary-actions>
-            <XCheckbox
-              :checked="route.params.expanded"
-              :label="t('connections.expanded')"
-              @change="(value) => route.update({ expanded: value })"
-            />
-            <XCheckbox
-              :checked="route.params.includeEds"
-              :label="t('connections.include_endpoints')"
-              @change="(value) => route.update({ includeEds: value })"
-            />
-            <XAction
-              action="refresh"
-              appearance="primary"
-              @click="refresh"
-            >
-              {{ t('common.refresh') }}
-            </XAction>
-          </template>
-        </XCodeBlock>
+        />
       </DataLoader>
     </AppView>
   </RouteView>
