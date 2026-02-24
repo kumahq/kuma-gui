@@ -114,7 +114,7 @@ describe('ConnectionXdsConfig', () => {
           ],
         },
       },
-    ])('.fromObject: $message', ({ input, keys, expected }) => {
+    ])('toFiltered reduces input to keys', ({ input, keys, expected }) => {
       expect(ConnectionXdsConfig.toFiltered(input, keys)).toStrictEqual(expected)
     })
   })
