@@ -19,8 +19,6 @@ Feature: mesh / dataplanes / connections / Traffic
       """
       body:
         resources:
-          - name: Mesh
-            shortName: ,
           - name: MeshService
             shortName: msvc
           - name: MeshExternalService
