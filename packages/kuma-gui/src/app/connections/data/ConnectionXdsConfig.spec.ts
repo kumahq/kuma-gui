@@ -84,6 +84,19 @@ describe('ConnectionXdsConfig', () => {
             },
             {
               bar: {
+                some: [
+                  {
+                    very: {
+                      deep: [
+                        {
+                          nested: {
+                            my_key: 'value',
+                          },
+                        },
+                      ],
+                    },
+                  },
+                ],
                 my_key: 'value',
                 another_key: 'other_value',
               },
@@ -107,6 +120,19 @@ describe('ConnectionXdsConfig', () => {
             },
             {
               bar: {
+                some: [
+                  {
+                    very: {
+                      deep: [
+                        {
+                          nested: {
+                            my_key: 'value',
+                          },
+                        },
+                      ],
+                    },
+                  },
+                ],
                 my_key: 'value',
                 another_key: 'other_value',
               },
