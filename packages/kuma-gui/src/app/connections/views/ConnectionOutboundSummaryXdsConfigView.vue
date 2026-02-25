@@ -31,7 +31,7 @@
         v-slot="{ data, refresh }"
       >
         <XLayout
-          variant="x-stack"
+          variant="action-group"
           justify="end"
         >
           <XCheckbox
