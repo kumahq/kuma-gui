@@ -112,18 +112,21 @@ const srcError = ref<Error | undefined>()
 // all data, including potentially the src data in index zero.
 // all elements can be undefined which means its still connecting
 const allData = computed(() => {
+  const _srcData = typeof props.src === 'undefined' || props.src === '' ? [] : [srcData.value]
   const propsData = (props.data ?? []).filter(item => !(item instanceof Error)) as K
-  const data = typeof props.src === 'undefined' ? propsData : [srcData.value, ...propsData]
-  return data
+  return [
+    ..._srcData,
+    ...propsData,
+  ]
 })
 
 // all errors, including potentially the src error in index zero.
 // undefineds are filtered out allowing allErrors.length checks
 const allErrors = computed(() => {
   // gather everything that can be erroneous
-  const propsErrors = props.errors ?? []
-  const dataErrors = (props.data ?? []).filter((item) => item instanceof Error) as Error[]
   const srcErrors = typeof props.src === 'undefined' ? [] : [srcError.value]
+  const dataErrors = (props.data ?? []).filter((item) => item instanceof Error) as Error[]
+  const propsErrors = props.errors ?? []
   // squeeze it all together
   return [
     ...srcErrors,
