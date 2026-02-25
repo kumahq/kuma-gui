@@ -49,7 +49,8 @@ export type ServiceConfigurator<T = Record<string, Token>> = ($: T) => ServiceDe
 export type Alias<T extends (...args: never[]) => unknown> = (...rest: Parameters<T>) => ReturnType<T>
 export type Decorator<T extends TokenValue> = TokenType<T>
 export type ReturnDecorated<T extends TokenValue> = () => TokenType<T>
-export const container = createContainer()
+export let container = createContainer()
+let labelMap = new WeakMap()
 
 //
 export const merge = (...definitions: Array<ServiceDefinition[]>): ServiceDefinition[] => {
@@ -102,6 +103,8 @@ export const get = <T extends TokenValue>(token: T): TokenType<T> => {
   }
 }
 export const build = (...entries: Array<ServiceDefinition[]>): typeof get => {
+  container = createContainer()
+  labelMap = new WeakMap()
   const merged = decorate(merge(...entries))
   merged.forEach(item => service(...item))
   return get
@@ -113,7 +116,6 @@ export const createInjections = <T extends TokenValue[]>(
   tokens.map((token) => () => get(token)) as InjectionHooks<T>
 //
 
-const labelMap = new WeakMap()
 export const service = (t: Token, config: DependencyDefinition): void => {
   const bound = container.bind(t)
   switch (true) {
