@@ -15,6 +15,17 @@ Feature: mesh / dataplanes / connections / Traffic
       KUMA_SERVICE_COUNT: 1
       KUMA_DATAPLANE_TYPE: standard
       """
+    And the URL "/_resources" responds with
+      """
+      body:
+        resources:
+          - name: MeshService
+            shortName: msvc
+          - name: MeshExternalService
+            shortName: extsvc
+          - name: MeshMultiZoneService
+            shortName: mzsvc
+      """
 
   Scenario: Traffic listing shows expected content
     And the URL "/meshes/default/dataplanes/service-less/_layout" responds with
@@ -40,6 +51,7 @@ Feature: mesh / dataplanes / connections / Traffic
     And the "$outbound" element contains "Mesh default"
     And the "$outbound" element contains "Zone scenario"
     And the "$outbound" element contains "Namespace kuma-system"
+    And the "$outbound" element contains "Type MeshService"
     And the "$outbound" element contains "service-less"
 
   Scenario: Abnormal traffic stats are detected
