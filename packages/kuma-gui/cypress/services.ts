@@ -1,8 +1,8 @@
+import { getClient } from '@kumahq/config/cypress'
 import { token, createInjections } from '@kumahq/container'
 import { mocker } from '@kumahq/fake-api/cypress'
 import env from '@kumahq/settings/env'
 
-import getClient from '@/test-support/client'
 import type { ServiceDefinition } from '@kumahq/container'
 import type { Middleware, Options } from '@kumahq/fake-api'
 

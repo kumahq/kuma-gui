@@ -51,10 +51,39 @@ const equals = (request: Request, item: HistoryEntry) => {
     },
   )
 }
-export default () => {
+export const getClient = () => {
   let history: HistoryEntry[] = []
   let listeners: Listener[] = []
   return {
+    waitForVisit: (_path: string, cookies: { name: string, value: string }[], cy: Cypress.cy) => {
+      // TODO: ideally we don't want to use cy.get here
+      cy.get('#kuma-config').then((obj) => {
+        const node = obj.get(0)
+        if (node === null || node.textContent === null) {
+          throw new Error('#kuma-config not found')
+        }
+        const config = JSON.parse(node.textContent)
+        cookies.forEach(item => {
+          switch (item.name) {
+            case 'KUMA_VERSION':
+              config.version = item.value
+              break
+            case 'KUMA_MODE':
+              config.mode = item.value
+              break
+            case 'KUMA_ENVIRONMENT':
+              config.environment = item.value
+              break
+            case 'KUMA_STORE_TYPE':
+              config.storeType = item.value
+              break
+          }
+        })
+        node.textContent = JSON.stringify(config)
+      })
+      // currently use this to denote "the page has initially rendered"
+      return '[data-testid-root="mesh-app"]'
+    },
     reset: () => {
       history = []
       listeners = []
