@@ -234,14 +234,14 @@ Refreshing data by refetching an endpoint will not show a loader as it happens i
 ```vue
 <DataSource
   :src="uri(meshSources, '/meshes/:mesh', {
-    mesh: routes.params.mesh
+    mesh: route.params.mesh
   })"
   v-slot={ data: [meshData], refresh: refreshMesh }
 >
   <DataLoader
     :src="uri(sources, '/meshes/:mesh/dataplanes/:name'), {
-      mesh: routes.params.mesh,
-      name: routes.params.name,
+      mesh: route.params.mesh,
+      name: route.params.name,
     }"
     :data="[meshData]"
     v-slot="{ data: [dataPlane, mesh], refresh }"
