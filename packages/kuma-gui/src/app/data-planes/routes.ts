@@ -2,6 +2,43 @@ import { routes as connections, networking } from '@/app/connections/routes'
 import { routes as subscriptions } from '@/app/subscriptions/routes'
 import type { RouteRecordRaw } from 'vue-router'
 
+export const routes = () => {
+  const item = (): RouteRecordRaw[] => [
+    {
+      path: '',
+      name: 'data-plane-root-view',
+      component: () => import('@/app/data-planes/views/RootView.vue'),
+      children: [...dataplaneRoutes()],
+    },
+  ]
+
+  const summary = (prefix?: string): RouteRecordRaw[] => {
+    const fullPrefix = prefix?.length ? `${prefix}-` : ''
+
+    return [
+      {
+        path: ':proxy',
+        name: `${fullPrefix}data-plane-summary-view`,
+        component: () => import('@/app/data-planes/views/DataPlaneSummaryView.vue'),
+      },
+    ]
+  }
+
+  return {
+    items: (): RouteRecordRaw[] => {
+      return [
+        {
+          path: 'data-planes',
+          name: 'data-plane-list-view',
+          component: () => import('@/app/data-planes/views/DataPlaneListView.vue'),
+          children: summary(),
+        },
+      ]
+    },
+    item,
+    summary,
+  }
+}
 export const dataplaneRoutes = (): RouteRecordRaw[] => {
   return [
     {
@@ -77,40 +114,3 @@ export const dataplaneRoutes = (): RouteRecordRaw[] => {
   ]
 }
 
-export const routes = () => {
-  const item = (): RouteRecordRaw[] => [
-    {
-      path: '',
-      name: 'data-plane-root-view',
-      component: () => import('@/app/legacy-data-planes/views/RootView.vue'),
-      children: [...dataplaneRoutes()],
-    },
-  ]
-
-  const summary = (prefix?: string): RouteRecordRaw[] => {
-    const fullPrefix = prefix?.length ? `${prefix}-` : ''
-
-    return [
-      {
-        path: ':proxy',
-        name: `${fullPrefix}data-plane-summary-view`,
-        component: () => import('@/app/data-planes/views/DataPlaneSummaryView.vue'),
-      },
-    ]
-  }
-
-  return {
-    items: (): RouteRecordRaw[] => {
-      return [
-        {
-          path: 'data-planes',
-          name: 'data-plane-list-view',
-          component: () => import('@/app/data-planes/views/DataPlaneListView.vue'),
-          children: summary(),
-        },
-      ]
-    },
-    item,
-    summary,
-  }
-}
