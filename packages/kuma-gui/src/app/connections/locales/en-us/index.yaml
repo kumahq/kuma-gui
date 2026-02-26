@@ -9,6 +9,7 @@ activeOutbounds:
     title: No active outbounds
 connections:
   include_endpoints: Include endpoints
+  expanded: Expand config
   routes:
     item:
       navigation:
@@ -16,3 +17,7 @@ connections:
         xds: 'XDS configuration'
         stats: 'Stats'
         clusters: 'Clusters'
+      format: Format
+      formats:
+        structured: 'Structured'
+        yaml: 'YAML'

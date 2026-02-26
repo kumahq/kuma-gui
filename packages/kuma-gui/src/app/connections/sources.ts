@@ -1,3 +1,4 @@
+import { ConnectionXdsConfig } from './data/ConnectionXdsConfig'
 import type { DataSourceResponse } from '@/app/application'
 import { defineSources } from '@/app/application'
 import { Stat, ConnectionCollection } from '@/app/connections/data/'
@@ -187,7 +188,7 @@ export const sources = (api: KumaApi) => {
         }
       })()
 
-      return filter(res, (key: string, arr: unknown[]) => {
+      const filtered = filter(res, (key: string, arr: unknown[]) => {
         switch (key) {
           case 'dynamic_listeners':
             // this one won't work yet see
@@ -196,13 +197,17 @@ export const sources = (api: KumaApi) => {
             return arr.filter(item => prop(item, 'name') && (item.name === `outbound:${outbound}` || item.name === outbound))
           case 'dynamic_active_clusters':
             // dynamic_active_clusters[].cluster.name === outbound
-            return arr.filter(item => prop(item, 'cluster') && prop(item.cluster, 'name') && item.cluster?.name === outbound)
-          case 'dynamic_endpoint_configs':
+            return arr.filter(item => prop(item, 'cluster') && ((prop(item.cluster, 'name') && (item.cluster.name === outbound) || (prop(item.cluster, 'alt_stat_name') && item.cluster.alt_stat_name === outbound))))
+          case 'dynamic_endpoint_configs': {
+            // prefixed outbound is i.e. `default:demo-app_kuma-demo_zone-1_msvc_5050` instead of `default_demo-app_kuma-demo_zone-1_msvc_5050`
+            const prefixedOutbound = `${outbound.split('_')[0]}:${outbound.split('_').slice(1).join('_')}`
             // dynamic_endpoint_configs[].endpoint_config.cluster_name === outbound
-            return arr.filter(item => prop(item, 'endpoint_config') && prop(item.endpoint_config, 'cluster_name') && item.endpoint_config?.cluster_name === outbound)
+            return arr.filter(item => prop(item, 'endpoint_config') && prop(item.endpoint_config, 'cluster_name') && (item.endpoint_config?.cluster_name === outbound || item.endpoint_config?.cluster_name === prefixedOutbound))
+          }
         }
         return []
       })
+      return ConnectionXdsConfig.fromCollection(filtered)
     },
     '/connections/xds/for/:proxyType/:name/:mesh/inbound/:inbound': async (params) => {
       const { name, mesh, inbound, proxyType } = params
