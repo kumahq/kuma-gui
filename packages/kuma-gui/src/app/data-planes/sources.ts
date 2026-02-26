@@ -213,11 +213,5 @@ export const sources = (api: KumaApi) => {
       })
       return DataplaneNetworkingLayout.fromObject(res.data!)
     },
-
-    '/foo': () => {
-      return {
-        foo: 'bar',
-      }
-    },
   })
 }
