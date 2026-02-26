@@ -222,4 +222,39 @@ polling.
     await new Promise(resolve => setTimeout(resolve, 2000))
   }
 },
+```
 
+### Refetching and refreshing
+
+In most cases refetching happens automatically in the background whenever a path or query parameter changes. But in some cases there is an imperative way of refreshing the fetched data required, i.e. to allow the user update the data manually. For this use case the `DataSource` component exposes a `refresh` method. The same method is also passed through `DataLoader`.
+Refreshing data by refetching an endpoint will not show a loader as it happens in the background. Once the new data is fetched the view will be rehydrated with the new data.
+
+**Note:** Calling `refresh` on `DataLoader` only refreshes a given source, but not any data that is passed via the `data`-prop.
+
+```vue
+<DataSource
+  :src="uri(meshSources, '/meshes/:mesh', {
+    mesh: routes.params.mesh
+  })"
+  v-slot={ data: [meshData], refresh: refreshMesh }
+>
+  <DataLoader
+    :src="uri(sources, '/meshes/:mesh/dataplanes/:name'), {
+      mesh: routes.params.mesh,
+      name: routes.params.name,
+    }"
+    :data="[meshData]"
+    v-slot="{ data: [dataPlane, mesh], refresh }"
+  >
+    <!-- Using refresh will only refresh the data of the data plane -->
+    <XAction @click="refresh">
+      Refresh data plane
+    </XAction>
+
+    <!-- Using refreshMesh will only refresh the data of the mesh -->
+    <XAction @click="refreshMesh">
+      Refresh mesh
+    </XAction>
+  </DataLoader>
+</DataSource>
+```
