@@ -9,6 +9,9 @@
     ".": {
       "default": "./src/index.ts"
     },
+    "./cypress": {
+      "import": "./src/cypress/index.ts"
+    },
     "./cypress/e2e": {
       "import": "./src/cypress/e2e.ts"
     },
