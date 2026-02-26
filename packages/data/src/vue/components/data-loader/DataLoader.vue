@@ -57,7 +57,7 @@ import { computed, ref, provide } from 'vue'
 import type { NonNullableArray, NullableArray, TypeOf } from '../../../'
 import DataSource from '../data-source/DataSource.vue'
 
-type Data = [TypeOf<T>] extends [never] ? NonNullableArray<[...K]> : NonNullableArray<[TypeOf<T>, ...K]>
+type Data = TypeOf<T> extends never ? NonNullableArray<[...K]> : NonNullableArray<[TypeOf<T>, ...K]>
 
 const props = withDefaults(defineProps<{
   src?: T
