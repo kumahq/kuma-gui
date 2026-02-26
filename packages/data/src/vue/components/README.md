@@ -229,7 +229,7 @@ polling.
 In most cases refetching happens automatically in the background whenever a path or query parameter changes. But in some cases there is an imperative way of refreshing the fetched data required, i.e. to allow the user update the data manually, say for example a `[Refresh]` button. For this use case the `DataSource` component exposes a `refresh` method. The same method is also passed through `DataLoader`.
 Refreshing data by refetching an endpoint will not show a loader as it happens in the background. Once the new data is fetched the view will be rehydrated with the new data.
 
-**Note:** Calling `refresh` on `DataLoader` only refreshes a given source, but not any data that is passed via the `data`-prop.
+**Note:** Calling `refresh` on `DataLoader` only refreshes a given source i.e. the data that the `:src` prop refers to, but not any data that is passed via the `:data` prop.
 
 ```vue
 <DataSource
