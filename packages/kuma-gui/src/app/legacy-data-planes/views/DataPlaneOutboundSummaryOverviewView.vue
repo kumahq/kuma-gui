@@ -50,7 +50,7 @@
                     mesh: route.params.mesh,
                     dataplane: route.params.proxy,
                   })"
-                  v-slot="{ data: rulesData }"
+                  v-slot="{ data: [rulesData] }"
                 >
                   <template
                     v-if="props.data.$resourceMeta.type !== ''"

@@ -23,7 +23,7 @@
             name: route.params.proxy,
             mesh: route.params.mesh || '*',
           })"
-          v-slot="{ data, refresh }"
+          v-slot="{ data: [data], refresh }"
         >
           <XWindow
             :resize="true"

@@ -184,7 +184,7 @@
           socketAddress: props.data.zoneIngress.socketAddress,
           proxyType: 'zone-ingress',
         })"
-        v-slot="{ data: traffic, refresh }"
+        v-slot="{ data: [traffic], refresh }"
       >
         <XCard>
           <XLayout

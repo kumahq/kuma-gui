@@ -25,7 +25,7 @@
           socketAddress: props.networking.inboundAddress,
         })"
 
-        v-slot="{ data, refresh }"
+        v-slot="{ data: [data], refresh }"
       >
         <DataCollection
           :items="data.raw.split('\n')"

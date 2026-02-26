@@ -40,7 +40,7 @@
               search: route.params.s,
             })"
             variant="list"
-            v-slot="{ data }"
+            v-slot="{ data: [data] }"
           >
             <DataCollection
               type="services"

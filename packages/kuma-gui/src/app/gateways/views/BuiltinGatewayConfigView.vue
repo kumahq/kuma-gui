@@ -22,7 +22,7 @@
             mesh: route.params.mesh,
             name: route.params.gateway,
           })"
-          v-slot="{ data }"
+          v-slot="{ data: [data] }"
         >
           <XLayout>
             <XLayout
@@ -73,7 +73,7 @@
                   mesh: route.params.mesh,
                   name: route.params.gateway,
                 })"
-                v-slot="{ data: k8sConfig }"
+                v-slot="{ data: [k8sConfig] }"
               >
                 <XCodeBlock
                   data-testid="codeblock-yaml-k8s"

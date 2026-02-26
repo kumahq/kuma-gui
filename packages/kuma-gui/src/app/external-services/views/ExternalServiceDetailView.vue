@@ -20,7 +20,7 @@
             mesh: route.params.mesh,
             name: route.params.service,
           })"
-          v-slot="{ data }"
+          v-slot="{ data: [data] }"
         >
           <XAboutCard
             data-testid="external-service-details"
@@ -111,7 +111,7 @@
                     mesh: route.params.mesh,
                     name: route.params.service,
                   })"
-                  v-slot="{ data: k8sConfig }"
+                  v-slot="{ data: [k8sConfig] }"
                 >
                   <XCodeBlock
                     data-testid="codeblock-yaml-k8s"

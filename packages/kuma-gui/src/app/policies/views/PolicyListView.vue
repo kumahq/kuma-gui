@@ -83,7 +83,7 @@
                   search: route.params.s,
                 })"
                 variant="list"
-                v-slot="{ data, refresh }"
+                v-slot="{ data: [data], refresh }"
               >
                 <DataCollection
                   :items="data.items"

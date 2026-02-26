@@ -23,7 +23,7 @@
             mesh: route.params.mesh,
             name: route.params.service,
           })"
-          v-slot="{ data }"
+          v-slot="{ data: [data] }"
         >
           <XAboutCard
             :title="t('services.internal-service.about.title')"
@@ -104,7 +104,7 @@
               search: route.params.s,
             })"
             variant="list"
-            v-slot="{ data }"
+            v-slot="{ data: [data] }"
           >
             <DataCollection
               type="data-planes"

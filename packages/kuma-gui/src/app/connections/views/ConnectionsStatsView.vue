@@ -24,7 +24,7 @@
             mesh: route.params.mesh || '*',
             socketAddress: props.networking.inboundAddress,
           })"
-          v-slot="{ data: statsData, refresh }"
+          v-slot="{ data: [statsData], refresh }"
         >
           <XWindow
             :resize="true"

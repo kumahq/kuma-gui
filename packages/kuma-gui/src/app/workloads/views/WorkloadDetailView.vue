@@ -130,7 +130,7 @@
                 search: `${route.params.s} kuma.io/workload:${kri.name} ${[['namespace', kri.namespace], ['zone', kri.zone]].filter(([ , v]) => v.length > 0).map(([k, v]) => `${k}:${v}`).join(' ')}`,
               })"
               variant="list"
-              v-slot="{ data: dataPlanes }"
+              v-slot="{ data: [dataPlanes] }"
             >
               <DataCollection
                 :items="dataPlanes.items"
