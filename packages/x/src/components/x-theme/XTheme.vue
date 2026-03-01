@@ -191,18 +191,100 @@
 </style>
 <style lang="scss" scoped>
 :deep(> *) {
-  & {
-    --x-anchor-text-color: #{$kui-color-text-primary};
-  }
+  /* animation */
+  --x-animation-duration-20: #{$kui-animation-duration-20};
 
-  a {
-    color: var(--x-anchor-text-color);
-  }
+  /* border-radius */
+  --x-border-radius-10: #{$kui-border-radius-10};
+  --x-border-radius-20: #{$kui-border-radius-20};
+  --x-border-radius-30: #{$kui-border-radius-30};
+  --x-border-radius-40: #{$kui-border-radius-40};
 
-  :where(p, td, dd, li) a:where(:hover, :focus) {
-    text-decoration: underline;
-  }
+  /* border-width */
+  --x-border-width-10: #{$kui-border-width-10};
 
+  /* color-background */
+  --x-color-background: #{$kui-color-background};
+  --x-color-background-inverse: #{$kui-color-background-inverse};
+  --x-color-background-neutral-weaker: #{$kui-color-background-neutral-weaker};
+  --x-color-background-neutral-weakest: #{$kui-color-background-neutral-weakest};
+  --x-color-background-primary: #{$kui-color-background-primary};
+  --x-color-background-primary-weakest: #{$kui-color-background-primary-weakest};
+  --x-color-background-success-weakest: #{$kui-color-background-success-weakest};
+  --x-color-background-warning-weak: #{$kui-color-background-warning-weak};
+
+  /* color-border */
+  --x-color-border: #{$kui-color-border};
+  --x-color-border-primary: #{$kui-color-border-primary};
+  --x-color-border-primary-strong: #{$kui-color-border-primary-strong};
+  --x-color-border-primary-weak: #{$kui-color-border-primary-weak};
+
+  /* color-text */
+  /* TODO(jc): This border color is in the design but doesn't seem to be exported from @kong/design-tokens */
+  /* https://github.com/Kong/design-tokens/blob/5b2d82048cdc48cd3d6a4d186b33ecdb22f134f2/tokens/alias/color/index.json#L185 */
+  --x-color-green-40: #00D6A4; // #{$kui-color-green-40};
+  --x-color-text: #{$kui-color-text};
+  --x-color-text-danger: #{$kui-color-text-danger};
+  --x-color-text-decorative-aqua: #{$kui-color-text-decorative-aqua};
+  --x-color-text-disabled: #{$kui-color-text-disabled};
+  --x-color-text-inverse: #{$kui-color-text-inverse};
+  --x-color-text-neutral: #{$kui-color-text-neutral};
+  --x-color-text-neutral-strong: #{$kui-color-text-neutral-strong};
+  --x-color-text-primary: #{$kui-color-text-primary};
+
+  /* font-family */
+  --x-font-family-code: #{$kui-font-family-code};
+  --x-font-family-text: #{$kui-font-family-text};
+
+  /* font-size */
+  --x-font-size-20: #{$kui-font-size-20};
+  --x-font-size-30: #{$kui-font-size-30};
+  --x-font-size-40: #{$kui-font-size-40};
+  --x-font-size-50: #{$kui-font-size-50};
+  --x-font-size-60: #{$kui-font-size-60};
+  --x-font-size-70: #{$kui-font-size-70};
+
+  /* font-weight */
+  --x-font-weight-bold: #{$kui-font-weight-bold};
+  --x-font-weight-medium: #{$kui-font-weight-medium};
+  --x-font-weight-regular: #{$kui-font-weight-regular};
+  --x-font-weight-semibold: #{$kui-font-weight-semibold};
+
+  /* icon-size */
+  --x-icon-size-30: #{$kui-icon-size-30};
+  --x-icon-size-40: #{$kui-icon-size-40};
+
+  /* line-height */
+  --x-line-height-20: #{$kui-line-height-20};
+  --x-line-height-30: #{$kui-line-height-30};
+  --x-line-height-40: #{$kui-line-height-40};
+
+  /* shadow */
+  --x-shadow-border: #{$kui-shadow-border};
+  --x-shadow-border-primary: #{$kui-shadow-border-primary};
+  --x-shadow-border-primary-strongest: #{$kui-shadow-border-primary-strongest};
+  --x-shadow-border-primary-weak: #{$kui-shadow-border-primary-weak};
+  --x-shadow-focus: #{$kui-shadow-focus};
+
+  /* spacing */
+  --x-space-10: #{$kui-space-10};
+  --x-space-20: #{$kui-space-20};
+  --x-space-30: #{$kui-space-30};
+  --x-space-40: #{$kui-space-40};
+  --x-space-50: #{$kui-space-50};
+  --x-space-60: #{$kui-space-60};
+  --x-space-70: #{$kui-space-70};
+  --x-space-80: #{$kui-space-80};
+  --x-space-90: #{$kui-space-90};
+  --x-space-100: #{$kui-space-100};
+  --x-space-110: #{$kui-space-110};
+
+  /* component specific */
+  /* kong/design-token grays are either too light or too dark i.e. we need weaker-than-weak-but-not-weakest */
+  --x-search-color-token-background: #f0f4f7;
+  --x-anchor-text-color: var(--x-color-text-primary);
+}
+:deep(> *) {
   /* icons */
   & {
     --icon-wifi-tethering-glyph: url('@/assets/images/icon-wifi-tethering.svg?inline');
@@ -301,14 +383,6 @@
     --icon-MeshTrafficPermission: icon-trafficpermission;
     --icon-MeshAccessLog: icon-trafficlog;
   }
-  & {
-    --icon-space-before: #{$kui-space-30};
-    --icon-space-after: #{$kui-space-30};
-  }
-
-
-
-
 
   /* icon-helpers */
   *, *::before, *::after {
@@ -355,6 +429,29 @@
   }
   [style*='--icon-name-end']::after {
     margin-left: var(--icon-space-before);
+  }
+  & {
+    --icon-space-before: var(--x-space-30);
+    --icon-space-after: var(--x-space-30);
+  }
+}
+
+:deep(> *) {
+  & {
+    font-size: var(--x-font-size-40);
+    color: var(--x-color-text);
+    font-family: var(--x-font-family-text);
+    font-weight: var(--x-font-weight-regular);
+  }
+  a {
+    color: var(--x-anchor-text-color);
+  }
+  :where(p, td, dd, li) a:where(:hover, :focus) {
+    text-decoration: underline;
+  }
+  /* make sure k-buttons are never underlined */
+  a.k-button {
+    text-decoration: none !important;
   }
 }
 </style>

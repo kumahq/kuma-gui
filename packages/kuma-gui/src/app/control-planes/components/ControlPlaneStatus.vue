@@ -177,13 +177,13 @@ const policyTotal = computed(() => {
 }
 
 .card-header {
-  margin-bottom: $kui-space-50;
+  margin-bottom: var(--x-space-50);
   min-height: 42px;
 }
 
 .icon {
-  height: $kui-icon-size-30;
-  width: $kui-icon-size-30;
+  height: var(--x-icon-size-30);
+  width: var(--x-icon-size-30);
 }
 
 // 639px <-> 39.938rem (with base 16px font-size)

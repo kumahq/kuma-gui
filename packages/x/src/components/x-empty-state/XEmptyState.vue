@@ -134,6 +134,6 @@ const iconMapping: Record<string, unknown> = {
 </script>
 <style lang="scss" scoped>
 .x-empty-state-title {
-  font-size: $kui-font-size-50;
+  font-size: var(--x-font-size-50);
 }
 </style>

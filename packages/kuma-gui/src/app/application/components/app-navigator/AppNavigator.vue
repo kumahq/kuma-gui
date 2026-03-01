@@ -34,7 +34,7 @@ const props = withDefaults(defineProps<{
   &::before {
     content: '';
     animation-name: var(--icon-name-start), icon-size-40;
-    margin-right: $kui-space-40;
+    margin-right: var(--x-space-40);
   }
 }
 </style>

@@ -66,7 +66,7 @@ const props = withDefaults(defineProps<{
 .x-copy-button {
   display: inline-flex;
   align-items: center;
-  gap: $kui-space-40;
+  gap: var(--x-space-40);
 }
 
 .text {

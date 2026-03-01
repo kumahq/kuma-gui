@@ -115,7 +115,7 @@ import { sources } from '@/app/policies/sources'
 <style lang="scss" scoped>
 .policy-type-list {
   position: sticky;
-  top: calc(var(--AppHeaderHeight) + $kui-space-70);
+  top: calc(var(--AppHeaderHeight) + var(--x-space-70));
   align-self: flex-start;
   max-width: 500px;
 }
@@ -126,8 +126,8 @@ ul {
 }
 li :deep(a) {
   display: block;
-  color: $kui-color-text-neutral;
-  padding: $kui-space-40 $kui-space-60;
+  color: var(--x-color-text-neutral);
+  padding: var(--x-space-40) var(--x-space-60);
   text-decoration: none;
   :hover, :focus {
     span:first-of-type {
@@ -136,7 +136,7 @@ li :deep(a) {
   }
 }
 li.active :deep(a) {
-  background-color: $kui-color-background-primary-weakest;
+  background-color: var(--x-color-background-primary-weakest);
   color: currentColor;
 }
 </style>

@@ -153,14 +153,14 @@ const MeshInsightsList = useMeshInsightsList()
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: $kui-space-50;
+  margin-bottom: var(--x-space-50);
   // Makes card header the same height as buttons so that they align with or without buttons present.
   min-height: 32px;
 }
 
 .card-title {
   display: flex;
-  gap: $kui-space-40;
+  gap: var(--x-space-40);
   align-items: baseline;
 }
 </style>

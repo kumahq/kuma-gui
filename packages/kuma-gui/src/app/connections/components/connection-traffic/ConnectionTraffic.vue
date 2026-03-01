@@ -23,11 +23,11 @@ import DataCard from '@/app/common/data-card/DataCard.vue'
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: $kui-space-40;
+  gap: var(--x-space-40);
 }
 .actions {
   display: flex;
-  gap: $kui-space-40;
+  gap: var(--x-space-40);
   position: absolute;
   right: 0;
 }
@@ -35,7 +35,7 @@ import DataCard from '@/app/common/data-card/DataCard.vue'
   border: 0;
 }
 .header :deep(.title) {
-  font-size: $kui-font-size-20;
+  font-size: var(--x-font-size-20);
 }
 .header > :deep(dt) {
   display: flex;
@@ -44,18 +44,17 @@ import DataCard from '@/app/common/data-card/DataCard.vue'
 .header :deep(.body dt)  {
   &::before {
     display: inline-block;
-    margin-right: $kui-space-20;
+    margin-right: var(--x-space-20);
     border: 4px solid;
     border-radius: 50%;
   }
   &.passthrough::before {
     content: '';
-    /* TODO(jc): This border color is in the design but doesn't seem to be in @kong/design-tokens */
-    border-color: #00D6A4; // $kui-color-green-40;
+    border-color: var(--x-color-green-40);
   }
   &.outbounds::before {
     content: '';
-    border-color: $kui-color-border-primary-weak;
+    border-color: var(--x-color-border-primary-weak);
   }
 
 }

@@ -39,13 +39,13 @@ const justify = computed(() => table?.props.variant !== 'kv' ? props.justify || 
 </script>
 <style lang="scss" scoped>
 .y-stack.large > * + * {
-  margin-block-start: $kui-space-100;
+  margin-block-start: var(--x-space-100);
 }
 .y-stack.normal > * + * {
-  margin-block-start: $kui-space-70;
+  margin-block-start: var(--x-space-70);
 }
 .y-stack.small > * + * {
-  margin-block-start: $kui-space-40;
+  margin-block-start: var(--x-space-40);
 }
 .x-stack {
   display: flex;
@@ -69,13 +69,13 @@ const justify = computed(() => table?.props.variant !== 'kv' ? props.justify || 
   .action-group
 ) {
   &.small {
-    gap: $kui-space-20;
+    gap: var(--x-space-20);
   }
   &.normal {
-    gap: $kui-space-40;
+    gap: var(--x-space-40);
   }
   &.large {
-    gap: $kui-space-80;
+    gap: var(--x-space-80);
   }
   &.start {
     justify-content: flex-start;
@@ -97,7 +97,7 @@ const justify = computed(() => table?.props.variant !== 'kv' ? props.justify || 
 
   display: flex;
   flex-wrap: wrap;
-  gap: $kui-space-80;
+  gap: var(--x-space-80);
 }
 
 .columns > * {
