@@ -1,4 +1,3 @@
-import { getClient } from '@kumahq/config/cypress'
 import { token, createInjections } from '@kumahq/container'
 import { mocker } from '@kumahq/fake-api/cypress'
 import env from '@kumahq/settings/env'
@@ -12,7 +11,6 @@ const $ = {
   env: token<typeof env>('cypress.env'),
   vars: token('cypress.env.vars'),
   mock: token<Mocker>('cypress.mocker'),
-  client: token<ReturnType<typeof getClient>>('cypress.client'),
 }
 type Token = ReturnType<typeof token>
 export const services = <T extends Record<string, Token>>(app: T): ServiceDefinition[] => [
@@ -35,9 +33,6 @@ export const services = <T extends Record<string, Token>>(app: T): ServiceDefini
     ],
   }],
 
-  [$.client, {
-    service: getClient,
-  }],
   [app.mock, {
     service: mocker,
     arguments: [
@@ -49,5 +44,4 @@ export const services = <T extends Record<string, Token>>(app: T): ServiceDefini
 export const TOKENS = $
 export const [
   useMock,
-  useClient,
-] = createInjections($.mock, $.client)
+] = createInjections($.mock)

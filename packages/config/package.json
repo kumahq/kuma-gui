@@ -9,14 +9,8 @@
     ".": {
       "default": "./src/index.ts"
     },
-    "./cypress": {
-      "import": "./src/cypress/index.ts"
-    },
     "./cypress/e2e": {
       "import": "./src/cypress/e2e.ts"
-    },
-    "./cypress/steps": {
-      "import": "./src/cypress/steps/index.ts"
     },
     "./ci": {
       "require": "./scripts/ci.cjs"
@@ -43,6 +37,7 @@
     "@bahmutov/cypress-esbuild-preprocessor": "^2.2.8",
     "@cucumber/gherkin-utils": "^11.0.0",
     "@eslint/js": "^9.39.3",
+    "@kumahq/gherkin-web": "*",
     "@stylistic/eslint-plugin": "^5.9.0",
     "@stylistic/stylelint-plugin": "^5.0.1",
     "@vue/eslint-config-typescript": "^14.7.0",

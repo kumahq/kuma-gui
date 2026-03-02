@@ -1,5 +1,5 @@
-import { setupSteps } from '@kumahq/config/cypress/steps'
 import { build, token } from '@kumahq/container'
+import { setupSteps } from '@kumahq/gherkin-web/cypress/browser'
 
 import { TOKENS, services as e2e } from './services'
 import { services as application } from '@/app/application/debug'
@@ -27,6 +27,5 @@ import { services as kuma, locales } from '@/app/kuma/debug'
 
   setupSteps({
     mock: get($.mock),
-    client: get($.client),
   })
 })()
