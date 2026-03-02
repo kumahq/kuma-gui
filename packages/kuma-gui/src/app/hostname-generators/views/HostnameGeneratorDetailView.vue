@@ -106,7 +106,7 @@
                   >
                     <div>
                       <dt>
-                        {{ t('http.api.property.tags') }}
+                        {{ t('http.api.property.match') }}
                       </dt>
                       <dd>
                         <XLayout
