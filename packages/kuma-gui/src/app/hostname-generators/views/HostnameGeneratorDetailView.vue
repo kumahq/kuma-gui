@@ -19,41 +19,79 @@
       :src="uri(sources, '/hostname-generators/:name', {
         name: route.params.name,
       })"
-      v-slot="{ data, error }"
+      v-slot="{ data: sourceData, error }"
     >
       <AppView :docs="t('hostname-generators.href.docs')">
         <template #title>
-          <XProgress
-            v-if="typeof data === 'undefined'"
-            variant="line"
-          />
-          <h1 v-else>
-            <XCopyButton
-              :text="data.name"
-            >
-              <RouteTitle
-                :title="t('hostname-generators.routes.item.title', { name: data.name })"
-              />
-            </XCopyButton>
-          </h1>
+          <DataLoader
+            :data="[sourceData]"
+          >
+            <template #connecting>
+              <XProgress variant="line" />
+            </template>
+            <template #default="{ data: [data] }">
+              <h1>
+                <XCopyButton
+                  :text="data.name"
+                >
+                  <RouteTitle
+                    :title="t('hostname-generators.routes.item.title', { name: data.name })"
+                  />
+                </XCopyButton>
+              </h1>
+            </template>
+          </DataLoader>
         </template>
         <XLayout
           type="stack"
         >
           <XAboutCard
             :title="t('hostname-generators.routes.item.about.title')"
-            :created="data?.creationTime"
-            :modified="data?.modificationTime"
+            :created="sourceData?.creationTime"
+            :modified="sourceData?.modificationTime"
           >
-          <!-- :data="[data]"
-          :errors="[error]" -->
             <DataLoader
-              :src="uri(sources, '/hostname-generators', {
-              }, { size: 50, page: 1})"
-              v-slot="{ data: foo }"
+              :data="[sourceData]"
+              v-slot="{ data: [data] }"
             >
-              {{ console.log('foo', foo) }}
-              <template v-if="typeof data !== 'undefined'">
+              <XLayout
+                variant="y-stack"
+              >
+                <XLayout
+                  variant="x-stack"
+                >
+                  <XDl>
+                    <div>
+                      <dt>
+                        {{ t('http.api.property.namespace') }}
+                      </dt>
+                      <dd>
+                        <XBadge>
+                          {{ data.namespace }}
+                        </XBadge>
+                      </dd>
+                    </div>
+                    <div v-if="can('use zones') && data.zone">
+                      <dt>
+                        {{ t('http.api.property.zone') }}
+                      </dt>
+                      <dd>
+                        <XAction
+                          :to="{
+                            name: 'zone-cp-detail-view',
+                            params: {
+                              zone: data.zone,
+                            },
+                          }"
+                        >
+                          <XBadge>
+                            {{ data.zone }}
+                          </XBadge>
+                        </XAction>
+                      </dd>
+                    </div>
+                  </XDl>
+                </XLayout>
                 <template
                   v-for="labels in [{
                     ...data.spec.selector.meshService.matchLabels,
@@ -86,16 +124,46 @@
                     </div>
                   </XDl>
                 </template>
-              </template>
+                <XDl>
+                  <template
+                    v-for="labels in [Object.entries(data.labels)]"
+                    :key="typeof labels"
+                  >
+                    <div v-if="labels.length">
+                      <dt>{{ t('hostname-generators.routes.item.labels') }}</dt>
+                      <dd>
+                        <XLayout
+                          variant="separated"
+                          truncate
+                        >
+                          <template
+                            v-for="kumaRe in [/^(.+\.)?kuma\.io\//]"
+                            :key="typeof kumaRe"
+                          >
+                            <XBadge
+                              v-for="[key, value] in labels"
+                              :key="key"
+                              :appearance="kumaRe.test(key) ? 'info' : 'decorative'"
+                            >
+                              {{ key }}:{{ value }}
+                            </XBadge>
+                          </template>
+                        </XLayout>
+                      </dd>
+                    </div>
+                  </template>
+                </XDl>
+              </XLayout>
             </DataLoader>
           </XAboutCard>
 
           <XCard>
             <DataLoader
-              :data="[data]"
+              :data="[sourceData]"
               :errors="[error]"
+              v-slot="{ data: [data] }"
             >
-              <XLayout v-if="typeof data !== 'undefined'">
+              <XLayout>
                 <XLayout
                   type="separated"
                   justify="end"
