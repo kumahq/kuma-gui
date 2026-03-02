@@ -40,7 +40,7 @@
     "@types/semver": "^7.7.1",
     "@vitejs/plugin-vue": "^6.0.4",
     "@vue/test-utils": "^2.4.6",
-    "cypress": "^15.10.0",
+    "cypress": "^15.11.0",
     "jsdom": "^28.1.0",
     "msw": "^2.12.10",
     "sass": "^1.97.3",
