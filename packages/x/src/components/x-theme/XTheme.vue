@@ -206,12 +206,14 @@
   /* color-background */
   --x-color-background: #{$kui-color-background};
   --x-color-background-inverse: #{$kui-color-background-inverse};
+  --x-color-background-neutral-weak: #{$kui-color-background-neutral-weak};
   --x-color-background-neutral-weaker: #{$kui-color-background-neutral-weaker};
   --x-color-background-neutral-weakest: #{$kui-color-background-neutral-weakest};
   --x-color-background-primary: #{$kui-color-background-primary};
   --x-color-background-primary-weakest: #{$kui-color-background-primary-weakest};
   --x-color-background-success-weakest: #{$kui-color-background-success-weakest};
   --x-color-background-warning-weak: #{$kui-color-background-warning-weak};
+  --x-color-background-danger: #{$kui-color-background-danger};
 
   /* color-border */
   --x-color-border: #{$kui-color-border};
@@ -250,6 +252,9 @@
   --x-font-weight-regular: #{$kui-font-weight-regular};
   --x-font-weight-semibold: #{$kui-font-weight-semibold};
 
+  /* letter-spacing*/
+  --x-letter-spacing-minus-20: #{$kui-letter-spacing-minus-20};
+
   /* icon-size */
   --x-icon-size-30: #{$kui-icon-size-30};
   --x-icon-size-40: #{$kui-icon-size-40};
@@ -258,6 +263,7 @@
   --x-line-height-20: #{$kui-line-height-20};
   --x-line-height-30: #{$kui-line-height-30};
   --x-line-height-40: #{$kui-line-height-40};
+  --x-line-height-50: #{$kui-line-height-50};
 
   /* shadow */
   --x-shadow-border: #{$kui-shadow-border};
