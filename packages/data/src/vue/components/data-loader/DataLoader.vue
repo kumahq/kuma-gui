@@ -54,10 +54,10 @@
 >
 import { computed, ref, provide } from 'vue'
 
-import type { ArrayExclude, NonNullableArray, NullableArray, TypeOf } from '../../../'
+import type { ArrayExclude, NullableArray, TypeOf } from '../../../'
 import DataSource from '../data-source/DataSource.vue'
 
-type Data = ArrayExclude<NonNullableArray<TypeOf<T> extends never ? [...K] : [TypeOf<T>, ...K]>, Error>
+type Data = ArrayExclude<TypeOf<T> extends never ? [...K] : [TypeOf<T>, ...K], Error | undefined>
 
 const props = withDefaults(defineProps<{
   src?: T
