@@ -29,6 +29,7 @@
         :refresh="typeof props.src !== 'undefined' ? refresh : () => {}"
       >
         <XProgress
+          v-if="props.variant !== 'no-indicator'"
           v-bind="$attrs"
           :variant="props.variant === 'default' ? 'legacy' : props.variant"
         />
@@ -54,16 +55,16 @@
 >
 import { computed, ref, provide } from 'vue'
 
-import type { NonNullableArray, NullableArray, TypeOf } from '../../../'
+import type { ArrayExclude, NonNullableArray, NullableArray, TypeOf } from '../../../'
 import DataSource from '../data-source/DataSource.vue'
 
-type Data = TypeOf<T> extends never ? NonNullableArray<[...K]> : NonNullableArray<[TypeOf<T>, ...K]>
+type Data = ArrayExclude<NonNullableArray<TypeOf<T> extends never ? [...K] : [TypeOf<T>, ...K]>, Error>
 
 const props = withDefaults(defineProps<{
   src?: T
   data?: K // (K | undefined)[]
   errors?: (Error | undefined)[]
-  variant?: 'default' | 'list' | 'spinner'
+  variant?: 'default' | 'list' | 'spinner' | 'no-indicator'
 }>(), {
   src: undefined,
   data: undefined,
@@ -102,7 +103,7 @@ const srcError = ref<Error | undefined>()
  */
 const allData = computed(() => {
   const _srcData = typeof props.src === 'undefined' || props.src === '' ? [] : [srcData.value]
-  const propsData = (props.data ?? []).filter(item => !(item instanceof Error)) as K
+  const propsData = (props.data ?? []).filter(item => !(item instanceof Error)) as ArrayExclude<K, Error>
   return [
     ..._srcData,
     ...propsData,
