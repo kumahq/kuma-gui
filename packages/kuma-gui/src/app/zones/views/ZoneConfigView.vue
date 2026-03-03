@@ -18,64 +18,72 @@
     >
       <DataLoader
         :data="[props.data]"
-        v-slot="{ data: [zone] }"
       >
-        <DataLoader
-          :src="uri(sources, '/control-plane/outdated/:version', {
-            version: zone.zoneInsight.version?.kumaCp?.version ?? '-',
-          })"
-          v-slot="{ data: [version] }"
-        >
-          <template
-            v-for="{ bool, key, params } in [
-              {
-                bool: zone.zoneInsight.store === 'memory',
-                key: 'store-memory',
-              },
-              {
-                bool: !zone.zoneInsight.version?.kumaCp?.kumaCpGlobalCompatible,
-                key: 'global-cp-incompatible',
-                params: {
-                  zoneCpVersion: zone.zoneInsight.version?.kumaCp?.version ?? '-',
-                  globalCpVersion: version?.version ?? '',
-                },
-              },
-              {
-                bool: (zone.zoneInsight.connectedSubscription?.status.total.responsesRejected ?? 0) > 0,
-                key: 'global-nack-response',
-              },
-            ]"
-            :key="key"
+        <template #connecting>
+          <div><!-- no loader --></div>
+        </template>
+        <template #default="{ data: [zone]}">
+          <DataLoader
+            :src="uri(sources, '/control-plane/outdated/:version', {
+              version: zone.zoneInsight.version?.kumaCp?.version ?? '-',
+            })"
           >
-            <XNotification
-              :notify="bool"
-              :data-testid="`warning-${key}`"
-              :uri="`zone-cps.notifications.${key}.${zone.id}`"
-            >
-              <XI18n
-                :path="`zone-cps.notifications.${key}`"
-                :params="Object.fromEntries(Object.entries(params ?? {}))"
+            <template #connecting>
+              <div><!-- no loader --></div>
+            </template>
+            <template #default="{ data: [version] }">
+              <template
+                v-for="{ bool, key, params } in [
+                  {
+                    bool: zone.zoneInsight.store === 'memory',
+                    key: 'store-memory',
+                  },
+                  {
+                    bool: !zone.zoneInsight.version?.kumaCp?.kumaCpGlobalCompatible,
+                    key: 'global-cp-incompatible',
+                    params: {
+                      zoneCpVersion: zone.zoneInsight.version?.kumaCp?.version ?? '-',
+                      globalCpVersion: version?.version ?? '',
+                    },
+                  },
+                  {
+                    bool: (zone.zoneInsight.connectedSubscription?.status.total.responsesRejected ?? 0) > 0,
+                    key: 'global-nack-response',
+                  },
+                ]"
+                :key="key"
               >
-                <template
-                  v-if="key === 'global-nack-response'"
-                  #link
+                <XNotification
+                  :notify="bool"
+                  :data-testid="`warning-${key}`"
+                  :uri="`zone-cps.notifications.${key}.${zone.id}`"
                 >
-                  <XAction
-                    data-action
-                    :to="{
-                      name: 'zone-cp-subscription-summary-view',
-                      params: {
-                        subscription: zone.zoneInsight.connectedSubscription?.id,
-                      },
-                    }"
+                  <XI18n
+                    :path="`zone-cps.notifications.${key}`"
+                    :params="Object.fromEntries(Object.entries(params ?? {}))"
                   >
-                    zone control plane summary
-                  </XAction>
-                </template>
-              </XI18n>
-            </XNotification>
-          </template>
-        </DataLoader>
+                    <template
+                      v-if="key === 'global-nack-response'"
+                      #link
+                    >
+                      <XAction
+                        data-action
+                        :to="{
+                          name: 'zone-cp-subscription-summary-view',
+                          params: {
+                            subscription: zone.zoneInsight.connectedSubscription?.id,
+                          },
+                        }"
+                      >
+                        zone control plane summary
+                      </XAction>
+                    </template>
+                  </XI18n>
+                </XNotification>
+              </template>
+            </template>
+          </DataLoader>
+        </template>
       </DataLoader>
       <XCard>
         <DataLoader

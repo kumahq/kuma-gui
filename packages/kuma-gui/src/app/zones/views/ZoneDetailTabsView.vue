@@ -23,57 +23,69 @@
         ]"
       >
         <template #title>
-          <XLayout
-            v-if="typeof data !== 'undefined'"
-            size="small"
+          <DataLoader
+            :data="[data]"
           >
-            <XLayout type="separated">
-              <template
-                v-for="env in [(['kubernetes', 'universal'] as const).find(env => env === data.zoneInsight.environment) ?? 'kubernetes']"
-                :key="env"
+            <template #connecting>
+              <XProgress variant="line" />
+            </template>
+            <template #default="{ data: [zone] }">
+              <XLayout
+                size="small"
               >
-                <XIcon
-                  :name="env"
-                  :size="KUI_ICON_SIZE_50"
+                <XLayout type="separated">
+                  <template
+                    v-for="env in [(['kubernetes', 'universal'] as const).find(env => env === zone.zoneInsight.environment) ?? 'kubernetes']"
+                    :key="env"
+                  >
+                    <XIcon
+                      :name="env"
+                      :size="KUI_ICON_SIZE_50"
+                    >
+                      {{ t(`common.product.environment.${env}`) }}
+                    </XIcon>
+                  </template>
+                  <h1>
+                    <XCopyButton :text="zone.name" />
+                  </h1>
+                </XLayout>
+                <XBadge
+                  :appearance="t(`common.status.appearance.${zone.state}`, undefined, { defaultMessage: 'neutral' })"
                 >
-                  {{ t(`common.product.environment.${env}`) }}
-                </XIcon>
-              </template>
-              <h1>
-                <XCopyButton :text="data.name" />
-              </h1>
-            </XLayout>
-            <XBadge
-              :appearance="t(`common.status.appearance.${data.state}`, undefined, { defaultMessage: 'neutral' })"
-            >
-              {{ t(`http.api.value.${data.state}`) }}
-            </XBadge>
-          </XLayout>
-          <XProgress
-            v-else
-            variant="line"
-          />
+                  {{ t(`http.api.value.${zone.state}`) }}
+                </XBadge>
+              </XLayout>
+            </template>
+          </DataLoader>
         </template>
 
         <template
           #actions
         >
-          <ZoneActionGroup
-            v-if="typeof data !== 'undefined'"
-            :item="data"
-            @change="() => route.replace({ name: 'zone-cp-list-view' })"
+          <DataLoader
+            :data="[data]"
           >
-            <template
-              #control
-            >
-              <XAction
-                action="expand"
-                appearance="primary"
-              >
-                {{ t('zones.action_menu.toggle_button') }}
-              </XAction>
+            <template #connecting>
+              <div><!-- no loader --></div>
             </template>
-          </ZoneActionGroup>
+            <template #default="{ data: [zone] }">
+              <ZoneActionGroup
+                :item="zone"
+                @change="() => route.replace({ name: 'zone-cp-list-view' })"
+              >
+                <template
+                  #control
+                >
+                  <XAction
+                    action="expand"
+                    appearance="primary"
+                  >
+                    {{ t('zones.action_menu.toggle_button') }}
+                  </XAction>
+                </template>
+              </ZoneActionGroup>
+            </template>
+          </DataLoader>
         </template>
 
         <XTabs
