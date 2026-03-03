@@ -13,32 +13,35 @@
       :render="false"
       :title="t('zone-cps.routes.item.navigation.zone-cp-config-view')"
     />
-    <DataSource
-      :src="uri(sources, '/control-plane/outdated/:version', {
-        version: props.data && !(props.data instanceof Error) ? props.data.zoneInsight.version?.kumaCp?.version ?? '-' : '-',
-      })"
-      v-slot="{ data: version }"
+    <AppView
+      :notifications="true"
     >
-      <AppView
-        :notifications="true"
+      <DataLoader
+        :data="[props.data]"
+        v-slot="{ data: [zone] }"
       >
-        <template v-if="props.data && !(props.data instanceof Error)">
+        <DataLoader
+          :src="uri(sources, '/control-plane/outdated/:version', {
+            version: zone.zoneInsight.version?.kumaCp?.version ?? '-',
+          })"
+          v-slot="{ data: [version] }"
+        >
           <template
             v-for="{ bool, key, params } in [
               {
-                bool: props.data.zoneInsight.store === 'memory',
+                bool: zone.zoneInsight.store === 'memory',
                 key: 'store-memory',
               },
               {
-                bool: !props.data.zoneInsight.version?.kumaCp?.kumaCpGlobalCompatible,
+                bool: !zone.zoneInsight.version?.kumaCp?.kumaCpGlobalCompatible,
                 key: 'global-cp-incompatible',
                 params: {
-                  zoneCpVersion: props.data.zoneInsight.version?.kumaCp?.version ?? '-',
+                  zoneCpVersion: zone.zoneInsight.version?.kumaCp?.version ?? '-',
                   globalCpVersion: version?.version ?? '',
                 },
               },
               {
-                bool: (props.data.zoneInsight.connectedSubscription?.status.total.responsesRejected ?? 0) > 0,
+                bool: (zone.zoneInsight.connectedSubscription?.status.total.responsesRejected ?? 0) > 0,
                 key: 'global-nack-response',
               },
             ]"
@@ -47,7 +50,7 @@
             <XNotification
               :notify="bool"
               :data-testid="`warning-${key}`"
-              :uri="`zone-cps.notifications.${key}.${props.data.id}`"
+              :uri="`zone-cps.notifications.${key}.${zone.id}`"
             >
               <XI18n
                 :path="`zone-cps.notifications.${key}`"
@@ -62,7 +65,7 @@
                     :to="{
                       name: 'zone-cp-subscription-summary-view',
                       params: {
-                        subscription: props.data.zoneInsight.connectedSubscription?.id,
+                        subscription: zone.zoneInsight.connectedSubscription?.id,
                       },
                     }"
                   >
@@ -72,39 +75,37 @@
               </XI18n>
             </XNotification>
           </template>
-        </template>
+        </DataLoader>
+      </DataLoader>
+      <XCard>
+        <DataLoader
+          :data="[props.data]"
+          v-slot="{ data: [zone] }"
+        >
+          <XCodeBlock
+            v-if="Object.keys(zone.zoneInsight.config).length > 0"
+            language="json"
+            :code="JSON.stringify(zone.zoneInsight.config, null, 2)"
+            is-searchable
+            :query="route.params.codeSearch"
+            :is-filter-mode="route.params.codeFilter"
+            :is-reg-exp-mode="route.params.codeRegExp"
+            @query-change="route.update({ codeSearch: $event })"
+            @filter-mode-change="route.update({ codeFilter: $event })"
+            @reg-exp-mode-change="route.update({ codeRegExp: $event })"
+          />
 
-        <XCard>
-          <DataLoader
-            :data="[props.data]"
+          <XAlert
+            v-else
+            class="mt-4"
+            data-testid="warning-no-subscriptions"
+            variant="warning"
           >
-            <template v-if="props.data && !(props.data instanceof Error)">
-              <XCodeBlock
-                v-if="Object.keys(props.data.zoneInsight.config).length > 0"
-                language="json"
-                :code="JSON.stringify(props.data.zoneInsight.config, null, 2)"
-                is-searchable
-                :query="route.params.codeSearch"
-                :is-filter-mode="route.params.codeFilter"
-                :is-reg-exp-mode="route.params.codeRegExp"
-                @query-change="route.update({ codeSearch: $event })"
-                @filter-mode-change="route.update({ codeFilter: $event })"
-                @reg-exp-mode-change="route.update({ codeRegExp: $event })"
-              />
-
-              <XAlert
-                v-else
-                class="mt-4"
-                data-testid="warning-no-subscriptions"
-                variant="warning"
-              >
-                {{ t('zone-cps.detail.no_subscriptions') }}
-              </XAlert>
-            </template>
-          </DataLoader>
-        </XCard>
-      </AppView>
-    </DataSource>
+            {{ t('zone-cps.detail.no_subscriptions') }}
+          </XAlert>
+        </DataLoader>
+      </XCard>
+    </AppView>
   </RouteView>
 </template>
 
