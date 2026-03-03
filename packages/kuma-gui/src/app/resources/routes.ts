@@ -10,11 +10,11 @@ export const meshIdentityRoutes = (prefix?: string): RouteRecordRaw[] => {
   ]
 }
 
-export const meshTrustRoutes = (): RouteRecordRaw[] => {
+export const meshTrustRoutes = (prefix?: string): RouteRecordRaw[] => {
   return [
     {
       path: 'meshtrust/:mtrust',
-      name: 'mesh-trust-summary-view',
+      name: `${prefix ? `${prefix}-` : ''}mesh-trust-summary-view`,
       component: () => import('@/app/resources/views/MeshTrustSummaryView.vue'),
     },
   ]

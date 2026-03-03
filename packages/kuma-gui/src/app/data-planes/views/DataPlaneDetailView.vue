@@ -305,9 +305,27 @@
                             {{ t('data-planes.routes.item.mtls.issued_backend.title') }}
                           </dt>
                           <dd>
-                            <XBadge appearance="decorative">
-                              {{ mTLS.issuedBackend }}
-                            </XBadge>
+                            <template
+                              v-if="Kri.isKriString(mTLS.issuedBackend)"
+                            >
+                              <XAction
+                                :to="{
+                                  name: 'data-plane-mesh-identity-summary-view',
+                                  params: {
+                                    mid: mTLS.issuedBackend,
+                                  },
+                                }"
+                              >
+                                <XBadge appearance="decorative">
+                                  {{ mTLS.issuedBackend }}
+                                </XBadge>
+                              </XAction>
+                            </template>
+                            <template v-else>
+                              <XBadge appearance="decorative">
+                                {{ mTLS.issuedBackend }}
+                              </XBadge>
+                            </template>
                           </dd>
                         </div>
                         <div
@@ -321,13 +339,30 @@
                               type="separated"
                               truncate
                             >
-                              <XBadge
+                              <template
                                 v-for="item in mTLS.supportedBackends"
                                 :key="item"
-                                :appearance="item === mTLS.issuedBackend ? 'decorative' : 'info'"
                               >
-                                {{ item }}
-                              </XBadge>
+                                <template v-if="Kri.isKriString(item)">
+                                  <XAction
+                                    :to="{
+                                      name: 'data-plane-mesh-trust-summary-view',
+                                      params: {
+                                        mtrust: item,
+                                      },
+                                    }"
+                                  >
+                                    <XBadge :appearance="item === mTLS.issuedBackend ? 'decorative' : 'info'">
+                                      {{ item }}
+                                    </XBadge>
+                                  </XAction>
+                                </template>
+                                <template v-else>
+                                  <XBadge :appearance="item === mTLS.issuedBackend ? 'decorative' : 'info'">
+                                    {{ item }}
+                                  </XBadge>
+                                </template>
+                              </template>
                             </XLayout>
                           </dd>
                         </div>
