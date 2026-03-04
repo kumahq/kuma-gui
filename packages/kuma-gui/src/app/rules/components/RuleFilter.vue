@@ -121,18 +121,18 @@ const props = defineProps<{
 .filter {
   display: flex;
   flex-wrap: wrap;
-  gap: $kui-space-50;
+  gap: var(--x-space-50);
   align-items: baseline;
 }
 
 .list {
   display: inline-flex;
   flex-wrap: wrap;
-  gap: $kui-space-40;
+  gap: var(--x-space-40);
   align-items: baseline;
 }
 
 .text-neutral {
-  color: $kui-color-text-neutral;
+  color: var(--x-color-text-neutral);
 }
 </style>

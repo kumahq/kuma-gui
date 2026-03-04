@@ -6,7 +6,7 @@
     :has-overlay="false"
     visible
     :max-width="props.width"
-    offset-top="var(--app-slideout-offset-top, 0)"
+    offset-top="var(--x-drawer-offset-top, 0)"
     data-testid="summary"
     @close="emit('close')"
   >
@@ -52,11 +52,11 @@ const emit = defineEmits<{
 }
 :deep(.slideout-header) {
   h1, h2, h4, h5, h6 {
-    font-size: $kui-font-size-70;
+    font-size: var(--x-font-size-70);
   }
   h1, h2 {
     --icon-name-start: var(--icon-wifi-tethering);
-    --icon-color: #{$kui-color-text-neutral};
+    --icon-color: var(--x-color-text-neutral);
     &::before {
       margin-right: var(--icon-space-after);
       content: '';

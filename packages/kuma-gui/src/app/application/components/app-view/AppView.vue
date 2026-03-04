@@ -71,11 +71,7 @@
                 />
               </nav>
 
-              <section
-                :class="{
-                  'is-fullscreen': props.fullscreen,
-                }"
-              >
+              <section>
                 <XLayout
                   type="stack"
                 >
@@ -83,8 +79,6 @@
                     v-if="slots.title || slots.actions"
                     class="app-view-title-bar"
                   >
-                    <KongIcon v-if="props.fullscreen" />
-
                     <template
                       v-if="summary.length > 0"
                     >
@@ -143,7 +137,6 @@
 </template>
 
 <script lang="ts" setup>
-import { KongIcon } from '@kong/icons'
 import { ROUTE_VIEW_PARENT } from '@kumahq/routing/vue'
 import { nextTick , provide, inject, watch, ref, onBeforeUnmount , useId } from 'vue'
 
@@ -162,12 +155,10 @@ type Breadcrumbs = Map<symbol, BreadcrumbItem[]>
 
 const props = withDefaults(defineProps<{
   breadcrumbs?: BreadcrumbItem[] | null
-  fullscreen?: boolean
   docs?: string
   notifications?: boolean
 }>(), {
   breadcrumbs: null,
-  fullscreen: false,
   docs: '',
   notifications: false,
 })
@@ -238,18 +229,6 @@ onBeforeUnmount(() => {
   position: relative;
   left: -3px;
 }
-.is-fullscreen {
-  .app-view-title-bar {
-    padding: $kui-space-80 $kui-space-90;
-    border-bottom: $kui-border-width-10 solid $kui-color-border;
-  }
-  .app-view-title-bar h1 {
-    margin-left: $kui-space-40;
-    padding-left: $kui-space-40;
-    border-left: $kui-border-width-10 solid $kui-color-border;
-    font-size: $kui-font-size-60;
-  }
-}
 .k-tabs + .route-view > .app-view .app-view-title-bar {
   margin-bottom: 20px;
 }
@@ -257,7 +236,7 @@ onBeforeUnmount(() => {
 
 <style lang="scss" scoped>
 .app-view {
-  font-size: $kui-font-size-30;
+  font-size: var(--x-font-size-30);
 }
 .app-view-title-bar {
   display: flex;
@@ -273,13 +252,13 @@ onBeforeUnmount(() => {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  gap: $kui-space-60;
+  gap: var(--x-space-60);
 }
 .notifications {
   padding: 0;
 }
 .notifications li {
-  margin-left: $kui-space-60;
+  margin-left: var(--x-space-60);
 }
 .notifications li:only-child {
   list-style-type: none;
