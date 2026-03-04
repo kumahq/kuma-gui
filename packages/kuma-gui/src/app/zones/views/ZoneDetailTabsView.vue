@@ -62,30 +62,21 @@
         <template
           #actions
         >
-          <DataLoader
-            :data="[data]"
+          <ZoneActionGroup
+            :item="data"
+            @change="() => route.replace({ name: 'zone-cp-list-view' })"
           >
-            <template #connecting>
-              <div><!-- no loader --></div>
-            </template>
-            <template #default="{ data: [zone] }">
-              <ZoneActionGroup
-                :item="zone"
-                @change="() => route.replace({ name: 'zone-cp-list-view' })"
+            <template
+              #control
+            >
+              <XAction
+                action="expand"
+                appearance="primary"
               >
-                <template
-                  #control
-                >
-                  <XAction
-                    action="expand"
-                    appearance="primary"
-                  >
-                    {{ t('zones.action_menu.toggle_button') }}
-                  </XAction>
-                </template>
-              </ZoneActionGroup>
+                {{ t('zones.action_menu.toggle_button') }}
+              </XAction>
             </template>
-          </DataLoader>
+          </ZoneActionGroup>
         </template>
 
         <XTabs
