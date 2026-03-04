@@ -88,7 +88,7 @@ const flags = process.argv.reduce((prev, flag, i, arr) => {
     const dereferenced = await openapiFormat.parseString(
       YAML.stringify(await $RefParser.dereference(filepath, hiddenRefs, {})),
       opts,
-    )
+    ) as OpenAPIOverlayOptions['overlaySet'] & { extends: string }
 
     // unhide the "private" `#$ref` backto `$ref`
     const overlay = walk(dereferenced, {
@@ -104,7 +104,7 @@ const flags = process.argv.reduce((prev, flag, i, arr) => {
     )
 
     const res = await openapiFormat.openapiOverlay(oas, {
-      overlaySet: overlay as OpenAPIOverlayOptions['overlaySet'],
+      overlaySet: overlay,
     })
 
     const output = YAML.stringify(res.data)
