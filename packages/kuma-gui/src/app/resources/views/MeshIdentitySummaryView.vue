@@ -73,12 +73,10 @@
 </template>
 
 <script lang="ts" setup>
-import type { MeshIdentity } from '../data/MeshIdentity'
 import { YAML } from '@/app/application'
 import { sources } from '@/app/resources/sources'
 
 const props = defineProps<{
-  meshIdentities: MeshIdentity[]
   routeName: string
 }>()
 </script>
