@@ -3,6 +3,7 @@ Feature: mesh / dataplanes / DataplaneDetailsTraffic
   Background:
     Given the CSS selectors
       | Alias           | Selector                                                                   |
+      | about-section   | [data-testid='dataplane-about-section']                                    |
       | detail-view     | [data-testid='data-plane-detail-tabs-view']                                |
       | loading-warning | [data-testid^='notification-data-planes.notifications.stats-not-enhanced'] |
       | traffic         | [data-testid='dataplane-traffic']                                          |
@@ -59,6 +60,7 @@ Feature: mesh / dataplanes / DataplaneDetailsTraffic
       body:
         dataplane:
           networking:
+            address: 58.25.181.133
             gateway: !!js/undefined
         dataplaneInsight:
           mTLS: !!js/undefined
@@ -78,3 +80,4 @@ Feature: mesh / dataplanes / DataplaneDetailsTraffic
     When I visit the "/meshes/default/data-planes/dpp-1-name-of-dataplane/overview" URL
     And the "$traffic" element exists
     And the "$loading-warning" element exists
+    And the "$about-section" element contains "58.25.181.133"

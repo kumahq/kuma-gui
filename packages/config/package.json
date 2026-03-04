@@ -9,14 +9,8 @@
     ".": {
       "default": "./src/index.ts"
     },
-    "./cypress": {
-      "import": "./src/cypress/index.ts"
-    },
     "./cypress/e2e": {
       "import": "./src/cypress/e2e.ts"
-    },
-    "./cypress/steps": {
-      "import": "./src/cypress/steps/index.ts"
     },
     "./ci": {
       "require": "./scripts/ci.cjs"
@@ -38,11 +32,12 @@
     "@types/markdown-it": "^14.1.2"
   },
   "dependencies": {
-    "@apidevtools/json-schema-ref-parser": "^15.2.2",
+    "@apidevtools/json-schema-ref-parser": "^15.3.1",
     "@badeball/cypress-cucumber-preprocessor": "^24.0.1",
     "@bahmutov/cypress-esbuild-preprocessor": "^2.2.8",
     "@cucumber/gherkin-utils": "^11.0.0",
     "@eslint/js": "^9.39.3",
+    "@kumahq/gherkin-web": "*",
     "@stylistic/eslint-plugin": "^5.9.0",
     "@stylistic/stylelint-plugin": "^5.0.1",
     "@vue/eslint-config-typescript": "^14.7.0",
@@ -64,7 +59,7 @@
     "globals": "^17.3.0",
     "husky": "^9.1.7",
     "js-yaml": "^4.1.1",
-    "lint-staged": "^16.2.7",
+    "lint-staged": "^16.3.0",
     "lockfile-lint": "^5.0.0",
     "markdown-it": "^14.1.1",
     "openapi-format": "^1.29.4",

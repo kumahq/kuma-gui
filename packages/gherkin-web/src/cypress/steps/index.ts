@@ -2,31 +2,20 @@ import { When, Then, Before, Given, DataTable, After } from '@badeball/cypress-c
 import deepmerge from 'deepmerge'
 import jsYaml, { DEFAULT_SCHEMA, Type } from 'js-yaml'
 
+import { getClient } from '../../client'
 import type { ArrayMergeOptions } from 'deepmerge'
 
 type Middleware = (req: { url: URL, method: string, body: any }, res: any) => typeof res
 type BaseMock = (route: string, opts?: Record<string, string>, cb?: Middleware) => ReturnType<typeof cy['intercept']>
 
-type Request = {
-  url: string
-  method: string
-  searchParams: Record<string, string>
-  body: Record<string, unknown>
-}
+type BaseClient = ReturnType<typeof getClient>
 
-type BaseClient = {
-  waitForVisit: (path: string, cookies: { name: string, value: string }[], cy: Cypress.cy) => string
-  waitForRequest: (request: Request) => Promise<unknown>
-  reset: () => unknown
-  request: (request: { url: URL, request: Omit<Request, 'url' | 'searchParams'> }) => unknown
-}
-
-type Options<TMock extends BaseMock, TClient extends BaseClient> = {
+type Options<TMock extends BaseMock> = {
   mock: TMock
-  client: TClient
+  client?: BaseClient
 }
 
-export async function setupSteps<TMock extends BaseMock, TClient extends BaseClient>({ mock, client }: Options<TMock, TClient>) {
+export async function setupSteps<TMock extends BaseMock>({ mock, client = getClient() }: Options<TMock>) {
   // merges objects in array positions rather than replacing
   const undefinedSymbol = Symbol('undefined')
   const combineMerge = (target: object[], source: object[], options: ArrayMergeOptions): object[] => {
@@ -146,15 +135,15 @@ export async function setupSteps<TMock extends BaseMock, TClient extends BaseCli
   })
 
   Given('the URL {string} responds with', (url: string, yaml: string) => {
-  // mock is a call to cy.intercept
-  // which mocks this specific url with the current env vars
-  // records every request as a client.request
-  // and merges any test case mock with the fake-fs mock
+    // mock is a call to cy.intercept
+    // which mocks this specific url with the current env vars
+    // records every request as a client.request
+    // and merges any test case mock with the fake-fs mock
     mock(url, env, (req, response) => {
-    // once the response has been rendered but not sent resolve any
-    // waiting request assertions this means that any mocking done after
-    // awaiting the request will happen on the subsequent request not this
-    // one
+      // once the response has been rendered but not sent resolve any
+      // waiting request assertions this means that any mocking done after
+      // awaiting the request will happen on the subsequent request not this
+      // one
       client.request({
         url: req.url,
         request: {
@@ -180,7 +169,7 @@ export async function setupSteps<TMock extends BaseMock, TClient extends BaseCli
     cy.getAllCookies().then((cookies) => {
       cy.visit(`${path}`)
       const sel = client.waitForVisit(`${path}`, cookies, cy)
-      if(sel.length > 0) {
+      if (sel.length > 0) {
         cy.get(sel).should('be.visible')
       }
     })
