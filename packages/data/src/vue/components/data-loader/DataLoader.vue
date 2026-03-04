@@ -29,7 +29,6 @@
         :refresh="typeof props.src !== 'undefined' ? refresh : () => {}"
       >
         <XProgress
-          v-if="props.variant !== 'no-indicator'"
           v-bind="$attrs"
           :variant="props.variant === 'default' ? 'legacy' : props.variant"
         />
@@ -64,7 +63,7 @@ const props = withDefaults(defineProps<{
   src?: T
   data?: K // (K | undefined)[]
   errors?: (Error | undefined)[]
-  variant?: 'default' | 'list' | 'spinner' | 'no-indicator'
+  variant?: 'default' | 'list' | 'spinner'
 }>(), {
   src: undefined,
   data: undefined,
