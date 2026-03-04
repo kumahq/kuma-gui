@@ -315,6 +315,7 @@
                                     mid: mTLS.issuedBackend,
                                   },
                                 }"
+                                data-testid="link-mesh-identity-summary-view"
                               >
                                 <XBadge appearance="decorative">
                                   {{ mTLS.issuedBackend }}
@@ -351,6 +352,7 @@
                                         mtrust: item,
                                       },
                                     }"
+                                    data-testid="link-mesh-trust-summary-view"
                                   >
                                     <XBadge :appearance="item === mTLS.issuedBackend ? 'decorative' : 'info'">
                                       {{ item }}
