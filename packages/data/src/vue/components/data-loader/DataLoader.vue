@@ -52,18 +52,19 @@
   typeOf(): any
 } = never, const K extends unknown[] = []" setup
 >
+import { XProgress } from '@kumahq/x'
 import { computed, ref, provide } from 'vue'
 
-import type { NonNullableArray, NullableArray, TypeOf } from '../../../'
+import type { ArrayExclude, NullableArray, TypeOf } from '../../../'
 import DataSource from '../data-source/DataSource.vue'
 
-type Data = TypeOf<T> extends never ? NonNullableArray<[...K]> : NonNullableArray<[TypeOf<T>, ...K]>
+type Data = ArrayExclude<TypeOf<T> extends never ? [...K] : [TypeOf<T>, ...K], Error | undefined>
 
 const props = withDefaults(defineProps<{
   src?: T
   data?: K // (K | undefined)[]
   errors?: (Error | undefined)[]
-  variant?: 'default' | 'list' | 'spinner'
+  variant?: 'default' | 'list' | 'spinner' | 'header'
 }>(), {
   src: undefined,
   data: undefined,
