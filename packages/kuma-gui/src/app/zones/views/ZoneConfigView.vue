@@ -16,22 +16,18 @@
     <AppView
       :notifications="true"
     >
-      <DataLoader
-        :data="[props.data]"
-      >
-        <template #connecting>
-          <div><!-- no loader --></div>
-        </template>
-        <template #default="{ data: [zone]}">
-          <DataLoader
+      <XCard>
+        <DataLoader
+          :data="[props.data]"
+          v-slot="{ data: [zone] }"
+        >
+          <DataSource
             :src="uri(sources, '/control-plane/outdated/:version', {
               version: zone.zoneInsight.version?.kumaCp?.version ?? '-',
             })"
+            v-slot="{ data: version }"
           >
-            <template #connecting>
-              <div><!-- no loader --></div>
-            </template>
-            <template #default="{ data: [version] }">
+            <template v-if="typeof version !== 'undefined'">
               <template
                 v-for="{ bool, key, params } in [
                   {
@@ -82,14 +78,7 @@
                 </XNotification>
               </template>
             </template>
-          </DataLoader>
-        </template>
-      </DataLoader>
-      <XCard>
-        <DataLoader
-          :data="[props.data]"
-          v-slot="{ data: [zone] }"
-        >
+          </DataSource>
           <XCodeBlock
             v-if="Object.keys(zone.zoneInsight.config).length > 0"
             language="json"
