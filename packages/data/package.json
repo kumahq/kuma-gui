@@ -16,6 +16,7 @@
     }
   },
   "dependencies": {
+    "@kumahq/x": "*",
     "path-to-regexp": "^8.3.0",
     "urlpattern-polyfill": "^10.1.0"
   },

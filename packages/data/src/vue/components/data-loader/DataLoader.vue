@@ -52,6 +52,7 @@
   typeOf(): any
 } = never, const K extends unknown[] = []" setup
 >
+import { XProgress } from '@kumahq/x'
 import { computed, ref, provide } from 'vue'
 
 import type { ArrayExclude, NullableArray, TypeOf } from '../../../'
@@ -63,7 +64,7 @@ const props = withDefaults(defineProps<{
   src?: T
   data?: K // (K | undefined)[]
   errors?: (Error | undefined)[]
-  variant?: 'default' | 'list' | 'spinner'
+  variant?: 'default' | 'list' | 'spinner' | 'header'
 }>(), {
   src: undefined,
   data: undefined,
