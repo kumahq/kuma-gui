@@ -27,9 +27,10 @@
             :data="[data]"
           >
             <template #connecting>
-              <XProgress variant="line" />
+              <XProgress variant="header" />
             </template>
             <template #default="{ data: [zone] }">
+              <!-- <XProgress variant="header" /> -->
               <XLayout
                 size="small"
               >
