@@ -371,6 +371,7 @@ export function createEslintConfig(
     },
     {
       ignores: [
+        '.features-gen/*',
         'dist/*',
         'node_modules/*',
       ],

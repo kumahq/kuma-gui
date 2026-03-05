@@ -31,3 +31,6 @@ dist
 
 # Cypress
 **/cypress/downloads/*
+
+# playwright
+**/.features-gen/*

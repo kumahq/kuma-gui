@@ -115,7 +115,7 @@ sWWnRiRqtJ6pNYTI3+qy4Y/pBcsX9rAFAlMGaNZiyo77Hd8C2gGTraj1T2qwKhAf
 jcrw4Z/qOwintpvJJVIrNKELr/zfQv5ugop05YC2h+rF1eSdwOGyzltnyunwi5kV
 gbXR5RnEs0hDxugaIknJMKk1b0g=
 -----END CERTIFICATE-----`
-    const encode = typeof window?.btoa === 'function' ? window.btoa : (str: string) => Buffer.from(str).toString('base64')
+    const encode = typeof globalThis?.btoa === 'function' ? globalThis.btoa : (str: string) => Buffer.from(str).toString('base64')
     return base64 ? encode(cert) : cert
   }
 
