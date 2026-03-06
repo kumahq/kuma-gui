@@ -59,7 +59,7 @@
     "globals": "^17.3.0",
     "husky": "^9.1.7",
     "js-yaml": "^4.1.1",
-    "lint-staged": "^16.3.0",
+    "lint-staged": "^16.3.2",
     "lockfile-lint": "^5.0.0",
     "markdown-it": "^14.1.1",
     "openapi-format": "^1.29.4",
