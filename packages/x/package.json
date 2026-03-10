@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@kong-ui-public/app-layout": "4.10.27",
-    "@kong/kongponents": "^9.52.0",
+    "@kong/kongponents": "^9.52.2",
     "@kong/icons": "^1.44.0",
     "shiki": "^4.0.1",
     "@vueuse/core": "^14.2.1",
