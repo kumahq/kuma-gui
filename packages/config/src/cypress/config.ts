@@ -1,11 +1,11 @@
-import { addCucumberPreprocessorPlugin } from '@badeball/cypress-cucumber-preprocessor'
-import { createEsbuildPlugin } from '@badeball/cypress-cucumber-preprocessor/esbuild'
-import createBundler from '@bahmutov/cypress-esbuild-preprocessor'
+import createEsbuildBundler from '@bahmutov/cypress-esbuild-preprocessor'
+import { setupNodeEvents, createEsbuildBundlerPlugin as createGherkinPlugin } from '@kumahq/gherkin-web/cypress/node'
 import { defineConfig } from 'cypress'
 import cypressFailFast from 'cypress-fail-fast/plugin.js'
 import installLogsPrinter from 'cypress-terminal-report/src/installLogsPrinter.js'
-import esbuild from 'esbuild'
 import fs from 'node:fs'
+
+import type esbuild from 'esbuild'
 
 function createVuePlugin(
 ): esbuild.Plugin {
@@ -40,7 +40,17 @@ export const cypress = (env: Record<string, string>) => {
           config.env[prop] = value
         })
         // This is required for the preprocessor to be able to generate JSON reports after each run, and more,
-        await addCucumberPreprocessorPlugin(on, config)
+        await setupNodeEvents(on, config)
+
+        on(
+          'file:preprocessor',
+          createEsbuildBundler({
+            plugins: [
+              createGherkinPlugin(config),
+              createVuePlugin(),
+            ],
+          }),
+        )
 
         on('task', {
           log(message: unknown) {
@@ -50,15 +60,6 @@ export const cypress = (env: Record<string, string>) => {
           },
         })
 
-        on(
-          'file:preprocessor',
-          createBundler({
-            plugins: [
-              createEsbuildPlugin(config) as esbuild.Plugin,
-              createVuePlugin(),
-            ],
-          }),
-        )
 
         on('after:spec', (_spec, results) => {
           // Deletes videos of successful specs to avoid uploading them as GitHub artifacts
