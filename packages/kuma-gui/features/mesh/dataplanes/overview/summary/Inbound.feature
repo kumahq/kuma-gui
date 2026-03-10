@@ -13,7 +13,6 @@ Feature: mesh / dataplanes / overview / summary / Inbound
       KUMA_DATAPLANEINBOUND_COUNT: 1
       KUMA_DATAPLANE_TYPE: standard
       """
-
   Scenario: Inbound summary overview shows expected content
     Given the URL "/meshes/default/dataplanes/service-less/_layout" responds with
       """
@@ -31,7 +30,7 @@ Feature: mesh / dataplanes / overview / summary / Inbound
           - kind: MeshFaultInjection
             rules:
               - conf:
-                  delay: 
+                  delay:
                     percentage: 10
                     fixedDelay: 100ms
                 kri: kri_mfi_default_pigsty_jury_innovation_appliance

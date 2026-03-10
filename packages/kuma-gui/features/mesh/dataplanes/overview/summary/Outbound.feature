@@ -2,10 +2,10 @@ Feature: mesh / dataplanes / overview / summary / Outbound
 
   Background:
     Given the CSS selectors
-      | Alias                   | Selector                                         |
-      | summary                 | [data-testid='slideout-container']               |
-      | outbound-policies-rules | $summary [data-testid='outbound-policies-rules'] |
-      | outbound-policies-rule  | $outbound-policies-rules li:first-of-type        |
+      | Alias                   | Selector                                                 |
+      | summary                 | [data-testid='slideout-container']                       |
+      | outbound-policies-rules | $summary [data-testid='outbound-policies-rules']         |
+      | outbound-policies-rule  | $outbound-policies-rules li.accordion-item:first-of-type |
     And the environment
       """
       KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: true
@@ -40,7 +40,7 @@ Feature: mesh / dataplanes / overview / summary / Outbound
     And the "$summary" element contains "Outbound service-less"
     And the "$summary" element contains "HTTP"
     And the "$outbound-policies-rule" element contains "MeshFaultInjection"
-    And the "$outbound-policies-rule" element contains "kri_mfi_default_pigsty_jury_innovation_appliance"
+    And the "$outbound-policies-rule li:first-of-type" element contains "kri_mfi_default_pigsty_jury_innovation_appliance"
     And the "$outbound-policies-rule [data-testid='k-code-block']" element exists
 
   Scenario: Clicking on origin leads to policy detail view

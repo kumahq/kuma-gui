@@ -43,6 +43,12 @@ Feature: mesh / dataplanes / DataplaneDetailsTraffic
           networking:
             gateway: !!js/undefined
       """
+    And the URL "/meshes/default/dataplanes/dpp-1-name-of-dataplane/stats" responds with
+      """
+      body: |
+        cluster.pocket-watch_colon_grandson_octave_mzsvc_162.upstream_rq_2xx: 0
+        cluster.pocket-watch_colon_grandson_octave_mzsvc_162.upstream_rq_4xx: 0
+      """
     When I visit the "/meshes/default/data-planes/dpp-1-name-of-dataplane/overview" URL
     Then the "$detail-view" element contains "dpp-1-name-of-dataplane"
     And the "$traffic" element exists but the "$outbounds" element doesn't exist

@@ -34,6 +34,6 @@ Feature: mesh / dataplanes / connections / Traffic
               - kri: kri_policy_mesh_zone_namespace_name_section
       """
     When I visit the "/meshes/default/data-planes/backend/overview" URL
-    Then I click on the "$about-dp-policies a:first" element
+    Then I click on the "$about-dp-policies a:first-child" element
     Then the URL contains "/meshes/default/data-planes/backend/overview/policy/meshtrafficpermission"
     And the "$summary-container" element exists

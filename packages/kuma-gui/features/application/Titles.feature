@@ -1,6 +1,6 @@
 Feature: application / titles
 
-  Scenario Outline: Visiting the "<Title>" page in "global" Mode
+  Scenario Outline: Visiting "<URL>" page in "global" Mode
     Given the environment
       """
       KUMA_MODE: global

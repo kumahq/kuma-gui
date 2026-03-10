@@ -67,11 +67,17 @@ Feature: zones / warnings
       | /zones/zone-cp-1/config   |
 
   Scenario Outline: When store type is kubernetes a warning isn't shown at "<URL>"
-    And the URL "/config" responds with
+    Given the environment
+      """
+      KUMA_SUBSCRIPTION_COUNT: 1
+      """
+    And the URL "/zones/zone-cp-1/_overview" responds with
       """
       body:
-        store:
-          type: kubernetes
+        zoneInsight:
+          subscriptions:
+          - config: |
+              { "store": { "type": "kubernetes" } }
       """
     When I visit the "<URL>" URL
     Then the "$detail" element exists but the "$warning-zone-memory" element doesn't exist

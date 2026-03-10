@@ -21,7 +21,7 @@ Feature: mesh / item
       """
 
   Scenario: The about section has the expected content
-    When I visit the "meshes/default/overview" URL
+    When I visit the "/meshes/default/overview" URL
     Then the "$about-section" element exists
     And the "$about-section" element contains "kuma.io/display-name:default"
 
@@ -109,23 +109,34 @@ Feature: mesh / item
     When I visit the "/meshes/default/overview" URL
     Then the "$mtls-warning" element exists
 
-  Scenario Outline: With <Scenario> the mTLS warning doesn't exist
+  Scenario: With a MeshIdentity and no mtls the mTLS warning doesn't exist
     Given the environment
       """
-      KUMA_MESHIDENTITY_COUNT: <midCount>
+      KUMA_MESHIDENTITY_COUNT: 1
       """
     And the URL "/meshes/default" responds with
       """
       body:
-        mtls: <mtls>
+        mtls: !!js/undefined
       """
     When I visit the "/meshes/default/overview" URL
     Then the "$mesh-detail" element exists but the "$mtls-warning" element doesn't exist
 
-    Examples:
-      | Scenario                   | midCount | mtls           |
-      | a MeshIdentity and no mtls |        1 | !!js/undefined |
-      | no MeshIdentity but mtls   |        0 |                |
+  Scenario: With no MeshIdentity but mtls the mTLS warning doesn't exist
+    Given the environment
+      """
+      KUMA_MESHIDENTITY_COUNT: 0
+      """
+    And the URL "/meshes/default" responds with
+      """
+      body:
+        mtls:
+          enabledBackend: ca-1
+          backends:
+            - name: ca-1
+      """
+    When I visit the "/meshes/default/overview" URL
+    Then the "$mesh-detail" element exists but the "$mtls-warning" element doesn't exist
 
   Scenario: With at least one MeshTrust the MeshTrust section exists
     Given the environment

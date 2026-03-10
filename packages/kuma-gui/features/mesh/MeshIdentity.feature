@@ -31,7 +31,7 @@ Feature: mesh / mesh-identity
             mesh: default
       """
     When I visit the "/meshes/default" URL
-    Then I click the "$mesh-mtls a:first" element
+    Then I click the "$mesh-mtls a:first-child" element
     Then the URL contains "/meshes/default/overview/meshidentity/kri_mid_default___identity-1_"
     And the "$summary" element exists
     And the "$summary" element contains "identity-1"

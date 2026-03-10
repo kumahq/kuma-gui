@@ -1,0 +1,45 @@
+import type { Dependencies, ResponseHandler } from '#mocks'
+import type { components } from '@kumahq/kuma-http-api'
+
+
+export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
+  const params = req.params
+  const mesh = params.mesh as string
+  const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
+  const itemsCount = parseInt(env('KUMA_MESHTRUST_COUNT', `${fake.number.int({ min: 1, max: 3 })}`))
+  const namespace = fake.word.noun()
+  const zone = fake.word.noun()
+  const origin = fake.kuma.origin()
+  return {
+    headers: {
+    },
+    body: {
+      items: Array.from({ length: itemsCount }, () => ({
+        type: 'MeshTrust',
+        mesh,
+        name: fake.word.noun(),
+        labels: {
+          'k8s.kuma.io/namespace': namespace,
+          'kuma.io/env': k8s ? 'kubernetes' : 'universal',
+          'kuma.io/mesh': mesh,
+          'kuma.io/origin': origin,
+          ...(origin === 'zone' ? { 'kuma.io/zone': zone } : {}),
+        },
+        creationTime: fake.date.past().toISOString(),
+        modificationTime: fake.date.recent().toISOString(),
+        spec: {
+          caBundles: [{
+            pem: {
+              value: fake.kuma.certificate(false),
+            },
+            type: 'Pem',
+          }],
+          origin: {
+            kri: fake.kuma.kri({ shortName: 'mid', mesh, namespace, zone }),
+          },
+          trustDomain: `${mesh}.${fake.word.noun()}.mesh.local`,
+        },
+      }) satisfies components['schemas']['MeshTrustItem']),
+    },
+  }
+}
