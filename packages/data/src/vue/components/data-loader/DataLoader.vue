@@ -52,7 +52,7 @@
   typeOf(): any
 } = never, const K extends unknown[] = []" setup
 >
-import { XProgress } from '@kumahq/x'
+import { XProgress, XErrorState } from '@kumahq/x'
 import { computed, ref, provide } from 'vue'
 
 import type { ArrayExclude, NullableArray, TypeOf } from '../../../'
