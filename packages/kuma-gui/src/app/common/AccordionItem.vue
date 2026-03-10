@@ -3,30 +3,34 @@
     class="accordion-item"
     :class="{ active: visible }"
   >
-    <button
-      class="accordion-item-header"
-      type="button"
-      :aria-expanded="visible ? 'true' : 'false'"
-      data-testid="accordion-item-button"
-      @click="open"
+    <component
+      :is="props.card ? `x-card` : `xanonymous`"
     >
-      <slot name="accordion-header" />
-    </button>
-
-    <transition
-      name="accordion"
-      @enter="start"
-      @after-enter="end"
-      @before-leave="start"
-    >
-      <div
-        v-if="visible"
-        class="accordion-item-content"
-        data-testid="accordion-item-content"
+      <button
+        class="accordion-item-header"
+        type="button"
+        :aria-expanded="visible ? 'true' : 'false'"
+        data-testid="accordion-item-button"
+        @click="open"
       >
-        <slot name="accordion-content" />
-      </div>
-    </transition>
+        <slot name="accordion-header" />
+      </button>
+
+      <transition
+        name="accordion"
+        @enter="start"
+        @after-enter="end"
+        @before-leave="start"
+      >
+        <div
+          v-if="visible"
+          class="accordion-item-content"
+          data-testid="accordion-item-content"
+        >
+          <slot name="accordion-content" />
+        </div>
+      </transition>
+    </component>
   </li>
 </template>
 
@@ -34,6 +38,12 @@
 import { computed, inject, ref } from 'vue'
 
 import type { Ref } from 'vue'
+
+const props = withDefaults(defineProps<{
+  card?: boolean
+}>(), {
+  card: false,
+})
 
 const parentAccordion = inject<{
   multipleOpen: boolean
