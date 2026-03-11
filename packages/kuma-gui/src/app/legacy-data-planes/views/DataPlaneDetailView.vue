@@ -333,7 +333,7 @@
                         </dt>
                         <dd>
                           <XLayout
-                            type="separated"
+                            variant="separated"
                             truncate
                           >
                             <XBadge
