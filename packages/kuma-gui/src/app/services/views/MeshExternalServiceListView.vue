@@ -44,7 +44,7 @@
           />
         </XNotification>
         <XCard>
-          <XLayout>
+          <XLayout variant="y-stack">
             <search>
               <form
                 @submit.prevent

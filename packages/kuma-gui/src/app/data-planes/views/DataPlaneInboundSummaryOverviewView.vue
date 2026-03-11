@@ -9,7 +9,7 @@
     v-slot="{ t, route, uri }"
   >
     <AppView>
-      <XLayout type="stack">
+      <XLayout variant="y-stack">
         <template
           v-for="inbound in [props.dataPlaneOverview.dataplane.networking.inbounds.find((item) => item.port === props.data.port)]"
           :key="typeof inbound"
@@ -79,7 +79,7 @@
         </template>
         <XLayout
           v-if="props.data"
-          type="stack"
+          variant="y-stack"
           size="small"
         >
           <h3>Policies</h3>
@@ -162,7 +162,7 @@
                                 <tr>
                                   <td colspan="2">
                                     <XLayout
-                                      type="stack"
+                                      variant="y-stack"
                                       size="small"
                                     >
                                       <span>Config</span>

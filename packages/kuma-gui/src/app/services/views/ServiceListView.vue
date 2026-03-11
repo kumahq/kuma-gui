@@ -18,7 +18,7 @@
       :docs="t('services.href.docs')"
     >
       <XCard>
-        <XLayout>
+        <XLayout variant="y-stack">
           <search>
             <form @submit.prevent>
               <XSearch

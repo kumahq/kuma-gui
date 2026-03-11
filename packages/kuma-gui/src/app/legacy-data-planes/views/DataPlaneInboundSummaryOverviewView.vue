@@ -10,7 +10,7 @@
   >
     <AppView>
       <XLayout
-        type="stack"
+        variant="y-stack"
       >
         <XTable
           variant="kv"
@@ -177,7 +177,7 @@
                                     <tr>
                                       <td colspan="2">
                                         <XLayout
-                                          type="stack"
+                                          variant="y-stack"
                                           size="small"
                                         >
                                           <span>Config</span>

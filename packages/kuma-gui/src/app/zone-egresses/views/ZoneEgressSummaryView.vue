@@ -37,7 +37,10 @@
         >
           <AppView>
             <template #title>
-              <XLayout size="small">
+              <XLayout
+                variant="y-stack"
+                size="small"
+              >
                 <h2
                   v-icon-start="`zone`"
                 >
@@ -65,11 +68,11 @@
             </template>
 
             <XLayout
-              type="stack"
+              variant="y-stack"
             >
               <header>
                 <XLayout
-                  type="separated"
+                  variant="separated"
                   size="max"
                 >
                   <h3>

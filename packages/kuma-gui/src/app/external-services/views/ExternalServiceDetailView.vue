@@ -62,9 +62,9 @@
               <h3>{{ t('external-services.detail.config') }}</h3>
             </template>
 
-            <XLayout>
+            <XLayout variant="y-stack">
               <XLayout
-                type="separated"
+                variant="separated"
                 justify="end"
               >
                 <div

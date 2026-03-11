@@ -55,7 +55,7 @@
                 />
               </XNotification>
               <XLayout
-                type="stack"
+                variant="y-stack"
               >
                 <XAboutCard
                   :title="t('meshes.routes.item.about.title')"
@@ -114,7 +114,7 @@
                         {{ t('http.api.property.mtls') }}
                       </dt>
                       <dd>
-                        <XLayout type="separated">
+                        <XLayout variant="separated">
                           <XBadge
                             v-if="props.mesh.mtlsBackend"
                             appearance="info"
@@ -249,7 +249,7 @@
 
                 <XCard>
                   <XLayout
-                    type="columns"
+                    variant="columns"
                     class="columns-with-borders"
                   >
                     <ResourceStatus
@@ -343,9 +343,9 @@
                 </XCard>
 
                 <XCard>
-                  <XLayout>
+                  <XLayout variant="y-stack">
                     <XLayout
-                      type="separated"
+                      variant="separated"
                       justify="end"
                     >
                       <div

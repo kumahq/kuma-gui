@@ -66,7 +66,7 @@
               <template #header>
                 <header>
                   <XLayout
-                    type="separated"
+                    variant="separated"
                     size="max"
                   >
                     <h3>

@@ -12,7 +12,7 @@
     v-slot="{ route, t, uri, me }"
   >
     <AppView>
-      <XLayout type="stack">
+      <XLayout variant="y-stack">
         <XAboutCard
           :title="t('services.mesh-multi-zone-service.about.title')"
           :created="props.data.creationTime"
@@ -27,7 +27,7 @@
               <dd>
                 <template v-if="props.data.spec.ports.length">
                   <XLayout
-                    type="separated"
+                    variant="separated"
                     truncate
                   >
                     <KumaPort
@@ -52,7 +52,7 @@
               <dd>
                 <template v-if="Object.keys(data.spec.selector.meshService.matchLabels ?? {}).length">
                   <XLayout
-                    type="separated"
+                    variant="separated"
                     truncate
                   >
                     <XBadge
@@ -136,7 +136,7 @@
                   </b>
                 </template>
                 <template #zones="{ row: item }">
-                  <XLayout type="separated">
+                  <XLayout variant="separated">
                     <XBadge
                       v-for="(zone, index) of item.zones"
                       :key="index"
@@ -161,9 +161,9 @@
         </XCard>
 
         <XCard>
-          <XLayout>
+          <XLayout variant="y-stack">
             <XLayout
-              type="separated"
+              variant="separated"
               justify="end"
             >
               <div
