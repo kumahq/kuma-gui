@@ -7,16 +7,6 @@ relying on `<div>`s and CSS classes.
 layouts, badge lists, responsive columns) into a reusable component with
 consistent spacing and alignment across the application.
 
-
-## Props
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `variant` | 'x-stack' \| 'y-stack' \| 'separated' \| 'columns'` | `''` | The layout pattern to use |
-| `size` | `'small' \| 'normal' \| 'large' \| 'max'` | `'normal'` | Controls spacing/gap size (applies to most variants) |
-| `justify` | `'start' \| 'around' \| 'between' \| 'end'` | `'start'` | Horizontal alignment (applies to `x-stack`, `separated`) |
-| `truncate` | `boolean` | `false` | Enables truncation with ellipsis (only works with `separated` variant) |
-
 ## Variants
 
 ### Common Use Cases
