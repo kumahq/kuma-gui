@@ -3,20 +3,26 @@ import { compile } from 'path-to-regexp'
 import CallableEventSource from './CallableEventSource'
 import type { Creator, Destroyer } from './DataSourcePool'
 export { default as DataSourcePool } from './DataSourcePool'
+
 // reusable Type Utility for easy to use Types within Vue templates
 export type DataSourceResponse<T> = {
   data: T | undefined
   error: Error | undefined
+  result: T | Error | undefined
   refresh: () => void
 }
 
-export type NonNullableArray<T extends unknown[]> = {
+export type NonNullableArray<T extends unknown[]> = [...{
   [K in keyof T]: NonNullable<T[K]>
-}
+}]
 
-export type NullableArray<T extends unknown[]> = {
+export type ArrayExclude<T extends unknown[], U> = [...{
+  [K in keyof T]: Exclude<T[K], U>
+}]
+
+export type NullableArray<T extends unknown[]> = [...{
   [K in keyof T]: T[K] | undefined
-}
+}]
 
 /**
  * Only use if `DataLoader` itself can't infer the type, i.e. because provided `:src` is a `string`.
