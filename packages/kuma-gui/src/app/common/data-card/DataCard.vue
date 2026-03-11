@@ -16,11 +16,11 @@
 </template>
 <style lang="scss" scoped>
 .data-card {
-  padding: $kui-space-50;
+  padding: var(--x-space-50);
 }
 
 .data-card :deep(.card-content) {
-  font-size: $kui-font-size-20;
+  font-size: var(--x-font-size-20);
 }
 .card {
   overflow: hidden;
@@ -29,28 +29,28 @@
 .body {
   display: flex;
   flex-wrap: wrap;
-  gap: $kui-space-40;
+  gap: var(--x-space-40);
   align-items: flex-start;
 }
 .body > :deep(dl) {
-  column-gap: $kui-space-80;
+  column-gap: var(--x-space-80);
 }
 .body,
 .card {
   flex-direction: column;
 }
 .title {
-  font-weight: $kui-font-weight-semibold;
-  font-size: $kui-font-size-60;
+  font-weight: var(--x-font-weight-semibold);
+  font-size: var(--x-font-size-60);
   width: 100%;
 }
 .body > :deep(dl) > div {
-  column-gap: $kui-space-20;
+  column-gap: var(--x-space-20);
   > dt {
-    color: $kui-color-text-disabled;
+    color: var(--x-color-text-disabled);
   }
   > dd  {
-    color: $kui-color-text;
+    color: var(--x-color-text);
   }
 }
 </style>
