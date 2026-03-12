@@ -73,8 +73,9 @@
             </td>
           </tr>
         </XTable>
-        <div
+        <XLayout
           v-if="props.data"
+          variant="y-stack"
         >
           <h3>Rules</h3>
           <DataSource
@@ -103,106 +104,104 @@
                     :items="[...rulesData!.rules, ...rulesData!.inboundRules]"
                     v-slot="{ items }"
                   >
-                    <div class="mt-4">
-                      <AccordionList
-                        :initially-open="0"
-                        multiple-open
-                        class="stack"
+                    <AccordionList
+                      :initially-open="0"
+                      multiple-open
+                      class="stack"
+                    >
+                      <template
+                        v-for="(rules, key) in Object.groupBy(items, item => item.type)"
+                        :key="key"
                       >
-                        <template
-                          v-for="(rules, key) in Object.groupBy(items, item => item.type)"
-                          :key="key"
+                        <AccordionItem
+                          :card="true"
                         >
-                          <AccordionItem
-                            :card="true"
-                          >
-                            <template #accordion-header>
-                              <span
-                                v-icon-start="{name: key, size: '60', default: 'policy'}"
+                          <template #accordion-header>
+                            <span
+                              v-icon-start="{name: key, size: '60', default: 'policy'}"
+                            >
+                              {{ key }} ({{ rules!.length }})
+                            </span>
+                          </template>
+                          <template #accordion-content>
+                            <XTable
+                              variant="kv"
+                            >
+                              <template
+                                v-for="item in rules"
+                                :key="item"
                               >
-                                {{ key }} ({{ rules!.length }})
-                              </span>
-                            </template>
-                            <template #accordion-content>
-                              <XTable
-                                variant="kv"
-                              >
-                                <template
-                                  v-for="item in rules"
-                                  :key="item"
+                                <tr
+                                  v-if="item.matchers.length > 0"
                                 >
-                                  <tr
-                                    v-if="item.matchers.length > 0"
-                                  >
-                                    <th scope="row">
-                                      From
-                                    </th>
-                                    <td>
-                                      <p><RuleMatchers :items="item.matchers" /></p>
-                                    </td>
-                                  </tr>
-                                  <tr
-                                    v-if="item.origins.length > 0"
-                                  >
-                                    <th scope="row">
-                                      Origin policies
-                                    </th>
-                                    <td>
-                                      <ul>
-                                        <li
-                                          v-for="origin in item.origins"
-                                          :key="`${origin.mesh}-${origin.name}`"
-                                        >
-                                          <XAction
-                                            v-if="policyTypes[origin.type]"
-                                            :to="{
-                                              name: 'policy-detail-view',
-                                              params: {
-                                                mesh: origin.mesh,
-                                                policyPath: policyTypes[origin.type]![0].path,
-                                                policy: origin.name,
-                                              },
-                                            }"
-                                          >
-                                            {{ origin.name }}
-                                          </XAction>
-                                          <template
-                                            v-else
-                                          >
-                                            {{ origin.name }}
-                                          </template>
-                                        </li>
-                                      </ul>
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <td colspan="2">
-                                      <XLayout
-                                        variant="y-stack"
-                                        size="small"
+                                  <th scope="row">
+                                    From
+                                  </th>
+                                  <td>
+                                    <p><RuleMatchers :items="item.matchers" /></p>
+                                  </td>
+                                </tr>
+                                <tr
+                                  v-if="item.origins.length > 0"
+                                >
+                                  <th scope="row">
+                                    Origin policies
+                                  </th>
+                                  <td>
+                                    <ul>
+                                      <li
+                                        v-for="origin in item.origins"
+                                        :key="`${origin.mesh}-${origin.name}`"
                                       >
-                                        <span>Config</span>
-                                        <XCodeBlock
-                                          :code="YAML.stringify(item.raw)"
-                                          language="yaml"
-                                          :show-copy-button="false"
-                                        />
-                                      </XLayout>
-                                    </td>
-                                  </tr>
-                                </template>
-                              </XTable>
-                            </template>
-                          </AccordionItem>
-                        </template>
-                      </AccordionList>
-                    </div>
+                                        <XAction
+                                          v-if="policyTypes[origin.type]"
+                                          :to="{
+                                            name: 'policy-detail-view',
+                                            params: {
+                                              mesh: origin.mesh,
+                                              policyPath: policyTypes[origin.type]![0].path,
+                                              policy: origin.name,
+                                            },
+                                          }"
+                                        >
+                                          {{ origin.name }}
+                                        </XAction>
+                                        <template
+                                          v-else
+                                        >
+                                          {{ origin.name }}
+                                        </template>
+                                      </li>
+                                    </ul>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td colspan="2">
+                                    <XLayout
+                                      variant="y-stack"
+                                      size="small"
+                                    >
+                                      <span>Config</span>
+                                      <XCodeBlock
+                                        :code="YAML.stringify(item.raw)"
+                                        language="yaml"
+                                        :show-copy-button="false"
+                                      />
+                                    </XLayout>
+                                  </td>
+                                </tr>
+                              </template>
+                            </XTable>
+                          </template>
+                        </AccordionItem>
+                      </template>
+                    </AccordionList>
                   </DataCollection>
                 </template>
               </DataLoader>
             </DataSource>
           </DataSource>
-        </div>
+        </XLayout>
       </XLayout>
     </AppView>
   </RouteView>

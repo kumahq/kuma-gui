@@ -101,59 +101,55 @@
                 </XLayout>
               </header>
               <template v-if="route.params.format === 'structured'">
-                <div
-                  class="stack-with-borders"
+                <XTable
                   data-testid="structured-view"
+                  variant="kv"
                 >
-                  <XTable
-                    variant="kv"
+                  <tr
+                    v-if="item.namespace.length > 0"
                   >
-                    <tr
-                      v-if="item.namespace.length > 0"
-                    >
-                      <th scope="row">
-                        {{ t('data-planes.routes.item.namespace') }}
-                      </th>
-                      <td>{{ item.namespace }}</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">
-                        {{ t('http.api.property.address') }}
-                      </th>
-                      <td>
-                        <template
-                          v-if="item.zoneIngress.socketAddress.length > 0"
-                        >
-                          <XCopyButton
-                            :text="item.zoneIngress.socketAddress"
-                          />
-                        </template>
+                    <th scope="row">
+                      {{ t('data-planes.routes.item.namespace') }}
+                    </th>
+                    <td>{{ item.namespace }}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      {{ t('http.api.property.address') }}
+                    </th>
+                    <td>
+                      <template
+                        v-if="item.zoneIngress.socketAddress.length > 0"
+                      >
+                        <XCopyButton
+                          :text="item.zoneIngress.socketAddress"
+                        />
+                      </template>
 
-                        <template v-else>
-                          {{ t('common.detail.none') }}
-                        </template>
-                      </td>
-                    </tr>
-                    <tr>
-                      <th scope="row">
-                        {{ t('http.api.property.advertisedAddress') }}
-                      </th>
-                      <td>
-                        <template
-                          v-if="item.zoneIngress.advertisedSocketAddress.length > 0"
-                        >
-                          <XCopyButton
-                            :text="item.zoneIngress.advertisedSocketAddress"
-                          />
-                        </template>
+                      <template v-else>
+                        {{ t('common.detail.none') }}
+                      </template>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      {{ t('http.api.property.advertisedAddress') }}
+                    </th>
+                    <td>
+                      <template
+                        v-if="item.zoneIngress.advertisedSocketAddress.length > 0"
+                      >
+                        <XCopyButton
+                          :text="item.zoneIngress.advertisedSocketAddress"
+                        />
+                      </template>
 
-                        <template v-else>
-                          {{ t('common.detail.none') }}
-                        </template>
-                      </td>
-                    </tr>
-                  </XTable>
-                </div>
+                      <template v-else>
+                        {{ t('common.detail.none') }}
+                      </template>
+                    </td>
+                  </tr>
+                </XTable>
               </template>
 
               <template v-else-if="route.params.format === 'universal'">
