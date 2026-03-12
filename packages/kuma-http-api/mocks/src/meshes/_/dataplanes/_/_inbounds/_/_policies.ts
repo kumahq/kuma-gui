@@ -52,7 +52,7 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
                               },
                               {
                                 type: fake.helpers.arrayElement(['Random', 'RoundRobin', 'Maglev']),
-                              }
+                              },
                             ]),
                             localityAwareness: {
                               disabled: fake.datatype.boolean(),

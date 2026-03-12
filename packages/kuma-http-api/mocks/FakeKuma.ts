@@ -495,7 +495,7 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
       ['MeshTrust', 'mtrust'],
       ['Workload', 'wl'],
       ['ZoneEgress', 'ze'],
-      ['ZoneIngress', 'zi']
+      ['ZoneIngress', 'zi'],
     ])
     return resourceNames.get(resourceName ?? this.faker.helpers.arrayElement([...resourceNames.keys()])) ?? ''
   }
