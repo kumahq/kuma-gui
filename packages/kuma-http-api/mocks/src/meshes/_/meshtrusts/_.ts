@@ -34,7 +34,7 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
             type: 'Pem',
           }],
           origin: {
-            kri: fake.kuma.kri({ shortName: 'mid', mesh, namespace, zone }),
+            kri: fake.kuma.kri({ resourceName: 'MeshIdentity', mesh, namespace, zone }),
           },
           trustDomain: `${mesh}.${fake.word.noun()}.mesh.local`,
         },
