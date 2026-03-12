@@ -12,13 +12,7 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
     body: {
       policies: Array.from({ length: fake.number.int({ min: 1, max: 10 })}).map(() => {
         const kind = fake.kuma.policyName()
-        const shortNames = new Map([
-          ['MeshLoadBalancingStrategy', 'mlbs'],
-          ['MeshCircuitBreaker', 'mcb'],
-          ['MeshFaultInjection', 'mfi'],
-          ['MeshHealthCheck', 'mhc'],
-        ])
-        const kri = fake.kuma.kri({ shortName: shortNames.get(kind) ?? '', mesh })
+        const kri = fake.kuma.kri({ resourceName: kind, mesh })
         return {
           kind,
           rules: Array.from({ length: ruleCount }).map(() => {
@@ -34,16 +28,16 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
                             name: fake.word.noun(),
                           },
                           default: {
-                            loadBalancer: (() => {
-                              const lbType = fake.helpers.arrayElement(['RoundRobin', 'LeastRequest', 'RingHash', 'Random', 'Maglev'])
-                              const config: Record<string, any> = { type: lbType }
-                              
-                              if (lbType === 'LeastRequest') {
-                                config.leastRequest = {
+                            loadBalancer: fake.helpers.arrayElement([
+                              {
+                                type: 'LeastRequest',
+                                leastRequest: {
                                   choiceCount: fake.number.int({ min: 2, max: 8 }),
-                                }
-                              } else if (lbType === 'RingHash') {
-                                config.ringHash = {
+                                },
+                              },
+                              {
+                                type: 'RingHash',
+                                ringHash: {
                                   hashFunction: fake.helpers.arrayElement(['XX_HASH', 'MURMUR_HASH_2']),
                                   minRingSize: fake.number.int({ min: 1024, max: 4096 }),
                                   hashPolicies: [
@@ -54,11 +48,12 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
                                       },
                                     },
                                   ],
-                                }
+                                },
+                              },
+                              {
+                                type: fake.helpers.arrayElement(['Random', 'RoundRobin', 'Maglev']),
                               }
-                              
-                              return config
-                            })(),
+                            ]),
                             localityAwareness: {
                               disabled: fake.datatype.boolean(),
                               localZone: {
