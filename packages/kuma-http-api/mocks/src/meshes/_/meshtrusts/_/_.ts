@@ -13,8 +13,6 @@ export default ({ fake }: Dependencies): ResponseHandler => (req) => {
   const k8s = req.url.searchParams.get('format') === 'kubernetes'
   const namespace = fake.word.noun()
   const zone = fake.word.noun()
-  const origin = fake.kuma.origin()
-
   return {
     headers: {},
     body: {
