@@ -23,9 +23,9 @@
               path=".routes.item.subscriptions.description"
             />
             <DataLoader
-              :data="[sourceSubscriptions]"
+              :data="[props.subscriptions]"
               variant="list"
-              v-slot="{ data: [subscriptions] }"
+              v-slot="{ data: [data] }"
             >
               <AppCollection
                 :headers="[
@@ -37,7 +37,7 @@
                   { ...me.get('headers.responses'), label: t('subscriptions.routes.item.headers.stat'), key: 'responses' },
                 ]"
                 :is-selected-row="item => item.id === route.params.subscription"
-                :items="[...subscriptions].reverse()"
+                :items="[...data].reverse()"
                 @resize="me.set"
               >
                 <template
@@ -111,7 +111,7 @@
                 >
                   <component
                     :is="child.Component"
-                    :data="subscriptions"
+                    :data="data"
                   />
                 </XDrawer>
               </RouterView>
@@ -126,12 +126,11 @@
 <script lang="ts" setup>
 import type { Subscription } from '../data'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
-import type { DataSourceResult } from '@kumahq/data'
-const { subscriptions: sourceSubscriptions, ...props } = defineProps<{
+const props = defineProps<{
   routeName: string
   // TODO: temporary until we can infer it from the meta.module
   routePrefix: string
   i18nPrefix: string
-  subscriptions: DataSourceResult<Subscription[]>
+  subscriptions: Subscription[] | Error | undefined
 }>()
 </script>
