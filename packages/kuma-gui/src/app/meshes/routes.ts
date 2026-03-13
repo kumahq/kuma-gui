@@ -42,8 +42,8 @@ export const routes = (
                   name: 'mesh-detail-view',
                   component: () => import('@/app/meshes/views/MeshDetailView.vue'),
                   children: [
-                    ...meshIdentityRoutes(),
-                    ...meshTrustRoutes(),
+                    ...meshIdentityRoutes('mesh'),
+                    ...meshTrustRoutes('mesh'),
                   ],
                 },
                 ...services.items(),
