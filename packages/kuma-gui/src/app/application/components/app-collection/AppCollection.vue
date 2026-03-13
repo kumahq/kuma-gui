@@ -139,8 +139,8 @@ onMounted(rewrite)
 .app-collection {
   isolation: isolate;
 }
-.app-collection :deep(td :is(a, button)[data-action]) {
-  &, > * {
+.app-collection :deep(td [data-action]:is(a, button)) {
+  &, > span {
     color: inherit;
     font-weight: var(--x-font-weight-semibold);
     text-decoration: none;
