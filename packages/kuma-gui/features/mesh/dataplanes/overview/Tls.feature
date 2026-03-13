@@ -7,6 +7,7 @@ Feature: mesh / dataplanes / overview / TLS
       | summary     | [data-testid="slideout-container"] |
     And the environment
       """
+      KUMA_MESHSERVICE_MODE: Exclusive
       KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: true
       KUMA_DATAPLANE_TLS_ISSUED_MESHIDENTITY: true
       """

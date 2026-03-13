@@ -180,7 +180,6 @@
 
                 <XCard
                   v-if="meshTrusts?.items?.length"
-                  data-testid="mesh-trusts-listing"
                 >
                   <template #title>
                     {{ t('meshes.routes.item.mesh-trusts.title') }}
@@ -190,6 +189,7 @@
                     :items="meshTrusts?.items"
                   >
                     <AppCollection
+                      data-testid="mesh-trusts-listing"
                       type="mesh-trusts-collection"
                       :items="meshTrusts?.items"
                       :headers="[

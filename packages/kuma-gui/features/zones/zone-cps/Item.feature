@@ -22,7 +22,7 @@ Feature: zones / item
       """
 
   Scenario: The about section has the expected content
-    When I visit the "zones/zone-cp-1/overview" URL
+    When I visit the "/zones/zone-cp-1/overview" URL
     Then the "$about-section" element exists
     And the "$about-section" element contains "kuma.io/display-name:default"
 

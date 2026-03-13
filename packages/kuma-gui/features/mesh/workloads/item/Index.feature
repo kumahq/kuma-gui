@@ -22,10 +22,10 @@ Feature: mesh / workloads / item / index
   Scenario: The workload tabs view has the expected title
     When I visit the "/meshes/default/workloads/kri_wl_default_z1_ns1_workload-1_/overview" URL
     Then the page title contains "workload-1"
-    Then the "header" element contains "workload-1"
+    Then the "h1" element contains "workload-1"
 
   Scenario: The workload tabs view has the expected tabs
     When I visit the "/meshes/default/workloads/kri_wl_default_z1_ns1_workload-1_/overview" URL
-    Then the "header" element contains "workload-1"
+    Then the "h1" element contains "workload-1"
     Then I click the "$config-tab" element
     Then the URL contains "/meshes/default/workloads/kri_wl_default_z1_ns1_workload-1_/config"

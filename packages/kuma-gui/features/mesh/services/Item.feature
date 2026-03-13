@@ -144,7 +144,7 @@ Feature: mesh / services / item
           total: 1
         """
       When I visit the "<URL>" URL
-      Then the "$hostnames" element exists
+      Then the "$hostnames:nth-child(1)" element exists
 
       Examples:
         | API                                                             | URL                                                                       | SVC    |

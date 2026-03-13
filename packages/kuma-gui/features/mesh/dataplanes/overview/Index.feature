@@ -1,4 +1,4 @@
-Feature: mesh / workloads / item / overview
+Feature: mesh / dataplanes / item / overview
 
   Background:
     Given the CSS selectors
@@ -27,7 +27,7 @@ Feature: mesh / workloads / item / overview
       """
 
   Scenario: The about section has the expected content
-    When I visit the "meshes/default/data-planes/dataplane-1/overview" URL
+    When I visit the "/meshes/default/data-planes/dataplane-1/overview" URL
     Then the "$about-section" element exists
     And the "$about-section" element contains "zone-1"
     And the "$about-section" element contains "kuma.io/origin:zone"

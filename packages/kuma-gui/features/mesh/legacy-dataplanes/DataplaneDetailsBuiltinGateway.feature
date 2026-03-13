@@ -2,13 +2,14 @@ Feature: Dataplane details for built-in gateway
 
   Background:
     Given the CSS selectors
-      | Alias             | Selector                                                           |
-      | detail-view       | [data-testid='data-plane-detail-tabs-view']                        |
-      | policies-view     | [data-testid='data-plane-policies-view']                           |
-      | warnings          | [data-testid^='notification-data-planes.notifications.no-mtls']    |
-      | details           | [data-testid='dataplane-details']                                  |
-      | route-item        | [data-testid='builtin-gateway-dataplane-policies'] .accordion-item |
-      | route-item-button | $route-item:nth-child(1) [data-testid='accordion-item-button']     |
+      | Alias                | Selector                                                                    |
+      | detail-view          | [data-testid='data-plane-detail-tabs-view']                                 |
+      | policies-view        | [data-testid='data-plane-policies-view']                                    |
+      | mtls-warning         | [data-testid^='notification-data-planes.notifications.no-mtls']             |
+      | cert-expired-warning | [data-testid^='notification-data-planes.notifications.certificate-expired'] |
+      | details              | [data-testid='dataplane-details']                                           |
+      | route-item           | [data-testid='builtin-gateway-dataplane-policies'] .accordion-item          |
+      | route-item-button    | $route-item:nth-child(1) [data-testid='accordion-item-button']              |
     And the environment
       """
       KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: false
@@ -18,7 +19,6 @@ Feature: Dataplane details for built-in gateway
     Given the environment
       """
       KUMA_SUBSCRIPTION_COUNT: 2
-      KUMA_DATAPLANEINBOUND_COUNT: 0
       KUMA_MODE: global
       """
     And the URL "/meshes/default/dataplanes/dataplane-gateway_builtin-1/_overview" responds with
@@ -63,7 +63,7 @@ Feature: Dataplane details for built-in gateway
       |       193.107.134.106 |
       | kuma.io/protocol:http |
       | kuma.io/zone:zone-1   |
-    And the "$detail-view" element exists but the "$warnings" element doesn't exist
+    And the "$detail-view" element exists but the "$cert-expired-warning" element doesn't exist
 
   Scenario: Policies tab has expected content
     Given the environment
@@ -103,4 +103,4 @@ Feature: Dataplane details for built-in gateway
           mTLS: !!js/undefined
       """
     When I visit the "/meshes/default/data-planes/dataplane-gateway_builtin-1/overview" URL
-    Then the "$warnings" element exists
+    Then the "$mtls-warning" element exists
