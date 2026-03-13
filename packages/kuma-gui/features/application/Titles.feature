@@ -35,6 +35,8 @@ Feature: application / titles
       | /meshes/default/policies/circuit-breakers/program-0/overview         | program-0           |
       | /meshes/default/workloads                                            | Workloads           |
       | /meshes/default/workloads/kri_wl_default_z1_ns1_workload-1_/overview | workload-1          |
+      | /hostname-generators                                                 | HostnameGenerators  |
+      | /hostname-generators/hg-name/overview                                | hg-name             |
 
   Scenario Outline: Visiting the "<Title>" page in "zone" Mode
     Given the environment
