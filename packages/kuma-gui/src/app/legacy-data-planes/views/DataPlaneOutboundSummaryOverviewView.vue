@@ -32,8 +32,9 @@
               </td>
             </tr>
           </XTable>
-          <div
+          <XLayout
             v-if="props.data"
+            variant="y-stack"
           >
             <h3>Rules</h3>
 
@@ -63,7 +64,7 @@
                       v-slot="{ items }"
                     >
                       <div
-                        class="stack-with-borders mt-4"
+                        class="stack-with-borders"
                       >
                         <template
                           v-for="(rules, key) in Object.groupBy(items, item => item.type)"
@@ -256,7 +257,7 @@
                 </DataLoader>
               </template>
             </DataSource>
-          </div>
+          </XLayout>
         </XLayout>
       </template>
     </AppView>

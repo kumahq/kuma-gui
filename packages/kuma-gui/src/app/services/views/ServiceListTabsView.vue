@@ -6,52 +6,48 @@
     }"
     v-slot="{ route, t }"
   >
-    <div
-      class="stack"
-    >
-      <AppView>
-        <template #actions>
-          <XActionGroup
-            :expanded="true"
-          >
-            <template
-              v-for="{ name } in route.children"
-              :key="name"
-            >
-              <XAction
-                v-if="!(!can('use service-insights', props.mesh) && ['service-list-view', 'external-service-list-view'].includes(name))"
-                :class="{
-                  'active': route.child()?.name === name,
-                }"
-                :to="{
-                  name,
-                  params: {
-                    mesh: route.params.mesh,
-                  },
-                }"
-                :data-testid="`${name}-sub-tab`"
-              >
-                {{ t(`services.routes.items.navigation.${name}.label`) }}
-              </XAction>
-            </template>
-          </XActionGroup>
-        </template>
-
-        <XI18n
-          :path="`services.routes.items.navigation.${route.child()?.name}.description`"
-          default-path="common.i18n.ignore-error"
-        />
-
-        <RouterView
-          v-slot="{ Component }"
+    <AppView>
+      <template #actions>
+        <XActionGroup
+          :expanded="true"
         >
-          <component
-            :is="Component"
-            :mesh="props.mesh"
-          />
-        </RouterView>
-      </AppView>
-    </div>
+          <template
+            v-for="{ name } in route.children"
+            :key="name"
+          >
+            <XAction
+              v-if="!(!can('use service-insights', props.mesh) && ['service-list-view', 'external-service-list-view'].includes(name))"
+              :class="{
+                'active': route.child()?.name === name,
+              }"
+              :to="{
+                name,
+                params: {
+                  mesh: route.params.mesh,
+                },
+              }"
+              :data-testid="`${name}-sub-tab`"
+            >
+              {{ t(`services.routes.items.navigation.${name}.label`) }}
+            </XAction>
+          </template>
+        </XActionGroup>
+      </template>
+
+      <XI18n
+        :path="`services.routes.items.navigation.${route.child()?.name}.description`"
+        default-path="common.i18n.ignore-error"
+      />
+
+      <RouterView
+        v-slot="{ Component }"
+      >
+        <component
+          :is="Component"
+          :mesh="props.mesh"
+        />
+      </RouterView>
+    </AppView>
   </RouteView>
 </template>
 <script lang="ts" setup>
