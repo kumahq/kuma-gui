@@ -13,6 +13,7 @@ Feature: mesh / dataplanes / overview / summary / Inbound
       KUMA_DATAPLANEINBOUND_COUNT: 1
       KUMA_DATAPLANE_TYPE: standard
       """
+
   Scenario: Inbound summary overview shows expected content
     Given the URL "/meshes/default/dataplanes/service-less/_layout" responds with
       """

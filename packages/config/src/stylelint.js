@@ -14,8 +14,6 @@ export function createStylelintConfig() {
       'dist/**/*',
     ],
     rules: {
-      '@stylistic/selector-combinator-space-before': 'always',
-      '@stylistic/selector-combinator-space-after': 'always',
       '@kong/design-tokens/use-proper-token': [
         true,
         {
@@ -23,6 +21,9 @@ export function createStylelintConfig() {
           severity: 'error',
         },
       ],
+      '@kong/design-tokens/token-var-usage': true,
+      '@stylistic/selector-combinator-space-before': 'always',
+      '@stylistic/selector-combinator-space-after': 'always',
       'no-duplicate-selectors': [null],
     },
   }
