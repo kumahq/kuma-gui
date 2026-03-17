@@ -1,2 +1,5 @@
 @use "fonts";
 @use "base";
+
+/* this can't be componentized because it affects global styles for at least popup */
+@import "@kong/kongponents/dist/style.css";

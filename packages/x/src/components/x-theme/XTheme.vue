@@ -6,7 +6,6 @@
   </div>
 </template>
 <script lang="ts" setup>
-import '@kong/kongponents/dist/style.css'
 import '@kong-ui-public/app-layout/dist/style.css'
 </script>
 <style lang="scss">
@@ -571,87 +570,18 @@ import '@kong-ui-public/app-layout/dist/style.css'
   strong {
     font-weight: var(--x-font-weight-semibold);
   }
-
-  small {
-    font-size: 0.8em;
-  }
-
-  code,
-  kbd,
-  pre {
-    font-size: 1em;
-  }
-
   textarea {
     resize: vertical;
   }
 
   img,
-  svg,
-  iframe {
+  svg {
     vertical-align: middle;
   }
 
-  // @TODO(jc): We either need a better way to turn this off (maybe :not([height])
-  // or it needs removing entirely
-  img:not(.no-auto-height) {
-    max-width: 100%;
-    height: auto;
-  }
-
-  [hidden] {
-    display: none !important;
-  }
 
   fieldset {
     border: none;
-  }
-
-
-  label {
-    display: block;
-  }
-
-  button,
-  input,
-  optgroup,
-  select {
-    margin: 0;
-    padding: 0;
-    font-size: 100%;
-    line-height: inherit;
-    font-family: inherit;
-    font-weight: inherit;
-    color: inherit;
-  }
-
-  button {
-    background: none;
-    border: none;
-    cursor: pointer;
-  }
-
-  input {
-    appearance: none;
-    border: var(--x-border-width-10) solid var(--x-color-border);
-    border-radius: 3px;
-    font: inherit;
-    margin: 0;
-    padding: var(--x-space-40);
-    color: currentColor;
-    background-color: var(--x-color-background);
-  }
-
-  select {
-    appearance: none;
-    border: var(--x-border-width-10) solid var(--x-color-border);
-    border-radius: 3px;
-    font-size: var(--x-font-size-40);
-    padding: 10px 30px 10px 13px;
-    background-color: var(--x-color-background);
-    background-image: url('@/assets/images/chevron-down.svg?url');
-    background-position: calc(100% - 13px) 50%;
-    background-repeat: no-repeat;
   }
 }
 </style>
@@ -854,6 +784,4 @@ import '@kong-ui-public/app-layout/dist/style.css'
     border-right: var(--x-border-width-10) solid var(--x-color-border);
   }
 }
-</style>
-<style lang="scss" scoped>
 </style>
