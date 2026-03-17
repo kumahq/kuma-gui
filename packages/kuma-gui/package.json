@@ -39,7 +39,7 @@
     "@kumahq/kuma-http-api": "*",
     "@types/js-yaml": "^4.0.9",
     "@types/semver": "^7.7.1",
-    "@vitejs/plugin-vue": "^6.0.4",
+    "@vitejs/plugin-vue": "^6.0.5",
     "@vue/test-utils": "^2.4.6",
     "cypress": "^15.11.0",
     "jsdom": "^28.1.0",
