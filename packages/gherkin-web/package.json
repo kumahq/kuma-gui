@@ -20,7 +20,7 @@
   "dependencies": {
     "@badeball/cypress-cucumber-preprocessor": "^24.0.1",
     "@bahmutov/cypress-esbuild-preprocessor": "^2.2.8",
-    "cypress": "^15.11.0",
+    "cypress": "^15.12.0",
     "deepmerge": "^4.3.1",
     "esbuild": "^0.27.3",
     "js-yaml": "^4.1.1"
