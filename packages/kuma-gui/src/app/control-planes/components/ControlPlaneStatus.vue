@@ -6,16 +6,16 @@
       </div>
     </div>
     <DataLoader
-      :data="[props.globalInsight]"
+      :data="[props.globalInsight, props.resources]"
+      v-slot="{ data: [globalInsightData, resourcesData] }"
     >
       <XLayout
-        v-if="props.globalInsight && !(props.globalInsight instanceof Error)"
         variant="columns"
         class="columns-with-borders"
       >
         <ResourceStatus
           v-if="props.canUseZones"
-          :total="props.globalInsight.zones.controlPlanes.total"
+          :total="globalInsightData.zones.controlPlanes.total"
           data-testid="zone-control-planes-status"
         >
           <template #icon>
@@ -32,7 +32,7 @@
         </ResourceStatus>
 
         <ResourceStatus
-          :total="props.globalInsight.meshes.total"
+          :total="globalInsightData.meshes.total"
           data-testid="meshes-status"
         >
           <template #icon>
@@ -48,7 +48,7 @@
           </template>
         </ResourceStatus>
         <template
-          v-for="insight in [props.globalInsight]"
+          v-for="insight in [globalInsightData]"
           :key="typeof insight"
         >
           <template
@@ -56,7 +56,7 @@
             :key="typeof meshServicesGeneric"
           >
             <ResourceStatus
-              :total="meshServicesGeneric.total || props.globalInsight.services.internal.total"
+              :total="meshServicesGeneric.total || globalInsightData.services.internal.total"
               data-testid="services-status"
             >
               <template #icon>
@@ -74,7 +74,7 @@
               </template>
 
               <template
-                v-if="meshServicesGeneric.total && props.globalInsight.services.internal.total > 0"
+                v-if="meshServicesGeneric.total && globalInsightData.services.internal.total > 0"
                 #description
               >
                 <XI18n
@@ -83,10 +83,10 @@
               </template>
 
               <template
-                v-if="meshServicesGeneric.total && props.globalInsight.services.internal.total > 0"
+                v-if="meshServicesGeneric.total && globalInsightData.services.internal.total > 0"
                 #body
               >
-                <ResourceStatus :total="props.globalInsight.services.internal.total">
+                <ResourceStatus :total="globalInsightData.services.internal.total">
                   <template #description>
                     <XI18n
                       path="main-overview.detail.about.descriptions.internal_services"
@@ -107,7 +107,7 @@
         </template>
 
         <ResourceStatus
-          :total="props.globalInsight.dataplanes.standard.total"
+          :total="globalInsightData.dataplanes.standard.total"
           data-testid="data-plane-proxies-status"
         >
           <template #icon>
@@ -123,7 +123,9 @@
           </template>
         </ResourceStatus>
         <ResourceStatus
-          :total="policyTotal"
+          :total="Object.entries(globalInsightData.resources).reduce((prev, [key, { total }]) => {
+            return resourcesData.policyTypesNames.includes(key) ? prev + total : prev
+          }, 0)"
           data-testid="policies-status"
         >
           <template #icon>
@@ -144,8 +146,6 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
-
 import { useI18n } from '@/app/application'
 import ResourceStatus from '@/app/common/ResourceStatus.vue'
 import type { GlobalInsight } from '@/app/control-planes/data'
@@ -158,15 +158,6 @@ const props = defineProps<{
   resources?: ResourceCollection
   canUseZones: boolean
 }>()
-const policyTotal = computed(() => {
-  if(props.globalInsight && !(props.globalInsight instanceof Error) && props.resources?.policyTypes) {
-    const policyTypes = props.resources?.policyTypes.map(item => item.name)
-    return Object.entries(props.globalInsight.resources).reduce((prev, [key, { total }]) => {
-      return policyTypes.includes(key) ? prev + total : prev
-    }, 0)
-  }
-  return 0
-})
 </script>
 
 <style lang="scss" scoped>
