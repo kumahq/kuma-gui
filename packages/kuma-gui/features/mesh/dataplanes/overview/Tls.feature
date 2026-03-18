@@ -13,7 +13,6 @@ Feature: mesh / dataplanes / overview / TLS
       KUMA_MESHSERVICE_MODE: Exclusive
       KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: true
       KUMA_DATAPLANE_TLS_ISSUED_MESHIDENTITY: true
-      KUMA_MESHSERVICE_MODE: Exclusive
       """
     And the URL "/meshes/default/dataplanes/backend/_overview" responds with
       """
