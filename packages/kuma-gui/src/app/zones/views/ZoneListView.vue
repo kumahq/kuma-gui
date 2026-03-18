@@ -52,7 +52,6 @@
             <search>
               <form @submit.prevent>
                 <XSearch
-                  class="search-field"
                   :keys="['name']"
                   :value="route.params.s"
                   @change="(s) => route.update({ page: 1, s })"
@@ -292,8 +291,5 @@ const getEgresses = (data: {items: ZoneEgressOverview[]}) => {
   color: inherit;
   font-weight: var(--x-font-weight-semibold);
   text-decoration: none;
-}
-.search-field {
-  width: 100%;
 }
 </style>

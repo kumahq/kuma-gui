@@ -350,8 +350,8 @@ input {
 
 .dropdown {
   position: relative;
-  min-width: inherit;
-  width: 0;
+  width: 100%;
+  min-width: 0;
 }
 
 :deep(.popover) {
