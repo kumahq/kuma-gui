@@ -11,27 +11,24 @@
     <AppView>
       <DataSource
         :src="uri(policySources, '/policy-types', {})"
-        v-slot="{ data, error }"
+        v-slot="{ data: policyTypesData, error }"
       >
         <DataSource
           :src="uri(sources, '/meshes/:mesh/mesh-gateways/:name/rules', {
             mesh: route.params.mesh,
             name: route.params.gateway,
           })"
-          v-slot="{ data: rules, error: rulesError }"
+          v-slot="{ data: sourceRules, error: rulesError }"
         >
           <DataLoader
-            :data="[data, rules]"
             :errors="[error, rulesError]"
           >
-            <template v-if="rules && data">
-              <ListenerRoutes
-                :mesh-gateway="props.gateway"
-                :selected-listener-index="Number(route.params.listener)"
-                :policy-types-by-name="data.policyTypes.reduce((obj, policyType) => Object.assign(obj, { [policyType.name]: policyType }), {})"
-                :inspect-rules="rules.rules"
-              />
-            </template>
+            <ListenerRoutes
+              :mesh-gateway="props.gateway"
+              :selected-listener-index="Number(route.params.listener)"
+              :policy-types-by-name="policyTypesData?.policyTypes.reduce((obj, policyType) => Object.assign(obj, { [policyType.name]: policyType }), {})"
+              :inspect-rules="sourceRules?.rules"
+            />
           </DataLoader>
         </DataSource>
       </DataSource>
@@ -45,6 +42,6 @@ import type { MeshGateway } from '../data'
 import { sources } from '../sources'
 import { sources as policySources } from '@/app/policies/sources'
 const props = defineProps<{
-  gateway: MeshGateway
+  gateway: MeshGateway | Error | undefined
 }>()
 </script>
