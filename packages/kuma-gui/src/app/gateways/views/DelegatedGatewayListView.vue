@@ -19,7 +19,6 @@
               @submit.prevent
             >
               <XSearch
-                class="search-field"
                 :keys="['name']"
                 :value="route.params.s"
                 @change="(s) => route.update({ page: 1, s })"
@@ -135,8 +134,3 @@ import AppCollection from '@/app/application/components/app-collection/AppCollec
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import { sources } from '@/app/services/sources'
 </script>
-<style lang="scss" scoped>
-.search-field {
-  width: 100%;
-}
-</style>

@@ -21,7 +21,6 @@
           <search>
             <form @submit.prevent>
               <XSearch
-                class="search-field"
                 :keys="['name', 'label']"
                 :value="route.params.s"
                 @change="(s) => route.update({ page: 1, s })"
@@ -61,6 +60,7 @@
                 <template #name="{ row: item }">
                   <XCopyButton :text="item.name">
                     <XAction
+                      data-action
                       :to="{
                         name: 'external-service-detail-view',
                         params: {
@@ -117,8 +117,3 @@
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 </script>
-<style lang="scss" scoped>
-.search-field {
-  width: 100%;
-}
-</style>

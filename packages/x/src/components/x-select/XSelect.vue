@@ -70,7 +70,7 @@ const items = computed(() => {
 .k-select {
   flex-basis: 245px;
   display: flex;
-  flex-direction: row;
+  flex-direction: row !important;
   align-items: center;
   gap: var(--x-space-40);
 }

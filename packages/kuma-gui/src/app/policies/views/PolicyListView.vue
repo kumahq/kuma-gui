@@ -22,45 +22,47 @@
       </template>
       <template #item="{ item: type }">
         <AppView>
-          <div class="stack">
-            <XCard>
-              <header>
-                <div>
-                  <XBadge
-                    v-if="type.policy.hasFromTargetRef"
-                    appearance="neutral"
-                  >
-                    {{ t('policies.collection.inbound') }}
-                  </XBadge>
-
-                  <XBadge
-                    v-if="type.policy.hasToTargetRef"
-                    appearance="neutral"
-                  >
-                    {{ t('policies.collection.outbound') }}
-                  </XBadge>
-
-                  <XAction
-                    action="docs"
-                    :href="t('policies.href.docs', { name: type.name })"
-                    data-testid="policy-documentation-link"
-                  >
-                    <span class="visually-hidden">{{ t('common.documentation') }}</span>
-                  </XAction>
-                </div>
-                <h3
-                  v-icon-start="{name: type.name, size: '60', default: 'policy'}"
+          <XCard>
+            <header>
+              <div>
+                <XBadge
+                  v-if="type.policy.hasFromTargetRef"
+                  appearance="neutral"
                 >
-                  {{ t('policies.collection.title', { name: type.name }) }}
-                </h3>
-              </header>
-              <XI18n
-                :path="`policies.type.${type.name}.description`"
-                default-path="policies.collection.description"
-              />
-            </XCard>
+                  {{ t('policies.collection.inbound') }}
+                </XBadge>
 
-            <XCard>
+                <XBadge
+                  v-if="type.policy.hasToTargetRef"
+                  appearance="neutral"
+                >
+                  {{ t('policies.collection.outbound') }}
+                </XBadge>
+
+                <XAction
+                  action="docs"
+                  :href="t('policies.href.docs', { name: type.name })"
+                  data-testid="policy-documentation-link"
+                >
+                  <span class="visually-hidden">{{ t('common.documentation') }}</span>
+                </XAction>
+              </div>
+              <h3
+                v-icon-start="{name: type.name, size: '60', default: 'policy'}"
+              >
+                {{ t('policies.collection.title', { name: type.name }) }}
+              </h3>
+            </header>
+            <XI18n
+              :path="`policies.type.${type.name}.description`"
+              default-path="policies.collection.description"
+            />
+          </XCard>
+
+          <XCard>
+            <XLayout
+              variant="y-stack"
+            >
               <search>
                 <form
                   @submit.prevent
@@ -153,7 +155,7 @@
                         <template
                           v-else
                         >
-                            &nbsp;
+                          &nbsp;
                         </template>
                       </template>
 
@@ -256,8 +258,8 @@
                   </XDrawer>
                 </RouterView>
               </DataLoader>
-            </XCard>
-          </div>
+            </XLayout>
+          </XCard>
         </AppView>
       </template>
     </DataCollection>
@@ -294,20 +296,15 @@ header > h3 {
   margin-top: 0;
   float: left;
 }
-search form {
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-  align-items: stretch;
-  flex-wrap: wrap;
-  gap: var(--x-space-70);
-  margin-bottom: var(--x-space-70);
-}
 .app-collection:deep(:is(th, td):nth-child(1)) {
   padding-right: 0 !important;
   width: 16px !important;
 }
+search form {
+  display: flex;
+}
 .search-field {
   flex: 1;
+  width: 0;
 }
 </style>

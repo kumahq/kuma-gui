@@ -5,6 +5,9 @@
     <slot name="default" />
   </div>
 </template>
+<script lang="ts" setup>
+import '@kong-ui-public/app-layout/dist/style.css'
+</script>
 <style lang="scss">
   @keyframes icon-size-30 {
     100% {
@@ -441,7 +444,8 @@
     --icon-space-after: var(--x-space-30);
   }
 }
-
+</style>
+<style lang="scss" scoped>
 :deep(> *) {
   & {
     font-size: var(--x-font-size-40);
@@ -458,6 +462,326 @@
   /* make sure k-buttons are never underlined */
   a.k-button {
     text-decoration: none !important;
+  }
+}
+</style>
+
+<style lang="scss" scoped>
+:deep(> *) {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+
+  &,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    line-height: 1.3;
+  }
+
+  blockquote,
+  dl,
+  dd,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  hr,
+  figure,
+  p,
+  pre,
+  ul,
+  ol {
+    margin: 0;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: var(--x-font-weight-bold);
+  }
+
+  h1 {
+    font-size: var(--x-font-size-70);
+  }
+
+  h2 {
+    font-size: var(--x-font-size-40);
+  }
+
+  h3 {
+    font-size: var(--x-font-size-40);
+  }
+
+  h4 {
+    font-size: var(--x-font-size-30);
+  }
+
+  h5 {
+    font-size: var(--x-font-size-30);
+  }
+
+  h6 {
+    font-size: var(--x-font-size-30);
+  }
+
+  ul,
+  ol {
+    padding-left: var(--x-space-80);
+  }
+
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  ul,
+  ol {
+    &:not(:first-child) {
+      margin-top: var(--x-space-50);
+    }
+  }
+
+  p:empty {
+    display: none;
+  }
+
+  dl p:not(:first-child) {
+    margin-top: var(--x-space-10);
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  b,
+  strong {
+    font-weight: var(--x-font-weight-semibold);
+  }
+  textarea {
+    resize: vertical;
+  }
+
+  img,
+  svg {
+    vertical-align: middle;
+  }
+
+
+  fieldset {
+    border: none;
+  }
+}
+</style>
+<style lang="scss" scoped>
+:deep(> *) {
+  .visually-hidden {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip-path: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+  }
+  .mt-auto {
+    margin-top: auto !important;
+  }
+  .mt-0 {
+    margin-top: 0px !important;
+  }
+  .mt-1 {
+    margin-top: var(--x-space-20) !important;
+  }
+  .mt-2 {
+    margin-top: var(--x-space-40) !important;
+  }
+  .mt-3 {
+    margin-top: var(--x-space-50) !important;
+  }
+  .mt-4 {
+    margin-top: var(--x-space-60) !important;
+  }
+  .mt-5 {
+    margin-top: var(--x-space-80) !important;
+  }
+  .mt-6 {
+    margin-top: var(--x-space-90) !important;
+  }
+  .mt-7 {
+    margin-top: var(--x-space-110) !important;
+  }
+  .mt-8 {
+    margin-top: var(--x-space-110) !important;
+  }
+
+  .mb-auto {
+    margin-bottom: auto !important;
+  }
+  .mb-0 {
+    margin-bottom: 0px !important;
+  }
+  .mb-1 {
+    margin-bottom: var(--x-space-20) !important;
+  }
+  .mb-2 {
+    margin-bottom: var(--x-space-40) !important;
+  }
+  .mb-3 {
+    margin-bottom: var(--x-space-50) !important;
+  }
+  .mb-4 {
+    margin-bottom: var(--x-space-60) !important;
+  }
+  .mb-5 {
+    margin-bottom: var(--x-space-80) !important;
+  }
+  .mb-6 {
+    margin-bottom: var(--x-space-90) !important;
+  }
+  .mb-7 {
+    margin-bottom: var(--x-space-110) !important;
+  }
+  .mb-8 {
+    margin-bottom: var(--x-space-110) !important;
+  }
+
+  .mr-auto {
+    margin-right: auto !important;
+  }
+  .mr-0 {
+    margin-right: 0px !important;
+  }
+  .mr-1 {
+    margin-right: var(--x-space-20) !important;
+  }
+  .mr-2 {
+    margin-right: var(--x-space-40) !important;
+  }
+  .mr-3 {
+    margin-right: var(--x-space-50) !important;
+  }
+  .mr-4 {
+    margin-right: var(--x-space-60) !important;
+  }
+  .mr-5 {
+    margin-right: var(--x-space-80) !important;
+  }
+  .mr-6 {
+    margin-right: var(--x-space-90) !important;
+  }
+  .mr-7 {
+    margin-right: var(--x-space-110) !important;
+  }
+  .mr-8 {
+    margin-right: var(--x-space-110) !important;
+  }
+
+  .ml-auto {
+    margin-left: auto !important;
+  }
+  .ml-0 {
+    margin-left: 0px !important;
+  }
+  .ml-1 {
+    margin-left: var(--x-space-20) !important;
+  }
+  .ml-2 {
+    margin-left: var(--x-space-40) !important;
+  }
+  .ml-3 {
+    margin-left: var(--x-space-50) !important;
+  }
+  .ml-4 {
+    margin-left: var(--x-space-60) !important;
+  }
+  .ml-5 {
+    margin-left: var(--x-space-80) !important;
+  }
+  .ml-6 {
+    margin-left: var(--x-space-90) !important;
+  }
+  .ml-7 {
+    margin-left: var(--x-space-110) !important;
+  }
+  .ml-8 {
+    margin-left: var(--x-space-110) !important;
+  }
+}
+</style>
+
+<style lang="scss" scoped>
+:deep(> * ) {
+  /*
+  .stack
+
+  For stacking elements with consistent space between.
+
+  Adapted from https://every-layout.dev/layouts/stack/.
+  */
+
+  .stack > * + * {
+    margin-block-start: var(--x-space-70);
+  }
+
+  .stack-small > * + * {
+    margin-block-start: var(--x-space-40);
+  }
+
+  /*
+  .stack-with-borders
+
+  Variant of .stack with a horizontal border in the center of the gap.
+  */
+  .stack-with-borders > * + * {
+    margin-block-start: var(--x-space-40);
+    border-block-start: var(--x-border-width-10) solid var(--x-color-border);
+    padding-block-start: var(--x-space-40);
+  }
+
+  /*
+  .columns
+
+  For horizontally listing elements with consistent space between. Once the space defined by `--threshold` is exhausted, the elements will **start** to wrap.
+
+  Adapted from https://every-layout.dev/layouts/switcher/.
+  */
+
+  .columns {
+    --threshold: 40rem;
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--x-space-80);
+  }
+
+  .columns > * {
+    flex-grow: 1;
+    flex-basis: calc((var(--threshold) - 100%) * 999);
+    min-inline-size: 0;
+  }
+
+  /*
+  .columns-with--borders
+
+  Variant of .columns with a vertical border at the right side of each column (except the last).
+  */
+  .columns-with-borders > *:not(:last-child) {
+    border-right: var(--x-border-width-10) solid var(--x-color-border);
   }
 }
 </style>

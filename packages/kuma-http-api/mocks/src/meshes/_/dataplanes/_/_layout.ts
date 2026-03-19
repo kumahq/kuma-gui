@@ -28,7 +28,7 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
       port,
       protocol: fake.kuma.protocol(),
       kri: fake.kuma.kri({
-        shortName: fake.helpers.arrayElement(['msvc', 'mzsvc', 'extsvc']),
+        resourceName: fake.helpers.arrayElement(['MeshService', 'MeshMultiZoneService', 'MeshExternalService']),
         mesh,
         namespace: nspace,
         name: fake.word.noun(),
@@ -41,7 +41,7 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
     headers: {},
     body: {
       kri: fake.kuma.kri({
-        shortName: 'dp',
+        resourceName: 'Dataplane',
         mesh,
         namespace: nspace,
         name: displayName,
@@ -62,7 +62,7 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
         const sectionName = fake.helpers.arrayElement(['default', 'httpport', port.toString(), 'ipv4', 'ipv6'])
         return {
           kri: fake.kuma.kri({
-            shortName: 'dp',
+            resourceName: 'Dataplane',
             mesh,
             namespace: nspace,
             name: displayName,
