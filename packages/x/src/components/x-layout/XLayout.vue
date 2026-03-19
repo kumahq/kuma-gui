@@ -27,7 +27,7 @@ const props = withDefaults(defineProps<{
   justify: '',
   truncate: false,
 })
-const table = inject<XComponent<typeof XTable>>('x-table')
+const table = inject<XComponent<typeof XTable> | undefined>('x-table', undefined)
 // when inside a kv table default is `end`, otherwise its `start`
 const justify = computed(() => table?.props.variant !== 'kv' ? props.justify || 'start' : props.justify || 'end')
 

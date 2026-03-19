@@ -234,8 +234,8 @@ nav {
 
 nav ul {
   list-style-type: none;
-  padding: unset;
-  margin: unset;
+  padding: 0 !important;
+  margin: 0 !important;
 }
 nav :deep(.app-navigator) + .app-navigator {
   margin-top: var(--x-space-20);

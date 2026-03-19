@@ -14,196 +14,196 @@
   >
     <AppView>
       <XCard>
-        <search>
-          <form
-            class="search-form"
-            @submit.prevent
-          >
-            <XSearch
-              class="search-field"
-              :keys="['name', 'tag', 'label', ...(can('use zones') ? ['zone'] : []), 'namespace']"
-              :value="route.params.s"
-              @change="(s) => route.update({ page: 1, s })"
-            />
-          </form>
-        </search>
-        <DataLoader
-          :src="uri(dataplaneSources, '/meshes/:mesh/dataplanes/for/service-insight/:service', {
-            mesh: route.params.mesh,
-            service: props.gateway.selectors[0].match['kuma.io/service'],
-          }, {
-            page: route.params.page,
-            size: route.params.size,
-            search: [
-              route.params.s,
-              ...(props.gateway.origin === 'zone' && props.gateway.zone.length ? [ `zone:${props.gateway.zone}` ] : []),
-            ].join(' '),
-          })"
-          variant="list"
-          v-slot="{ data: [dataplanesData] }"
+        <XLayout
+          variant="y-stack"
         >
-          <DataCollection
-            type="data-planes"
-            :items="dataplanesData.items"
-            :total="dataplanesData.total"
-            :page="route.params.page"
-            :page-size="route.params.size"
-            @change="route.update"
+          <search>
+            <form @submit.prevent>
+              <XSearch
+                :keys="['name', 'tag', 'label', ...(can('use zones') ? ['zone'] : []), 'namespace']"
+                :value="route.params.s"
+                @change="(s) => route.update({ page: 1, s })"
+              />
+            </form>
+          </search>
+          <DataLoader
+            :src="uri(dataplaneSources, '/meshes/:mesh/dataplanes/for/service-insight/:service', {
+              mesh: route.params.mesh,
+              service: props.gateway.selectors[0].match['kuma.io/service'],
+            }, {
+              page: route.params.page,
+              size: route.params.size,
+              search: [
+                route.params.s,
+                ...(props.gateway.origin === 'zone' && props.gateway.zone.length ? [ `zone:${props.gateway.zone}` ] : []),
+              ].join(' '),
+            })"
+            variant="list"
+            v-slot="{ data: [dataplanesData] }"
           >
-            <AppCollection
-              class="data-plane-collection"
-              data-testid="data-plane-collection"
-              :headers="[
-                { ...me.get('headers.name'), label: 'Name', key: 'name' },
-                { ...me.get('headers.namespace'), label: 'Namespace', key: 'namespace' },
-                ...(can('use zones') ? [{ ...me.get('headers.zone'), label: 'Zone', key: 'zone' }] : []),
-                { ...me.get('headers.certificate'), label: 'Certificate info', key: 'certificate' },
-                { ...me.get('headers.status'), label: 'Status', key: 'status' },
-                { ...me.get('headers.warnings'), label: 'Warnings', key: 'warnings', hideLabel: true },
-                { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
-              ]"
+            <DataCollection
+              type="data-planes"
               :items="dataplanesData.items"
-              :is-selected-row="(row) => row.name === route.params.proxy"
-              @resize="me.set"
+              :total="dataplanesData.total"
+              :page="route.params.page"
+              :page-size="route.params.size"
+              @change="route.update"
             >
-              <template #namespace="{ row }">
-                {{ row.namespace }}
-              </template>
+              <AppCollection
+                class="data-plane-collection"
+                data-testid="data-plane-collection"
+                :headers="[
+                  { ...me.get('headers.name'), label: 'Name', key: 'name' },
+                  { ...me.get('headers.namespace'), label: 'Namespace', key: 'namespace' },
+                  ...(can('use zones') ? [{ ...me.get('headers.zone'), label: 'Zone', key: 'zone' }] : []),
+                  { ...me.get('headers.certificate'), label: 'Certificate info', key: 'certificate' },
+                  { ...me.get('headers.status'), label: 'Status', key: 'status' },
+                  { ...me.get('headers.warnings'), label: 'Warnings', key: 'warnings', hideLabel: true },
+                  { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
+                ]"
+                :items="dataplanesData.items"
+                :is-selected-row="(row) => row.name === route.params.proxy"
+                @resize="me.set"
+              >
+                <template #namespace="{ row }">
+                  {{ row.namespace }}
+                </template>
 
-              <template #name="{ row }">
-                <XAction
-                  data-action
-                  class="name-link"
-                  :title="row.name"
-                  :to="{
-                    name: 'builtin-gateway-data-plane-summary-view',
+                <template #name="{ row }">
+                  <XAction
+                    data-action
+                    class="name-link"
+                    :title="row.name"
+                    :to="{
+                      name: 'builtin-gateway-data-plane-summary-view',
+                      params: {
+                        mesh: row.mesh,
+                        proxy: row.id,
+                      },
+                      query: {
+                        page: route.params.page,
+                        size: route.params.size,
+                        s: route.params.s,
+                      },
+                    }"
+                  >
+                    {{ row.name }}
+                  </XAction>
+                </template>
+
+                <template #zone="{ row }">
+                  <XAction
+                    v-if="row.zone"
+                    :to="{
+                      name: 'zone-cp-detail-view',
+                      params: {
+                        zone: row.zone,
+                      },
+                    }"
+                  >
+                    {{ row.zone }}
+                  </XAction>
+
+                  <template v-else>
+                    {{ t('common.collection.none') }}
+                  </template>
+                </template>
+
+                <template #certificate="{ row }">
+                  <template v-if="row.dataplaneInsight.mTLS?.certificateExpirationTime">
+                    {{ t('common.formats.datetime', { value: Date.parse(row.dataplaneInsight.mTLS.certificateExpirationTime) }) }}
+                  </template>
+
+                  <template v-else>
+                    {{ t('data-planes.components.data-plane-list.certificate.none') }}
+                  </template>
+                </template>
+
+                <template #status="{ row }">
+                  <StatusBadge :status="row.status" />
+                </template>
+
+                <template #warnings="{ row: item }">
+                  <template
+                    v-for="warnings in [[
+                      {
+                        bool: item.dataplaneInsight.version?.kumaDp?.kumaCpCompatible === false || item.dataplaneInsight.version?.envoy?.kumaDpCompatible === false,
+                        key: 'dp-cp-incompatible',
+                      },
+                      {
+                        bool: item.isCertExpiresSoon,
+                        key: 'certificate-expires-soon',
+                      },
+                      {
+                        bool: item.isCertExpired,
+                        key: 'certificate-expired',
+                      },
+                    ].filter(({ bool }) => bool)]"
+                    :key="typeof warnings"
+                  >
+                    <XIcon
+                      v-if="warnings.length > 0"
+                      name="warning"
+                      data-testid="warning"
+                    >
+                      <ul>
+                        <li
+                          v-for="{ key } in warnings"
+                          :key="key"
+                          :data-testid="`warning-${key}`"
+                        >
+                          {{ t(`data-planes.routes.items.warnings.${key}`) }}
+                        </li>
+                      </ul>
+                    </XIcon>
+                    <template v-else>
+                      {{ t('common.collection.none') }}
+                    </template>
+                  </template>
+                </template>
+
+                <template #actions="{ row: item }">
+                  <XActionGroup>
+                    <XAction
+                      :to="{
+                        name: 'data-plane-detail-view',
+                        params: {
+                          proxy: item.id,
+                        },
+                      }"
+                    >
+                      {{ t('common.collection.actions.view') }}
+                    </XAction>
+                  </XActionGroup>
+                </template>
+              </AppCollection>
+              <RouterView
+                v-if="route.params.proxy"
+                v-slot="child"
+              >
+                <XDrawer
+                  @close="route.replace({
+                    name: route.name,
                     params: {
-                      mesh: row.mesh,
-                      proxy: row.id,
+                      mesh: route.params.mesh,
                     },
                     query: {
                       page: route.params.page,
                       size: route.params.size,
                       s: route.params.s,
                     },
-                  }"
+                  })"
                 >
-                  {{ row.name }}
-                </XAction>
-              </template>
-
-              <template #zone="{ row }">
-                <XAction
-                  v-if="row.zone"
-                  :to="{
-                    name: 'zone-cp-detail-view',
-                    params: {
-                      zone: row.zone,
-                    },
-                  }"
-                >
-                  {{ row.zone }}
-                </XAction>
-
-                <template v-else>
-                  {{ t('common.collection.none') }}
-                </template>
-              </template>
-
-              <template #certificate="{ row }">
-                <template v-if="row.dataplaneInsight.mTLS?.certificateExpirationTime">
-                  {{ t('common.formats.datetime', { value: Date.parse(row.dataplaneInsight.mTLS.certificateExpirationTime) }) }}
-                </template>
-
-                <template v-else>
-                  {{ t('data-planes.components.data-plane-list.certificate.none') }}
-                </template>
-              </template>
-
-              <template #status="{ row }">
-                <StatusBadge :status="row.status" />
-              </template>
-
-              <template #warnings="{ row: item }">
-                <template
-                  v-for="warnings in [[
-                    {
-                      bool: item.dataplaneInsight.version?.kumaDp?.kumaCpCompatible === false || item.dataplaneInsight.version?.envoy?.kumaDpCompatible === false,
-                      key: 'dp-cp-incompatible',
-                    },
-                    {
-                      bool: item.isCertExpiresSoon,
-                      key: 'certificate-expires-soon',
-                    },
-                    {
-                      bool: item.isCertExpired,
-                      key: 'certificate-expired',
-                    },
-                  ].filter(({ bool }) => bool)]"
-                  :key="typeof warnings"
-                >
-                  <XIcon
-                    v-if="warnings.length > 0"
-                    name="warning"
-                    data-testid="warning"
-                  >
-                    <ul>
-                      <li
-                        v-for="{ key } in warnings"
-                        :key="key"
-                        :data-testid="`warning-${key}`"
-                      >
-                        {{ t(`data-planes.routes.items.warnings.${key}`) }}
-                      </li>
-                    </ul>
-                  </XIcon>
-                  <template v-else>
-                    {{ t('common.collection.none') }}
-                  </template>
-                </template>
-              </template>
-
-              <template #actions="{ row: item }">
-                <XActionGroup>
-                  <XAction
-                    :to="{
-                      name: 'data-plane-detail-view',
-                      params: {
-                        proxy: item.id,
-                      },
-                    }"
-                  >
-                    {{ t('common.collection.actions.view') }}
-                  </XAction>
-                </XActionGroup>
-              </template>
-            </AppCollection>
-            <RouterView
-              v-if="route.params.proxy"
-              v-slot="child"
-            >
-              <XDrawer
-                @close="route.replace({
-                  name: route.name,
-                  params: {
-                    mesh: route.params.mesh,
-                  },
-                  query: {
-                    page: route.params.page,
-                    size: route.params.size,
-                    s: route.params.s,
-                  },
-                })"
-              >
-                <component
-                  :is="child.Component"
-                  v-if="typeof dataplanesData !== 'undefined'"
-                  :items="dataplanesData.items"
-                />
-              </XDrawer>
-            </RouterView>
-          </DataCollection>
-        </DataLoader>
+                  <component
+                    :is="child.Component"
+                    v-if="typeof dataplanesData !== 'undefined'"
+                    :items="dataplanesData.items"
+                  />
+                </XDrawer>
+              </RouterView>
+            </DataCollection>
+          </DataLoader>
+        </XLayout>
       </XCard>
     </AppView>
   </RouteView>
@@ -220,26 +220,6 @@ const props = defineProps<{
 </script>
 
 <style lang="scss" scoped>
-search {
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-  align-items: stretch;
-  flex-wrap: wrap;
-  gap: var(--x-space-70);
-  margin-bottom: var(--x-space-70);
-}
-
-.search-form {
-  display: flex;
-  flex-basis: 350px;
-  flex-grow: 1;
-}
-
-.search-field {
-  flex: 1;
-}
-
 .name-link {
   display: inline-block;
   width: 100%;

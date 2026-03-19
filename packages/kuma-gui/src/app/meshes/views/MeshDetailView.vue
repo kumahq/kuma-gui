@@ -127,7 +127,7 @@
                           >
                             <XAction
                               :to="{
-                                name: 'mesh-identity-summary-view',
+                                name: 'mesh-mesh-identity-summary-view',
                                 params: {
                                   mid: identity.kri,
                                 },
@@ -205,7 +205,7 @@
                           class="name-link"
                           :title="item.name"
                           :to="{
-                            name: 'mesh-trust-summary-view',
+                            name: 'mesh-mesh-trust-summary-view',
                             params: {
                               mtrust: item.kri,
                             },
@@ -229,7 +229,7 @@
                         <XAction
                           v-if="item.spec.origin.kri.length > 0"
                           :to="{
-                            name: 'mesh-identity-summary-view',
+                            name: 'mesh-mesh-identity-summary-view',
                             params: {
                               mid: item.spec.origin.kri,
                             },

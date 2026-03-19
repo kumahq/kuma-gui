@@ -95,21 +95,19 @@
       </XAboutCard>
 
       <XCard>
+        <template #title>
+          <h2>
+            {{ t('workloads.routes.item.dataplaneProxies.title') }}
+          </h2>
+        </template>
         <XLayout
           variant="y-stack"
         >
-          <slot name="title">
-            <h2>
-              {{ t('workloads.routes.item.dataplaneProxies.title') }}
-            </h2>
-          </slot>
           <search>
             <form
-              class="search-form"
               @submit.prevent
             >
               <XSearch
-                class="search-field"
                 :keys="['name', 'tag', 'label']"
                 :value="route.params.s"
                 @change="(s) => route.update({ page: 1, s })"
@@ -305,8 +303,3 @@ const props = defineProps<{
   data: WorkloadItem | Error | undefined
 }>()
 </script>
-<style scoped lang="scss">
-.search-field {
-  width: 100%;
-}
-</style>

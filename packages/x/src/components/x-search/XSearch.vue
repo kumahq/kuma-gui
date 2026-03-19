@@ -345,12 +345,13 @@ input {
   outline: none;
   caret-color: var(--x-color-text);
   line-height: var(--x-font-size-70);
+  font: inherit;
 }
 
 .dropdown {
   position: relative;
-  min-width: inherit;
-  width: 0;
+  width: 100%;
+  min-width: 0;
 }
 
 :deep(.popover) {
