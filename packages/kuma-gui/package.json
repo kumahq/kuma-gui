@@ -42,7 +42,7 @@
     "@vitejs/plugin-vue": "^6.0.5",
     "@vue/test-utils": "^2.4.6",
     "cypress": "^15.12.0",
-    "jsdom": "^28.1.0",
+    "jsdom": "^29.0.0",
     "msw": "^2.12.10",
     "sass": "^1.98.0",
     "vite": "^7.3.1",
