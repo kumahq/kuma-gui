@@ -15,11 +15,10 @@ export const PolicyResourceType = {
     const isPolicyType = (o: PartialResourceType): o is PartialPolicyResourceType => {
       return typeof o.policy !== 'undefined'
     }
-    const policyTypes = partialResourceTypes.resources.filter(isPolicyType).map(PolicyResourceType.fromObject)
+    
     return {
       ...partialResourceTypes,
-      policyTypes,
-      policyTypesNames: policyTypes.map((policyType) => policyType.name),
+      policyTypes: partialResourceTypes.resources.filter(isPolicyType).map(PolicyResourceType.fromObject),
     }
   },
 }

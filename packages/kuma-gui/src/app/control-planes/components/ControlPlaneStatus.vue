@@ -124,7 +124,7 @@
         </ResourceStatus>
         <ResourceStatus
           :total="Object.entries(globalInsightData.resources).reduce((prev, [key, { total }]) => {
-            return resourcesData.policyTypesNames.includes(key) ? prev + total : prev
+            return resourcesData.policyTypes.find((type) => type.name === key) ? prev + total : prev
           }, 0)"
           data-testid="policies-status"
         >
