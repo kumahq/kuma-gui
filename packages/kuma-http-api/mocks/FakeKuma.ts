@@ -466,8 +466,42 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
     return this.faker.helpers.arrayElements(items, minmax({ min: 0, max: items.length }, count))
   }
 
-  kri({ shortName, mesh, zone, namespace, name, sectionName }: Partial<{ shortName: string, mesh: string, zone: string, namespace: string, name: string, sectionName: string }> = {}) {
-    return `kri_${shortName ?? this.faker.word.noun()}_${mesh ?? this.faker.word.noun()}_${zone ?? this.faker.word.noun()}_${namespace ?? this.k8s.namespace()}_${name ?? this.faker.word.noun()}_${sectionName ?? this.faker.word.noun()}`
+  shortName(resourceName?: string) {
+    const resourceNames = new Map([
+      ['Dataplane', 'dp'],
+      ['HostnameGenerator', 'hg'],
+      ['Mesh', 'm'],
+      ['MeshAccessLog', 'mal'],
+      ['MeshCircuitBreaker', 'mcb'],
+      ['MeshExternalService', 'extsvc'],
+      ['MeshFaultInjection', 'mfi'],
+      ['MeshGateway', 'mgw'],
+      ['MeshHTTPRoute', 'mhttpr'],
+      ['MeshHealthCheck', 'mhc'],
+      ['MeshIdentity', 'mid'],
+      ['MeshLoadBalancingStrategy', 'mlbs'],
+      ['MeshMetric', 'mm'],
+      ['MeshMultiZoneService', 'mzsvc'],
+      ['MeshPassthrough', 'mp'],
+      ['MeshProxyPatch', 'mpp'],
+      ['MeshRateLimit', 'mrl'],
+      ['MeshRetry', 'mr'],
+      ['MeshService', 'msvc'],
+      ['MeshTCPRoute', 'mtcpr'],
+      ['MeshTLS', 'mtls'],
+      ['MeshTimeout', 'mt'],
+      ['MeshTrace', 'mtr'],
+      ['MeshTrafficPermission', 'mtp'],
+      ['MeshTrust', 'mtrust'],
+      ['Workload', 'wl'],
+      ['ZoneEgress', 'ze'],
+      ['ZoneIngress', 'zi'],
+    ])
+    return resourceNames.get(resourceName ?? this.faker.helpers.arrayElement([...resourceNames.keys()])) ?? ''
+  }
+
+  kri({ resourceName, shortName, mesh, zone, namespace, name, sectionName }: Partial<{ resourceName: string, shortName: string, mesh: string, zone: string, namespace: string, name: string, sectionName: string }> = {}) {
+    return `kri_${shortName ?? this.shortName(resourceName)}_${mesh ?? this.faker.word.noun()}_${zone ?? this.faker.word.noun()}_${namespace ?? this.k8s.namespace()}_${name ?? this.faker.word.noun()}_${sectionName ?? this.faker.word.noun()}`
   }
 
   contextualKri({ context, name }: { context: string, name: string }) {
