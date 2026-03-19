@@ -37,7 +37,6 @@
           @change="getEgresses"
         />
         <XI18n
-          v-if="data?.items.length"
           path="zone-cps.routes.items.intro"
           default-path="common.i18n.ignore-error"
         />
@@ -62,13 +61,14 @@
               :data="[data]"
               :errors="[error]"
               variant="list"
+              v-slot="{ data: [zones] }"
             >
               <DataCollection
                 type="zone-cps"
-                :items="data?.items ?? [undefined]"
+                :items="zones.items"
                 :page="route.params.page"
                 :page-size="route.params.size"
-                :total="data?.total"
+                :total="zones.total"
                 @change="route.update"
               >
                 <AppCollection
@@ -84,7 +84,7 @@
                     { ...me.get('headers.warnings'), label: 'Warnings', key: 'warnings', hideLabel: true },
                     { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
                   ]"
-                  :items="data?.items"
+                  :items="zones.items"
                   :is-selected-row="(row) => row.name === route.params.zone"
                   @resize="me.set"
                 >
@@ -200,30 +200,30 @@
                   </template>
                 </AppCollection>
               </DataCollection>
+              <RouterView
+                v-if="route.params.zone"
+                v-slot="child"
+              >
+                <XDrawer
+                  @close="route.replace({
+                    name: 'zone-cp-list-view',
+                    query: {
+                      page: route.params.page,
+                      size: route.params.size,
+                      s: route.params.s,
+                    },
+                  })"
+                >
+                  <component
+                    :is="child.Component"
+                    :name="route.params.zone"
+                    :zone-overview="zones.items.find((item) => item.name === route.params.zone)"
+                  />
+                </XDrawer>
+              </RouterView>
             </DataLoader>
           </XLayout>
         </XCard>
-        <RouterView
-          v-if="route.params.zone"
-          v-slot="child"
-        >
-          <XDrawer
-            @close="route.replace({
-              name: 'zone-cp-list-view',
-              query: {
-                page: route.params.page,
-                size: route.params.size,
-                s: route.params.s,
-              },
-            })"
-          >
-            <component
-              :is="child.Component"
-              :name="route.params.zone"
-              :zone-overview="data?.items.find((item) => item.name === route.params.zone)"
-            />
-          </XDrawer>
-        </RouterView>
       </AppView>
     </DataSource>
   </RouteView>
