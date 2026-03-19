@@ -36,5 +36,10 @@ runs:
       # will be saved to the cache.
     - if: steps.cache.outputs.cache-hit != 'true' && inputs.install-cmd != ''
       shell: bash
-      run: ${{ inputs.install-cmd }}
+      env:
+        # pass inputs through env vars to restrict potentially commands
+        # specifically this will allow simple commands but no pipes/redirects etc
+        INSTALL_CMD: ${{ inputs.install-cmd }}
+      ##
+      run: $INSTALL_CMD
 
