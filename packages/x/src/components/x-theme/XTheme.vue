@@ -573,6 +573,18 @@ import '@kong-ui-public/app-layout/dist/style.css'
   textarea {
     resize: vertical;
   }
+  button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    font-size: 100%;
+    line-height: inherit;
+    font-family: inherit;
+    font-weight: inherit;
+    color: inherit;
+  }
 
   img,
   svg {
