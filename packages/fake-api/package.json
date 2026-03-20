@@ -18,10 +18,6 @@
       "import": "./src/cypress.ts",
       "types": "./src/cypress.ts"
     },
-    "./playwright": {
-      "import": "./src/playwright.ts",
-      "types": "./src/playwright.ts"
-    },
     "./msw": {
       "import": "./src/msw.ts",
       "types": "./src/msw.ts"
