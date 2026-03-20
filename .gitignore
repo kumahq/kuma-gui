@@ -34,3 +34,5 @@ dist
 
 # playwright
 **/.features-gen/*
+**/playwright-report/*
+**/test-results/*

@@ -12,6 +12,9 @@
     "./cypress/e2e": {
       "import": "./src/cypress/e2e.ts"
     },
+    "./playwright": {
+      "import": "./src/playwright/index.ts"
+    },
     "./ci": {
       "require": "./scripts/ci.cjs"
     },

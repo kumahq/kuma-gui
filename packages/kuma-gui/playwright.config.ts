@@ -1,12 +1,15 @@
+import { config } from '@kumahq/config/playwright'
 import { defineConfig } from '@playwright/test'
-import { defineBddConfig } from 'playwright-bdd'
 
-const testDir = defineBddConfig({
-  features: 'features/**/*.feature',
-  steps: 'playwright/main.ts',
-})
-
-export default defineConfig({
-  testDir,
-  reporter: '',
-})
+export default defineConfig(
+  config({
+    features: 'features/**/*.feature',
+    steps: 'playwright/main.ts',
+  }),
+  {
+    use: {
+      headless: false, //!!process.env.CI,
+      baseURL: 'http://localhost:8080',
+    },
+  },
+)

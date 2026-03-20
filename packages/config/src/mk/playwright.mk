@@ -9,8 +9,6 @@ build:
 
 .PHONY: test
 test: build
-	@$(PLAYWRIGHT) test \
-		--fully-parallel \
-		-x
+	@$(PLAYWRIGHT) test
 
 
