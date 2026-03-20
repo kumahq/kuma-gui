@@ -36,168 +36,45 @@
           >
             <DataLoader
               :data="[meshIdentities, meshTrusts]"
+              v-slot="{ data: [meshIdentitiesData, meshTrustsData] }"
             >
               <XNotification
-                :notify="!props.mesh.mtlsBackend && meshIdentities!.items.length === 0"
+                :notify="!props.mesh.mtlsBackend && meshIdentitiesData.items.length === 0"
                 :uri="`meshes.notifications.mtls-warning:${props.mesh.id}`"
               >
-                <XI18n
-                  path="meshes.notifications.mtls-warning"
-                />
+                <XI18n path="meshes.notifications.mtls-warning" />
               </XNotification>
               <XNotification
                 :notify="mesh.meshServices.mode === 'Disabled'"
-                :uri="`meshes.notifications.mesh-service-activation:${route.params.mesh}`"
+                :uri="`meshes.notifications.mesh-service-activation:${props.mesh.id}`"
                 variant="info"
               >
-                <XI18n
-                  path="meshes.notifications.mesh-service-activation"
-                />
+                <XI18n path="meshes.notifications.mesh-service-activation" />
               </XNotification>
-              <XLayout
-                variant="y-stack"
-              >
-                <XAboutCard
-                  :title="t('meshes.routes.item.about.title')"
-                  :created="props.mesh.creationTime"
-                  :modified="props.mesh.modificationTime"
-                  class="about-section"
-                  data-testid="mesh-about-section"
-                >
-                  <XDl
-                    variant="x-stack"
-                  >
-                    <template
-                      v-for="policy in ['MeshTrafficPermission', 'MeshMetric', 'MeshAccessLog', 'MeshTrace']"
-                      :key="policy"
-                    >
-                      <template
-                        v-for="stats in [data?.policies?.[policy] ?? { total: 0 }]"
-                        :key="typeof stats"
-                      >
-                        <XNotification
-                          :notify="policy === 'MeshTrafficPermission' && props.mesh.mtlsBackend && stats.total === 0"
-                          :uri="`meshes.notifications.mtp-warning:${props.mesh.id}`"
-                        >
-                          <XI18n
-                            path="meshes.notifications.mtp-warning"
-                          />
-                        </XNotification>
-                        <div>
-                          <dt>
-                            <XAction
-                              :to="{
-                                name: 'policy-list-view',
-                                params: {
-                                  mesh: route.params.mesh,
-                                  policyPath: `${policy.toLowerCase()}s`,
-                                },
-                              }"
-                            >
-                              {{ policy }}
-                            </XAction>
-                          </dt>
-                          <dd>
-                            <XBadge
-                              :appearance="stats.total > 0 ? 'success' : 'neutral'"
-                            >
-                              {{ stats.total > 0 ? t('meshes.detail.enabled') : t('meshes.detail.disabled') }}
-                            </XBadge>
-                          </dd>
-                        </div>
-                      </template>
-                    </template>
-                    <div
-                      data-testid="mesh-mtls"
-                    >
-                      <dt>
-                        {{ t('http.api.property.mtls') }}
-                      </dt>
-                      <dd>
-                        <XLayout variant="separated">
-                          <XBadge
-                            v-if="props.mesh.mtlsBackend"
-                            appearance="info"
-                          >
-                            {{ props.mesh.mtlsBackend.type }} / {{ props.mesh.mtlsBackend.name }}
-                          </XBadge>
-                          <template
-                            v-for="identity in meshIdentities?.items"
-                            :key="identity.name"
-                          >
-                            <XAction
-                              :to="{
-                                name: 'mesh-mesh-identity-summary-view',
-                                params: {
-                                  mid: identity.kri,
-                                },
-                              }"
-                            >
-                              <XBadge appearance="info">
-                                MeshIdentity / {{ identity.name }}
-                              </XBadge>
-                            </XAction>
-                          </template>
-                          <XBadge
-                            v-if="!props.mesh.mtlsBackend && !meshIdentities?.items?.length"
-                            appearance="neutral"
-                          >
-                            {{ t('meshes.detail.disabled') }}
-                          </XBadge>
-                        </XLayout>
-                      </dd>
-                    </div>
-
-                    <template
-                      v-for="labels in [Object.entries(props.mesh.labels)]"
-                      :key="typeof labels"
-                    >
-                      <div v-if="labels.length > 0">
-                        <dt>{{ t('services.routes.item.labels') }}</dt>
-                        <dd>
-                          <XLayout
-                            variant="separated"
-                            truncate
-                          >
-                            <template
-                              v-for="kumaRe in [/^(.+\.)?kuma\.io\//]"
-                              :key="typeof kumaRe"
-                            >
-                              <XBadge
-                                v-for="[key, value] in labels"
-                                :key="key"
-                                :appearance="kumaRe.test(key) ? 'info' : 'decorative'"
-                              >
-                                {{ key }}:{{ value }}
-                              </XBadge>
-                            </template>
-                          </XLayout>
-                        </dd>
-                      </div>
-                    </template>
-                  </XDl>
-                </XAboutCard>
-
-                <XCard
-                  v-if="meshTrusts?.items?.length"
-                >
+              <XLayout variant="y-stack">
+                <MeshStatus
+                  :mesh="props.mesh"
+                  :mesh-identities="meshIdentitiesData.items"
+                  :policies="data?.policies"
+                />
+                <XCard v-if="meshTrustsData.items.length">
                   <template #title>
                     {{ t('meshes.routes.item.mesh-trusts.title') }}
                   </template>
                   <DataCollection
                     type="mesh-trusts"
-                    :items="meshTrusts?.items"
+                    :items="meshTrustsData.items"
+                    v-slot="{ items }"
                   >
                     <AppCollection
                       data-testid="mesh-trusts-listing"
                       type="mesh-trusts-collection"
-                      :items="meshTrusts?.items"
+                      :items="items"
                       :headers="[
                         { ...me.get('headers.identity'), label: t('meshes.routes.item.mesh-trusts.name'), key: 'name' },
                         { ...me.get('headers.type'), label: t('meshes.routes.item.mesh-trusts.trust-domain'), key: 'trustDomain' },
                         { ...me.get('headers.origin'), label: t('meshes.routes.item.mesh-trusts.origin'), key: 'origin' },
                       ]"
-
                       @resize="me.set"
                     >
                       <template #name="{ row: item }">
@@ -219,9 +96,7 @@
                         </XAction>
                       </template>
                       <template #trustDomain="{ row: item }">
-                        <XBadge
-                          appearance="decorative"
-                        >
+                        <XBadge appearance="decorative">
                           {{ item.spec.trustDomain }}
                         </XBadge>
                       </template>
@@ -236,9 +111,7 @@
                           }"
                           data-action
                         >
-                          <XBadge
-                            appearance="decorative"
-                          >
+                          <XBadge appearance="decorative">
                             {{ item.spec.origin.kri }}
                           </XBadge>
                         </XAction>
@@ -297,12 +170,8 @@
                           <template #description>
                             {{ t('meshes.detail.services') }}
 
-                            <XIcon
-                              name="info"
-                            >
-                              <XI18n
-                                path="meshes.detail.infos.services"
-                              />
+                            <XIcon name="info">
+                              <XI18n path="meshes.detail.infos.services" />
                             </XIcon>
                           </template>
                         </ResourceStatus>
@@ -345,7 +214,7 @@
                 <XCard>
                   <XLayout variant="y-stack">
                     <XLayout
-                      variant="separated"
+                      variant="action-group"
                       justify="end"
                     >
                       <div
@@ -397,9 +266,7 @@
                 </XCard>
               </XLayout>
 
-              <RouterView
-                v-slot="child"
-              >
+              <RouterView v-slot="child">
                 <XDrawer
                   v-if="child.route.name !== route.name"
                   @close="route.replace({
@@ -414,8 +281,8 @@
                 >
                   <component
                     :is="child.Component"
-                    :mesh-identities="meshIdentities?.items"
-                    :mesh-trusts="meshTrusts?.items"
+                    :mesh-identities="meshIdentitiesData.items"
+                    :mesh-trusts="meshTrustsData.items"
                   />
                 </XDrawer>
               </RouterView>
@@ -428,6 +295,7 @@
 </template>
 
 <script lang="ts" setup>
+import { useMeshStatus } from '../'
 import type { Mesh } from '../data'
 import { sources } from '../sources'
 import { YAML } from '@/app/application'
@@ -439,18 +307,6 @@ import { sources as resourceSources } from '@/app/resources/sources'
 const props = defineProps<{
   mesh: Mesh
 }>()
+
+const MeshStatus = useMeshStatus()
 </script>
-<style lang="scss" scoped>
-.about-subsection {
-  border-top: var(--x-border-width-10) solid var(--x-color-border);
-  padding-top: var(--x-space-70);
-}
-
-:deep(.about-section .about-section-content) {
-  display: block !important;
-
-  h3 {
-    color: var(--x-color-text);
-  }
-}
-</style>

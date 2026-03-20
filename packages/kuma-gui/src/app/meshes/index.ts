@@ -1,6 +1,7 @@
 import { token, createInjections } from '@kumahq/container'
 
 import MeshActionGroup from './components/MeshActionGroup.vue'
+import MeshStatus from './components/MeshStatus.vue'
 import MeshInsightsList from './components/MeshInsightsList.vue'
 import locales from './locales/en-us/index.yaml'
 import { routes } from './routes'
@@ -22,6 +23,7 @@ type Token = ReturnType<typeof token>
 const $ = {
   MeshInsightsList: token<typeof MeshInsightsList>('meshes.components.MeshInsightsList'),
   MeshActionGroup: token<typeof MeshActionGroup>('meshes.components.MeshActionGroup'),
+  MeshStatus: token<typeof MeshStatus>('meshes.components.MeshStatus'),
 }
 
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
@@ -37,6 +39,9 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
     }],
     [$.MeshActionGroup, {
       service: () => MeshActionGroup,
+    }],
+    [$.MeshStatus, {
+      service: () => MeshStatus,
     }],
     [token('meshes.sources'), {
       service: sources,
@@ -84,7 +89,9 @@ export const TOKENS = $
 export const [
   useMeshInsightsList,
   useMeshActionGroup,
+  useMeshStatus,
 ] = createInjections(
   $.MeshInsightsList,
   $.MeshActionGroup,
+  $.MeshStatus,
 )
