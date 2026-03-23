@@ -246,7 +246,6 @@ watch(() => props.value, () => {
 <style scoped lang="scss">
 .container {
   width: 100%;
-  position: relative;
   font-family: var(--x-font-family-code);
   position: relative;
   display: inline-flex;
@@ -298,7 +297,7 @@ watch(() => props.value, () => {
   position: absolute;
   display: inline-flex;
   padding: 0;
-  word-break: break-word;
+  overflow-wrap: anywhere;
   white-space: pre;
   flex: 1;
 
@@ -345,7 +344,9 @@ input {
   outline: none;
   caret-color: var(--x-color-text);
   line-height: var(--x-font-size-70);
-  font: inherit;
+  font-family: inherit;
+  font-weight: inherit;
+  font-size: inherit;
 }
 
 .dropdown {

@@ -4,7 +4,7 @@ Feature: mesh / mesh-identity
     Given the CSS selectors
       | Alias              | Selector                            |
       | meshtrusts-listing | [data-testid="mesh-trusts-listing"] |
-      | item             | $meshtrusts-listing tbody tr                                  |
+      | item               | $meshtrusts-listing tbody tr        |
       | summary            | [data-testid="slideout-container"]  |
 
   Scenario: MeshTrusts are listed in mesh overview

@@ -371,6 +371,8 @@ export function createEslintConfig(
     },
     {
       ignores: [
+        '.features-gen/*',
+        'playwright-report/*',
         'dist/*',
         'node_modules/*',
       ],
