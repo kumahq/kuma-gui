@@ -12,7 +12,8 @@ build:
 	@$(BDDGEN)
 
 .PHONY: test
+test: PLAYWRIGHT_FLAGS=""
 test: build install
-	@$(PLAYWRIGHT) test
+	@$(PLAYWRIGHT) test $(PLAYWRIGHT_FLAGS)
 
 

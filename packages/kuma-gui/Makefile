@@ -54,10 +54,14 @@ test/unit/watch: .test/unit/watch ## Dev: run unit tests but watch for changes
 test/e2e: ## Run browser-based e2e tests against a running GUI, you may want to set KUMA_TEST_BROWSER=chrome
 ifndef KUMA_TEST_BROWSER
 	@while ! nc -z localhost 5681; do sleep 1; done;
-endif
 	@$(MAKE) \
 		-f $(MK)/playwright.mk \
 			test
+else
+	@$(MAKE) \
+		-f $(MK)/playwright.mk \
+			test PLAYWRIGHT_FLAGS="--ui"
+endif
 
 .PHONY: build
 build: .build ## Dev: build a production artifact in `./dist`
