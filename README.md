@@ -36,7 +36,7 @@ Built by Envoy contributors at Kong 🦍.
 
 Kuma is under active development and production-ready.
 
-See [DEVELOPER.md](DEVELOPER.md) for further details.
+See [@kumahq/kuma-gui](./packages/kuma-gui/README.md) for further details.
 
 ## License
 
