@@ -15,9 +15,6 @@
     "./playwright": {
       "import": "./src/playwright/index.ts"
     },
-    "./ci": {
-      "require": "./scripts/ci.cjs"
-    },
     "./vite": {
       "import": "./src/vite/index.ts"
     },

@@ -23,7 +23,7 @@ runs:
       with:
         path: |
           **/node_modules
-          /home/runner/.cache/Cypress
+          ~/.cache/ms-playwright
         # if you ever want to ignore or rebuild the cache you can temporarily
         # remove the restore-keys related comments here also see
         # https://github.com/actions/cache/blob/main/tips-and-workarounds.md#update-a-cache
