@@ -346,10 +346,6 @@ search {
 
 .search-field {
   flex-basis: 310px;
-  flex-grow: 1;
-}
-
-.search-field {
   flex: 1;
 }
 

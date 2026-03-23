@@ -15,79 +15,76 @@
     v-slot="{ can, route, t, me, uri }"
   >
     <AppView>
-      <div
-        class="stack"
+      <DataLoader
+        :src="uri(sources, `/meshes/:mesh/service-insights/:name`, {
+          mesh: route.params.mesh,
+          name: route.params.service,
+        })"
+        v-slot="{ data: [data] }"
       >
-        <DataLoader
-          :src="uri(sources, `/meshes/:mesh/service-insights/:name`, {
-            mesh: route.params.mesh,
-            name: route.params.service,
-          })"
-          v-slot="{ data: [data] }"
+        <XAboutCard
+          :title="t('services.internal-service.about.title')"
+          :created="data.creationTime"
+          :modified="data.modificationTime"
         >
-          <XAboutCard
-            :title="t('services.internal-service.about.title')"
-            :created="data.creationTime"
-            :modified="data.modificationTime"
-          >
-            <XDl variant="x-stack">
-              <div>
-                <dt>
-                  {{ t('http.api.property.status') }}
-                </dt>
-                <dd>
-                  <StatusBadge :status="data.status" />
-                </dd>
-              </div>
-              <div>
-                <dt>
-                  {{ t('http.api.property.address') }}
-                </dt>
-                <dd>
-                  <template v-if="data.addressPort">
-                    <XCopyButton
-                      variant="badge"
-                      format="default"
-                      :text="data.addressPort"
-                    />
-                  </template>
+          <XDl variant="x-stack">
+            <div>
+              <dt>
+                {{ t('http.api.property.status') }}
+              </dt>
+              <dd>
+                <StatusBadge :status="data.status" />
+              </dd>
+            </div>
+            <div>
+              <dt>
+                {{ t('http.api.property.address') }}
+              </dt>
+              <dd>
+                <template v-if="data.addressPort">
+                  <XCopyButton
+                    variant="badge"
+                    format="default"
+                    :text="data.addressPort"
+                  />
+                </template>
 
-                  <template v-else>
-                    {{ t('common.detail.none') }}
-                  </template>
-                </dd>
-              </div>
-              <div>
-                <dt>
-                  {{ t('http.api.property.dataPlaneProxies') }}
-                </dt>
-                <dd
-                  v-for="[online, total] in [[data.dataplanes?.online ?? 0, data.dataplanes?.total ?? 0]]"
-                  :key="typeof online"
+                <template v-else>
+                  {{ t('common.detail.none') }}
+                </template>
+              </dd>
+            </div>
+            <div>
+              <dt>
+                {{ t('http.api.property.dataPlaneProxies') }}
+              </dt>
+              <dd
+                v-for="[online, total] in [[data.dataplanes?.online ?? 0, data.dataplanes?.total ?? 0]]"
+                :key="typeof online"
+              >
+                <XBadge
+                  :appearance="online === 0 ? 'danger' : online !== total ? 'warning' : 'success'"
                 >
-                  <XBadge
-                    :appearance="online === 0 ? 'danger' : online !== total ? 'warning' : 'success'"
-                  >
-                    {{ online ?? 0 }}/{{ total ?? 0 }}
-                  </XBadge>
-                </dd>
-              </div>
-            </XDl>
-          </XAboutCard>
-        </DataLoader>
+                  {{ online ?? 0 }}/{{ total ?? 0 }}
+                </XBadge>
+              </dd>
+            </div>
+          </XDl>
+        </XAboutCard>
+      </DataLoader>
 
-        <XCard>
-          <template #title>
-            <h3>{{ t('services.detail.data_plane_proxies') }}</h3>
-          </template>
-
+      <XCard>
+        <template #title>
+          <h3>{{ t('services.detail.data_plane_proxies') }}</h3>
+        </template>
+        <XLayout
+          variant="y-stack"
+        >
           <search>
             <form
-              class="search-form"
               @submit.prevent
             >
               <XSearch
-                class="search-field"
                 :keys="['name', 'tag', ...(can('use zones') ? ['zone'] : []), 'namespace', 'label']"
                 :value="route.params.s"
                 @change="(s) => route.update({ page: 1, s })"
@@ -268,8 +265,8 @@
               </RouterView>
             </DataCollection>
           </DataLoader>
-        </XCard>
-      </div>
+        </XLayout>
+      </XCard>
     </AppView>
   </RouteView>
 </template>
@@ -282,26 +279,6 @@ import { sources as dataplaneSources } from '@/app/data-planes/sources'
 </script>
 
 <style lang="scss" scoped>
-search {
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-  align-items: stretch;
-  flex-wrap: wrap;
-  gap: var(--x-space-70);
-  margin-bottom: var(--x-space-70);
-}
-
-.search-form {
-  display: flex;
-  flex-basis: 350px;
-  flex-grow: 1;
-}
-
-.search-field {
-  flex: 1;
-}
-
 .name-link {
   display: inline-block;
   width: 100%;

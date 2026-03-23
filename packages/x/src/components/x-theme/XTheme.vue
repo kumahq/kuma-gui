@@ -5,6 +5,9 @@
     <slot name="default" />
   </div>
 </template>
+<script lang="ts" setup>
+import '@kong-ui-public/app-layout/dist/style.css'
+</script>
 <style lang="scss">
   @keyframes icon-size-30 {
     100% {
@@ -192,98 +195,100 @@
 <style lang="scss" scoped>
 :deep(> *) {
   /* animation */
-  --x-animation-duration-20: #{$kui-animation-duration-20};
+  --x-animation-duration-20: var(--kui-animation-duration-20, #{$kui-animation-duration-20});
 
   /* border-radius */
-  --x-border-radius-10: #{$kui-border-radius-10};
-  --x-border-radius-20: #{$kui-border-radius-20};
-  --x-border-radius-30: #{$kui-border-radius-30};
-  --x-border-radius-40: #{$kui-border-radius-40};
+  --x-border-radius-10: var(--kui-border-radius-10, #{$kui-border-radius-10});
+  --x-border-radius-20: var(--kui-border-radius-20, #{$kui-border-radius-20});
+  --x-border-radius-30: var(--kui-border-radius-30, #{$kui-border-radius-30});
+  --x-border-radius-40: var(--kui-border-radius-40, #{$kui-border-radius-40});
 
   /* border-width */
-  --x-border-width-10: #{$kui-border-width-10};
+  --x-border-width-10: var(--kui-border-width-10, #{$kui-border-width-10});
 
   /* color-background */
-  --x-color-background: #{$kui-color-background};
-  --x-color-background-inverse: #{$kui-color-background-inverse};
-  --x-color-background-neutral-weak: #{$kui-color-background-neutral-weak};
-  --x-color-background-neutral-weaker: #{$kui-color-background-neutral-weaker};
-  --x-color-background-neutral-weakest: #{$kui-color-background-neutral-weakest};
-  --x-color-background-primary: #{$kui-color-background-primary};
-  --x-color-background-primary-weakest: #{$kui-color-background-primary-weakest};
-  --x-color-background-success-weakest: #{$kui-color-background-success-weakest};
-  --x-color-background-warning-weak: #{$kui-color-background-warning-weak};
-  --x-color-background-danger: #{$kui-color-background-danger};
+  --x-color-background: var(--kui-color-background, #{$kui-color-background});
+  --x-color-background-inverse: var(--kui-color-background-inverse, #{$kui-color-background-inverse});
+  --x-color-background-neutral-weak: var(--kui-color-background-neutral-weak, #{$kui-color-background-neutral-weak});
+  --x-color-background-neutral-weaker: var(--kui-color-background-neutral-weaker, #{$kui-color-background-neutral-weaker});
+  --x-color-background-neutral-weakest: var(--kui-color-background-neutral-weakest, #{$kui-color-background-neutral-weakest});
+  --x-color-background-primary: var(--kui-color-background-primary, #{$kui-color-background-primary});
+  --x-color-background-primary-weakest: var(--kui-color-background-primary-weakest, #{$kui-color-background-primary-weakest});
+  --x-color-background-success-weakest: var(--kui-color-background-success-weakest, #{$kui-color-background-success-weakest});
+  --x-color-background-warning-weak: var(--kui-color-background-warning-weak, #{$kui-color-background-warning-weak});
+  --x-color-background-danger: var(--kui-color-background-danger, #{$kui-color-background-danger});
 
   /* color-border */
-  --x-color-border: #{$kui-color-border};
-  --x-color-border-primary: #{$kui-color-border-primary};
-  --x-color-border-primary-strong: #{$kui-color-border-primary-strong};
-  --x-color-border-primary-weak: #{$kui-color-border-primary-weak};
+  --x-color-border: var(--kui-color-border, #{$kui-color-border});
+  --x-color-border-primary: var(--kui-color-border-primary, #{$kui-color-border-primary});
+  --x-color-border-primary-strong: var(--kui-color-border-primary-strong, #{$kui-color-border-primary-strong});
+  --x-color-border-primary-weak: var(--kui-color-border-primary-weak, #{$kui-color-border-primary-weak});
 
   /* color-text */
   /* TODO(jc): This border color is in the design but doesn't seem to be exported from @kong/design-tokens */
   /* https://github.com/Kong/design-tokens/blob/5b2d82048cdc48cd3d6a4d186b33ecdb22f134f2/tokens/alias/color/index.json#L185 */
   --x-color-green-40: #00D6A4; // #{$kui-color-green-40};
-  --x-color-text: #{$kui-color-text};
-  --x-color-text-danger: #{$kui-color-text-danger};
-  --x-color-text-decorative-aqua: #{$kui-color-text-decorative-aqua};
-  --x-color-text-disabled: #{$kui-color-text-disabled};
-  --x-color-text-inverse: #{$kui-color-text-inverse};
-  --x-color-text-neutral: #{$kui-color-text-neutral};
-  --x-color-text-neutral-strong: #{$kui-color-text-neutral-strong};
-  --x-color-text-primary: #{$kui-color-text-primary};
+  --x-color-text: var(--kui-color-text, #{$kui-color-text});
+  --x-color-text-danger: var(--kui-color-text-danger, #{$kui-color-text-danger});
+  --x-color-text-decorative-aqua: var(--kui-color-text-decorative-aqua, #{$kui-color-text-decorative-aqua});
+  --x-color-text-disabled: var(--kui-color-text-disabled, #{$kui-color-text-disabled});
+  --x-color-text-inverse: var(--kui-color-text-inverse, #{$kui-color-text-inverse});
+  --x-color-text-neutral: var(--kui-color-text-neutral, #{$kui-color-text-neutral});
+  --x-color-text-neutral-strong: var(--kui-color-text-neutral-strong, #{$kui-color-text-neutral-strong});
+  --x-color-text-primary: var(--kui-color-text-primary, #{$kui-color-text-primary});
+
+
 
   /* font-family */
-  --x-font-family-code: #{$kui-font-family-code};
-  --x-font-family-text: #{$kui-font-family-text};
+  --x-font-family-code: var(--kui-font-family-code, #{$kui-font-family-code});
+  --x-font-family-text: var(--kui-font-family-text, #{$kui-font-family-text});
 
   /* font-size */
-  --x-font-size-20: #{$kui-font-size-20};
-  --x-font-size-30: #{$kui-font-size-30};
-  --x-font-size-40: #{$kui-font-size-40};
-  --x-font-size-50: #{$kui-font-size-50};
-  --x-font-size-60: #{$kui-font-size-60};
-  --x-font-size-70: #{$kui-font-size-70};
+  --x-font-size-20: var(--kui-font-size-20, #{$kui-font-size-20});
+  --x-font-size-30: var(--kui-font-size-30, #{$kui-font-size-30});
+  --x-font-size-40: var(--kui-font-size-40, #{$kui-font-size-40});
+  --x-font-size-50: var(--kui-font-size-50, #{$kui-font-size-50});
+  --x-font-size-60: var(--kui-font-size-60, #{$kui-font-size-60});
+  --x-font-size-70: var(--kui-font-size-70, #{$kui-font-size-70});
 
   /* font-weight */
-  --x-font-weight-bold: #{$kui-font-weight-bold};
-  --x-font-weight-medium: #{$kui-font-weight-medium};
-  --x-font-weight-regular: #{$kui-font-weight-regular};
-  --x-font-weight-semibold: #{$kui-font-weight-semibold};
+  --x-font-weight-bold: var(--kui-font-weight-bold, #{$kui-font-weight-bold});
+  --x-font-weight-medium: var(--kui-font-weight-medium, #{$kui-font-weight-medium});
+  --x-font-weight-regular: var(--kui-font-weight-regular, #{$kui-font-weight-regular});
+  --x-font-weight-semibold: var(--kui-font-weight-semibold, #{$kui-font-weight-semibold});
 
   /* letter-spacing*/
-  --x-letter-spacing-minus-20: #{$kui-letter-spacing-minus-20};
+  --x-letter-spacing-minus-20: var(--kui-letter-spacing-minus-20, #{$kui-letter-spacing-minus-20});
 
   /* icon-size */
-  --x-icon-size-30: #{$kui-icon-size-30};
-  --x-icon-size-40: #{$kui-icon-size-40};
+  --x-icon-size-30: var(--kui-icon-size-30, #{$kui-icon-size-30});
+  --x-icon-size-40: var(--kui-icon-size-40, #{$kui-icon-size-40});
 
   /* line-height */
-  --x-line-height-20: #{$kui-line-height-20};
-  --x-line-height-30: #{$kui-line-height-30};
-  --x-line-height-40: #{$kui-line-height-40};
-  --x-line-height-50: #{$kui-line-height-50};
+  --x-line-height-20: var(--kui-line-height-20, #{$kui-line-height-20});
+  --x-line-height-30: var(--kui-line-height-30, #{$kui-line-height-30});
+  --x-line-height-40: var(--kui-line-height-40, #{$kui-line-height-40});
+  --x-line-height-50: var(--kui-line-height-50, #{$kui-line-height-50});
 
   /* shadow */
-  --x-shadow-border: #{$kui-shadow-border};
-  --x-shadow-border-primary: #{$kui-shadow-border-primary};
-  --x-shadow-border-primary-strongest: #{$kui-shadow-border-primary-strongest};
-  --x-shadow-border-primary-weak: #{$kui-shadow-border-primary-weak};
-  --x-shadow-focus: #{$kui-shadow-focus};
+  --x-shadow-border: var(--kui-shadow-border, #{$kui-shadow-border});
+  --x-shadow-border-primary: var(--kui-shadow-border-primary, #{$kui-shadow-border-primary});
+  --x-shadow-border-primary-strongest: var(--kui-shadow-border-primary-strongest, #{$kui-shadow-border-primary-strongest});
+  --x-shadow-border-primary-weak: var(--kui-shadow-border-primary-weak, #{$kui-shadow-border-primary-weak});
+  --x-shadow-focus: var(--kui-shadow-focus, #{$kui-shadow-focus});
 
   /* spacing */
-  --x-space-10: #{$kui-space-10};
-  --x-space-20: #{$kui-space-20};
-  --x-space-30: #{$kui-space-30};
-  --x-space-40: #{$kui-space-40};
-  --x-space-50: #{$kui-space-50};
-  --x-space-60: #{$kui-space-60};
-  --x-space-70: #{$kui-space-70};
-  --x-space-80: #{$kui-space-80};
-  --x-space-90: #{$kui-space-90};
-  --x-space-100: #{$kui-space-100};
-  --x-space-110: #{$kui-space-110};
+  --x-space-10: var(--kui-space-10, #{$kui-space-10});
+  --x-space-20: var(--kui-space-20, #{$kui-space-20});
+  --x-space-30: var(--kui-space-30, #{$kui-space-30});
+  --x-space-40: var(--kui-space-40, #{$kui-space-40});
+  --x-space-50: var(--kui-space-50, #{$kui-space-50});
+  --x-space-60: var(--kui-space-60, #{$kui-space-60});
+  --x-space-70: var(--kui-space-70, #{$kui-space-70});
+  --x-space-80: var(--kui-space-80, #{$kui-space-80});
+  --x-space-90: var(--kui-space-90, #{$kui-space-90});
+  --x-space-100: var(--kui-space-100, #{$kui-space-100});
+  --x-space-110: var(--kui-space-110, #{$kui-space-110});
 
   /* component specific */
   /* kong/design-token grays are either too light or too dark i.e. we need weaker-than-weak-but-not-weakest */
@@ -318,7 +323,7 @@
     --icon-trafficroute-glyph: url('@/assets/images/policies/TrafficRoute.png');
     --icon-traffictrace-glyph: url('@/assets/images/policies/TrafficTrace.png');
     --icon-virtualoutbound-glyph: url('@/assets/images/policies/VirtualOutbound.png');
-    /* */
+    /* end-legacy */
 
     /* application mappings i.e. kuma things to generic things */
     --icon-wifi-tethering: icon-wifi-tethering;
@@ -334,7 +339,8 @@
     * @deprecated
     */
     --icon-standard: icon-dataplane-standard;
-    /**/
+    /*end deprecated */
+
     --icon-dataplane-standard: icon-dataplane-standard;
     --icon-dataplane-builtin: icon-dataplane-standard;
     --icon-dataplane-delegated: icon-dataplane-standard;
@@ -365,7 +371,7 @@
     --icon-TrafficPermission: icon-trafficpermission;
     --icon-TrafficRoute: icon-trafficroute;
     --icon-TrafficTrace: icon-traffictrace;
-    /**/
+    /* end legacy */
 
     --icon-meshcircuitbreakers: icon-circuitbreaker;
     --icon-meshfaultinjections: icon-faultinjection;
@@ -441,7 +447,8 @@
     --icon-space-after: var(--x-space-30);
   }
 }
-
+</style>
+<style lang="scss" scoped>
 :deep(> *) {
   & {
     font-size: var(--x-font-size-40);
@@ -458,6 +465,338 @@
   /* make sure k-buttons are never underlined */
   a.k-button {
     text-decoration: none !important;
+  }
+}
+</style>
+
+<style lang="scss" scoped>
+:deep(> *) {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+
+  &,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    line-height: 1.3;
+  }
+
+  blockquote,
+  dl,
+  dd,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  hr,
+  figure,
+  p,
+  pre,
+  ul,
+  ol {
+    margin: 0;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: var(--x-font-weight-bold);
+  }
+
+  h1 {
+    font-size: var(--x-font-size-70);
+  }
+
+  h2 {
+    font-size: var(--x-font-size-40);
+  }
+
+  h3 {
+    font-size: var(--x-font-size-40);
+  }
+
+  h4 {
+    font-size: var(--x-font-size-30);
+  }
+
+  h5 {
+    font-size: var(--x-font-size-30);
+  }
+
+  h6 {
+    font-size: var(--x-font-size-30);
+  }
+
+  ul,
+  ol {
+    padding-left: var(--x-space-80);
+  }
+
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  ul,
+  ol {
+    &:not(:first-child) {
+      margin-top: var(--x-space-50);
+    }
+  }
+
+  p:empty {
+    display: none;
+  }
+
+  dl p:not(:first-child) {
+    margin-top: var(--x-space-10);
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  b,
+  strong {
+    font-weight: var(--x-font-weight-semibold);
+  }
+  textarea {
+    resize: vertical;
+  }
+  button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    font-size: 100%;
+    line-height: inherit;
+    font-family: inherit;
+    font-weight: inherit;
+    color: inherit;
+  }
+
+  img,
+  svg {
+    vertical-align: middle;
+  }
+
+
+  fieldset {
+    border: none;
+  }
+}
+</style>
+<style lang="scss" scoped>
+:deep(> *) {
+  .visually-hidden {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip-path: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+  }
+  .mt-auto {
+    margin-top: auto !important;
+  }
+  .mt-0 {
+    margin-top: 0px !important;
+  }
+  .mt-1 {
+    margin-top: var(--x-space-20) !important;
+  }
+  .mt-2 {
+    margin-top: var(--x-space-40) !important;
+  }
+  .mt-3 {
+    margin-top: var(--x-space-50) !important;
+  }
+  .mt-4 {
+    margin-top: var(--x-space-60) !important;
+  }
+  .mt-5 {
+    margin-top: var(--x-space-80) !important;
+  }
+  .mt-6 {
+    margin-top: var(--x-space-90) !important;
+  }
+  .mt-7 {
+    margin-top: var(--x-space-110) !important;
+  }
+  .mt-8 {
+    margin-top: var(--x-space-110) !important;
+  }
+
+  .mb-auto {
+    margin-bottom: auto !important;
+  }
+  .mb-0 {
+    margin-bottom: 0px !important;
+  }
+  .mb-1 {
+    margin-bottom: var(--x-space-20) !important;
+  }
+  .mb-2 {
+    margin-bottom: var(--x-space-40) !important;
+  }
+  .mb-3 {
+    margin-bottom: var(--x-space-50) !important;
+  }
+  .mb-4 {
+    margin-bottom: var(--x-space-60) !important;
+  }
+  .mb-5 {
+    margin-bottom: var(--x-space-80) !important;
+  }
+  .mb-6 {
+    margin-bottom: var(--x-space-90) !important;
+  }
+  .mb-7 {
+    margin-bottom: var(--x-space-110) !important;
+  }
+  .mb-8 {
+    margin-bottom: var(--x-space-110) !important;
+  }
+
+  .mr-auto {
+    margin-right: auto !important;
+  }
+  .mr-0 {
+    margin-right: 0px !important;
+  }
+  .mr-1 {
+    margin-right: var(--x-space-20) !important;
+  }
+  .mr-2 {
+    margin-right: var(--x-space-40) !important;
+  }
+  .mr-3 {
+    margin-right: var(--x-space-50) !important;
+  }
+  .mr-4 {
+    margin-right: var(--x-space-60) !important;
+  }
+  .mr-5 {
+    margin-right: var(--x-space-80) !important;
+  }
+  .mr-6 {
+    margin-right: var(--x-space-90) !important;
+  }
+  .mr-7 {
+    margin-right: var(--x-space-110) !important;
+  }
+  .mr-8 {
+    margin-right: var(--x-space-110) !important;
+  }
+
+  .ml-auto {
+    margin-left: auto !important;
+  }
+  .ml-0 {
+    margin-left: 0px !important;
+  }
+  .ml-1 {
+    margin-left: var(--x-space-20) !important;
+  }
+  .ml-2 {
+    margin-left: var(--x-space-40) !important;
+  }
+  .ml-3 {
+    margin-left: var(--x-space-50) !important;
+  }
+  .ml-4 {
+    margin-left: var(--x-space-60) !important;
+  }
+  .ml-5 {
+    margin-left: var(--x-space-80) !important;
+  }
+  .ml-6 {
+    margin-left: var(--x-space-90) !important;
+  }
+  .ml-7 {
+    margin-left: var(--x-space-110) !important;
+  }
+  .ml-8 {
+    margin-left: var(--x-space-110) !important;
+  }
+}
+</style>
+
+<style lang="scss" scoped>
+:deep(> * ) {
+  /*
+  .stack
+
+  For stacking elements with consistent space between.
+
+  Adapted from https://every-layout.dev/layouts/stack/.
+  */
+
+  .stack > * + * {
+    margin-block-start: var(--x-space-70);
+  }
+
+  .stack-small > * + * {
+    margin-block-start: var(--x-space-40);
+  }
+
+  /*
+  .stack-with-borders
+
+  Variant of .stack with a horizontal border in the center of the gap.
+  */
+  .stack-with-borders > * + * {
+    margin-block-start: var(--x-space-40);
+    border-block-start: var(--x-border-width-10) solid var(--x-color-border);
+    padding-block-start: var(--x-space-40);
+  }
+
+  /*
+  .columns
+
+  For horizontally listing elements with consistent space between. Once the space defined by `--threshold` is exhausted, the elements will **start** to wrap.
+
+  Adapted from https://every-layout.dev/layouts/switcher/.
+  */
+
+  .columns {
+    --threshold: 40rem;
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--x-space-80);
+  }
+
+  .columns > * {
+    flex-grow: 1;
+    flex-basis: calc((var(--threshold) - 100%) * 999);
+    min-inline-size: 0;
+  }
+
+  /*
+  .columns-with--borders
+
+  Variant of .columns with a vertical border at the right side of each column (except the last).
+  */
+  .columns-with-borders > *:not(:last-child) {
+    border-right: var(--x-border-width-10) solid var(--x-color-border);
   }
 }
 </style>

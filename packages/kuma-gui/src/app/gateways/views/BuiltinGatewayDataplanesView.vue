@@ -13,17 +13,13 @@
     v-slot="{ can, route, t, me, uri }"
   >
     <AppView>
-      <div
-        class="stack"
-      >
-        <XCard>
+      <XCard>
+        <XLayout
+          variant="y-stack"
+        >
           <search>
-            <form
-              class="search-form"
-              @submit.prevent
-            >
+            <form @submit.prevent>
               <XSearch
-                class="search-field"
                 :keys="['name', 'tag', 'label', ...(can('use zones') ? ['zone'] : []), 'namespace']"
                 :value="route.params.s"
                 @change="(s) => route.update({ page: 1, s })"
@@ -207,8 +203,8 @@
               </RouterView>
             </DataCollection>
           </DataLoader>
-        </XCard>
-      </div>
+        </XLayout>
+      </XCard>
     </AppView>
   </RouteView>
 </template>
@@ -224,26 +220,6 @@ const props = defineProps<{
 </script>
 
 <style lang="scss" scoped>
-search {
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-  align-items: stretch;
-  flex-wrap: wrap;
-  gap: var(--x-space-70);
-  margin-bottom: var(--x-space-70);
-}
-
-.search-form {
-  display: flex;
-  flex-basis: 350px;
-  flex-grow: 1;
-}
-
-.search-field {
-  flex: 1;
-}
-
 .name-link {
   display: inline-block;
   width: 100%;
