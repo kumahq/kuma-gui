@@ -68,7 +68,7 @@
     "markdown-it": "^14.1.1",
     "openapi-format": "^1.29.5",
     "openapi-typescript": "^7.13.0",
-    "playwright-bdd": "^8.4.2",
+    "playwright-bdd": "^8.5.0",
     "stylelint": "^17.4.0",
     "stylelint-config-html": "^1.1.0",
     "stylelint-config-recommended-scss": "^17.0.0",
