@@ -1,6 +1,9 @@
 import { config } from '@kumahq/config/playwright'
 import { defineConfig } from '@playwright/test'
 
+// The only thing you cannot set --ui via TS playwright.config therefore --ui
+// is conditionally added via the CLI via our Makefile via @kumahq/config
+
 const headed = (process.env.KUMA_TEST_BROWSER || '').length > 0
 
 export default defineConfig(
