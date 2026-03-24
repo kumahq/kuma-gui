@@ -32,7 +32,6 @@
       >
         <XLayout
           variant="action-group"
-          justify="end"
         >
           <XCheckbox
             :checked="route.params.expanded"
