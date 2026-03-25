@@ -34,8 +34,7 @@ import { setupSteps } from '@kumahq/gherkin-web/playwright'
 // ...
 
 setupSteps({
-  baseURL: 'http://localhost:8080/gui',
-  // ...
+  // ...options
 })
 
 ```
