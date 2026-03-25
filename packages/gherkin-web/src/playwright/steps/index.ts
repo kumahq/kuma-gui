@@ -1,24 +1,31 @@
 import { createFetch } from '@kumahq/fake-api'
 import { expect } from '@playwright/test'
-import { createBdd } from 'playwright-bdd'
+import { createBdd, test as base } from 'playwright-bdd'
 
 import { getClient, YAML, merge, Cookie, routeToRegexp } from '../..'
 import type { DataTable } from '@cucumber/cucumber'
 
 type Options = {
-  baseURL?: string
   negativeTimeout?: number
   dependencies: any
   fs: any
   client?: ReturnType<typeof getClient>
 }
-export async function setupSteps({ dependencies, fs, baseURL = '', negativeTimeout = 4000, client = getClient() }: Options) {
+
+export const test = base.extend<{
+  baseURL: string
+}>({
+  baseURL: async ({ baseURL }, use) => {
+    await use(baseURL)
+  },
+})
+
+export async function setupSteps({ dependencies, fs, negativeTimeout = 4000, client = getClient() }: Options) {
   const _fetch = createFetch({
     dependencies,
     fs,
   })
   const config = {
-    baseURL,
     negativeTimeout,
     fetch: async (...rest: Parameters<typeof _fetch>) => {
       const options = rest[1] ?? {}
@@ -33,8 +40,7 @@ export async function setupSteps({ dependencies, fs, baseURL = '', negativeTimeo
       return res
     },
   }
-
-  const { Given, When, Then, Before, After } = createBdd()
+  const { Given, When, Then, Before, After } = createBdd(test)
 
   const fetch = config.fetch
 
@@ -60,7 +66,7 @@ export async function setupSteps({ dependencies, fs, baseURL = '', negativeTimeo
   let env: Record<string, string> = {}
   let selectors: Record<string, string> = {}
   let localStorage: Set<string>
-  Before(async ({ context }) => {
+  Before(async ({ context, baseURL }) => {
     client.reset()
     env = {}
     selectors = {}
@@ -70,7 +76,7 @@ export async function setupSteps({ dependencies, fs, baseURL = '', negativeTimeo
       {
         name: 'KUMA_MOCK_API_ENABLED',
         value: 'false',
-        url: `${config.baseURL}`,
+        url: `${baseURL}`,
       },
     ])
     const p = Object.keys(fs).map(route => {
@@ -124,7 +130,7 @@ export async function setupSteps({ dependencies, fs, baseURL = '', negativeTimeo
       },
     )
   })
-  Given('the environment', async ({ context }, yaml: string) => {
+  Given('the environment', async ({ context, baseURL }, yaml: string) => {
     env = {
       ...env,
       ...YAML.parse(yaml) as object,
@@ -132,7 +138,7 @@ export async function setupSteps({ dependencies, fs, baseURL = '', negativeTimeo
     await context.addCookies(Object.entries(env).map(([key, value]) => ({
       name: key,
       value: String(value),
-      url: `${config.baseURL}`,
+      url: `${baseURL}`,
     })))
   })
 
@@ -210,8 +216,8 @@ export async function setupSteps({ dependencies, fs, baseURL = '', negativeTimeo
 
   // act
 
-  When('I visit the {string} URL', async ({ page }, path: string) => {
-    const url = `${config.baseURL}${path}`
+  When('I visit the {string} URL', async ({ page, baseURL }, path: string) => {
+    const url = `${baseURL}${path}`
     await page.goto(url)
     await page.locator('[data-testid-root="mesh-app"]').waitFor({
       state: 'attached',
@@ -273,8 +279,8 @@ export async function setupSteps({ dependencies, fs, baseURL = '', negativeTimeo
 
   // assert
 
-  Then('the URL is {string}', async ({ page }, expected: string) => {
-    await page.waitForURL(`${config.baseURL}${expected}`)
+  Then('the URL is {string}', async ({ page, baseURL }, expected: string) => {
+    await page.waitForURL(`${baseURL}${expected}`)
   })
 
   Then(/^the URL( doesn't | )contain[s]? "(.*)"$/, async ({ page }, assertion: string, str: string) => {

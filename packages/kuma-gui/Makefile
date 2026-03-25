@@ -51,7 +51,17 @@ test/unit: .test/unit ## Dev: run unit tests and exit
 test/unit/watch: .test/unit/watch ## Dev: run unit tests but watch for changes
 
 .PHONY: test/e2e
-test/e2e: .test/e2e ## Run browser-based e2e tests against a running GUI, you may want to set KUMA_BASE_URL=http://localhost:8080/gui and KUMA_TEST_BROWSER=chrome
+test/e2e: ## Run browser-based e2e tests against a running GUI, you may want to set KUMA_TEST_BROWSER=chrome
+ifndef KUMA_TEST_BROWSER
+	@while ! nc -z localhost 5681; do sleep 1; done;
+	@$(MAKE) \
+		-f $(MK)/playwright.mk \
+			test
+else
+	@$(MAKE) \
+		-f $(MK)/playwright.mk \
+			test PLAYWRIGHT_FLAGS="--ui"
+endif
 
 .PHONY: build
 build: .build ## Dev: build a production artifact in `./dist`
@@ -73,11 +83,4 @@ prune:
 release: KUMAHQ_KUMA_GUI=$(NPM_WORKSPACE_ROOT)/$(shell cat $(NPM_WORKSPACE_ROOT)/package-lock.json | jq -r '.packages | to_entries[] | select(.value.name == "@kumahq/kuma-gui") | .key')
 release: SRC?=$(KUMAHQ_KUMA_GUI)/dist
 release: .release ## CI: 'releases' a built artifact, depends on the build artifact from 'make build'
-
-.PHONY: playwright
-playwright: ## Run e2e tests with playwright
-	@$(MAKE) \
-		-f $(MK)/playwright.mk \
-			test
-
 
