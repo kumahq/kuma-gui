@@ -18,4 +18,22 @@ the majority of available targets.
 message. Therefore, when writing final PRs descriptions on multi-commit PRs
 write it as if there was one atomic commit in the PR.
 
+### Testing
+
+For testing tasks, follow these rules:
+
+- Check for available skills
+- Write end-to-end or integration tests using Gherkin/Cucumber (`.feature` files)
+- Create unit tests for business logic (`.spec.ts` files)
+- Run test suites and analyze results
+- Follow established testing patterns from existing test files
+
+**Test Commands:**
+- `make -C packages/kuma-gui test/e2e` - Run e2e tests from repository root
+- `make -C packages/kuma-gui test/unit` - Run unit tests from repository root
+- `make -C <path> test/unit` - Run unit tests of package/app in `path` from repository root
+
+The test agent uses only existing Gherkin step definitions and never modifies
+source code or removes failing tests.
+
 ---
