@@ -1,0 +1,49 @@
+resources:
+  x-empty-state:
+    title: No data
+    body: !!text/markdown |
+      There are no { type } resources present{ suffix }.
+  routes:
+    items:
+      title: Resources
+      category:
+        title: Category
+        options:
+          all: All
+          security: Security
+          traffic: Traffic
+          observability: Observability
+          performance: Performance
+          reliability: Reliability
+      empty: This resource type does not exist.
+      types:
+        policies:
+          title: Policies
+          href:
+            docs: '{KUMA_DOCS_URL}/policies/{name}?{KUMA_UTM_QUERY_PARAMS}'
+          description: !!text/markdown |
+            Use policies to apply filters to incoming or outgoing traffic of data plane proxies. To generate the Envoy configuration of a proxy the control plane uses its data plane configuration with the policies matching it.
+        mesh:
+          title: Mesh scoped
+          href:
+            docs: '{KUMA_DOCS_URL}/resources/{name}?{KUMA_UTM_QUERY_PARAMS}'
+          description: !!text/markdown |
+            Use mesh-scoped resources to configure services and infrastructure within a specific mesh. These resources like data planes and services are managed by the control plane and define the behavior and properties of components operating within their designated mesh boundary.
+        global:
+          title: Global scoped
+          href:
+            docs: '{KUMA_DOCS_URL}/resources/{name}?{KUMA_UTM_QUERY_PARAMS}'
+          description: !!text/markdown |
+            Use global resources to configure cross-mesh infrastructure and mesh management itself. These resources like meshes and zones operate at the cluster level and are managed by the global control plane to coordinate behavior across the entire service mesh deployment.
+        others:
+          title: Other
+    item:
+      title: '{name}'
+      config: Configuration
+      format: Format
+      formats:
+        universal: Universal
+        k8s: Kubernetes
+      about:
+        title: About this {resource}
+        resource: Resource

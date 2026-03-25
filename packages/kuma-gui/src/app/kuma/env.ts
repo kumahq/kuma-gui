@@ -20,6 +20,8 @@ export const vars = (config: HtmlVars) => {
     KUMA_STORE_TYPE: () => config.storeType,
     //
     KUMA_VERSION_URL: () => 'https://kuma.io/latest_version',
+    //
+    KUMA_RESOURCES_ROUTE_ENABLED: () => 'false',
   }
 }
 declare module '@/app/application' {

@@ -54,6 +54,7 @@ meshes:
         data-plane-list-view: Data plane proxies
         policy-list-index-view: Policies
         workload-list-view: Workloads
+        resource-types-list-view: Resources
       overview: 'Overview'
       about:
         title: About this mesh
