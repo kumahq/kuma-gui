@@ -15,25 +15,50 @@ export const GlobalInsight = {
   fromObject(partialGlobalInsight: PartialGlobalInsight) {
     return {
       ...partialGlobalInsight,
-      resources: {
-        ...partialGlobalInsight.resources,
-        MeshService: {
-          ...partialGlobalInsight.resources.MeshService,
-          total: partialGlobalInsight.resources.MeshService?.total ?? 0,
-        },
-        MeshMultiZoneService: {
-          ...partialGlobalInsight.resources.MeshMultiZoneService,
-          total: partialGlobalInsight.resources.MeshMultiZoneService?.total ?? 0,
-        },
-        MeshExternalService: {
-          ...partialGlobalInsight.resources.MeshExternalService,
-          total: partialGlobalInsight.resources.MeshExternalService?.total ?? 0,
-        },
-      },
+      resources: (() => {
+        const resources = {
+          ...partialGlobalInsight.resources,
+          MeshService: {
+            ...partialGlobalInsight.resources.MeshService,
+            total: partialGlobalInsight.resources.MeshService?.total ?? 0,
+          },
+          MeshMultiZoneService: {
+            ...partialGlobalInsight.resources.MeshMultiZoneService,
+            total: partialGlobalInsight.resources.MeshMultiZoneService?.total ?? 0,
+          },
+          MeshExternalService: {
+            ...partialGlobalInsight.resources.MeshExternalService,
+            total: partialGlobalInsight.resources.MeshExternalService?.total ?? 0,
+          },
+          HostnameGenerator: {
+            ...partialGlobalInsight.resources.HostnameGenerator,
+            total: partialGlobalInsight.resources.HostnameGenerator?.total ?? 0,
+          },
+          Zone: {
+            ...partialGlobalInsight.resources.Zone,
+            total: partialGlobalInsight.resources.Zone?.total ?? partialGlobalInsight.zones.controlPlanes.total ?? 0,
+          },
+          ZoneEgress: {
+            ...partialGlobalInsight.resources.ZoneEgress,
+            total: partialGlobalInsight.resources.ZoneEgress?.total ?? partialGlobalInsight.zones.zoneEgresses.total ?? 0,
+          },
+          ZoneIngress: {
+            ...partialGlobalInsight.resources.ZoneIngress,
+            total: partialGlobalInsight.resources.ZoneIngress?.total ?? partialGlobalInsight.zones.zoneIngresses.total ?? 0,
+          },
+          Mesh: {
+            ...partialGlobalInsight.resources.Mesh,
+            total: partialGlobalInsight.resources.Mesh?.total ?? partialGlobalInsight.meshes.total ?? 0,
+          },
+          MeshGateway: {
+            ...partialGlobalInsight.resources.MeshGateway,
+            total: partialGlobalInsight.resources.MeshGateway?.total ?? partialGlobalInsight.dataplanes.gatewayBuiltin.total ?? 0,
+          },
+        }
+        return resources as PartialGlobalInsight['resources'] & typeof resources
+      })(),
     }
   },
 }
 
-export type GlobalInsight = ReturnType<typeof GlobalInsight.fromObject> & {
-  resources: PartialGlobalInsight['resources']
-}
+export type GlobalInsight = ReturnType<typeof GlobalInsight.fromObject>
