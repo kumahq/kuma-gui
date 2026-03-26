@@ -125,7 +125,7 @@ jobs:
 
   post-checks:
     # There is a branch protection rule on the repo that requires "branch-protection" to
-    # be successful
+    # be successful in order to merge a PR
     name: branch-protection
     #
     needs:
@@ -142,3 +142,10 @@ jobs:
           contains(needs.*.result, 'cancelled')
         run: echo '${{toJSON(needs)}}' && exit 1
       - run: echo "Successful"
+  # when everything is successful on the main branch run the release.yml
+  # workflow
+  release:
+    needs:
+      - post-checks
+    if: ${{ github.event_name != 'pull_request' }}
+    uses: ./.github/workflows/release.yml
