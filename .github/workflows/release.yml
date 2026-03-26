@@ -37,14 +37,9 @@ on:
         required: true
         type: string
         description: The commit hash for which to create a release PR
-  workflow_run:
-    workflows:
-      - main
-    types:
-      - completed
-    branches:
-      - master
-      - release-[0-9]+.[0-9]+
+  # Allows us to call this workflow once main.yml on the main branch has
+  # successfully completed
+  workflow_call:
 
 permissions:
   contents: read # for checking out the repository (e.g. actions/checkout)
