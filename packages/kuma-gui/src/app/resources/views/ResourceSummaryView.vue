@@ -104,7 +104,7 @@
 
             <template v-else>
               <DataLoader
-                :src="uri(sources, '/resources/:kri/as/kubernetes', {
+                :src="uri(sources, '/resource/:kri/as/kubernetes', {
                   kri: route.params.kri,
                 })"
                 v-slot="{ data: [k8sConfig] }"

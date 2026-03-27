@@ -73,15 +73,15 @@
               </form>
             </search>
             <DataLoader
-              :src="type.scope === 'mesh' || type.scope === 'policies' ? uri(sources, '/meshes/:mesh/:path', {
-                mesh: route.params.mesh,
+              :src="type.scope === 'global' ? uri(sources, '/resources/:path', {
                 path: route.params.resourcePath,
               }, {
                 page: route.params.page,
                 size: route.params.size,
                 search: route.params.s,
-              }) : uri(sources, '/:path', {
+              }) : uri(sources, '/resources/:path/for/:mesh', {
                 path: route.params.resourcePath,
+                mesh: route.params.mesh,
               }, {
                 page: route.params.page,
                 size: route.params.size,
