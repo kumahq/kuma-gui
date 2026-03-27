@@ -13,7 +13,7 @@
     v-slot="{ route, t, uri }"
   >
     <DataSource
-      :src="uri(sources, '/resources/:kri', { kri: route.params.kri })"
+      :src="uri(sources, '/resource/:kri', { kri: route.params.kri })"
       v-slot="{ data: sourceData }"
     >
       <AppView
@@ -176,7 +176,7 @@
 
             <template v-else>
               <DataLoader
-                :src="uri(sources, '/resources/:kri/as/kubernetes', {
+                :src="uri(sources, '/resource/:kri/as/kubernetes', {
                   kri: route.params.kri,
                 })"
                 v-slot="{ data: [k8sConfig] }"
