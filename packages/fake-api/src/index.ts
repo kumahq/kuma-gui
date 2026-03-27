@@ -1,3 +1,4 @@
+import { pathToRegexp } from 'path-to-regexp'
 import { URLPattern } from 'urlpattern-polyfill'
 
 export type RestRequest = {
@@ -67,6 +68,19 @@ export const Cookie = {
       .filter(([key, _value]) => key.startsWith(prefix)))
   },
 }
+export const routeToRegexp = (route: string) => {
+  const url = new URL(route, !route.includes('://') ? 'http://localhost' : undefined)
+  // escape `:`s for pathToRegexp's named segments (/:segment/)
+  const origin = url.origin.replaceAll(':', '\\:')
+  const { regexp } = pathToRegexp(`${route.includes('://') ? origin : ''}${url.pathname}`)
+  // remove the end of pathToRegexps regexp
+  // and replace it with optional `/` and optional `?<optional chars>`
+  const re = new RegExp(
+    regexp.toString().replace('(?:\\/$)?$/i', '(?:\\/)?(\\?.*)?$').substring(1), 'i',
+  )
+  return re
+}
+
 export const createFetchSync = <T extends object = {}>({ dependencies, fs }: { dependencies: Dependencies<T>, fs: FS }) => {
   const router = new Router(fs)
   return (url: string, options: RequestInit & { body?: Record<string, string>, headers?: Record<string, string | string[] | undefined>}) => {

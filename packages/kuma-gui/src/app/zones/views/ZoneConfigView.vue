@@ -13,70 +13,76 @@
       :render="false"
       :title="t('zone-cps.routes.item.navigation.zone-cp-config-view')"
     />
-    <DataSource
-      :src="uri(sources, '/control-plane/outdated/:version', {
-        version: props.data.zoneInsight.version?.kumaCp?.version ?? '-',
-      })"
-      v-slot="{ data: version }"
+    <AppView
+      :notifications="true"
     >
-      <AppView
-        :notifications="true"
-      >
-        <template
-          v-for="{ bool, key, params } in [
-            {
-              bool: props.data.zoneInsight.store === 'memory',
-              key: 'store-memory',
-            },
-            {
-              bool: !props.data.zoneInsight.version?.kumaCp?.kumaCpGlobalCompatible,
-              key: 'global-cp-incompatible',
-              params: {
-                zoneCpVersion: props.data.zoneInsight.version?.kumaCp?.version ?? '-',
-                globalCpVersion: version?.version ?? '',
-              },
-            },
-            {
-              bool: (props.data.zoneInsight.connectedSubscription?.status.total.responsesRejected ?? 0) > 0,
-              key: 'global-nack-response',
-            },
-          ]"
-          :key="key"
+      <XCard>
+        <DataLoader
+          :data="[props.data]"
+          v-slot="{ data: [zone] }"
         >
-          <XNotification
-            :notify="bool"
-            :data-testid="`warning-${key}`"
-            :uri="`zone-cps.notifications.${key}.${props.data.id}`"
+          <DataSource
+            :src="uri(sources, '/control-plane/outdated/:version', {
+              version: zone.zoneInsight.version?.kumaCp?.version ?? '-',
+            })"
+            v-slot="{ data: version }"
           >
-            <XI18n
-              :path="`zone-cps.notifications.${key}`"
-              :params="Object.fromEntries(Object.entries(params ?? {}))"
-            >
+            <template v-if="typeof version !== 'undefined'">
               <template
-                v-if="key === 'global-nack-response'"
-                #link
-              >
-                <XAction
-                  data-action
-                  :to="{
-                    name: 'zone-cp-subscription-summary-view',
+                v-for="{ bool, key, params } in [
+                  {
+                    bool: zone.zoneInsight.store === 'memory',
+                    key: 'store-memory',
+                  },
+                  {
+                    bool: !zone.zoneInsight.version?.kumaCp?.kumaCpGlobalCompatible,
+                    key: 'global-cp-incompatible',
                     params: {
-                      subscription: props.data.zoneInsight.connectedSubscription?.id,
+                      zoneCpVersion: zone.zoneInsight.version?.kumaCp?.version ?? '-',
+                      globalCpVersion: version?.version ?? '',
                     },
-                  }"
+                  },
+                  {
+                    bool: (zone.zoneInsight.connectedSubscription?.status.total.responsesRejected ?? 0) > 0,
+                    key: 'global-nack-response',
+                  },
+                ]"
+                :key="key"
+              >
+                <XNotification
+                  :notify="bool"
+                  :data-testid="`warning-${key}`"
+                  :uri="`zone-cps.notifications.${key}.${zone.id}`"
                 >
-                  zone control plane summary
-                </XAction>
+                  <XI18n
+                    :path="`zone-cps.notifications.${key}`"
+                    :params="Object.fromEntries(Object.entries(params ?? {}))"
+                  >
+                    <template
+                      v-if="key === 'global-nack-response'"
+                      #link
+                    >
+                      <XAction
+                        data-action
+                        :to="{
+                          name: 'zone-cp-subscription-summary-view',
+                          params: {
+                            subscription: zone.zoneInsight.connectedSubscription?.id,
+                          },
+                        }"
+                      >
+                        zone control plane summary
+                      </XAction>
+                    </template>
+                  </XI18n>
+                </XNotification>
               </template>
-            </XI18n>
-          </XNotification>
-        </template>
-
-        <XCard>
+            </template>
+          </DataSource>
           <XCodeBlock
-            v-if="Object.keys(props.data.zoneInsight.config).length > 0"
+            v-if="Object.keys(zone.zoneInsight.config).length > 0"
             language="json"
-            :code="JSON.stringify(props.data.zoneInsight.config, null, 2)"
+            :code="JSON.stringify(zone.zoneInsight.config, null, 2)"
             is-searchable
             :query="route.params.codeSearch"
             :is-filter-mode="route.params.codeFilter"
@@ -94,9 +100,9 @@
           >
             {{ t('zone-cps.detail.no_subscriptions') }}
           </XAlert>
-        </XCard>
-      </AppView>
-    </DataSource>
+        </DataLoader>
+      </XCard>
+    </AppView>
   </RouteView>
 </template>
 
@@ -104,6 +110,6 @@
 import type { ZoneOverview } from '../data'
 import { sources } from '@/app/control-planes/sources'
 const props = defineProps<{
-  data: ZoneOverview
+  data: ZoneOverview | Error | undefined
 }>()
 </script>

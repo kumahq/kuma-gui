@@ -12,8 +12,14 @@
     "./cypress/e2e": {
       "import": "./src/cypress/e2e.ts"
     },
-    "./ci": {
-      "require": "./scripts/ci.cjs"
+    "./cypress": {
+      "import": "./src/cypress/config.ts"
+    },
+    "./playwright": {
+      "import": "./src/playwright/index.ts"
+    },
+    "./eslint": {
+      "import": "./src/eslint.ts"
     },
     "./vite": {
       "import": "./src/vite/index.ts"
@@ -29,23 +35,19 @@
     "./tsconfig/node": "./tsconfig/node.json"
   },
   "devDependencies": {
-    "@types/markdown-it": "^14.1.2"
+    "@types/markdown-it": "^14.1.2",
+    "@types/node": "^25.5.0"
   },
   "dependencies": {
     "@apidevtools/json-schema-ref-parser": "^15.3.1",
-    "@badeball/cypress-cucumber-preprocessor": "^24.0.1",
-    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.8",
     "@cucumber/gherkin-utils": "^11.0.0",
     "@eslint/js": "^9.39.4",
     "@kumahq/gherkin-web": "*",
+    "@playwright/test": "^1.58.2",
     "@stylistic/eslint-plugin": "^5.10.0",
     "@stylistic/stylelint-plugin": "^5.0.1",
     "@vue/eslint-config-typescript": "^14.7.0",
     "@vue/tsconfig": "^0.9.0",
-    "cypress": "^15.12.0",
-    "cypress-fail-fast": "^7.1.1",
-    "cypress-fail-on-console-error": "^5.1.3",
-    "cypress-terminal-report": "^7.3.3",
     "deepmerge": "^4.3.1",
     "esbuild": "^0.27.4",
     "escape-string-regexp": "^4.0.0",
@@ -59,18 +61,19 @@
     "globals": "^17.4.0",
     "husky": "^9.1.7",
     "js-yaml": "^4.1.1",
-    "lint-staged": "^16.3.4",
+    "lint-staged": "^16.4.0",
     "lockfile-lint": "^5.0.0",
     "markdown-it": "^14.1.1",
-    "openapi-format": "^1.29.5",
+    "openapi-format": "^1.30.0",
     "openapi-typescript": "^7.13.0",
-    "stylelint": "^17.4.0",
+    "playwright-bdd": "^8.5.0",
+    "stylelint": "^17.5.0",
     "stylelint-config-html": "^1.1.0",
     "stylelint-config-recommended-scss": "^17.0.0",
     "stylelint-config-recommended-vue": "^1.6.1",
     "typescript": "^5.9.3",
     "vite": "^7.3.1",
     "vitest": "^4.1.0",
-    "vue-tsc": "^3.2.5"
+    "vue-tsc": "^3.2.6"
   }
 }

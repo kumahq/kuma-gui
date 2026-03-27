@@ -195,98 +195,100 @@ import '@kong-ui-public/app-layout/dist/style.css'
 <style lang="scss" scoped>
 :deep(> *) {
   /* animation */
-  --x-animation-duration-20: #{$kui-animation-duration-20};
+  --x-animation-duration-20: var(--kui-animation-duration-20, #{$kui-animation-duration-20});
 
   /* border-radius */
-  --x-border-radius-10: #{$kui-border-radius-10};
-  --x-border-radius-20: #{$kui-border-radius-20};
-  --x-border-radius-30: #{$kui-border-radius-30};
-  --x-border-radius-40: #{$kui-border-radius-40};
+  --x-border-radius-10: var(--kui-border-radius-10, #{$kui-border-radius-10});
+  --x-border-radius-20: var(--kui-border-radius-20, #{$kui-border-radius-20});
+  --x-border-radius-30: var(--kui-border-radius-30, #{$kui-border-radius-30});
+  --x-border-radius-40: var(--kui-border-radius-40, #{$kui-border-radius-40});
 
   /* border-width */
-  --x-border-width-10: #{$kui-border-width-10};
+  --x-border-width-10: var(--kui-border-width-10, #{$kui-border-width-10});
 
   /* color-background */
-  --x-color-background: #{$kui-color-background};
-  --x-color-background-inverse: #{$kui-color-background-inverse};
-  --x-color-background-neutral-weak: #{$kui-color-background-neutral-weak};
-  --x-color-background-neutral-weaker: #{$kui-color-background-neutral-weaker};
-  --x-color-background-neutral-weakest: #{$kui-color-background-neutral-weakest};
-  --x-color-background-primary: #{$kui-color-background-primary};
-  --x-color-background-primary-weakest: #{$kui-color-background-primary-weakest};
-  --x-color-background-success-weakest: #{$kui-color-background-success-weakest};
-  --x-color-background-warning-weak: #{$kui-color-background-warning-weak};
-  --x-color-background-danger: #{$kui-color-background-danger};
+  --x-color-background: var(--kui-color-background, #{$kui-color-background});
+  --x-color-background-inverse: var(--kui-color-background-inverse, #{$kui-color-background-inverse});
+  --x-color-background-neutral-weak: var(--kui-color-background-neutral-weak, #{$kui-color-background-neutral-weak});
+  --x-color-background-neutral-weaker: var(--kui-color-background-neutral-weaker, #{$kui-color-background-neutral-weaker});
+  --x-color-background-neutral-weakest: var(--kui-color-background-neutral-weakest, #{$kui-color-background-neutral-weakest});
+  --x-color-background-primary: var(--kui-color-background-primary, #{$kui-color-background-primary});
+  --x-color-background-primary-weakest: var(--kui-color-background-primary-weakest, #{$kui-color-background-primary-weakest});
+  --x-color-background-success-weakest: var(--kui-color-background-success-weakest, #{$kui-color-background-success-weakest});
+  --x-color-background-warning-weak: var(--kui-color-background-warning-weak, #{$kui-color-background-warning-weak});
+  --x-color-background-danger: var(--kui-color-background-danger, #{$kui-color-background-danger});
 
   /* color-border */
-  --x-color-border: #{$kui-color-border};
-  --x-color-border-primary: #{$kui-color-border-primary};
-  --x-color-border-primary-strong: #{$kui-color-border-primary-strong};
-  --x-color-border-primary-weak: #{$kui-color-border-primary-weak};
+  --x-color-border: var(--kui-color-border, #{$kui-color-border});
+  --x-color-border-primary: var(--kui-color-border-primary, #{$kui-color-border-primary});
+  --x-color-border-primary-strong: var(--kui-color-border-primary-strong, #{$kui-color-border-primary-strong});
+  --x-color-border-primary-weak: var(--kui-color-border-primary-weak, #{$kui-color-border-primary-weak});
 
   /* color-text */
   /* TODO(jc): This border color is in the design but doesn't seem to be exported from @kong/design-tokens */
   /* https://github.com/Kong/design-tokens/blob/5b2d82048cdc48cd3d6a4d186b33ecdb22f134f2/tokens/alias/color/index.json#L185 */
   --x-color-green-40: #00D6A4; // #{$kui-color-green-40};
-  --x-color-text: #{$kui-color-text};
-  --x-color-text-danger: #{$kui-color-text-danger};
-  --x-color-text-decorative-aqua: #{$kui-color-text-decorative-aqua};
-  --x-color-text-disabled: #{$kui-color-text-disabled};
-  --x-color-text-inverse: #{$kui-color-text-inverse};
-  --x-color-text-neutral: #{$kui-color-text-neutral};
-  --x-color-text-neutral-strong: #{$kui-color-text-neutral-strong};
-  --x-color-text-primary: #{$kui-color-text-primary};
+  --x-color-text: var(--kui-color-text, #{$kui-color-text});
+  --x-color-text-danger: var(--kui-color-text-danger, #{$kui-color-text-danger});
+  --x-color-text-decorative-aqua: var(--kui-color-text-decorative-aqua, #{$kui-color-text-decorative-aqua});
+  --x-color-text-disabled: var(--kui-color-text-disabled, #{$kui-color-text-disabled});
+  --x-color-text-inverse: var(--kui-color-text-inverse, #{$kui-color-text-inverse});
+  --x-color-text-neutral: var(--kui-color-text-neutral, #{$kui-color-text-neutral});
+  --x-color-text-neutral-strong: var(--kui-color-text-neutral-strong, #{$kui-color-text-neutral-strong});
+  --x-color-text-primary: var(--kui-color-text-primary, #{$kui-color-text-primary});
+
+
 
   /* font-family */
-  --x-font-family-code: #{$kui-font-family-code};
-  --x-font-family-text: #{$kui-font-family-text};
+  --x-font-family-code: var(--kui-font-family-code, #{$kui-font-family-code});
+  --x-font-family-text: var(--kui-font-family-text, #{$kui-font-family-text});
 
   /* font-size */
-  --x-font-size-20: #{$kui-font-size-20};
-  --x-font-size-30: #{$kui-font-size-30};
-  --x-font-size-40: #{$kui-font-size-40};
-  --x-font-size-50: #{$kui-font-size-50};
-  --x-font-size-60: #{$kui-font-size-60};
-  --x-font-size-70: #{$kui-font-size-70};
+  --x-font-size-20: var(--kui-font-size-20, #{$kui-font-size-20});
+  --x-font-size-30: var(--kui-font-size-30, #{$kui-font-size-30});
+  --x-font-size-40: var(--kui-font-size-40, #{$kui-font-size-40});
+  --x-font-size-50: var(--kui-font-size-50, #{$kui-font-size-50});
+  --x-font-size-60: var(--kui-font-size-60, #{$kui-font-size-60});
+  --x-font-size-70: var(--kui-font-size-70, #{$kui-font-size-70});
 
   /* font-weight */
-  --x-font-weight-bold: #{$kui-font-weight-bold};
-  --x-font-weight-medium: #{$kui-font-weight-medium};
-  --x-font-weight-regular: #{$kui-font-weight-regular};
-  --x-font-weight-semibold: #{$kui-font-weight-semibold};
+  --x-font-weight-bold: var(--kui-font-weight-bold, #{$kui-font-weight-bold});
+  --x-font-weight-medium: var(--kui-font-weight-medium, #{$kui-font-weight-medium});
+  --x-font-weight-regular: var(--kui-font-weight-regular, #{$kui-font-weight-regular});
+  --x-font-weight-semibold: var(--kui-font-weight-semibold, #{$kui-font-weight-semibold});
 
   /* letter-spacing*/
-  --x-letter-spacing-minus-20: #{$kui-letter-spacing-minus-20};
+  --x-letter-spacing-minus-20: var(--kui-letter-spacing-minus-20, #{$kui-letter-spacing-minus-20});
 
   /* icon-size */
-  --x-icon-size-30: #{$kui-icon-size-30};
-  --x-icon-size-40: #{$kui-icon-size-40};
+  --x-icon-size-30: var(--kui-icon-size-30, #{$kui-icon-size-30});
+  --x-icon-size-40: var(--kui-icon-size-40, #{$kui-icon-size-40});
 
   /* line-height */
-  --x-line-height-20: #{$kui-line-height-20};
-  --x-line-height-30: #{$kui-line-height-30};
-  --x-line-height-40: #{$kui-line-height-40};
-  --x-line-height-50: #{$kui-line-height-50};
+  --x-line-height-20: var(--kui-line-height-20, #{$kui-line-height-20});
+  --x-line-height-30: var(--kui-line-height-30, #{$kui-line-height-30});
+  --x-line-height-40: var(--kui-line-height-40, #{$kui-line-height-40});
+  --x-line-height-50: var(--kui-line-height-50, #{$kui-line-height-50});
 
   /* shadow */
-  --x-shadow-border: #{$kui-shadow-border};
-  --x-shadow-border-primary: #{$kui-shadow-border-primary};
-  --x-shadow-border-primary-strongest: #{$kui-shadow-border-primary-strongest};
-  --x-shadow-border-primary-weak: #{$kui-shadow-border-primary-weak};
-  --x-shadow-focus: #{$kui-shadow-focus};
+  --x-shadow-border: var(--kui-shadow-border, #{$kui-shadow-border});
+  --x-shadow-border-primary: var(--kui-shadow-border-primary, #{$kui-shadow-border-primary});
+  --x-shadow-border-primary-strongest: var(--kui-shadow-border-primary-strongest, #{$kui-shadow-border-primary-strongest});
+  --x-shadow-border-primary-weak: var(--kui-shadow-border-primary-weak, #{$kui-shadow-border-primary-weak});
+  --x-shadow-focus: var(--kui-shadow-focus, #{$kui-shadow-focus});
 
   /* spacing */
-  --x-space-10: #{$kui-space-10};
-  --x-space-20: #{$kui-space-20};
-  --x-space-30: #{$kui-space-30};
-  --x-space-40: #{$kui-space-40};
-  --x-space-50: #{$kui-space-50};
-  --x-space-60: #{$kui-space-60};
-  --x-space-70: #{$kui-space-70};
-  --x-space-80: #{$kui-space-80};
-  --x-space-90: #{$kui-space-90};
-  --x-space-100: #{$kui-space-100};
-  --x-space-110: #{$kui-space-110};
+  --x-space-10: var(--kui-space-10, #{$kui-space-10});
+  --x-space-20: var(--kui-space-20, #{$kui-space-20});
+  --x-space-30: var(--kui-space-30, #{$kui-space-30});
+  --x-space-40: var(--kui-space-40, #{$kui-space-40});
+  --x-space-50: var(--kui-space-50, #{$kui-space-50});
+  --x-space-60: var(--kui-space-60, #{$kui-space-60});
+  --x-space-70: var(--kui-space-70, #{$kui-space-70});
+  --x-space-80: var(--kui-space-80, #{$kui-space-80});
+  --x-space-90: var(--kui-space-90, #{$kui-space-90});
+  --x-space-100: var(--kui-space-100, #{$kui-space-100});
+  --x-space-110: var(--kui-space-110, #{$kui-space-110});
 
   /* component specific */
   /* kong/design-token grays are either too light or too dark i.e. we need weaker-than-weak-but-not-weakest */
@@ -321,7 +323,7 @@ import '@kong-ui-public/app-layout/dist/style.css'
     --icon-trafficroute-glyph: url('@/assets/images/policies/TrafficRoute.png');
     --icon-traffictrace-glyph: url('@/assets/images/policies/TrafficTrace.png');
     --icon-virtualoutbound-glyph: url('@/assets/images/policies/VirtualOutbound.png');
-    /* */
+    /* end-legacy */
 
     /* application mappings i.e. kuma things to generic things */
     --icon-wifi-tethering: icon-wifi-tethering;
@@ -337,7 +339,8 @@ import '@kong-ui-public/app-layout/dist/style.css'
     * @deprecated
     */
     --icon-standard: icon-dataplane-standard;
-    /**/
+    /*end deprecated */
+
     --icon-dataplane-standard: icon-dataplane-standard;
     --icon-dataplane-builtin: icon-dataplane-standard;
     --icon-dataplane-delegated: icon-dataplane-standard;
@@ -368,7 +371,7 @@ import '@kong-ui-public/app-layout/dist/style.css'
     --icon-TrafficPermission: icon-trafficpermission;
     --icon-TrafficRoute: icon-trafficroute;
     --icon-TrafficTrace: icon-traffictrace;
-    /**/
+    /* end legacy */
 
     --icon-meshcircuitbreakers: icon-circuitbreaker;
     --icon-meshfaultinjections: icon-faultinjection;
@@ -572,6 +575,18 @@ import '@kong-ui-public/app-layout/dist/style.css'
   }
   textarea {
     resize: vertical;
+  }
+  button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    font-size: 100%;
+    line-height: inherit;
+    font-family: inherit;
+    font-weight: inherit;
+    color: inherit;
   }
 
   img,

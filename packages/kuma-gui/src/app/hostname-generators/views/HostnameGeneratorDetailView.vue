@@ -15,131 +15,143 @@
       :render="false"
     />
 
-    <DataLoader
+    <DataSource
       :src="uri(sources, '/hostname-generators/:name', {
         name: route.params.name,
       })"
-      v-slot="{ data: [data] }"
+      v-slot="{ data: sourceData, error }"
     >
       <AppView :docs="t('hostname-generators.href.docs')">
         <template #title>
-          <h1>
-            <XCopyButton
-              :text="data.name"
-            >
-              <RouteTitle
-                :title="t('hostname-generators.routes.item.title', { name: data.name })"
-              />
-            </XCopyButton>
-          </h1>
+          <DataLoader
+            :data="[sourceData]"
+            variant="header"
+            v-slot="{ data: [data] }"
+          >
+            <h1>
+              <XCopyButton
+                :text="data.name"
+              >
+                <RouteTitle
+                  :title="t('hostname-generators.routes.item.title', { name: data.name })"
+                />
+              </XCopyButton>
+            </h1>
+          </DataLoader>
         </template>
         <XLayout
           variant="y-stack"
         >
           <XAboutCard
             :title="t('hostname-generators.routes.item.about.title')"
-            :created="data.creationTime"
-            :modified="data.modificationTime"
+            :created="sourceData?.creationTime"
+            :modified="sourceData?.modificationTime"
             data-testid="hostname-generator-about-section"
           >
-            <XLayout
-              variant="y-stack"
+            <DataLoader
+              :data="[sourceData]"
+              :errors="[error]"
+              v-slot="{ data: [data] }"
             >
-              <XLayout variant="y-stack">
-                <XDl>
-                  <div>
-                    <dt>
-                      {{ t('http.api.property.namespace') }}
-                    </dt>
-                    <dd>
-                      <XBadge>
-                        {{ data.namespace }}
-                      </XBadge>
-                    </dd>
-                  </div>
-                  <div v-if="can('use zones') && data.zone">
-                    <dt>
-                      {{ t('http.api.property.zone') }}
-                    </dt>
-                    <dd>
-                      <XAction
-                        :to="{
-                          name: 'zone-cp-detail-view',
-                          params: {
-                            zone: data.zone,
-                          },
-                        }"
-                      >
-                        <XBadge>
-                          {{ data.zone }}
-                        </XBadge>
-                      </XAction>
-                    </dd>
-                  </div>
-                </XDl>
-              </XLayout>
-              <template
-                v-for="labels in [{
-                  ...data.spec.selector.meshService.matchLabels,
-                  ...data.spec.selector.meshExternalService.matchLabels,
-                  ...data.spec.selector.meshMultiZoneService.matchLabels,
-                }]"
-                :key="typeof labels"
+              <XLayout
+                variant="y-stack"
               >
-                <XDl
-                  v-if="Object.keys(labels).length"
-                  variant="x-stack"
-                >
-                  <div>
-                    <dt>
-                      {{ t('http.api.property.match') }}
-                    </dt>
-                    <dd>
-                      <XLayout
-                        variant="separated"
-                        truncate
-                      >
-                        <XBadge
-                          v-for="([label, value], index) in Object.entries(labels)"
-                          :key="`${label}${value}${index}`"
-                        >
-                          {{ label }}:{{ value }}
+                <XLayout variant="y-stack">
+                  <XDl>
+                    <div>
+                      <dt>
+                        {{ t('http.api.property.namespace') }}
+                      </dt>
+                      <dd>
+                        <XBadge>
+                          {{ data.namespace }}
                         </XBadge>
-                      </XLayout>
-                    </dd>
-                  </div>
-                </XDl>
-              </template>
-              <XDl>
+                      </dd>
+                    </div>
+                    <div v-if="can('use zones') && data.zone">
+                      <dt>
+                        {{ t('http.api.property.zone') }}
+                      </dt>
+                      <dd>
+                        <XAction
+                          :to="{
+                            name: 'zone-cp-detail-view',
+                            params: {
+                              zone: data.zone,
+                            },
+                          }"
+                        >
+                          <XBadge>
+                            {{ data.zone }}
+                          </XBadge>
+                        </XAction>
+                      </dd>
+                    </div>
+                  </XDl>
+                </XLayout>
                 <template
-                  v-for="labels in [Object.entries(data.labels)]"
+                  v-for="labels in [{
+                    ...data.spec.selector.meshService.matchLabels,
+                    ...data.spec.selector.meshExternalService.matchLabels,
+                    ...data.spec.selector.meshMultiZoneService.matchLabels,
+                  }]"
                   :key="typeof labels"
                 >
-                  <div v-if="labels.length">
-                    <dt>{{ t('hostname-generators.routes.item.labels') }}</dt>
-                    <dd>
-                      <XLayout
-                        variant="separated"
-                        truncate
-                      >
-                        <template
-                          v-for="kumaRe in [/^(.+\.)?kuma\.io\//]"
-                          :key="typeof kumaRe"
+                  <XDl
+                    v-if="Object.keys(labels).length"
+                    variant="x-stack"
+                  >
+                    <div>
+                      <dt>
+                        {{ t('http.api.property.match') }}
+                      </dt>
+                      <dd>
+                        <XLayout
+                          variant="separated"
+                          truncate
                         >
                           <XBadge
-                            v-for="[key, value] in labels"
-                            :key="key"
-                            :appearance="kumaRe.test(key) ? 'info' : 'decorative'"
+                            v-for="([label, value], index) in Object.entries(labels)"
+                            :key="`${label}${value}${index}`"
                           >
-                            {{ key }}:{{ value }}
+                            {{ label }}:{{ value }}
                           </XBadge>
-                        </template>
-                      </XLayout>
-                    </dd>
-                  </div>
+                        </XLayout>
+                      </dd>
+                    </div>
+                  </XDl>
                 </template>
-              </XDl>
-            </XLayout>
+                <XDl>
+                  <template
+                    v-for="labels in [Object.entries(data.labels)]"
+                    :key="typeof labels"
+                  >
+                    <div v-if="labels.length">
+                      <dt>{{ t('hostname-generators.routes.item.labels') }}</dt>
+                      <dd>
+                        <XLayout
+                          variant="separated"
+                          truncate
+                        >
+                          <template
+                            v-for="kumaRe in [/^(.+\.)?kuma\.io\//]"
+                            :key="typeof kumaRe"
+                          >
+                            <XBadge
+                              v-for="[key, value] in labels"
+                              :key="key"
+                              :appearance="kumaRe.test(key) ? 'info' : 'decorative'"
+                            >
+                              {{ key }}:{{ value }}
+                            </XBadge>
+                          </template>
+                        </XLayout>
+                      </dd>
+                    </div>
+                  </template>
+                </XDl>
+              </XLayout>
+            </DataLoader>
           </XAboutCard>
 
           <XCard>
@@ -172,18 +184,24 @@
               </XLayout>
 
               <template v-if="route.params.environment === 'universal'">
-                <XCodeBlock
-                  data-testid="codeblock-yaml-universal"
-                  language="yaml"
-                  :code="YAML.stringify(data.$raw)"
-                  is-searchable
-                  :query="route.params.codeSearch"
-                  :is-filter-mode="route.params.codeFilter"
-                  :is-reg-exp-mode="route.params.codeRegExp"
-                  @query-change="route.update({ codeSearch: $event })"
-                  @filter-mode-change="route.update({ codeFilter: $event })"
-                  @reg-exp-mode-change="route.update({ codeRegExp: $event })"
-                />
+                <DataLoader
+                  :data="[sourceData]"
+                  :errors="[error]"
+                  v-slot="{ data: [data] }"
+                >
+                  <XCodeBlock
+                    data-testid="codeblock-yaml-universal"
+                    language="yaml"
+                    :code="YAML.stringify(data.$raw)"
+                    is-searchable
+                    :query="route.params.codeSearch"
+                    :is-filter-mode="route.params.codeFilter"
+                    :is-reg-exp-mode="route.params.codeRegExp"
+                    @query-change="route.update({ codeSearch: $event })"
+                    @filter-mode-change="route.update({ codeFilter: $event })"
+                    @reg-exp-mode-change="route.update({ codeRegExp: $event })"
+                  />
+                </DataLoader>
               </template>
 
               <template v-else>
@@ -211,7 +229,7 @@
           </XCard>
         </XLayout>
       </AppView>
-    </DataLoader>
+    </DataSource>
   </RouteView>
 </template>
 

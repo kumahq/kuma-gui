@@ -45,6 +45,7 @@ import {
   XTeleportSlot,
   XTeleportTemplate,
   XTheme,
+  XTimespan,
   XTooltip,
   XWindow,
   XErrorState,
@@ -90,6 +91,7 @@ const components = [
   ['XTeleportTemplate', XTeleportTemplate],
   ['XTeleportSlot', XTeleportSlot],
   ['XTheme', XTheme],
+  ['XTimespan', XTimespan],
   ['XTooltip', XTooltip],
   ['XDisclosure', XDisclosure],
   ['XDownload', XDownload],
@@ -145,6 +147,7 @@ declare module 'vue' {
     XTeleportTemplate: typeof XTeleportTemplate
     XTeleportSlot: typeof XTeleportSlot
     XTheme: typeof XTheme
+    XTimespan: typeof XTimespan
     XTooltip: typeof XTooltip
     XDisclosure: typeof XDisclosure
     XDownload: typeof XDownload

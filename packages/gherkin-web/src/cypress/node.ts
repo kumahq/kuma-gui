@@ -1,4 +1,6 @@
+// eslint-disable-next-line import/no-unresolved
 import { addCucumberPreprocessorPlugin } from '@badeball/cypress-cucumber-preprocessor'
+// eslint-disable-next-line import/no-unresolved
 import { createEsbuildPlugin } from '@badeball/cypress-cucumber-preprocessor/esbuild'
 
 import type esbuild from 'esbuild'

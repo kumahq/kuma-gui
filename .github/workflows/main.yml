@@ -59,17 +59,7 @@ jobs:
           echo "e2e<<EOF" >> $GITHUB_OUTPUT
             make meta/e2e >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
-      - id: set-groups
-        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8.0.0
-        env:
-          THREAD_COUNT: 4
-        with:
-          script: |
-            const ci = require('@kumahq/config/ci')
-            const json = {
-              '@kumahq/kuma-gui': ci.getPartitionedTestFiles(process.env.THREAD_COUNT, 'packages/kuma-gui/'),
-            }
-            return json
+
   lint-tests:
     timeout-minutes: 30
     needs:
@@ -111,29 +101,31 @@ jobs:
       fail-fast: false
       matrix:
         package: ${{ fromJSON(needs.install-dependencies.outputs.e2e) }}
-        container: [0, 1, 2, 3]
+        container: [1, 2, 3, 4]
     name: |
       Browser tests: ${{ matrix.package.name }}
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - uses: ./.github/actions/bootstrap/
-      - run: |
+      - env:
+          KUMA_BASE_URL: 'http://localhost:5681/gui'
+          KUMA_E2E_SHARD_CURRENT: ${{ matrix.container }}
+          KUMA_E2E_SHARD_TOTAL: 4
+        run: |
           make -C ${{ matrix.package.path }} run/e2e &
-          make -C ${{ matrix.package.path }} \
-            CYPRESS_SPEC="$(echo '${{ needs.install-dependencies.outputs.spec_groups }}' | jq -cMr '.["${{ matrix.package.name }}"]' | jq -cMr '.[${{ matrix.container }}]')" \
-            test/e2e
+          make -C ${{ matrix.package.path }} test/e2e
       - uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
         if: failure()
         with:
-          name: cypress-artifacts-${{ matrix.package.slug }}-${{ matrix.container }}
+          name: e2e-artifacts-${{ matrix.package.slug }}-${{ matrix.container }}
           retention-days: ${{ github.event_name == 'pull_request' && 3 || 30 }}
           path: |
-            ${{ matrix.package.path }}/cypress/screenshots
-            ${{ matrix.package.path }}/cypress/videos
+            ${{ matrix.package.path }}/test-results
+            ${{ matrix.package.path }}/playwright-report
 
   post-checks:
     # There is a branch protection rule on the repo that requires "branch-protection" to
-    # be successful
+    # be successful in order to merge a PR
     name: branch-protection
     #
     needs:
@@ -150,3 +142,13 @@ jobs:
           contains(needs.*.result, 'cancelled')
         run: echo '${{toJSON(needs)}}' && exit 1
       - run: echo "Successful"
+  # when everything is successful on the main branch run the release.yml
+  # workflow
+  release:
+    needs:
+      - post-checks
+    if: ${{ github.event_name != 'pull_request' }}
+    uses: ./.github/workflows/release.yml
+    secrets:
+      APP_ID: ${{ secrets.APP_ID }}
+      APP_PRIVATE_KEY: ${{ secrets.APP_PRIVATE_KEY }}
