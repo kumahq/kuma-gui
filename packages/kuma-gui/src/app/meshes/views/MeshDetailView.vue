@@ -102,14 +102,13 @@
                       </template>
                       <template #origin="{ row: item }">
                         <XAction
-                          v-if="item.spec.origin.kri.length > 0"
+                          v-if="item.spec.origin?.kri?.length > 0"
                           :to="{
                             name: 'mesh-mesh-identity-summary-view',
                             params: {
                               mid: item.spec.origin.kri,
                             },
                           }"
-                          data-action
                         >
                           <XBadge appearance="decorative">
                             {{ item.spec.origin.kri }}
