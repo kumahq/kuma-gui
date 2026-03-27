@@ -299,8 +299,8 @@ import { sources } from '../sources'
 import { YAML } from '@/app/application'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import ResourceStatus from '@/app/common/ResourceStatus.vue'
-import { sources as meshIdentitySources } from '@/app/mesh-identity/sources'
-import { sources as meshTrustSources } from '@/app/mesh-trust/sources'
+import { sources as meshIdentitySources } from '@/app/mesh-identities/sources'
+import { sources as meshTrustSources } from '@/app/mesh-trusts/sources'
 import { sources as policySources } from '@/app/policies/sources'
 
 const props = defineProps<{
