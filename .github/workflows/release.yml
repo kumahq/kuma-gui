@@ -1,6 +1,6 @@
 name: release
 run-name: |
-  release (branch: ${{ github.event.workflow_run.head_branch || inputs.branch }})
+  release (branch: ${{ inputs.branch || github.ref_name }})
 
 # **Note 1**: You can merge a pull request into a release branch of the form
 # “release-$MAJOR.$MINOR” (e.g. “release-2.1”) in order to create the GUI
@@ -8,21 +8,11 @@ run-name: |
 # work, the name of this repository’s release branch must match that of the
 # host repository exactly.
 
-# **Note 2**: Since this workflow can be triggered using the `workflow_run`
-# event type, one needs to pay special attention to the context in which runs
-# will be executed based on this workflow. Most importantly, runs will be using
-# the workflow file found **in the project’s default branch**. This means that
-# context variables like `github.ref` and `github.ref_name` will refer to the
-# default branch **and not the branch that caused the workflow_run event to
-# trigger**. Also, it likely means that to change the behavior of the workflow
-# in a release branch, one will actually have to update the workflow file in
-# the default branch, too.
-
 # Ensures that we only run one workflow per branch at a time.
 # Already running workflows will be cancelled.
 concurrency:
   cancel-in-progress: true
-  group: ${{ github.workflow }}-${{ github.event.workflow_run.head_branch || inputs.branch }}
+  group: ${{ github.workflow }}-${{ inputs.branch || github.ref_name }}
 
 on:
 
@@ -47,11 +37,6 @@ permissions:
 jobs:
   # Creates a pull request in the main application to update its GUI i.e. a GUI release
   create-release-pr:
-    # Only runs this job when the triggering workflow run was a success (i.e. the "Tests" workflow passes).
-    if: ${{ github.event_name == 'workflow_dispatch' ||
-          (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success')
-        }}
-    #
     timeout-minutes: 10
     runs-on: ubuntu-latest
     strategy:
@@ -63,8 +48,8 @@ jobs:
     name: |
       Releasing ${{ matrix.package.name }} to ${{ matrix.package.destination }}
     env:
-      SHA: ${{ github.event.workflow_run.head_sha || inputs.sha }}
-      BRANCH: ${{ github.event.workflow_run.head_branch || inputs.branch }}
+      SHA: ${{ inputs.sha || github.sha }}
+      BRANCH: ${{ inputs.branch || github.ref_name }}
       APP_WORKSPACE: repository
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
