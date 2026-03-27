@@ -74,7 +74,7 @@
 
 <script lang="ts" setup>
 import { YAML } from '@/app/application'
-import { sources } from '@/app/mesh-trust/sources'
+import { sources } from '@/app/mesh-trusts/sources'
 
 const props = defineProps<{
   routeName: string

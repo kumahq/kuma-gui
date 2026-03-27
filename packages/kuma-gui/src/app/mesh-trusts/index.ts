@@ -8,7 +8,7 @@ type ResourcesSources = ReturnType<typeof sources>
 
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   return [
-    [token<ResourcesSources>('mesh-insight.sources'), {
+    [token<ResourcesSources>('mesh-trusts.sources'), {
       service: sources,
       arguments: [
         app.api,
