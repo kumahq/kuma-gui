@@ -30,7 +30,7 @@ export const sources = (api: KumaApi) => {
       }
     },
 
-    '/:path': async (params) => {
+    '/resources/:path': async (params) => {
       const { path } = params
       const search = Resource.search(params.search)
 
@@ -46,7 +46,7 @@ export const sources = (api: KumaApi) => {
       return Resources.fromCollection(response.data!)
     },
 
-    '/meshes/:mesh/:path': async (params) => {
+    '/resources/:path/for/:mesh': async (params) => {
       const { mesh, path } = params
       const search = Resource.search(params.search)
       
@@ -65,7 +65,7 @@ export const sources = (api: KumaApi) => {
       return Resources.fromCollection(response.data!)
     },
 
-    '/resources/:kri': async (params) => {
+    '/resource/:kri': async (params) => {
       const response = await http.GET('/_kri/{kri}', {
         params: {
           path: {
@@ -77,7 +77,7 @@ export const sources = (api: KumaApi) => {
       return Resources.fromObject(response.data!)
     },
 
-    '/resources/:kri/as/kubernetes': async (params) => {
+    '/resource/:kri/as/kubernetes': async (params) => {
       const response = await http.GET('/_kri/{kri}', {
         params: {
           path: {
