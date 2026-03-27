@@ -30,6 +30,12 @@ on:
   # Allows us to call this workflow once main.yml on the main branch has
   # successfully completed
   workflow_call:
+    # used for creating a GH token in `github-app-token:`
+    secrets:
+      APP_ID:
+        required: true
+      APP_PRIVATE_KEY:
+        required: true
 
 permissions:
   contents: read # for checking out the repository (e.g. actions/checkout)
