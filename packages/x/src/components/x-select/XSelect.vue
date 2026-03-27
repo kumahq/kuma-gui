@@ -1,9 +1,9 @@
 <template>
   <KSelect
-    v-model="selected"
+    :model-value="props.selected"
     :label="props.label"
     :items="items"
-    @selected="emit('change', String($event.value))"
+    @selected="(value) => emit('change', value.value)"
   >
     <template
       #selected-item-template="{ item }: any"
@@ -26,7 +26,7 @@
 </template>
 <script lang="ts" setup>
 import { KSelect } from '@kong/kongponents'
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 
 const emit = defineEmits<{
   (event: 'change', value: string): void
@@ -41,7 +41,6 @@ const props = withDefaults(defineProps<{
 
 const slots = defineSlots()
 
-const selected = ref(props.selected)
 
 const items = computed(() => {
   const items = Object.keys(slots).reduce<
