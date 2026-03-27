@@ -12,7 +12,7 @@ run-name: |
 # Already running workflows will be cancelled.
 concurrency:
   cancel-in-progress: true
-  group: ${{ github.workflow }}-${{ inputs.branch || github.ref_name }}
+  group: release-${{ inputs.branch || github.ref_name }}
 
 on:
 
