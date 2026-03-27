@@ -149,3 +149,6 @@ jobs:
       - post-checks
     if: ${{ github.event_name != 'pull_request' }}
     uses: ./.github/workflows/release.yml
+    secrets:
+      APP_ID: ${{ secrets.APP_ID }}
+      APP_PRIVATE_KEY: ${{ secrets.APP_PRIVATE_KEY }}
