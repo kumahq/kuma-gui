@@ -10,12 +10,15 @@ import { services as dataplanes } from '@/app/data-planes'
 import { services as externalServicesModule } from '@/app/external-services'
 import { services as gatewaysModule } from '@/app/gateways'
 import { services as legacyDataplanes } from '@/app/legacy-data-planes'
+import { services as meshIdentities } from '@/app/mesh-identities'
+import { services as meshTrusts } from '@/app/mesh-trusts'
 import { services as policies } from '@/app/policies'
 import { services as rules } from '@/app/rules'
 import { services as servicesModule } from '@/app/services'
 import { services as workloads } from '@/app/workloads'
 import type { ServiceDefinition } from '@kumahq/container'
 import type { RouteRecordRaw } from 'vue-router'
+
 
 type Token = ReturnType<typeof token>
 
@@ -78,6 +81,8 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
     ...policies(mesh),
     ...rules(mesh),
     ...workloads(mesh),
+    ...meshIdentities(mesh),
+    ...meshTrusts(mesh),
   ]
 }
 export const TOKENS = $
