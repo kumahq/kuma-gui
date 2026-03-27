@@ -3,6 +3,42 @@
 Collection of gherkin/cucumber steps specifically for testing web applications
 using a choice of browser runners
 
+## playwright
+
+Playwright support currently leans heavily on and is setup almost the same way as:
+
+- `playwright-bdd` <https://github.com/vitalets/playwright-bdd>
+
+```js
+import { defineConfig } from '@playwright/test';
+import { defineBddConfig } from 'playwright-bdd';
+
+export default defineConfig({
+  testDir: defineBddConfig({
+    features: 'sample.feature',
+    steps: 'playwright/main.ts',
+  }),
+  reporter: 'html',
+});
+```
+
+The main difference is that your `steps:` setting should point to the file that
+imports and uses `@kumahq/gherkin-web/playwright`
+
+
+```js
+// playwright/main.ts
+
+import { setupSteps } from '@kumahq/gherkin-web/playwright'
+
+// ...
+
+setupSteps({
+  // ...options
+})
+
+```
+
 ## cypress
 
 Cypress support currently leans heavily on:
@@ -57,7 +93,4 @@ setupSteps({
 })
 ```
 
-## playwright
-
-TBD
 
