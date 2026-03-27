@@ -371,6 +371,9 @@ export function createEslintConfig(
     },
     {
       ignores: [
+        '**/cypress/**',
+        '.features-gen/*',
+        'playwright-report/*',
         'dist/*',
         'node_modules/*',
       ],

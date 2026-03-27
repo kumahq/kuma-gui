@@ -57,13 +57,19 @@
               <XLayout
                 variant="y-stack"
               >
-                <XAboutCard
-                  :title="t('meshes.routes.item.about.title')"
-                  :created="props.mesh.creationTime"
-                  :modified="props.mesh.modificationTime"
+                <XCard
                   class="about-section"
                   data-testid="mesh-about-section"
                 >
+                  <template
+                    #title
+                  >
+                    {{ t('meshes.routes.item.about.title') }}
+                  </template>
+                  <XTimespan
+                    :start="props.mesh.creationTime"
+                    :end="props.mesh.modificationTime"
+                  />
                   <XDl
                     variant="x-stack"
                   >
@@ -176,7 +182,7 @@
                       </div>
                     </template>
                   </XDl>
-                </XAboutCard>
+                </XCard>
 
                 <XCard
                   v-if="meshTrusts?.items?.length"

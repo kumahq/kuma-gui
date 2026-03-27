@@ -3,11 +3,8 @@
   "extends": "@kumahq/config/tsconfig/node",
   "compilerOptions": {
     "lib": ["esnext", "dom"],
-    "types": [
-      "cypress"
-    ]
   },
   "include": ["**/*.ts"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "**/cypress/**"]
 }
 

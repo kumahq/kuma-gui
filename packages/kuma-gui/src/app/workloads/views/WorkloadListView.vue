@@ -36,11 +36,9 @@
           >
             <search>
               <form
-                class="search-form"
                 @submit.prevent
               >
                 <XSearch
-                  class="search-field"
                   :keys="['name', 'namespace', ...(can('use zones') ? ['zone'] : []), 'label']"
                   :value="route.params.s"
                   @change="(s) => route.update({ page: 1, s })"
@@ -167,8 +165,3 @@
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import { sources } from '@/app/workloads/sources'
 </script>
-<style scoped lang="scss">
-.search-field {
-  width: 100%;
-}
-</style>

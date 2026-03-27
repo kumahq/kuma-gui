@@ -139,8 +139,9 @@ onMounted(rewrite)
 .app-collection {
   isolation: isolate;
 }
-.app-collection :deep(td :is(a, button)[data-action]) {
-  &, > * {
+/* this used to use `> *` but thats too eager for x-badges so for now we are using span */
+.app-collection :deep(td [data-action]:is(a, button)) {
+  &, > span {
     color: inherit;
     font-weight: var(--x-font-weight-semibold);
     text-decoration: none;

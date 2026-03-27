@@ -1,8 +1,25 @@
 import { load, DEFAULT_SCHEMA, Type } from 'js-yaml'
 import markdown from 'markdown-it'
+import { execSync } from 'node:child_process'
+import { dirname } from 'node:path'
+import { fileURLToPath } from 'node:url'
 
 import type { Plugin } from 'vite'
 
+export const playwrightBdd = (src ='features/**/*.feature'): Plugin => {
+  const playwrightBdd = dirname(fileURLToPath(import.meta.resolve('playwright-bdd')))
+  return {
+    name: 'playwrightBdd',
+    configureServer(server) {
+      server.watcher.add(src)
+      server.watcher.on('change', (path) => {
+        if(path.endsWith('.feature')) {
+          execSync(`node ${playwrightBdd}/cli/index.js`, { stdio: 'inherit' })
+        }
+      })
+    },
+  }
+}
 
 export const yamlLoader = (): Plugin => {
   const md = markdown(
@@ -30,7 +47,7 @@ export const yamlLoader = (): Plugin => {
     name: 'yamlLoader',
     transform: async (code, filename) => {
       if (/\.ya?ml$/.test(filename)) {
-        const json = load(code, { schema, filename, onWarning: (warning) => console.warn(warning.toString())})
+        const json = load(code, { schema, filename, onWarning: (warning) => console.warn(warning.toString()) })
         return {
           code: `export default ${JSON.stringify(json)};`,
           map: { mappings: '' },

@@ -1,22 +1,8 @@
-import { pathToRegexp } from 'path-to-regexp'
-
-import { createFetchSync } from './index'
+import { createFetchSync, routeToRegexp } from './index'
 import type { Middleware, Dependencies, FS, Mocker } from './index'
 
 const noop: Middleware = (_req, response) => response
 
-const routeToRegexp = (route: string) => {
-  const url = new URL(route, !route.includes('://') ? 'http://localhost' : undefined)
-  // escape `:`s for pathToRegexp's named segments (/:segment/)
-  const origin = url.origin.replaceAll(':', '\\:')
-  const { regexp } = pathToRegexp(`${route.includes('://') ? origin : ''}${url.pathname}`)
-  // remove the end of pathToRegexps regexp
-  // and replace it with optional `/` and optional `?<optional chars>`
-  const re = new RegExp(
-    regexp.toString().replace('(?:\\/$)?$/i', '(?:\\/)?(\\?.*)?$').substring(1), 'i',
-  )
-  return re
-}
 export const mocker = <T extends object = {}>(
   dependencies: Dependencies<T>,
   fs: FS,

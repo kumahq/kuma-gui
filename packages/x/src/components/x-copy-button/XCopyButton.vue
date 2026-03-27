@@ -71,6 +71,6 @@ const props = withDefaults(defineProps<{
 
 .text {
   min-width: 0;
-  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 </style>
