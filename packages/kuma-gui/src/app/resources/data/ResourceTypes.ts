@@ -62,26 +62,9 @@ export const ResourcesTypes = {
   },
 
   fromCollection(partialResources: KumaResourceTypesCollection) {
-    const resources = partialResources.resources.map(this.fromObject)
     return {
-      resources,
-      resourcesByType: {
-        policies: [],
-        meshes: [],
-        globals: [],
-        others: [],
-        ...Object.groupBy(resources, (resource) => {
-          switch(true) {
-            case 'policy' in resource:
-              return 'policies'
-            case resource.scope === 'Mesh':
-              return 'meshes'
-            case resource.scope === 'Global':
-              return 'globals'
-            default:
-              return 'others'
-          }
-        })},
+      ...partialResources,
+      resources: partialResources.resources.map(this.fromObject),
     }
   },
 }
