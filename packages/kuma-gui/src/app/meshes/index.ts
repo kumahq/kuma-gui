@@ -101,8 +101,8 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
     ...meshIdentities(mesh),
     ...meshTrusts(mesh),
     ...resources(mesh),
-    ...meshIdentity(mesh),
-    ...meshTrust(mesh),
+    ...meshIdentities(mesh),
+    ...meshTrusts(mesh),
   ]
 }
 export const TOKENS = $
