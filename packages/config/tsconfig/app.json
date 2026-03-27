@@ -10,8 +10,7 @@
     "allowJs": true,
     "lib": ["esnext", "dom", "dom.iterable"],
     "types": [
-      "vite/client",
-      "cypress"
+      "vite/client"
     ]
   }
 }

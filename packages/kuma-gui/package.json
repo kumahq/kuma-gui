@@ -31,7 +31,7 @@
     "vue-router": "^4.6.4"
   },
   "devDependencies": {
-    "@badeball/cypress-cucumber-preprocessor": "^24.0.1",
+    "@faker-js/faker": "^10.3.0",
     "@kong/design-tokens": "^1.20.0",
     "@kumahq/config": "*",
     "@kumahq/fake-api": "*",
@@ -42,7 +42,6 @@
     "@types/semver": "^7.7.1",
     "@vitejs/plugin-vue": "^6.0.5",
     "@vue/test-utils": "^2.4.6",
-    "cypress": "^15.12.0",
     "jsdom": "^29.0.0",
     "msw": "^2.12.13",
     "playwright-bdd": "^8.5.0",
@@ -57,10 +56,5 @@
   ],
   "msw": {
     "workerDirectory": "public"
-  },
-  "cypress-cucumber-preprocessor": {
-    "stepDefinitions": [
-      "./cypress/main.ts"
-    ]
   }
 }
