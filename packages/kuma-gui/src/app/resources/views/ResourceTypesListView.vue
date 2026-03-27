@@ -113,8 +113,11 @@
                                         <span>
                                           {{ item.name }}
                                         </span>
-                                        <span>
+                                        <span v-if="item.scope === 'global'">
                                           {{ globalInsight.resources[item.name]?.total ?? 0 }}
+                                        </span>
+                                        <span v-else>
+                                          {{ meshInsight.resources[item.name]?.total ?? 0 }}
                                         </span>
                                       </XLayout>
                                     </XAction>

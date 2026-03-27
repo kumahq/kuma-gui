@@ -50,10 +50,6 @@ export const GlobalInsight = {
             ...partialGlobalInsight.resources.Mesh,
             total: partialGlobalInsight.resources.Mesh?.total ?? partialGlobalInsight.meshes.total ?? 0,
           },
-          MeshGateway: {
-            ...partialGlobalInsight.resources.MeshGateway,
-            total: partialGlobalInsight.resources.MeshGateway?.total ?? partialGlobalInsight.dataplanes.gatewayBuiltin.total ?? 0,
-          },
         }
         return resources as PartialGlobalInsight['resources'] & typeof resources
       })(),
