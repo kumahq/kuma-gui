@@ -28,8 +28,9 @@ const props = withDefaults(defineProps<{
   truncate: false,
 })
 const table = inject<XComponent<typeof XTable> | undefined>('x-table', undefined)
-// when inside a kv table default is `end`, otherwise its `start`
-const justify = computed(() => table?.props.variant !== 'kv' ? props.justify || 'start' : props.justify || 'end')
+// when inside a kv table default is `end` or action-group default is `end`,
+// otherwise its `start`
+const justify = computed(() => table?.props.variant === 'kv' || props.variant === 'action-group' ? props.justify || 'end' : props.justify || 'start')
 
 </script>
 <style lang="scss" scoped>
