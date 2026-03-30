@@ -51,6 +51,7 @@ For example:
 - **[XSelect](./src/components/x-select)** - Select dropdown with slot-based option rendering. ([KSelect](https://kongponents.konghq.com/components/select.html))
 - **[XTable](./src/components/x-table)** - Semantic table wrapper with key-value variant support.
 - **[XTabs](./src/components/x-tabs)** - Tab navigation with custom slot handling. ([KTabs](https://kongponents.konghq.com/components/tabs.html))
+- **[XTimespan](./src/components/x-timespan)** - Displays timestamps
 - **[XTeleportSlot](./src/components/x-teleport)** - Marks a teleport target location in the DOM. ([Teleport](https://vuejs.org/guide/built-ins/teleport.html))
 - **[XTeleportTemplate](./src/components/x-teleport)** - Conditionally teleports content to a named XTeleportSlot. ([Teleport](https://vuejs.org/guide/built-ins/teleport.html))
 - **[XTheme](./src/components/x-theme)** - Theme provider that exposes design tokens via CSS variables.
