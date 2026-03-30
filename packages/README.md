@@ -1,5 +1,9 @@
 # @kumahq packages
 
+For more detailed information for each package, see the package README.md or
+run `make help` inside the package for a list of available make
+targets/engineering utilities.
+
 - **[@kumahq/config](./config)** - Shared development tooling configuration (TypeScript,
 ESLint, Playwright, Cypress, Vite, OpenAPI) for use across packages in this
 repository.
