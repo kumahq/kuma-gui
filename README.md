@@ -7,7 +7,7 @@ This is the source code for the [Kuma](https://github.com/kumahq/kuma/) GUI.
 It's proudly built on [Vue.js](https://vuejs.org/) and leverages the
 [Kongponents](https://kongponents.konghq.com/) component library.
 
-Changes are continuously "released" and [embedded in the Kuma
+Changes to the GUI are continuously "released" and [embedded in the Kuma
 software/binary](https://github.com/kumahq/kuma/tree/master/app/kuma-ui/pkg/resources)
 
 When running Kuma itself, the GUI is automatically served on port `:5681` and
@@ -47,7 +47,7 @@ clarifications. We are here to help. See [Get
 Involved](https://github.com/kumahq/kuma?tab=readme-ov-file#get-involved) in
 the [Kuma Repository](https://github.com/kumahq/kuma) for more details.
 
-## GUI Development
+## Contributing to GUI Development
 
 This repository is a monorepo containing the main web application along with
 various custom local (but unpublished) packages used by the web application.
