@@ -1,5 +1,5 @@
-[![Kuma](https://kuma-public-assets.s3.amazonaws.com/kuma-logo-v2.png)](https://kuma.io/)[![master](https://github.com/kumahq/kuma-gui/actions/workflows/main.yml/badge.svg)](https://github.com/kumahq/kuma-gui/actions/workflows/main.yml)[![Releases to: kumahq/kuma](https://github.com/kumahq/kuma-gui/actions/workflows/release.yml/badge.svg)](https://github.com/kumahq/kuma-gui/actions/workflows/release.yml)[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/kumahq/kuma-gui/blob/master/LICENSE)
-![Slack](https://img.shields.io/badge/Slack-4A154B?logo=slack)](https://join.slack.com/t/kuma-mesh/shared_invite/zt-1rcll3y6t-DkV_CAItZUoy0IvCwQ~jlQ)
+[![Kuma](https://kuma-public-assets.s3.amazonaws.com/kuma-logo-v2.png)](https://kuma.io/)[![master](https://github.com/kumahq/kuma-gui/actions/workflows/main.yml/badge.svg)](https://github.com/kumahq/kuma-gui/actions/workflows/main.yml) [![Releases to: kumahq/kuma](https://github.com/kumahq/kuma-gui/actions/workflows/release.yml/badge.svg)](https://github.com/kumahq/kuma-gui/actions/workflows/release.yml) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/kumahq/kuma-gui/blob/master/LICENSE)
+ [![Slack](https://img.shields.io/badge/Slack-4A154B?logo=slack)](https://join.slack.com/t/kuma-mesh/shared_invite/zt-1rcll3y6t-DkV_CAItZUoy0IvCwQ~jlQ)
 
 # Kuma GUI
 
@@ -52,8 +52,8 @@ the [Kuma Repository](https://github.com/kumahq/kuma) for more details.
 This repository is a monorepo containing the main web application along with
 various custom local (but unpublished) packages used by the web application.
 
-For contributions, the best starting point is the web application itself:
-[@kumahq/kuma-gui](./packages/kuma-gui/README.md)
+For contributions, the best starting point is the source code for the web
+application itself: [@kumahq/kuma-gui](./packages/kuma-gui/README.md)
 
 Additionally, an overview of all packages in the repository can be found at
 [./packages/README.md](./packages/README.md)
