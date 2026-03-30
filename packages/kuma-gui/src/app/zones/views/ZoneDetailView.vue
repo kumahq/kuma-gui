@@ -15,13 +15,16 @@
       :docs="t('zones.href.docs.cta')"
       :notifications="true"
     >
-      <XAboutCard
-        :title="t('zone-cps.detail.about.title')"
-        :created="props.data && 'creationTime' in props.data ? props.data.creationTime : undefined"
-        :modified="props.data && 'modificationTime' in props.data ? props.data.modificationTime : undefined"
-        class="about-section"
+      <XCard
         data-testid="zone-about-section"
       >
+        <XTimespan
+          :start="props.data && 'creationTime' in props.data ? props.data.creationTime : undefined"
+          :end="props.data && 'modificationTime' in props.data ? props.data.modificationTime : undefined"
+        />
+        <template #title>
+          {{ t('zone-cps.detail.about.title') }}
+        </template>
         <DataLoader
           :data="[props.data]"
           v-slot="{ data: [zone] }"
@@ -236,7 +239,7 @@
             </XLayout>
           </DataLoader>
         </DataLoader>
-      </XAboutCard>
+      </XCard>
     </AppView>
   </RouteView>
 </template>
@@ -254,13 +257,5 @@ const props = defineProps<{
 .about-subsection {
   border-top: var(--x-border-width-10) solid var(--x-color-border);
   padding-top: var(--x-space-70);
-}
-
-:deep(.about-section .about-section-content) {
-  display: block !important;
-
-  h3 {
-    color: var(--x-color-text);
-  }
 }
 </style>

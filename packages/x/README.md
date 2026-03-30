@@ -16,5 +16,6 @@ For example:
 - `XTeleportTemplate`/`XTeleportSlot`: Use these for rendering things in a
   different place to where you are writing it. They wrap Vue's `Teleport`.
 - `XTabs`: Basic tab navigation. They wrap `KTabs`.
+- `XCard`/`XTimespan`: Use these for detail view "About" sections. Place `XTimespan` inside `XCard` to show created/modified timestamps.
 - ...
 

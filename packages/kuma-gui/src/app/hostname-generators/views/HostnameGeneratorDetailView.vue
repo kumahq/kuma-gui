@@ -42,12 +42,16 @@
         <XLayout
           variant="y-stack"
         >
-          <XAboutCard
-            :title="t('hostname-generators.routes.item.about.title')"
-            :created="sourceData?.creationTime"
-            :modified="sourceData?.modificationTime"
+          <XCard
             data-testid="hostname-generator-about-section"
           >
+            <XTimespan
+              :start="sourceData?.creationTime"
+              :end="sourceData?.modificationTime"
+            />
+            <template #title>
+              {{ t('hostname-generators.routes.item.about.title') }}
+            </template>
             <DataLoader
               :data="[sourceData]"
               :errors="[error]"
@@ -152,7 +156,7 @@
                 </XDl>
               </XLayout>
             </DataLoader>
-          </XAboutCard>
+          </XCard>
 
           <XCard>
             <XLayout variant="y-stack">

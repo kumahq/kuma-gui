@@ -1,4 +1,3 @@
-export { default as XAboutCard } from './x-about-card/XAboutCard.vue'
 export { default as XAction } from './x-action/XAction.vue'
 export { default as XActionGroup } from './x-action-group/XActionGroup.vue'
 export { default as XAlert } from './x-alert/XAlert.vue'

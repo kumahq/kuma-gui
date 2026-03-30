@@ -10,13 +10,16 @@
   >
     <AppView>
       <XLayout variant="y-stack">
-        <XAboutCard
-          :title="t('zone-egresses.routes.item.about.title')"
-          :created="props.data.creationTime"
-          :modified="props.data.modificationTime"
-          class="about-section"
+        <XCard
           data-testid="zone-egress-about-section"
         >
+          <XTimespan
+            :start="props.data.creationTime"
+            :end="props.data.modificationTime"
+          />
+          <template #title>
+            {{ t('zone-egresses.routes.item.about.title') }}
+          </template>
           <XLayout variant="y-stack">
             <XDl variant="x-stack">
               <div>
@@ -152,7 +155,7 @@
               </template>
             </XLayout>
           </XLayout>
-        </XAboutCard>
+        </XCard>
 
         <DataLoader
           :src="uri(sources, '/connections/stats/for/:proxyType/:name/:mesh/:socketAddress', {
@@ -344,13 +347,5 @@ const _route = useRoute()
 .about-subsection {
   border-top: var(--x-border-width-10) solid var(--x-color-border);
   padding-top: var(--x-space-70);
-}
-
-:deep(.about-section .about-section-content) {
-  display: block !important;
-
-  h3 {
-    color: var(--x-color-text);
-  }
 }
 </style>

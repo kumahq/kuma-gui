@@ -13,12 +13,16 @@
   >
     <AppView>
       <XLayout variant="y-stack">
-        <XAboutCard
-          :title="t('services.mesh-multi-zone-service.about.title')"
-          :created="props.data.creationTime"
-          :modified="props.data.modificationTime"
+        <XCard
           data-testid="mesh-multi-zone-service-about-section"
         >
+          <XTimespan
+            :start="props.data.creationTime"
+            :end="props.data.modificationTime"
+          />
+          <template #title>
+            {{ t('services.mesh-multi-zone-service.about.title') }}
+          </template>
           <XDl variant="x-stack">
             <div>
               <dt>
@@ -98,7 +102,7 @@
               </div>
             </template>
           </XDl>
-        </XAboutCard>
+        </XCard>
 
         <XCard>
           <template #title>
