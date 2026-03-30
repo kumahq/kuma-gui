@@ -17,7 +17,7 @@
     "@kong/icons": "^1.47.0",
     "shiki": "^4.0.2",
     "@vueuse/core": "^14.2.1",
-    "@vue/shared": "^3.5.30",
+    "@vue/shared": "^3.5.31",
     "vue-global-events": "^3.0.1",
     "vue-router": "^4.6.4"
   },
