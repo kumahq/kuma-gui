@@ -1,9 +1,5 @@
-<a href="https://kuma.io/"><img class="logo" src="https://kuma-public-assets.s3.amazonaws.com/kuma-logo-v2.png"></a>
-
-[![master](https://github.com/kumahq/kuma-gui/actions/workflows/main.yml/badge.svg)](https://github.com/kumahq/kuma-gui/actions/workflows/main.yml)
-[![Releases to: kumahq/kuma](https://github.com/kumahq/kuma-gui/actions/workflows/release.yml/badge.svg)](https://github.com/kumahq/kuma-gui/actions/workflows/release.yml)
-<a class="badge" href="https://github.com/kumahq/kuma-gui/blob/master/LICENSE"><img alt="License" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg"></a>
-<a class="badge" href="https://join.slack.com/t/kuma-mesh/shared_invite/zt-1rcll3y6t-DkV_CAItZUoy0IvCwQ~jlQ"><img alt="Slack" src="https://img.shields.io/badge/Slack-4A154B?logo=slack"></a>
+[![Kuma](https://kuma-public-assets.s3.amazonaws.com/kuma-logo-v2.png)](https://kuma.io/)[![master](https://github.com/kumahq/kuma-gui/actions/workflows/main.yml/badge.svg)](https://github.com/kumahq/kuma-gui/actions/workflows/main.yml)[![Releases to: kumahq/kuma](https://github.com/kumahq/kuma-gui/actions/workflows/release.yml/badge.svg)](https://github.com/kumahq/kuma-gui/actions/workflows/release.yml)[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/kumahq/kuma-gui/blob/master/LICENSE)
+![Slack](https://img.shields.io/badge/Slack-4A154B?logo=slack)](https://join.slack.com/t/kuma-mesh/shared_invite/zt-1rcll3y6t-DkV_CAItZUoy0IvCwQ~jlQ)
 
 # Kuma GUI
 
