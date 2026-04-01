@@ -45,7 +45,7 @@
     "@kumahq/gherkin-web": "*",
     "@playwright/test": "^1.58.2",
     "@stylistic/eslint-plugin": "^5.10.0",
-    "@stylistic/stylelint-plugin": "^5.0.1",
+    "@stylistic/stylelint-plugin": "^5.1.0",
     "@vue/eslint-config-typescript": "^14.7.0",
     "@vue/tsconfig": "^0.9.1",
     "deepmerge": "^4.3.1",
