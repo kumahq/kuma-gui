@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "@kumahq/config": "*",
-    "@kong/design-tokens": "^1.20.0"
+    "@kong/design-tokens": "^1.20.1"
   },
   "peerDependencies": {
     "vue": "*"
