@@ -27,7 +27,7 @@
     "deepmerge": "^4.3.1",
     "esbuild": "^0.28.0",
     "js-yaml": "^4.1.1",
-    "path-to-regexp": "^8.4.0",
+    "path-to-regexp": "^8.4.2",
     "playwright-bdd": "^8.5.0"
   },
   "devDependencies": {
