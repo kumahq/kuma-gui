@@ -21,7 +21,7 @@
     "urlpattern-polyfill": "^10.1.0"
   },
   "optionalDependencies": {
-    "vue": "^3.5.31"
+    "vue": "^3.5.32"
   },
   "devDependencies": {
     "@kumahq/config": "*",
