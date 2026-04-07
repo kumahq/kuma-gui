@@ -19,13 +19,13 @@
     "@kumahq/data": "*"
   },
   "optionalDependencies": {
-    "vue": "^3.5.31",
+    "vue": "^3.5.32",
     "vue-router": "^4.6.4"
   },
   "devDependencies": {
     "@kumahq/config": "*",
     "@vitejs/plugin-vue": "^6.0.5",
-    "vite": "^7.3.1",
+    "vite": "^7.3.2",
     "vitest": "^4.1.2"
   }
 }

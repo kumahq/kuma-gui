@@ -36,20 +36,20 @@
   },
   "devDependencies": {
     "@types/markdown-it": "^14.1.2",
-    "@types/node": "^25.5.0"
+    "@types/node": "^25.5.2"
   },
   "dependencies": {
-    "@apidevtools/json-schema-ref-parser": "^15.3.4",
+    "@apidevtools/json-schema-ref-parser": "^15.3.5",
     "@cucumber/gherkin-utils": "^11.0.0",
     "@eslint/js": "^9.39.4",
     "@kumahq/gherkin-web": "*",
-    "@playwright/test": "^1.58.2",
+    "@playwright/test": "^1.59.1",
     "@stylistic/eslint-plugin": "^5.10.0",
     "@stylistic/stylelint-plugin": "^5.1.0",
     "@vue/eslint-config-typescript": "^14.7.0",
     "@vue/tsconfig": "^0.9.1",
     "deepmerge": "^4.3.1",
-    "esbuild": "^0.27.4",
+    "esbuild": "^0.28.0",
     "escape-string-regexp": "^4.0.0",
     "eslint": "^9.39.4",
     "eslint-import-resolver-alias": "^1.1.2",
@@ -72,7 +72,7 @@
     "stylelint-config-recommended-scss": "^17.0.0",
     "stylelint-config-recommended-vue": "^1.6.1",
     "typescript": "^5.9.3",
-    "vite": "^7.3.1",
+    "vite": "^7.3.2",
     "vitest": "^4.1.2",
     "vue-tsc": "^3.2.6"
   }
