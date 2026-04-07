@@ -43,7 +43,7 @@
     "@cucumber/gherkin-utils": "^11.0.0",
     "@eslint/js": "^9.39.4",
     "@kumahq/gherkin-web": "*",
-    "@playwright/test": "^1.58.2",
+    "@playwright/test": "^1.59.1",
     "@stylistic/eslint-plugin": "^5.10.0",
     "@stylistic/stylelint-plugin": "^5.1.0",
     "@vue/eslint-config-typescript": "^14.7.0",

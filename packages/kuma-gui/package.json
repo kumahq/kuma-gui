@@ -37,7 +37,7 @@
     "@kumahq/fake-api": "*",
     "@kumahq/gherkin-web": "*",
     "@kumahq/kuma-http-api": "*",
-    "@playwright/test": "^1.58.2",
+    "@playwright/test": "^1.59.1",
     "@types/js-yaml": "^4.0.9",
     "@types/semver": "^7.7.1",
     "@vitejs/plugin-vue": "^6.0.5",
