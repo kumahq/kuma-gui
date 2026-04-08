@@ -12,8 +12,6 @@ import { services as dataplanes } from '@/app/data-planes'
 import { services as externalServicesModule } from '@/app/external-services'
 import { services as gatewaysModule } from '@/app/gateways'
 import { services as legacyDataplanes } from '@/app/legacy-data-planes'
-import { services as meshIdentities } from '@/app/mesh-identities'
-import { services as meshTrusts } from '@/app/mesh-trusts'
 import { services as policies } from '@/app/policies'
 import { services as resources } from '@/app/resources'
 import { services as rules } from '@/app/rules'
@@ -99,8 +97,6 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
     ...rules(mesh),
     ...workloads(mesh),
     ...resources(mesh),
-    ...meshIdentities(mesh),
-    ...meshTrusts(mesh),
   ]
 }
 export const TOKENS = $

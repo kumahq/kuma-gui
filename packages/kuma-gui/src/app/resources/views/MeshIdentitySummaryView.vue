@@ -74,7 +74,7 @@
 
 <script lang="ts" setup>
 import { YAML } from '@/app/application'
-import { sources } from '@/app/mesh-identities/sources'
+import { sources } from '@/app/resources/sources'
 
 const props = defineProps<{
   routeName: string

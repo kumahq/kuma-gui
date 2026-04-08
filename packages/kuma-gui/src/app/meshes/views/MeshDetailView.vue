@@ -19,13 +19,13 @@
       v-slot="{ data }"
     >
       <DataSource
-        :src="uri(meshIdentitySources, '/meshes/:mesh/meshidentities', {
+        :src="uri(resourcesSources, '/meshes/:mesh/meshidentities', {
           mesh: route.params.mesh,
         })"
         v-slot="{ data: meshIdentities }"
       >
         <DataSource
-          :src="uri(meshTrustSources, '/meshes/:mesh/meshtrusts', {
+          :src="uri(resourcesSources, '/meshes/:mesh/meshtrusts', {
             mesh: route.params.mesh,
           })"
           v-slot="{ data: meshTrusts }"
@@ -299,9 +299,8 @@ import { sources } from '../sources'
 import { YAML } from '@/app/application'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import ResourceStatus from '@/app/common/ResourceStatus.vue'
-import { sources as meshIdentitySources } from '@/app/mesh-identities/sources'
-import { sources as meshTrustSources } from '@/app/mesh-trusts/sources'
 import { sources as policySources } from '@/app/policies/sources'
+import { sources as resourcesSources } from '@/app/resources/sources'
 
 const props = defineProps<{
   mesh: Mesh
