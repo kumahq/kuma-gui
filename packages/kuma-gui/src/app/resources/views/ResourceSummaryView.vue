@@ -43,7 +43,12 @@
                   v-icon-start="`policy`"
                 >
                   <XAction
-                    :href="`kri://${item.kri}`"
+                    :to="{
+                      name: 'resource-detail-view',
+                      params: {
+                        kri: item.kri,
+                      },
+                    }"
                   >
                     <RouteTitle
                       :title="t('resources.routes.item.title', { name: item.name })"

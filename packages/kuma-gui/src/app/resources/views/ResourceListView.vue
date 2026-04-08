@@ -142,7 +142,12 @@
                     <template #name="{ row }">
                       <XAction
                         data-action
-                        :href="`kri://${row.kri}?relative=${route.name}`"
+                        :to="{
+                          name: 'resource-summary-view',
+                          params: {
+                            kri: row.kri,
+                          },
+                        }"
                       >
                         {{ row.name }}
                       </XAction>
@@ -169,7 +174,12 @@
                     <template #actions="{ row }">
                       <XActionGroup>
                         <XAction
-                          :href="`kri://${row.kri}${type.policy ? `?policyPath=${route.params.resourcePath}` : ''}`"
+                          :to="{
+                            name: 'resource-detail-view',
+                            params: {
+                              kri: row.kri,
+                            },
+                          }"
                         >
                           {{ t('common.collection.actions.view') }}
                         </XAction>
