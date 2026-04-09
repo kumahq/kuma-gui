@@ -19,136 +19,141 @@
         <XCard
           data-testid="mesh-service-about-section"
         >
-          <XTimespan
-            :start="props.data.creationTime"
-            :end="props.data.modificationTime"
-          />
           <template #title>
             {{ t('services.mesh-service.about.title') }}
           </template>
-          <XDl variant="x-stack">
-            <div>
-              <dt>
-                {{ t('http.api.property.state') }}
-              </dt>
-              <dd>
-                <XBadge
-                  :appearance="props.data.spec.state === 'Available' ? 'success' : 'danger'"
-                >
-                  {{ props.data.spec.state }}
-                </XBadge>
-              </dd>
-            </div>
-            <div
-              v-if="props.data.namespace.length > 0"
-            >
-              <dt>
-                {{ t('http.api.property.namespace') }}
-              </dt>
-              <dd>
-                <XBadge appearance="decorative">
-                  {{ props.data.namespace }}
-                </XBadge>
-              </dd>
-            </div>
-            <div
-              v-if="can('use zones') && props.data.zone"
-            >
-              <dt>
-                {{ t('http.api.property.zone') }}
-              </dt>
-              <dd>
-                <XAction
-                  :to="{
-                    name: 'zone-cp-detail-view',
-                    params: {
-                      zone: props.data.zone,
-                    },
-                  }"
-                >
-                  <XBadge appearance="decorative">
-                    {{ props.data.zone }}
-                  </XBadge>
-                </XAction>
-              </dd>
-            </div>
-            <div>
-              <dt>
-                {{ t('http.api.property.ports') }}
-              </dt>
-              <dd>
-                <template v-if="props.data.spec.ports.length">
-                  <XLayout
-                    variant="separated"
-                    truncate
-                  >
-                    <KumaPort
-                      v-for="connection in props.data.spec.ports"
-                      :key="connection.port"
-                      :port="{
-                        ...connection,
-                        targetPort: undefined,
-                      }"
-                    />
-                  </XLayout>
-                </template>
-                <template v-else>
-                  {{ t('common.detail.none') }}
-                </template>
-              </dd>
-            </div>
-            <div>
-              <dt>
-                {{ t('http.api.property.selector') }}
-              </dt>
-              <dd>
-                <template v-if="Object.keys(props.data.spec.selector.dataplaneTags).length">
-                  <XLayout
-                    variant="separated"
-                    truncate
-                  >
-                    <XBadge
-                      v-for="(value, key) in props.data.spec.selector.dataplaneTags"
-                      :key="`${key}:${value}`"
-                      appearance="info"
-                    >
-                      {{ key }}:{{ value }}
-                    </XBadge>
-                  </XLayout>
-                </template>
-                <template v-else>
-                  {{ t('common.detail.none') }}
-                </template>
-              </dd>
-            </div>
-            <template
-              v-for="labels in [Object.entries(props.data.labels)]"
-              :key="typeof labels"
-            >
-              <div v-if="labels.length > 0">
-                <dt>{{ t('services.routes.item.labels') }}</dt>
+          <DataLoader
+            :data="[props.data]"
+            v-slot="{ data: [service] }"
+          >
+            <XTimespan
+              :start="service.creationTime"
+              :end="service.modificationTime"
+            />
+            <XDl variant="x-stack">
+              <div>
+                <dt>
+                  {{ t('http.api.property.state') }}
+                </dt>
                 <dd>
-                  <XLayout
-                    variant="separated"
-                    truncate
+                  <XBadge
+                    :appearance="service.spec.state === 'Available' ? 'success' : 'danger'"
                   >
-                    <template
-                      v-for="kumaRe in [/^(.+\.)?kuma\.io\//]"
-                      :key="typeof kumaRe"
+                    {{ service.spec.state }}
+                  </XBadge>
+                </dd>
+              </div>
+              <div
+                v-if="service.namespace.length > 0"
+              >
+                <dt>
+                  {{ t('http.api.property.namespace') }}
+                </dt>
+                <dd>
+                  <XBadge appearance="decorative">
+                    {{ service.namespace }}
+                  </XBadge>
+                </dd>
+              </div>
+              <div
+                v-if="can('use zones') && service.zone"
+              >
+                <dt>
+                  {{ t('http.api.property.zone') }}
+                </dt>
+                <dd>
+                  <XAction
+                    :to="{
+                      name: 'zone-cp-detail-view',
+                      params: {
+                        zone: service.zone,
+                      },
+                    }"
+                  >
+                    <XBadge appearance="decorative">
+                      {{ service.zone }}
+                    </XBadge>
+                  </XAction>
+                </dd>
+              </div>
+              <div>
+                <dt>
+                  {{ t('http.api.property.ports') }}
+                </dt>
+                <dd>
+                  <template v-if="service.spec.ports.length">
+                    <XLayout
+                      variant="separated"
+                      truncate
+                    >
+                      <KumaPort
+                        v-for="connection in service.spec.ports"
+                        :key="connection.port"
+                        :port="{
+                          ...connection,
+                          targetPort: undefined,
+                        }"
+                      />
+                    </XLayout>
+                  </template>
+                  <template v-else>
+                    {{ t('common.detail.none') }}
+                  </template>
+                </dd>
+              </div>
+              <div>
+                <dt>
+                  {{ t('http.api.property.selector') }}
+                </dt>
+                <dd>
+                  <template v-if="Object.keys(service.spec.selector.dataplaneTags).length">
+                    <XLayout
+                      variant="separated"
+                      truncate
                     >
                       <XBadge
-                        v-for="[key, value] in labels"
-                        :key="key"
-                        :appearance="kumaRe.test(key) ? 'info' : 'decorative'"
+                        v-for="(value, key) in service.spec.selector.dataplaneTags"
+                        :key="`${key}:${value}`"
+                        appearance="info"
                       >
                         {{ key }}:{{ value }}
                       </XBadge>
-                    </template>
-                  </XLayout>
+                    </XLayout>
+                  </template>
+                  <template v-else>
+                    {{ t('common.detail.none') }}
+                  </template>
                 </dd>
               </div>
-            </template>
-          </XDl>
+              <template
+                v-for="labels in [Object.entries(service.labels)]"
+                :key="typeof labels"
+              >
+                <div v-if="labels.length > 0">
+                  <dt>{{ t('services.routes.item.labels') }}</dt>
+                  <dd>
+                    <XLayout
+                      variant="separated"
+                      truncate
+                    >
+                      <template
+                        v-for="kumaRe in [/^(.+\.)?kuma\.io\//]"
+                        :key="typeof kumaRe"
+                      >
+                        <XBadge
+                          v-for="[key, value] in labels"
+                          :key="key"
+                          :appearance="kumaRe.test(key) ? 'info' : 'decorative'"
+                        >
+                          {{ key }}:{{ value }}
+                        </XBadge>
+                      </template>
+                    </XLayout>
+                  </dd>
+                </div>
+              </template>
+            </XDl>
+          </DataLoader>
         </XCard>
 
         <XCard>
@@ -212,7 +217,7 @@
         </XCard>
 
         <XCard
-          v-if="props.data.spec.identities.length"
+          v-if="!(props.data instanceof Error) && props.data?.spec.identities.length"
           data-testid="mesh-service-identities"
         >
           <template #title>
@@ -251,68 +256,76 @@
             {{ t('services.detail.dpp-status.title') }}
           </template>
 
-          <XLayout
-            variant="columns"
-            class="columns-with-borders"
+          <DataLoader
+            :data="[props.data]"
+            v-slot="{ data: [service] }"
           >
-            <ResourceStatus
-              :total="props.data.status.dataplaneProxies.total"
-              :online="props.data.status.dataplaneProxies.connected"
-              data-testid="connected-dpps"
+            <XLayout
+              variant="columns"
+              class="columns-with-borders"
             >
-              <template #icon>
-                <XIcon name="connected" />
-              </template>
-              <template #title>
-                {{ t('services.detail.dpp-status.connected') }}
-              </template>
-            </ResourceStatus>
+              <ResourceStatus
+                :total="service.status.dataplaneProxies.total"
+                :online="service.status.dataplaneProxies.connected"
+                data-testid="connected-dpps"
+              >
+                <template #icon>
+                  <XIcon name="connected" />
+                </template>
+                <template #title>
+                  {{ t('services.detail.dpp-status.connected') }}
+                </template>
+              </ResourceStatus>
 
-            <ResourceStatus
-              :total="props.data.status.dataplaneProxies.healthy"
-              data-testid="healthy-dpps"
-            >
-              <template #icon>
-                <XIcon name="healthy" />
-              </template>
-              <template #title>
-                {{ t('services.detail.dpp-status.healthy') }}
-              </template>
-            </ResourceStatus>
-          </XLayout>
+              <ResourceStatus
+                :total="service.status.dataplaneProxies.healthy"
+                data-testid="healthy-dpps"
+              >
+                <template #icon>
+                  <XIcon name="healthy" />
+                </template>
+                <template #title>
+                  {{ t('services.detail.dpp-status.healthy') }}
+                </template>
+              </ResourceStatus>
+            </XLayout>
+          </DataLoader>
         </XCard>
 
-        <div>
-          <XCard
-            class="mt-4"
+        <XCard>
+          <template #title>
+            {{ t('services.detail.data_plane_proxies') }}
+          </template>
+
+          <XLayout
+            variant="y-stack"
           >
-            <template #title>
-              {{ t('services.detail.data_plane_proxies') }}
-            </template>
-            <XLayout
-              variant="y-stack"
+            <search>
+              <form
+                @submit.prevent
+              >
+                <XSearch
+                  :keys="['name', 'tag', 'label']"
+                  :value="route.params.s"
+                  @change="(s) => route.update({ page: 1, s })"
+                />
+              </form>
+            </search>
+            <DataLoader
+              :data="[props.data]"
+              variant="list"
+              v-slot="{ data: [service] }"
             >
-              <search>
-                <form
-                  @submit.prevent
-                >
-                  <XSearch
-                    :keys="['name', 'tag', 'label']"
-                    :value="route.params.s"
-                    @change="(s) => route.update({ page: 1, s })"
-                  />
-                </form>
-              </search>
               <DataLoader
                 :src="uri(sources, '/meshes/:mesh/dataplanes/for/mesh-service/:tags', {
                   mesh: route.params.mesh,
                   tags: JSON.stringify({
-                    ...props.data.spec.selector.dataplaneTags,
+                    ...service.spec.selector.dataplaneTags,
                   }),
                 }, {
                   page: route.params.page,
                   size: route.params.size,
-                  search: `${route.params.s}${can('use zones') && props.data.zone.length > 0 ? ` zone:${props.data.zone}`: ''}`,
+                  search: `${route.params.s}${can('use zones') && service.zone.length > 0 ? ` zone:${service.zone}`: ''}`,
                 })"
                 variant="list"
                 v-slot="{ data: [dataplanes] }"
@@ -478,9 +491,9 @@
                   </RouterView>
                 </DataCollection>
               </DataLoader>
-            </XLayout>
-          </XCard>
-        </div>
+            </DataLoader>
+          </XLayout>
+        </XCard>
       </XLayout>
     </AppView>
   </RouteView>
@@ -496,7 +509,7 @@ import { sources as servicesSources } from '@/app/services/sources'
 
 
 const props = defineProps<{
-  data: MeshService
+  data: MeshService | Error | undefined
 }>()
 </script>
 
