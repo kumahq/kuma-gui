@@ -12,7 +12,7 @@
         mesh: route.params.mesh,
         name: route.params.gateway,
       })"
-      v-slot="{ data, error }"
+      v-slot="{ data: sourceData, result }"
     >
       <AppView
         :docs="t('builtin-gateways.href.docs')"
@@ -40,48 +40,47 @@
         <template
           #title
         >
-          <h1
-            v-if="data"
+          <DataLoader
+            :data="[sourceData]"
+            variant="header"
+            v-slot="{ data: [data] }"
           >
-            <XCopyButton
-              :text="data.name"
-            >
-              <RouteTitle
-                :title="t('builtin-gateways.routes.item.title', { name: data.name })"
-              />
-            </XCopyButton>
-          </h1>
+            <h1>
+              <XCopyButton
+                :text="data.name"
+              >
+                <RouteTitle
+                  :title="t('builtin-gateways.routes.item.title', { name: data.name })"
+                />
+              </XCopyButton>
+            </h1>
+          </DataLoader>
         </template>
 
-        <DataLoader
-          :data="[data]"
-          :errors="[error]"
+        <XTabs
+          :selected="route.child()?.name"
         >
-          <XTabs
-            :selected="route.child()?.name"
+          <template
+            v-for="{ name } in route.children"
+            :key="name"
+            #[`${name}-tab`]
           >
-            <template
-              v-for="{ name } in route.children"
-              :key="name"
-              #[`${name}-tab`]
+            <XAction
+              :to="{ name }"
             >
-              <XAction
-                :to="{ name }"
-              >
-                {{ t(`builtin-gateways.routes.item.navigation.${name}`) }}
-              </XAction>
-            </template>
-          </XTabs>
+              {{ t(`builtin-gateways.routes.item.navigation.${name}`) }}
+            </XAction>
+          </template>
+        </XTabs>
 
-          <RouterView
-            v-slot="{ Component }"
-          >
-            <component
-              :is="Component"
-              :gateway="data"
-            />
-          </RouterView>
-        </DataLoader>
+        <RouterView
+          v-slot="{ Component }"
+        >
+          <component
+            :is="Component"
+            :gateway="result"
+          />
+        </RouterView>
       </AppView>
     </DataSource>
   </RouteView>
