@@ -12,7 +12,7 @@
         mesh: route.params.mesh,
         name: route.params.service,
       })"
-      v-slot="{ data, error }"
+      v-slot="{ data, result }"
     >
       <AppView
         :docs="t('services.mesh-service.href.docs')"
@@ -38,55 +38,55 @@
         ]"
       >
         <template #title>
-          <XLayout
-            v-if="data"
-            variant="y-stack"
-            size="small"
+          <DataLoader
+            :data="[data]"
+            variant="header"
+            v-slot="{ data: [service] }"
           >
-            <h1>
-              <XCopyButton :text="data.name">
-                <RouteTitle
-                  :title="t('services.routes.item.title', { name: data.name })"
-                />
-              </XCopyButton>
-            </h1>
-            <XBadge
-              :appearance="t(`common.status.appearance.${data.spec.state}`, undefined, { defaultMessage: 'neutral' })"
+            <XLayout
+              variant="y-stack"
+              size="small"
             >
-              {{ t(`http.api.value.${data.spec.state}`) }}
-            </XBadge>
-          </XLayout>
+              <h1>
+                <XCopyButton :text="service.name">
+                  <RouteTitle
+                    :title="t('services.routes.item.title', { name: service.name })"
+                  />
+                </XCopyButton>
+              </h1>
+              <XBadge
+                :appearance="t(`common.status.appearance.${service.spec.state}`, undefined, { defaultMessage: 'neutral' })"
+              >
+                {{ t(`http.api.value.${service.spec.state}`) }}
+              </XBadge>
+            </XLayout>
+          </DataLoader>
         </template>
 
-        <DataLoader
-          :data="[data]"
-          :errors="[error]"
+        <XTabs
+          :selected="route.child()?.name"
         >
-          <XTabs
-            :selected="route.child()?.name"
+          <template
+            v-for="{ name } in route.children"
+            :key="name"
+            #[`${name}-tab`]
           >
-            <template
-              v-for="{ name } in route.children"
-              :key="name"
-              #[`${name}-tab`]
+            <XAction
+              :to="{ name }"
             >
-              <XAction
-                :to="{ name }"
-              >
-                {{ t(`services.routes.item.navigation.${name}`) }}
-              </XAction>
-            </template>
-          </XTabs>
+              {{ t(`services.routes.item.navigation.${name}`) }}
+            </XAction>
+          </template>
+        </XTabs>
 
-          <RouterView
-            v-slot="child"
-          >
-            <component
-              :is="child.Component"
-              :data="data"
-            />
-          </RouterView>
-        </DataLoader>
+        <RouterView
+          v-slot="child"
+        >
+          <component
+            :is="child.Component"
+            :data="result"
+          />
+        </RouterView>
       </AppView>
     </DataSource>
   </RouteView>
