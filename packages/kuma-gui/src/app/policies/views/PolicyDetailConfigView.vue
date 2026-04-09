@@ -43,18 +43,23 @@
           </XLayout>
 
           <template v-if="route.params.environment === 'universal'">
-            <XCodeBlock
-              data-testid="codeblock-yaml-universal"
-              language="yaml"
-              :code="props.data.yaml"
-              is-searchable
-              :query="route.params.codeSearch"
-              :is-filter-mode="route.params.codeFilter"
-              :is-reg-exp-mode="route.params.codeRegExp"
-              @query-change="route.update({ codeSearch: $event })"
-              @filter-mode-change="route.update({ codeFilter: $event })"
-              @reg-exp-mode-change="route.update({ codeRegExp: $event })"
-            />
+            <DataLoader
+              :data="[props.data]"
+              v-slot="{ data: [policy] }"
+            >
+              <XCodeBlock
+                data-testid="codeblock-yaml-universal"
+                language="yaml"
+                :code="policy.yaml"
+                is-searchable
+                :query="route.params.codeSearch"
+                :is-filter-mode="route.params.codeFilter"
+                :is-reg-exp-mode="route.params.codeRegExp"
+                @query-change="route.update({ codeSearch: $event })"
+                @filter-mode-change="route.update({ codeFilter: $event })"
+                @reg-exp-mode-change="route.update({ codeRegExp: $event })"
+              />
+            </DataLoader>
           </template>
 
           <template v-else>
@@ -90,6 +95,6 @@
 import type { Policy } from '../data'
 import { sources } from '../sources'
 const props = defineProps<{
-  data: Policy
+  data: Policy | Error | undefined
 }>()
 </script>
