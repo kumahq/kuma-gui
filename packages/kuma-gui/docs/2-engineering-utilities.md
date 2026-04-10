@@ -64,5 +64,9 @@ debug/engineering utilities to make debugging easier, for example:
 
 - Our mocks are injected via `debug` containers.
 - Clicking copy buttons will also print what is copied to `console`
+- Feature flagging in production and development environments
 
+## Incremental development
 
+In order to incrementally develop a feature it may be required to flag it to keep it hidden or disabled in production environments while it shall be 
+visible and usable in development environments to be able to gather feedback as early as possible. If the feature flag does not rely on run-time data, it can be applied in the service containers just like the `debug` capabilities. Ideally these flags remain in their respective module, which means that a new flag should be created in a `features.ts` file and a flag name in a `debug.ts` file, all relative to the module they belong to. The default/production value needs to be set in `src/app/kuma/env.ts` and the `debug.ts` file needs to be wired in the `main.ts`.

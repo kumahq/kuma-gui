@@ -1,12 +1,18 @@
 import createClient from 'openapi-fetch'
 
+import { Resource } from './data'
 import { MeshIdentity } from './data/MeshIdentity'
 import type { KumaMeshIdentity } from './data/MeshIdentity'
 import { MeshTrust } from './data/MeshTrust'
 import type { KumaMeshTrust } from './data/MeshTrust'
+import { Resources } from './data/Resources'
+import { ResourcesTypes } from './data/ResourceTypes'
 import { defineSources } from '@/app/application'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import type { paths } from '@kumahq/kuma-http-api'
+
+type DynamicPathGlobal = 'hostnamegenerators'
+type DynamicPathMesh = 'meshaccesslogs'
 
 export const sources = (api: KumaApi) => {
   const http = createClient<paths>({
@@ -14,13 +20,85 @@ export const sources = (api: KumaApi) => {
     fetch: api.client.fetch,
   })
   return defineSources({
-    '/resources': async () => {
-      return (await http.GET('/_resources')).data!
+    '/resources': async (params) => {
+      const search = Resource.parseSearch(params.search, { defaultKey: 'category' })
+      const response = await http.GET('/_resources')
+
+      const normalized = ResourcesTypes.fromCollection(response.data!)
+
+      return !search.category ? normalized : {
+        ...normalized,
+        resources: normalized.resources.filter((resource) => {
+          return resource.categories.includes(search.category as string)
+        }),
+      }
+    },
+
+    '/resources/:path': async (params) => {
+      const { path } = params
+      const search = Resource.search(params.search)
+
+      const response = await http.GET(`/${path as DynamicPathGlobal}`, {
+        params: {
+          // @ts-expect-error - incorrect typing in openapi-fetch
+          query: {
+            ...search,
+          },
+        },
+      })
+
+      return Resources.fromCollection(response.data!)
+    },
+
+    '/resources/:path/for/:mesh': async (params) => {
+      const { mesh, path } = params
+      const search = Resource.search(params.search)
+      
+      const response = await http.GET(`/meshes/{mesh}/${path as DynamicPathMesh}`, {
+        params: {
+          path: {
+            mesh,
+          },
+          // @ts-expect-error - incorrect typing in openapi-fetch
+          query: {
+            ...search,
+          },
+        },
+      })
+
+      return Resources.fromCollection(response.data!)
+    },
+
+    '/resource/:kri': async (params) => {
+      const response = await http.GET('/_kri/{kri}', {
+        params: {
+          path: {
+            kri: params.kri,
+          },
+        },
+      })
+
+      return Resources.fromObject(response.data!)
+    },
+
+    '/resource/:kri/as/kubernetes': async (params) => {
+      const response = await http.GET('/_kri/{kri}', {
+        params: {
+          path: {
+            kri: params.kri,
+          },
+        },
+        query: {
+          format: 'kubernetes',
+        },
+      })
+
+      return response.data!
     },
 
     '/meshes/:mesh/meshidentities': async (params) => {
       const { mesh } = params
-  
+      
       const res = await http.GET('/meshes/{mesh}/meshidentities', {
         params: {
           path: {
@@ -28,13 +106,13 @@ export const sources = (api: KumaApi) => {
           },
         },
       })
-  
+      
       return MeshIdentity.fromCollection(res.data!)
     },
-
+    
     '/meshidentities/:mid': async (params) => {
       const { mid } = params
-  
+      
       const res = await http.GET('/_kri/{kri}', {
         params: {
           path: {
@@ -42,13 +120,13 @@ export const sources = (api: KumaApi) => {
           },
         },
       })
-  
+      
       return MeshIdentity.fromObject(res.data as KumaMeshIdentity)
     },
-
+    
     '/meshidentities/:mid/as/kubernetes': async (params) => {
       const { mid } = params
-  
+      
       const res = await http.GET('/_kri/{kri}', {
         params: {
           path: {
@@ -60,13 +138,13 @@ export const sources = (api: KumaApi) => {
           },
         },
       })
-  
+      
       return res.data
     },
 
     '/meshes/:mesh/meshtrusts': async (params) => {
       const { mesh } = params
-  
+      
       const res = await http.GET('/meshes/{mesh}/meshtrusts', {
         params: {
           path: {
@@ -74,13 +152,13 @@ export const sources = (api: KumaApi) => {
           },
         },
       })
-  
+      
       return MeshTrust.fromCollection(res.data!)
     },
-
+    
     '/meshtrusts/:mtrust': async (params) => {
       const { mtrust } = params
-  
+      
       const res = await http.GET('/_kri/{kri}', {
         params: {
           path: {
@@ -88,13 +166,13 @@ export const sources = (api: KumaApi) => {
           },
         },
       })
-  
+      
       return MeshTrust.fromObject(res.data as KumaMeshTrust)
     },
-
+    
     '/meshtrusts/:mtrust/as/kubernetes': async (params) => {
       const { mtrust } = params
-  
+      
       const res = await http.GET('/_kri/{kri}', {
         params: {
           path: {
@@ -106,7 +184,7 @@ export const sources = (api: KumaApi) => {
           },
         },
       })
-  
+      
       return res.data
     },
   })
