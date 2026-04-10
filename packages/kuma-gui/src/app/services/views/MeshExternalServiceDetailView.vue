@@ -13,106 +13,113 @@
   >
     <AppView>
       <XLayout variant="y-stack">
-        <XAboutCard
-          :title="t('services.mesh-external-service.about.title')"
-          :created="props.data.creationTime"
-          :modified="props.data.modificationTime"
+        <XCard
           data-testid="mesh-external-service-about-section"
         >
-          <XDl variant="x-stack">
-            <div
-              v-if="props.data.namespace.length > 0"
-            >
-              <dt>
-                {{ t('http.api.property.namespace') }}
-              </dt>
-              <dd>
-                <XBadge appearance="decorative">
-                  {{ props.data.namespace }}
-                </XBadge>
-              </dd>
-            </div>
-            <div
-              v-if="can('use zones') && props.data.zone"
-            >
-              <dt>
-                {{ t('http.api.property.zone') }}
-              </dt>
-              <dd>
-                <XAction
-                  :to="{
-                    name: 'zone-cp-detail-view',
-                    params: {
-                      zone: props.data.zone,
-                    },
-                  }"
-                >
-                  <XBadge appearance="decorative">
-                    {{ props.data.zone }}
-                  </XBadge>
-                </XAction>
-              </dd>
-            </div>
-            <div
-              v-if="data.spec.match"
-              class="port"
-            >
-              <dt>
-                {{ t('http.api.property.port') }}
-              </dt>
-              <dd>
-                <KumaPort
-                  :port="data.spec.match"
-                />
-              </dd>
-            </div>
-            <div
-              v-if="data.spec.match"
-              class="tls"
-            >
-              <dt>
-                {{ t('http.api.property.tls') }}
-              </dt>
-              <dd>
-                <XBadge
-                  :appearance="data.spec.tls?.enabled ? 'success' : 'neutral'"
-                >
-                  {{ data.spec.tls?.enabled ? 'Enabled' : 'Disabled' }}
-                </XBadge>
-              </dd>
-            </div>
-
-            <template
-              v-for="labels in [Object.entries(props.data.labels)]"
-              :key="typeof labels"
-            >
-              <div v-if="labels.length > 0">
-                <dt>{{ t('services.routes.item.labels') }}</dt>
+          <template #title>
+            {{ t('services.mesh-external-service.about.title') }}
+          </template>
+          <DataLoader
+            :data="[props.data]"
+            v-slot="{ data: [service] }"
+          >
+            <XTimespan
+              :start="service.creationTime"
+              :end="service.modificationTime"
+            />
+            <XDl variant="x-stack">
+              <div
+                v-if="service.namespace.length > 0"
+              >
+                <dt>
+                  {{ t('http.api.property.namespace') }}
+                </dt>
                 <dd>
-                  <XLayout
-                    variant="separated"
-                    truncate
-                  >
-                    <template
-                      v-for="kumaRe in [/^(.+\.)?kuma\.io\//]"
-                      :key="typeof kumaRe"
-                    >
-                      <XBadge
-                        v-for="[key, value] in labels"
-                        :key="key"
-                        :appearance="kumaRe.test(key) ? 'info' : 'decorative'"
-                      >
-                        {{ key }}:{{ value }}
-                      </XBadge>
-                    </template>
-                  </XLayout>
+                  <XBadge appearance="decorative">
+                    {{ service.namespace }}
+                  </XBadge>
                 </dd>
               </div>
-            </template>
-          </XDl>
-        </XAboutCard>
+              <div
+                v-if="can('use zones') && service.zone"
+              >
+                <dt>
+                  {{ t('http.api.property.zone') }}
+                </dt>
+                <dd>
+                  <XAction
+                    :to="{
+                      name: 'zone-cp-detail-view',
+                      params: {
+                        zone: service.zone,
+                      },
+                    }"
+                  >
+                    <XBadge appearance="decorative">
+                      {{ service.zone }}
+                    </XBadge>
+                  </XAction>
+                </dd>
+              </div>
+              <div
+                v-if="service.spec.match"
+                class="port"
+              >
+                <dt>
+                  {{ t('http.api.property.port') }}
+                </dt>
+                <dd>
+                  <KumaPort
+                    :port="service.spec.match"
+                  />
+                </dd>
+              </div>
+              <div
+                v-if="service.spec.match"
+                class="tls"
+              >
+                <dt>
+                  {{ t('http.api.property.tls') }}
+                </dt>
+                <dd>
+                  <XBadge
+                    :appearance="service.spec.tls?.enabled ? 'success' : 'neutral'"
+                  >
+                    {{ service.spec.tls?.enabled ? 'Enabled' : 'Disabled' }}
+                  </XBadge>
+                </dd>
+              </div>
 
-
+              <template
+                v-for="labels in [Object.entries(service.labels)]"
+                :key="typeof labels"
+              >
+                <div v-if="labels.length > 0">
+                  <dt>{{ t('services.routes.item.labels') }}</dt>
+                  <dd>
+                    <XLayout
+                      variant="separated"
+                      truncate
+                    >
+                      <template
+                        v-for="kumaRe in [/^(.+\.)?kuma\.io\//]"
+                        :key="typeof kumaRe"
+                      >
+                        <XBadge
+                          v-for="[key, value] in labels"
+                          :key="key"
+                          :appearance="kumaRe.test(key) ? 'info' : 'decorative'"
+                        >
+                          {{ key }}:{{ value }}
+                        </XBadge>
+                      </template>
+                    </XLayout>
+                  </dd>
+                </div>
+              </template>
+            </XDl>
+          </DataLoader>
+        </XCard>
 
         <XCard>
           <template #title>
@@ -204,23 +211,31 @@
             </XLayout>
 
             <template v-if="route.params.environment === 'universal'">
-              <XCodeBlock
-                data-testid="codeblock-yaml-universal"
-                language="yaml"
-                :code="YAML.stringify(props.data.config)"
-                is-searchable
-                :query="route.params.codeSearch"
-                :is-filter-mode="route.params.codeFilter"
-                :is-reg-exp-mode="route.params.codeRegExp"
-                @query-change="route.update({ codeSearch: $event })"
-                @filter-mode-change="route.update({ codeFilter: $event })"
-                @reg-exp-mode-change="route.update({ codeRegExp: $event })"
-              />
+              <DataLoader
+                :data="[props.data]"
+                v-slot="{ data: [service] }"
+              >
+                <XCodeBlock
+                  data-testid="codeblock-yaml-universal"
+                  language="yaml"
+                  :code="YAML.stringify(service.config)"
+                  is-searchable
+                  :query="route.params.codeSearch"
+                  :is-filter-mode="route.params.codeFilter"
+                  :is-reg-exp-mode="route.params.codeRegExp"
+                  @query-change="route.update({ codeSearch: $event })"
+                  @filter-mode-change="route.update({ codeFilter: $event })"
+                  @reg-exp-mode-change="route.update({ codeRegExp: $event })"
+                />
+              </DataLoader>
             </template>
 
             <template v-else>
               <DataLoader
-                :src="`/meshes/${props.data.mesh}/mesh-external-service/${props.data.id}/as/kubernetes`"
+                :src="uri(servicesSources, '/meshes/:mesh/mesh-external-service/:name/as/kubernetes', {
+                  mesh: route.params.mesh,
+                  name: route.params.service,
+                })"
                 v-slot="{ data: [k8sConfig] }"
               >
                 <XCodeBlock
@@ -251,7 +266,7 @@ import AppCollection from '@/app/application/components/app-collection/AppCollec
 import { sources as servicesSources } from '@/app/services/sources'
 
 const props = defineProps<{
-  data: MeshExternalService
+  data: MeshExternalService | Error | undefined
 }>()
 </script>
 

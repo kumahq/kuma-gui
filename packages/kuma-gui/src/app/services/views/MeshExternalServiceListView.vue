@@ -21,28 +21,12 @@
         page: 1,
         size: 100,
       })"
-      v-slot="{ data: egresses }"
+      v-slot="{ data: sourceEgresses }"
     >
       <AppView
         :docs="t('services.mesh-external-service.href.docs')"
         :notifications="true"
       >
-        <XNotification
-          :notify="!props.mesh.mtlsBackend"
-          :uri="`mes-mtls-warning.${props.mesh.id}`"
-        >
-          <XI18n
-            path="services.mesh-external-service.notifications.mtls-warning"
-          />
-        </XNotification>
-        <XNotification
-          :notify="egresses && !egresses.items.find((egress) => typeof egress.zoneEgressInsight.connectedSubscription !== 'undefined')"
-          :uri="`mes-no-zone-ingress.${props.mesh.id}`"
-        >
-          <XI18n
-            path="services.mesh-external-service.notifications.no-zone-egress"
-          />
-        </XNotification>
         <XCard>
           <XLayout variant="y-stack">
             <search>
@@ -64,9 +48,26 @@
                 size: route.params.size,
                 search: route.params.s,
               })"
+              :data="[sourceEgresses]"
               variant="list"
-              v-slot="{ data: [data] }"
+              v-slot="{ data: [data, egresses] }"
             >
+              <XNotification
+                :notify="!props.mesh.mtlsBackend"
+                :uri="`mes-mtls-warning.${props.mesh.id}`"
+              >
+                <XI18n
+                  path="services.mesh-external-service.notifications.mtls-warning"
+                />
+              </XNotification>
+              <XNotification
+                :notify="!egresses.items.find((egress) => typeof egress.zoneEgressInsight.connectedSubscription !== 'undefined')"
+                :uri="`mes-no-zone-ingress.${props.mesh.id}`"
+              >
+                <XI18n
+                  path="services.mesh-external-service.notifications.no-zone-egress"
+                />
+              </XNotification>
               <DataCollection
                 type="services"
                 :items="data.items"

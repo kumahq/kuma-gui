@@ -38,24 +38,29 @@
         ]"
       >
         <template #title>
-          <XLayout
-            v-if="data"
-            variant="y-stack"
-            size="small"
+          <DataLoader
+            :data="[data]"
+            variant="header"
+            v-slot="{ data: [service] }"
           >
-            <h1>
-              <XCopyButton :text="route.params.service">
-                <RouteTitle
-                  :title="t('services.routes.item.title', { name: route.params.service })"
-                />
-              </XCopyButton>
-            </h1>
-            <XBadge
-              :appearance="t(`common.status.appearance.${data.status}`, undefined, { defaultMessage: 'neutral' })"
+            <XLayout
+              variant="y-stack"
+              size="small"
             >
-              {{ t(`http.api.value.${data.status}`) }}
-            </XBadge>
-          </XLayout>
+              <h1>
+                <XCopyButton :text="route.params.service">
+                  <RouteTitle
+                    :title="t('services.routes.item.title', { name: route.params.service })"
+                  />
+                </XCopyButton>
+              </h1>
+              <XBadge
+                :appearance="t(`common.status.appearance.${service.status}`, undefined, { defaultMessage: 'neutral' })"
+              >
+                {{ t(`http.api.value.${service.status}`) }}
+              </XBadge>
+            </XLayout>
+          </DataLoader>
         </template>
 
         <XTabs

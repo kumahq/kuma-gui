@@ -158,7 +158,7 @@
                 </template>
               </AppCollection>
               <RouterView
-                v-if="data.items && route.params.service"
+                v-if="route.params.service"
                 v-slot="child"
               >
                 <XDrawer

@@ -12,47 +12,56 @@
     v-slot="{ route, t, uri }"
   >
     <AppView>
-      <DataLoader
+      <DataSource
         :src="uri(sources, `/meshes/:mesh/external-services/:name`, {
           mesh: route.params.mesh,
           name: route.params.service,
         })"
-        v-slot="{ data: [data] }"
+        v-slot="{ data }"
       >
-        <XAboutCard
+        <XCard
           data-testid="external-service-details"
-          :title="t('external-services.detail.about.title')"
-          :created="data.creationTime"
-          :modified="data.modificationTime"
         >
-          <XDl variant="x-stack">
-            <div>
-              <dt>
-                {{ t('http.api.property.address') }}
-              </dt>
-              <dd>
-                <XCopyButton
-                  variant="badge"
-                  format="default"
-                  :text="data.networking.address"
-                />
-              </dd>
-            </div>
-            <div
-              v-if="data.tags"
-            >
-              <dt>
-                {{ t('http.api.property.tags') }}
-              </dt>
-              <dd>
-                <TagList
-                  :tags="data.tags"
-                  should-truncate
-                />
-              </dd>
-            </div>
-          </XDl>
-        </XAboutCard>
+          <template #title>
+            {{ t('external-services.detail.about.title') }}
+          </template>
+          <DataLoader
+            :data="[data]"
+            v-slot="{ data: [service] }"
+          >
+            <XTimespan
+              :start="service.creationTime"
+              :end="service.modificationTime"
+            />
+            <XDl variant="x-stack">
+              <div>
+                <dt>
+                  {{ t('http.api.property.address') }}
+                </dt>
+                <dd>
+                  <XCopyButton
+                    variant="badge"
+                    format="default"
+                    :text="service.networking.address"
+                  />
+                </dd>
+              </div>
+              <div
+                v-if="service.tags"
+              >
+                <dt>
+                  {{ t('http.api.property.tags') }}
+                </dt>
+                <dd>
+                  <TagList
+                    :tags="service.tags"
+                    should-truncate
+                  />
+                </dd>
+              </div>
+            </XDl>
+          </DataLoader>
+        </XCard>
 
         <XCard>
           <template #title>
@@ -88,18 +97,23 @@
             </XLayout>
 
             <template v-if="route.params.environment === 'universal'">
-              <XCodeBlock
-                data-testid="codeblock-yaml-universal"
-                language="yaml"
-                :code="YAML.stringify(data.config)"
-                is-searchable
-                :query="route.params.codeSearch"
-                :is-filter-mode="route.params.codeFilter"
-                :is-reg-exp-mode="route.params.codeRegExp"
-                @query-change="route.update({ codeSearch: $event })"
-                @filter-mode-change="route.update({ codeFilter: $event })"
-                @reg-exp-mode-change="route.update({ codeRegExp: $event })"
-              />
+              <DataLoader
+                :data="[data]"
+                v-slot="{ data: [service] }"
+              >
+                <XCodeBlock
+                  data-testid="codeblock-yaml-universal"
+                  language="yaml"
+                  :code="YAML.stringify(service.config)"
+                  is-searchable
+                  :query="route.params.codeSearch"
+                  :is-filter-mode="route.params.codeFilter"
+                  :is-reg-exp-mode="route.params.codeRegExp"
+                  @query-change="route.update({ codeSearch: $event })"
+                  @filter-mode-change="route.update({ codeFilter: $event })"
+                  @reg-exp-mode-change="route.update({ codeRegExp: $event })"
+                />
+              </DataLoader>
             </template>
 
             <template v-else>
@@ -126,7 +140,7 @@
             </template>
           </XLayout>
         </XCard>
-      </DataLoader>
+      </DataSource>
     </AppView>
   </RouteView>
 </template>
