@@ -9,61 +9,30 @@
     />
     <AppView>
       <XCard>
-        <DataCollection
-          type="services"
-          :items="props.data.zoneIngress.availableServices"
-          :total="props.data.zoneIngress.availableServices.length"
+        <DataLoader
+          :data="[props.data]"
+          variant="list"
+          v-slot="{ data: [zoneIngress] }"
         >
-          <AppCollection
-            data-testid="available-services-collection"
-            :headers="[
-              { label: 'Name', key: 'name' },
-              { label: 'Mesh', key: 'mesh' },
-              { label: 'Protocol', key: 'protocol' },
-              { label: 'No. instances', key: 'instances' },
-              { label: 'Actions', key: 'actions', hideLabel: true },
-            ]"
-            :items="props.data.zoneIngress.availableServices"
+          <DataCollection
+            type="services"
+            :items="zoneIngress.zoneIngress.availableServices"
+            :total="zoneIngress.zoneIngress.availableServices.length"
           >
-            <template #name="{ row: item }">
-              <XAction
-                data-action
-                :to="{
-                  name: 'service-detail-view',
-                  params: {
-                    mesh: item.mesh,
-                    service: item.tags['kuma.io/service'],
-                  },
-                }"
-              >
-                {{ item.tags['kuma.io/service'] }}
-              </XAction>
-            </template>
-
-            <template #mesh="{ row: item }">
-              <XAction
-                :to="{
-                  name: 'mesh-detail-view',
-                  params: {
-                    mesh: item.mesh,
-                  },
-                }"
-              >
-                {{ item.mesh }}
-              </XAction>
-            </template>
-
-            <template #protocol="{ row: item }">
-              {{ item.tags['kuma.io/protocol'] ?? t('common.collection.none') }}
-            </template>
-
-            <template #instances="{ row: item }">
-              {{ item.instances }}
-            </template>
-
-            <template #actions="{ row: item }">
-              <XActionGroup>
+            <AppCollection
+              data-testid="available-services-collection"
+              :headers="[
+                { label: 'Name', key: 'name' },
+                { label: 'Mesh', key: 'mesh' },
+                { label: 'Protocol', key: 'protocol' },
+                { label: 'No. instances', key: 'instances' },
+                { label: 'Actions', key: 'actions', hideLabel: true },
+              ]"
+              :items="zoneIngress.zoneIngress.availableServices"
+            >
+              <template #name="{ row: item }">
                 <XAction
+                  data-action
                   :to="{
                     name: 'service-detail-view',
                     params: {
@@ -72,12 +41,49 @@
                     },
                   }"
                 >
-                  {{ t('common.collection.actions.view') }}
+                  {{ item.tags['kuma.io/service'] }}
                 </XAction>
-              </XActionGroup>
-            </template>
-          </AppCollection>
-        </DataCollection>
+              </template>
+
+              <template #mesh="{ row: item }">
+                <XAction
+                  :to="{
+                    name: 'mesh-detail-view',
+                    params: {
+                      mesh: item.mesh,
+                    },
+                  }"
+                >
+                  {{ item.mesh }}
+                </XAction>
+              </template>
+
+              <template #protocol="{ row: item }">
+                {{ item.tags['kuma.io/protocol'] ?? t('common.collection.none') }}
+              </template>
+
+              <template #instances="{ row: item }">
+                {{ item.instances }}
+              </template>
+
+              <template #actions="{ row: item }">
+                <XActionGroup>
+                  <XAction
+                    :to="{
+                      name: 'service-detail-view',
+                      params: {
+                        mesh: item.mesh,
+                        service: item.tags['kuma.io/service'],
+                      },
+                    }"
+                  >
+                    {{ t('common.collection.actions.view') }}
+                  </XAction>
+                </XActionGroup>
+              </template>
+            </AppCollection>
+          </DataCollection>
+        </DataLoader>
       </XCard>
     </AppView>
   </RouteView>
@@ -87,6 +93,6 @@
 import type { ZoneIngressOverview } from '../data'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 const props = defineProps<{
-  data: ZoneIngressOverview
+  data: ZoneIngressOverview | Error | undefined
 }>()
 </script>
