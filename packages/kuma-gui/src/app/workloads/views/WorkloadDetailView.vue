@@ -16,12 +16,16 @@
       :title="t('workloads.routes.item.title', { name: Kri.fromString(route.params.wl).name })"
     />
     <AppView>
-      <XAboutCard
-        :title="t('workloads.routes.item.about.title')"
-        :created="typeof props.data !== 'undefined' && !(props.data instanceof Error) ? props.data.creationTime : undefined"
-        :modified="typeof props.data !== 'undefined' && !(props.data instanceof Error) ? props.data.modificationTime : undefined"
+      <XCard
         data-testid="about-workload"
       >
+        <XTimespan
+          :start="typeof props.data !== 'undefined' && !(props.data instanceof Error) ? props.data.creationTime : undefined"
+          :end="typeof props.data !== 'undefined' && !(props.data instanceof Error) ? props.data.modificationTime : undefined"
+        />
+        <template #title>
+          {{ t('workloads.routes.item.about.title') }}
+        </template>
         <DataLoader
           :data="[props.data]"
         >
@@ -92,7 +96,7 @@
             </XDl>
           </template>
         </DataLoader>
-      </XAboutCard>
+      </XCard>
 
       <XCard>
         <template #title>

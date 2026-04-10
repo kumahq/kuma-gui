@@ -22,11 +22,14 @@
         })"
         v-slot="{ data: [data] }"
       >
-        <XAboutCard
-          :title="t('services.internal-service.about.title')"
-          :created="data.creationTime"
-          :modified="data.modificationTime"
-        >
+        <XCard>
+          <XTimespan
+            :start="data.creationTime"
+            :end="data.modificationTime"
+          />
+          <template #title>
+            {{ t('services.internal-service.about.title') }}
+          </template>
           <XDl variant="x-stack">
             <div>
               <dt>
@@ -70,7 +73,7 @@
               </dd>
             </div>
           </XDl>
-        </XAboutCard>
+        </XCard>
       </DataLoader>
 
       <XCard>

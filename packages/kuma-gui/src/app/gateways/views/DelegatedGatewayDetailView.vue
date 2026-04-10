@@ -20,12 +20,16 @@
           })"
           v-slot="{ data: [data] }"
         >
-          <XAboutCard
+          <XCard
             v-if="data"
-            :title="t('delegated-gateways.detail.about.title')"
-            :created="data.creationTime"
-            :modified="data.modificationTime"
           >
+            <XTimespan
+              :start="data.creationTime"
+              :end="data.modificationTime"
+            />
+            <template #title>
+              {{ t('delegated-gateways.detail.about.title') }}
+            </template>
             <XDl variant="x-stack">
               <div>
                 <dt>
@@ -68,7 +72,7 @@
                 </dd>
               </div>
             </XDl>
-          </XAboutCard>
+          </XCard>
         </DataLoader>
 
         <XCard>

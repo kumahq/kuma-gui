@@ -7,7 +7,6 @@ import { createHighlighterCore } from 'shiki/core'
 import { createJavaScriptRegexEngine } from 'shiki/engine/javascript'
 
 import {
-  XAboutCard,
   XAction,
   XActionGroup,
   XAlert,
@@ -96,7 +95,6 @@ const components = [
   ['XDisclosure', XDisclosure],
   ['XDownload', XDownload],
   ['XDrawer', XDrawer],
-  ['XAboutCard', XAboutCard],
   ['XInputSwitch', XInputSwitch],
   ['XCheckbox', XCheckBox],
   ['XWindow', XWindow],
@@ -151,7 +149,6 @@ declare module 'vue' {
     XTooltip: typeof XTooltip
     XDisclosure: typeof XDisclosure
     XDownload: typeof XDownload
-    XAboutCard: typeof XAboutCard
     XInputSwitch: typeof XInputSwitch
     XCheckbox: typeof XCheckBox
     XWindow: typeof XWindow
