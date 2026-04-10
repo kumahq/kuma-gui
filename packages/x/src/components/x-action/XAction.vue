@@ -66,7 +66,7 @@
   </template>
 
   <template
-    v-else-if="href.length > 0"
+    v-else-if="href.length > 0 || typeof href === 'object'"
   >
     <KButton
       v-if="['primary', 'secondary', 'tertiary', 'danger'].includes(props.appearance)"
@@ -82,6 +82,19 @@
         name="default"
       />
     </KButton>
+    <RouterLink
+      v-else-if="typeof href === 'object'"
+      :class="{
+        'x-action-appearance-anchor': true,
+      }"
+      data-testid="x-action"
+      v-bind="$attrs"
+      :to="href"
+      :target="target"
+      :rel="rel"
+    >
+      <slot name="default" />
+    </RouterLink>
     <a
       v-else
       data-testid="x-action"
