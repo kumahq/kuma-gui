@@ -74,7 +74,7 @@
                         name: 'mesh-service-summary-view',
                         params: {
                           mesh: item.mesh,
-                          service: item.id,
+                          service: item.kri,
                         },
                         query: {
                           page: route.params.page,
@@ -148,7 +148,7 @@
                         name: 'mesh-service-detail-view',
                         params: {
                           mesh: item.mesh,
-                          service: item.id,
+                          service: item.kri,
                         },
                       }"
                     >
