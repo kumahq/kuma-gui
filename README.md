@@ -57,3 +57,19 @@ application itself: [@kumahq/kuma-gui](./packages/kuma-gui/README.md)
 
 Additionally, an overview of all packages in the repository can be found at
 [./packages/README.md](./packages/README.md)
+
+### Prerequisites
+
+To work on the packages in this repository, you will need to have the following
+tools and programs installed:
+
+- [Node.js](https://nodejs.org) and `npm` (see
+[.nvmrc](https://github.com/kumahq/kuma-gui/blob/master/.nvmrc) for the
+required main version and
+[nvm/installing](https://github.com/nvm-sh/nvm?tab=readme-ov-file#installing-and-updating)
+for installation instructions). With `nvm` installed run `nvm install` to
+install/change to the required version.
+- git
+- make
+- jq (some make targets use jq)
+

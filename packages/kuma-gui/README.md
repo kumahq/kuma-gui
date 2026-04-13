@@ -11,6 +11,10 @@ experience, this documentation will help you get started. It serves as a guide
 and a reference for the technology, libraries, and things used to build and run
 the app.
 
+> [!TIP]
+> All development tooling uses `make`. You can get a list of available make
+> targets by running `make help`
+
 ## Prerequisites
 
 You will need to have the following tools and programs installed to run and
@@ -49,18 +53,17 @@ data so you don’t have to run anything else to start exploring.
 Alternatively, make the development mode use a real Kuma installation running
 at <http://localhost:5681>.
 
-::: tip To work on GUI features using Kuma’s real API, you will need to run
-[Kuma](https://github.com/kumahq/kuma/) locally. Go to
-[github.com/kumahq/kuma](https://github.com/kumahq/kuma/) to find out how to do
-that.
-
-You can confirm Kuma is running by accessing its API:
-
-```sh
-curl http://localhost:5681/
-```
-
-:::
+> [!TIP]
+> To work on GUI features using Kuma’s real API, you will need to run
+> [Kuma](https://github.com/kumahq/kuma/) locally. Go to
+> [github.com/kumahq/kuma](https://github.com/kumahq/kuma/) to find out how to do
+> that.
+>
+> You can confirm Kuma is running by accessing its API:
+>
+> ```sh
+> curl http://localhost:5681/
+> ```
 
 Once installed you can make the development server/GUI use Kuma by adding a
 `KUMA_MOCK_API_ENABLED=false` cookie to your browser. You can do this my using
@@ -84,8 +87,9 @@ echo "export KUMA_REPORTS_ENABLED=false" >> ~/.profile
 make build
 ```
 
-::: tip NOTE In production environments, the GUI application is typically
-served at [localhost:5681/gui/](http://localhost:5681/gui/). :::
+> [!TIP]
+> NOTE In production environments, the GUI application is typically served at
+> [localhost:5681/gui/](http://localhost:5681/gui/).
 
 ## Run unit tests
 
@@ -113,26 +117,21 @@ The above environment variables:
 1. Point the e2e tests to use the locally running GUI on localhost:8080
 2. Tell the e2e tests to open and run in Chrome
 
-::: tip NOTE If you are running tests often you should consider adding these
-environment variables to your shell profile:
-
-```sh
-export KUMA_BASE_URL=http://localhost:8080/gui export
-KUMA_TEST_BROWSER=chrome make test/e2e
-```
-
-You can then just run:
-
-```sh
-make run make test/e2e
-```
-
-:::
-
-See our [package
-file](https://github.com/kumahq/kuma-gui/blob/master/package.json) for more
-details
-:::
+> [!TIP]
+> NOTE If you are running tests often you should consider adding these
+> environment variables to your shell profile:
+>
+> ```sh
+> export KUMA_BASE_URL=http://localhost:8080/gui export
+> KUMA_TEST_BROWSER=chrome make test/e2e
+> ```
+>
+> You can then just run:
+>
+> ```sh
+> make run make test/e2e
+> ```
+>
 
 ## Run linters
 
@@ -140,16 +139,12 @@ details
 make lint
 ```
 
-::: tip You can also lint specific language files:
-
-```sh
-make lint/ts
-```
-
-See our [package
-file](https://github.com/kumahq/kuma-gui/blob/master/package.json) for more
-details
-:::
+> [!TIP]
+> You can also lint specific language files:
+>
+> ```sh
+> make lint/ts
+> ```
 
 ## File structure
 
