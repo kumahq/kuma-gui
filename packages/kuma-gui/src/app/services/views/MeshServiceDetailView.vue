@@ -156,7 +156,7 @@
             :src="uri(servicesSources, '/meshes/:mesh/:serviceType/:serviceName/_hostnames', {
               mesh: route.params.mesh,
               serviceType: 'meshservices',
-              serviceName: route.params.service,
+              serviceName: props.data.id,
             })"
             variant="list"
             v-slot="{ data: [hostnames] }"
@@ -489,7 +489,6 @@ import ResourceStatus from '@/app/common/ResourceStatus.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import { sources } from '@/app/data-planes/sources'
 import { sources as servicesSources } from '@/app/services/sources'
-
 
 const props = defineProps<{
   data: MeshService

@@ -123,7 +123,7 @@
             :src="uri(servicesSources, '/meshes/:mesh/:serviceType/:serviceName/_hostnames', {
               mesh: route.params.mesh,
               serviceType: 'meshexternalservices',
-              serviceName: route.params.service,
+              serviceName: props.data.id,
             })"
             variant="list"
             v-slot="{ data: [hostnames] }"
