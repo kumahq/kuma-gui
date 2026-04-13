@@ -70,7 +70,7 @@
                         name: 'mesh-multi-zone-service-summary-view',
                         params: {
                           mesh: item.mesh,
-                          service: item.id,
+                          service: item.kri,
                         },
                         query: {
                           page: route.params.page,
@@ -123,7 +123,7 @@
                         name: 'mesh-multi-zone-service-detail-view',
                         params: {
                           mesh: item.mesh,
-                          service: item.id,
+                          service: item.kri,
                         },
                       }"
                     >
