@@ -48,6 +48,7 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
           ...(k8s ? { namespace: nspace } : {}),
         }),
       },
+      kri: fake.kuma.kri({ resourceName: 'MeshService', mesh, zone: '', namespace: nspace, name: displayName || name, sectionName: '' }),
       spec: {
         selector: {
           meshService: {
