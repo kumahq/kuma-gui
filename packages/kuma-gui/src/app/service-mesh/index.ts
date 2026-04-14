@@ -8,7 +8,6 @@ import { services as hostnameGenerators } from '@/app/hostname-generators'
 import { Kri } from '@/app/kuma'
 import { services as me } from '@/app/me'
 import { services as meshes } from '@/app/meshes'
-import { services as resources } from '@/app/resources'
 import { services as zones } from '@/app/zones'
 import type { ServiceDefinition, Token } from '@kumahq/container'
 import type { Router } from 'vue-router'
@@ -32,6 +31,153 @@ const findAnchor = (target: HTMLElement) => {
   // anything else we do nothing special
   return null
 }
+
+const kriProtocolHandler = (url: URL, router: Router) => {
+  const { shortName, mesh, namespace, name } = Kri.fromString(url.hostname)
+  const id = `${name}${namespace !== '' ? `.${namespace}`: '' }`
+  const relative = url.searchParams.get('relative')
+  if(relative !== null) {
+    const urlPath = router.resolve({ ...router.currentRoute.value.matched.find((m) => m.name === relative), params: router.currentRoute.value.params }).path
+    const matched = router.resolve([
+      urlPath,
+      url.hostname,
+    ].join('/'))
+
+
+    if(!matched.path) {
+      return url.href
+    }
+
+
+    return {
+      path: matched.path,
+    }
+  }
+
+
+  const to = (() => {
+    const policyPath = url.searchParams.get('policyPath')
+    switch(true) {
+      case policyPath !== null:
+        return {
+          name: 'policy-detail-view',
+          params: {
+            mesh,
+            policy: id,
+            policyPath,
+            resourcePath: policyPath,
+          },
+        }
+      case shortName === 'mgw':
+        return {
+          name: 'builtin-gateway-detail-view',
+          params: {
+            mesh,
+            gateway: id,
+          },
+        }
+      case shortName === 'wl':
+        return {
+          name: 'workload-detail-view',
+          params: {
+            mesh,
+            wl: url.hostname,
+          },
+        }
+      case shortName === 'hg':
+        return {
+          name: 'hostname-generator-detail-view',
+          params: {
+            mesh,
+            name: id,
+          },
+        }
+      case shortName === 'm':
+        return {
+          name: 'mesh-detail-view',
+          params: {
+            name: mesh,
+          },
+        }
+      case shortName === '$zone': {
+        return {
+          name: 'zone-cp-detail-view',
+          params: {
+            zone: name,
+          },
+        }
+      }
+      // TODO: the following cases are currently not supported because we need to add support for KRIs in these routes first
+      // case shortName === 'ze': {
+      //   return {
+      //     name: 'zone-egress-detail-view',
+      //     params: {
+      //       zone,
+      //       proxy: id,
+      //     },
+      //   }
+      // }
+      // case shortName === 'zi': {
+      //   return {
+      //     name: 'zone-ingress-detail-view',
+      //     params: {
+      //       zone,
+      //       proxy: id,
+      //       proxyType: 'ingresses',
+      //     },
+      //   }
+      // }
+      // case shortName === 'dp':
+      //   return {
+      //     name: 'data-plane-detail-view',
+      //     params: {
+      //       mesh,
+      //       proxy: id,
+      //     },
+      //   }
+      // case shortName === 'msvc':
+      //   return {
+      //     name: 'mesh-service-detail-view',
+      //     params: {
+      //       mesh,
+      //       service: id,
+      //     },
+      //   }
+      // case shortName === 'mzsvc':
+      //   return {
+      //     name: 'mesh-multi-zone-service-detail-view',
+      //     params: {
+      //       mesh: mesh,
+      //       service: id,
+      //     },
+      //   }
+      // case shortName === 'extsvc':
+      //   return {
+      //     name: 'mesh-external-service-detail-view',
+      //     params: {
+      //       mesh: mesh,
+      //       service: id,
+      //     },
+      //   }
+      default: {
+        return {
+          name: 'resource-detail-view',
+          params: {
+            kri: url.hostname,
+          },
+        }
+      }
+    }
+  })()
+
+
+  if(to) {
+    const link = useLink({ to })
+    return link.href.value
+  }
+  return url.href
+}
+
 const protocolHandler = (router: Router, doc = document) => {
 
   const base = router.options.history.base
@@ -63,52 +209,18 @@ const protocolHandler = (router: Router, doc = document) => {
   doc.body.addEventListener('click', listener)
 
   return (href: string) => {
-    const kriProto = 'kri://'
-    switch (true) {
-      case href.startsWith(kriProto): {
-        const { mesh, name, namespace, shortName } = Kri.fromString(href.substring(kriProto.length))
-        const id = `${name}${namespace !== '' ? `.${namespace}`: '' }`
+    try {
+      const url = new URL(href)
 
-        const to = (() => {
-          switch (true) {
-            case shortName === 'msvc':
-              return {
-                name: 'mesh-service-detail-view',
-                params: {
-                  mesh,
-                  service: id,
-                },
-              }
-            case shortName === 'mzsvc':
-              return {
-                name: 'mesh-multi-zone-service-detail-view',
-                params: {
-                  mesh: mesh,
-                  service: id,
-                },
-              }
-            case shortName === 'extsvc':
-              return {
-                name: 'mesh-external-service-detail-view',
-                params: {
-                  mesh: mesh,
-                  service: id,
-                },
-              }
-            default:
-              return
-          }
-        })()
-        if (to) {
-          const link = useLink({ to })
-          return link.href.value
-        }
-        return ''
+      if(url.protocol === 'kri:' && Kri.isKriString(url.hostname)) {
+        return kriProtocolHandler(url, router)
       }
+      return href
+    } catch {
+      console.error(`Failed to parse url: "${href}"`)
+      return href
     }
-    return href
   }
-
 }
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   return [
@@ -136,6 +248,5 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
     ...zones(app),
     ...meshes(app),
     ...hostnameGenerators(app),
-    ...resources(app),
   ]
 }
