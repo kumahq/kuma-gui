@@ -71,7 +71,7 @@
     "stylelint-config-html": "^1.1.0",
     "stylelint-config-recommended-scss": "^17.0.1",
     "stylelint-config-recommended-vue": "^1.6.1",
-    "typescript": "^5.9.3",
+    "typescript": "^6.0.2",
     "vite": "^7.3.2",
     "vitest": "^4.1.4",
     "vue-tsc": "^3.2.6"
