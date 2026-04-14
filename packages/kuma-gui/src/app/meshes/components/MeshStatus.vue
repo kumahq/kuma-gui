@@ -133,7 +133,7 @@
 </template>
 <script lang="ts" setup>
 import type { Mesh } from '../data'
-import type { MeshIdentity } from '@/app/resources/data'
+import type { MeshIdentity } from '@/app/mesh-identities/data'
 const props = defineProps<{
   mesh: Mesh
   meshIdentities: MeshIdentity[]
