@@ -166,7 +166,7 @@ const { t } = useI18n()
 .application-shell {
   --AppHeaderHeight: 60px;
   --AppSidebarWidth: 240px;
-  --AppContentPadding: var(--x-space-80);
+  --AppContentPadding: 0;//var(--x-space-80);
   --x-drawer-offset-top: var(--AppHeaderHeight);
 
 }

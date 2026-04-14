@@ -1,125 +1,83 @@
 <template>
-  <div
+  <PageLayout
+    v-if="!hasParent"
     class="app-view"
+    :title="``"
+    :breadcrumbs="_breadcrumbs"
+    :tabs="props.tabs"
+    v-bind="attrs"
   >
-    <DataSource
-      :src="`/me/~notifications`"
-      v-slot="{ data: dismissed, refresh }"
+    <template #title-after>
+      <XTeleportSlot
+        :name="`app-view-title-slot`"
+      />
+    </template>
+    <template
+      #actions
     >
-      <DataSink
-        :src="`/me/~notifications/reset`"
-        v-slot="{ submit: reset }"
+      <XTeleportSlot
+        name="app-view-docs"
+      />
+      <slot name="actions">
+        <XTeleportSlot
+          :name="`${routeView.name}-actions`"
+        />
+      </slot>
+    </template>
+    <section>
+      <XLayout
+        variant="y-stack"
       >
-        <DataSink
-          :src="`/me/~notifications/dismiss`"
-          v-slot="{ submit: dismiss }"
+        <slot
+          name="default"
+        />
+      </XLayout>
+    </section>
+  </PageLayout>
+  <template
+    v-else
+  >
+    <section>
+      <XLayout
+        variant="y-stack"
+      >
+        <header
+          v-if="slots.title || slots.actions"
+          class="app-view-title-bar"
         >
-          <component
-            :is="props.notifications ? `XNotificationHub` : `XAnonymous`"
-            v-if="dismissed"
-            :uri="id"
-            :dismissed="dismissed"
-            @reset="(str: string) => reset([str])"
-            v-slot="hub"
+          <template
+            v-if="summary.length > 0"
           >
-            <XLayout
-              variant="y-stack"
-              size="small"
+            <XTeleportTemplate
+              :to="{ name: summary }"
             >
-              <aside
-                v-if="hub?.notifications?.size > 0"
-              >
-                <XLayout
-                  variant="y-stack"
-                >
-                  <template
-                    v-for="[variant, value] in hub.notifications"
-                    :key="variant"
-                  >
-                    <XAlert
-                      :variant="variant"
-                      @dismiss="async () => {
-                        dismiss(Array.from(value))
-                        await nextTick()
-                        refresh()
-                      }"
-                    >
-                      <ul
-                        class="notifications"
-                      >
-                        <li
-                          v-for="notification in value"
-                          :key="notification"
-                          :data-testid="`notification-${notification}`"
-                        >
-                          <XNotification
-                            :uri="notification"
-                          />
-                        </li>
-                      </ul>
-                    </XAlert>
-                  </template>
-                </XLayout>
-              </aside>
+              <slot name="title" />
+            </XTeleportTemplate>
+          </template>
+          <XTeleportTemplate
+            v-else
+            :to="{ name: `app-view-title-slot` }"
+          >
+            <slot name="title" />
+          </XTeleportTemplate>
 
-              <nav
-                v-if="!hasParent && _breadcrumbs.length > 0"
-                aria-label="Breadcrumb"
-              >
-                <XBreadcrumbs
-                  :items="_breadcrumbs"
-                />
-              </nav>
+          <XLayout
+            variant="action-group"
+          >
+            <slot name="actions">
+              <XTeleportSlot
+                :name="`${routeView.name}-actions`"
+              />
+            </slot>
+          </XLayout>
+        </header>
+        <slot
+          name="default"
+        />
+      </XLayout>
+    </section>
+  </template>
 
-              <section>
-                <XLayout
-                  variant="y-stack"
-                >
-                  <header
-                    v-if="slots.title || slots.actions"
-                    class="app-view-title-bar"
-                  >
-                    <template
-                      v-if="summary.length > 0"
-                    >
-                      <XTeleportTemplate
-                        :to="{ name: summary }"
-                      >
-                        <slot name="title" />
-                      </XTeleportTemplate>
-                    </template>
-                    <template
-                      v-else
-                    >
-                      <slot name="title" />
-                    </template>
-
-                    <div
-                      class="actions"
-                    >
-                      <XTeleportSlot
-                        v-if="slots.title"
-                        name="app-view-docs"
-                      />
-                      <slot name="actions">
-                        <XTeleportSlot
-                          :name="`${routeView.name}-actions`"
-                        />
-                      </slot>
-                    </div>
-                  </header>
-
-                  <slot
-                    name="default"
-                  />
-                </XLayout>
-              </section>
-            </XLayout>
-          </component>
-        </DataSink>
-      </DataSink>
-    </DataSource>
-  </div>
   <XTeleportTemplate
     v-if="props.docs.length > 0"
     :to="{ name: 'app-view-docs' }"
@@ -137,38 +95,41 @@
 </template>
 
 <script lang="ts" setup>
+import { PageLayout } from '@kong-ui-public/page-layout'
 import { ROUTE_VIEW_PARENT } from '@kumahq/routing/vue'
-import { nextTick , provide, inject, watch, ref, onBeforeUnmount , useId } from 'vue'
+import { provide, inject, watch, ref, onBeforeUnmount, useAttrs } from 'vue'
 
-
+import type { PageLayoutProps } from '@kong-ui-public/page-layout'
 import type { RouteViewService } from '@kumahq/routing/vue'
+import type { XBreadcrumbs } from '@kumahq/x'
+import type { ComponentInstance } from 'vue'
+
 type AppView = {
   addBreadcrumbs: (items: BreadcrumbItem[], sym: symbol) => void
   removeBreadcrumbs: (sym: symbol) => void
 }
-import type { XBreadcrumbs } from '@kumahq/x'
-import type { ComponentInstance } from 'vue'
-
 type BreadcrumbItem = ComponentInstance<typeof XBreadcrumbs>['$props']['items'][number]
 type Breadcrumbs = Map<symbol, BreadcrumbItem[]>
 
 
-const props = withDefaults(defineProps<{
+const props = withDefaults(defineProps<Omit<PageLayoutProps, 'breadcrumbs' | 'title'> & {
   breadcrumbs?: BreadcrumbItem[] | null
   docs?: string
   notifications?: boolean
 }>(), {
   breadcrumbs: null,
+  tabs: () => [],
   docs: '',
   notifications: false,
 })
 const slots = defineSlots()
 
-const id = useId()
+const attrs = useAttrs()
 const routeView = inject<RouteViewService>(ROUTE_VIEW_PARENT)!
 
 const summary: string = inject('app-summary-view', '')
 provide('app-summary-view', '')
+
 const map: Breadcrumbs = new Map()
 const _breadcrumbs = ref<BreadcrumbItem[]>([])
 const symbol = Symbol('app-view')
@@ -210,7 +171,7 @@ const hasParent: AppView | undefined = inject('app-view-parent', undefined)
 if (!hasParent) {
   provide('app-view-parent', appView)
 }
-const parent: AppView = hasParent || appView
+const parent: AppView = inject('app-view-parent', appView)
 
 watch(() => props.breadcrumbs, (items: BreadcrumbItem[] | null) => {
   if (items !== null) {
@@ -222,17 +183,6 @@ onBeforeUnmount(() => {
   parent.removeBreadcrumbs(symbol)
 })
 </script>
-
-<style lang="scss">
-.k-breadcrumbs {
-  margin-bottom: 0 !important;
-  position: relative;
-  left: -3px;
-}
-.k-tabs + .route-view > .app-view .app-view-title-bar {
-  margin-bottom: 20px;
-}
-</style>
 
 <style lang="scss" scoped>
 .app-view {
@@ -246,13 +196,6 @@ onBeforeUnmount(() => {
     overflow: hidden;
     text-overflow: ellipsis;
   }
-}
-.actions {
-  flex-grow: 1;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: var(--x-space-60);
 }
 .notifications {
   padding: 0;
