@@ -38,26 +38,27 @@
         <template
           #title
         >
-          <XProgress
-            v-if="typeof data === 'undefined'"
-            variant="line"
-          />
-          <XLayout
-            v-else
-            variant="y-stack"
-            size="small"
+          <DataLoader
+            :data="[data]"
+            variant="header"
+            v-slot="{ data: [workload] }"
           >
-            <h1>
-              <XCopyButton
-                :text="data.name"
-              />
-            </h1>
-            <XBadge
-              :appearance="t(`common.status.appearance.${data.status.state}`, undefined, { defaultMessage: 'neutral' })"
+            <XLayout
+              variant="y-stack"
+              size="small"
             >
-              {{ t(`http.api.value.${data.status.state}`) }}
-            </XBadge>
-          </XLayout>
+              <h1>
+                <XCopyButton
+                  :text="workload.name"
+                />
+              </h1>
+              <XBadge
+                :appearance="t(`common.status.appearance.${workload.status.state}`, undefined, { defaultMessage: 'neutral' })"
+              >
+                {{ t(`http.api.value.${workload.status.state}`) }}
+              </XBadge>
+            </XLayout>
+          </DataLoader>
         </template>
 
         <XTabs
