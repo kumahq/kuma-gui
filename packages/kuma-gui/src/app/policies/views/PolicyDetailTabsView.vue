@@ -8,6 +8,7 @@
     }"
     v-slot="{ route, t, uri }"
   >
+    {{ console.log(route.params) }}
     <DataSource
       :src="uri(sources, '/meshes/:mesh/policy-path/:path/policy/:name', {
         mesh: route.params.mesh,

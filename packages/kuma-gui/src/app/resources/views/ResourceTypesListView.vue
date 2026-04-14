@@ -95,6 +95,7 @@
                                         params: {
                                           mesh: route.params.mesh,
                                           resourcePath: item.path,
+                                          scope: key,
                                         },
                                       }"
                                       :data-testid="`resource-type-link-${item.name}`"

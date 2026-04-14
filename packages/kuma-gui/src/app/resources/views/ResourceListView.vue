@@ -8,6 +8,7 @@
       resourcePath: '',
       kri: '',
       s: '',
+      scope: '',
     }"
     v-slot="{ route, t, can, uri, me }"
   >
