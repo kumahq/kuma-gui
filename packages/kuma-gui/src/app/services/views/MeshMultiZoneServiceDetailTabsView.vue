@@ -12,7 +12,7 @@
         mesh: route.params.mesh,
         name: route.params.service,
       })"
-      v-slot="{ data, error }"
+      v-slot="{ data, result }"
     >
       <AppView
         :docs="t('services.mesh-multi-zone-service.href.docs')"
@@ -38,46 +38,45 @@
         ]"
       >
         <template #title>
-          <h1
-            v-if="data"
+          <DataLoader
+            :data="[data]"
+            variant="header"
+            v-slot="{ data: [service] }"
           >
-            <XCopyButton :text="data.name">
-              <RouteTitle
-                :title="t('services.routes.item.title', { name: data.name })"
-              />
-            </XCopyButton>
-          </h1>
+            <h1>
+              <XCopyButton :text="service.name">
+                <RouteTitle
+                  :title="t('services.routes.item.title', { name: service.name })"
+                />
+              </XCopyButton>
+            </h1>
+          </DataLoader>
         </template>
 
-        <DataLoader
-          :data="[data]"
-          :errors="[error]"
+        <XTabs
+          :selected="route.child()?.name"
         >
-          <XTabs
-            :selected="route.child()?.name"
+          <template
+            v-for="{ name } in route.children"
+            :key="name"
+            #[`${name}-tab`]
           >
-            <template
-              v-for="{ name } in route.children"
-              :key="name"
-              #[`${name}-tab`]
+            <XAction
+              :to="{ name }"
             >
-              <XAction
-                :to="{ name }"
-              >
-                {{ t(`services.routes.item.navigation.${name}`) }}
-              </XAction>
-            </template>
-          </XTabs>
+              {{ t(`services.routes.item.navigation.${name}`) }}
+            </XAction>
+          </template>
+        </XTabs>
 
-          <RouterView
-            v-slot="child"
-          >
-            <component
-              :is="child.Component"
-              :data="data"
-            />
-          </RouterView>
-        </DataLoader>
+        <RouterView
+          v-slot="child"
+        >
+          <component
+            :is="child.Component"
+            :data="result"
+          />
+        </RouterView>
       </AppView>
     </DataSource>
   </RouteView>
