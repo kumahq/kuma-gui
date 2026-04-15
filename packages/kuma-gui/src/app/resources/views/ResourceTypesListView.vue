@@ -45,7 +45,7 @@
                         :label="t('resources.routes.items.category.title')"
                         :selected="route.params.category"
                         @change="(value) => route.update({ category: value })"
-                        @vue:before-mount="$event?.props?.selected && options.includes($event.props.selected) && $event.props.selected !== route.params.category && route.update({ category: $event.props.selected })"
+                        @vue:before-mount="$event?.props?.selected && options.includes($event.props.selected) && $event.props.selected !== route.params.category ? route.update({ category: $event.props.selected }) : route.update({ category: 'all' })"
                       >
                         <template
                           v-for="option in options"
