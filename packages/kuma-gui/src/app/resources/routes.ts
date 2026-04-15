@@ -51,7 +51,7 @@ export const meshIdentityRoutes = (prefix: string): RouteRecordRaw[] => {
     {
       path: 'meshidentity/:mid',
       name: `${prefix}-mesh-identity-summary-view`,
-      component: () => import('@/app/resources/views/MeshIdentitySummaryView.vue'),
+      component: () => import('@/app/mesh-identities/views/MeshIdentitySummaryView.vue'),
     },
   ]
 }
@@ -61,7 +61,7 @@ export const meshTrustRoutes = (prefix: string): RouteRecordRaw[] => {
     {
       path: 'meshtrust/:mtrust',
       name: `${prefix}-mesh-trust-summary-view`,
-      component: () => import('@/app/resources/views/MeshTrustSummaryView.vue'),
+      component: () => import('@/app/mesh-trusts/views/MeshTrustSummaryView.vue'),
     },
   ]
 }

@@ -1,6 +1,6 @@
+import type { Can } from '@/app/application'
 import { routes as meshIdentity } from '@/app/mesh-identities/routes'
 import { routes as meshTrust } from '@/app/mesh-trusts/routes'
-import type { Can } from '@/app/application'
 import type { RouteRecordRaw } from 'vue-router'
 
 export type SplitRouteRecordRaw = {
