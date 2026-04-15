@@ -14,8 +14,8 @@
     />
     <AppView>
       <DataSource
-        :src="uri(sources, '/resources', {}, {
-          search: `${route.params.category !== 'all' ? `category:${route.params.category}` : ''}`,
+        :src="uri(sources, '/resources/by/:category', {
+          category: route.params.category || 'all',
         })"
         v-slot="{ data: sourceResources, error: resourcesError }"
       >

@@ -20,16 +20,26 @@ export const sources = (api: KumaApi) => {
     fetch: api.client.fetch,
   })
   return defineSources({
-    '/resources': async (params) => {
-      const search = Resource.parseSearch(params.search, { defaultKey: 'category' })
+    '/resources': async () => {
+      const response = await http.GET('/_resources')
+
+      return ResourcesTypes.fromCollection(response.data!)
+    },
+
+    '/resources/by/:category': async (params) => {
+      const { category } = params
       const response = await http.GET('/_resources')
 
       const normalized = ResourcesTypes.fromCollection(response.data!)
 
-      return !search.category ? normalized : {
+      if(category === 'all') {
+        return normalized
+      }
+
+      return {
         ...normalized,
         resources: normalized.resources.filter((resource) => {
-          return resource.categories.includes(search.category as string)
+          return resource.categories.includes(category)
         }),
       }
     },
