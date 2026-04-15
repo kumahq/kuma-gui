@@ -1,83 +1,146 @@
 <template>
-  <PageLayout
-    v-if="!hasParent"
-    class="app-view"
-    :title="``"
-    :breadcrumbs="_breadcrumbs"
-    :tabs="_tabs"
-    v-bind="attrs"
+  <DataSource
+    :src="`/me/~notifications`"
+    v-slot="{ data: dismissed, refresh }"
   >
-    <template #title-after>
-      <XTeleportSlot
-        :name="`app-view-title-slot`"
-      />
-    </template>
-    <template
-      #actions
+    <DataSink
+      :src="`/me/~notifications/reset`"
+      v-slot="{ submit: reset }"
     >
-      <XTeleportSlot
-        name="app-view-docs"
-      />
-      <slot name="actions">
-        <XTeleportSlot
-          :name="`${routeView.name}-actions`"
-        />
-      </slot>
-    </template>
-    <section>
-      <XLayout
-        variant="y-stack"
+      <DataSink
+        :src="`/me/~notifications/dismiss`"
+        v-slot="{ submit: dismiss }"
       >
-        <slot
-          name="default"
-        />
-      </XLayout>
-    </section>
-  </PageLayout>
-  <template
-    v-else
-  >
-    <section>
-      <XLayout
-        variant="y-stack"
-      >
-        <header
-          v-if="slots.title || slots.actions"
-          class="app-view-title-bar"
+        <component
+          :is="props.notifications ? `XNotificationHub` : `XAnonymous`"
+          v-if="dismissed"
+          :uri="id"
+          :dismissed="dismissed"
+          @reset="(str: string) => reset([str])"
+          v-slot="hub"
         >
-          <template
-            v-if="summary.length > 0"
-          >
-            <XTeleportTemplate
-              :to="{ name: summary }"
-            >
-              <slot name="title" />
-            </XTeleportTemplate>
-          </template>
-          <XTeleportTemplate
-            v-else
-            :to="{ name: `app-view-title-slot` }"
-          >
-            <slot name="title" />
-          </XTeleportTemplate>
-
           <XLayout
-            variant="action-group"
+            variant="y-stack"
+            size="small"
           >
-            <slot name="actions">
-              <XTeleportSlot
-                :name="`${routeView.name}-actions`"
-              />
-            </slot>
-          </XLayout>
-        </header>
-        <slot
-          name="default"
-        />
-      </XLayout>
-    </section>
-  </template>
+            <aside
+              v-if="hub?.notifications?.size > 0"
+            >
+              <XLayout
+                variant="y-stack"
+              >
+                <template
+                  v-for="[variant, value] in hub.notifications"
+                  :key="variant"
+                >
+                  <XAlert
+                    :variant="variant"
+                    @dismiss="async () => {
+                      dismiss(Array.from(value))
+                      await nextTick()
+                      refresh()
+                    }"
+                  >
+                    <ul
+                      class="notifications"
+                    >
+                      <li
+                        v-for="notification in value"
+                        :key="notification"
+                        :data-testid="`notification-${notification}`"
+                      >
+                        <XNotification
+                          :uri="notification"
+                        />
+                      </li>
+                    </ul>
+                  </XAlert>
+                </template>
+              </XLayout>
+            </aside>
+            <PageLayout
+              v-if="!hasParent"
+              class="app-view"
+              :title="``"
+              :breadcrumbs="_breadcrumbs"
+              :tabs="_tabs"
+              v-bind="attrs"
+            >
+              <template #title-after>
+                <XTeleportSlot
+                  :name="`app-view-title-slot`"
+                />
+              </template>
+              <template
+                #actions
+              >
+                <XTeleportSlot
+                  name="app-view-docs"
+                />
+                <slot name="actions">
+                  <XTeleportSlot
+                    :name="`${routeView.name}-actions`"
+                  />
+                </slot>
+              </template>
+              <section>
+                <XLayout
+                  variant="y-stack"
+                >
+                  <slot
+                    name="default"
+                  />
+                </XLayout>
+              </section>
+            </PageLayout>
+            <template
+              v-else
+            >
+              <section>
+                <XLayout
+                  variant="y-stack"
+                >
+                  <header
+                    v-if="slots.title || slots.actions"
+                    class="app-view-title-bar"
+                  >
+                    <template
+                      v-if="summary.length > 0"
+                    >
+                      <XTeleportTemplate
+                        :to="{ name: summary }"
+                      >
+                        <slot name="title" />
+                      </XTeleportTemplate>
+                    </template>
+                    <XTeleportTemplate
+                      v-else
+                      :to="{ name: `app-view-title-slot` }"
+                    >
+                      <slot name="title" />
+                    </XTeleportTemplate>
 
+                    <XLayout
+                      variant="action-group"
+                    >
+                      <slot name="actions">
+                        <XTeleportSlot
+                          :name="`${routeView.name}-actions`"
+                        />
+                      </slot>
+                    </XLayout>
+                  </header>
+                  <slot
+                    name="default"
+                  />
+                </XLayout>
+              </section>
+            </template>
+          </XLayout>
+        </component>
+      </DataSink>
+    </DataSink>
+  </DataSource>
   <XTeleportTemplate
     v-if="props.docs.length > 0"
     :to="{ name: 'app-view-docs' }"
@@ -97,7 +160,7 @@
 <script lang="ts" setup>
 import { PageLayout } from '@kong-ui-public/page-layout'
 import { ROUTE_VIEW_PARENT } from '@kumahq/routing/vue'
-import { provide, inject, watch, ref, onBeforeUnmount, useAttrs } from 'vue'
+import { nextTick, provide, inject, watch, ref, onBeforeUnmount, useAttrs, useId } from 'vue'
 
 import type { PageLayoutProps, PageLayoutTab } from '@kong-ui-public/page-layout'
 import type { RouteViewService } from '@kumahq/routing/vue'
@@ -128,13 +191,13 @@ const props = withDefaults(defineProps<Omit<PageLayoutProps, 'tabs' | 'breadcrum
 const slots = defineSlots()
 
 const attrs = useAttrs()
+const id = useId()
 const routeView = inject<RouteViewService>(ROUTE_VIEW_PARENT)!
 
 const summary: string = inject('app-summary-view', '')
 provide('app-summary-view', '')
 
 const map: Breadcrumbs = new Map()
-const _title = ref('')
 const _tabs = ref<PageLayoutTab[]>([])
 const _breadcrumbs = ref<BreadcrumbItem[]>([])
 const symbol = Symbol('app-view')

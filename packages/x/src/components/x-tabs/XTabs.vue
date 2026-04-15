@@ -1,15 +1,11 @@
 <template>
-  <div
-    class="x-tabs"
+  <template
+    v-for="item in items"
   >
-    <template
-      v-for="item in items"
-    >
-      <slot
-        :name="`${item.title}-tab`"
-      />
-    </template>
-  </div>
+    <slot
+      :name="`${item.title}-tab`"
+    />
+  </template>
 </template>
 <script lang="ts" setup>
 import { computed, watch, inject, provide } from 'vue'
