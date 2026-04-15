@@ -1,49 +1,47 @@
 <template>
   <div
-    ref="$ref"
     class="x-tabs"
-    v-bind="$attrs"
   >
-    <KTabs
-      role="navigation"
-      :aria-label="attrs['aria-label']"
-      :tabs="items"
-      :model-value="props.selected.length > 0 ? `#${props.selected}` : ''"
-      hide-panels
+    <template
+      v-for="item in items"
     >
-      <template
-        v-for="item in items"
-        :key="`${item.title}`"
-        #[`${item.title}-anchor`]
-      >
-        <slot
-          :name="`${item.title}-tab`"
-        />
-      </template>
-    </KTabs>
+      <slot
+        :name="`${item.title}-tab`"
+      />
+    </template>
   </div>
 </template>
 <script lang="ts" setup>
-import { KTabs } from '@kong/kongponents'
-import { useAttrs, computed, onMounted, ref, watch } from 'vue'
+import { computed, watch, inject, provide } from 'vue'
+import { useRouter } from 'vue-router'
 
 import type { Tab } from '@kong/kongponents'
+import type { PageLayoutTab } from '@kong-ui-public/page-layout'
+import type { RouteLocationNamedRaw } from 'vue-router'
 
-defineOptions({
-  inheritAttrs: false,
-})
 
-const slots = defineSlots()
+type AppView = {
+  setTabs: (tabs: PageLayoutTab[]) => void
+}
 
 const props = withDefaults(defineProps<{
   selected?: string
 }>(), {
   selected: '',
 })
+const slots = defineSlots()
 
-const attrs = useAttrs()
-const $attrs = Object.fromEntries(Object.entries(attrs).filter(([key, _value]) => !['aria-label'].includes(key)))
-const $ref = ref<HTMLDivElement | null>(null)
+const router = useRouter()
+
+const beforePaint = <T extends (...args: any[]) => void>(fn: T) => {
+  let num: number
+  return (...args: Parameters<T>) => {
+    if (num) {
+      window.cancelAnimationFrame(num)
+    }
+    num = window.requestAnimationFrame(fn.bind(fn, ...args))
+  }
+}
 
 const items = computed(() => {
   return Object.keys(slots).reduce<Tab[]>((prev, key) => {
@@ -60,27 +58,46 @@ const items = computed(() => {
     return prev
   }, [])
 })
-const rewrite = () => {
-  const $el = $ref.value! // $ref is statically always there
 
-  const $tablist = $el.querySelector('[role="tablist"]')
-  const $tabs = $el.querySelectorAll('[role="tab"]')
-  const $tabindexed = $el.querySelectorAll('[tabindex="0"]')
-  const $id = $el.querySelectorAll('[id]')
-
-  $tablist && ['role', 'aria-label'].forEach(attr => $tablist.removeAttribute(attr))
-  ;['role'].forEach(attr => Array.from($tabs).forEach(item => item.removeAttribute(attr)))
-  ;['tabindex'].forEach(attr => Array.from($tabindexed).forEach(item => item.removeAttribute(attr)))
-
-  ;['id'].forEach(attr => Array.from($id).forEach(item => {
-    item.setAttribute('data-testid', item.getAttribute(attr) ?? '')
-    item.removeAttribute(attr)
-  }))
-}
-onMounted(rewrite)
-watch(() => slots, () => {
-  rewrite()
+const appView: AppView | undefined = inject<AppView | undefined>('app-view-parent', undefined)
+type ProvidedTab = { to: RouteLocationNamedRaw, key: string, label: string }
+const tabs: ProvidedTab[] = []
+const addTabs = beforePaint(() => {
+  if(typeof appView !== 'undefined') {
+    appView.setTabs(tabs.map(item => ({
+      ...item,
+      to: {
+        ...item.to,
+        params: {
+          ...router.currentRoute.value.params,
+          ... item.to.params,
+        },
+      },
+      active: item.to.name === props.selected,
+    })))
+  }
 })
+provide('x-tabs', {
+  add: (item: ProvidedTab) => {
+    tabs.push(item)
+    addTabs()
+  },
+})
+watch(() => props.selected, () => {
+  if(typeof appView !== 'undefined') {
+    appView.setTabs(tabs.map(item => ({
+      ...item,
+      to: {
+        ...item.to,
+        params: {
+          ...router.currentRoute.value.params,
+          ...item.to.params,
+        },
+      },
+      active: item.to.name === props.selected,
+    })))
+  }
+}, { immediate: true })
 </script>
 <style lang="scss" scoped>
 :deep(.tab-link) {

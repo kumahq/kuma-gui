@@ -1,6 +1,7 @@
 <template>
+  <template v-if="xTabs" />
   <template
-    v-if="group?.expanded === false"
+    v-else-if="group?.expanded === false"
   >
     <KDropdownItem
       data-testid="x-action"
@@ -179,7 +180,7 @@
 <script lang="ts" setup>
 import { KUI_ICON_SIZE_40 } from '@kong/design-tokens'
 import { KDropdownItem, KButton } from '@kong/kongponents'
-import { computed, watch, inject, provide, useAttrs } from 'vue'
+import { computed, watch, inject, provide, useAttrs, render, h, useId } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
 
 import { useProtocolHandler } from '../../'
@@ -192,7 +193,7 @@ type RouteLocationRawWithBooleanQuery = Omit<RouteLocationNamedRaw, 'query'> & {
   query?: BooleanLocationQueryRaw
 }
 
-defineSlots<{
+const slots = defineSlots<{
   default(props: {
     inactive?: boolean
   }): any
@@ -214,11 +215,27 @@ const props = withDefaults(defineProps<{
 })
 
 const attrs = useAttrs()
+const id = useId()
 
 const group = inject<{
   expanded: boolean
 } | undefined>('x-action-group', undefined)
 
+type ProvidedTab = { to: RouteLocationRawWithBooleanQuery, key: string, label: string }
+type XTabs = {
+  add(tab: ProvidedTab): void
+}
+const xTabs = inject<XTabs | undefined>('x-tabs', undefined)
+if(xTabs) {
+  const slotContent = slots.default({ inactive: false })
+  const tempDiv = document.createElement('div')
+  render(h('div', {}, slotContent), tempDiv)
+  xTabs.add({
+    key: id,
+    to: props.to,
+    label: (tempDiv.textContent || tempDiv.innerText || '').trim(),
+  })
+}
 const router = useRouter()
 
 const protocolHandler = useProtocolHandler()

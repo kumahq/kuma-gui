@@ -4,7 +4,7 @@
     class="app-view"
     :title="``"
     :breadcrumbs="_breadcrumbs"
-    :tabs="props.tabs"
+    :tabs="_tabs"
     v-bind="attrs"
   >
     <template #title-after>
@@ -99,7 +99,7 @@ import { PageLayout } from '@kong-ui-public/page-layout'
 import { ROUTE_VIEW_PARENT } from '@kumahq/routing/vue'
 import { provide, inject, watch, ref, onBeforeUnmount, useAttrs } from 'vue'
 
-import type { PageLayoutProps } from '@kong-ui-public/page-layout'
+import type { PageLayoutProps, PageLayoutTab } from '@kong-ui-public/page-layout'
 import type { RouteViewService } from '@kumahq/routing/vue'
 import type { XBreadcrumbs } from '@kumahq/x'
 import type { ComponentInstance } from 'vue'
@@ -107,18 +107,21 @@ import type { ComponentInstance } from 'vue'
 type AppView = {
   addBreadcrumbs: (items: BreadcrumbItem[], sym: symbol) => void
   removeBreadcrumbs: (sym: symbol) => void
+  setTabs: (tabs: PageLayoutTab[]) => void
+  removeTabs: () => void
 }
 type BreadcrumbItem = ComponentInstance<typeof XBreadcrumbs>['$props']['items'][number]
 type Breadcrumbs = Map<symbol, BreadcrumbItem[]>
 
 
-const props = withDefaults(defineProps<Omit<PageLayoutProps, 'breadcrumbs' | 'title'> & {
+const props = withDefaults(defineProps<Omit<PageLayoutProps, 'tabs' | 'breadcrumbs' | 'title'> & {
   breadcrumbs?: BreadcrumbItem[] | null
+  tabs?: PageLayoutTab[] | null
   docs?: string
   notifications?: boolean
 }>(), {
   breadcrumbs: null,
-  tabs: () => [],
+  tabs: null,
   docs: '',
   notifications: false,
 })
@@ -131,6 +134,8 @@ const summary: string = inject('app-summary-view', '')
 provide('app-summary-view', '')
 
 const map: Breadcrumbs = new Map()
+const _title = ref('')
+const _tabs = ref<PageLayoutTab[]>([])
 const _breadcrumbs = ref<BreadcrumbItem[]>([])
 const symbol = Symbol('app-view')
 
@@ -166,6 +171,19 @@ const appView: AppView = {
       refreshBreadcrumbs(map)
     }
   },
+  setTabs: (items: PageLayoutTab[]) => {
+    if (items.length === 0 || JSON.stringify(_tabs.value) === JSON.stringify(items)) {
+      // if they are the same, don't refresh
+      return
+    }
+    _tabs.value = items
+  },
+  removeTabs: () => {
+    if (_tabs.value.length === 0) {
+      return
+    }
+    _tabs.value = []
+  },
 }
 const hasParent: AppView | undefined = inject('app-view-parent', undefined)
 if (!hasParent) {
@@ -178,6 +196,14 @@ watch(() => props.breadcrumbs, (items: BreadcrumbItem[] | null) => {
     parent.addBreadcrumbs(items, symbol)
   }
 }, { immediate: true })
+watch(() => props.tabs, (items?: PageLayoutTab[] | null) => {
+  // props are only ever used instead of unmount seeing as we can't use unmount
+  // so they are only used if they are `[]`
+  // which we currently use as a signal to say "this AppView has no tabs"
+  if(Array.isArray(items) && items.length === 0) {
+    parent.removeTabs()
+  }
+}, { immediate: true })
 
 onBeforeUnmount(() => {
   parent.removeBreadcrumbs(symbol)
@@ -185,6 +211,9 @@ onBeforeUnmount(() => {
 </script>
 
 <style lang="scss" scoped>
+:deep(.title-after-container) {
+  padding-left: 0 !important;
+}
 .app-view {
   font-size: var(--x-font-size-30);
 }

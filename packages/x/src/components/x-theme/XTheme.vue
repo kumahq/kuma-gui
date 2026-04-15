@@ -516,7 +516,7 @@ import '@kong-ui-public/app-layout/dist/style.css'
   }
 
   h1 {
-    font-size: var(--x-font-size-70);
+    font-size: var(--x-font-size-50);
   }
 
   h2 {

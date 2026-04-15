@@ -3,7 +3,9 @@
     :name="props.routeName"
     v-slot="{ can, t, uri, me, route }"
   >
-    <AppView>
+    <AppView
+      :tabs="[]"
+    >
       <template #title>
         <h1>
           <RouteTitle
