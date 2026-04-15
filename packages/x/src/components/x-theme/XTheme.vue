@@ -466,6 +466,11 @@ import '@kong-ui-public/app-layout/dist/style.css'
   a.k-button {
     text-decoration: none !important;
   }
+
+  /* styles for things that come from locales/i18n rendered from markdown */
+  .x-i18n p {
+    margin-bottom: var(--x-space-50);
+  }
 }
 </style>
 
@@ -542,19 +547,6 @@ import '@kong-ui-public/app-layout/dist/style.css'
   ul,
   ol {
     padding-left: var(--x-space-80);
-  }
-
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  p,
-  ul,
-  ol {
-    &:not(:first-child) {
-      margin-top: var(--x-space-50);
-    }
   }
 
   p:empty {
