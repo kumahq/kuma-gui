@@ -18,6 +18,7 @@
       v-slot="{ data, error, refresh }"
     >
       <AppView
+        :tabs="[]"
         :docs="data && data?.items?.length ? t('zones.href.docs.cta'): ''"
       >
         <template #title>

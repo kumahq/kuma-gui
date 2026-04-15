@@ -9,6 +9,7 @@
     v-slot="{ route, t, uri }"
   >
     <AppView
+      :tabs="[]"
       :breadcrumbs="[
         {
           to: {

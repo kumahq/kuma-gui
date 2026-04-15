@@ -18,6 +18,7 @@
       v-slot="{ data, error, refresh }"
     >
       <AppView
+        :tabs="[]"
         :docs="data?.items.length ? t('meshes.href.docs'):''"
       >
         <template #title>
