@@ -9,7 +9,7 @@
       codeRegExp: false,
       environment: String,
     }"
-    v-slot="{ route, t }"
+    v-slot="{ route, t, uri }"
   >
     <AppView>
       <XCard>
@@ -42,23 +42,31 @@
           </XLayout>
 
           <template v-if="route.params.environment === 'universal'">
-            <XCodeBlock
-              data-testid="codeblock-yaml-universal"
-              language="yaml"
-              :code="YAML.stringify(props.data.config)"
-              is-searchable
-              :query="route.params.codeSearch"
-              :is-filter-mode="route.params.codeFilter"
-              :is-reg-exp-mode="route.params.codeRegExp"
-              @query-change="route.update({ codeSearch: $event })"
-              @filter-mode-change="route.update({ codeFilter: $event })"
-              @reg-exp-mode-change="route.update({ codeRegExp: $event })"
-            />
+            <DataLoader
+              :data="[props.data]"
+              v-slot="{ data: [service] }"
+            >
+              <XCodeBlock
+                data-testid="codeblock-yaml-universal"
+                language="yaml"
+                :code="YAML.stringify(service.config)"
+                is-searchable
+                :query="route.params.codeSearch"
+                :is-filter-mode="route.params.codeFilter"
+                :is-reg-exp-mode="route.params.codeRegExp"
+                @query-change="route.update({ codeSearch: $event })"
+                @filter-mode-change="route.update({ codeFilter: $event })"
+                @reg-exp-mode-change="route.update({ codeRegExp: $event })"
+              />
+            </DataLoader>
           </template>
 
           <template v-else>
             <DataLoader
-              :src="`/meshes/${props.data.mesh}/mesh-service/${props.data.id}/as/kubernetes`"
+              :src="uri(sources, '/meshes/:mesh/mesh-service/:name/as/kubernetes', {
+                mesh: route.params.mesh,
+                name: route.params.service,
+              })"
               v-slot="{ data: [k8sConfig] }"
             >
               <XCodeBlock
@@ -83,8 +91,9 @@
 
 <script lang="ts" setup>
 import type { MeshService } from '../data'
+import { sources } from '../sources'
 import { YAML } from '@/app/application'
 const props = defineProps<{
-  data: MeshService
+  data: MeshService | Error | undefined
 }>()
 </script>

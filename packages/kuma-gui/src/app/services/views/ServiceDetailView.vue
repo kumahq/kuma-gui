@@ -15,21 +15,21 @@
     v-slot="{ can, route, t, me, uri }"
   >
     <AppView>
-      <DataLoader
-        :src="uri(sources, `/meshes/:mesh/service-insights/:name`, {
-          mesh: route.params.mesh,
-          name: route.params.service,
-        })"
-        v-slot="{ data: [data] }"
-      >
-        <XCard>
+      <XCard>
+        <template #title>
+          {{ t('services.internal-service.about.title') }}
+        </template>
+        <DataLoader
+          :src="uri(sources, `/meshes/:mesh/service-insights/:name`, {
+            mesh: route.params.mesh,
+            name: route.params.service,
+          })"
+          v-slot="{ data: [data] }"
+        >
           <XTimespan
             :start="data.creationTime"
             :end="data.modificationTime"
-          />
-          <template #title>
-            {{ t('services.internal-service.about.title') }}
-          </template>
+          /> 
           <XDl variant="x-stack">
             <div>
               <dt>
@@ -73,8 +73,8 @@
               </dd>
             </div>
           </XDl>
-        </XCard>
-      </DataLoader>
+        </DataLoader>
+      </XCard>
 
       <XCard>
         <template #title>
@@ -261,7 +261,6 @@
                 >
                   <component
                     :is="Component"
-                    v-if="typeof data !== 'undefined'"
                     :items="data.items"
                   />
                 </XDrawer>
