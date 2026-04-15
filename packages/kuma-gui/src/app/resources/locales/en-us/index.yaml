@@ -37,6 +37,11 @@ resources:
             Use global resources to configure cross-mesh infrastructure and mesh management itself. These resources like meshes and zones operate at the cluster level and are managed by the global control plane to coordinate behavior across the entire service mesh deployment.
         others:
           title: Other
+        
+        collection:
+          title: 'About {name}'
+          inbound: Inbound
+          outbound: Outbound
     item:
       title: '{name}'
       config: Configuration
@@ -47,3 +52,4 @@ resources:
       about:
         title: About this {resource}
         resource: Resource
+        labels: Labels

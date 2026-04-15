@@ -52,22 +52,28 @@
                 :text="data.name"
               >
                 <RouteTitle
-                  :title="t('policies.routes.item.title', { name: data.name })"
+                  :title="t('resources.routes.item.title', { name: data.name })"
                 />
               </XCopyButton>
             </h1>
           </DataLoader>
         </template>
-        <XAboutCard
-          :title="t('resources.routes.item.about.title', { resource: sourceData?.type ?? t('resources.routes.item.about.resource') })"
-          :created="typeof sourceData !== 'undefined' && !(sourceData instanceof Error) ? sourceData.creationTime : undefined"
-          :modified="typeof sourceData !== 'undefined' && !(sourceData instanceof Error) ? sourceData.modificationTime : undefined"
-          data-testid="about-workload"
+        <XCard
+          data-testid="about-resource"
         >
+          <template #title>
+            <h2>
+              {{ t('resources.routes.item.about.title', { resource: sourceData?.type ?? t('resources.routes.item.about.resource') }) }}
+            </h2>
+          </template>
           <DataLoader
             :data="[sourceData]"
             v-slot="{ data: [data] }"
           >
+            <XTimespan
+              :start="data.creationTime"
+              :end="data.modificationTime"
+            />
             <XDl>
               <div v-if="data.zone.length">
                 <dt>{{ t('http.api.property.zone') }}</dt>
@@ -98,7 +104,7 @@
                 :key="typeof labels"
               >
                 <div v-if="labels.length > 0">
-                  <dt>{{ t('workloads.routes.item.about.labels') }}</dt>
+                  <dt>{{ t('resources.routes.item.about.labels') }}</dt>
                   <dd>
                     <XLayout
                       variant="separated"
@@ -122,7 +128,7 @@
               </template>
             </XDl>
           </DataLoader>
-        </XAboutCard>
+        </XCard>
 
         <XCard>
           <template #title>
@@ -138,7 +144,7 @@
               :key="typeof options"
             >
               <XSelect
-                :label="t('data-planes.routes.item.format')"
+                :label="t('resources.routes.item.format')"
                 :selected="route.params.format"
                 @change="(value) => {
                   route.update({ format: value })
@@ -150,7 +156,7 @@
                   :key="value"
                   #[`${value}-option`]
                 >
-                  {{ t(`data-planes.routes.item.formats.${value}`) }}
+                  {{ t(`resources.routes.item.formats.${value}`) }}
                 </template>
               </XSelect>
             </template>

@@ -31,14 +31,14 @@
                   v-if="'policy' in type && type.policy?.hasFromTargetRef"
                   appearance="neutral"
                 >
-                  {{ t('policies.collection.inbound') }}
+                  {{ t('resources.routes.items.types.collection.inbound') }}
                 </XBadge>
 
                 <XBadge
                   v-if="'policy' in type && type.policy?.hasToTargetRef"
                   appearance="neutral"
                 >
-                  {{ t('policies.collection.outbound') }}
+                  {{ t('resources.routes.items.types.collection.outbound') }}
                 </XBadge>
 
                 <XAction
@@ -52,7 +52,7 @@
               <h3
                 v-icon-start="{name: type.name, size: '60', default: 'policy'}"
               >
-                {{ t('policies.collection.title', { name: type.name }) }}
+                {{ t('resources.routes.items.types.collection.title', { name: type.name }) }}
               </h3>
             </header>
             <XI18n
