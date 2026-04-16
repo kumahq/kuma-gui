@@ -21,7 +21,7 @@ export const sources = (api: KumaApi) => {
       return ResourcesTypes.fromCollection(response.data!)
     },
 
-    '/resources/by/:category': async (params) => {
+    '/resources/of/:category': async (params) => {
       const { category } = params
       const response = await http.GET('/_resources')
 
