@@ -27,7 +27,7 @@ export const routes = () => {
         {
           name: 'resource-types-list-view',
           path: 'resources',
-          component: () => import('@/app/resources/views/ResourceTypesListView.vue'),
+          component: () => import('@/app/resources/views/ResourceTypeListView.vue'),
           children: [
             {
               name: 'resource-list-view',
