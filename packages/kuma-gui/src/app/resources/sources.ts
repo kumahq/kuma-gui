@@ -39,13 +39,15 @@ export const sources = (api: KumaApi) => {
     },
 
     '/resources/:path': async (params) => {
-      const { path } = params
+      const { path, size } = params
+      const offset = params.size * (params.page - 1)
       const search = Resource.search(params.search)
 
       const response = await http.GET(`/${path as DynamicPathGlobal}`, {
         params: {
-          // @ts-expect-error - incorrect typing in openapi-fetch
           query: {
+            size,
+            offset,
             ...search,
           },
         },
@@ -55,7 +57,8 @@ export const sources = (api: KumaApi) => {
     },
 
     '/resources/:path/for/:mesh': async (params) => {
-      const { mesh, path } = params
+      const { mesh, path, size } = params
+      const offset = params.size * (params.page - 1)
       const search = Resource.search(params.search)
       
       const response = await http.GET(`/meshes/{mesh}/${path as DynamicPathMesh}`, {
@@ -63,8 +66,9 @@ export const sources = (api: KumaApi) => {
           path: {
             mesh,
           },
-          // @ts-expect-error - incorrect typing in openapi-fetch
           query: {
+            size,
+            offset,
             ...search,
           },
         },
