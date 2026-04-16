@@ -30,26 +30,6 @@ export const GlobalInsight = {
             ...partialGlobalInsight.resources.MeshExternalService,
             total: partialGlobalInsight.resources.MeshExternalService?.total ?? 0,
           },
-          HostnameGenerator: {
-            ...partialGlobalInsight.resources.HostnameGenerator,
-            total: partialGlobalInsight.resources.HostnameGenerator?.total ?? 0,
-          },
-          Zone: {
-            ...partialGlobalInsight.resources.Zone,
-            total: partialGlobalInsight.resources.Zone?.total ?? partialGlobalInsight.zones.controlPlanes.total ?? 0,
-          },
-          ZoneEgress: {
-            ...partialGlobalInsight.resources.ZoneEgress,
-            total: partialGlobalInsight.resources.ZoneEgress?.total ?? partialGlobalInsight.zones.zoneEgresses.total ?? 0,
-          },
-          ZoneIngress: {
-            ...partialGlobalInsight.resources.ZoneIngress,
-            total: partialGlobalInsight.resources.ZoneIngress?.total ?? partialGlobalInsight.zones.zoneIngresses.total ?? 0,
-          },
-          Mesh: {
-            ...partialGlobalInsight.resources.Mesh,
-            total: partialGlobalInsight.resources.Mesh?.total ?? partialGlobalInsight.meshes.total ?? 0,
-          },
         }
         return resources as PartialGlobalInsight['resources'] & typeof resources
       })(),
