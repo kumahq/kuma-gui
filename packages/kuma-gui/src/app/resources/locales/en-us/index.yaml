@@ -17,7 +17,7 @@ resources:
           reliability: Reliability
       empty: This resource type does not exist.
       types:
-        policies:
+        policy:
           title: Policies
           href:
             docs: '{KUMA_DOCS_URL}/policies/{name}?{KUMA_UTM_QUERY_PARAMS}'
@@ -37,6 +37,12 @@ resources:
             Use global resources to configure cross-mesh infrastructure and mesh management itself. These resources like meshes and zones operate at the cluster level and are managed by the global control plane to coordinate behavior across the entire service mesh deployment.
         others:
           title: Other
+        default:
+          title: '{name}'
+          href:
+            docs: '{KUMA_DOCS_URL}/resources/{name}?{KUMA_UTM_QUERY_PARAMS}'
+          description: !!text/markdown |
+            This resource type is not categorized yet. Please refer to the documentation for more details.
         
         collection:
           title: 'About {name}'

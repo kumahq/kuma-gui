@@ -43,7 +43,7 @@
 
                 <XAction
                   action="docs"
-                  :href="t(`resources.routes.items.types.${type.scope}.href.docs`, { name: type.name }, { defaultMessage: t('common.product.docs')})"
+                  :href="t(`resources.routes.items.types.${type.group}.href.docs`, { name: type.name }, { defaultMessage: t('common.product.docs')})"
                   data-testid="policy-documentation-link"
                 >
                   <span class="visually-hidden">{{ t('common.documentation') }}</span>
@@ -56,7 +56,8 @@
               </h3>
             </header>
             <XI18n
-              :path="`resources.routes.items.types.${type.scope}.description`"
+              :path="`resources.routes.items.types.${type.group}.description`"
+              default-path="resources.routes.items.types.default.description"
             />
           </XCard>
           <XCard>
@@ -73,7 +74,7 @@
               </form>
             </search>
             <DataLoader
-              :src="type.scope === 'global' ? uri(sources, '/resources/:path', {
+              :src="type.group === 'global' ? uri(sources, '/resources/:path', {
                 path: route.params.resourcePath,
               }, {
                 page: route.params.page,
@@ -118,7 +119,7 @@
                     >
                       <XAction
                         action="docs"
-                        :href="t(`resources.routes.items.types.${type.scope}.href.docs`, { name: type.name })"
+                        :href="t(`resources.routes.items.types.${type.group}.href.docs`, { name: type.name })"
                       >
                         {{ t('common.documentation') }}
                       </XAction>

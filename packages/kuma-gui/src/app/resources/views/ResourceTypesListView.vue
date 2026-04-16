@@ -69,7 +69,7 @@
                     variant="y-stack"
                   >
                     <template
-                      v-for="([key, group], i) in Object.entries(Object.groupBy(filtered, (resource) => resource.scope)).toSorted((a, b) => a[0] > b[0] ? -1 : 1)"
+                      v-for="([key, group], i) in Object.entries(Object.groupBy(filtered, (resource) => resource.group)).toSorted((a, b) => a[0] > b[0] ? -1 : 1)"
                       :key="key"
                     >
                       <ul v-if="group?.length">
@@ -113,7 +113,7 @@
                                         <span>
                                           {{ item.name }}
                                         </span>
-                                        <span v-if="item.scope === 'global'">
+                                        <span v-if="item.group === 'global'">
                                           {{ globalInsight.resources[item.name]?.total ?? 0 }}
                                         </span>
                                         <span v-else>

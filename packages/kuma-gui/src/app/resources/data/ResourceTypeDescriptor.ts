@@ -54,7 +54,7 @@ export const ResourceTypeDescriptor = {
     return {
       ...partialResource,
       categories: resourceCategories.get(partialResource.name.toLowerCase()) ?? [],
-      scope: ('policy' in partialResource ? 'policies' : (partialResource.scope ?? 'others')).toLowerCase(),
+      group: ('policy' in partialResource ? 'policy' : (partialResource.scope ?? 'others')).toLowerCase(),
     }
   },
 
