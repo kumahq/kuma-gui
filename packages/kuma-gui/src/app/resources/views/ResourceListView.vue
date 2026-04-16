@@ -222,7 +222,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { ResourceTypeCollection } from '../data/ResourceTypes'
+import type { ResourceTypeCollection } from '../data'
 import { sources } from '../sources'
 import { useDataEmptyState } from '@/app/application'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'

@@ -42,5 +42,5 @@ export const Resources = {
   },
 }
 
-export type Resource = ReturnType<typeof Resources.fromObject>
-export type ResourceCollection = ReturnType<typeof Resources.fromCollection>
+export type Resources = ReturnType<typeof Resources.fromObject>
+export type ResourcesCollection = ReturnType<typeof Resources.fromCollection>
