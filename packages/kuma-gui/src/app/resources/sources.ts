@@ -1,6 +1,6 @@
 import createClient from 'openapi-fetch'
 
-import { Resource, Resources, ResourceTypes } from './data'
+import { Resource, Resources, ResourceTypeDescriptor } from './data'
 import { defineSources } from '@/app/application'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import type { paths } from '@kumahq/kuma-http-api'
@@ -17,14 +17,14 @@ export const sources = (api: KumaApi) => {
     '/resources': async () => {
       const response = await http.GET('/_resources')
 
-      return ResourceTypes.fromCollection(response.data!)
+      return ResourceTypeDescriptor.fromCollection(response.data!)
     },
 
     '/resources/of/:category': async (params) => {
       const { category } = params
       const response = await http.GET('/_resources')
 
-      const normalized = ResourceTypes.fromCollection(response.data!)
+      const normalized = ResourceTypeDescriptor.fromCollection(response.data!)
 
       if(category === 'all') {
         return normalized

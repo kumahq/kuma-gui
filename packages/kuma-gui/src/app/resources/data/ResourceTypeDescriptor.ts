@@ -1,6 +1,7 @@
 import type { paths } from '@kumahq/kuma-http-api'
 
-type KumaResourceTypesCollection = paths['/_resources']['get']['responses']['200']['content']['application/json']
+type KumaResourceTypeDescriptorCollection = paths['/_resources']['get']['responses']['200']['content']['application/json']
+type KumaResourceTypeDescriptor = KumaResourceTypeDescriptorCollection['resources'][number]
 
 const resourceCategories = new Map<string, string[]>([
   ['circuitbreaker', ['reliability', 'performance']],
@@ -48,8 +49,8 @@ const resourceCategories = new Map<string, string[]>([
   ['zone', ['traffic']],
 ])
 
-export const ResourceTypes = {
-  fromObject(partialResource: KumaResourceTypesCollection['resources'][number]) {
+export const ResourceTypeDescriptor = {
+  fromObject(partialResource: KumaResourceTypeDescriptor) {
     return {
       ...partialResource,
       categories: (() => {
@@ -61,7 +62,7 @@ export const ResourceTypes = {
     }
   },
 
-  fromCollection(partialResources: KumaResourceTypesCollection) {
+  fromCollection(partialResources: KumaResourceTypeDescriptorCollection) {
     return {
       ...partialResources,
       resources: partialResources.resources.map(this.fromObject),
@@ -69,5 +70,5 @@ export const ResourceTypes = {
   },
 }
 
-export type ResourceType = ReturnType<typeof ResourceTypes.fromObject>
-export type ResourceTypeCollection = ReturnType<typeof ResourceTypes.fromCollection>
+export type ResourceTypeDescriptor = ReturnType<typeof ResourceTypeDescriptor.fromObject>
+export type ResourceTypeDescriptorCollection = ReturnType<typeof ResourceTypeDescriptor.fromCollection>

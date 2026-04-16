@@ -222,13 +222,13 @@
 </template>
 
 <script lang="ts" setup>
-import type { ResourceTypeCollection } from '../data'
+import type { ResourceTypeDescriptorCollection } from '../data'
 import { sources } from '../sources'
 import { useDataEmptyState } from '@/app/application'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 const DataEmptyState = useDataEmptyState()
 const props = defineProps<{
-  resourceTypes?: ResourceTypeCollection
+  resourceTypes?: ResourceTypeDescriptorCollection
 }>()
 </script>
 <style lang="scss" scoped>
