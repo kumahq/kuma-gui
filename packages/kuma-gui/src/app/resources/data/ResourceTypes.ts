@@ -48,7 +48,7 @@ const resourceCategories = new Map<string, string[]>([
   ['zone', ['traffic']],
 ])
 
-export const ResourcesTypes = {
+export const ResourceTypes = {
   fromObject(partialResource: KumaResourceTypesCollection['resources'][number]) {
     return {
       ...partialResource,
@@ -69,5 +69,5 @@ export const ResourcesTypes = {
   },
 }
 
-export type ResourceType = ReturnType<typeof ResourcesTypes.fromObject>
-export type ResourceTypeCollection = ReturnType<typeof ResourcesTypes.fromCollection>
+export type ResourceType = ReturnType<typeof ResourceTypes.fromObject>
+export type ResourceTypeCollection = ReturnType<typeof ResourceTypes.fromCollection>
