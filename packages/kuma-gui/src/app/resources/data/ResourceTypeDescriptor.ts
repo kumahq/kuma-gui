@@ -53,11 +53,7 @@ export const ResourceTypeDescriptor = {
   fromObject(partialResource: KumaResourceTypeDescriptor) {
     return {
       ...partialResource,
-      categories: (() => {
-        const name = partialResource.name.toLowerCase()
-        return resourceCategories.get(name) ?? []
-      })(),
-      deprecated: partialResource.policy?.isTargetRef === false,
+      categories: resourceCategories.get(partialResource.name.toLowerCase()) ?? [],
       scope: ('policy' in partialResource ? 'policies' : (partialResource.scope ?? 'others')).toLowerCase(),
     }
   },
