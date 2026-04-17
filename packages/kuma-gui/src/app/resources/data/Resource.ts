@@ -92,7 +92,7 @@ export const Resource = {
 
 
   },
-  
+
   search(query: string, options: SearchOptions = {}) {
     const { labels = {}, tags = {}, ...rest } = Resource.parseSearch(query, options)
 
@@ -121,10 +121,9 @@ export const Resource = {
       namespace,
       name,
       zone,
-      creationTime: 'creationTime' in partialResource ? partialResource.creationTime : '',
-      modificationTime: 'modificationTime' in partialResource ? partialResource.modificationTime : '',
+      creationTime: 'creationTime' in partialResource ? partialResource.creationTime ?? '' : '',
+      modificationTime: 'modificationTime' in partialResource ? partialResource.modificationTime ?? '' : '',
       labels: partialResource.labels ?? {},
-      type: partialResource.type ?? '',
     }
   },
 
