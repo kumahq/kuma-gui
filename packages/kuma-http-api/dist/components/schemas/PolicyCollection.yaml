@@ -1,8 +1,15 @@
-allOf:
-  - $ref: 'PagedCollection.yaml'
-  - type: object
-    properties:
-      items:
-        type: array
-        items:
-          $ref: 'Policy.yaml'
+type: object
+properties:
+  total:
+    type: integer
+  items:
+    type: array
+    items:
+      $ref: 'Policy.yaml'
+  next:
+    nullable: true
+    type: string
+required:
+  - next
+  - total
+  - items

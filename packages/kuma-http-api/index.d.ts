@@ -9731,25 +9731,18 @@ export interface components {
             };
         };
         ControlPlaneConfig: Record<string, never>;
-        PagedCollection: {
-            total: number;
-            items: Record<string, never>[];
-            next: string | null;
-        };
-        Entity: {
-            name: string;
-            creationTime: string;
-            modificationTime: string;
-        };
         MeshInsightDataplaneStatistics: {
             total?: number;
             online?: number;
             offline?: number;
             partiallyDegraded?: number;
         };
-        MeshInsight: components["schemas"]["Entity"] & {
+        MeshInsight: {
+            name: string;
+            creationTime: string;
+            modificationTime: string;
             /** @enum {string} */
-            type?: "MeshInsight";
+            type: "MeshInsight";
             lastSync?: string;
             dataplanes?: components["schemas"]["MeshInsightDataplaneStatistics"];
             dataplanesByType?: {
@@ -9790,8 +9783,10 @@ export interface components {
                 external?: number;
             };
         };
-        MeshInsightCollection: components["schemas"]["PagedCollection"] & {
-            items?: components["schemas"]["MeshInsight"][];
+        MeshInsightCollection: {
+            total: number;
+            items: components["schemas"]["MeshInsight"][];
+            next: string | null;
         };
         /** @description MeshAccessLog configures access logging for traffic between services in the mesh. It allows you to capture and export request/response logs to various backends (file, TCP, or OpenTelemetry) for monitoring, debugging, and auditing purposes. */
         TargetRefPolicy: {
@@ -9863,8 +9858,10 @@ export interface components {
             };
         };
         Policy: components["schemas"]["TargetRefPolicy"] | components["schemas"]["LegacyPolicy"];
-        PolicyCollection: components["schemas"]["PagedCollection"] & {
-            items?: components["schemas"]["Policy"][];
+        PolicyCollection: {
+            total: number;
+            items: components["schemas"]["Policy"][];
+            next: string | null;
         };
     };
     responses: {
