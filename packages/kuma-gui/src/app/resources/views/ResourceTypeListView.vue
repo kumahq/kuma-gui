@@ -94,6 +94,9 @@
                                     <li
                                       v-for="(item, j) in items"
                                       :key="item.name"
+                                      :class="{
+                                        'active': item.path === route.params.resourcePath,
+                                      }"
                                     >
                                       <XAction
                                         :to="{
@@ -101,6 +104,9 @@
                                           params: {
                                             mesh: route.params.mesh,
                                             resourcePath: item.path,
+                                          },
+                                          query: {
+                                            category: route.params.category,
                                           },
                                         }"
                                         :data-testid="`resource-type-link-${item.name}`"
@@ -165,7 +171,7 @@ import { sources } from '@/app/resources/sources'
   flex-grow: 1;
   overflow-y: auto;
   min-height: 0;
-  min-width: 500px;
+  max-width: 500px;
 }
 
 ul {
