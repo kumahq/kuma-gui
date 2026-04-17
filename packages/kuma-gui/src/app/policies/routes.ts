@@ -5,6 +5,7 @@ export const routes = () => {
     return [
       {
         path: 'policies/:policyPath/:policy/overview',
+        alias: ['resources/policies/:policyPath/:kri/overview'],
         name: 'policy-detail-tabs-view',
         component: () => import('@/app/policies/views/PolicyDetailTabsView.vue'),
         children: [
@@ -38,6 +39,7 @@ export const routes = () => {
               children: [
                 {
                   path: ':policy',
+                  alias: ':kri',
                   name: 'policy-summary-view',
                   component: () => import('@/app/policies/views/PolicySummaryView.vue'),
                 },

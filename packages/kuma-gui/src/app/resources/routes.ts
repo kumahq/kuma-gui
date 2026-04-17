@@ -22,8 +22,17 @@ export const routes = () => {
        */
       {
         name: 'policy-resource-detail-view',
-        path: 'resources/:scope(policies)/:policyPath/:kri/overview',
-        component: () => import('@/app/policies/views/PolicyDetailView.vue'),
+        path: 'resources/:scope(policies)/:resourcePath/:kri/overview',
+        redirect: (to) => {
+          return {
+            name: 'policy-detail-view',
+            params: {
+              ...to.params,
+              policyPath: to.params.resourcePath,
+              policy: to.params.kri,
+            }
+          } 
+        }
       },
       {
         name: 'dataplane-resource-detail-view',
@@ -33,7 +42,7 @@ export const routes = () => {
       {
         name: 'mesh-resource-detail-view',
         path: 'resources/:scope(mesh)/:resourcePath/:kri/overview',
-        component: () => import('@/app/data-planes/views/ResourceDetailView.vue'),
+        component: () => import('@/app/resources/views/ResourceDetailView.vue'),
       },
       {
         name: 'global-resource-detail-view',

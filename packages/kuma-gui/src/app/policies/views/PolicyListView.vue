@@ -7,6 +7,7 @@
       mesh: '',
       policyPath: '',
       policy: '',
+      kri: '',
       s: '',
     }"
     v-slot="{ route, t, can, uri, me }"
@@ -167,7 +168,8 @@
                             params: {
                               mesh: row.mesh,
                               policyPath: type.path,
-                              policy: row.id,
+                              policy: row.id || 'foo',
+                              kri: row.id,
                             },
                             query: {
                               page: route.params.page,
@@ -220,7 +222,7 @@
                               params: {
                                 mesh: item.mesh,
                                 policyPath: type.path,
-                                policy: item.id,
+                                policy: item.id || route.params.kri,
                               },
                             }"
                           >

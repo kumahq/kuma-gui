@@ -4,16 +4,16 @@
     :params="{
       mesh: '',
       policy: '',
+      kri: '',
       policyPath: '',
     }"
     v-slot="{ route, t, uri }"
   >
-    {{ console.log(route.params) }}
     <DataSource
       :src="uri(sources, '/meshes/:mesh/policy-path/:path/policy/:name', {
         mesh: route.params.mesh,
         path: route.params.policyPath,
-        name: route.params.policy,
+        name: route.params.policy || route.params.kri,
       })"
       v-slot="{ data, error }"
     >
@@ -95,7 +95,10 @@
               #[`${name}-tab`]
             >
               <XAction
-                :to="{ name }"
+                :to="{ name, params: {
+                  ...route.params,
+                  policy: route.params.policy || route.params.kri,
+                }}"
               >
                 {{ t(`policies.routes.item.navigation.${name}`) }}
               </XAction>

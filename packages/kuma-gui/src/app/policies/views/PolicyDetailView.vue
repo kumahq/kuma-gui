@@ -7,6 +7,7 @@
       s: '',
       mesh: '',
       policy: '',
+      kri: '',
       policyPath: '',
       proxy: '',
     }"

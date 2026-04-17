@@ -5,6 +5,7 @@
       mesh: '',
       policyPath: '',
       policy: '',
+      kri: '',
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
@@ -47,7 +48,7 @@
                     params: {
                       mesh: route.params.mesh,
                       policyPath: route.params.policyPath,
-                      policy: route.params.policy,
+                      policy: route.params.policy || route.params.kri,
                     },
                   }"
                 >

@@ -4,6 +4,7 @@
     :params="{
       mesh: '',
       policy: '',
+      kri: '',
       policyPath: '',
       codeSearch: '',
       codeFilter: false,
