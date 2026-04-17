@@ -1,7 +1,10 @@
 import { Kri } from '@/app/kuma'
 import type { paths } from '@kumahq/kuma-http-api'
 
-
+/**
+ * There is no types based on OAS that guarantee the shape of a generic resource collection.
+ * Therefore we are only assuming that it's an object of unknown entries and we shape it to what we expect in the data layer.
+ */
 type KumaResourceCollection = Record<string, unknown>
 export type KumaResource = paths['/_kri/{kri}']['get']['responses']['200']['content']['application/json']
 

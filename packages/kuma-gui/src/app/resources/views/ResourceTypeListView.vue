@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    name="resource-types-list-view"
+    name="resource-type-list-view"
     :params="{
       mesh: '',
       resourcePath: '',

@@ -25,7 +25,7 @@ export const routes = () => {
     items: (): RouteRecordRaw[] => {
       return [
         {
-          name: 'resource-types-list-view',
+          name: 'resource-type-list-view',
           path: 'resources',
           component: () => import('@/app/resources/views/ResourceTypeListView.vue'),
           children: [
