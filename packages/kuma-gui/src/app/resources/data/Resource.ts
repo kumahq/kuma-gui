@@ -6,6 +6,11 @@ type KumaResource = {
   mesh?: string
   labels?: Record<string, string>
   type?: string
+  namespace?: string
+  name?: string
+  zone?: string
+  creationTime?: string
+  modificationTime?: string
   [key: string]: unknown
 }
 
@@ -107,22 +112,21 @@ export const Resource = {
   },
 
   fromObject(partialResource: KumaResource) {
-    const kri = Kri.fromString(partialResource.kri ?? '')
-    const mesh = kri.mesh || (partialResource.mesh ?? partialResource.labels?.['kuma.io/mesh'] ?? '')
-    const namespace = kri.namespace || (partialResource.labels?.['kuma.io/namespace'] ?? '')
-    const name = kri.name || (partialResource.labels?.['kuma.io/display-name'] ??partialResource.name ?? partialResource.labels?.['kuma.io/name'] ?? '') as string
-    const zone = kri.zone || (partialResource.zone ?? partialResource.labels?.['kuma.io/zone'] ?? '') as string
+    const mesh = partialResource.mesh ?? partialResource.labels?.['kuma.io/mesh'] ?? ''
+    const namespace = partialResource.namespace ?? partialResource.labels?.['kuma.io/namespace'] ?? ''
+    const name =  partialResource.name ?? partialResource.labels?.['kuma.io/display-name'] ?? partialResource.labels?.['kuma.io/name'] ?? ''
+    const zone = partialResource.zone ?? (partialResource.labels?.['kuma.io/origin'] === 'zone' ? partialResource.labels?.['kuma.io/zone'] ?? '' : '')
 
     return {
       ...partialResource,
       config: partialResource,
-      kri: Kri.isKriString(partialResource.kri ?? '') ? partialResource.kri : Kri.toString({ shortName: `$${partialResource.type?.toLowerCase()}`, mesh, zone, namespace, name }),
+      kri: Kri.isKriString(partialResource.kri ?? '') ? partialResource.kri : Kri.toString({ shortName: `~${partialResource.type?.toLowerCase()}`, mesh, zone, namespace, name }),
       mesh,
       namespace,
       name,
       zone,
-      creationTime: partialResource.creationTime as string | undefined,
-      modificationTime: partialResource.modificationTime as string | undefined,
+      creationTime: partialResource.creationTime ?? '',
+      modificationTime: partialResource.modificationTime ?? '',
       labels: partialResource.labels ?? {},
       type: partialResource.type ?? '',
     }

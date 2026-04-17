@@ -14,26 +14,14 @@ export const sources = (api: KumaApi) => {
     fetch: api.client.fetch,
   })
   return defineSources({
-    '/resources': async () => {
-      const response = await http.GET('/_resources')
-
-      return ResourceTypeDescriptor.fromCollection(response.data!)
-    },
-
-    '/resources/of/:category': async (params) => {
-      const { category } = params
+    '/resource-type-descriptors': async () => {
       const response = await http.GET('/_resources')
 
       const normalized = ResourceTypeDescriptor.fromCollection(response.data!)
-
-      if(category === 'all') {
-        return normalized
-      }
-
       return {
         ...normalized,
         resources: normalized.resources.filter((resource) => {
-          return resource.categories.includes(category)
+          return ['insight', 'secret'].every((excluded) => !resource.name.toLowerCase().includes(excluded))
         }),
       }
     },
