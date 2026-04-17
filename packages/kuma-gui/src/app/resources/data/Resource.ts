@@ -1,3 +1,15 @@
+import { Kri } from '@/app/kuma'
+
+type KumaResourcesCollection = Record<string, unknown>
+type KumaResource = {
+  kri?: string
+  mesh?: string
+  labels?: Record<string, string>
+  type?: string
+  [key: string]: unknown
+}
+
+
 /**
  * Filters should follow the rules of [kong-aip#160](https://kong-aip.netlify.app/aip/160/).
  *
@@ -93,4 +105,38 @@ export const Resource = {
       ...(Object.keys(tags).length > 0 ? { tag: Object.entries(tags).map(([key, value]) => `${key}${value.length > 0 ? `:${value}` : ''}`) }: {}),
     } as typeof rest & { tag?: string[] }
   },
+
+  fromObject(partialResource: KumaResource) {
+    const kri = Kri.fromString(partialResource.kri ?? '')
+    const mesh = kri.mesh || (partialResource.mesh ?? partialResource.labels?.['kuma.io/mesh'] ?? '')
+    const namespace = kri.namespace || (partialResource.labels?.['kuma.io/namespace'] ?? '')
+    const name = kri.name || (partialResource.labels?.['kuma.io/display-name'] ??partialResource.name ?? partialResource.labels?.['kuma.io/name'] ?? '') as string
+    const zone = kri.zone || (partialResource.zone ?? partialResource.labels?.['kuma.io/zone'] ?? '') as string
+
+    return {
+      ...partialResource,
+      config: partialResource,
+      kri: Kri.isKriString(partialResource.kri ?? '') ? partialResource.kri : Kri.toString({ shortName: `$${partialResource.type?.toLowerCase()}`, mesh, zone, namespace, name }),
+      mesh,
+      namespace,
+      name,
+      zone,
+      creationTime: partialResource.creationTime as string | undefined,
+      modificationTime: partialResource.modificationTime as string | undefined,
+      labels: partialResource.labels ?? {},
+      type: partialResource.type ?? '',
+    }
+  },
+
+  fromCollection(partialResources: KumaResourcesCollection = {}) {
+    const collection = Object.values(partialResources).find((value) => Array.isArray(value)) ?? []
+    return {
+      ...partialResources,
+      items: collection.map(Resource.fromObject),
+      total: partialResources.total as number | undefined ?? collection.length ?? 0,
+    }
+  },
 }
+
+export type Resources = ReturnType<typeof Resource.fromObject>
+export type ResourcesCollection = ReturnType<typeof Resource.fromCollection>

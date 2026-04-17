@@ -1,6 +1,6 @@
 import createClient from 'openapi-fetch'
 
-import { Resource, Resources, ResourceTypeDescriptor } from './data'
+import { Resource, ResourceTypeDescriptor } from './data'
 import { defineSources } from '@/app/application'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import type { paths } from '@kumahq/kuma-http-api'
@@ -53,7 +53,7 @@ export const sources = (api: KumaApi) => {
         },
       })
 
-      return Resources.fromCollection(response.data!)
+      return Resource.fromCollection(response.data!)
     },
 
     '/resources/:path/for/:mesh': async (params) => {
@@ -74,7 +74,7 @@ export const sources = (api: KumaApi) => {
         },
       })
 
-      return Resources.fromCollection(response.data!)
+      return Resource.fromCollection(response.data!)
     },
 
     '/resource/:kri': async (params) => {
@@ -86,7 +86,7 @@ export const sources = (api: KumaApi) => {
         },
       })
 
-      return Resources.fromObject(response.data!)
+      return Resource.fromObject(response.data!)
     },
 
     '/resource/:kri/as/kubernetes': async (params) => {
