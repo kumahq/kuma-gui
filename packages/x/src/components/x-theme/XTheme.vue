@@ -466,11 +466,6 @@ import '@kong-ui-public/app-layout/dist/style.css'
   a.k-button {
     text-decoration: none !important;
   }
-
-  /* styles for things that come from locales/i18n rendered from markdown */
-  .x-i18n p {
-    margin-bottom: var(--x-space-50);
-  }
 }
 </style>
 
