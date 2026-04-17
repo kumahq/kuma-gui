@@ -136,12 +136,12 @@
 </template>
 
 <script lang="ts" setup>
-import type { Resources } from '../data'
+import type { Resource } from '../data'
 import { sources } from '../sources'
 import { YAML } from '@/app/application'
 
 const props = defineProps<{
-  items: Resources[]
+  items: Resource[]
   routeName: string
 }>()
 </script>

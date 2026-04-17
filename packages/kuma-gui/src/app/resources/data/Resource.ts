@@ -1,18 +1,9 @@
 import { Kri } from '@/app/kuma'
+import type { paths } from '@kumahq/kuma-http-api'
 
-type KumaResourcesCollection = Record<string, unknown>
-type KumaResource = {
-  kri?: string
-  mesh?: string
-  labels?: Record<string, string>
-  type?: string
-  namespace?: string
-  name?: string
-  zone?: string
-  creationTime?: string
-  modificationTime?: string
-  [key: string]: unknown
-}
+
+type KumaResourceCollection = Record<string, unknown>
+export type KumaResource = paths['/_kri/{kri}']['get']['responses']['200']['content']['application/json']
 
 
 /**
@@ -101,6 +92,7 @@ export const Resource = {
 
 
   },
+  
   search(query: string, options: SearchOptions = {}) {
     const { labels = {}, tags = {}, ...rest } = Resource.parseSearch(query, options)
 
@@ -112,27 +104,31 @@ export const Resource = {
   },
 
   fromObject(partialResource: KumaResource) {
-    const mesh = partialResource.mesh ?? partialResource.labels?.['kuma.io/mesh'] ?? ''
-    const namespace = partialResource.namespace ?? partialResource.labels?.['kuma.io/namespace'] ?? ''
-    const name =  partialResource.name ?? partialResource.labels?.['kuma.io/display-name'] ?? partialResource.labels?.['kuma.io/name'] ?? ''
-    const zone = partialResource.zone ?? (partialResource.labels?.['kuma.io/origin'] === 'zone' ? partialResource.labels?.['kuma.io/zone'] ?? '' : '')
+    const labels = 'labels' in partialResource ? partialResource.labels ?? {} : {}
+    const mesh = 'mesh' in partialResource ? partialResource.mesh : labels['kuma.io/mesh'] ?? ''
+    const namespace = labels['k8s.kuma.io/namespace'] ?? ''
+    const name =  labels['kuma.io/display-name'] ?? partialResource.name ?? ''
+    const zone =  labels['kuma.io/origin'] === 'zone' ? labels['kuma.io/zone'] ?? '' : ''
+
+    const kri = 'kri' in partialResource ? partialResource.kri ?? '' : ''
 
     return {
       ...partialResource,
       config: partialResource,
-      kri: Kri.isKriString(partialResource.kri ?? '') ? partialResource.kri : Kri.toString({ shortName: `~${partialResource.type?.toLowerCase()}`, mesh, zone, namespace, name }),
+      id: partialResource.name,
+      kri: Kri.isKriString(kri) ? kri : Kri.toString({ shortName: `~${partialResource.type?.toLowerCase()}`, mesh, zone, namespace, name }),
       mesh,
       namespace,
       name,
       zone,
-      creationTime: partialResource.creationTime ?? '',
-      modificationTime: partialResource.modificationTime ?? '',
+      creationTime: 'creationTime' in partialResource ? partialResource.creationTime : '',
+      modificationTime: 'modificationTime' in partialResource ? partialResource.modificationTime : '',
       labels: partialResource.labels ?? {},
       type: partialResource.type ?? '',
     }
   },
 
-  fromCollection(partialResources: KumaResourcesCollection = {}) {
+  fromCollection(partialResources: KumaResourceCollection = {}) {
     const collection = Object.values(partialResources).find((value) => Array.isArray(value)) ?? []
     return {
       ...partialResources,
@@ -142,5 +138,5 @@ export const Resource = {
   },
 }
 
-export type Resources = ReturnType<typeof Resource.fromObject>
-export type ResourcesCollection = ReturnType<typeof Resource.fromCollection>
+export type Resource = ReturnType<typeof Resource.fromObject>
+export type ResourceCollection = ReturnType<typeof Resource.fromCollection>
