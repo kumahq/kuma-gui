@@ -41,7 +41,7 @@
   "dependencies": {
     "@apidevtools/json-schema-ref-parser": "^15.3.5",
     "@cucumber/gherkin-utils": "^11.0.0",
-    "@eslint/js": "^9.39.4",
+    "@eslint/js": "^10.0.1",
     "@kumahq/gherkin-web": "*",
     "@playwright/test": "^1.59.1",
     "@stylistic/eslint-plugin": "^5.10.0",
@@ -51,7 +51,7 @@
     "deepmerge": "^4.3.1",
     "esbuild": "^0.28.0",
     "escape-string-regexp": "^4.0.0",
-    "eslint": "^9.39.4",
+    "eslint": "^10.2.1",
     "eslint-import-resolver-alias": "^1.1.2",
     "eslint-import-resolver-typescript": "^4.4.4",
     "eslint-plugin-import": "^2.32.0",
