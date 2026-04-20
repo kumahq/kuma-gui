@@ -495,7 +495,7 @@
           </XCard>
 
           <DataSource
-            :src="uri(resourceSources, '/resources', {})"
+            :src="uri(resourceSources, '/resource-type-descriptors', {})"
             v-slot="{ result: resourceTypes }"
           >
             <DataSource

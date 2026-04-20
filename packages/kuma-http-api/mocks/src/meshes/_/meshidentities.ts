@@ -21,6 +21,7 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
         },
         creationTime: fake.date.past().toISOString(),
         modificationTime: fake.date.recent().toISOString(),
+        kri: fake.kuma.kri({ resourceName: 'MeshIdentity', mesh }),
         spec: {
           provider: {
             bundled: {

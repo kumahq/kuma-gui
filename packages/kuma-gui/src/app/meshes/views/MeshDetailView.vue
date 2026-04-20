@@ -19,13 +19,13 @@
       v-slot="{ data }"
     >
       <DataSource
-        :src="uri(meshIdentitySources, '/meshes/:mesh/meshidentities', {
+        :src="uri(meshIdentitiesSources, '/meshes/:mesh/meshidentities', {
           mesh: route.params.mesh,
         })"
         v-slot="{ data: meshIdentities }"
       >
         <DataSource
-          :src="uri(meshTrustSources, '/meshes/:mesh/meshtrusts', {
+          :src="uri(meshTrustsSources, '/meshes/:mesh/meshtrusts', {
             mesh: route.params.mesh,
           })"
           v-slot="{ data: meshTrusts }"
@@ -102,14 +102,13 @@
                       </template>
                       <template #origin="{ row: item }">
                         <XAction
-                          v-if="item.spec.origin.kri.length > 0"
+                          v-if="item.spec.origin?.kri?.length > 0"
                           :to="{
                             name: 'mesh-mesh-identity-summary-view',
                             params: {
                               mid: item.spec.origin.kri,
                             },
                           }"
-                          data-action
                         >
                           <XBadge appearance="decorative">
                             {{ item.spec.origin.kri }}
@@ -300,8 +299,8 @@ import { sources } from '../sources'
 import { YAML } from '@/app/application'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import ResourceStatus from '@/app/common/ResourceStatus.vue'
-import { sources as meshIdentitySources } from '@/app/mesh-identities/sources'
-import { sources as meshTrustSources } from '@/app/mesh-trusts/sources'
+import { sources as meshIdentitiesSources } from '@/app/mesh-identities/sources'
+import { sources as meshTrustsSources } from '@/app/mesh-trusts/sources'
 import { sources as policySources } from '@/app/policies/sources'
 
 const props = defineProps<{

@@ -15,25 +15,26 @@ export const GlobalInsight = {
   fromObject(partialGlobalInsight: PartialGlobalInsight) {
     return {
       ...partialGlobalInsight,
-      resources: {
-        ...partialGlobalInsight.resources,
-        MeshService: {
-          ...partialGlobalInsight.resources.MeshService,
-          total: partialGlobalInsight.resources.MeshService?.total ?? 0,
-        },
-        MeshMultiZoneService: {
-          ...partialGlobalInsight.resources.MeshMultiZoneService,
-          total: partialGlobalInsight.resources.MeshMultiZoneService?.total ?? 0,
-        },
-        MeshExternalService: {
-          ...partialGlobalInsight.resources.MeshExternalService,
-          total: partialGlobalInsight.resources.MeshExternalService?.total ?? 0,
-        },
-      },
+      resources: (() => {
+        const resources = {
+          ...partialGlobalInsight.resources,
+          MeshService: {
+            ...partialGlobalInsight.resources.MeshService,
+            total: partialGlobalInsight.resources.MeshService?.total ?? 0,
+          },
+          MeshMultiZoneService: {
+            ...partialGlobalInsight.resources.MeshMultiZoneService,
+            total: partialGlobalInsight.resources.MeshMultiZoneService?.total ?? 0,
+          },
+          MeshExternalService: {
+            ...partialGlobalInsight.resources.MeshExternalService,
+            total: partialGlobalInsight.resources.MeshExternalService?.total ?? 0,
+          },
+        }
+        return resources as PartialGlobalInsight['resources'] & typeof resources
+      })(),
     }
   },
 }
 
-export type GlobalInsight = ReturnType<typeof GlobalInsight.fromObject> & {
-  resources: PartialGlobalInsight['resources']
-}
+export type GlobalInsight = ReturnType<typeof GlobalInsight.fromObject>
