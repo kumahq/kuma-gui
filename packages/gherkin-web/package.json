@@ -21,7 +21,7 @@
     }
   },
   "dependencies": {
-    "@cucumber/cucumber": "^12.7.0",
+    "@cucumber/cucumber": "^12.8.0",
     "@kumahq/fake-api": "*",
     "@playwright/test": "^1.59.1",
     "deepmerge": "^4.3.1",
