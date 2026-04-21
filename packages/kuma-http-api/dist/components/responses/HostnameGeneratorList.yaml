@@ -7,7 +7,7 @@ content:
         items:
           type: array
           items:
-            $ref: "../schemas/HostnameGeneratorItem.yaml"
+            $ref: ../schemas/HostnameGeneratorItem.yaml
         total:
           description: The total number of entities
           type: number

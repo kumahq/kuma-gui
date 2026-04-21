@@ -1,0 +1,76 @@
+get:
+  operationId: getMeshOpenTelemetryBackend
+  summary: Returns MeshOpenTelemetryBackend entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshOpenTelemetryBackend
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: ../components/responses/MeshOpenTelemetryBackendItem.yaml
+    '404':
+      $ref: ../components/responses/NotFound.yaml
+  tags:
+    - MeshOpenTelemetryBackend
+put:
+  operationId: putMeshOpenTelemetryBackend
+  summary: Creates or Updates MeshOpenTelemetryBackend entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshOpenTelemetryBackend
+      required: true
+      schema:
+        type: string
+  requestBody:
+    description: Put request
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/MeshOpenTelemetryBackendItem.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/MeshOpenTelemetryBackendCreateOrUpdateSuccessResponse.yaml
+    '201':
+      $ref: ../components/responses/MeshOpenTelemetryBackendCreateOrUpdateSuccessResponse.yaml
+  tags:
+    - MeshOpenTelemetryBackend
+delete:
+  operationId: deleteMeshOpenTelemetryBackend
+  summary: Deletes MeshOpenTelemetryBackend entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the MeshOpenTelemetryBackend
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: ../components/responses/MeshOpenTelemetryBackendDeleteSuccessResponse.yaml
+    '404':
+      $ref: ../components/responses/NotFound.yaml
+  tags:
+    - MeshOpenTelemetryBackend

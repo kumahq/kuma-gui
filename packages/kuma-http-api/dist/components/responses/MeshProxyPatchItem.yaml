@@ -2,4 +2,4 @@ description: Successful response
 content:
   application/json:
     schema:
-      $ref: "../schemas/MeshProxyPatchItem.yaml"
+      $ref: ../schemas/MeshProxyPatchItem.yaml

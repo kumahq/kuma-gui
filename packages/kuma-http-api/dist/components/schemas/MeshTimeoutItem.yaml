@@ -1,4 +1,4 @@
-description: 'MeshTimeout configures timeout limits for service-to-service communication to prevent requests from hanging indefinitely. It supports connection timeouts, idle timeouts, and HTTP-specific timeouts (request, stream, headers) to ensure timely failure detection and improve service responsiveness.'
+description: MeshTimeout configures timeout limits for service-to-service communication to prevent requests from hanging indefinitely. It supports connection timeouts, idle timeouts, and HTTP-specific timeouts (request, stream, headers) to ensure timely failure detection and improve service responsiveness.
 type: object
 properties:
   type:
@@ -396,13 +396,13 @@ properties:
     description: Time at which the resource was created
     type: string
     format: date-time
-    example: '0001-01-01T00:00:00Z'
+    example: 0001-01-01T00:00:00Z
     readOnly: true
   modificationTime:
     description: Time at which the resource was updated
     type: string
     format: date-time
-    example: '0001-01-01T00:00:00Z'
+    example: 0001-01-01T00:00:00Z
     readOnly: true
 required:
   - type

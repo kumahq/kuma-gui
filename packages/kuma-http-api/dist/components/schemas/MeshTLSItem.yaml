@@ -1,4 +1,4 @@
-description: 'MeshTLS configures TLS and mutual TLS (mTLS) settings for secure communication between services in the mesh. It allows you to enforce encryption, configure TLS versions and cipher suites, and control whether mTLS is required (strict mode) or optional (permissive mode) for inbound traffic.'
+description: MeshTLS configures TLS and mutual TLS (mTLS) settings for secure communication between services in the mesh. It allows you to enforce encryption, configure TLS versions and cipher suites, and control whether mTLS is required (strict mode) or optional (permissive mode) for inbound traffic.
 type: object
 properties:
   type:
@@ -61,7 +61,7 @@ properties:
                   type: object
                   properties:
                     max:
-                      description: 'Max defines maximum supported version. One of `TLSAuto`, `TLS10`, `TLS11`, `TLS12`, `TLS13`.'
+                      description: Max defines maximum supported version. One of `TLSAuto`, `TLS10`, `TLS11`, `TLS12`, `TLS13`.
                       type: string
                       default: TLSAuto
                       enum:
@@ -71,7 +71,7 @@ properties:
                         - TLS12
                         - TLS13
                     min:
-                      description: 'Min defines minimum supported version. One of `TLSAuto`, `TLS10`, `TLS11`, `TLS12`, `TLS13`.'
+                      description: Min defines minimum supported version. One of `TLSAuto`, `TLS10`, `TLS11`, `TLS12`, `TLS13`.
                       type: string
                       default: TLSAuto
                       enum:
@@ -180,7 +180,7 @@ properties:
                   type: object
                   properties:
                     max:
-                      description: 'Max defines maximum supported version. One of `TLSAuto`, `TLS10`, `TLS11`, `TLS12`, `TLS13`.'
+                      description: Max defines maximum supported version. One of `TLSAuto`, `TLS10`, `TLS11`, `TLS12`, `TLS13`.
                       type: string
                       default: TLSAuto
                       enum:
@@ -190,7 +190,7 @@ properties:
                         - TLS12
                         - TLS13
                     min:
-                      description: 'Min defines minimum supported version. One of `TLSAuto`, `TLS10`, `TLS11`, `TLS12`, `TLS13`.'
+                      description: Min defines minimum supported version. One of `TLSAuto`, `TLS10`, `TLS11`, `TLS12`, `TLS13`.
                       type: string
                       default: TLSAuto
                       enum:
@@ -268,13 +268,13 @@ properties:
     description: Time at which the resource was created
     type: string
     format: date-time
-    example: '0001-01-01T00:00:00Z'
+    example: 0001-01-01T00:00:00Z
     readOnly: true
   modificationTime:
     description: Time at which the resource was updated
     type: string
     format: date-time
-    example: '0001-01-01T00:00:00Z'
+    example: 0001-01-01T00:00:00Z
     readOnly: true
 required:
   - type

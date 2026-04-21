@@ -16,9 +16,9 @@ get:
         type: string
   responses:
     '200':
-      $ref: "../components/responses/MeshServiceItem.yaml"
+      $ref: ../components/responses/MeshServiceItem.yaml
     '404':
-      $ref: "../components/responses/NotFound.yaml"
+      $ref: ../components/responses/NotFound.yaml
   tags:
     - MeshService
 put:
@@ -43,12 +43,12 @@ put:
     content:
       application/json:
         schema:
-          $ref: "../components/schemas/MeshServiceItem.yaml"
+          $ref: ../components/schemas/MeshServiceItem.yaml
   responses:
     '200':
-      $ref: "../components/responses/MeshServiceCreateOrUpdateSuccessResponse.yaml"
+      $ref: ../components/responses/MeshServiceCreateOrUpdateSuccessResponse.yaml
     '201':
-      $ref: "../components/responses/MeshServiceCreateOrUpdateSuccessResponse.yaml"
+      $ref: ../components/responses/MeshServiceCreateOrUpdateSuccessResponse.yaml
   tags:
     - MeshService
 delete:
@@ -69,8 +69,8 @@ delete:
         type: string
   responses:
     '200':
-      $ref: "../components/responses/MeshServiceDeleteSuccessResponse.yaml"
+      $ref: ../components/responses/MeshServiceDeleteSuccessResponse.yaml
     '404':
-      $ref: "../components/responses/NotFound.yaml"
+      $ref: ../components/responses/NotFound.yaml
   tags:
     - MeshService

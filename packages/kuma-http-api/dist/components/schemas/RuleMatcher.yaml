@@ -10,7 +10,7 @@ properties:
     type: string
     example: my-cool-service
   not:
-    description: 'whether we check on the absence of this key:value pair'
+    description: whether we check on the absence of this key:value pair
     type: boolean
 required:
   - key

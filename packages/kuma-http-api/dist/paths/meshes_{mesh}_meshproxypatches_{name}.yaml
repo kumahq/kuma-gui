@@ -16,9 +16,9 @@ get:
         type: string
   responses:
     '200':
-      $ref: "../components/responses/MeshProxyPatchItem.yaml"
+      $ref: ../components/responses/MeshProxyPatchItem.yaml
     '404':
-      $ref: "../components/responses/NotFound.yaml"
+      $ref: ../components/responses/NotFound.yaml
   tags:
     - MeshProxyPatch
 put:
@@ -43,12 +43,12 @@ put:
     content:
       application/json:
         schema:
-          $ref: "../components/schemas/MeshProxyPatchItem.yaml"
+          $ref: ../components/schemas/MeshProxyPatchItem.yaml
   responses:
     '200':
-      $ref: "../components/responses/MeshProxyPatchCreateOrUpdateSuccessResponse.yaml"
+      $ref: ../components/responses/MeshProxyPatchCreateOrUpdateSuccessResponse.yaml
     '201':
-      $ref: "../components/responses/MeshProxyPatchCreateOrUpdateSuccessResponse.yaml"
+      $ref: ../components/responses/MeshProxyPatchCreateOrUpdateSuccessResponse.yaml
   tags:
     - MeshProxyPatch
 delete:
@@ -69,8 +69,8 @@ delete:
         type: string
   responses:
     '200':
-      $ref: "../components/responses/MeshProxyPatchDeleteSuccessResponse.yaml"
+      $ref: ../components/responses/MeshProxyPatchDeleteSuccessResponse.yaml
     '404':
-      $ref: "../components/responses/NotFound.yaml"
+      $ref: ../components/responses/NotFound.yaml
   tags:
     - MeshProxyPatch

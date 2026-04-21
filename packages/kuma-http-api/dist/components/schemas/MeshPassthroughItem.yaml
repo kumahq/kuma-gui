@@ -1,4 +1,4 @@
-description: 'MeshPassthrough controls how traffic to external services (outside the mesh) is handled by the sidecar proxy. It allows you to configure passthrough mode to permit, deny, or selectively allow traffic to specific external destinations based on domain names, IPs, or CIDR ranges.'
+description: MeshPassthrough controls how traffic to external services (outside the mesh) is handled by the sidecar proxy. It allows you to configure passthrough mode to permit, deny, or selectively allow traffic to specific external destinations based on domain names, IPs, or CIDR ranges.
 type: object
 properties:
   type:
@@ -52,7 +52,7 @@ properties:
                     - http2
                     - mysql
                 type:
-                  description: 'Type of the match, one of `Domain`, `IP` or `CIDR` is available.'
+                  description: Type of the match, one of `Domain`, `IP` or `CIDR` is available.
                   type: string
                   enum:
                     - Domain
@@ -143,13 +143,13 @@ properties:
     description: Time at which the resource was created
     type: string
     format: date-time
-    example: '0001-01-01T00:00:00Z'
+    example: 0001-01-01T00:00:00Z
     readOnly: true
   modificationTime:
     description: Time at which the resource was updated
     type: string
     format: date-time
-    example: '0001-01-01T00:00:00Z'
+    example: 0001-01-01T00:00:00Z
     readOnly: true
 required:
   - type

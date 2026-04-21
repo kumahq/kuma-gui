@@ -8,7 +8,7 @@ properties:
   zones:
     type: array
     items:
-      $ref: "InspectHostnameZone.yaml"
+      $ref: InspectHostnameZone.yaml
 required:
   - hostname
   - zones

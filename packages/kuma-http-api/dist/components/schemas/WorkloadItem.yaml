@@ -1,4 +1,4 @@
-description: 'Workload represents a logical grouping of data plane proxies in the mesh, providing visibility into their operational status. It tracks statistics about the data plane proxies that belong to a workload, including the number of connected, healthy, and total proxies, enabling monitoring and health assessment of your workload deployments. Workloads is also the primary way data-planes are grouped together in metrics and traces.'
+description: Workload represents a logical grouping of data plane proxies in the mesh, providing visibility into their operational status. It tracks statistics about the data plane proxies that belong to a workload, including the number of connected, healthy, and total proxies, enabling monitoring and health assessment of your workload deployments. Workloads is also the primary way data-planes are grouped together in metrics and traces.
 type: object
 properties:
   type:
@@ -30,13 +30,13 @@ properties:
     description: Time at which the resource was created
     type: string
     format: date-time
-    example: '0001-01-01T00:00:00Z'
+    example: 0001-01-01T00:00:00Z
     readOnly: true
   modificationTime:
     description: Time at which the resource was updated
     type: string
     format: date-time
-    example: '0001-01-01T00:00:00Z'
+    example: 0001-01-01T00:00:00Z
     readOnly: true
   status:
     description: Status is the current status of the Kuma Workload resource.

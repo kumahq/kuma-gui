@@ -249,7 +249,7 @@ properties:
                               type: integer
                               format: int32
                     disabled:
-                      description: 'When set to true, outlierDetection configuration won''t take any effect'
+                      description: When set to true, outlierDetection configuration won't take any effect
                       type: boolean
                     healthyPanicThreshold:
                       description: |-
@@ -566,7 +566,7 @@ properties:
                               type: integer
                               format: int32
                     disabled:
-                      description: 'When set to true, outlierDetection configuration won''t take any effect'
+                      description: When set to true, outlierDetection configuration won't take any effect
                       type: boolean
                     healthyPanicThreshold:
                       description: |-
@@ -884,7 +884,7 @@ properties:
                               type: integer
                               format: int32
                     disabled:
-                      description: 'When set to true, outlierDetection configuration won''t take any effect'
+                      description: When set to true, outlierDetection configuration won't take any effect
                       type: boolean
                     healthyPanicThreshold:
                       description: |-
@@ -983,13 +983,13 @@ properties:
     description: Time at which the resource was created
     type: string
     format: date-time
-    example: '0001-01-01T00:00:00Z'
+    example: 0001-01-01T00:00:00Z
     readOnly: true
   modificationTime:
     description: Time at which the resource was updated
     type: string
     format: date-time
-    example: '0001-01-01T00:00:00Z'
+    example: 0001-01-01T00:00:00Z
     readOnly: true
 required:
   - type

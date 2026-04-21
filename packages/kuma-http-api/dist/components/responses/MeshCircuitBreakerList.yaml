@@ -7,7 +7,7 @@ content:
         items:
           type: array
           items:
-            $ref: "../schemas/MeshCircuitBreakerItem.yaml"
+            $ref: ../schemas/MeshCircuitBreakerItem.yaml
         total:
           description: The total number of entities
           type: number

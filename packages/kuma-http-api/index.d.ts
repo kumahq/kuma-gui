@@ -1269,6 +1269,42 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/meshes/{mesh}/meshopentelemetrybackends/{name}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Returns MeshOpenTelemetryBackend entity */
+        get: operations["getMeshOpenTelemetryBackend"];
+        /** Creates or Updates MeshOpenTelemetryBackend entity */
+        put: operations["putMeshOpenTelemetryBackend"];
+        post?: never;
+        /** Deletes MeshOpenTelemetryBackend entity */
+        delete: operations["deleteMeshOpenTelemetryBackend"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/meshes/{mesh}/meshopentelemetrybackends": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Returns a list of MeshOpenTelemetryBackend in the mesh. */
+        get: operations["getMeshOpenTelemetryBackendList"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/meshes/{mesh}/meshservices/{name}": {
         parameters: {
             query?: never;
@@ -1333,6 +1369,42 @@ export interface paths {
         };
         /** Returns a list of MeshTrust in the mesh. */
         get: operations["getMeshTrustList"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/meshes/{mesh}/meshzoneaddresses/{name}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Returns MeshZoneAddress entity */
+        get: operations["getMeshZoneAddress"];
+        /** Creates or Updates MeshZoneAddress entity */
+        put: operations["putMeshZoneAddress"];
+        post?: never;
+        /** Deletes MeshZoneAddress entity */
+        delete: operations["deleteMeshZoneAddress"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/meshes/{mesh}/meshzoneaddresses": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Returns a list of MeshZoneAddress in the mesh. */
+        get: operations["getMeshZoneAddressList"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1702,10 +1774,10 @@ export interface components {
             total: number;
         };
         /**
-         * GlobalInsight
+         * GlobalInsightBase
          * @description Global Insight contains statistics for all main resources
          */
-        "schemas-GlobalInsight": {
+        GlobalInsightBase: {
             /**
              * Format: date-time
              * @description Time of Global Insight creation
@@ -1727,7 +1799,7 @@ export interface components {
                 [key: string]: components["schemas"]["ResourceStats"];
             };
         };
-        GlobalInsight: components["schemas"]["schemas-GlobalInsight"];
+        GlobalInsight: components["schemas"]["GlobalInsightBase"];
         Meta: {
             /**
              * @description the type of this resource
@@ -1924,6 +1996,8 @@ export interface components {
             };
             inbounds: components["schemas"]["DataplaneInbound"][];
             outbounds: components["schemas"]["DataplaneOutbound"][];
+            /** @description SPIFFE ID of the dataplane's workload identity certificate */
+            spiffeId?: string;
         };
         /** @description The list of policies KRI that contributed to the 'conf'. The order is important as it reflects in what order confs were merged to get the resulting 'conf'. */
         PolicyOrigin: {
@@ -2286,6 +2360,33 @@ export interface components {
                     tags?: {
                         [key: string]: string;
                     };
+                }[];
+                /**
+                 * @description Listeners describes zone proxy listeners embedded in this Dataplane.
+                 *     Listeners may coexist with inbounds and gateways.
+                 */
+                listeners?: {
+                    /** @description Address on which the listener will be exposed. */
+                    address?: string;
+                    /**
+                     * @description Name uniquely identifies this listener within the Dataplane and is
+                     *     used to reference it via sectionName in policies.
+                     *     Optional: if unset, the port value is used as the name (as a string).
+                     */
+                    name?: string;
+                    /** @description Port on which the listener will be exposed. */
+                    port?: number;
+                    /**
+                     * @description State describes the current health state of the listener.
+                     *     The control plane sets this based on the readiness of the underlying
+                     *     pod and sidecar container.
+                     */
+                    state?: string | number;
+                    /**
+                     * @description Type determines the role of this listener: ZoneIngress for inbound
+                     *     cross-zone traffic or ZoneEgress for outbound external traffic.
+                     */
+                    type?: string | number;
                 }[];
                 /**
                  * @description Outbound describes a list of services consumed by the data plane proxy.
@@ -2802,6 +2903,30 @@ export interface components {
                                     value: string;
                                 }[];
                                 /**
+                                 * @description BackendRef is a reference to a MeshOpenTelemetryBackend resource that
+                                 *     defines the collector endpoint. Mutually exclusive with Endpoint.
+                                 */
+                                backendRef?: {
+                                    /**
+                                     * @description Kind of the backend resource.
+                                     * @enum {string}
+                                     */
+                                    kind: "MeshOpenTelemetryBackend";
+                                    /**
+                                     * @description Labels to match the referenced resource. Use for cross-zone references
+                                     *     where KDS adds a hash suffix to metadata.name. Mutually exclusive with
+                                     *     Name. When multiple resources match, the oldest by creation time wins.
+                                     */
+                                    labels?: {
+                                        [key: string]: string;
+                                    };
+                                    /**
+                                     * @description Name of the referenced resource (metadata.name). Use for same-cluster
+                                     *     references. Mutually exclusive with Labels.
+                                     */
+                                    name?: string;
+                                };
+                                /**
                                  * @description Body is a raw string or an OTLP any value as described at
                                  *     https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/logs/data-model.md#field-body
                                  *     It can contain placeholders available on
@@ -2822,6 +2947,9 @@ export interface components {
                                 body?: unknown;
                                 /**
                                  * @description Endpoint of OpenTelemetry collector. An empty port defaults to 4317.
+                                 *
+                                 *     Deprecated: use BackendRef instead.
+                                 * @default
                                  * @example otel-collector:4317
                                  */
                                 endpoint: string;
@@ -2975,6 +3103,30 @@ export interface components {
                                     value: string;
                                 }[];
                                 /**
+                                 * @description BackendRef is a reference to a MeshOpenTelemetryBackend resource that
+                                 *     defines the collector endpoint. Mutually exclusive with Endpoint.
+                                 */
+                                backendRef?: {
+                                    /**
+                                     * @description Kind of the backend resource.
+                                     * @enum {string}
+                                     */
+                                    kind: "MeshOpenTelemetryBackend";
+                                    /**
+                                     * @description Labels to match the referenced resource. Use for cross-zone references
+                                     *     where KDS adds a hash suffix to metadata.name. Mutually exclusive with
+                                     *     Name. When multiple resources match, the oldest by creation time wins.
+                                     */
+                                    labels?: {
+                                        [key: string]: string;
+                                    };
+                                    /**
+                                     * @description Name of the referenced resource (metadata.name). Use for same-cluster
+                                     *     references. Mutually exclusive with Labels.
+                                     */
+                                    name?: string;
+                                };
+                                /**
                                  * @description Body is a raw string or an OTLP any value as described at
                                  *     https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/logs/data-model.md#field-body
                                  *     It can contain placeholders available on
@@ -2995,6 +3147,9 @@ export interface components {
                                 body?: unknown;
                                 /**
                                  * @description Endpoint of OpenTelemetry collector. An empty port defaults to 4317.
+                                 *
+                                 *     Deprecated: use BackendRef instead.
+                                 * @default
                                  * @example otel-collector:4317
                                  */
                                 endpoint: string;
@@ -3149,6 +3304,30 @@ export interface components {
                                     value: string;
                                 }[];
                                 /**
+                                 * @description BackendRef is a reference to a MeshOpenTelemetryBackend resource that
+                                 *     defines the collector endpoint. Mutually exclusive with Endpoint.
+                                 */
+                                backendRef?: {
+                                    /**
+                                     * @description Kind of the backend resource.
+                                     * @enum {string}
+                                     */
+                                    kind: "MeshOpenTelemetryBackend";
+                                    /**
+                                     * @description Labels to match the referenced resource. Use for cross-zone references
+                                     *     where KDS adds a hash suffix to metadata.name. Mutually exclusive with
+                                     *     Name. When multiple resources match, the oldest by creation time wins.
+                                     */
+                                    labels?: {
+                                        [key: string]: string;
+                                    };
+                                    /**
+                                     * @description Name of the referenced resource (metadata.name). Use for same-cluster
+                                     *     references. Mutually exclusive with Labels.
+                                     */
+                                    name?: string;
+                                };
+                                /**
                                  * @description Body is a raw string or an OTLP any value as described at
                                  *     https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/logs/data-model.md#field-body
                                  *     It can contain placeholders available on
@@ -3169,6 +3348,9 @@ export interface components {
                                 body?: unknown;
                                 /**
                                  * @description Endpoint of OpenTelemetry collector. An empty port defaults to 4317.
+                                 *
+                                 *     Deprecated: use BackendRef instead.
+                                 * @default
                                  * @example otel-collector:4317
                                  */
                                 endpoint: string;
@@ -3274,6 +3456,31 @@ export interface components {
              * @example 0001-01-01T00:00:00Z
              */
             readonly modificationTime?: string;
+            /** @description Status is the current status of the Kuma MeshAccessLog resource. */
+            readonly status?: {
+                conditions?: {
+                    /**
+                     * @description message is a human readable message indicating details about the transition.
+                     *     This may be an empty string.
+                     */
+                    message: string;
+                    /**
+                     * @description reason contains a programmatic identifier indicating the reason for the condition's last transition.
+                     *     Producers of specific condition types may define expected values and meanings for this field,
+                     *     and whether the values are considered a guaranteed API.
+                     *     The value should be a CamelCase string.
+                     *     This field may not be empty.
+                     */
+                    reason: string;
+                    /**
+                     * @description status of the condition, one of True, False, Unknown.
+                     * @enum {string}
+                     */
+                    status: "True" | "False" | "Unknown";
+                    /** @description type of condition in CamelCase or in foo.example.com/CamelCase. */
+                    type: string;
+                }[];
+            };
         };
         /** @description MeshCircuitBreaker protects services from cascading failures by limiting connections and detecting unhealthy instances. It provides connection limits to prevent overload and outlier detection to temporarily remove failing endpoints from the load balancing pool. */
         MeshCircuitBreakerItem: {
@@ -5807,7 +6014,36 @@ export interface components {
                     backends?: {
                         /** @description OpenTelemetry backend configuration */
                         openTelemetry?: {
-                            /** @description Endpoint for OpenTelemetry collector */
+                            /**
+                             * @description BackendRef is a reference to a MeshOpenTelemetryBackend resource that
+                             *     defines the collector endpoint. Mutually exclusive with Endpoint.
+                             */
+                            backendRef?: {
+                                /**
+                                 * @description Kind of the backend resource.
+                                 * @enum {string}
+                                 */
+                                kind: "MeshOpenTelemetryBackend";
+                                /**
+                                 * @description Labels to match the referenced resource. Use for cross-zone references
+                                 *     where KDS adds a hash suffix to metadata.name. Mutually exclusive with
+                                 *     Name. When multiple resources match, the oldest by creation time wins.
+                                 */
+                                labels?: {
+                                    [key: string]: string;
+                                };
+                                /**
+                                 * @description Name of the referenced resource (metadata.name). Use for same-cluster
+                                 *     references. Mutually exclusive with Labels.
+                                 */
+                                name?: string;
+                            };
+                            /**
+                             * @description Endpoint for OpenTelemetry collector.
+                             *
+                             *     Deprecated: use BackendRef instead.
+                             * @default
+                             */
                             endpoint: string;
                             /** @description RefreshInterval defines how frequent metrics should be pushed to collector */
                             refreshInterval?: string;
@@ -5952,6 +6188,31 @@ export interface components {
              * @example 0001-01-01T00:00:00Z
              */
             readonly modificationTime?: string;
+            /** @description Status is the current status of the Kuma MeshMetric resource. */
+            readonly status?: {
+                conditions?: {
+                    /**
+                     * @description message is a human readable message indicating details about the transition.
+                     *     This may be an empty string.
+                     */
+                    message: string;
+                    /**
+                     * @description reason contains a programmatic identifier indicating the reason for the condition's last transition.
+                     *     Producers of specific condition types may define expected values and meanings for this field,
+                     *     and whether the values are considered a guaranteed API.
+                     *     The value should be a CamelCase string.
+                     *     This field may not be empty.
+                     */
+                    reason: string;
+                    /**
+                     * @description status of the condition, one of True, False, Unknown.
+                     * @enum {string}
+                     */
+                    status: "True" | "False" | "Unknown";
+                    /** @description type of condition in CamelCase or in foo.example.com/CamelCase. */
+                    type: string;
+                }[];
+            };
         };
         /** @description MeshPassthrough controls how traffic to external services (outside the mesh) is handled by the sidecar proxy. It allows you to configure passthrough mode to permit, deny, or selectively allow traffic to specific external destinations based on domain names, IPs, or CIDR ranges. */
         MeshPassthroughItem: {
@@ -8014,7 +8275,34 @@ export interface components {
                         /** @description OpenTelemetry backend configuration. */
                         openTelemetry?: {
                             /**
+                             * @description BackendRef is a reference to a MeshOpenTelemetryBackend resource that
+                             *     defines the collector endpoint. Mutually exclusive with Endpoint.
+                             */
+                            backendRef?: {
+                                /**
+                                 * @description Kind of the backend resource.
+                                 * @enum {string}
+                                 */
+                                kind: "MeshOpenTelemetryBackend";
+                                /**
+                                 * @description Labels to match the referenced resource. Use for cross-zone references
+                                 *     where KDS adds a hash suffix to metadata.name. Mutually exclusive with
+                                 *     Name. When multiple resources match, the oldest by creation time wins.
+                                 */
+                                labels?: {
+                                    [key: string]: string;
+                                };
+                                /**
+                                 * @description Name of the referenced resource (metadata.name). Use for same-cluster
+                                 *     references. Mutually exclusive with Labels.
+                                 */
+                                name?: string;
+                            };
+                            /**
                              * @description Address of OpenTelemetry collector.
+                             *
+                             *     Deprecated: use BackendRef instead.
+                             * @default
                              * @example otel-collector:4317
                              */
                             endpoint: string;
@@ -8166,6 +8454,31 @@ export interface components {
              * @example 0001-01-01T00:00:00Z
              */
             readonly modificationTime?: string;
+            /** @description Status is the current status of the Kuma MeshTrace resource. */
+            readonly status?: {
+                conditions?: {
+                    /**
+                     * @description message is a human readable message indicating details about the transition.
+                     *     This may be an empty string.
+                     */
+                    message: string;
+                    /**
+                     * @description reason contains a programmatic identifier indicating the reason for the condition's last transition.
+                     *     Producers of specific condition types may define expected values and meanings for this field,
+                     *     and whether the values are considered a guaranteed API.
+                     *     The value should be a CamelCase string.
+                     *     This field may not be empty.
+                     */
+                    reason: string;
+                    /**
+                     * @description status of the condition, one of True, False, Unknown.
+                     * @enum {string}
+                     */
+                    status: "True" | "False" | "Unknown";
+                    /** @description type of condition in CamelCase or in foo.example.com/CamelCase. */
+                    type: string;
+                }[];
+            };
         };
         /** @description MeshTrafficPermission controls which services are allowed to communicate with each other in the mesh. It provides fine-grained access control by allowing you to define allow/deny rules based on service identity, enabling zero-trust security and supporting shadow mode for testing permission changes before enforcement. */
         MeshTrafficPermissionItem: {
@@ -8622,6 +8935,33 @@ export interface components {
                         };
                     }[];
                     /**
+                     * @description Listeners describes zone proxy listeners embedded in this Dataplane.
+                     *     Listeners may coexist with inbounds and gateways.
+                     */
+                    listeners?: {
+                        /** @description Address on which the listener will be exposed. */
+                        address?: string;
+                        /**
+                         * @description Name uniquely identifies this listener within the Dataplane and is
+                         *     used to reference it via sectionName in policies.
+                         *     Optional: if unset, the port value is used as the name (as a string).
+                         */
+                        name?: string;
+                        /** @description Port on which the listener will be exposed. */
+                        port?: number;
+                        /**
+                         * @description State describes the current health state of the listener.
+                         *     The control plane sets this based on the readiness of the underlying
+                         *     pod and sidecar container.
+                         */
+                        state?: string | number;
+                        /**
+                         * @description Type determines the role of this listener: ZoneIngress for inbound
+                         *     cross-zone traffic or ZoneEgress for outbound external traffic.
+                         */
+                        type?: string | number;
+                    }[];
+                    /**
                      * @description Outbound describes a list of services consumed by the data plane proxy.
                      *     For every defined Outbound, there is a corresponding Envoy Listener.
                      */
@@ -8794,6 +9134,39 @@ export interface components {
                     supportedBackends?: string[];
                 };
                 metadata?: Record<string, never>;
+                /** @description Insights about OTel runtime resolution for this Dataplane. */
+                openTelemetry?: {
+                    backends?: {
+                        logs?: {
+                            blockedReasons?: string[];
+                            enabled?: boolean;
+                            envAllowed?: boolean;
+                            envInputPresent?: boolean;
+                            missingFields?: string[];
+                            overrideKinds?: string[];
+                            state?: string;
+                        };
+                        metrics?: {
+                            blockedReasons?: string[];
+                            enabled?: boolean;
+                            envAllowed?: boolean;
+                            envInputPresent?: boolean;
+                            missingFields?: string[];
+                            overrideKinds?: string[];
+                            state?: string;
+                        };
+                        name?: string;
+                        traces?: {
+                            blockedReasons?: string[];
+                            enabled?: boolean;
+                            envAllowed?: boolean;
+                            envInputPresent?: boolean;
+                            missingFields?: string[];
+                            overrideKinds?: string[];
+                            state?: string;
+                        };
+                    }[];
+                };
                 /** @description List of ADS subscriptions created by a given Dataplane. */
                 subscriptions?: {
                     /** @description Time when a given Dataplane connected to the Control Plane. */
@@ -9001,6 +9374,13 @@ export interface components {
                      * @description Port of the endpoint
                      */
                     port: number;
+                    /**
+                     * Format: int32
+                     * @description Priority maps to Envoy's priority levels to enable endpoint failover.
+                     *     Lower values have higher priority (0 is the default/primary).
+                     *     When the primary endpoints become unhealthy, traffic fails over to the next priority level.
+                     */
+                    priority?: number;
                 }[];
                 /** @description Extension struct for a plugin configuration, in the presence of an extension `endpoints` and `tls` are not required anymore - it's up to the extension to validate them independently. */
                 extension?: {
@@ -9263,6 +9643,13 @@ export interface components {
                          */
                         meshTrustCreation?: "Enabled" | "Disabled";
                     };
+                    /** @description Extension indicates that custom provider is used. */
+                    extension?: {
+                        /** @description Config is a freeform configuration for the extension. */
+                        config?: unknown;
+                        /** @description Name is the name of the extension provider. */
+                        name: string;
+                    };
                     /** @description Spire indicates that SPIRE is used for certificate delivery. */
                     spire?: {
                         /** @description Spire agent configuration */
@@ -9278,7 +9665,7 @@ export interface components {
                      * @description Type specifies the type of certificate provider.
                      * @enum {string}
                      */
-                    type: "Bundled" | "Spire";
+                    type: "Bundled" | "Spire" | "Extension";
                 };
                 selector?: {
                     dataplane?: {
@@ -9465,6 +9852,127 @@ export interface components {
                 /** @description VIPs is a list of assigned Kuma VIPs. */
                 vips?: {
                     ip?: string;
+                }[];
+            };
+        };
+        /**
+         * @description MeshOpenTelemetryBackend defines a shared OTel collector endpoint for observability policies.
+         *     An empty spec is valid and represents the node-local default flow
+         *     (kuma-dp resolves the address at runtime using HOST_IP or 127.0.0.1).
+         */
+        MeshOpenTelemetryBackendItem: {
+            /**
+             * @description the type of the resource
+             * @enum {string}
+             */
+            type: "MeshOpenTelemetryBackend";
+            /**
+             * @description Mesh is the name of the Kuma mesh this resource belongs to. It may be omitted for cluster-scoped resources.
+             * @default default
+             */
+            mesh: string;
+            /**
+             * @description A unique identifier for this resource instance used by internal tooling and integrations. Typically derived from resource attributes and may be used for cross-references or indexing
+             * @example kri_motb_default_zone-east_kuma-system_myresource1_
+             */
+            readonly kri?: string;
+            /** @description Name of the Kuma resource */
+            name: string;
+            /** @description The labels to help identity resources */
+            labels?: {
+                [key: string]: string;
+            };
+            /** @description Spec is the specification of the Kuma MeshOpenTelemetryBackend resource. */
+            spec: {
+                /**
+                 * @description Endpoint optionally defines the OTel collector address and port.
+                 *     When omitted, the CP defaults port to 4317 and leaves address empty;
+                 *     kuma-dp resolves the address at runtime using HOST_IP or 127.0.0.1.
+                 */
+                endpoint?: {
+                    /**
+                     * @description Address of the OTel collector (hostname or IP).
+                     *     When omitted, kuma-dp resolves it at runtime using HOST_IP or 127.0.0.1.
+                     */
+                    address?: string;
+                    /**
+                     * @description Path is an optional base path prefix for HTTP endpoints.
+                     *     The CP appends signal-specific suffixes (/v1/traces, /v1/metrics, /v1/logs).
+                     *     Non-empty value is rejected by validation when protocol is grpc.
+                     */
+                    path?: string;
+                    /**
+                     * Format: int32
+                     * @description Port of the OTel collector. Defaults to 4317 when omitted.
+                     */
+                    port?: number;
+                };
+                /**
+                 * @description Env controls whether standard OTEL exporter env vars participate in the
+                 *     final exporter config for this backend.
+                 */
+                env?: {
+                    /**
+                     * @description AllowSignalOverrides controls whether signal-specific OTEL env vars such
+                     *     as `OTEL_EXPORTER_OTLP_TRACES_*` may diverge from the shared config.
+                     */
+                    allowSignalOverrides?: boolean;
+                    /**
+                     * @description Mode controls whether OTEL env vars are ignored, allowed, or required.
+                     * @default Optional
+                     * @enum {string}
+                     */
+                    mode: "Disabled" | "Optional" | "Required";
+                    /**
+                     * @description Precedence controls whether explicit backend fields or env vars win when
+                     *     both are present for the same field.
+                     * @default EnvFirst
+                     * @enum {string}
+                     */
+                    precedence: "ExplicitFirst" | "EnvFirst";
+                };
+                /**
+                 * @description Protocol selects gRPC or HTTP transport for the collector connection.
+                 *     Defaults to grpc when omitted.
+                 * @enum {string}
+                 */
+                protocol?: "grpc" | "http";
+            };
+            /**
+             * Format: date-time
+             * @description Time at which the resource was created
+             * @example 0001-01-01T00:00:00Z
+             */
+            readonly creationTime?: string;
+            /**
+             * Format: date-time
+             * @description Time at which the resource was updated
+             * @example 0001-01-01T00:00:00Z
+             */
+            readonly modificationTime?: string;
+            /** @description Status is the current status of the Kuma MeshOpenTelemetryBackend resource. */
+            readonly status?: {
+                conditions?: {
+                    /**
+                     * @description message is a human readable message indicating details about the transition.
+                     *     This may be an empty string.
+                     */
+                    message: string;
+                    /**
+                     * @description reason contains a programmatic identifier indicating the reason for the condition's last transition.
+                     *     Producers of specific condition types may define expected values and meanings for this field,
+                     *     and whether the values are considered a guaranteed API.
+                     *     The value should be a CamelCase string.
+                     *     This field may not be empty.
+                     */
+                    reason: string;
+                    /**
+                     * @description status of the condition, one of True, False, Unknown.
+                     * @enum {string}
+                     */
+                    status: "True" | "False" | "Unknown";
+                    /** @description type of condition in CamelCase or in foo.example.com/CamelCase. */
+                    type: string;
                 }[];
             };
         };
@@ -9671,6 +10179,52 @@ export interface components {
                 };
             };
         };
+        /** @description MeshZoneAddress holds the public address and port for a mesh-scoped zone ingress proxy. */
+        MeshZoneAddressItem: {
+            /**
+             * @description the type of the resource
+             * @enum {string}
+             */
+            type: "MeshZoneAddress";
+            /**
+             * @description Mesh is the name of the Kuma mesh this resource belongs to. It may be omitted for cluster-scoped resources.
+             * @default default
+             */
+            mesh: string;
+            /**
+             * @description A unique identifier for this resource instance used by internal tooling and integrations. Typically derived from resource attributes and may be used for cross-references or indexing
+             * @example kri_mza_default_zone-east_kuma-demo_myresource1_
+             */
+            readonly kri?: string;
+            /** @description Name of the Kuma resource */
+            name: string;
+            /** @description The labels to help identity resources */
+            labels?: {
+                [key: string]: string;
+            };
+            /** @description Spec is the specification of the Kuma MeshZoneAddress resource. */
+            spec: {
+                /** @description Address is the publicly reachable address of the zone ingress. */
+                address: string;
+                /**
+                 * Format: int32
+                 * @description Port is the publicly reachable port of the zone ingress.
+                 */
+                port: number;
+            };
+            /**
+             * Format: date-time
+             * @description Time at which the resource was created
+             * @example 0001-01-01T00:00:00Z
+             */
+            readonly creationTime?: string;
+            /**
+             * Format: date-time
+             * @description Time at which the resource was updated
+             * @example 0001-01-01T00:00:00Z
+             */
+            readonly modificationTime?: string;
+        };
         /** @description Workload represents a logical grouping of data plane proxies in the mesh, providing visibility into their operational status. It tracks statistics about the data plane proxies that belong to a workload, including the number of connected, healthy, and total proxies, enabling monitoring and health assessment of your workload deployments. Workloads is also the primary way data-planes are grouped together in metrics and traces. */
         WorkloadItem: {
             /**
@@ -9820,6 +10374,31 @@ export interface components {
              * @example 0001-01-01T00:00:00Z
              */
             readonly modificationTime?: string;
+            /** @description Status is the current status of the Kuma MeshAccessLog resource. */
+            readonly status?: {
+                conditions?: {
+                    /**
+                     * @description message is a human readable message indicating details about the transition.
+                     *     This may be an empty string.
+                     */
+                    message: string;
+                    /**
+                     * @description reason contains a programmatic identifier indicating the reason for the condition's last transition.
+                     *     Producers of specific condition types may define expected values and meanings for this field,
+                     *     and whether the values are considered a guaranteed API.
+                     *     The value should be a CamelCase string.
+                     *     This field may not be empty.
+                     */
+                    reason: string;
+                    /**
+                     * @description status of the condition, one of True, False, Unknown.
+                     * @enum {string}
+                     */
+                    status: "True" | "False" | "Unknown";
+                    /** @description type of condition in CamelCase or in foo.example.com/CamelCase. */
+                    type: string;
+                }[];
+            };
             /** @description Spec is the specification of the Kuma Policy resource. */
             spec: {
                 targetRef?: components["schemas"]["MeshAccessLogItem"]["spec"]["targetRef"];
@@ -9852,6 +10431,31 @@ export interface components {
              * @example 0001-01-01T00:00:00Z
              */
             readonly modificationTime?: string;
+            /** @description Status is the current status of the Kuma MeshAccessLog resource. */
+            readonly status?: {
+                conditions?: {
+                    /**
+                     * @description message is a human readable message indicating details about the transition.
+                     *     This may be an empty string.
+                     */
+                    message: string;
+                    /**
+                     * @description reason contains a programmatic identifier indicating the reason for the condition's last transition.
+                     *     Producers of specific condition types may define expected values and meanings for this field,
+                     *     and whether the values are considered a guaranteed API.
+                     *     The value should be a CamelCase string.
+                     *     This field may not be empty.
+                     */
+                    reason: string;
+                    /**
+                     * @description status of the condition, one of True, False, Unknown.
+                     * @enum {string}
+                     */
+                    status: "True" | "False" | "Unknown";
+                    /** @description type of condition in CamelCase or in foo.example.com/CamelCase. */
+                    type: string;
+                }[];
+            };
             /** @description Spec is the specification of the Kuma Policy resource. */
             spec: {
                 targetRef?: components["schemas"]["MeshAccessLogItem"]["spec"]["targetRef"];
@@ -11281,6 +11885,54 @@ export interface components {
             };
         };
         /** @description Successful response */
+        MeshOpenTelemetryBackendItem: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["MeshOpenTelemetryBackendItem"];
+            };
+        };
+        /** @description Successful response */
+        MeshOpenTelemetryBackendCreateOrUpdateSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    /**
+                     * @description warnings is a list of warning messages to return to the requesting Kuma API clients.
+                     *     Warning messages describe a problem the client making the API request should correct or be aware of.
+                     */
+                    readonly warnings?: string[];
+                };
+            };
+        };
+        /** @description Successful response */
+        MeshOpenTelemetryBackendDeleteSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": Record<string, never>;
+            };
+        };
+        /** @description List */
+        MeshOpenTelemetryBackendList: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    items?: components["schemas"]["MeshOpenTelemetryBackendItem"][];
+                    /** @description The total number of entities */
+                    total?: number;
+                    /** @description URL to the next page */
+                    next?: string;
+                };
+            };
+        };
+        /** @description Successful response */
         MeshServiceItem: {
             headers: {
                 [name: string]: unknown;
@@ -11369,6 +12021,54 @@ export interface components {
             content: {
                 "application/json": {
                     items?: components["schemas"]["MeshTrustItem"][];
+                    /** @description The total number of entities */
+                    total?: number;
+                    /** @description URL to the next page */
+                    next?: string;
+                };
+            };
+        };
+        /** @description Successful response */
+        MeshZoneAddressItem: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["MeshZoneAddressItem"];
+            };
+        };
+        /** @description Successful response */
+        MeshZoneAddressCreateOrUpdateSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    /**
+                     * @description warnings is a list of warning messages to return to the requesting Kuma API clients.
+                     *     Warning messages describe a problem the client making the API request should correct or be aware of.
+                     */
+                    readonly warnings?: string[];
+                };
+            };
+        };
+        /** @description Successful response */
+        MeshZoneAddressDeleteSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": Record<string, never>;
+            };
+        };
+        /** @description List */
+        MeshZoneAddressList: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    items?: components["schemas"]["MeshZoneAddressItem"][];
                     /** @description The total number of entities */
                     total?: number;
                     /** @description URL to the next page */
@@ -14181,6 +14881,98 @@ export interface operations {
             200: components["responses"]["MeshMultiZoneServiceList"];
         };
     };
+    getMeshOpenTelemetryBackend: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshOpenTelemetryBackend */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["MeshOpenTelemetryBackendItem"];
+            404: components["responses"]["NotFound"];
+        };
+    };
+    putMeshOpenTelemetryBackend: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshOpenTelemetryBackend */
+                name: string;
+            };
+            cookie?: never;
+        };
+        /** @description Put request */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MeshOpenTelemetryBackendItem"];
+            };
+        };
+        responses: {
+            200: components["responses"]["MeshOpenTelemetryBackendCreateOrUpdateSuccessResponse"];
+            201: components["responses"]["MeshOpenTelemetryBackendCreateOrUpdateSuccessResponse"];
+        };
+    };
+    deleteMeshOpenTelemetryBackend: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshOpenTelemetryBackend */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["MeshOpenTelemetryBackendDeleteSuccessResponse"];
+            404: components["responses"]["NotFound"];
+        };
+    };
+    getMeshOpenTelemetryBackendList: {
+        parameters: {
+            query?: {
+                /**
+                 * @description offset in the list of entities
+                 * @example 0
+                 */
+                offset?: number;
+                /** @description the number of items per page */
+                size?: number;
+                /**
+                 * @description filter by labels when multiple filters are present, they are ANDed
+                 * @example {
+                 *       "label.k8s.kuma.io/namespace": "my-ns"
+                 *     }
+                 */
+                filter?: {
+                    key?: string;
+                    value?: string;
+                };
+            };
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["MeshOpenTelemetryBackendList"];
+        };
+    };
     getMeshService: {
         parameters: {
             query?: never;
@@ -14363,6 +15155,98 @@ export interface operations {
         requestBody?: never;
         responses: {
             200: components["responses"]["MeshTrustList"];
+        };
+    };
+    getMeshZoneAddress: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshZoneAddress */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["MeshZoneAddressItem"];
+            404: components["responses"]["NotFound"];
+        };
+    };
+    putMeshZoneAddress: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshZoneAddress */
+                name: string;
+            };
+            cookie?: never;
+        };
+        /** @description Put request */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MeshZoneAddressItem"];
+            };
+        };
+        responses: {
+            200: components["responses"]["MeshZoneAddressCreateOrUpdateSuccessResponse"];
+            201: components["responses"]["MeshZoneAddressCreateOrUpdateSuccessResponse"];
+        };
+    };
+    deleteMeshZoneAddress: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshZoneAddress */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["MeshZoneAddressDeleteSuccessResponse"];
+            404: components["responses"]["NotFound"];
+        };
+    };
+    getMeshZoneAddressList: {
+        parameters: {
+            query?: {
+                /**
+                 * @description offset in the list of entities
+                 * @example 0
+                 */
+                offset?: number;
+                /** @description the number of items per page */
+                size?: number;
+                /**
+                 * @description filter by labels when multiple filters are present, they are ANDed
+                 * @example {
+                 *       "label.k8s.kuma.io/namespace": "my-ns"
+                 *     }
+                 */
+                filter?: {
+                    key?: string;
+                    value?: string;
+                };
+            };
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["MeshZoneAddressList"];
         };
     };
     getWorkload: {

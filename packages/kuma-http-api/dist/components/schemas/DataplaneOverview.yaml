@@ -16,9 +16,9 @@ properties:
           conf:
             type: object
             oneOf:
-              - $ref: "PrometheusMetricsBackendConfig.yaml"
+              - $ref: PrometheusMetricsBackendConfig.yaml
           name:
-            description: 'Name of the backend, can be then used in Mesh.metrics.enabledBackend'
+            description: Name of the backend, can be then used in Mesh.metrics.enabledBackend
             type: string
           type:
             description: Type of the backend (Kuma ships with 'prometheus')
@@ -125,7 +125,7 @@ properties:
                         traffic.
                       type: boolean
                 name:
-                  description: 'Name adds another way of referencing this port, usable with MeshService'
+                  description: Name adds another way of referencing this port, usable with MeshService
                   type: string
                 port:
                   description: |-
@@ -137,7 +137,7 @@ properties:
                     this port.
                   type: integer
                 protocol:
-                  description: 'Protocol of the service (tcp, http, grpc, etc).'
+                  description: Protocol of the service (tcp, http, grpc, etc).
                   type: string
                 serviceAddress:
                   description: |-
@@ -208,6 +208,42 @@ properties:
                   type: object
                   additionalProperties:
                     type: string
+              type: object
+          listeners:
+            description: |-
+              Listeners describes zone proxy listeners embedded in this Dataplane.
+              Listeners may coexist with inbounds and gateways.
+            type: array
+            items:
+              description: Listener describes a zone proxy listener (ZoneIngress or ZoneEgress) embedded in a regular Dataplane.
+              properties:
+                address:
+                  description: Address on which the listener will be exposed.
+                  type: string
+                name:
+                  description: |-
+                    Name uniquely identifies this listener within the Dataplane and is
+                    used to reference it via sectionName in policies.
+                    Optional: if unset, the port value is used as the name (as a string).
+                  type: string
+                port:
+                  description: Port on which the listener will be exposed.
+                  type: integer
+                state:
+                  description: |-
+                    State describes the current health state of the listener.
+                    The control plane sets this based on the readiness of the underlying
+                    pod and sidecar container.
+                  oneOf:
+                    - type: string
+                    - type: integer
+                type:
+                  description: |-
+                    Type determines the role of this listener: ZoneIngress for inbound
+                    cross-zone traffic or ZoneEgress for outbound external traffic.
+                  oneOf:
+                    - type: string
+                    - type: integer
               type: object
           outbound:
             description: |-
@@ -298,21 +334,36 @@ properties:
                     items:
                       properties:
                         kind:
-                          description: "Type of the backend: MeshService or MeshExternalService\n\n\t+required"
+                          description: |-
+                            Type of the backend: MeshService or MeshExternalService
+
+                            	+required
                           type: string
                         labels:
-                          description: "Labels used to select backends\n\n\t+optional"
+                          description: |-
+                            Labels used to select backends
+
+                            	+optional
                           type: object
                           additionalProperties:
                             type: string
                         name:
-                          description: "Name of the backend.\n\n\t+optional"
+                          description: |-
+                            Name of the backend.
+
+                            	+optional
                           type: string
                         namespace:
-                          description: "Namespace of the backend. Might be empty\n\n\t+optional"
+                          description: |-
+                            Namespace of the backend. Might be empty
+
+                            	+optional
                           type: string
                         port:
-                          description: "Port of the backend.\n\n\t+optional"
+                          description: |-
+                            Port of the backend.
+
+                            	+optional
                           type: integer
                           format: uint32
                       type: object
@@ -408,6 +459,86 @@ properties:
       metadata:
         type: object
         properties: {}
+      openTelemetry:
+        description: Insights about OTel runtime resolution for this Dataplane.
+        type: object
+        properties:
+          backends:
+            type: array
+            items:
+              properties:
+                logs:
+                  type: object
+                  properties:
+                    blockedReasons:
+                      type: array
+                      items:
+                        type: string
+                    enabled:
+                      type: boolean
+                    envAllowed:
+                      type: boolean
+                    envInputPresent:
+                      type: boolean
+                    missingFields:
+                      type: array
+                      items:
+                        type: string
+                    overrideKinds:
+                      type: array
+                      items:
+                        type: string
+                    state:
+                      type: string
+                metrics:
+                  type: object
+                  properties:
+                    blockedReasons:
+                      type: array
+                      items:
+                        type: string
+                    enabled:
+                      type: boolean
+                    envAllowed:
+                      type: boolean
+                    envInputPresent:
+                      type: boolean
+                    missingFields:
+                      type: array
+                      items:
+                        type: string
+                    overrideKinds:
+                      type: array
+                      items:
+                        type: string
+                    state:
+                      type: string
+                name:
+                  type: string
+                traces:
+                  type: object
+                  properties:
+                    blockedReasons:
+                      type: array
+                      items:
+                        type: string
+                    enabled:
+                      type: boolean
+                    envAllowed:
+                      type: boolean
+                    envInputPresent:
+                      type: boolean
+                    missingFields:
+                      type: array
+                      items:
+                        type: string
+                    overrideKinds:
+                      type: array
+                      items:
+                        type: string
+                    state:
+                      type: string
+              type: object
       subscriptions:
         description: List of ADS subscriptions created by a given Dataplane.
         type: array
@@ -523,7 +654,7 @@ properties:
               type: object
               properties:
                 dependencies:
-                  description: 'Versions of other dependencies, i.e. CoreDNS'
+                  description: Versions of other dependencies, i.e. CoreDNS
                   type: object
                   additionalProperties:
                     type: string

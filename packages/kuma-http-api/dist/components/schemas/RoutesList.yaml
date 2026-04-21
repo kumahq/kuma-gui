@@ -4,6 +4,6 @@ properties:
     description: Computed list of routes
     type: array
     items:
-      $ref: "RouteConf.yaml"
+      $ref: RouteConf.yaml
 required:
   - routes

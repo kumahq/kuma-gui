@@ -16,9 +16,9 @@ get:
         type: string
   responses:
     '200':
-      $ref: "../components/responses/WorkloadItem.yaml"
+      $ref: ../components/responses/WorkloadItem.yaml
     '404':
-      $ref: "../components/responses/NotFound.yaml"
+      $ref: ../components/responses/NotFound.yaml
   tags:
     - Workload
 put:
@@ -43,12 +43,12 @@ put:
     content:
       application/json:
         schema:
-          $ref: "../components/schemas/WorkloadItem.yaml"
+          $ref: ../components/schemas/WorkloadItem.yaml
   responses:
     '200':
-      $ref: "../components/responses/WorkloadCreateOrUpdateSuccessResponse.yaml"
+      $ref: ../components/responses/WorkloadCreateOrUpdateSuccessResponse.yaml
     '201':
-      $ref: "../components/responses/WorkloadCreateOrUpdateSuccessResponse.yaml"
+      $ref: ../components/responses/WorkloadCreateOrUpdateSuccessResponse.yaml
   tags:
     - Workload
 delete:
@@ -69,8 +69,8 @@ delete:
         type: string
   responses:
     '200':
-      $ref: "../components/responses/WorkloadDeleteSuccessResponse.yaml"
+      $ref: ../components/responses/WorkloadDeleteSuccessResponse.yaml
     '404':
-      $ref: "../components/responses/NotFound.yaml"
+      $ref: ../components/responses/NotFound.yaml
   tags:
     - Workload

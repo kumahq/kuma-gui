@@ -16,9 +16,9 @@ get:
         type: string
   responses:
     '200':
-      $ref: "../components/responses/MeshRetryItem.yaml"
+      $ref: ../components/responses/MeshRetryItem.yaml
     '404':
-      $ref: "../components/responses/NotFound.yaml"
+      $ref: ../components/responses/NotFound.yaml
   tags:
     - MeshRetry
 put:
@@ -43,12 +43,12 @@ put:
     content:
       application/json:
         schema:
-          $ref: "../components/schemas/MeshRetryItem.yaml"
+          $ref: ../components/schemas/MeshRetryItem.yaml
   responses:
     '200':
-      $ref: "../components/responses/MeshRetryCreateOrUpdateSuccessResponse.yaml"
+      $ref: ../components/responses/MeshRetryCreateOrUpdateSuccessResponse.yaml
     '201':
-      $ref: "../components/responses/MeshRetryCreateOrUpdateSuccessResponse.yaml"
+      $ref: ../components/responses/MeshRetryCreateOrUpdateSuccessResponse.yaml
   tags:
     - MeshRetry
 delete:
@@ -69,8 +69,8 @@ delete:
         type: string
   responses:
     '200':
-      $ref: "../components/responses/MeshRetryDeleteSuccessResponse.yaml"
+      $ref: ../components/responses/MeshRetryDeleteSuccessResponse.yaml
     '404':
-      $ref: "../components/responses/NotFound.yaml"
+      $ref: ../components/responses/NotFound.yaml
   tags:
     - MeshRetry

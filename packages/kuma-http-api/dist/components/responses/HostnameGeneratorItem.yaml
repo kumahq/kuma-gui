@@ -2,4 +2,4 @@ description: Successful response
 content:
   application/json:
     schema:
-      $ref: "../schemas/HostnameGeneratorItem.yaml"
+      $ref: ../schemas/HostnameGeneratorItem.yaml

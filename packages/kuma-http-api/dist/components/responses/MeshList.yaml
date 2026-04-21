@@ -7,7 +7,7 @@ content:
         items:
           type: array
           items:
-            $ref: "../schemas/MeshItem.yaml"
+            $ref: ../schemas/MeshItem.yaml
         next:
           description: URL to the next page
           type: string

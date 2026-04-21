@@ -1,4 +1,4 @@
-description: 'MeshHealthCheck enables active health checking of services in the mesh. It periodically probes service endpoints using TCP, HTTP, or gRPC health checks to detect and remove unhealthy instances from the load balancing pool, improving overall service reliability.'
+description: MeshHealthCheck enables active health checking of services in the mesh. It periodically probes service endpoints using TCP, HTTP, or gRPC health checks to detect and remove unhealthy instances from the load balancing pool, improving overall service reliability.
 type: object
 properties:
   type:
@@ -190,7 +190,7 @@ properties:
                                 type: string
                                 maxLength: 256
                                 minLength: 1
-                                pattern: '^[a-z0-9!#$%&''*+\-.^_\x60|~]+$'
+                                pattern: ^[a-z0-9!#$%&'*+\-.^_\x60|~]+$
                               value:
                                 type: string
                             required:
@@ -209,7 +209,7 @@ properties:
                                 type: string
                                 maxLength: 256
                                 minLength: 1
-                                pattern: '^[a-z0-9!#$%&''*+\-.^_\x60|~]+$'
+                                pattern: ^[a-z0-9!#$%&'*+\-.^_\x60|~]+$
                               value:
                                 type: string
                             required:
@@ -361,13 +361,13 @@ properties:
     description: Time at which the resource was created
     type: string
     format: date-time
-    example: '0001-01-01T00:00:00Z'
+    example: 0001-01-01T00:00:00Z
     readOnly: true
   modificationTime:
     description: Time at which the resource was updated
     type: string
     format: date-time
-    example: '0001-01-01T00:00:00Z'
+    example: 0001-01-01T00:00:00Z
     readOnly: true
 required:
   - type

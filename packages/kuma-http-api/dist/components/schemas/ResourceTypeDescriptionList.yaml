@@ -4,7 +4,7 @@ properties:
   resources:
     type: array
     items:
-      $ref: "ResourceTypeDescription.yaml"
+      $ref: ResourceTypeDescription.yaml
 required:
   - resources
 title: ResourceTypeDescriptionList

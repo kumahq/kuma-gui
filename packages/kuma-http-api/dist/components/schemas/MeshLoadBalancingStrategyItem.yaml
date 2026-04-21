@@ -1,4 +1,4 @@
-description: 'MeshLoadBalancingStrategy configures how traffic is distributed across service instances. It supports multiple load balancing algorithms (round-robin, least request, ring hash, random, maglev), locality-aware routing to prefer nearby instances, and cross-zone failover strategies for high availability.'
+description: MeshLoadBalancingStrategy configures how traffic is distributed across service instances. It supports multiple load balancing algorithms (round-robin, least request, ring hash, random, maglev), locality-aware routing to prefer nearby instances, and cross-zone failover strategies for high availability.
 type: object
 properties:
   type:
@@ -128,7 +128,7 @@ properties:
                             description: The name of the path for the cookie.
                             type: string
                           ttl:
-                            description: 'If specified, a cookie with the TTL will be generated if the cookie is not present.'
+                            description: If specified, a cookie with the TTL will be generated if the cookie is not present.
                             type: string
                         required:
                           - name
@@ -246,7 +246,7 @@ properties:
                                     description: The name of the path for the cookie.
                                     type: string
                                   ttl:
-                                    description: 'If specified, a cookie with the TTL will be generated if the cookie is not present.'
+                                    description: If specified, a cookie with the TTL will be generated if the cookie is not present.
                                     type: string
                                 required:
                                   - name
@@ -362,7 +362,7 @@ properties:
                                     description: The name of the path for the cookie.
                                     type: string
                                   ttl:
-                                    description: 'If specified, a cookie with the TTL will be generated if the cookie is not present.'
+                                    description: If specified, a cookie with the TTL will be generated if the cookie is not present.
                                     type: string
                                 required:
                                   - name
@@ -612,13 +612,13 @@ properties:
     description: Time at which the resource was created
     type: string
     format: date-time
-    example: '0001-01-01T00:00:00Z'
+    example: 0001-01-01T00:00:00Z
     readOnly: true
   modificationTime:
     description: Time at which the resource was updated
     type: string
     format: date-time
-    example: '0001-01-01T00:00:00Z'
+    example: 0001-01-01T00:00:00Z
     readOnly: true
 required:
   - type
