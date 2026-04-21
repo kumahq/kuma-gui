@@ -13,8 +13,16 @@ Feature: mesh / dataplanes / DataplaneDetailsTraffic
       """
       KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: false
       """
+    And the URL "/_kri/kri_dp_default_zone-1_kuma-demo_dpp-1-name-of-dataplane_" responds with
+      """
+      body:
+        name: dpp-1-name-of-dataplane
+        kri: kri_dp_default_zone-1_kuma-demo_dpp-1-name-of-dataplane_
+        labels:
+          kuma.io/display-name: dpp-1-name-of-dataplane
+      """
 
-  Scenario: Standard sidecar proxy shows the traffic component
+  Scenario Outline: Standard sidecar proxy shows the traffic component
     Given the environment
       """
       KUMA_DATAPLANEINBOUND_COUNT: 1
@@ -26,11 +34,16 @@ Feature: mesh / dataplanes / DataplaneDetailsTraffic
           networking:
             gateway: !!js/undefined
       """
-    When I visit the "/meshes/default/data-planes/dpp-1-name-of-dataplane/overview" URL
+    When I visit the "/meshes/default/data-planes/<Name>/overview" URL
     And the "$detail-view" element contains "dpp-1-name-of-dataplane"
     And the "$traffic" element exists
 
-  Scenario: With no outbound traffic, I have to click the toggle to see outbounds
+    Examples:
+      | Name             |
+      | dpp-1-name-of-dataplane      |
+      | kri_dp_default_zone-1_kuma-demo_dpp-1-name-of-dataplane_ |
+
+  Scenario Outline: With no outbound traffic, I have to click the toggle to see outbounds
     Given the environment
       """
       KUMA_DATAPLANEINBOUND_COUNT: 1
@@ -49,13 +62,18 @@ Feature: mesh / dataplanes / DataplaneDetailsTraffic
         cluster.pocket-watch_colon_grandson_octave_mzsvc_162.upstream_rq_2xx: 0
         cluster.pocket-watch_colon_grandson_octave_mzsvc_162.upstream_rq_4xx: 0
       """
-    When I visit the "/meshes/default/data-planes/dpp-1-name-of-dataplane/overview" URL
+    When I visit the "/meshes/default/data-planes/<Name>/overview" URL
     Then the "$detail-view" element contains "dpp-1-name-of-dataplane"
     And the "$traffic" element exists but the "$outbounds" element doesn't exist
     When I click the "$inactiveToggle" element
     Then the "$outbounds" element exists
 
-  Scenario: Standard sidecar proxy shows the traffic component and an error warning when _stats fails
+    Examples:
+      | Name             |
+      | dpp-1-name-of-dataplane      |
+      | kri_dp_default_zone-1_kuma-demo_dpp-1-name-of-dataplane_ |
+
+  Scenario Outline: Standard sidecar proxy shows the traffic component and an error warning when _stats fails
     Given the environment
       """
       KUMA_DATAPLANEINBOUND_COUNT: 1
@@ -83,7 +101,12 @@ Feature: mesh / dataplanes / DataplaneDetailsTraffic
         Status-Code: '504'
       body: upstream request timeout
       """
-    When I visit the "/meshes/default/data-planes/dpp-1-name-of-dataplane/overview" URL
+    When I visit the "/meshes/default/data-planes/<Name>/overview" URL
     And the "$traffic" element exists
     And the "$loading-warning" element exists
     And the "$about-section" element contains "58.25.181.133"
+
+    Examples:
+      | Name             |
+      | dpp-1-name-of-dataplane      |
+      | kri_dp_default_zone-1_kuma-demo_dpp-1-name-of-dataplane_ |

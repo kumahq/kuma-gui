@@ -1,4 +1,5 @@
 import { ZoneOverview } from './data'
+import { Kri } from '../kuma'
 import type { DataSourceResponse } from '@/app/application'
 import { defineSources } from '@/app/application'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
@@ -27,7 +28,7 @@ export const sources = (api: KumaApi) => {
     },
     '/zone-cps/:name': async (params) => {
       const { name } = params
-      return ZoneOverview.fromObject(await api.getZoneOverview({ name }))
+      return ZoneOverview.fromObject(await api.getZoneOverview({ name: Kri.isKriString(name) ? Kri.fromString(name).name : name }))
     },
   })
 }

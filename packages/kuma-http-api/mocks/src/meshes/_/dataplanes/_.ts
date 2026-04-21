@@ -1,8 +1,15 @@
 import type { Dependencies, ResponseHandler } from '#mocks'
 export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
-  const { mesh, name } = req.params
+  const kri = req.params.kri as string | undefined
+  const [
+    mesh = req.params.mesh as string,
+    zone = '',
+    namespace = '',
+    name = req.params.name as string,
+  ] = kri?.split('_') ?? ''
 
   const inbounds = parseInt(env('KUMA_DATAPLANEINBOUND_COUNT', `${fake.number.int({ min: 1, max: 5 })}`))
+  const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
 
   let type: 'gateway_builtin' | 'gateway_delegated' | 'proxy' = 'proxy'
   if (name.includes('-gateway_builtin')) {
@@ -11,7 +18,7 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
     type = 'gateway_delegated'
   }
 
-  const isMultizone = fake.datatype.boolean()
+  const isMultizone = fake.datatype.boolean() || zone.length > 0
 
   return {
     headers: {},
@@ -24,6 +31,22 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
       name,
       creationTime: '2021-02-17T08:33:36.442044+01:00',
       modificationTime: '2021-02-17T08:33:36.442044+01:00',
+      kri: fake.kuma.kri({ resourceName: 'Dataplane', mesh, zone, namespace, name, sectionName: '' }),
+      labels: {
+        'kuma.io/display-name': name,
+        'kuma.io/mesh': mesh,
+        ...(isMultizone ? {
+          'kuma.io/origin': 'zone',
+          'kuma.io/zone': zone || fake.word.noun(),
+        } : {}),
+        ...(namespace.length > 0 ?
+          {
+            'k8s.kuma.io/namespace': namespace,
+          } : {
+            ...(k8s ? { 'k8s.kuma.io/namespace': fake.helpers.arrayElement([fake.k8s.namespace(), 'kuma-demo']) } : {}),
+          }
+        ),
+      },
       networking: (() => {
         const address = fake.internet.ipv4()
         const advertisedAddress = fake.datatype.boolean({ probability: 0.25 }) ? fake.internet.ipv4() : undefined

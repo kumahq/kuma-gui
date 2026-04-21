@@ -201,7 +201,7 @@
           <template #default="{ data: [zoneIngress] }">
             <DataLoader
               :src="uri(sources, '/connections/stats/for/:proxyType/:name/:mesh/:socketAddress', {
-                name: route.params.proxy,
+                name: zoneIngress.id,
                 mesh: '*',
                 socketAddress: zoneIngress.zoneIngress.socketAddress,
                 proxyType: 'zone-ingress',
@@ -369,6 +369,7 @@
                       :is="child.Component"
                       :data="route.params.subscription.length > 0 ? zoneIngress.zoneIngressInsight.subscriptions : (child.route.name as string).includes('-inbound-') ? [zoneIngress.zoneIngress] : traffic?.outbounds || {}"
                       :networking="zoneIngress.zoneIngress.networking"
+                      :overview="props.data"
                     />
                   </XDrawer>
                 </RouterView>

@@ -25,9 +25,22 @@ Feature: mesh / dataplanes / item / overview
               - tags:
                   kuma.io/zone: zone-1
       """
+    And the URL "/_kri/kri_dp_default_zone-1_kuma-demo_dataplane-1_" responds with
+      """
+      body:
+        name: dataplane-1
+        kri: kri_dp_default_zone-1_kuma-demo_dataplane-1_
+        labels:
+          kuma.io/display-name: dataplane-1
+      """
 
-  Scenario: The about section has the expected content
-    When I visit the "/meshes/default/data-planes/dataplane-1/overview" URL
+  Scenario Outline: The about section has the expected content
+    When I visit the "/meshes/default/data-planes/<Name>/overview" URL
     Then the "$about-section" element exists
     And the "$about-section" element contains "zone-1"
     And the "$about-section" element contains "kuma.io/origin:zone"
+
+    Examples:
+      | Name             |
+      | dataplane-1      |
+      | kri_dp_default_zone-1_kuma-demo_dataplane-1_ |

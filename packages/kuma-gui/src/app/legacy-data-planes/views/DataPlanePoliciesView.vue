@@ -26,7 +26,7 @@
           <DataLoader
             :src="uri(sources, '/meshes/:mesh/rules/for/:dataplane', {
               mesh: route.params.mesh,
-              dataplane: route.params.proxy,
+              dataplane: props.data.id,
             })"
             :data="[policyTypesData]"
             :errors="[policyTypesError]"

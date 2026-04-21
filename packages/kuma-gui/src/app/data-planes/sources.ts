@@ -8,12 +8,13 @@ import {
   SidecarDataplane,
   DataplaneNetworkingLayout,
 } from './data'
+import { Kri } from '../kuma'
 import type { DataSourceResponse } from '@/app/application'
 import { YAML , defineSources } from '@/app/application'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import { Resource } from '@/app/resources/data/Resource'
 import type { PaginatedApiListResponse as CollectionResponse, ApiKindListResponse as KindCollectionResponse } from '@/types/api.d'
-import type { PolicyTypeEntry } from '@/types/index.d'
+import type { DataPlane, PolicyTypeEntry } from '@/types/index.d'
 import type { paths } from '@kumahq/kuma-http-api'
 
 export type { Dataplane, DataplaneOverview } from './data'
@@ -42,11 +43,36 @@ export const sources = (api: KumaApi) => {
   })
   return defineSources({
     '/meshes/:mesh/dataplanes/:name': async (params) => {
-      return Dataplane.fromObject(await api.getDataplaneFromMesh(params))
+      const { name } = params
+
+      let response
+      if(Kri.isKriString(name)) {
+        response = (await http.GET('/_kri/{kri}', {
+          params: {
+            path: {
+              kri: name,
+            },
+          },
+        })).data!
+      } else {
+        response = await api.getDataplaneFromMesh(params)
+      }
+      return Dataplane.fromObject(response as DataPlane)
     },
 
     '/meshes/:mesh/dataplanes/:name/as/kubernetes': async (params) => {
-      return api.getDataplaneFromMesh(params, { format: 'kubernetes' })
+      const { name } = params
+      if(Kri.isKriString(name)) {
+        return (await http.GET('/_kri/{kri}', {
+          params: {
+            path: {
+              kri: name,
+            },
+          },
+        })).data
+      } else {
+        return api.getDataplaneFromMesh(params, { format: 'kubernetes' })
+      }
     },
     '/meshes/:mesh/dataplanes/:name/as/tarball/:spec': async (params) => {
       const { mesh, name } = params

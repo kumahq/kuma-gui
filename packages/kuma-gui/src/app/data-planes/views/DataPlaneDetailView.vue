@@ -12,7 +12,7 @@
     <DataSource
       :src="uri(connectionSources, '/connections/stats/for/:proxyType/:name/:mesh/:socketAddress', {
         proxyType: ({ ingresses: 'zone-ingress', egresses: 'zone-egress' })[route.params.proxyType] ?? 'dataplane',
-        name: route.params.proxy,
+        name: props.data.id,
         mesh: route.params.mesh || '*',
         // 'self_inbound' can be used as socket address to filter the stats as the contextual kri of an inbound always starts with 'self_inbound'
         socketAddress: 'self_inbound',
@@ -453,7 +453,7 @@
                   v-if="can('use unified-resource-naming', { mesh: props.mesh, dataplaneOverview: props.data })"
                   :src="uri(policySources, '/meshes/:mesh/dataplanes/:name/policies/for/proxy', {
                     mesh: route.params.mesh,
-                    name: route.params.proxy,
+                    name: props.data.id,
                   })"
                   @change="(res) => resources = res"
                 >
@@ -501,7 +501,7 @@
             <DataSource
               :src="uri(sources, '/meshes/:mesh/dataplanes/:name/layout', {
                 mesh: route.params.mesh,
-                name: route.params.proxy,
+                name: props.data.id,
               })"
               v-slot="{ data: dataplaneLayout, refresh, error }"
             >

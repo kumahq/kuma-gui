@@ -17,7 +17,7 @@ export const ZoneIngress = {
     return {
       ...item,
       listenerAddress: item.networking?.address && item.networking?.port ? `${item.networking.address}_${item.networking.port}` : '',
-
+      id: item.name,
       config: item,
       availableServices: Array.isArray(item.availableServices) ? item.availableServices : [],
       socketAddress: item.networking?.address && item.networking?.port ? `${item.networking.address}:${item.networking.port}` : '',
