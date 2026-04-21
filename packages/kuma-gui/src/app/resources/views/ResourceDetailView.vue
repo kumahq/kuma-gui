@@ -76,12 +76,7 @@
                 <dd>
                   <XAction
                     v-if="data.zone"
-                    :to="{
-                      name: 'zone-cp-detail-view',
-                      params: {
-                        zone: data.zone,
-                      },
-                    }"
+                    :href="t('common.label.href.kuma~io/zone', { name: data.zone })"
                   >
                     <XBadge>{{ data.zone }}</XBadge>
                   </XAction>

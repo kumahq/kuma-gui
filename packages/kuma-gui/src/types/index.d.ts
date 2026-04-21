@@ -341,8 +341,9 @@ export interface LabelValue {
 export interface Entity {
   type: string
   name: string
-  creationTime?: string
-  modificationTime?: string
+  kri?: string
+  creationTime: string
+  modificationTime: string
 }
 
 export interface MeshEntity extends Entity {

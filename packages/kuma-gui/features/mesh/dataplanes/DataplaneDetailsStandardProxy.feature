@@ -14,6 +14,14 @@ Feature: Dataplane details for standard Data Plane Proxy
       KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: true
       KUMA_MESHSERVICE_MODE: Exclusive
       """
+    And the URL "/_kri/kri_dp_default_zone-1_kuma-demo_dpp-1-name-of-dataplane_" responds with
+      """
+      body:
+        name: dpp-1-name-of-dataplane
+        kri: kri_dp_default_zone-1_kuma-demo_dpp-1-name-of-dataplane_
+        labels:
+          kuma.io/display-name: dpp-1-name-of-dataplane
+      """
 
   Scenario: Overview tab has expected content
     Given the environment
@@ -40,7 +48,7 @@ Feature: Dataplane details for standard Data Plane Proxy
             - connectTime: 2021-02-17T07:33:37.412683Z
               disconnectTime: !!js/undefined
       """
-    When I visit the "/meshes/default/data-planes/dpp-1-name-of-dataplane/overview" URL
+    When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_dpp-1-name-of-dataplane_/overview" URL
     Then the page title contains "dpp-1-name-of-dataplane"
     And the "$detail-view" element contains "dpp-1-name-of-dataplane"
     And the "$details" element contains "Online"
@@ -54,11 +62,11 @@ Feature: Dataplane details for standard Data Plane Proxy
         access_log_sink::default_priority::max_pending_requests::1024
         access_log_sink::default_priority::max_requests::1024
       """
-    When I visit the "/meshes/default/data-planes/dpp-1-name-of-dataplane/clusters" URL
+    When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_dpp-1-name-of-dataplane_/clusters" URL
     Then the "$clusters-view" element contains "access_log_sink::observability_name::access_log_sink"
 
   Scenario: Shows config with format based on environment
-    When I visit the "/meshes/default/data-planes/dpp-1-name-of-dataplane/config" URL
+    When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_dpp-1-name-of-dataplane_/config" URL
     Then the "$config-universal" element exists
     And the URL contains "?environment=universal"
     When I click the "$select-environment" element

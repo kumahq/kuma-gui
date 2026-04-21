@@ -17,12 +17,13 @@ Feature: zones / item
     And the URL "/zones/zone-cp-1/_overview" responds with
       """
       body:
+        name: zone-cp-1
         labels:
           kuma.io/display-name: default
       """
 
   Scenario: The about section has the expected content
-    When I visit the "/zones/zone-cp-1/overview" URL
+    When I visit the "/zones/kri_z____zone-cp-1_ /overview" URL
     Then the "$about-section" element exists
     And the "$about-section" element contains "kuma.io/display-name:default"
 
@@ -56,7 +57,7 @@ Feature: zones / item
                     responsesSent: '12'
                     responsesAcknowledged: '10'
       """
-    When I visit the "/zones/zone-cp-1/overview" URL
+    When I visit the "/zones/kri_z____zone-cp-1_/overview" URL
     Then the page title contains "zone-cp-1"
     And the "$tabs-view" element contains "zone-cp-1"
     And the "$detail-view" element contains
@@ -79,7 +80,7 @@ Feature: zones / item
                 kumaCp:
                   version: 0.0.0
       """
-    When I visit the "/zones/zone-cp-1/overview" URL
+    When I visit the "/zones/kri_z____zone-cp-1_/overview" URL
     And the "$version-outdated" element contains "0.0.0"
 
   Scenario: Config view has expected content
@@ -94,6 +95,6 @@ Feature: zones / item
               config: |
                 { "multizone": { "zone": { "globalAddress": "grpcs://localhost:123" } } }
       """
-    When I visit the "/zones/zone-cp-1/config" URL
+    When I visit the "/zones/kri_z____zone-cp-1_/config" URL
     Then the "$config-view" element contains "globalAddress"
     And the "$config-view" element contains "grpcs://localhost:123"

@@ -44,6 +44,7 @@
             :is="Component"
             :data="items[0][1]"
             :networking="props.networking"
+            :overview="props.overview"
           />
         </DataCollection>
       </RouterView>
@@ -52,12 +53,13 @@
 </template>
 
 <script lang="ts" setup>
-import type { DataplaneNetworking } from '@/app/data-planes/data/'
-import type { ZoneEgress } from '@/app/zone-egresses/data/'
-import type { ZoneIngress } from '@/app/zone-ingresses/data/'
+import type { DataplaneNetworking, DataplaneOverview } from '@/app/data-planes/data/'
+import type { ZoneEgress, ZoneEgressOverview } from '@/app/zone-egresses/data/'
+import type { ZoneIngress, ZoneIngressOverview } from '@/app/zone-ingresses/data/'
 const props = defineProps<{
   data: Record<string, any>
   networking: DataplaneNetworking | ZoneIngress['networking'] | ZoneEgress['networking']
   routeName: string
+  overview: DataplaneOverview | ZoneIngressOverview | ZoneEgressOverview | Error | undefined 
 }>()
 </script>

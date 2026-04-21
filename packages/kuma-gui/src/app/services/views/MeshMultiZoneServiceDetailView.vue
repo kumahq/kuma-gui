@@ -155,12 +155,7 @@
                         appearance="decorative"
                       >
                         <XAction
-                          :to="{
-                            name: 'zone-cp-detail-view',
-                            params: {
-                              zone: zone.name,
-                            },
-                          }"
+                          :href="t('common.label.href.kuma~io/zone', { name: zone.name })"
                         >
                           {{ zone.name }}
                         </XAction>

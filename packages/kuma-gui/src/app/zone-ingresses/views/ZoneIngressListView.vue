@@ -36,8 +36,8 @@
           </search>
 
           <DataLoader
-            :src="uri(sources, `/zone-cps/:name/ingresses`, {
-              name: route.params.zone,
+            :src="uri(sources, `/zone-cps/:zone/ingresses`, {
+              zone: route.params.zone,
             }, {
               page: route.params.page,
               size: route.params.size,
@@ -65,7 +65,7 @@
                   { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
                 ]"
                 :items="data.items"
-                :is-selected-row="(row) => row.name === route.params.proxy"
+                :is-selected-row="(row) => row.kri === route.params.proxy"
                 @resize="me.set"
               >
                 <template #name="{ row: item }">
@@ -75,7 +75,7 @@
                       name: 'zone-ingress-summary-view',
                       params: {
                         zone: route.params.zone,
-                        proxy: item.id,
+                        proxy: item.kri,
                         proxyType: 'ingresses',
                       },
                       query: {
@@ -121,7 +121,7 @@
                       :to="{
                         name: 'zone-ingress-detail-view',
                         params: {
-                          proxy: item.id,
+                          proxy: item.kri,
                           proxyType: 'ingresses',
                         },
                       }"

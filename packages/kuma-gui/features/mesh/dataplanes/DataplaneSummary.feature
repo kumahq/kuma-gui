@@ -23,6 +23,8 @@ Feature: Dataplane summary
           - name: test-data-plane-1
             labels:
               kuma.io/display-name: test-data-plane-1
+              kuma.io/origin: zone
+              kuma.io/zone: zone-1
             modificationTime: 2021-02-18T08:33:36.442044+01:00
       """
 
@@ -53,7 +55,7 @@ Feature: Dataplane summary
       """
       KUMA_DATAPLANE_COUNT: 51
       """
-    When I visit the "/meshes/default/data-planes/test-data-plane-1?page=2&size=50" URL
+    When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1__test-data-plane-1_?page=2&size=50" URL
     Then the "$summary" element exists
 
   Scenario: Switching to universal format and back
@@ -61,7 +63,7 @@ Feature: Dataplane summary
       """
       KUMA_DATAPLANE_COUNT: 1
       """
-    When I visit the "/meshes/default/data-planes/test-data-plane-1" URL
+    When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1__test-data-plane-1_" URL
     Then the "$select-preference" element exists
     And the "$structured-view" element exists
     When I click the "$select-preference" element
@@ -83,8 +85,10 @@ Feature: Dataplane summary
       body:
         items:
           - name: test-data-plane-1
+            kri: kri_dp_default_zone-1__test-data-plane-1_
             labels:
               kuma.io/display-name: test-data-plane-1
+              kuma.io/zone: zone-1
             dataplane:
               networking:
                 type: standard
@@ -98,6 +102,6 @@ Feature: Dataplane summary
                     tags:
                       kuma.io/service: foo
       """
-    When I visit the "/meshes/default/data-planes/test-data-plane-1?format=structured" URL
+    When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1__test-data-plane-1_?format=structured" URL
     Then the "$inbounds" element exists
     And the "$outbounds" element exists

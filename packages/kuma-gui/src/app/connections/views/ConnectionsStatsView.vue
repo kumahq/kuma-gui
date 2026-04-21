@@ -18,13 +18,13 @@
     <AppView>
       <XCard>
         <DataLoader
-          :data="[props.networking]"
-          v-slot="{ data: [networkingData] }"
+          :data="[props.data, props.networking]"
+          v-slot="{ data: [overviewData, networkingData] }"
         >
           <DataLoader
             :src="uri(sources, '/connections/stats/for/:proxyType/:name/:mesh/:socketAddress', {
               proxyType: ({ ingresses: 'zone-ingress', egresses: 'zone-egress'})[route.params.proxyType] ?? 'dataplane',
-              name: route.params.proxy,
+              name: overviewData.id,
               mesh: route.params.mesh || '*',
               socketAddress: networkingData.inboundAddress,
             })"
@@ -70,10 +70,13 @@
 
 <script lang="ts" setup>
 import { sources } from '../sources'
-import type { DataplaneNetworking } from '@/app/data-planes/data'
+import type { DataplaneNetworking, DataplaneOverview } from '@/app/data-planes/data'
+import type { ZoneEgressOverview } from '@/app/zone-egresses/data'
+import type { ZoneIngressOverview } from '@/app/zone-ingresses/data'
 
 const props = defineProps<{
   networking: DataplaneNetworking | Error | undefined
   routeName: string
+  data: DataplaneOverview | ZoneIngressOverview | ZoneEgressOverview | Error | undefined
 }>()
 </script>

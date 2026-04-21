@@ -119,7 +119,7 @@
             <DataSource
               :src="uri(policySources, '/meshes/:mesh/dataplanes/:name/policies/for/inbound/:kri', {
                 mesh: route.params.mesh,
-                name: route.params.proxy,
+                name: props.dataPlaneOverview.id,
                 kri: props.data.kri,
               })"
               v-slot="{ data: sourcePolicies, error: policiesError }"
@@ -227,7 +227,7 @@
 </template>
 
 <script lang="ts" setup>
-import { DataplaneNetworkingLayout, DataplaneOverview } from '../data'
+import type { DataplaneNetworkingLayout, DataplaneOverview } from '../data'
 import { YAML } from '@/app/application'
 import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'

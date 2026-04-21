@@ -75,7 +75,7 @@
                     { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
                   ]"
                   :items="zones.items"
-                  :is-selected-row="(row) => row.name === route.params.zone"
+                  :is-selected-row="(row) => row.kri === route.params.zone"
                   @resize="me.set"
                 >
                   <template
@@ -98,7 +98,7 @@
                       :to="{
                         name: 'zone-cp-detail-view',
                         params: {
-                          zone: item.name,
+                          zone: item.kri,
                         },
                       }"
                     >
@@ -164,7 +164,7 @@
                         :to="{
                           name: 'zone-cp-detail-view',
                           params: {
-                            zone: row.name,
+                            zone: row.kri,
                           },
                         }"
                       >

@@ -13,7 +13,7 @@
   >
     <DataCollection
       :items="props.items"
-      :predicate="item => item.id === route.params.proxy"
+      :predicate="item => item.kri === route.params.proxy"
     >
       <template #empty>
         <XEmptyState>
@@ -47,7 +47,7 @@
                     :to="{
                       name: 'data-plane-detail-view',
                       params: {
-                        proxy: item.id,
+                        proxy: item.kri,
                       },
                     }"
                   >
@@ -133,12 +133,7 @@
                     </th>
                     <td>
                       <XAction
-                        :to="{
-                          name: 'zone-cp-detail-view',
-                          params: {
-                            zone: item.zone,
-                          },
-                        }"
+                        :href="t('common.label.href.kuma~io/zone', { name: item.zone })"
                       >
                         {{ item.zone }}
                       </XAction>
@@ -435,9 +430,8 @@
 
             <template v-else>
               <DataLoader
-                :src="uri(sources, '/meshes/:mesh/dataplanes/:name/as/kubernetes', {
-                  mesh: route.params.mesh,
-                  name: route.params.proxy,
+                :src="uri(sources, '/dataplanes/:kri/as/kubernetes', {
+                  kri: item.kri,
                 })"
                 v-slot="{ data: [k8sConfig] }"
               >

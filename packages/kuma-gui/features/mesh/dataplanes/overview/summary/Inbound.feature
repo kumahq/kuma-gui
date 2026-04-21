@@ -16,6 +16,14 @@ Feature: mesh / dataplanes / overview / summary / Inbound
       KUMA_DATAPLANE_TYPE: standard
       KUMA_DATAPLANE_RULE_COUNT: 1
       """
+    And the URL "/_kri/kri_dp_default_zone-1_kuma-demo_service-less_" responds with
+      """
+      body:
+        name: service-less
+        kri: kri_dp_default_zone-1_kuma-demo_service-less_
+        labels:
+          kuma.io/display-name: service-less
+      """
 
   Scenario: Inbound summary overview shows expected content
     Given the URL "/meshes/default/dataplanes/service-less/_layout" responds with
@@ -54,7 +62,7 @@ Feature: mesh / dataplanes / overview / summary / Inbound
                 tags:
                   kuma.io/protocol: tcp
       """
-    When I visit the "/meshes/default/data-planes/service-less/overview/inbound/self_inbound_http/overview" URL
+    When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_service-less_/overview/inbound/self_inbound_http/overview" URL
     And the "$title" element contains "Inbound :12345"
     And the "$protocol" element contains "HTTP"
     And the "$inbound-policies-rule" element contains "MeshFaultInjection"
@@ -92,6 +100,6 @@ Feature: mesh / dataplanes / overview / summary / Inbound
                 tags:
                   kuma.io/protocol: http
       """
-    When I visit the "/meshes/default/data-planes/service-less/overview/inbound/self_inbound_http/overview" URL
+    When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_service-less_/overview/inbound/self_inbound_http/overview" URL
     Then I click on the "$inbound-policies-rule table tr:first-of-type td a" element
     Then the URL contains "/gui/meshes/default/policies/meshfaultinjections/kri_mfi_default_pigsty_jury_the-policy-name_appliance/overview/overview"

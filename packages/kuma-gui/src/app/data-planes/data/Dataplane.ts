@@ -1,13 +1,15 @@
 import { DataplaneNetworking } from './DataplaneNetworking'
 import type { components } from '@kumahq/kuma-http-api'
 
-type KumaDataplane = NonNullable<components['schemas']['DataplaneItem']>
+export type KumaDataplane = NonNullable<components['schemas']['DataplaneItem']>
 type KumaDataplaneNetworking = NonNullable<components['schemas']['DataplaneItem']['networking']>
 
 export const Dataplane = {
   fromObject(partialDataplane: KumaDataplane) {
     return {
       ...partialDataplane,
+      kri: partialDataplane.kri ?? '',
+      id: partialDataplane.name,
       config: partialDataplane,
       networking: DataplaneNetworking.fromObject(partialDataplane.networking as KumaDataplaneNetworking),
     }

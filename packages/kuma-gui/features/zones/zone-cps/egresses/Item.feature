@@ -23,9 +23,17 @@ Feature: zones / egresses / item
         labels:
           kuma.io/display-name: default
       """
+    And the URL "/_kri/kri_ze__zone-cp-1_kuma-system_item-1_" responds with
+      """
+      body:
+        name: item-1
+        kri: kri_ze__zone-cp-1_kuma-system_item-1_
+        labels:
+          kuma.io/display-name: default
+      """
 
   Scenario: The about section has the expected content
-    When I visit the "/zones/zone-cp-1/egresses/item-1/overview" URL
+    When I visit the "/zones/kri_z____zone-cp-1_/egresses/kri_ze__zone-cp-1_kuma-system_item-1_/overview" URL
     Then the "$about-section" element exists
     And the "$about-section" element contains "kuma.io/display-name:default"
 
@@ -45,7 +53,7 @@ Feature: zones / egresses / item
             - connectTime: 2020-07-28T16:18:09.743141Z
               disconnectTime: !!js/undefined
       """
-    When I visit the "/zones/zone-cp-1/egresses/item-1/overview" URL
+    When I visit the "/zones/kri_z____zone-cp-1_/egresses/kri_ze__zone-cp-1_kuma-system_item-1_/overview" URL
     Then the page title contains "item-1"
     Then the "$header" element contains "item-1"
     Then the "$overview-view" element contains "166.197.238.26:20555"
@@ -53,7 +61,7 @@ Feature: zones / egresses / item
     Then the "$config-view" element contains "type: ZoneEgress"
 
   Scenario: Shows config with format based on environment
-    When I visit the "/zones/zone-cp-1/egresses/item-1/config" URL
+    When I visit the "/zones/kri_z____zone-cp-1_/egresses/kri_ze__zone-cp-1_kuma-system_item-1_/config" URL
     Then the "$config-universal" element exists
     And the URL contains "?environment=universal"
     When I click the "$select-environment" element

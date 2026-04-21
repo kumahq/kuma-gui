@@ -67,7 +67,7 @@
                     { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
                   ]"
                   :items="dataplanesData.items"
-                  :is-selected-row="(row) => row.name === route.params.proxy"
+                  :is-selected-row="(row) => row.kri === route.params.proxy"
                   @resize="me.set"
                 >
                   <template #namespace="{ row }">
@@ -83,7 +83,7 @@
                         name: 'builtin-gateway-data-plane-summary-view',
                         params: {
                           mesh: row.mesh,
-                          proxy: row.id,
+                          proxy: row.kri,
                         },
                         query: {
                           page: route.params.page,
@@ -99,12 +99,7 @@
                   <template #zone="{ row }">
                     <XAction
                       v-if="row.zone"
-                      :to="{
-                        name: 'zone-cp-detail-view',
-                        params: {
-                          zone: row.zone,
-                        },
-                      }"
+                      :href="t('common.label.href.kuma~io/zone', { name: row.zone })"
                     >
                       {{ row.zone }}
                     </XAction>
@@ -173,7 +168,7 @@
                         :to="{
                           name: 'data-plane-detail-view',
                           params: {
-                            proxy: item.id,
+                            proxy: item.kri,
                           },
                         }"
                       >

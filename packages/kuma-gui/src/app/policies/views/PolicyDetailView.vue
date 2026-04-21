@@ -58,12 +58,7 @@
               </dt>
               <dd>
                 <XAction
-                  :to="{
-                    name: 'zone-cp-detail-view',
-                    params: {
-                      zone: policy.zone,
-                    },
-                  }"
+                  :href="t('common.label.href.kuma~io/zone', { name: policy.zone })"
                 >
                   <XBadge appearance="decorative">
                     {{ policy.zone }}
@@ -160,7 +155,7 @@
                     :to="{
                       name: 'data-plane-detail-view',
                       params: {
-                        proxy: item.id,
+                        proxy: item.kri,
                       },
                     }"
                   >
@@ -175,12 +170,7 @@
                 <template #zone="{ row }">
                   <XAction
                     v-if="row.zone"
-                    :to="{
-                      name: 'zone-cp-detail-view',
-                      params: {
-                        zone: row.zone,
-                      },
-                    }"
+                    :href="t('common.label.href.kuma~io/zone', { name: row.zone })"
                   >
                     {{ row.zone }}
                   </XAction>
@@ -196,7 +186,7 @@
                       :to="{
                         name: 'data-plane-detail-view',
                         params: {
-                          proxy: item.id,
+                          proxy: item.kri,
                         },
                       }"
                     >

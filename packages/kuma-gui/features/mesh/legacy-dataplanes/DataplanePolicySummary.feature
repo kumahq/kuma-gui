@@ -13,6 +13,14 @@ Feature: Dataplane policy summary
       """
       KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: false
       """
+    And the URL "/_kri/kri_dp_default_zone-1_kuma-demo_dataplane-1_" responds with
+      """
+      body:
+        name: dataplane-1
+        kri: kri_dp_default_zone-1_kuma-demo_dataplane-1_
+        labels:
+          kuma.io/display-name: dataplane-1
+      """
 
   Scenario: Policy Summary View has expected content
     Given the URL "/meshes/default/meshhttproutes/the-other-http-route" responds with
@@ -45,7 +53,7 @@ Feature: Dataplane policy summary
                         name: bar
                         weight: 1
       """
-    When I visit the "/meshes/default/data-planes/dataplane-1/policies/meshhttproutes/the-other-http-route" URL
+    When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_dataplane-1_/policies/meshhttproutes/the-other-http-route" URL
     Then the "[data-testid='data-plane-policies-view']" element exists
     Then the "$summary-slideout-container" element exists
     And the "$summary-title" element contains "the-other-http-route"
@@ -71,7 +79,7 @@ Feature: Dataplane policy summary
             kind: MeshGateway
             name: foo
       """
-    When I visit the "/meshes/default/data-planes/dataplane-1/policies/meshhttproutes/<PolicyName>" URL
+    When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_dataplane-1_/policies/meshhttproutes/<PolicyName>" URL
     Then the "$select-preference" element exists
     And the "$structured-view" element exists
     When I click the "$select-preference" element

@@ -80,7 +80,7 @@ const protocolHandler = (can: Can) => {
                 return {
                   name: 'zone-cp-detail-view',
                   params: {
-                    zone: name,
+                    zone: kri,
                   },
                 }
               }

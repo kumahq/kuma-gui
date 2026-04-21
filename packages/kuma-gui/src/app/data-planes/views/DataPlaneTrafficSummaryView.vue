@@ -62,7 +62,7 @@
               :is="child.Component"
               :data="items[0]"
               :networking="props.networking"
-              :data-plane-overview="props.dataPlaneOverview"
+              :overview="props.dataPlaneOverview"
             />
           </RouterView>
         </AppView>

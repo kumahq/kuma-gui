@@ -49,12 +49,7 @@
           </th>
           <td>
             <XAction
-              :to="{
-                name: 'zone-cp-detail-view',
-                params: {
-                  zone: props.policy.zone,
-                },
-              }"
+              :href="t('common.label.href.kuma~io/zone', { name: props.policy.zone })"
             >
               {{ props.policy.zone }}
             </XAction>

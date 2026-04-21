@@ -192,12 +192,7 @@
                       <template #zone="{ row }">
                         <template v-if="row.zone">
                           <XAction
-                            :to="{
-                              name: 'zone-cp-detail-view',
-                              params: {
-                                zone: row.zone,
-                              },
-                            }"
+                            :href="t('common.label.href.kuma~io/zone', { name: row.zone })"
                           >
                             {{ row.zone }}
                           </XAction>

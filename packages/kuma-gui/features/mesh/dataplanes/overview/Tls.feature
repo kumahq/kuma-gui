@@ -14,6 +14,14 @@ Feature: mesh / dataplanes / overview / TLS
       KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: true
       KUMA_DATAPLANE_TLS_ISSUED_MESHIDENTITY: true
       """
+    And the URL "/_kri/kri_dp_default_zone-1_kuma-demo_backend_" responds with
+      """
+      body:
+        name: backend
+        kri: kri_dp_default_zone-1_kuma-demo_backend_
+        labels:
+          kuma.io/display-name: backend
+      """
     And the URL "/meshes/default/dataplanes/backend/_overview" responds with
       """
       body:
@@ -42,7 +50,7 @@ Feature: mesh / dataplanes / overview / TLS
       body:
         spiffeId: spiffe://default.local-zone.mesh.local/ns/kuma-demo/sa/default
       """
-    When I visit the "/meshes/default/data-planes/backend/overview" URL
+    When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_backend_/overview" URL
     Then the "$tls-section" element exists
     And the "$tls-section" element contains "The certificate is managed externally"
     And the "$tls-section" element contains "kri_mid_default_east_kuma-demo_identity-1_"
@@ -51,15 +59,15 @@ Feature: mesh / dataplanes / overview / TLS
     And the "$tls-section" element contains "spiffe://default.local-zone.mesh.local/ns/kuma-demo/sa/default"
 
   Scenario: Link to MeshIdentity from TLS section
-    When I visit the "/meshes/default/data-planes/backend/overview" URL
+    When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_backend_/overview" URL
     Then the "$tls-section" element exists
     And I click the "$link-mesh-identity-summary-view" element
-    Then the URL contains "/meshes/default/data-planes/backend/overview/meshidentity/kri_mid_default_east_kuma-demo_identity-1_"
+    Then the URL contains "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_backend_/overview/meshidentity/kri_mid_default_east_kuma-demo_identity-1_"
     And the "$summary" element contains "identity-1"
 
   Scenario: Link to MeshTrust from TLS section
-    When I visit the "/meshes/default/data-planes/backend/overview" URL
+    When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_backend_/overview" URL
     Then the "$tls-section" element exists
     And I click the "$link-mesh-trust-summary-view" element
-    Then the URL contains "/meshes/default/data-planes/backend/overview/meshtrust/kri_mtrust_default_east_kuma-demo_identity-1_"
+    Then the URL contains "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_backend_/overview/meshtrust/kri_mtrust_default_east_kuma-demo_identity-1_"
     And the "$summary" element contains "identity-1"

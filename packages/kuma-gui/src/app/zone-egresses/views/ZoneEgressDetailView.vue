@@ -105,7 +105,7 @@
                     :to="{
                       name: 'zone-egress-subscriptions-list-view',
                       params: {
-                        proxy: route.params.proxy,
+                        proxy: zoneEgress.kri,
                       },
                       query: {
                         inactive: route.params.inactive,
@@ -178,7 +178,7 @@
             <template #default="{ data: [zoneEgress] }">
               <DataLoader
                 :src="uri(sources, '/connections/stats/for/:proxyType/:name/:mesh/:socketAddress', {
-                  name: route.params.proxy,
+                  name: zoneEgress.id,
                   mesh: '*',
                   socketAddress: zoneEgress.zoneEgress.socketAddress,
                   proxyType: 'zone-egress',
@@ -341,6 +341,7 @@
                         :is="child.Component"
                         :data="route.params.subscription.length > 0 ? zoneEgress.zoneEgressInsight.subscriptions : (child.route.name as string).includes('-inbound-') ? [zoneEgress.zoneEgress] : traffic?.outbounds || {}"
                         :networking="zoneEgress.zoneEgress.networking"
+                        :overview="props.data"
                       />
                     </XDrawer>
                   </RouterView>

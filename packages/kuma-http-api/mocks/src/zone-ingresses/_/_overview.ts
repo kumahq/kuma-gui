@@ -1,13 +1,17 @@
 import type { Dependencies, ResponseHandler } from '#mocks'
 export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
-  const { name } = req.params
   const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
-
-  const parts = String(name).split('.')
-  const displayName = parts.slice(0, -1).join('.')
-  const nspace = parts.at(-1) ?? ''
-
-  const zoneName = fake.word.noun()
+  
+  const [
+    zone,
+    nspace,
+    displayName,
+  ] = [
+    fake.helpers.arrayElement(['', fake.word.noun()]), // zone
+    // with k8s the request.name MUST be use the correct `name.ns` format
+    ...(k8s ? String(req.params.name).split('.').toReversed() : ['', String(req.params.name)]), // nspace, displayName
+  ]
+  const name = String(req.params.name)
 
   const subscriptionCount = parseInt(env('KUMA_SUBSCRIPTION_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
   const serviceCount = parseInt(env('KUMA_SERVICE_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
@@ -18,20 +22,17 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
     body: {
       type: 'ZoneIngressOverview',
       name,
-      ...((modificationTime) => ({
-        creationTime: fake.kuma.date({ refDate: modificationTime }),
-        modificationTime,
-      }))(fake.kuma.date()),
-      ...(k8s
-        ? {
-          labels: {
-            'kuma.io/display-name': displayName,
-            'k8s.kuma.io/namespace': nspace,
-          },
-        }
-        : {}),
+      ...fake.kuma.timespan(),
+      kri: fake.kuma.kri({ resourceName: 'ZoneEgress', mesh: '', zone, namespace: nspace, name: displayName, sectionName: '' }),
+      labels: {
+        ...fake.kuma.labels({
+          name: displayName,
+          zone,
+          ...(k8s ? { namespace: nspace } : {}),
+        }),
+      },
       zoneIngress: {
-        zone: zoneName,
+        zone,
         networking: {
           address: fake.internet.ip(),
           advertisedAddress: fake.internet.ip(),
@@ -45,7 +46,7 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
               app: mesh,
               'kuma.io/protocol': fake.kuma.protocol(),
               'kuma.io/service': `${mesh}_${fake.word.noun()}_svc_${fake.number.int({ min: 0, max: 65535 })}`,
-              'kuma.io/zone': zoneName,
+              'kuma.io/zone': zone,
               'pod-template-hash': fake.string.alphanumeric({ casing: 'lower', length: 10 }),
             },
             instances: fake.number.int({ min: 1, max: 100 }),

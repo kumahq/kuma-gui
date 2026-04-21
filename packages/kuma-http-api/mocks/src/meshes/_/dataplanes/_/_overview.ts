@@ -12,6 +12,7 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
     // with k8s the request.name MUST be use the correct `name.ns` format
     ...(k8s ? String(req.params.name).split('.').toReversed() : ['', String(req.params.name)]), // nspace, displayName
   ]
+  console.log(req.params.name)
   const name = String(req.params.name)
 
   // use a seed based on the name to keep ports and ip address the same across
@@ -96,6 +97,7 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
         creationTime: fake.kuma.date({ refDate: modificationTime }),
         modificationTime,
       }))(fake.kuma.date()),
+      kri: fake.kuma.kri({ resourceName: 'Dataplane', mesh, zone, namespace: k8s ? nspace : '', name: displayName, sectionName: '' }),
       dataplane: {
         networking: {
           address,

@@ -12,6 +12,14 @@ Feature: mesh / dataplanes / overview / summary / Outbound
       KUMA_MESHSERVICE_MODE: Exclusive
       KUMA_DATAPLANE_TYPE: standard
       """
+    And the URL "/_kri/kri_dp_default_zone-1_kuma-demo_service-less_" responds with
+      """
+      body:
+        name: service-less
+        kri: kri_dp_default_zone-1_kuma-demo_service-less_
+        labels:
+          kuma.io/display-name: service-less
+      """
 
   Scenario: Outbound summary overview shows expected content
     Given the URL "/meshes/default/dataplanes/service-less/_layout" responds with
@@ -35,7 +43,7 @@ Feature: mesh / dataplanes / overview / summary / Outbound
             origins:
               - kri: kri_mfi_default_pigsty_jury_innovation_appliance
       """
-    When I visit the "/meshes/default/data-planes/service-less/overview/outbound/kri_dp_default_numeric_kuma-system_service-less_httpport/overview" URL
+    When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_service-less_/overview/outbound/kri_dp_default_numeric_kuma-system_service-less_httpport/overview" URL
     And the "$summary" element exists
     And the "$summary" element contains "Outbound service-less"
     And the "$summary" element contains "HTTP"
@@ -65,6 +73,6 @@ Feature: mesh / dataplanes / overview / summary / Outbound
             origins:
               - kri: kri_mfi_default_pigsty_jury_the-policy-name_appliance
       """
-    When I visit the "/meshes/default/data-planes/service-less/overview/outbound/kri_dp_default_numeric_kuma-system_service-less_httpport/overview" URL
+    When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_service-less_/overview/outbound/kri_dp_default_numeric_kuma-system_service-less_httpport/overview" URL
     Then I click on the "$outbound-policies-rule ul:first-of-type li:first-of-type a:first-of-type" element
     Then the URL contains "/gui/meshes/default/policies/meshfaultinjections/kri_mfi_default_pigsty_jury_the-policy-name_appliance/overview/overview"

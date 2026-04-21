@@ -18,45 +18,53 @@
     />
     <AppView>
       <DataLoader
-        :src="uri(sources, '/connections/xds/for/:proxyType/:name/:mesh/inbound/:inbound', {
-          mesh: route.params.mesh || '*',
-          name: route.params.proxy,
-          inbound: 'stat_prefix' in props.data ? props.data.stat_prefix : `${props.data.port}`,
-          proxyType: ({ ingresses: 'zone-ingress', egresses: 'zone-egress'})[route.params.proxyType] ?? 'dataplane',
-        })"
-        v-slot="{ data: [raw], refresh }"
+        :data="[props.overview]"
+        v-slot="{ data: [overviewData] }"
       >
-        <XCodeBlock
-          language="json"
-          :code="JSON.stringify(raw, null, 2)"
-          is-searchable
-          :query="route.params.codeSearch"
-          :is-filter-mode="route.params.codeFilter"
-          :is-reg-exp-mode="route.params.codeRegExp"
-          @query-change="route.update({ codeSearch: $event })"
-          @filter-mode-change="route.update({ codeFilter: $event })"
-          @reg-exp-mode-change="route.update({ codeRegExp: $event })"
+        <DataLoader
+          :src="uri(sources, '/connections/xds/for/:proxyType/:name/:mesh/inbound/:inbound', {
+            mesh: route.params.mesh || '*',
+            name: overviewData.id,
+            inbound: 'stat_prefix' in props.data ? props.data.stat_prefix : `${props.data.port}`,
+            proxyType: ({ ingresses: 'zone-ingress', egresses: 'zone-egress'})[route.params.proxyType] ?? 'dataplane',
+          })"
+          v-slot="{ data: [raw], refresh }"
         >
-          <template #primary-actions>
-            <XAction
-              action="refresh"
-              appearance="primary"
-              @click="refresh"
-            >
-              {{ t('common.refresh') }}
-            </XAction>
-          </template>
-        </XCodeBlock>
+          <XCodeBlock
+            language="json"
+            :code="JSON.stringify(raw, null, 2)"
+            is-searchable
+            :query="route.params.codeSearch"
+            :is-filter-mode="route.params.codeFilter"
+            :is-reg-exp-mode="route.params.codeRegExp"
+            @query-change="route.update({ codeSearch: $event })"
+            @filter-mode-change="route.update({ codeFilter: $event })"
+            @reg-exp-mode-change="route.update({ codeRegExp: $event })"
+          >
+            <template #primary-actions>
+              <XAction
+                action="refresh"
+                appearance="primary"
+                @click="refresh"
+              >
+                {{ t('common.refresh') }}
+              </XAction>
+            </template>
+          </XCodeBlock>
+        </DataLoader>
       </DataLoader>
     </AppView>
   </RouteView>
 </template>
 <script lang="ts" setup>
+import type { ZoneIngressOverview } from '@/app/zone-ingresses/data';
 import { sources } from '../sources'
-import type { DataplaneNetworkingLayout, DataplaneInbound } from '@/app/data-planes/data'
+import type { DataplaneNetworkingLayout, DataplaneInbound, DataplaneOverview } from '@/app/data-planes/data'
+import type { ZoneEgressOverview } from '@/app/zone-egresses/data';
 
 const props = defineProps<{
   data: DataplaneInbound | DataplaneNetworkingLayout['inbounds'][number]
   routeName: string
+  overview: DataplaneOverview | ZoneIngressOverview | ZoneEgressOverview | Error | undefined 
 }>()
 </script>

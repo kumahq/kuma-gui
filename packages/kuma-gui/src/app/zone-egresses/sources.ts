@@ -2,7 +2,8 @@ import { TarWriter } from '@gera2ld/tarjs'
 import createClient from 'openapi-fetch'
 
 import { ZoneEgressOverview, ZoneEgress } from './data'
-import { YAML, defineSources } from '@/app/application'
+import { Kri } from '../kuma'
+import { YAML , defineSources } from '@/app/application'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
 import type {
@@ -21,9 +22,10 @@ export const sources = (api: KumaApi) => {
     fetch: api.client.fetch,
   })
   return defineSources({
-    '/zone-cps/:name/egresses': async (params) => {
-      const { name, size, page } = params
-      const filter = name !== '*' ? {
+    '/zone-cps/:zone/egresses': async (params) => {
+      const { zone, size, page } = params
+      const { name } = Kri.fromString(zone)
+      const filter = zone !== '*' ? {
         [`labels.${'kuma.io/zone'}`]: name,
       } : undefined
       const offset = size * (page - 1)
@@ -43,35 +45,35 @@ export const sources = (api: KumaApi) => {
       return ZoneEgressOverview.fromCollection(res.data! as unknown as CollectionResponse<PartialZoneEgressOverview>)
     },
 
-    '/zone-egresses/:name': async (params) => {
-      const { name } = params
-      const res = await http.GET('/zoneegresses/{name}', {
+    '/zone-egresses/:kri': async (params) => {
+      const { kri } = params
+      const response = await http.GET('/_kri/{kri}', {
         params: {
           path: {
-            name,
+            kri,
           },
         },
       })
 
-      return ZoneEgress.fromObject(res.data! as unknown as PartialZoneEgress)
+      return ZoneEgress.fromObject(response.data as PartialZoneEgress)
     },
 
-    '/zone-egresses/:name/as/kubernetes': async (params) => {
-      const { name } = params
+    '/zone-egresses/:kri/as/kubernetes': async (params) => {
+      const { kri } = params
 
-      const res = await http.GET('/zoneegresses/{name}', {
+      const response = await http.GET('/_kri/{kri}', {
         params: {
           path: {
-            name,
+            kri,
           },
-          // @ts-expect-error OpenAPI says this is undefined
+          // @ts-expect-error - missing types for format query parameter
           query: {
             format: 'kubernetes',
           },
         },
       })
-      // TODO: This is actually kubernetes format, right now its fine as we only display it
-      return res.data
+
+      return response.data
     },
 
     '/zone-egresses/:name/as/tarball/:spec': async (params) => {

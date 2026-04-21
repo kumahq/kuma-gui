@@ -11,6 +11,14 @@ Feature: mesh / dataplanes / overview / summary / Listener
       KUMA_DATAPLANELISTENER_COUNT: 1
       KUMA_DATAPLANE_TYPE: standard
       """
+    And the URL "/_kri/kri_dp_default_zone-1_kuma-demo_service-less_" responds with
+      """
+      body:
+        name: service-less
+        kri: kri_dp_default_zone-1_kuma-demo_service-less_
+        labels:
+          kuma.io/display-name: service-less
+      """
   # Note: A listener is currently treated exactly like an inbound
 
   Scenario: Listener summary overview shows expected content
@@ -34,7 +42,7 @@ Feature: mesh / dataplanes / overview / summary / Listener
                 type: ZoneIngress
                 address: 10.244.0.21
       """
-    When I visit the "/meshes/default/data-planes/service-less/overview/inbound/self_zoneingress_dp_12345/overview" URL
+    When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_service-less_/overview/inbound/self_zoneingress_dp_12345/overview" URL
     And the "$summary" element exists
     And the "$summary" element contains "Inbound :12345"
     And the "$summary" element contains "TCP"

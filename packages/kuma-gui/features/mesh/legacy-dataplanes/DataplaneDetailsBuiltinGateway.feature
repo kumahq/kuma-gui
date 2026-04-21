@@ -14,6 +14,22 @@ Feature: Dataplane details for built-in gateway
       """
       KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: false
       """
+    And the URL "/_kri/kri_dp_default_zone-1_kuma-demo_dataplane-gateway_builtin-1_" responds with
+      """
+      body:
+        name: dataplane-gateway_builtin-1
+        kri: kri_dp_default_zone-1_kuma-demo_dataplane-gateway_builtin-1_
+        labels:
+          kuma.io/display-name: dataplane-gateway_builtin-1
+      """
+    And the URL "/_kri/kri_dp_default_zone-1_kuma-demo_dataplane-gateway-builtin-1_" responds with
+      """
+      body:
+        name: dataplane-gateway-builtin-1
+        kri: kri_dp_default_zone-1_kuma-demo_dataplane-gateway-builtin-1_
+        labels:
+          kuma.io/display-name: dataplane-gateway-builtin-1
+      """
 
   Scenario: Overview tab has expected content
     Given the environment
@@ -54,7 +70,7 @@ Feature: Dataplane details for built-in gateway
                   kumaDpCompatible: true
       """
     And the date is "2023-10-14T00:00:00Z"
-    When I visit the "/meshes/default/data-planes/dataplane-gateway_builtin-1/overview" URL
+    When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_dataplane-gateway_builtin-1_/overview" URL
     Then the page title contains "dataplane-gateway_builtin-1"
     And the "$detail-view" element contains "dataplane-gateway_builtin-1"
     And the "$details" element contains
@@ -88,7 +104,7 @@ Feature: Dataplane details for built-in gateway
           TrafficTrace:
             name: traffic-trace-1
       """
-    When I visit the "/meshes/default/data-planes/dataplane-gateway-builtin-1/policies" URL
+    When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_dataplane-gateway-builtin-1_/policies" URL
     Then the "$policies-view" element contains "traffic-log-1"
     And the "$policies-view" element contains "traffic-trace-1"
     When I click the "$route-item-button" element
@@ -102,5 +118,5 @@ Feature: Dataplane details for built-in gateway
         dataplaneInsight:
           mTLS: !!js/undefined
       """
-    When I visit the "/meshes/default/data-planes/dataplane-gateway_builtin-1/overview" URL
+    When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_dataplane-gateway_builtin-1_/overview" URL
     Then the "$mtls-warning" element exists

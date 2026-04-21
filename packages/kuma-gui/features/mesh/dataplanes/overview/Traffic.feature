@@ -29,6 +29,22 @@ Feature: mesh / dataplanes / connections / Traffic
           - name: MeshMultiZoneService
             shortName: mzsvc
       """
+    And the URL "/_kri/kri_dp_default_zone-1_kuma-demo_service-less_" responds with
+      """
+      body:
+        name: service-less
+        kri: kri_dp_default_zone-1_kuma-demo_service-less_
+        labels:
+          kuma.io/display-name: service-less
+      """
+    And the URL "/_kri/kri_dp_default_zone-1_kuma-demo_dpp-1-name-of-dataplane_" responds with
+      """
+      body:
+        name: dpp-1-name-of-dataplane
+        kri: kri_dp_default_zone-1_kuma-demo_dpp-1-name-of-dataplane_
+        labels:
+          kuma.io/display-name: dpp-1-name-of-dataplane
+      """
 
   Scenario: Traffic listing shows expected content
     And the URL "/meshes/default/dataplanes/service-less/_layout" responds with
@@ -50,7 +66,7 @@ Feature: mesh / dataplanes / connections / Traffic
             protocol: tcp
             proxyResourceName: kri_msvc_default_scenario_kuma-system_service-less_ipv6
       """
-    When I visit the "/meshes/default/data-planes/service-less/overview" URL
+    When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_service-less_/overview" URL
     Then the "$traffic" element exists
     # inbounds and listeners
     And the "$inbound" element exists 2 times
@@ -96,7 +112,7 @@ Feature: mesh / dataplanes / connections / Traffic
         Status-Code: '504'
       body: upstream request timeout
       """
-    When I visit the "/meshes/default/data-planes/dpp-1-name-of-dataplane/overview" URL
+    When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_dpp-1-name-of-dataplane_/overview" URL
     And the "$traffic" element exists
     And the "$loading-warning" element exists
     And the "$about-section" element contains "58.25.181.133"
@@ -121,7 +137,7 @@ Feature: mesh / dataplanes / connections / Traffic
       body: |
         cluster.kri_msvc_default_abnormal-traffic_kuma-system_service-less_ipv6.circuit_breakers.default.cx_open: 5
       """
-    When I visit the "/meshes/default/data-planes/service-less/overview" URL
+    When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_service-less_/overview" URL
     Then the "$traffic" element exists
     And the "$warning" element exists
 
@@ -173,7 +189,7 @@ Feature: mesh / dataplanes / connections / Traffic
         listener.self_zoneegress_dp_54321.downstream_cx_overload_reject: 0
         listener.self_zoneegress_dp_54321.downstream_cx_total: 10
       """
-    When I visit the "/meshes/default/data-planes/service-less/overview" URL
+    When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_service-less_/overview" URL
     Then the "$traffic" element exists
     And the "$inbound" element exists 2 times
     And the "$inbound:nth-child(1)" element contains

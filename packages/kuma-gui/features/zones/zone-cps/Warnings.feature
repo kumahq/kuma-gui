@@ -24,7 +24,7 @@ Feature: zones / warnings
         zoneInsight:
           subscriptions: !!js/undefined
       """
-    When I visit the "/zones/zone-cp-1/overview" URL
+    When I visit the "/zones/kri_z____zone-cp-1_/overview" URL
     And I click the "[data-testid='zone-cp-config-view-tab'] a" element
     Then the "$warning-no-subscriptions" element exists
 
@@ -63,8 +63,8 @@ Feature: zones / warnings
 
     Examples:
       | URL                       |
-      | /zones/zone-cp-1/overview |
-      | /zones/zone-cp-1/config   |
+      | /zones/kri_z____zone-cp-1_/overview |
+      | /zones/kri_z____zone-cp-1_/config   |
 
   Scenario Outline: When store type is kubernetes a warning isn't shown at "<URL>"
     Given the environment
@@ -84,8 +84,8 @@ Feature: zones / warnings
 
     Examples:
       | URL                       |
-      | /zones/zone-cp-1/overview |
-      | /zones/zone-cp-1/config   |
+      | /zones/kri_z____zone-cp-1_/overview |
+      | /zones/kri_z____zone-cp-1_/config   |
 
   Scenario Outline: When the connected subscription has a NACK "<URL>" shows a notification
     Given the environment
@@ -108,5 +108,5 @@ Feature: zones / warnings
 
     Examples:
       | URL                       |
-      | /zones/zone-cp-1/overview |
-      | /zones/zone-cp-1/config   |
+      | /zones/kri_z____zone-cp-1_/overview |
+      | /zones/kri_z____zone-cp-1_/config   |

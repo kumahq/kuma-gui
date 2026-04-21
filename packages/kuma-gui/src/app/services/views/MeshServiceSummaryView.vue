@@ -113,12 +113,7 @@
                   </th>
                   <td>
                     <XAction
-                      :to="{
-                        name: 'zone-cp-detail-view',
-                        params: {
-                          zone: item.zone,
-                        },
-                      }"
+                      :href="t('common.label.href.kuma~io/zone', { name: item.zone })"
                     >
                       {{ item.zone }}
                     </XAction>

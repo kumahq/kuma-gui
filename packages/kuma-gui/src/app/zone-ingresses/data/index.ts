@@ -15,10 +15,12 @@ export type ZoneIngressInsight = PartialZoneIngressInsight & DiscoverySubscripti
 
 export const ZoneIngress = {
   fromObject: (item: PartialZoneIngress) => {
+    console.log('🚀 ~ item:', item)
     return {
       ...item,
+      kri: item.kri ?? Kri.toString({}),
       listenerAddress: item.networking?.address && item.networking?.port ? `${item.networking.address}_${item.networking.port}` : '',
-
+      id: item.name,
       config: item,
       availableServices: Array.isArray(item.availableServices) ? item.availableServices : [],
       socketAddress: item.networking?.address && item.networking?.port ? `${item.networking.address}:${item.networking.port}` : '',
@@ -79,9 +81,7 @@ export const ZoneIngressOverview = {
     const zone = labels['kuma.io/origin'] === 'zone' && labels['kuma.io/zone'] ? labels['kuma.io/zone'] : ''
     const namespace = labels['k8s.kuma.io/namespace'] ?? ''
     const name = labels['kuma.io/display-name'] ?? item.name
-
-    // temporarily make a KRI until we have those from the backend
-    const kri = Kri.toString({ shortName: 'zi', mesh, zone, namespace, name })
+    const kri = item.kri ?? Kri.toString({ shortName: 'zi', mesh, zone, namespace, name })
 
     return {
       ...item,

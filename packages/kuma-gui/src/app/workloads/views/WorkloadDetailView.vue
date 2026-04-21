@@ -47,12 +47,7 @@
                 <dd>
                   <XAction
                     v-if="props.data.zone"
-                    :to="{
-                      name: 'zone-cp-detail-view',
-                      params: {
-                        zone: props.data.zone,
-                      },
-                    }"
+                    :href="t('common.label.href.kuma~io/zone', { name: props.data.zone })"
                   >
                     <XBadge>{{ props.data.zone }}</XBadge>
                   </XAction>
@@ -152,6 +147,7 @@
                     { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
                   ]"
                   :items="dataPlanes.items"
+                  :is-selected-row="(row) => row.kri === route.params.proxy"
                   @resize="me.set"
                 >
                   <template #name="{ row: item }">
@@ -163,7 +159,7 @@
                         name: 'workload-data-plane-summary-view',
                         params: {
                           mesh: item.mesh,
-                          proxy: item.id,
+                          proxy: item.kri,
                         },
                       }"
                     >
@@ -178,12 +174,7 @@
                   <template #zone="{ row }">
                     <XAction
                       v-if="row.zone"
-                      :to="{
-                        name: 'zone-cp-detail-view',
-                        params: {
-                          zone: row.zone,
-                        },
-                      }"
+                      :href="t('common.label.href.kuma~io/zone', { name: row.zone })"
                     >
                       {{ row.zone }}
                     </XAction>
@@ -256,7 +247,7 @@
                         :to="{
                           name: 'data-plane-detail-view',
                           params: {
-                            proxy: item.id,
+                            proxy: item.kri,
                           },
                         }"
                       >

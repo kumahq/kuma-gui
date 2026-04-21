@@ -17,6 +17,14 @@ Feature: mesh / dataplanes / warnings
       KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: true
       KUMA_MESHSERVICE_MODE: Exclusive
       """
+    And the URL "/_kri/kri_dp_default_zone-1_kuma-demo_dpp-1_" responds with
+      """
+      body:
+        name: dpp-1
+        kri: kri_dp_default_zone-1_kuma-demo_dpp-1_
+        labels:
+          kuma.io/display-name: dpp-1
+      """
 
   Scenario: With a certificate expires soon (at least 6 hours before) a cert warning is shown
     Given the URL "/meshes/default/dataplanes/dpp-1/_overview" responds with
@@ -28,7 +36,7 @@ Feature: mesh / dataplanes / warnings
             lastCertificateRegeneration: 2021-10-03T12:40:13Z
       """
     When the date is "2022-10-03T06:45:13Z"
-    And I visit the "/meshes/default/data-planes/dpp-1/overview" URL
+    And I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_dpp-1_/overview" URL
     Then the "$expires-soon-cert-warning" element exists
 
   Scenario: With an expired certificate a cert warning is shown
@@ -40,7 +48,7 @@ Feature: mesh / dataplanes / warnings
             certificateExpirationTime: 2022-10-03T12:40:13Z
             lastCertificateRegeneration: 2021-10-03T12:40:13Z
       """
-    When I visit the "/meshes/default/data-planes/dpp-1/overview" URL
+    When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_dpp-1_/overview" URL
     Then the "$expired-cert-warning" element exists
 
   Scenario: With an expired CA a CA warning isn't shown
@@ -52,7 +60,7 @@ Feature: mesh / dataplanes / warnings
             certificateExpirationTime: 3022-10-03T12:40:13Z
             lastCertificateRegeneration: 3021-10-03T12:40:13Z
       """
-    When I visit the "/meshes/default/data-planes/dpp-1/overview" URL
+    When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_dpp-1_/overview" URL
     Then the "$detail-view" element exists but the "$expired-cert-warning" element doesn't exist
 
   Scenario: With no mTLS a certificate warning isn't shown
@@ -62,7 +70,7 @@ Feature: mesh / dataplanes / warnings
         dataplaneInsight:
           mTLS: !!js/undefined
       """
-    When I visit the "/meshes/default/data-planes/dpp-1/overview" URL
+    When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_dpp-1_/overview" URL
     Then the "$detail-view" element exists but the "$expired-cert-warning" element doesn't exist
 
   Scenario: Unsupported zone warning is shown
@@ -85,7 +93,7 @@ Feature: mesh / dataplanes / warnings
               - tags:
                   kuma.io/zone: zone
       """
-    When I visit the "/meshes/default/data-planes/dpp-1/overview" URL
+    When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_dpp-1_/overview" URL
     Then the "$unsupported-zone-warning" element exists
 
   Scenario: Unsupported kuma warning is shown
@@ -104,7 +112,7 @@ Feature: mesh / dataplanes / warnings
                 envoy:
                   kumaDpCompatible: true
       """
-    When I visit the "/meshes/default/data-planes/dpp-1/overview" URL
+    When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_dpp-1_/overview" URL
     Then the "$unsupported-kuma-warning" element exists
 
   Scenario: Unsupported envoy warning is shown
@@ -123,7 +131,7 @@ Feature: mesh / dataplanes / warnings
                 envoy:
                   kumaDpCompatible: false
       """
-    When I visit the "/meshes/default/data-planes/dpp-1/overview" URL
+    When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_dpp-1_/overview" URL
     Then the "$unsupported-envoy-warning" element exists
 
   Scenario: Incomplete networking configuration
@@ -137,7 +145,7 @@ Feature: mesh / dataplanes / warnings
           metadata:
             features: !!js/undefined
       """
-    When I visit the "/meshes/default/data-planes/dpp-1/overview" URL
+    When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_dpp-1_/overview" URL
     Then the "$networking-transparent-proxying" element exists
 
   Scenario: Dataplane offline notification
@@ -161,7 +169,7 @@ Feature: mesh / dataplanes / warnings
           metadata:
             features: !!js/undefined
       """
-    When I visit the "/meshes/default/data-planes/dpp-1/overview" URL
+    When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_dpp-1_/overview" URL
     Then the "$dataplane-offline" element exists
     Then the "$networking-transparent-proxying" element exists
 
@@ -179,5 +187,5 @@ Feature: mesh / dataplanes / warnings
           metadata:
             features: !!js/undefined
       """
-    When I visit the "/meshes/default/data-planes/dpp-1/overview" URL
+    When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_dpp-1_/overview" URL
     Then the "$dataplane-disconnected-cp" element exists

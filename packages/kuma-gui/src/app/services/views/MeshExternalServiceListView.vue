@@ -110,12 +110,7 @@
                     <template v-if="item.labels && item.labels['kuma.io/origin'] === 'zone' && item.labels['kuma.io/zone']">
                       <XAction
                         v-if="item.labels['kuma.io/zone']"
-                        :to="{
-                          name: 'zone-cp-detail-view',
-                          params: {
-                            zone: item.labels['kuma.io/zone'],
-                          },
-                        }"
+                        :href="t('common.label.href.kuma~io/zone', { name: item.labels['kuma.io/zone'] })"
                       >
                         {{ item.labels['kuma.io/zone'] }}
                       </XAction>
