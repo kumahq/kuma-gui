@@ -39,8 +39,8 @@ Feature: mesh / dataplanes / DataplaneDetailsTraffic
     And the "$traffic" element exists
 
     Examples:
-      | Name             |
-      | dpp-1-name-of-dataplane      |
+      | Name                                                     |
+      | dpp-1-name-of-dataplane                                  |
       | kri_dp_default_zone-1_kuma-demo_dpp-1-name-of-dataplane_ |
 
   Scenario Outline: With no outbound traffic, I have to click the toggle to see outbounds
@@ -69,8 +69,8 @@ Feature: mesh / dataplanes / DataplaneDetailsTraffic
     Then the "$outbounds" element exists
 
     Examples:
-      | Name             |
-      | dpp-1-name-of-dataplane      |
+      | Name                                                     |
+      | dpp-1-name-of-dataplane                                  |
       | kri_dp_default_zone-1_kuma-demo_dpp-1-name-of-dataplane_ |
 
   Scenario Outline: Standard sidecar proxy shows the traffic component and an error warning when _stats fails
@@ -107,6 +107,6 @@ Feature: mesh / dataplanes / DataplaneDetailsTraffic
     And the "$about-section" element contains "58.25.181.133"
 
     Examples:
-      | Name             |
-      | dpp-1-name-of-dataplane      |
+      | Name                                                     |
+      | dpp-1-name-of-dataplane                                  |
       | kri_dp_default_zone-1_kuma-demo_dpp-1-name-of-dataplane_ |

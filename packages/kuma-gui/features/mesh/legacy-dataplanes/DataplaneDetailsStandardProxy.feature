@@ -53,8 +53,8 @@ Feature: Dataplane details for standard Data Plane Proxy
     And the "$details" element contains "Online"
 
     Examples:
-      | Name             |
-      | dpp-1-name-of-dataplane      |
+      | Name                                                     |
+      | dpp-1-name-of-dataplane                                  |
       | kri_dp_default_zone-1_kuma-demo_dpp-1-name-of-dataplane_ |
 
   Scenario Outline: Clusters tab has expected content
@@ -70,8 +70,8 @@ Feature: Dataplane details for standard Data Plane Proxy
     Then the "$clusters-view" element contains "access_log_sink::observability_name::access_log_sink"
 
     Examples:
-      | Name             |
-      | dpp-1-name-of-dataplane      |
+      | Name                                                     |
+      | dpp-1-name-of-dataplane                                  |
       | kri_dp_default_zone-1_kuma-demo_dpp-1-name-of-dataplane_ |
 
   Scenario Outline: Shows config with format based on environment
@@ -84,6 +84,6 @@ Feature: Dataplane details for standard Data Plane Proxy
     And the URL contains "?environment=k8s"
 
     Examples:
-      | Name             |
-      | dpp-1-name-of-dataplane      |
+      | Name                                                     |
+      | dpp-1-name-of-dataplane                                  |
       | kri_dp_default_zone-1_kuma-demo_dpp-1-name-of-dataplane_ |

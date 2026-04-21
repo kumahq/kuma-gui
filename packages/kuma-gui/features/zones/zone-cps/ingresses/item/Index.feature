@@ -39,8 +39,8 @@ Feature: zones / ingresses / item
     And the "$about-section" element contains "kuma.io/display-name:default"
 
     Examples:
-      | Name             |
-      | item-1           |
+      | Name                               |
+      | item-1                             |
       | kri_zi__zone-1_kuma-system_item-1_ |
 
   Scenario Outline: Clicking through the secondary navigation
@@ -53,8 +53,8 @@ Feature: zones / ingresses / item
     Then I click the "$navigation li:nth-child(1) a" element
 
     Examples:
-      | Name             |
-      | item-1           |
+      | Name                               |
+      | item-1                             |
       | kri_zi__zone-1_kuma-system_item-1_ |
 
   Scenario Outline: Detail view has expected content
@@ -75,8 +75,8 @@ Feature: zones / ingresses / item
     Then the "$config-view" element contains "type: ZoneIngress"
 
     Examples:
-      | Name             |
-      | item-1           |
+      | Name                               |
+      | item-1                             |
       | kri_zi__zone-1_kuma-system_item-1_ |
 
   Scenario Outline: Shows config with format based on environment
@@ -89,6 +89,6 @@ Feature: zones / ingresses / item
     And the URL contains "?environment=k8s"
 
     Examples:
-      | Name             |
-      | item-1           |
+      | Name                               |
+      | item-1                             |
       | kri_zi__zone-1_kuma-system_item-1_ |

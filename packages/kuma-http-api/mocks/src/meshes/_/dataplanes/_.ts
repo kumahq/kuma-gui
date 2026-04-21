@@ -4,7 +4,7 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
   const [
     mesh = req.params.mesh as string,
     zone = '',
-    namespace = '',
+    namespace = fake.k8s.namespace(),
     name = req.params.name as string,
   ] = kri?.split('_') ?? ''
 
@@ -28,7 +28,7 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
       }),
       type: 'Dataplane',
       mesh,
-      name,
+      name: `${name}.${namespace}`,
       creationTime: '2021-02-17T08:33:36.442044+01:00',
       modificationTime: '2021-02-17T08:33:36.442044+01:00',
       kri: fake.kuma.kri({ resourceName: 'Dataplane', mesh, zone, namespace, name, sectionName: '' }),

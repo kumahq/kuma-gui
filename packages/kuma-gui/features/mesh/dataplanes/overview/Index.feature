@@ -41,6 +41,6 @@ Feature: mesh / dataplanes / item / overview
     And the "$about-section" element contains "kuma.io/origin:zone"
 
     Examples:
-      | Name             |
-      | dataplane-1      |
+      | Name                                         |
+      | dataplane-1                                  |
       | kri_dp_default_zone-1_kuma-demo_dataplane-1_ |

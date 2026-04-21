@@ -31,6 +31,6 @@ Feature: mesh / dataplanes / connections / Traffic
     Then the "$about-section" element contains "MeshTrafficPermission"
 
     Examples:
-      | Name             |
-      | backend          |
+      | Name                                     |
+      | backend                                  |
       | kri_dp_default_zone-1_kuma-demo_backend_ |

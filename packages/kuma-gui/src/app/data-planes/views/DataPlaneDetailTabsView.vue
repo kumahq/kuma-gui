@@ -30,7 +30,7 @@
       ]"
     >
       <template
-        v-if="data"
+        v-if="props.data"
         #title
       >
         <XLayout

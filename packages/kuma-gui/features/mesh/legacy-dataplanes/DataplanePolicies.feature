@@ -107,8 +107,8 @@ Feature: Dataplane policies
       And the "$to-rule-item:nth-child(2)" element contains "kuma.io/service:backend_kuma-demo_svc_3001"
 
       Examples:
-        | Name             |
-        | dataplane-1      |
+        | Name                                         |
+        | dataplane-1                                  |
         | kri_dp_default_zone-1_kuma-demo_dataplane-1_ |
 
     Scenario: Policies tab has expected content (MeshTimeout with from & to rules)
@@ -239,8 +239,8 @@ Feature: Dataplane policies
       Then the "$from-rule-item:nth-child(1)" element contains "!kuma.io/service:two"
 
       Examples:
-        | Name             |
-        | dataplane-1      |
+        | Name                                         |
+        | dataplane-1                                  |
         | kri_dp_default_zone-1_kuma-demo_dataplane-1_ |
 
     Scenario Outline: Policies tab has expected content (MeshTimeout with proxy & to rule)
@@ -293,8 +293,8 @@ Feature: Dataplane policies
       Then the "$to-rule-item:nth-child(1)" element contains "!kuma.io/service:bar"
 
       Examples:
-        | Name             |
-        | dataplane-1      |
+        | Name                                         |
+        | dataplane-1                                  |
         | kri_dp_default_zone-1_kuma-demo_dataplane-1_ |
 
     Scenario Outline: The origin policies link in the policies rules' policy list opens the policy summary panel
@@ -331,8 +331,8 @@ Feature: Dataplane policies
       And the "$summary-slideout-container [data-testid='slideout-title'] h2 a" element contains "the-other-http-route"
 
       Examples:
-        | Name             |
-        | dataplane-1      |
+        | Name                                         |
+        | dataplane-1                                  |
         | kri_dp_default_zone-1_kuma-demo_dataplane-1_ |
 
     Scenario Outline: Policies tab has expected content (inbound rules & partial from rules)
@@ -365,8 +365,8 @@ Feature: Dataplane policies
       And the "$from-rule-item" element exists
 
       Examples:
-        | Name             |
-        | dataplane-1      |
+        | Name                                         |
+        | dataplane-1                                  |
         | kri_dp_default_zone-1_kuma-demo_dataplane-1_ |
 
   Rule: Standard proxy
@@ -388,8 +388,8 @@ Feature: Dataplane policies
       And the "$to-rules" element exists but the "$legacy-gateway-policies" element doesn't exist
 
       Examples:
-        | Name             |
-        | dataplane-1      |
+        | Name                                         |
+        | dataplane-1                                  |
         | kri_dp_default_zone-1_kuma-demo_dataplane-1_ |
 
     Scenario Outline: Non-federated shows the rules and only sidecar legacy content
@@ -402,8 +402,8 @@ Feature: Dataplane policies
       And the "$legacy-sidecar-policies" element exists but the "$legacy-gateway-policies" element doesn't exist
 
       Examples:
-        | Name             |
-        | dataplane-1      |
+        | Name                                         |
+        | dataplane-1                                  |
         | kri_dp_default_zone-1_kuma-demo_dataplane-1_ |
 
   Rule: Delegated gateway
@@ -428,8 +428,8 @@ Feature: Dataplane policies
     # data layer unit test for this instead, we can remove this test.
 
       Examples:
-        | Name             |
-        | dataplane-1      |
+        | Name                                         |
+        | dataplane-1                                  |
         | kri_dp_default_zone-1_kuma-demo_dataplane-1_ |
 
     Scenario Outline: Federated (with a default/delegated type) shows the rules but no legacy content
@@ -450,8 +450,8 @@ Feature: Dataplane policies
       And the "$to-rules" element exists but the "$legacy-gateway-policies" element doesn't exist
 
       Examples:
-        | Name             |
-        | dataplane-1      |
+        | Name                                         |
+        | dataplane-1                                  |
         | kri_dp_default_zone-1_kuma-demo_dataplane-1_ |
 
     Scenario Outline: Non-federated shows the rules and only sidecar-like (i.e. delegated) gateway legacy content
@@ -464,8 +464,8 @@ Feature: Dataplane policies
       And the "$legacy-sidecar-policies" element exists but the "$legacy-gateway-policies" element doesn't exist
 
       Examples:
-        | Name             |
-        | dataplane-1      |
+        | Name                                         |
+        | dataplane-1                                  |
         | kri_dp_default_zone-1_kuma-demo_dataplane-1_ |
 
   Rule: Built-in gateway
@@ -495,8 +495,8 @@ Feature: Dataplane policies
       And the "$to-rules" element exists but the "$legacy-gateway-policies" element doesn't exist
 
       Examples:
-        | Name             |
-        | dataplane-gateway_builtin-1     |
+        | Name                                                         |
+        | dataplane-gateway_builtin-1                                  |
         | kri_dp_default_zone-1_kuma-demo_dataplane-gateway_builtin-1_ |
 
     Scenario Outline: Non-federated shows the rules and only builtin gateway legacy content
@@ -509,6 +509,6 @@ Feature: Dataplane policies
       And the "$legacy-gateway-policies" element exists but the "$legacy-sidecar-policies" element doesn't exist
 
       Examples:
-        | Name             |
-        | dataplane-gateway_builtin-1     |
-        | kri_dp_default_zone-1_kuma-demo_dataplane-gateway_builtin-1_ |
+        | Name                                                         |
+        | dataplane-gateway-builtin-1                                  |
+        | kri_dp_default_zone-1_kuma-demo_dataplane-gateway-builtin-1_ |

@@ -53,8 +53,8 @@ Feature: mesh / dataplanes / overview / TLS
     And the "$tls-section" element doesn't contain "Supported CAs"
 
     Examples:
-      | Name             |
-      | backend          |
+      | Name                                     |
+      | backend                                  |
       | kri_dp_default_zone-1_kuma-demo_backend_ |
 
   Scenario Outline: Link to MeshIdentity from TLS section
@@ -65,8 +65,8 @@ Feature: mesh / dataplanes / overview / TLS
     And the "$summary" element contains "identity-1"
 
     Examples:
-      | Name             |
-      | backend          |
+      | Name                                     |
+      | backend                                  |
       | kri_dp_default_zone-1_kuma-demo_backend_ |
 
   Scenario Outline: Link to MeshTrust from TLS section
@@ -77,6 +77,6 @@ Feature: mesh / dataplanes / overview / TLS
     And the "$summary" element contains "identity-1"
 
     Examples:
-      | Name             |
-      | backend          |
+      | Name                                     |
+      | backend                                  |
       | kri_dp_default_zone-1_kuma-demo_backend_ |

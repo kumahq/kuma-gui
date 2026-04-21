@@ -110,3 +110,14 @@ const safeT: TFunction = (
 }
 
 </script>
+<style lang="scss" scoped>
+/* default styles for markdown content */
+/* note whilst it doesn't seem necessary */
+/* the x-i18n scope is necessary here */
+/* to prevent "global" `p` styles from overwriting this */
+.x-i18n {
+  :deep(p + p) {
+    margin-block-start: 1em;
+  }
+}
+</style>

@@ -35,6 +35,6 @@ Feature: zones / ingresses / item / services
     Then the "$item" element exists 2 times
 
     Examples:
-      | Name             |
-      | item-1           |
+      | Name                               |
+      | item-1                             |
       | kri_zi__zone-1_kuma-system_item-1_ |

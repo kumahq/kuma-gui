@@ -38,8 +38,8 @@ Feature: zones / egresses / item
     And the "$about-section" element contains "kuma.io/display-name:default"
 
     Examples:
-      | Name             |
-      | item-1           |
+      | Name                                  |
+      | item-1                                |
       | kri_ze__zone-cp-1_kuma-system_item-1_ |
 
   Scenario Outline: Detail view has expected content
@@ -66,8 +66,8 @@ Feature: zones / egresses / item
     Then the "$config-view" element contains "type: ZoneEgress"
 
     Examples:
-      | Name             |
-      | item-1           |
+      | Name                                  |
+      | item-1                                |
       | kri_ze__zone-cp-1_kuma-system_item-1_ |
 
   Scenario Outline: Shows config with format based on environment
@@ -80,6 +80,6 @@ Feature: zones / egresses / item
     And the URL contains "?environment=k8s"
 
     Examples:
-      | Name             |
-      | item-1           |
+      | Name                                  |
+      | item-1                                |
       | kri_ze__zone-cp-1_kuma-system_item-1_ |

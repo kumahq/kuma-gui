@@ -63,8 +63,8 @@ Feature: mesh / dataplanes / connections / Traffic
     And the "$outbound" element contains "service-less"
 
     Examples:
-      | Name             |
-      | service-less          |
+      | Name                                          |
+      | service-less                                  |
       | kri_dp_default_zone-1_kuma-demo_service-less_ |
 
   Scenario Outline: Abnormal traffic stats are detected
@@ -92,6 +92,6 @@ Feature: mesh / dataplanes / connections / Traffic
     And the "$warning" element exists
 
     Examples:
-      | Name             |
-      | service-less          |
+      | Name                                          |
+      | service-less                                  |
       | kri_dp_default_zone-1_kuma-demo_service-less_ |

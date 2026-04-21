@@ -36,8 +36,8 @@ Feature: dataplanes / subscriptions
     And the "$about-zone-ingress-subscriptions" element contains "foo"
 
     Examples:
-      | Name             |
-      | east-ingress     |
+      | Name                                     |
+      | east-ingress                             |
       | kri_zi__zone-1_kuma-system_east-ingress_ |
 
   Scenario Outline: Go to subscription detail and back
@@ -61,6 +61,6 @@ Feature: dataplanes / subscriptions
     Then the URL contains "/zones/east/ingresses/<Name>/subscriptions"
 
     Examples:
-      | Name             |
-      | east-ingress     |
+      | Name                                     |
+      | east-ingress                             |
       | kri_zi__zone-1_kuma-system_east-ingress_ |

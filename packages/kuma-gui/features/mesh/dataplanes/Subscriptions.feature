@@ -39,8 +39,8 @@ Feature: dataplanes / subscriptions
     And the "$about-dp-subscriptions" element contains "foo"
 
     Examples:
-      | Name             |
-      | backend          |
+      | Name                                     |
+      | backend                                  |
       | kri_dp_default_zone-1_kuma-demo_backend_ |
 
   Scenario Outline: Go to subscription detail and back
@@ -65,6 +65,6 @@ Feature: dataplanes / subscriptions
     Then the URL contains "/meshes/default/data-planes/<Name>/subscriptions"
 
     Examples:
-      | Name             |
-      | backend          |
+      | Name                                     |
+      | backend                                  |
       | kri_dp_default_zone-1_kuma-demo_backend_ |

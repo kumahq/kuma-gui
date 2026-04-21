@@ -544,19 +544,6 @@ import '@kong-ui-public/app-layout/dist/style.css'
     padding-left: var(--x-space-80);
   }
 
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  p,
-  ul,
-  ol {
-    &:not(:first-child) {
-      margin-top: var(--x-space-50);
-    }
-  }
-
   p:empty {
     display: none;
   }

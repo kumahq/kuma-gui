@@ -36,8 +36,8 @@ Feature: dataplanes / subscriptions
     And the "$about-zone-egress-subscriptions" element contains "foo"
 
     Examples:
-      | Name             |
-      | east-egress      |
+      | Name                                  |
+      | east-egress                           |
       | kri_ze__east_kuma-system_east-egress_ |
 
   Scenario Outline: Go to subscription detail and back
@@ -61,6 +61,6 @@ Feature: dataplanes / subscriptions
     Then the URL contains "/zones/east/egresses/<Name>/subscriptions"
 
     Examples:
-      | Name             |
-      | east-egress      |
+      | Name                                  |
+      | east-egress                           |
       | kri_ze__east_kuma-system_east-egress_ |
