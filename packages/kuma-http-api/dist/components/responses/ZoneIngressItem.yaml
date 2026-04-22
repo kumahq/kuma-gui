@@ -2,4 +2,4 @@ description: Successful response
 content:
   application/json:
     schema:
-      $ref: "../schemas/ZoneIngressItem.yaml"
+      $ref: ../schemas/ZoneIngressItem.yaml

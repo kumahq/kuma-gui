@@ -1,4 +1,4 @@
-description: 'MeshIdentity manages service identity and certificate provisioning for workloads in the mesh. It configures how services obtain their identity certificates, supporting multiple providers including bundled certificates (self-signed or user-provided CA), SPIRE integration, and custom SPIFFE ID configuration for secure service-to-service authentication.'
+description: MeshIdentity manages service identity and certificate provisioning for workloads in the mesh. It configures how services obtain their identity certificates, supporting multiple providers including bundled certificates (self-signed or user-provided CA), SPIRE integration, and custom SPIFFE ID configuration for secure service-to-service authentication.
 type: object
 properties:
   type:
@@ -155,6 +155,18 @@ properties:
                 enum:
                   - Enabled
                   - Disabled
+          extension:
+            description: Extension indicates that custom provider is used.
+            type: object
+            properties:
+              config:
+                description: Config is a freeform configuration for the extension.
+                x-kubernetes-preserve-unknown-fields: true
+              name:
+                description: Name is the name of the extension provider.
+                type: string
+            required:
+              - name
           spire:
             description: Spire indicates that SPIRE is used for certificate delivery.
             type: object
@@ -174,6 +186,7 @@ properties:
             enum:
               - Bundled
               - Spire
+              - Extension
         required:
           - type
       selector:
@@ -197,13 +210,13 @@ properties:
     description: Time at which the resource was created
     type: string
     format: date-time
-    example: '0001-01-01T00:00:00Z'
+    example: 0001-01-01T00:00:00Z
     readOnly: true
   modificationTime:
     description: Time at which the resource was updated
     type: string
     format: date-time
-    example: '0001-01-01T00:00:00Z'
+    example: 0001-01-01T00:00:00Z
     readOnly: true
   status:
     description: Status is the current status of the Kuma MeshIdentity resource.
@@ -230,9 +243,9 @@ properties:
               type: string
               maxLength: 1024
               minLength: 1
-              pattern: '^[A-Za-z]([A-Za-z0-9_,:]*[A-Za-z0-9_])?$'
+              pattern: ^[A-Za-z]([A-Za-z0-9_,:]*[A-Za-z0-9_])?$
             status:
-              description: 'status of the condition, one of True, False, Unknown.'
+              description: status of the condition, one of True, False, Unknown.
               type: string
               enum:
                 - 'True'
@@ -242,7 +255,7 @@ properties:
               description: type of condition in CamelCase or in foo.example.com/CamelCase.
               type: string
               maxLength: 316
-              pattern: '^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$'
+              pattern: ^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$
           required:
             - message
             - reason

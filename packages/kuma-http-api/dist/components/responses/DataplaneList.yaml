@@ -7,7 +7,7 @@ content:
         items:
           type: array
           items:
-            $ref: "../schemas/DataplaneItem.yaml"
+            $ref: ../schemas/DataplaneItem.yaml
         next:
           description: URL to the next page
           type: string

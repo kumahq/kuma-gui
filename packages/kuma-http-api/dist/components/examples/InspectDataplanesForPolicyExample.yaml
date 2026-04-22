@@ -1,6 +1,6 @@
 value:
   total: 100
-  next: 'http://localhost:5681/meshes/default/meshretries/_resources/dataplanes?offset=100'
+  next: http://localhost:5681/meshes/default/meshretries/_resources/dataplanes?offset=100
   items:
     - type: Dataplane
       mesh: default

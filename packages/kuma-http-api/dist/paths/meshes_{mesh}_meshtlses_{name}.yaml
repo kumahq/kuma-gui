@@ -16,9 +16,9 @@ get:
         type: string
   responses:
     '200':
-      $ref: "../components/responses/MeshTLSItem.yaml"
+      $ref: ../components/responses/MeshTLSItem.yaml
     '404':
-      $ref: "../components/responses/NotFound.yaml"
+      $ref: ../components/responses/NotFound.yaml
   tags:
     - MeshTLS
 put:
@@ -43,12 +43,12 @@ put:
     content:
       application/json:
         schema:
-          $ref: "../components/schemas/MeshTLSItem.yaml"
+          $ref: ../components/schemas/MeshTLSItem.yaml
   responses:
     '200':
-      $ref: "../components/responses/MeshTLSCreateOrUpdateSuccessResponse.yaml"
+      $ref: ../components/responses/MeshTLSCreateOrUpdateSuccessResponse.yaml
     '201':
-      $ref: "../components/responses/MeshTLSCreateOrUpdateSuccessResponse.yaml"
+      $ref: ../components/responses/MeshTLSCreateOrUpdateSuccessResponse.yaml
   tags:
     - MeshTLS
 delete:
@@ -69,8 +69,8 @@ delete:
         type: string
   responses:
     '200':
-      $ref: "../components/responses/MeshTLSDeleteSuccessResponse.yaml"
+      $ref: ../components/responses/MeshTLSDeleteSuccessResponse.yaml
     '404':
-      $ref: "../components/responses/NotFound.yaml"
+      $ref: ../components/responses/NotFound.yaml
   tags:
     - MeshTLS

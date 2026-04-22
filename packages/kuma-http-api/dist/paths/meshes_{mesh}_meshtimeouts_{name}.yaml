@@ -16,9 +16,9 @@ get:
         type: string
   responses:
     '200':
-      $ref: "../components/responses/MeshTimeoutItem.yaml"
+      $ref: ../components/responses/MeshTimeoutItem.yaml
     '404':
-      $ref: "../components/responses/NotFound.yaml"
+      $ref: ../components/responses/NotFound.yaml
   tags:
     - MeshTimeout
 put:
@@ -43,12 +43,12 @@ put:
     content:
       application/json:
         schema:
-          $ref: "../components/schemas/MeshTimeoutItem.yaml"
+          $ref: ../components/schemas/MeshTimeoutItem.yaml
   responses:
     '200':
-      $ref: "../components/responses/MeshTimeoutCreateOrUpdateSuccessResponse.yaml"
+      $ref: ../components/responses/MeshTimeoutCreateOrUpdateSuccessResponse.yaml
     '201':
-      $ref: "../components/responses/MeshTimeoutCreateOrUpdateSuccessResponse.yaml"
+      $ref: ../components/responses/MeshTimeoutCreateOrUpdateSuccessResponse.yaml
   tags:
     - MeshTimeout
 delete:
@@ -69,8 +69,8 @@ delete:
         type: string
   responses:
     '200':
-      $ref: "../components/responses/MeshTimeoutDeleteSuccessResponse.yaml"
+      $ref: ../components/responses/MeshTimeoutDeleteSuccessResponse.yaml
     '404':
-      $ref: "../components/responses/NotFound.yaml"
+      $ref: ../components/responses/NotFound.yaml
   tags:
     - MeshTimeout

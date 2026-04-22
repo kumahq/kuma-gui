@@ -2,4 +2,4 @@ description: Successful response
 content:
   application/json:
     schema:
-      $ref: "../schemas/MeshLoadBalancingStrategyItem.yaml"
+      $ref: ../schemas/MeshLoadBalancingStrategyItem.yaml

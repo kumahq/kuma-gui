@@ -16,9 +16,9 @@ get:
         type: string
   responses:
     '200':
-      $ref: "../components/responses/MeshAccessLogItem.yaml"
+      $ref: ../components/responses/MeshAccessLogItem.yaml
     '404':
-      $ref: "../components/responses/NotFound.yaml"
+      $ref: ../components/responses/NotFound.yaml
   tags:
     - MeshAccessLog
 put:
@@ -43,12 +43,12 @@ put:
     content:
       application/json:
         schema:
-          $ref: "../components/schemas/MeshAccessLogItem.yaml"
+          $ref: ../components/schemas/MeshAccessLogItem.yaml
   responses:
     '200':
-      $ref: "../components/responses/MeshAccessLogCreateOrUpdateSuccessResponse.yaml"
+      $ref: ../components/responses/MeshAccessLogCreateOrUpdateSuccessResponse.yaml
     '201':
-      $ref: "../components/responses/MeshAccessLogCreateOrUpdateSuccessResponse.yaml"
+      $ref: ../components/responses/MeshAccessLogCreateOrUpdateSuccessResponse.yaml
   tags:
     - MeshAccessLog
 delete:
@@ -69,8 +69,8 @@ delete:
         type: string
   responses:
     '200':
-      $ref: "../components/responses/MeshAccessLogDeleteSuccessResponse.yaml"
+      $ref: ../components/responses/MeshAccessLogDeleteSuccessResponse.yaml
     '404':
-      $ref: "../components/responses/NotFound.yaml"
+      $ref: ../components/responses/NotFound.yaml
   tags:
     - MeshAccessLog

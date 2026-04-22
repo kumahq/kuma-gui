@@ -2,4 +2,4 @@ description: Successful response
 content:
   application/json:
     schema:
-      $ref: "../schemas/MeshExternalServiceItem.yaml"
+      $ref: ../schemas/MeshExternalServiceItem.yaml

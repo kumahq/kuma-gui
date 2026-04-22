@@ -30,12 +30,12 @@ get:
       example: redis
   responses:
     '200':
-      $ref: "../components/responses/InspectHostnamesResponse.yaml"
+      $ref: ../components/responses/InspectHostnamesResponse.yaml
     '400':
-      $ref: "../components/responses/BadRequest.yaml"
+      $ref: ../components/responses/BadRequest.yaml
     '404':
-      $ref: "../components/responses/NotFound.yaml"
+      $ref: ../components/responses/NotFound.yaml
     '500':
-      $ref: "../components/responses/Internal.yaml"
+      $ref: ../components/responses/Internal.yaml
   tags:
     - Inspect

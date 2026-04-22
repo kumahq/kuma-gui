@@ -10,9 +10,9 @@ delete:
         type: string
   responses:
     '200':
-      $ref: "../components/responses/MeshDeleteSuccessResponse.yaml"
+      $ref: ../components/responses/MeshDeleteSuccessResponse.yaml
     '404':
-      $ref: "../components/responses/NotFound.yaml"
+      $ref: ../components/responses/NotFound.yaml
   tags:
     - Mesh
 get:
@@ -27,9 +27,9 @@ get:
         type: string
   responses:
     '200':
-      $ref: "../components/responses/MeshItem.yaml"
+      $ref: ../components/responses/MeshItem.yaml
     '404':
-      $ref: "../components/responses/NotFound.yaml"
+      $ref: ../components/responses/NotFound.yaml
   tags:
     - Mesh
 put:
@@ -48,11 +48,11 @@ put:
     content:
       application/json:
         schema:
-          $ref: "../components/schemas/MeshItem.yaml"
+          $ref: ../components/schemas/MeshItem.yaml
   responses:
     '200':
-      $ref: "../components/responses/MeshCreateOrUpdateSuccessResponse.yaml"
+      $ref: ../components/responses/MeshCreateOrUpdateSuccessResponse.yaml
     '201':
-      $ref: "../components/responses/MeshCreateOrUpdateSuccessResponse.yaml"
+      $ref: ../components/responses/MeshCreateOrUpdateSuccessResponse.yaml
   tags:
     - Mesh

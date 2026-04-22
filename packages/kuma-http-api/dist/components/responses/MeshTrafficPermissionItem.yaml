@@ -2,4 +2,4 @@ description: Successful response
 content:
   application/json:
     schema:
-      $ref: "../schemas/MeshTrafficPermissionItem.yaml"
+      $ref: ../schemas/MeshTrafficPermissionItem.yaml

@@ -2,7 +2,7 @@ description: A response containing hostnames that match a service.
 content:
   application/json:
     schema:
-      $ref: "../schemas/InspectHostnames.yaml"
+      $ref: ../schemas/InspectHostnames.yaml
     examples:
       ResponseForHostnames:
-        $ref: "../examples/InspectHostnamesExample.yaml"
+        $ref: ../examples/InspectHostnamesExample.yaml

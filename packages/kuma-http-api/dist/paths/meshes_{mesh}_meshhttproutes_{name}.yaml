@@ -16,9 +16,9 @@ get:
         type: string
   responses:
     '200':
-      $ref: "../components/responses/MeshHTTPRouteItem.yaml"
+      $ref: ../components/responses/MeshHTTPRouteItem.yaml
     '404':
-      $ref: "../components/responses/NotFound.yaml"
+      $ref: ../components/responses/NotFound.yaml
   tags:
     - MeshHTTPRoute
 put:
@@ -43,12 +43,12 @@ put:
     content:
       application/json:
         schema:
-          $ref: "../components/schemas/MeshHTTPRouteItem.yaml"
+          $ref: ../components/schemas/MeshHTTPRouteItem.yaml
   responses:
     '200':
-      $ref: "../components/responses/MeshHTTPRouteCreateOrUpdateSuccessResponse.yaml"
+      $ref: ../components/responses/MeshHTTPRouteCreateOrUpdateSuccessResponse.yaml
     '201':
-      $ref: "../components/responses/MeshHTTPRouteCreateOrUpdateSuccessResponse.yaml"
+      $ref: ../components/responses/MeshHTTPRouteCreateOrUpdateSuccessResponse.yaml
   tags:
     - MeshHTTPRoute
 delete:
@@ -69,8 +69,8 @@ delete:
         type: string
   responses:
     '200':
-      $ref: "../components/responses/MeshHTTPRouteDeleteSuccessResponse.yaml"
+      $ref: ../components/responses/MeshHTTPRouteDeleteSuccessResponse.yaml
     '404':
-      $ref: "../components/responses/NotFound.yaml"
+      $ref: ../components/responses/NotFound.yaml
   tags:
     - MeshHTTPRoute

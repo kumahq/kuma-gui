@@ -10,9 +10,9 @@ delete:
         type: string
   responses:
     '200':
-      $ref: "../components/responses/ZoneEgressDeleteSuccessResponse.yaml"
+      $ref: ../components/responses/ZoneEgressDeleteSuccessResponse.yaml
     '404':
-      $ref: "../components/responses/NotFound.yaml"
+      $ref: ../components/responses/NotFound.yaml
   tags:
     - ZoneEgress
 get:
@@ -27,9 +27,9 @@ get:
         type: string
   responses:
     '200':
-      $ref: "../components/responses/ZoneEgressItem.yaml"
+      $ref: ../components/responses/ZoneEgressItem.yaml
     '404':
-      $ref: "../components/responses/NotFound.yaml"
+      $ref: ../components/responses/NotFound.yaml
   tags:
     - ZoneEgress
 put:
@@ -48,11 +48,11 @@ put:
     content:
       application/json:
         schema:
-          $ref: "../components/schemas/ZoneEgressItem.yaml"
+          $ref: ../components/schemas/ZoneEgressItem.yaml
   responses:
     '200':
-      $ref: "../components/responses/ZoneEgressCreateOrUpdateSuccessResponse.yaml"
+      $ref: ../components/responses/ZoneEgressCreateOrUpdateSuccessResponse.yaml
     '201':
-      $ref: "../components/responses/ZoneEgressCreateOrUpdateSuccessResponse.yaml"
+      $ref: ../components/responses/ZoneEgressCreateOrUpdateSuccessResponse.yaml
   tags:
     - ZoneEgress

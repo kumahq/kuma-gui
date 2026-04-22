@@ -74,10 +74,10 @@ properties:
                   type: array
                   items:
                     oneOf:
-                      - $ref: "DataSource_File.yaml"
-                      - $ref: "DataSource_Inline.yaml"
-                      - $ref: "DataSource_InlineString.yaml"
-                      - $ref: "DataSource_Secret.yaml"
+                      - $ref: DataSource_File.yaml
+                      - $ref: DataSource_Inline.yaml
+                      - $ref: DataSource_InlineString.yaml
+                      - $ref: DataSource_Secret.yaml
                 mode:
                   description: |-
                     Mode defines the TLS behavior for the TLS session initiated
@@ -110,7 +110,7 @@ properties:
       description: Selector defines structure for selecting tags for given dataplane
       properties:
         match:
-          description: 'Tags to match, can be used for both source and destinations'
+          description: Tags to match, can be used for both source and destinations
           type: object
           additionalProperties:
             type: string

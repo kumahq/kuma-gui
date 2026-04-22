@@ -4,13 +4,13 @@ info:
   description: Kuma API
   version: v1alpha1
   x-ref-schema-name: DataplaneOverview
-  x-oas-source: kumahq/kuma@2b3a907ad432eff0b6dcf1cbeb131769ae87dab9
+  x-oas-source: kumahq/kuma@84ada43c9b742f4c30a7c1f40091a761f2728a87
 paths:
   /:
     get:
       operationId: index
       summary: The index endpoint
-      description: 'The index endpoint, some common metadata'
+      description: The index endpoint, some common metadata
       responses:
         '200':
           $ref: '#/components/responses/IndexResponse'
@@ -48,7 +48,7 @@ paths:
           $ref: '#/components/responses/Internal'
       tags:
         - GlobalInsight
-  '/meshes/{mesh}/{resourceType}/{resourceName}/_rules':
+  /meshes/{mesh}/{resourceType}/{resourceName}/_rules:
     get:
       operationId: inspect-dataplanes-rules
       summary: Returns rules matching this dataplane
@@ -87,11 +87,11 @@ paths:
           $ref: '#/components/responses/Internal'
       tags:
         - Inspect
-  '/meshes/{mesh}/dataplanes/{name}/_config':
+  /meshes/{mesh}/dataplanes/{name}/_config:
     get:
       operationId: get-dataplanes-xds-config
-      summary: 'Get a proxy XDS config on a CP, this endpoint is only available on zone CPs.'
-      description: 'Returns the [xds](https://www.envoyproxy.io/docs/envoy/latest/api-docs/xds_protocol) configuration of the proxy.'
+      summary: Get a proxy XDS config on a CP, this endpoint is only available on zone CPs.
+      description: Returns the [xds](https://www.envoyproxy.io/docs/envoy/latest/api-docs/xds_protocol) configuration of the proxy.
       parameters:
         - name: mesh
           in: path
@@ -130,7 +130,7 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '500':
           $ref: '#/components/responses/Internal'
-  '/meshes/{mesh}/dataplanes/{name}/_layout':
+  /meshes/{mesh}/dataplanes/{name}/_layout:
     get:
       operationId: get-dataplanes-layout
       summary: Get networking layout for this dataplane
@@ -155,7 +155,7 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '500':
           $ref: '#/components/responses/Internal'
-  '/meshes/{mesh}/dataplanes/{name}/_policies':
+  /meshes/{mesh}/dataplanes/{name}/_policies:
     get:
       operationId: get-proxy-policy-conf
       summary: Get proxy policies for this dataplane
@@ -180,7 +180,7 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '500':
           $ref: '#/components/responses/Internal'
-  '/meshes/{mesh}/dataplanes/{name}/_inbounds/{inbound-kri}/_policies':
+  /meshes/{mesh}/dataplanes/{name}/_inbounds/{inbound-kri}/_policies:
     get:
       operationId: get-inbound-policy-conf
       summary: Get policies for this inbound
@@ -211,7 +211,7 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '500':
           $ref: '#/components/responses/Internal'
-  '/meshes/{mesh}/dataplanes/{name}/_outbounds/{kri}/_policies':
+  /meshes/{mesh}/dataplanes/{name}/_outbounds/{kri}/_policies:
     get:
       operationId: get-outbound-policy-conf
       summary: Get policies for this outbound
@@ -242,7 +242,7 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '500':
           $ref: '#/components/responses/Internal'
-  '/meshes/{mesh}/dataplanes/{name}/_outbounds/{kri}/_routes':
+  /meshes/{mesh}/dataplanes/{name}/_outbounds/{kri}/_routes:
     get:
       operationId: get-outbound-routes
       summary: Get routes configuration for this outbound
@@ -273,7 +273,7 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '500':
           $ref: '#/components/responses/Internal'
-  '/meshes/{mesh}/dataplanes/{name}/_outbounds/{outbound-kri}/_routes/{route-kri}/_policies':
+  /meshes/{mesh}/dataplanes/{name}/_outbounds/{outbound-kri}/_routes/{route-kri}/_policies:
     get:
       operationId: get-route-policy-conf
       summary: Get policies for this route
@@ -310,7 +310,7 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '500':
           $ref: '#/components/responses/Internal'
-  '/meshes/{mesh}/{policyType}/{policyName}/_resources/dataplanes':
+  /meshes/{mesh}/{policyType}/{policyName}/_resources/dataplanes:
     get:
       operationId: inspect-resources
       summary: Returns resources matched by this policy
@@ -364,7 +364,7 @@ paths:
           $ref: '#/components/responses/Internal'
       tags:
         - Inspect
-  '/meshes/{mesh}/meshservices/{name}/_dataplanes':
+  /meshes/{mesh}/meshservices/{name}/_dataplanes:
     get:
       operationId: inspect-meshservices-dataplanes
       summary: Returns dataplanes matched by a MeshService
@@ -411,7 +411,7 @@ paths:
           $ref: '#/components/responses/Internal'
       tags:
         - Inspect
-  '/meshes/{mesh}/{serviceType}/{serviceName}/_hostnames':
+  /meshes/{mesh}/{serviceType}/{serviceName}/_hostnames:
     get:
       operationId: inspect-hostnames
       summary: Returns hostnames for service
@@ -453,7 +453,7 @@ paths:
           $ref: '#/components/responses/Internal'
       tags:
         - Inspect
-  '/_kri/{kri}':
+  /_kri/{kri}:
     get:
       operationId: getByKri
       summary: Returns a resource by KRI
@@ -498,7 +498,7 @@ paths:
           $ref: '#/components/responses/NotFound'
       tags:
         - KRI
-  '/meshes/{mesh}/meshaccesslogs/{name}':
+  /meshes/{mesh}/meshaccesslogs/{name}:
     get:
       operationId: getMeshAccessLog
       summary: Returns MeshAccessLog entity
@@ -575,7 +575,7 @@ paths:
           $ref: '#/components/responses/NotFound'
       tags:
         - MeshAccessLog
-  '/meshes/{mesh}/meshaccesslogs':
+  /meshes/{mesh}/meshaccesslogs:
     get:
       operationId: getMeshAccessLogList
       summary: Returns a list of MeshAccessLog in the mesh.
@@ -598,7 +598,7 @@ paths:
             minimum: 1
         - name: filter
           in: query
-          description: 'filter by labels when multiple filters are present, they are ANDed'
+          description: filter by labels when multiple filters are present, they are ANDed
           required: false
           schema:
             type: object
@@ -620,7 +620,7 @@ paths:
           $ref: '#/components/responses/MeshAccessLogList'
       tags:
         - MeshAccessLog
-  '/meshes/{mesh}/meshcircuitbreakers/{name}':
+  /meshes/{mesh}/meshcircuitbreakers/{name}:
     get:
       operationId: getMeshCircuitBreaker
       summary: Returns MeshCircuitBreaker entity
@@ -697,7 +697,7 @@ paths:
           $ref: '#/components/responses/NotFound'
       tags:
         - MeshCircuitBreaker
-  '/meshes/{mesh}/meshcircuitbreakers':
+  /meshes/{mesh}/meshcircuitbreakers:
     get:
       operationId: getMeshCircuitBreakerList
       summary: Returns a list of MeshCircuitBreaker in the mesh.
@@ -720,7 +720,7 @@ paths:
             minimum: 1
         - name: filter
           in: query
-          description: 'filter by labels when multiple filters are present, they are ANDed'
+          description: filter by labels when multiple filters are present, they are ANDed
           required: false
           schema:
             type: object
@@ -742,7 +742,7 @@ paths:
           $ref: '#/components/responses/MeshCircuitBreakerList'
       tags:
         - MeshCircuitBreaker
-  '/meshes/{mesh}/meshfaultinjections/{name}':
+  /meshes/{mesh}/meshfaultinjections/{name}:
     get:
       operationId: getMeshFaultInjection
       summary: Returns MeshFaultInjection entity
@@ -819,7 +819,7 @@ paths:
           $ref: '#/components/responses/NotFound'
       tags:
         - MeshFaultInjection
-  '/meshes/{mesh}/meshfaultinjections':
+  /meshes/{mesh}/meshfaultinjections:
     get:
       operationId: getMeshFaultInjectionList
       summary: Returns a list of MeshFaultInjection in the mesh.
@@ -842,7 +842,7 @@ paths:
             minimum: 1
         - name: filter
           in: query
-          description: 'filter by labels when multiple filters are present, they are ANDed'
+          description: filter by labels when multiple filters are present, they are ANDed
           required: false
           schema:
             type: object
@@ -864,7 +864,7 @@ paths:
           $ref: '#/components/responses/MeshFaultInjectionList'
       tags:
         - MeshFaultInjection
-  '/meshes/{mesh}/meshhealthchecks/{name}':
+  /meshes/{mesh}/meshhealthchecks/{name}:
     get:
       operationId: getMeshHealthCheck
       summary: Returns MeshHealthCheck entity
@@ -941,7 +941,7 @@ paths:
           $ref: '#/components/responses/NotFound'
       tags:
         - MeshHealthCheck
-  '/meshes/{mesh}/meshhealthchecks':
+  /meshes/{mesh}/meshhealthchecks:
     get:
       operationId: getMeshHealthCheckList
       summary: Returns a list of MeshHealthCheck in the mesh.
@@ -964,7 +964,7 @@ paths:
             minimum: 1
         - name: filter
           in: query
-          description: 'filter by labels when multiple filters are present, they are ANDed'
+          description: filter by labels when multiple filters are present, they are ANDed
           required: false
           schema:
             type: object
@@ -986,7 +986,7 @@ paths:
           $ref: '#/components/responses/MeshHealthCheckList'
       tags:
         - MeshHealthCheck
-  '/meshes/{mesh}/meshhttproutes/{name}':
+  /meshes/{mesh}/meshhttproutes/{name}:
     get:
       operationId: getMeshHTTPRoute
       summary: Returns MeshHTTPRoute entity
@@ -1063,7 +1063,7 @@ paths:
           $ref: '#/components/responses/NotFound'
       tags:
         - MeshHTTPRoute
-  '/meshes/{mesh}/meshhttproutes':
+  /meshes/{mesh}/meshhttproutes:
     get:
       operationId: getMeshHTTPRouteList
       summary: Returns a list of MeshHTTPRoute in the mesh.
@@ -1086,7 +1086,7 @@ paths:
             minimum: 1
         - name: filter
           in: query
-          description: 'filter by labels when multiple filters are present, they are ANDed'
+          description: filter by labels when multiple filters are present, they are ANDed
           required: false
           schema:
             type: object
@@ -1108,7 +1108,7 @@ paths:
           $ref: '#/components/responses/MeshHTTPRouteList'
       tags:
         - MeshHTTPRoute
-  '/meshes/{mesh}/meshloadbalancingstrategies/{name}':
+  /meshes/{mesh}/meshloadbalancingstrategies/{name}:
     get:
       operationId: getMeshLoadBalancingStrategy
       summary: Returns MeshLoadBalancingStrategy entity
@@ -1185,7 +1185,7 @@ paths:
           $ref: '#/components/responses/NotFound'
       tags:
         - MeshLoadBalancingStrategy
-  '/meshes/{mesh}/meshloadbalancingstrategies':
+  /meshes/{mesh}/meshloadbalancingstrategies:
     get:
       operationId: getMeshLoadBalancingStrategyList
       summary: Returns a list of MeshLoadBalancingStrategy in the mesh.
@@ -1208,7 +1208,7 @@ paths:
             minimum: 1
         - name: filter
           in: query
-          description: 'filter by labels when multiple filters are present, they are ANDed'
+          description: filter by labels when multiple filters are present, they are ANDed
           required: false
           schema:
             type: object
@@ -1230,7 +1230,7 @@ paths:
           $ref: '#/components/responses/MeshLoadBalancingStrategyList'
       tags:
         - MeshLoadBalancingStrategy
-  '/meshes/{mesh}/meshmetrics/{name}':
+  /meshes/{mesh}/meshmetrics/{name}:
     get:
       operationId: getMeshMetric
       summary: Returns MeshMetric entity
@@ -1307,7 +1307,7 @@ paths:
           $ref: '#/components/responses/NotFound'
       tags:
         - MeshMetric
-  '/meshes/{mesh}/meshmetrics':
+  /meshes/{mesh}/meshmetrics:
     get:
       operationId: getMeshMetricList
       summary: Returns a list of MeshMetric in the mesh.
@@ -1330,7 +1330,7 @@ paths:
             minimum: 1
         - name: filter
           in: query
-          description: 'filter by labels when multiple filters are present, they are ANDed'
+          description: filter by labels when multiple filters are present, they are ANDed
           required: false
           schema:
             type: object
@@ -1352,7 +1352,7 @@ paths:
           $ref: '#/components/responses/MeshMetricList'
       tags:
         - MeshMetric
-  '/meshes/{mesh}/meshpassthroughs/{name}':
+  /meshes/{mesh}/meshpassthroughs/{name}:
     get:
       operationId: getMeshPassthrough
       summary: Returns MeshPassthrough entity
@@ -1429,7 +1429,7 @@ paths:
           $ref: '#/components/responses/NotFound'
       tags:
         - MeshPassthrough
-  '/meshes/{mesh}/meshpassthroughs':
+  /meshes/{mesh}/meshpassthroughs:
     get:
       operationId: getMeshPassthroughList
       summary: Returns a list of MeshPassthrough in the mesh.
@@ -1452,7 +1452,7 @@ paths:
             minimum: 1
         - name: filter
           in: query
-          description: 'filter by labels when multiple filters are present, they are ANDed'
+          description: filter by labels when multiple filters are present, they are ANDed
           required: false
           schema:
             type: object
@@ -1474,7 +1474,7 @@ paths:
           $ref: '#/components/responses/MeshPassthroughList'
       tags:
         - MeshPassthrough
-  '/meshes/{mesh}/meshproxypatches/{name}':
+  /meshes/{mesh}/meshproxypatches/{name}:
     get:
       operationId: getMeshProxyPatch
       summary: Returns MeshProxyPatch entity
@@ -1551,7 +1551,7 @@ paths:
           $ref: '#/components/responses/NotFound'
       tags:
         - MeshProxyPatch
-  '/meshes/{mesh}/meshproxypatches':
+  /meshes/{mesh}/meshproxypatches:
     get:
       operationId: getMeshProxyPatchList
       summary: Returns a list of MeshProxyPatch in the mesh.
@@ -1574,7 +1574,7 @@ paths:
             minimum: 1
         - name: filter
           in: query
-          description: 'filter by labels when multiple filters are present, they are ANDed'
+          description: filter by labels when multiple filters are present, they are ANDed
           required: false
           schema:
             type: object
@@ -1596,7 +1596,7 @@ paths:
           $ref: '#/components/responses/MeshProxyPatchList'
       tags:
         - MeshProxyPatch
-  '/meshes/{mesh}/meshratelimits/{name}':
+  /meshes/{mesh}/meshratelimits/{name}:
     get:
       operationId: getMeshRateLimit
       summary: Returns MeshRateLimit entity
@@ -1673,7 +1673,7 @@ paths:
           $ref: '#/components/responses/NotFound'
       tags:
         - MeshRateLimit
-  '/meshes/{mesh}/meshratelimits':
+  /meshes/{mesh}/meshratelimits:
     get:
       operationId: getMeshRateLimitList
       summary: Returns a list of MeshRateLimit in the mesh.
@@ -1696,7 +1696,7 @@ paths:
             minimum: 1
         - name: filter
           in: query
-          description: 'filter by labels when multiple filters are present, they are ANDed'
+          description: filter by labels when multiple filters are present, they are ANDed
           required: false
           schema:
             type: object
@@ -1718,7 +1718,7 @@ paths:
           $ref: '#/components/responses/MeshRateLimitList'
       tags:
         - MeshRateLimit
-  '/meshes/{mesh}/meshretries/{name}':
+  /meshes/{mesh}/meshretries/{name}:
     get:
       operationId: getMeshRetry
       summary: Returns MeshRetry entity
@@ -1795,7 +1795,7 @@ paths:
           $ref: '#/components/responses/NotFound'
       tags:
         - MeshRetry
-  '/meshes/{mesh}/meshretries':
+  /meshes/{mesh}/meshretries:
     get:
       operationId: getMeshRetryList
       summary: Returns a list of MeshRetry in the mesh.
@@ -1818,7 +1818,7 @@ paths:
             minimum: 1
         - name: filter
           in: query
-          description: 'filter by labels when multiple filters are present, they are ANDed'
+          description: filter by labels when multiple filters are present, they are ANDed
           required: false
           schema:
             type: object
@@ -1840,7 +1840,7 @@ paths:
           $ref: '#/components/responses/MeshRetryList'
       tags:
         - MeshRetry
-  '/meshes/{mesh}/meshtcproutes/{name}':
+  /meshes/{mesh}/meshtcproutes/{name}:
     get:
       operationId: getMeshTCPRoute
       summary: Returns MeshTCPRoute entity
@@ -1917,7 +1917,7 @@ paths:
           $ref: '#/components/responses/NotFound'
       tags:
         - MeshTCPRoute
-  '/meshes/{mesh}/meshtcproutes':
+  /meshes/{mesh}/meshtcproutes:
     get:
       operationId: getMeshTCPRouteList
       summary: Returns a list of MeshTCPRoute in the mesh.
@@ -1940,7 +1940,7 @@ paths:
             minimum: 1
         - name: filter
           in: query
-          description: 'filter by labels when multiple filters are present, they are ANDed'
+          description: filter by labels when multiple filters are present, they are ANDed
           required: false
           schema:
             type: object
@@ -1962,7 +1962,7 @@ paths:
           $ref: '#/components/responses/MeshTCPRouteList'
       tags:
         - MeshTCPRoute
-  '/meshes/{mesh}/meshtimeouts/{name}':
+  /meshes/{mesh}/meshtimeouts/{name}:
     get:
       operationId: getMeshTimeout
       summary: Returns MeshTimeout entity
@@ -2039,7 +2039,7 @@ paths:
           $ref: '#/components/responses/NotFound'
       tags:
         - MeshTimeout
-  '/meshes/{mesh}/meshtimeouts':
+  /meshes/{mesh}/meshtimeouts:
     get:
       operationId: getMeshTimeoutList
       summary: Returns a list of MeshTimeout in the mesh.
@@ -2062,7 +2062,7 @@ paths:
             minimum: 1
         - name: filter
           in: query
-          description: 'filter by labels when multiple filters are present, they are ANDed'
+          description: filter by labels when multiple filters are present, they are ANDed
           required: false
           schema:
             type: object
@@ -2084,7 +2084,7 @@ paths:
           $ref: '#/components/responses/MeshTimeoutList'
       tags:
         - MeshTimeout
-  '/meshes/{mesh}/meshtlses/{name}':
+  /meshes/{mesh}/meshtlses/{name}:
     get:
       operationId: getMeshTLS
       summary: Returns MeshTLS entity
@@ -2161,7 +2161,7 @@ paths:
           $ref: '#/components/responses/NotFound'
       tags:
         - MeshTLS
-  '/meshes/{mesh}/meshtlses':
+  /meshes/{mesh}/meshtlses:
     get:
       operationId: getMeshTLSList
       summary: Returns a list of MeshTLS in the mesh.
@@ -2184,7 +2184,7 @@ paths:
             minimum: 1
         - name: filter
           in: query
-          description: 'filter by labels when multiple filters are present, they are ANDed'
+          description: filter by labels when multiple filters are present, they are ANDed
           required: false
           schema:
             type: object
@@ -2206,7 +2206,7 @@ paths:
           $ref: '#/components/responses/MeshTLSList'
       tags:
         - MeshTLS
-  '/meshes/{mesh}/meshtraces/{name}':
+  /meshes/{mesh}/meshtraces/{name}:
     get:
       operationId: getMeshTrace
       summary: Returns MeshTrace entity
@@ -2283,7 +2283,7 @@ paths:
           $ref: '#/components/responses/NotFound'
       tags:
         - MeshTrace
-  '/meshes/{mesh}/meshtraces':
+  /meshes/{mesh}/meshtraces:
     get:
       operationId: getMeshTraceList
       summary: Returns a list of MeshTrace in the mesh.
@@ -2306,7 +2306,7 @@ paths:
             minimum: 1
         - name: filter
           in: query
-          description: 'filter by labels when multiple filters are present, they are ANDed'
+          description: filter by labels when multiple filters are present, they are ANDed
           required: false
           schema:
             type: object
@@ -2328,7 +2328,7 @@ paths:
           $ref: '#/components/responses/MeshTraceList'
       tags:
         - MeshTrace
-  '/meshes/{mesh}/meshtrafficpermissions/{name}':
+  /meshes/{mesh}/meshtrafficpermissions/{name}:
     get:
       operationId: getMeshTrafficPermission
       summary: Returns MeshTrafficPermission entity
@@ -2405,7 +2405,7 @@ paths:
           $ref: '#/components/responses/NotFound'
       tags:
         - MeshTrafficPermission
-  '/meshes/{mesh}/meshtrafficpermissions':
+  /meshes/{mesh}/meshtrafficpermissions:
     get:
       operationId: getMeshTrafficPermissionList
       summary: Returns a list of MeshTrafficPermission in the mesh.
@@ -2428,7 +2428,7 @@ paths:
             minimum: 1
         - name: filter
           in: query
-          description: 'filter by labels when multiple filters are present, they are ANDed'
+          description: filter by labels when multiple filters are present, they are ANDed
           required: false
           schema:
             type: object
@@ -2450,7 +2450,7 @@ paths:
           $ref: '#/components/responses/MeshTrafficPermissionList'
       tags:
         - MeshTrafficPermission
-  '/meshes/{mesh}/dataplanes':
+  /meshes/{mesh}/dataplanes:
     get:
       operationId: getDataplaneList
       summary: Returns a list of Dataplane in the mesh.
@@ -2473,7 +2473,7 @@ paths:
             minimum: 1
         - name: filter
           in: query
-          description: 'filter by labels when multiple filters are present, they are ANDed'
+          description: filter by labels when multiple filters are present, they are ANDed
           required: false
           schema:
             type: object
@@ -2495,7 +2495,7 @@ paths:
           $ref: '#/components/responses/DataplaneList'
       tags:
         - Dataplane
-  '/meshes/{mesh}/dataplanes/{name}':
+  /meshes/{mesh}/dataplanes/{name}:
     delete:
       operationId: deleteDataplane
       summary: Deletes Dataplane entity
@@ -2572,7 +2572,7 @@ paths:
           $ref: '#/components/responses/DataplaneCreateOrUpdateSuccessResponse'
       tags:
         - Dataplane
-  '/meshes/{mesh}/dataplanes/{name}/_overview':
+  /meshes/{mesh}/dataplanes/{name}/_overview:
     get:
       operationId: getDataplaneOverview
       parameters:
@@ -2595,7 +2595,7 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '500':
           $ref: '#/components/responses/Internal'
-  '/meshes/{mesh}/dataplanes/_overview':
+  /meshes/{mesh}/dataplanes/_overview:
     get:
       operationId: getDataplaneOverviewList
       parameters:
@@ -2635,7 +2635,7 @@ paths:
             minimum: 1
         - name: filter
           in: query
-          description: 'filter by labels when multiple filters are present, they are ANDed'
+          description: filter by labels when multiple filters are present, they are ANDed
           required: false
           schema:
             type: object
@@ -2651,7 +2651,7 @@ paths:
           $ref: '#/components/responses/MeshList'
       tags:
         - Mesh
-  '/meshes/{name}':
+  /meshes/{name}:
     delete:
       operationId: deleteMesh
       summary: Deletes Mesh entity
@@ -2710,7 +2710,7 @@ paths:
           $ref: '#/components/responses/MeshCreateOrUpdateSuccessResponse'
       tags:
         - Mesh
-  '/meshes/{mesh}/meshgateways':
+  /meshes/{mesh}/meshgateways:
     get:
       operationId: getMeshGatewayList
       summary: Returns a list of MeshGateway in the mesh.
@@ -2733,7 +2733,7 @@ paths:
             minimum: 1
         - name: filter
           in: query
-          description: 'filter by labels when multiple filters are present, they are ANDed'
+          description: filter by labels when multiple filters are present, they are ANDed
           required: false
           schema:
             type: object
@@ -2755,7 +2755,7 @@ paths:
           $ref: '#/components/responses/MeshGatewayList'
       tags:
         - MeshGateway
-  '/meshes/{mesh}/meshgateways/{name}':
+  /meshes/{mesh}/meshgateways/{name}:
     delete:
       operationId: deleteMeshGateway
       summary: Deletes MeshGateway entity
@@ -2832,7 +2832,7 @@ paths:
           $ref: '#/components/responses/MeshGatewayCreateOrUpdateSuccessResponse'
       tags:
         - MeshGateway
-  '/meshes/{mesh}/secrets':
+  /meshes/{mesh}/secrets:
     get:
       operationId: getSecretList
       summary: Returns a list of Secret in the mesh.
@@ -2855,7 +2855,7 @@ paths:
             minimum: 1
         - name: filter
           in: query
-          description: 'filter by labels when multiple filters are present, they are ANDed'
+          description: filter by labels when multiple filters are present, they are ANDed
           required: false
           schema:
             type: object
@@ -2877,7 +2877,7 @@ paths:
           $ref: '#/components/responses/SecretList'
       tags:
         - Secret
-  '/meshes/{mesh}/secrets/{name}':
+  /meshes/{mesh}/secrets/{name}:
     delete:
       operationId: deleteSecret
       summary: Deletes Secret entity
@@ -2977,7 +2977,7 @@ paths:
             minimum: 1
         - name: filter
           in: query
-          description: 'filter by labels when multiple filters are present, they are ANDed'
+          description: filter by labels when multiple filters are present, they are ANDed
           required: false
           schema:
             type: object
@@ -2993,7 +2993,7 @@ paths:
           $ref: '#/components/responses/ZoneEgressList'
       tags:
         - ZoneEgress
-  '/zoneegresses/{name}':
+  /zoneegresses/{name}:
     delete:
       operationId: deleteZoneEgress
       summary: Deletes ZoneEgress entity
@@ -3075,7 +3075,7 @@ paths:
             minimum: 1
         - name: filter
           in: query
-          description: 'filter by labels when multiple filters are present, they are ANDed'
+          description: filter by labels when multiple filters are present, they are ANDed
           required: false
           schema:
             type: object
@@ -3091,7 +3091,7 @@ paths:
           $ref: '#/components/responses/ZoneIngressList'
       tags:
         - ZoneIngress
-  '/zoneingresses/{name}':
+  /zoneingresses/{name}:
     delete:
       operationId: deleteZoneIngress
       summary: Deletes ZoneIngress entity
@@ -3150,7 +3150,7 @@ paths:
           $ref: '#/components/responses/ZoneIngressCreateOrUpdateSuccessResponse'
       tags:
         - ZoneIngress
-  '/hostnamegenerators/{name}':
+  /hostnamegenerators/{name}:
     get:
       operationId: getHostnameGenerator
       summary: Returns HostnameGenerator entity
@@ -3232,7 +3232,7 @@ paths:
             minimum: 1
         - name: filter
           in: query
-          description: 'filter by labels when multiple filters are present, they are ANDed'
+          description: filter by labels when multiple filters are present, they are ANDed
           required: false
           schema:
             type: object
@@ -3248,7 +3248,7 @@ paths:
           $ref: '#/components/responses/HostnameGeneratorList'
       tags:
         - HostnameGenerator
-  '/meshes/{mesh}/meshexternalservices/{name}':
+  /meshes/{mesh}/meshexternalservices/{name}:
     get:
       operationId: getMeshExternalService
       summary: Returns MeshExternalService entity
@@ -3325,7 +3325,7 @@ paths:
           $ref: '#/components/responses/NotFound'
       tags:
         - MeshExternalService
-  '/meshes/{mesh}/meshexternalservices':
+  /meshes/{mesh}/meshexternalservices:
     get:
       operationId: getMeshExternalServiceList
       summary: Returns a list of MeshExternalService in the mesh.
@@ -3348,7 +3348,7 @@ paths:
             minimum: 1
         - name: filter
           in: query
-          description: 'filter by labels when multiple filters are present, they are ANDed'
+          description: filter by labels when multiple filters are present, they are ANDed
           required: false
           schema:
             type: object
@@ -3370,7 +3370,7 @@ paths:
           $ref: '#/components/responses/MeshExternalServiceList'
       tags:
         - MeshExternalService
-  '/meshes/{mesh}/meshidentities/{name}':
+  /meshes/{mesh}/meshidentities/{name}:
     get:
       operationId: getMeshIdentity
       summary: Returns MeshIdentity entity
@@ -3447,7 +3447,7 @@ paths:
           $ref: '#/components/responses/NotFound'
       tags:
         - MeshIdentity
-  '/meshes/{mesh}/meshidentities':
+  /meshes/{mesh}/meshidentities:
     get:
       operationId: getMeshIdentityList
       summary: Returns a list of MeshIdentity in the mesh.
@@ -3470,7 +3470,7 @@ paths:
             minimum: 1
         - name: filter
           in: query
-          description: 'filter by labels when multiple filters are present, they are ANDed'
+          description: filter by labels when multiple filters are present, they are ANDed
           required: false
           schema:
             type: object
@@ -3492,7 +3492,7 @@ paths:
           $ref: '#/components/responses/MeshIdentityList'
       tags:
         - MeshIdentity
-  '/meshes/{mesh}/meshmultizoneservices/{name}':
+  /meshes/{mesh}/meshmultizoneservices/{name}:
     get:
       operationId: getMeshMultiZoneService
       summary: Returns MeshMultiZoneService entity
@@ -3569,7 +3569,7 @@ paths:
           $ref: '#/components/responses/NotFound'
       tags:
         - MeshMultiZoneService
-  '/meshes/{mesh}/meshmultizoneservices':
+  /meshes/{mesh}/meshmultizoneservices:
     get:
       operationId: getMeshMultiZoneServiceList
       summary: Returns a list of MeshMultiZoneService in the mesh.
@@ -3592,7 +3592,7 @@ paths:
             minimum: 1
         - name: filter
           in: query
-          description: 'filter by labels when multiple filters are present, they are ANDed'
+          description: filter by labels when multiple filters are present, they are ANDed
           required: false
           schema:
             type: object
@@ -3614,7 +3614,129 @@ paths:
           $ref: '#/components/responses/MeshMultiZoneServiceList'
       tags:
         - MeshMultiZoneService
-  '/meshes/{mesh}/meshservices/{name}':
+  /meshes/{mesh}/meshopentelemetrybackends/{name}:
+    get:
+      operationId: getMeshOpenTelemetryBackend
+      summary: Returns MeshOpenTelemetryBackend entity
+      parameters:
+        - name: mesh
+          in: path
+          description: name of the mesh
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: path
+          description: name of the MeshOpenTelemetryBackend
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/MeshOpenTelemetryBackendItem'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      tags:
+        - MeshOpenTelemetryBackend
+    put:
+      operationId: putMeshOpenTelemetryBackend
+      summary: Creates or Updates MeshOpenTelemetryBackend entity
+      parameters:
+        - name: mesh
+          in: path
+          description: name of the mesh
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: path
+          description: name of the MeshOpenTelemetryBackend
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Put request
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MeshOpenTelemetryBackendItem'
+      responses:
+        '200':
+          $ref: '#/components/responses/MeshOpenTelemetryBackendCreateOrUpdateSuccessResponse'
+        '201':
+          $ref: '#/components/responses/MeshOpenTelemetryBackendCreateOrUpdateSuccessResponse'
+      tags:
+        - MeshOpenTelemetryBackend
+    delete:
+      operationId: deleteMeshOpenTelemetryBackend
+      summary: Deletes MeshOpenTelemetryBackend entity
+      parameters:
+        - name: mesh
+          in: path
+          description: name of the mesh
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: path
+          description: name of the MeshOpenTelemetryBackend
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/MeshOpenTelemetryBackendDeleteSuccessResponse'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      tags:
+        - MeshOpenTelemetryBackend
+  /meshes/{mesh}/meshopentelemetrybackends:
+    get:
+      operationId: getMeshOpenTelemetryBackendList
+      summary: Returns a list of MeshOpenTelemetryBackend in the mesh.
+      parameters:
+        - name: offset
+          in: query
+          description: offset in the list of entities
+          required: false
+          schema:
+            type: integer
+          example: 0
+        - name: size
+          in: query
+          description: the number of items per page
+          required: false
+          schema:
+            type: integer
+            default: 100
+            maximum: 1000
+            minimum: 1
+        - name: filter
+          in: query
+          description: filter by labels when multiple filters are present, they are ANDed
+          required: false
+          schema:
+            type: object
+            properties:
+              key:
+                type: string
+              value:
+                type: string
+          example:
+            label.k8s.kuma.io/namespace: my-ns
+        - name: mesh
+          in: path
+          description: name of the mesh
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/MeshOpenTelemetryBackendList'
+      tags:
+        - MeshOpenTelemetryBackend
+  /meshes/{mesh}/meshservices/{name}:
     get:
       operationId: getMeshService
       summary: Returns MeshService entity
@@ -3691,7 +3813,7 @@ paths:
           $ref: '#/components/responses/NotFound'
       tags:
         - MeshService
-  '/meshes/{mesh}/meshservices':
+  /meshes/{mesh}/meshservices:
     get:
       operationId: getMeshServiceList
       summary: Returns a list of MeshService in the mesh.
@@ -3714,7 +3836,7 @@ paths:
             minimum: 1
         - name: filter
           in: query
-          description: 'filter by labels when multiple filters are present, they are ANDed'
+          description: filter by labels when multiple filters are present, they are ANDed
           required: false
           schema:
             type: object
@@ -3736,7 +3858,7 @@ paths:
           $ref: '#/components/responses/MeshServiceList'
       tags:
         - MeshService
-  '/meshes/{mesh}/meshtrusts/{name}':
+  /meshes/{mesh}/meshtrusts/{name}:
     get:
       operationId: getMeshTrust
       summary: Returns MeshTrust entity
@@ -3813,7 +3935,7 @@ paths:
           $ref: '#/components/responses/NotFound'
       tags:
         - MeshTrust
-  '/meshes/{mesh}/meshtrusts':
+  /meshes/{mesh}/meshtrusts:
     get:
       operationId: getMeshTrustList
       summary: Returns a list of MeshTrust in the mesh.
@@ -3836,7 +3958,7 @@ paths:
             minimum: 1
         - name: filter
           in: query
-          description: 'filter by labels when multiple filters are present, they are ANDed'
+          description: filter by labels when multiple filters are present, they are ANDed
           required: false
           schema:
             type: object
@@ -3858,7 +3980,129 @@ paths:
           $ref: '#/components/responses/MeshTrustList'
       tags:
         - MeshTrust
-  '/meshes/{mesh}/workloads/{name}':
+  /meshes/{mesh}/meshzoneaddresses/{name}:
+    get:
+      operationId: getMeshZoneAddress
+      summary: Returns MeshZoneAddress entity
+      parameters:
+        - name: mesh
+          in: path
+          description: name of the mesh
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: path
+          description: name of the MeshZoneAddress
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/MeshZoneAddressItem'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      tags:
+        - MeshZoneAddress
+    put:
+      operationId: putMeshZoneAddress
+      summary: Creates or Updates MeshZoneAddress entity
+      parameters:
+        - name: mesh
+          in: path
+          description: name of the mesh
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: path
+          description: name of the MeshZoneAddress
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Put request
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MeshZoneAddressItem'
+      responses:
+        '200':
+          $ref: '#/components/responses/MeshZoneAddressCreateOrUpdateSuccessResponse'
+        '201':
+          $ref: '#/components/responses/MeshZoneAddressCreateOrUpdateSuccessResponse'
+      tags:
+        - MeshZoneAddress
+    delete:
+      operationId: deleteMeshZoneAddress
+      summary: Deletes MeshZoneAddress entity
+      parameters:
+        - name: mesh
+          in: path
+          description: name of the mesh
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: path
+          description: name of the MeshZoneAddress
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/MeshZoneAddressDeleteSuccessResponse'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      tags:
+        - MeshZoneAddress
+  /meshes/{mesh}/meshzoneaddresses:
+    get:
+      operationId: getMeshZoneAddressList
+      summary: Returns a list of MeshZoneAddress in the mesh.
+      parameters:
+        - name: offset
+          in: query
+          description: offset in the list of entities
+          required: false
+          schema:
+            type: integer
+          example: 0
+        - name: size
+          in: query
+          description: the number of items per page
+          required: false
+          schema:
+            type: integer
+            default: 100
+            maximum: 1000
+            minimum: 1
+        - name: filter
+          in: query
+          description: filter by labels when multiple filters are present, they are ANDed
+          required: false
+          schema:
+            type: object
+            properties:
+              key:
+                type: string
+              value:
+                type: string
+          example:
+            label.k8s.kuma.io/namespace: my-ns
+        - name: mesh
+          in: path
+          description: name of the mesh
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/MeshZoneAddressList'
+      tags:
+        - MeshZoneAddress
+  /meshes/{mesh}/workloads/{name}:
     get:
       operationId: getWorkload
       summary: Returns Workload entity
@@ -3935,7 +4179,7 @@ paths:
           $ref: '#/components/responses/NotFound'
       tags:
         - Workload
-  '/meshes/{mesh}/workloads':
+  /meshes/{mesh}/workloads:
     get:
       operationId: getWorkloadList
       summary: Returns a list of Workload in the mesh.
@@ -3958,7 +4202,7 @@ paths:
             minimum: 1
         - name: filter
           in: query
-          description: 'filter by labels when multiple filters are present, they are ANDed'
+          description: filter by labels when multiple filters are present, they are ANDed
           required: false
           schema:
             type: object
@@ -4003,7 +4247,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MeshInsightCollection'
-  '/mesh-insights/{name}':
+  /mesh-insights/{name}:
     get:
       parameters:
         - name: name
@@ -4063,7 +4307,7 @@ components:
         hostname:
           type: string
         product:
-          description: 'The product line (Kuma for OSS, different for other distributions)'
+          description: The product line (Kuma for OSS, different for other distributions)
           type: string
         version:
           description: The semantic version of the server running
@@ -4149,7 +4393,7 @@ components:
           description: |
             Used to return the correlation ID back to the user, in the format `<app>:trace:<correlation_id>`.
           type: string
-          example: 'portal:trace:2287285207635123011'
+          example: portal:trace:2287285207635123011
         detail:
           description: |
             A human readable explanation specific to this occurrence of the problem.
@@ -4176,8 +4420,8 @@ components:
         Example 1:
           status: 404
           title: Not Found
-          type: 'https://kongapi.info/konnect/not-found'
-          instance: 'portal:trace:2287285207635123011'
+          type: https://kongapi.info/konnect/not-found
+          instance: portal:trace:2287285207635123011
           detail: The requested document was not found
     PolicyDescription:
       description: information about a policy
@@ -4196,7 +4440,7 @@ components:
           description: indicates that the policy has a rules targetRef field for matching
           type: boolean
         isFromAsRules:
-          description: 'If set to `true`, performs a backward compatibility conversion from the deprecated ''from'' array to the new ''rules'' array. This ensures older policies remain functional under the updated schema.'
+          description: If set to `true`, performs a backward compatibility conversion from the deprecated 'from' array to the new 'rules' array. This ensures older policies remain functional under the updated schema.
           type: boolean
       required:
         - hasToTargetRef
@@ -4205,7 +4449,7 @@ components:
         - isTargetRef
         - isFromAsRules
     ResourceTypeDescription:
-      description: 'Description of a resource type, this is useful for dynamically generated clients and the gui'
+      description: Description of a resource type, this is useful for dynamically generated clients and the gui
       type: object
       properties:
         name:
@@ -4387,7 +4631,7 @@ components:
       required:
         - total
       title: Resource Stats
-    schemas-GlobalInsight:
+    GlobalInsightBase:
       description: Global Insight contains statistics for all main resources
       type: object
       properties:
@@ -4395,7 +4639,7 @@ components:
           description: Time of Global Insight creation
           type: string
           format: date-time
-          example: '2023-01-11T02:30:42.227Z'
+          example: 2023-01-11T02:30:42.227Z
         services:
           description: Mesh services statistics
           allOf:
@@ -4429,10 +4673,7 @@ components:
         - policies
         - meshes
         - resources
-      title: GlobalInsight
-    GlobalInsight:
-      allOf:
-        - $ref: '#/components/schemas/schemas-GlobalInsight'
+      title: GlobalInsightBase
     Meta:
       type: object
       properties:
@@ -4481,7 +4722,7 @@ components:
           description: The actual conf generated
           type: object
           additionalProperties: true
-          x-go-type: 'interface{}'
+          x-go-type: interface{}
         origin:
           type: array
           items:
@@ -4502,7 +4743,7 @@ components:
           type: string
           example: my-cool-service
         not:
-          description: 'whether we check on the absence of this key:value pair'
+          description: whether we check on the absence of this key:value pair
           type: boolean
       required:
         - key
@@ -4519,7 +4760,7 @@ components:
           description: The actual conf generated
           type: object
           additionalProperties: true
-          x-go-type: 'interface{}'
+          x-go-type: interface{}
         origin:
           type: array
           items:
@@ -4549,7 +4790,7 @@ components:
           items:
             type: object
             additionalProperties: true
-            x-go-type: 'interface{}'
+            x-go-type: interface{}
         origin:
           description: The list of policies that contributed to the 'conf'. The order is important as it reflects in what order confs were merged to get the resulting 'conf'.
           type: array
@@ -4568,7 +4809,7 @@ components:
           type: object
           additionalProperties:
             type: string
-          x-go-type: 'map[string]string'
+          x-go-type: map[string]string
         port:
           type: integer
       required:
@@ -4590,12 +4831,12 @@ components:
       type: object
       properties:
         conf:
-          description: 'The final computed configuration for the data plane proxy, derived by merging all policies whose ''targetRef'' field matches the proxy. The merging process follows [RFC 7396 (JSON Merge Patch)](https://datatracker.ietf.org/doc/html/rfc7396), with the order of merging influenced by factors such as where the policy was applied (e.g., custom namespace, system, or global control plane), policy role, and targetRef specificity.'
+          description: The final computed configuration for the data plane proxy, derived by merging all policies whose 'targetRef' field matches the proxy. The merging process follows [RFC 7396 (JSON Merge Patch)](https://datatracker.ietf.org/doc/html/rfc7396), with the order of merging influenced by factors such as where the policy was applied (e.g., custom namespace, system, or global control plane), policy role, and targetRef specificity.
           type: array
           items:
             type: object
             additionalProperties: true
-            x-go-type: 'interface{}'
+            x-go-type: interface{}
         origin:
           description: The list of policies that contributed to the 'conf'. The order is important as it reflects in what order confs were merged to get the resulting 'conf'.
           type: array
@@ -4610,7 +4851,7 @@ components:
         inbound:
           $ref: '#/components/schemas/Inbound'
         rules:
-          description: 'The ''rules'' field is an array to allow for future expansion when ''matches'' conditions are added. Currently, it contains a single item.'
+          description: The 'rules' field is an array to allow for future expansion when 'matches' conditions are added. Currently, it contains a single item.
           type: array
           items:
             $ref: '#/components/schemas/InboundRule'
@@ -4632,7 +4873,7 @@ components:
           items:
             $ref: '#/components/schemas/Rule'
         toResourceRules:
-          description: 'a set of rules for the outbounds produced by real resources (i.e MeshService, MeshExternalService, MeshMultiZoneService).'
+          description: a set of rules for the outbounds produced by real resources (i.e MeshService, MeshExternalService, MeshMultiZoneService).
           type: array
           items:
             $ref: '#/components/schemas/ResourceRule'
@@ -4642,7 +4883,7 @@ components:
           items:
             $ref: '#/components/schemas/FromRule'
         inboundRules:
-          description: 'a set of rules for each inbound port of the proxy. When the policy descriptor has ''isFromAsRules'' set to true, this field supersedes ''fromRules'' and should be used instead.'
+          description: a set of rules for each inbound port of the proxy. When the policy descriptor has 'isFromAsRules' set to true, this field supersedes 'fromRules' and should be used instead.
           type: array
           items:
             $ref: '#/components/schemas/InboundRulesEntry'
@@ -4662,7 +4903,7 @@ components:
           type: string
         match:
           type: object
-          x-go-type: 'interface{}'
+          x-go-type: interface{}
       required:
         - hash
         - match
@@ -4778,6 +5019,9 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/DataplaneOutbound'
+        spiffeId:
+          description: SPIFFE ID of the dataplane's workload identity certificate
+          type: string
       required:
         - kri
         - labels
@@ -4798,10 +5042,10 @@ components:
         kind:
           type: string
         conf:
-          description: 'The final computed configuration for the data plane proxy, derived by merging all policies whose ''targetRef'' field matches the proxy. The merging process follows [RFC 7396 (JSON Merge Patch)](https://datatracker.ietf.org/doc/html/rfc7396), with the order of merging influenced by factors such as where the policy was applied (e.g., custom namespace, system, or global control plane), policy role, and targetRef specificity.'
+          description: The final computed configuration for the data plane proxy, derived by merging all policies whose 'targetRef' field matches the proxy. The merging process follows [RFC 7396 (JSON Merge Patch)](https://datatracker.ietf.org/doc/html/rfc7396), with the order of merging influenced by factors such as where the policy was applied (e.g., custom namespace, system, or global control plane), policy role, and targetRef specificity.
           type: object
           additionalProperties: true
-          x-go-type: 'interface{}'
+          x-go-type: interface{}
         origins:
           description: The list of policies KRI that contributed to the 'conf'. The order is important as it reflects in what order confs were merged to get the resulting 'conf'.
           type: array
@@ -4815,7 +5059,7 @@ components:
       type: object
       properties:
         policies:
-          description: 'The final computed configuration, derived by merging all policies whose ''targetRef'' field matches the proxy. The merging process follows [RFC 7396 (JSON Merge Patch)](https://datatracker.ietf.org/doc/html/rfc7396), with the order of merging influenced by factors such as where the policy was applied (e.g., custom namespace, system, or global control plane), policy role, and targetRef specificity.'
+          description: The final computed configuration, derived by merging all policies whose 'targetRef' field matches the proxy. The merging process follows [RFC 7396 (JSON Merge Patch)](https://datatracker.ietf.org/doc/html/rfc7396), with the order of merging influenced by factors such as where the policy was applied (e.g., custom namespace, system, or global control plane), policy role, and targetRef specificity.
           type: array
           items:
             $ref: '#/components/schemas/PolicyConf'
@@ -4825,10 +5069,10 @@ components:
       type: object
       properties:
         conf:
-          description: 'The final computed configuration for the data plane proxy, derived by merging all policies whose ''targetRef'' field matches the proxy. The merging process follows [RFC 7396 (JSON Merge Patch)](https://datatracker.ietf.org/doc/html/rfc7396), with the order of merging influenced by factors such as where the policy was applied (e.g., custom namespace, system, or global control plane), policy role, and targetRef specificity.'
+          description: The final computed configuration for the data plane proxy, derived by merging all policies whose 'targetRef' field matches the proxy. The merging process follows [RFC 7396 (JSON Merge Patch)](https://datatracker.ietf.org/doc/html/rfc7396), with the order of merging influenced by factors such as where the policy was applied (e.g., custom namespace, system, or global control plane), policy role, and targetRef specificity.
           type: object
           additionalProperties: true
-          x-go-type: 'interface{}'
+          x-go-type: interface{}
         kri:
           type: string
       required:
@@ -4855,7 +5099,7 @@ components:
       type: object
       properties:
         policies:
-          description: 'The final computed configuration, derived by merging all policies whose ''targetRef'' field matches the proxy. The merging process follows [RFC 7396 (JSON Merge Patch)](https://datatracker.ietf.org/doc/html/rfc7396), with the order of merging influenced by factors such as where the policy was applied (e.g., custom namespace, system, or global control plane), policy role, and targetRef specificity.'
+          description: The final computed configuration, derived by merging all policies whose 'targetRef' field matches the proxy. The merging process follows [RFC 7396 (JSON Merge Patch)](https://datatracker.ietf.org/doc/html/rfc7396), with the order of merging influenced by factors such as where the policy was applied (e.g., custom namespace, system, or global control plane), policy role, and targetRef specificity.
           type: array
           items:
             $ref: '#/components/schemas/InboundPolicyConf'
@@ -4872,12 +5116,12 @@ components:
           items:
             type: object
             additionalProperties: true
-            x-go-type: 'interface{}'
+            x-go-type: interface{}
         conf:
-          description: 'The final computed configuration for the data plane proxy, derived by merging all policies whose ''targetRef'' field matches the proxy. The merging process follows [RFC 7396 (JSON Merge Patch)](https://datatracker.ietf.org/doc/html/rfc7396), with the order of merging influenced by factors such as where the policy was applied (e.g., custom namespace, system, or global control plane), policy role, and targetRef specificity.'
+          description: The final computed configuration for the data plane proxy, derived by merging all policies whose 'targetRef' field matches the proxy. The merging process follows [RFC 7396 (JSON Merge Patch)](https://datatracker.ietf.org/doc/html/rfc7396), with the order of merging influenced by factors such as where the policy was applied (e.g., custom namespace, system, or global control plane), policy role, and targetRef specificity.
           type: object
           additionalProperties: true
-          x-go-type: 'interface{}'
+          x-go-type: interface{}
       required:
         - kri
         - conf
@@ -4986,7 +5230,7 @@ components:
               example: Not Found
             type:
               type: string
-              example: 'https://httpstatuses.com/404'
+              example: https://httpstatuses.com/404
             detail:
               type: string
               example: The requested resource was not found
@@ -5093,7 +5337,7 @@ components:
               oneOf:
                 - $ref: '#/components/schemas/PrometheusMetricsBackendConfig'
             name:
-              description: 'Name of the backend, can be then used in Mesh.metrics.enabledBackend'
+              description: Name of the backend, can be then used in Mesh.metrics.enabledBackend
               type: string
             type:
               description: Type of the backend (Kuma ships with 'prometheus')
@@ -5202,7 +5446,7 @@ components:
                           traffic.
                         type: boolean
                   name:
-                    description: 'Name adds another way of referencing this port, usable with MeshService'
+                    description: Name adds another way of referencing this port, usable with MeshService
                     type: string
                   port:
                     description: |-
@@ -5214,7 +5458,7 @@ components:
                       this port.
                     type: integer
                   protocol:
-                    description: 'Protocol of the service (tcp, http, grpc, etc).'
+                    description: Protocol of the service (tcp, http, grpc, etc).
                     type: string
                   serviceAddress:
                     description: |-
@@ -5285,6 +5529,42 @@ components:
                     type: object
                     additionalProperties:
                       type: string
+                type: object
+            listeners:
+              description: |-
+                Listeners describes zone proxy listeners embedded in this Dataplane.
+                Listeners may coexist with inbounds and gateways.
+              type: array
+              items:
+                description: Listener describes a zone proxy listener (ZoneIngress or ZoneEgress) embedded in a regular Dataplane.
+                properties:
+                  address:
+                    description: Address on which the listener will be exposed.
+                    type: string
+                  name:
+                    description: |-
+                      Name uniquely identifies this listener within the Dataplane and is
+                      used to reference it via sectionName in policies.
+                      Optional: if unset, the port value is used as the name (as a string).
+                    type: string
+                  port:
+                    description: Port on which the listener will be exposed.
+                    type: integer
+                  state:
+                    description: |-
+                      State describes the current health state of the listener.
+                      The control plane sets this based on the readiness of the underlying
+                      pod and sidecar container.
+                    oneOf:
+                      - type: string
+                      - type: integer
+                  type:
+                    description: |-
+                      Type determines the role of this listener: ZoneIngress for inbound
+                      cross-zone traffic or ZoneEgress for outbound external traffic.
+                    oneOf:
+                      - type: string
+                      - type: integer
                 type: object
             outbound:
               description: |-
@@ -5375,21 +5655,36 @@ components:
                       items:
                         properties:
                           kind:
-                            description: "Type of the backend: MeshService or MeshExternalService\n\n\t+required"
+                            description: |-
+                              Type of the backend: MeshService or MeshExternalService
+
+                              	+required
                             type: string
                           labels:
-                            description: "Labels used to select backends\n\n\t+optional"
+                            description: |-
+                              Labels used to select backends
+
+                              	+optional
                             type: object
                             additionalProperties:
                               type: string
                           name:
-                            description: "Name of the backend.\n\n\t+optional"
+                            description: |-
+                              Name of the backend.
+
+                              	+optional
                             type: string
                           namespace:
-                            description: "Namespace of the backend. Might be empty\n\n\t+optional"
+                            description: |-
+                              Namespace of the backend. Might be empty
+
+                              	+optional
                             type: string
                           port:
-                            description: "Port of the backend.\n\n\t+optional"
+                            description: |-
+                              Port of the backend.
+
+                              	+optional
                             type: integer
                             format: uint32
                         type: object
@@ -5675,7 +5970,7 @@ components:
                     oneOf:
                       - $ref: '#/components/schemas/PrometheusMetricsBackendConfig'
                   name:
-                    description: 'Name of the backend, can be then used in Mesh.metrics.enabledBackend'
+                    description: Name of the backend, can be then used in Mesh.metrics.enabledBackend
                     type: string
                   type:
                     description: Type of the backend (Kuma ships with 'prometheus')
@@ -5753,7 +6048,7 @@ components:
               description: Name of the enabled backend
               type: string
             skipValidation:
-              description: 'If enabled, skips CA validation.'
+              description: If enabled, skips CA validation.
               type: boolean
         name:
           type: string
@@ -5837,7 +6132,7 @@ components:
         - type
         - name
     MeshAccessLogItem:
-      description: 'MeshAccessLog configures access logging for traffic between services in the mesh. It allows you to capture and export request/response logs to various backends (file, TCP, or OpenTelemetry) for monitoring, debugging, and auditing purposes.'
+      description: MeshAccessLog configures access logging for traffic between services in the mesh. It allows you to capture and export request/response logs to various backends (file, TCP, or OpenTelemetry) for monitoring, debugging, and auditing purposes.
       type: object
       properties:
         type:
@@ -5950,6 +6245,32 @@ components:
                                   example:
                                     - key: mesh
                                       value: '%KUMA_MESH%'
+                                backendRef:
+                                  description: |-
+                                    BackendRef is a reference to a MeshOpenTelemetryBackend resource that
+                                    defines the collector endpoint. Mutually exclusive with Endpoint.
+                                  type: object
+                                  properties:
+                                    kind:
+                                      description: Kind of the backend resource.
+                                      type: string
+                                      enum:
+                                        - MeshOpenTelemetryBackend
+                                    labels:
+                                      description: |-
+                                        Labels to match the referenced resource. Use for cross-zone references
+                                        where KDS adds a hash suffix to metadata.name. Mutually exclusive with
+                                        Name. When multiple resources match, the oldest by creation time wins.
+                                      type: object
+                                      additionalProperties:
+                                        type: string
+                                    name:
+                                      description: |-
+                                        Name of the referenced resource (metadata.name). Use for same-cluster
+                                        references. Mutually exclusive with Labels.
+                                      type: string
+                                  required:
+                                    - kind
                                 body:
                                   description: |-
                                     Body is a raw string or an OTLP any value as described at
@@ -5964,12 +6285,13 @@ components:
                                             stringValue: '%KUMA_MESH%'
                                   x-kubernetes-preserve-unknown-fields: true
                                 endpoint:
-                                  description: Endpoint of OpenTelemetry collector. An empty port defaults to 4317.
+                                  description: |-
+                                    Endpoint of OpenTelemetry collector. An empty port defaults to 4317.
+
+                                    Deprecated: use BackendRef instead.
                                   type: string
-                                  example: 'otel-collector:4317'
-                                  minLength: 1
-                              required:
-                                - endpoint
+                                  example: otel-collector:4317
+                                  default: ''
                             tcp:
                               description: TCPBackend defines a TCP logging backend.
                               type: object
@@ -5977,7 +6299,7 @@ components:
                                 address:
                                   description: Address of the TCP logging backend
                                   type: string
-                                  example: '127.0.0.1:5000'
+                                  example: 127.0.0.1:5000
                                   minLength: 1
                                 format:
                                   description: |-
@@ -6177,6 +6499,32 @@ components:
                                   example:
                                     - key: mesh
                                       value: '%KUMA_MESH%'
+                                backendRef:
+                                  description: |-
+                                    BackendRef is a reference to a MeshOpenTelemetryBackend resource that
+                                    defines the collector endpoint. Mutually exclusive with Endpoint.
+                                  type: object
+                                  properties:
+                                    kind:
+                                      description: Kind of the backend resource.
+                                      type: string
+                                      enum:
+                                        - MeshOpenTelemetryBackend
+                                    labels:
+                                      description: |-
+                                        Labels to match the referenced resource. Use for cross-zone references
+                                        where KDS adds a hash suffix to metadata.name. Mutually exclusive with
+                                        Name. When multiple resources match, the oldest by creation time wins.
+                                      type: object
+                                      additionalProperties:
+                                        type: string
+                                    name:
+                                      description: |-
+                                        Name of the referenced resource (metadata.name). Use for same-cluster
+                                        references. Mutually exclusive with Labels.
+                                      type: string
+                                  required:
+                                    - kind
                                 body:
                                   description: |-
                                     Body is a raw string or an OTLP any value as described at
@@ -6191,12 +6539,13 @@ components:
                                             stringValue: '%KUMA_MESH%'
                                   x-kubernetes-preserve-unknown-fields: true
                                 endpoint:
-                                  description: Endpoint of OpenTelemetry collector. An empty port defaults to 4317.
+                                  description: |-
+                                    Endpoint of OpenTelemetry collector. An empty port defaults to 4317.
+
+                                    Deprecated: use BackendRef instead.
                                   type: string
-                                  example: 'otel-collector:4317'
-                                  minLength: 1
-                              required:
-                                - endpoint
+                                  example: otel-collector:4317
+                                  default: ''
                             tcp:
                               description: TCPBackend defines a TCP logging backend.
                               type: object
@@ -6204,7 +6553,7 @@ components:
                                 address:
                                   description: Address of the TCP logging backend
                                   type: string
-                                  example: '127.0.0.1:5000'
+                                  example: 127.0.0.1:5000
                                   minLength: 1
                                 format:
                                   description: |-
@@ -6404,6 +6753,32 @@ components:
                                   example:
                                     - key: mesh
                                       value: '%KUMA_MESH%'
+                                backendRef:
+                                  description: |-
+                                    BackendRef is a reference to a MeshOpenTelemetryBackend resource that
+                                    defines the collector endpoint. Mutually exclusive with Endpoint.
+                                  type: object
+                                  properties:
+                                    kind:
+                                      description: Kind of the backend resource.
+                                      type: string
+                                      enum:
+                                        - MeshOpenTelemetryBackend
+                                    labels:
+                                      description: |-
+                                        Labels to match the referenced resource. Use for cross-zone references
+                                        where KDS adds a hash suffix to metadata.name. Mutually exclusive with
+                                        Name. When multiple resources match, the oldest by creation time wins.
+                                      type: object
+                                      additionalProperties:
+                                        type: string
+                                    name:
+                                      description: |-
+                                        Name of the referenced resource (metadata.name). Use for same-cluster
+                                        references. Mutually exclusive with Labels.
+                                      type: string
+                                  required:
+                                    - kind
                                 body:
                                   description: |-
                                     Body is a raw string or an OTLP any value as described at
@@ -6418,12 +6793,13 @@ components:
                                             stringValue: '%KUMA_MESH%'
                                   x-kubernetes-preserve-unknown-fields: true
                                 endpoint:
-                                  description: Endpoint of OpenTelemetry collector. An empty port defaults to 4317.
+                                  description: |-
+                                    Endpoint of OpenTelemetry collector. An empty port defaults to 4317.
+
+                                    Deprecated: use BackendRef instead.
                                   type: string
-                                  example: 'otel-collector:4317'
-                                  minLength: 1
-                              required:
-                                - endpoint
+                                  example: otel-collector:4317
+                                  default: ''
                             tcp:
                               description: TCPBackend defines a TCP logging backend.
                               type: object
@@ -6431,7 +6807,7 @@ components:
                                 address:
                                   description: Address of the TCP logging backend
                                   type: string
-                                  example: '127.0.0.1:5000'
+                                  example: 127.0.0.1:5000
                                   minLength: 1
                                 format:
                                   description: |-
@@ -6551,13 +6927,57 @@ components:
           description: Time at which the resource was created
           type: string
           format: date-time
-          example: '0001-01-01T00:00:00Z'
+          example: 0001-01-01T00:00:00Z
           readOnly: true
         modificationTime:
           description: Time at which the resource was updated
           type: string
           format: date-time
-          example: '0001-01-01T00:00:00Z'
+          example: 0001-01-01T00:00:00Z
+          readOnly: true
+        status:
+          description: Status is the current status of the Kuma MeshAccessLog resource.
+          type: object
+          properties:
+            conditions:
+              type: array
+              items:
+                properties:
+                  message:
+                    description: |-
+                      message is a human readable message indicating details about the transition.
+                      This may be an empty string.
+                    type: string
+                    maxLength: 32768
+                  reason:
+                    description: |-
+                      reason contains a programmatic identifier indicating the reason for the condition's last transition.
+                      Producers of specific condition types may define expected values and meanings for this field,
+                      and whether the values are considered a guaranteed API.
+                      The value should be a CamelCase string.
+                      This field may not be empty.
+                    type: string
+                    maxLength: 1024
+                    minLength: 1
+                    pattern: ^[A-Za-z]([A-Za-z0-9_,:]*[A-Za-z0-9_])?$
+                  status:
+                    description: status of the condition, one of True, False, Unknown.
+                    type: string
+                    enum:
+                      - 'True'
+                      - 'False'
+                      - Unknown
+                  type:
+                    description: type of condition in CamelCase or in foo.example.com/CamelCase.
+                    type: string
+                    maxLength: 316
+                    pattern: ^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$
+                required:
+                  - message
+                  - reason
+                  - status
+                  - type
+                type: object
           readOnly: true
       required:
         - type
@@ -6815,7 +7235,7 @@ components:
                                     type: integer
                                     format: int32
                           disabled:
-                            description: 'When set to true, outlierDetection configuration won''t take any effect'
+                            description: When set to true, outlierDetection configuration won't take any effect
                             type: boolean
                           healthyPanicThreshold:
                             description: |-
@@ -7132,7 +7552,7 @@ components:
                                     type: integer
                                     format: int32
                           disabled:
-                            description: 'When set to true, outlierDetection configuration won''t take any effect'
+                            description: When set to true, outlierDetection configuration won't take any effect
                             type: boolean
                           healthyPanicThreshold:
                             description: |-
@@ -7450,7 +7870,7 @@ components:
                                     type: integer
                                     format: int32
                           disabled:
-                            description: 'When set to true, outlierDetection configuration won''t take any effect'
+                            description: When set to true, outlierDetection configuration won't take any effect
                             type: boolean
                           healthyPanicThreshold:
                             description: |-
@@ -7549,20 +7969,20 @@ components:
           description: Time at which the resource was created
           type: string
           format: date-time
-          example: '0001-01-01T00:00:00Z'
+          example: 0001-01-01T00:00:00Z
           readOnly: true
         modificationTime:
           description: Time at which the resource was updated
           type: string
           format: date-time
-          example: '0001-01-01T00:00:00Z'
+          example: 0001-01-01T00:00:00Z
           readOnly: true
       required:
         - type
         - name
         - spec
     MeshFaultInjectionItem:
-      description: 'MeshFaultInjection allows you to test the resiliency of your services by injecting faults like delays, connection aborts, and response bandwidth limits into the traffic. This is useful for chaos testing and validating that your applications handle failures gracefully.'
+      description: MeshFaultInjection allows you to test the resiliency of your services by injecting faults like delays, connection aborts, and response bandwidth limits into the traffic. This is useful for chaos testing and validating that your applications handle failures gracefully.
       type: object
       properties:
         type:
@@ -8054,13 +8474,13 @@ components:
           description: Time at which the resource was created
           type: string
           format: date-time
-          example: '0001-01-01T00:00:00Z'
+          example: 0001-01-01T00:00:00Z
           readOnly: true
         modificationTime:
           description: Time at which the resource was updated
           type: string
           format: date-time
-          example: '0001-01-01T00:00:00Z'
+          example: 0001-01-01T00:00:00Z
           readOnly: true
       required:
         - type
@@ -8179,7 +8599,7 @@ components:
             description: Selector defines structure for selecting tags for given dataplane
             properties:
               match:
-                description: 'Tags to match, can be used for both source and destinations'
+                description: Tags to match, can be used for both source and destinations
                 type: object
                 additionalProperties:
                   type: string
@@ -8415,7 +8835,7 @@ components:
                                               type: string
                                               maxLength: 256
                                               minLength: 1
-                                              pattern: '^[a-z0-9!#$%&''*+\-.^_\x60|~]+$'
+                                              pattern: ^[a-z0-9!#$%&'*+\-.^_\x60|~]+$
                                             value:
                                               type: string
                                           required:
@@ -8439,7 +8859,7 @@ components:
                                               type: string
                                               maxLength: 256
                                               minLength: 1
-                                              pattern: '^[a-z0-9!#$%&''*+\-.^_\x60|~]+$'
+                                              pattern: ^[a-z0-9!#$%&'*+\-.^_\x60|~]+$
                                             value:
                                               type: string
                                           required:
@@ -8547,7 +8967,7 @@ components:
                                         type: string
                                         maxLength: 253
                                         minLength: 1
-                                        pattern: '^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$'
+                                        pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$
                                       path:
                                         description: |-
                                           Path defines parameters used to modify the path of the incoming request.
@@ -8605,7 +9025,7 @@ components:
                                               type: string
                                               maxLength: 256
                                               minLength: 1
-                                              pattern: '^[a-z0-9!#$%&''*+\-.^_\x60|~]+$'
+                                              pattern: ^[a-z0-9!#$%&'*+\-.^_\x60|~]+$
                                             value:
                                               type: string
                                           required:
@@ -8629,7 +9049,7 @@ components:
                                               type: string
                                               maxLength: 256
                                               minLength: 1
-                                              pattern: '^[a-z0-9!#$%&''*+\-.^_\x60|~]+$'
+                                              pattern: ^[a-z0-9!#$%&'*+\-.^_\x60|~]+$
                                             value:
                                               type: string
                                           required:
@@ -8661,7 +9081,7 @@ components:
                                         type: string
                                         maxLength: 253
                                         minLength: 1
-                                        pattern: '^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$'
+                                        pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$
                                       path:
                                         description: Path defines a path rewrite.
                                         type: object
@@ -8701,7 +9121,7 @@ components:
                                       type: string
                                       maxLength: 256
                                       minLength: 1
-                                      pattern: '^[a-z0-9!#$%&''*+\-.^_\x60|~]+$'
+                                      pattern: ^[a-z0-9!#$%&'*+\-.^_\x60|~]+$
                                     type:
                                       description: Type specifies how to match against the value of the header.
                                       type: string
@@ -8847,20 +9267,20 @@ components:
           description: Time at which the resource was created
           type: string
           format: date-time
-          example: '0001-01-01T00:00:00Z'
+          example: 0001-01-01T00:00:00Z
           readOnly: true
         modificationTime:
           description: Time at which the resource was updated
           type: string
           format: date-time
-          example: '0001-01-01T00:00:00Z'
+          example: 0001-01-01T00:00:00Z
           readOnly: true
       required:
         - type
         - name
         - spec
     MeshHealthCheckItem:
-      description: 'MeshHealthCheck enables active health checking of services in the mesh. It periodically probes service endpoints using TCP, HTTP, or gRPC health checks to detect and remove unhealthy instances from the load balancing pool, improving overall service reliability.'
+      description: MeshHealthCheck enables active health checking of services in the mesh. It periodically probes service endpoints using TCP, HTTP, or gRPC health checks to detect and remove unhealthy instances from the load balancing pool, improving overall service reliability.
       type: object
       properties:
         type:
@@ -9052,7 +9472,7 @@ components:
                                       type: string
                                       maxLength: 256
                                       minLength: 1
-                                      pattern: '^[a-z0-9!#$%&''*+\-.^_\x60|~]+$'
+                                      pattern: ^[a-z0-9!#$%&'*+\-.^_\x60|~]+$
                                     value:
                                       type: string
                                   required:
@@ -9071,7 +9491,7 @@ components:
                                       type: string
                                       maxLength: 256
                                       minLength: 1
-                                      pattern: '^[a-z0-9!#$%&''*+\-.^_\x60|~]+$'
+                                      pattern: ^[a-z0-9!#$%&'*+\-.^_\x60|~]+$
                                     value:
                                       type: string
                                   required:
@@ -9223,20 +9643,20 @@ components:
           description: Time at which the resource was created
           type: string
           format: date-time
-          example: '0001-01-01T00:00:00Z'
+          example: 0001-01-01T00:00:00Z
           readOnly: true
         modificationTime:
           description: Time at which the resource was updated
           type: string
           format: date-time
-          example: '0001-01-01T00:00:00Z'
+          example: 0001-01-01T00:00:00Z
           readOnly: true
       required:
         - type
         - name
         - spec
     MeshLoadBalancingStrategyItem:
-      description: 'MeshLoadBalancingStrategy configures how traffic is distributed across service instances. It supports multiple load balancing algorithms (round-robin, least request, ring hash, random, maglev), locality-aware routing to prefer nearby instances, and cross-zone failover strategies for high availability.'
+      description: MeshLoadBalancingStrategy configures how traffic is distributed across service instances. It supports multiple load balancing algorithms (round-robin, least request, ring hash, random, maglev), locality-aware routing to prefer nearby instances, and cross-zone failover strategies for high availability.
       type: object
       properties:
         type:
@@ -9366,7 +9786,7 @@ components:
                                   description: The name of the path for the cookie.
                                   type: string
                                 ttl:
-                                  description: 'If specified, a cookie with the TTL will be generated if the cookie is not present.'
+                                  description: If specified, a cookie with the TTL will be generated if the cookie is not present.
                                   type: string
                               required:
                                 - name
@@ -9484,7 +9904,7 @@ components:
                                           description: The name of the path for the cookie.
                                           type: string
                                         ttl:
-                                          description: 'If specified, a cookie with the TTL will be generated if the cookie is not present.'
+                                          description: If specified, a cookie with the TTL will be generated if the cookie is not present.
                                           type: string
                                       required:
                                         - name
@@ -9600,7 +10020,7 @@ components:
                                           description: The name of the path for the cookie.
                                           type: string
                                         ttl:
-                                          description: 'If specified, a cookie with the TTL will be generated if the cookie is not present.'
+                                          description: If specified, a cookie with the TTL will be generated if the cookie is not present.
                                           type: string
                                       required:
                                         - name
@@ -9850,20 +10270,20 @@ components:
           description: Time at which the resource was created
           type: string
           format: date-time
-          example: '0001-01-01T00:00:00Z'
+          example: 0001-01-01T00:00:00Z
           readOnly: true
         modificationTime:
           description: Time at which the resource was updated
           type: string
           format: date-time
-          example: '0001-01-01T00:00:00Z'
+          example: 0001-01-01T00:00:00Z
           readOnly: true
       required:
         - type
         - name
         - spec
     MeshMetricItem:
-      description: 'MeshMetric enables collection and export of service mesh metrics. It configures sidecar and application metrics scraping, allows customization of which metrics are published, and supports exporting to Prometheus or OpenTelemetry backends for monitoring and observability.'
+      description: MeshMetric enables collection and export of service mesh metrics. It configures sidecar and application metrics scraping, allows customization of which metrics are published, and supports exporting to Prometheus or OpenTelemetry backends for monitoring and observability.
       type: object
       properties:
         type:
@@ -9927,14 +10347,42 @@ components:
                         description: OpenTelemetry backend configuration
                         type: object
                         properties:
+                          backendRef:
+                            description: |-
+                              BackendRef is a reference to a MeshOpenTelemetryBackend resource that
+                              defines the collector endpoint. Mutually exclusive with Endpoint.
+                            type: object
+                            properties:
+                              kind:
+                                description: Kind of the backend resource.
+                                type: string
+                                enum:
+                                  - MeshOpenTelemetryBackend
+                              labels:
+                                description: |-
+                                  Labels to match the referenced resource. Use for cross-zone references
+                                  where KDS adds a hash suffix to metadata.name. Mutually exclusive with
+                                  Name. When multiple resources match, the oldest by creation time wins.
+                                type: object
+                                additionalProperties:
+                                  type: string
+                              name:
+                                description: |-
+                                  Name of the referenced resource (metadata.name). Use for same-cluster
+                                  references. Mutually exclusive with Labels.
+                                type: string
+                            required:
+                              - kind
                           endpoint:
-                            description: Endpoint for OpenTelemetry collector
+                            description: |-
+                              Endpoint for OpenTelemetry collector.
+
+                              Deprecated: use BackendRef instead.
                             type: string
+                            default: ''
                           refreshInterval:
                             description: RefreshInterval defines how frequent metrics should be pushed to collector
                             type: string
-                        required:
-                          - endpoint
                       prometheus:
                         description: Prometheus backend configuration.
                         type: object
@@ -10114,20 +10562,64 @@ components:
           description: Time at which the resource was created
           type: string
           format: date-time
-          example: '0001-01-01T00:00:00Z'
+          example: 0001-01-01T00:00:00Z
           readOnly: true
         modificationTime:
           description: Time at which the resource was updated
           type: string
           format: date-time
-          example: '0001-01-01T00:00:00Z'
+          example: 0001-01-01T00:00:00Z
+          readOnly: true
+        status:
+          description: Status is the current status of the Kuma MeshMetric resource.
+          type: object
+          properties:
+            conditions:
+              type: array
+              items:
+                properties:
+                  message:
+                    description: |-
+                      message is a human readable message indicating details about the transition.
+                      This may be an empty string.
+                    type: string
+                    maxLength: 32768
+                  reason:
+                    description: |-
+                      reason contains a programmatic identifier indicating the reason for the condition's last transition.
+                      Producers of specific condition types may define expected values and meanings for this field,
+                      and whether the values are considered a guaranteed API.
+                      The value should be a CamelCase string.
+                      This field may not be empty.
+                    type: string
+                    maxLength: 1024
+                    minLength: 1
+                    pattern: ^[A-Za-z]([A-Za-z0-9_,:]*[A-Za-z0-9_])?$
+                  status:
+                    description: status of the condition, one of True, False, Unknown.
+                    type: string
+                    enum:
+                      - 'True'
+                      - 'False'
+                      - Unknown
+                  type:
+                    description: type of condition in CamelCase or in foo.example.com/CamelCase.
+                    type: string
+                    maxLength: 316
+                    pattern: ^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$
+                required:
+                  - message
+                  - reason
+                  - status
+                  - type
+                type: object
           readOnly: true
       required:
         - type
         - name
         - spec
     MeshPassthroughItem:
-      description: 'MeshPassthrough controls how traffic to external services (outside the mesh) is handled by the sidecar proxy. It allows you to configure passthrough mode to permit, deny, or selectively allow traffic to specific external destinations based on domain names, IPs, or CIDR ranges.'
+      description: MeshPassthrough controls how traffic to external services (outside the mesh) is handled by the sidecar proxy. It allows you to configure passthrough mode to permit, deny, or selectively allow traffic to specific external destinations based on domain names, IPs, or CIDR ranges.
       type: object
       properties:
         type:
@@ -10181,7 +10673,7 @@ components:
                           - http2
                           - mysql
                       type:
-                        description: 'Type of the match, one of `Domain`, `IP` or `CIDR` is available.'
+                        description: Type of the match, one of `Domain`, `IP` or `CIDR` is available.
                         type: string
                         enum:
                           - Domain
@@ -10272,20 +10764,20 @@ components:
           description: Time at which the resource was created
           type: string
           format: date-time
-          example: '0001-01-01T00:00:00Z'
+          example: 0001-01-01T00:00:00Z
           readOnly: true
         modificationTime:
           description: Time at which the resource was updated
           type: string
           format: date-time
-          example: '0001-01-01T00:00:00Z'
+          example: 0001-01-01T00:00:00Z
           readOnly: true
       required:
         - type
         - name
         - spec
     MeshProxyPatchItem:
-      description: 'MeshProxyPatch provides advanced customization of the Envoy proxy configuration generated by Kuma. It allows you to add, remove, or modify Envoy resources (clusters, listeners, filters, virtual hosts) using YAML patches or JSON patches for fine-grained control beyond standard policies.'
+      description: MeshProxyPatch provides advanced customization of the Envoy proxy configuration generated by Kuma. It allows you to add, remove, or modify Envoy resources (clusters, listeners, filters, virtual hosts) using YAML patches or JSON patches for fine-grained control beyond standard policies.
       type: object
       properties:
         type:
@@ -10338,7 +10830,7 @@ components:
                               description: JsonPatchBlock is one json patch operation block.
                               properties:
                                 from:
-                                  description: 'From is a jsonpatch from string, used by move and copy operations.'
+                                  description: From is a jsonpatch from string, used by move and copy operations.
                                   type: string
                                 op:
                                   description: Op is a jsonpatch operation string.
@@ -10410,7 +10902,7 @@ components:
                               description: JsonPatchBlock is one json patch operation block.
                               properties:
                                 from:
-                                  description: 'From is a jsonpatch from string, used by move and copy operations.'
+                                  description: From is a jsonpatch from string, used by move and copy operations.
                                   type: string
                                 op:
                                   description: Op is a jsonpatch operation string.
@@ -10439,7 +10931,7 @@ components:
                                 description: Name of the listener to match.
                                 type: string
                               listenerTags:
-                                description: 'Listener tags available in Listener#Metadata#FilterMetadata[io.kuma.tags]'
+                                description: Listener tags available in Listener#Metadata#FilterMetadata[io.kuma.tags]
                                 type: object
                                 additionalProperties:
                                   type: string
@@ -10491,7 +10983,7 @@ components:
                               description: JsonPatchBlock is one json patch operation block.
                               properties:
                                 from:
-                                  description: 'From is a jsonpatch from string, used by move and copy operations.'
+                                  description: From is a jsonpatch from string, used by move and copy operations.
                                   type: string
                                 op:
                                   description: Op is a jsonpatch operation string.
@@ -10537,7 +11029,7 @@ components:
                                   For example MeshTrace plugin can create Cluster with "mesh-trace" origin.
                                 type: string
                               tags:
-                                description: 'Tags available in Listener#Metadata#FilterMetadata[io.kuma.tags]'
+                                description: Tags available in Listener#Metadata#FilterMetadata[io.kuma.tags]
                                 type: object
                                 additionalProperties:
                                   type: string
@@ -10566,7 +11058,7 @@ components:
                               description: JsonPatchBlock is one json patch operation block.
                               properties:
                                 from:
-                                  description: 'From is a jsonpatch from string, used by move and copy operations.'
+                                  description: From is a jsonpatch from string, used by move and copy operations.
                                   type: string
                                 op:
                                   description: Op is a jsonpatch operation string.
@@ -10595,7 +11087,7 @@ components:
                                 description: Name of the listener to match.
                                 type: string
                               listenerTags:
-                                description: 'Listener tags available in Listener#Metadata#FilterMetadata[io.kuma.tags]'
+                                description: Listener tags available in Listener#Metadata#FilterMetadata[io.kuma.tags]
                                 type: object
                                 additionalProperties:
                                   type: string
@@ -10649,7 +11141,7 @@ components:
                               description: JsonPatchBlock is one json patch operation block.
                               properties:
                                 from:
-                                  description: 'From is a jsonpatch from string, used by move and copy operations.'
+                                  description: From is a jsonpatch from string, used by move and copy operations.
                                   type: string
                                 op:
                                   description: Op is a jsonpatch operation string.
@@ -10781,13 +11273,13 @@ components:
           description: Time at which the resource was created
           type: string
           format: date-time
-          example: '0001-01-01T00:00:00Z'
+          example: 0001-01-01T00:00:00Z
           readOnly: true
         modificationTime:
           description: Time at which the resource was updated
           type: string
           format: date-time
-          example: '0001-01-01T00:00:00Z'
+          example: 0001-01-01T00:00:00Z
           readOnly: true
       required:
         - type
@@ -10863,7 +11355,7 @@ components:
                                               type: string
                                               maxLength: 256
                                               minLength: 1
-                                              pattern: '^[a-z0-9!#$%&''*+\-.^_\x60|~]+$'
+                                              pattern: ^[a-z0-9!#$%&'*+\-.^_\x60|~]+$
                                             value:
                                               type: string
                                           required:
@@ -10882,7 +11374,7 @@ components:
                                               type: string
                                               maxLength: 256
                                               minLength: 1
-                                              pattern: '^[a-z0-9!#$%&''*+\-.^_\x60|~]+$'
+                                              pattern: ^[a-z0-9!#$%&'*+\-.^_\x60|~]+$
                                             value:
                                               type: string
                                           required:
@@ -11046,7 +11538,7 @@ components:
                                               type: string
                                               maxLength: 256
                                               minLength: 1
-                                              pattern: '^[a-z0-9!#$%&''*+\-.^_\x60|~]+$'
+                                              pattern: ^[a-z0-9!#$%&'*+\-.^_\x60|~]+$
                                             value:
                                               type: string
                                           required:
@@ -11065,7 +11557,7 @@ components:
                                               type: string
                                               maxLength: 256
                                               minLength: 1
-                                              pattern: '^[a-z0-9!#$%&''*+\-.^_\x60|~]+$'
+                                              pattern: ^[a-z0-9!#$%&'*+\-.^_\x60|~]+$
                                             value:
                                               type: string
                                           required:
@@ -11228,7 +11720,7 @@ components:
                                               type: string
                                               maxLength: 256
                                               minLength: 1
-                                              pattern: '^[a-z0-9!#$%&''*+\-.^_\x60|~]+$'
+                                              pattern: ^[a-z0-9!#$%&'*+\-.^_\x60|~]+$
                                             value:
                                               type: string
                                           required:
@@ -11247,7 +11739,7 @@ components:
                                               type: string
                                               maxLength: 256
                                               minLength: 1
-                                              pattern: '^[a-z0-9!#$%&''*+\-.^_\x60|~]+$'
+                                              pattern: ^[a-z0-9!#$%&'*+\-.^_\x60|~]+$
                                             value:
                                               type: string
                                           required:
@@ -11375,20 +11867,20 @@ components:
           description: Time at which the resource was created
           type: string
           format: date-time
-          example: '0001-01-01T00:00:00Z'
+          example: 0001-01-01T00:00:00Z
           readOnly: true
         modificationTime:
           description: Time at which the resource was updated
           type: string
           format: date-time
-          example: '0001-01-01T00:00:00Z'
+          example: 0001-01-01T00:00:00Z
           readOnly: true
       required:
         - type
         - name
         - spec
     MeshRetryItem:
-      description: 'MeshRetry configures automatic retry behavior for failed requests to improve service reliability. It supports configurable retry conditions, limits, timeouts, and backoff strategies for HTTP, gRPC, and TCP traffic, helping services recover from transient failures.'
+      description: MeshRetry configures automatic retry behavior for failed requests to improve service reliability. It supports configurable retry conditions, limits, timeouts, and backoff strategies for HTTP, gRPC, and TCP traffic, helping services recover from transient failures.
       type: object
       properties:
         type:
@@ -11556,7 +12048,7 @@ components:
                                       type: string
                                       maxLength: 256
                                       minLength: 1
-                                      pattern: '^[a-z0-9!#$%&''*+\-.^_\x60|~]+$'
+                                      pattern: ^[a-z0-9!#$%&'*+\-.^_\x60|~]+$
                                   required:
                                     - format
                                     - name
@@ -11682,7 +12174,7 @@ components:
                                       type: string
                                       maxLength: 256
                                       minLength: 1
-                                      pattern: '^[a-z0-9!#$%&''*+\-.^_\x60|~]+$'
+                                      pattern: ^[a-z0-9!#$%&'*+\-.^_\x60|~]+$
                                   required:
                                     - format
                                     - name
@@ -11704,7 +12196,7 @@ components:
                                   type: string
                                   maxLength: 256
                                   minLength: 1
-                                  pattern: '^[a-z0-9!#$%&''*+\-.^_\x60|~]+$'
+                                  pattern: ^[a-z0-9!#$%&'*+\-.^_\x60|~]+$
                                 type:
                                   description: Type specifies how to match against the value of the header.
                                   type: string
@@ -11739,7 +12231,7 @@ components:
                                   type: string
                                   maxLength: 256
                                   minLength: 1
-                                  pattern: '^[a-z0-9!#$%&''*+\-.^_\x60|~]+$'
+                                  pattern: ^[a-z0-9!#$%&'*+\-.^_\x60|~]+$
                                 type:
                                   description: Type specifies how to match against the value of the header.
                                   type: string
@@ -11867,13 +12359,13 @@ components:
           description: Time at which the resource was created
           type: string
           format: date-time
-          example: '0001-01-01T00:00:00Z'
+          example: 0001-01-01T00:00:00Z
           readOnly: true
         modificationTime:
           description: Time at which the resource was updated
           type: string
           format: date-time
-          example: '0001-01-01T00:00:00Z'
+          example: 0001-01-01T00:00:00Z
           readOnly: true
       required:
         - type
@@ -12145,20 +12637,20 @@ components:
           description: Time at which the resource was created
           type: string
           format: date-time
-          example: '0001-01-01T00:00:00Z'
+          example: 0001-01-01T00:00:00Z
           readOnly: true
         modificationTime:
           description: Time at which the resource was updated
           type: string
           format: date-time
-          example: '0001-01-01T00:00:00Z'
+          example: 0001-01-01T00:00:00Z
           readOnly: true
       required:
         - type
         - name
         - spec
     MeshTLSItem:
-      description: 'MeshTLS configures TLS and mutual TLS (mTLS) settings for secure communication between services in the mesh. It allows you to enforce encryption, configure TLS versions and cipher suites, and control whether mTLS is required (strict mode) or optional (permissive mode) for inbound traffic.'
+      description: MeshTLS configures TLS and mutual TLS (mTLS) settings for secure communication between services in the mesh. It allows you to enforce encryption, configure TLS versions and cipher suites, and control whether mTLS is required (strict mode) or optional (permissive mode) for inbound traffic.
       type: object
       properties:
         type:
@@ -12221,7 +12713,7 @@ components:
                         type: object
                         properties:
                           max:
-                            description: 'Max defines maximum supported version. One of `TLSAuto`, `TLS10`, `TLS11`, `TLS12`, `TLS13`.'
+                            description: Max defines maximum supported version. One of `TLSAuto`, `TLS10`, `TLS11`, `TLS12`, `TLS13`.
                             type: string
                             default: TLSAuto
                             enum:
@@ -12231,7 +12723,7 @@ components:
                               - TLS12
                               - TLS13
                           min:
-                            description: 'Min defines minimum supported version. One of `TLSAuto`, `TLS10`, `TLS11`, `TLS12`, `TLS13`.'
+                            description: Min defines minimum supported version. One of `TLSAuto`, `TLS10`, `TLS11`, `TLS12`, `TLS13`.
                             type: string
                             default: TLSAuto
                             enum:
@@ -12340,7 +12832,7 @@ components:
                         type: object
                         properties:
                           max:
-                            description: 'Max defines maximum supported version. One of `TLSAuto`, `TLS10`, `TLS11`, `TLS12`, `TLS13`.'
+                            description: Max defines maximum supported version. One of `TLSAuto`, `TLS10`, `TLS11`, `TLS12`, `TLS13`.
                             type: string
                             default: TLSAuto
                             enum:
@@ -12350,7 +12842,7 @@ components:
                               - TLS12
                               - TLS13
                           min:
-                            description: 'Min defines minimum supported version. One of `TLSAuto`, `TLS10`, `TLS11`, `TLS12`, `TLS13`.'
+                            description: Min defines minimum supported version. One of `TLSAuto`, `TLS10`, `TLS11`, `TLS12`, `TLS13`.
                             type: string
                             default: TLSAuto
                             enum:
@@ -12428,20 +12920,20 @@ components:
           description: Time at which the resource was created
           type: string
           format: date-time
-          example: '0001-01-01T00:00:00Z'
+          example: 0001-01-01T00:00:00Z
           readOnly: true
         modificationTime:
           description: Time at which the resource was updated
           type: string
           format: date-time
-          example: '0001-01-01T00:00:00Z'
+          example: 0001-01-01T00:00:00Z
           readOnly: true
       required:
         - type
         - name
         - spec
     MeshTimeoutItem:
-      description: 'MeshTimeout configures timeout limits for service-to-service communication to prevent requests from hanging indefinitely. It supports connection timeouts, idle timeouts, and HTTP-specific timeouts (request, stream, headers) to ensure timely failure detection and improve service responsiveness.'
+      description: MeshTimeout configures timeout limits for service-to-service communication to prevent requests from hanging indefinitely. It supports connection timeouts, idle timeouts, and HTTP-specific timeouts (request, stream, headers) to ensure timely failure detection and improve service responsiveness.
       type: object
       properties:
         type:
@@ -12839,20 +13331,20 @@ components:
           description: Time at which the resource was created
           type: string
           format: date-time
-          example: '0001-01-01T00:00:00Z'
+          example: 0001-01-01T00:00:00Z
           readOnly: true
         modificationTime:
           description: Time at which the resource was updated
           type: string
           format: date-time
-          example: '0001-01-01T00:00:00Z'
+          example: 0001-01-01T00:00:00Z
           readOnly: true
       required:
         - type
         - name
         - spec
     MeshTraceItem:
-      description: 'MeshTrace enables distributed tracing to track requests as they flow through multiple services in the mesh. It supports exporting trace data to backends like Zipkin, Datadog, and OpenTelemetry, with configurable sampling rates and custom tags for detailed observability and debugging of service interactions.'
+      description: MeshTrace enables distributed tracing to track requests as they flow through multiple services in the mesh. It supports exporting trace data to backends like Zipkin, Datadog, and OpenTelemetry, with configurable sampling rates and custom tags for detailed observability and debugging of service interactions.
       type: object
       properties:
         type:
@@ -12894,7 +13386,7 @@ components:
                     array for now.
                   type: array
                   items:
-                    description: 'Only one of zipkin, datadog or openTelemetry can be used.'
+                    description: Only one of zipkin, datadog or openTelemetry can be used.
                     properties:
                       datadog:
                         description: Datadog backend configuration.
@@ -12920,13 +13412,40 @@ components:
                         description: OpenTelemetry backend configuration.
                         type: object
                         properties:
+                          backendRef:
+                            description: |-
+                              BackendRef is a reference to a MeshOpenTelemetryBackend resource that
+                              defines the collector endpoint. Mutually exclusive with Endpoint.
+                            type: object
+                            properties:
+                              kind:
+                                description: Kind of the backend resource.
+                                type: string
+                                enum:
+                                  - MeshOpenTelemetryBackend
+                              labels:
+                                description: |-
+                                  Labels to match the referenced resource. Use for cross-zone references
+                                  where KDS adds a hash suffix to metadata.name. Mutually exclusive with
+                                  Name. When multiple resources match, the oldest by creation time wins.
+                                type: object
+                                additionalProperties:
+                                  type: string
+                              name:
+                                description: |-
+                                  Name of the referenced resource (metadata.name). Use for same-cluster
+                                  references. Mutually exclusive with Labels.
+                                type: string
+                            required:
+                              - kind
                           endpoint:
-                            description: Address of OpenTelemetry collector.
+                            description: |-
+                              Address of OpenTelemetry collector.
+
+                              Deprecated: use BackendRef instead.
                             type: string
-                            example: 'otel-collector:4317'
-                            minLength: 1
-                        required:
-                          - endpoint
+                            example: otel-collector:4317
+                            default: ''
                       type:
                         type: string
                         enum:
@@ -13114,20 +13633,64 @@ components:
           description: Time at which the resource was created
           type: string
           format: date-time
-          example: '0001-01-01T00:00:00Z'
+          example: 0001-01-01T00:00:00Z
           readOnly: true
         modificationTime:
           description: Time at which the resource was updated
           type: string
           format: date-time
-          example: '0001-01-01T00:00:00Z'
+          example: 0001-01-01T00:00:00Z
+          readOnly: true
+        status:
+          description: Status is the current status of the Kuma MeshTrace resource.
+          type: object
+          properties:
+            conditions:
+              type: array
+              items:
+                properties:
+                  message:
+                    description: |-
+                      message is a human readable message indicating details about the transition.
+                      This may be an empty string.
+                    type: string
+                    maxLength: 32768
+                  reason:
+                    description: |-
+                      reason contains a programmatic identifier indicating the reason for the condition's last transition.
+                      Producers of specific condition types may define expected values and meanings for this field,
+                      and whether the values are considered a guaranteed API.
+                      The value should be a CamelCase string.
+                      This field may not be empty.
+                    type: string
+                    maxLength: 1024
+                    minLength: 1
+                    pattern: ^[A-Za-z]([A-Za-z0-9_,:]*[A-Za-z0-9_])?$
+                  status:
+                    description: status of the condition, one of True, False, Unknown.
+                    type: string
+                    enum:
+                      - 'True'
+                      - 'False'
+                      - Unknown
+                  type:
+                    description: type of condition in CamelCase or in foo.example.com/CamelCase.
+                    type: string
+                    maxLength: 316
+                    pattern: ^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$
+                required:
+                  - message
+                  - reason
+                  - status
+                  - type
+                type: object
           readOnly: true
       required:
         - type
         - name
         - spec
     MeshTrafficPermissionItem:
-      description: 'MeshTrafficPermission controls which services are allowed to communicate with each other in the mesh. It provides fine-grained access control by allowing you to define allow/deny rules based on service identity, enabling zero-trust security and supporting shadow mode for testing permission changes before enforcement.'
+      description: MeshTrafficPermission controls which services are allowed to communicate with each other in the mesh. It provides fine-grained access control by allowing you to define allow/deny rules based on service identity, enabling zero-trust security and supporting shadow mode for testing permission changes before enforcement.
       type: object
       properties:
         type:
@@ -13387,13 +13950,13 @@ components:
           description: Time at which the resource was created
           type: string
           format: date-time
-          example: '0001-01-01T00:00:00Z'
+          example: 0001-01-01T00:00:00Z
           readOnly: true
         modificationTime:
           description: Time at which the resource was updated
           type: string
           format: date-time
-          example: '0001-01-01T00:00:00Z'
+          example: 0001-01-01T00:00:00Z
           readOnly: true
       required:
         - type
@@ -13526,7 +14089,7 @@ components:
                   oneOf:
                     - $ref: '#/components/schemas/PrometheusMetricsBackendConfig'
                 name:
-                  description: 'Name of the backend, can be then used in Mesh.metrics.enabledBackend'
+                  description: Name of the backend, can be then used in Mesh.metrics.enabledBackend
                   type: string
                 type:
                   description: Type of the backend (Kuma ships with 'prometheus')
@@ -13633,7 +14196,7 @@ components:
                               traffic.
                             type: boolean
                       name:
-                        description: 'Name adds another way of referencing this port, usable with MeshService'
+                        description: Name adds another way of referencing this port, usable with MeshService
                         type: string
                       port:
                         description: |-
@@ -13645,7 +14208,7 @@ components:
                           this port.
                         type: integer
                       protocol:
-                        description: 'Protocol of the service (tcp, http, grpc, etc).'
+                        description: Protocol of the service (tcp, http, grpc, etc).
                         type: string
                       serviceAddress:
                         description: |-
@@ -13716,6 +14279,42 @@ components:
                         type: object
                         additionalProperties:
                           type: string
+                    type: object
+                listeners:
+                  description: |-
+                    Listeners describes zone proxy listeners embedded in this Dataplane.
+                    Listeners may coexist with inbounds and gateways.
+                  type: array
+                  items:
+                    description: Listener describes a zone proxy listener (ZoneIngress or ZoneEgress) embedded in a regular Dataplane.
+                    properties:
+                      address:
+                        description: Address on which the listener will be exposed.
+                        type: string
+                      name:
+                        description: |-
+                          Name uniquely identifies this listener within the Dataplane and is
+                          used to reference it via sectionName in policies.
+                          Optional: if unset, the port value is used as the name (as a string).
+                        type: string
+                      port:
+                        description: Port on which the listener will be exposed.
+                        type: integer
+                      state:
+                        description: |-
+                          State describes the current health state of the listener.
+                          The control plane sets this based on the readiness of the underlying
+                          pod and sidecar container.
+                        oneOf:
+                          - type: string
+                          - type: integer
+                      type:
+                        description: |-
+                          Type determines the role of this listener: ZoneIngress for inbound
+                          cross-zone traffic or ZoneEgress for outbound external traffic.
+                        oneOf:
+                          - type: string
+                          - type: integer
                     type: object
                 outbound:
                   description: |-
@@ -13806,21 +14405,36 @@ components:
                           items:
                             properties:
                               kind:
-                                description: "Type of the backend: MeshService or MeshExternalService\n\n\t+required"
+                                description: |-
+                                  Type of the backend: MeshService or MeshExternalService
+
+                                  	+required
                                 type: string
                               labels:
-                                description: "Labels used to select backends\n\n\t+optional"
+                                description: |-
+                                  Labels used to select backends
+
+                                  	+optional
                                 type: object
                                 additionalProperties:
                                   type: string
                               name:
-                                description: "Name of the backend.\n\n\t+optional"
+                                description: |-
+                                  Name of the backend.
+
+                                  	+optional
                                 type: string
                               namespace:
-                                description: "Namespace of the backend. Might be empty\n\n\t+optional"
+                                description: |-
+                                  Namespace of the backend. Might be empty
+
+                                  	+optional
                                 type: string
                               port:
-                                description: "Port of the backend.\n\n\t+optional"
+                                description: |-
+                                  Port of the backend.
+
+                                  	+optional
                                 type: integer
                                 format: uint32
                             type: object
@@ -13916,6 +14530,86 @@ components:
             metadata:
               type: object
               properties: {}
+            openTelemetry:
+              description: Insights about OTel runtime resolution for this Dataplane.
+              type: object
+              properties:
+                backends:
+                  type: array
+                  items:
+                    properties:
+                      logs:
+                        type: object
+                        properties:
+                          blockedReasons:
+                            type: array
+                            items:
+                              type: string
+                          enabled:
+                            type: boolean
+                          envAllowed:
+                            type: boolean
+                          envInputPresent:
+                            type: boolean
+                          missingFields:
+                            type: array
+                            items:
+                              type: string
+                          overrideKinds:
+                            type: array
+                            items:
+                              type: string
+                          state:
+                            type: string
+                      metrics:
+                        type: object
+                        properties:
+                          blockedReasons:
+                            type: array
+                            items:
+                              type: string
+                          enabled:
+                            type: boolean
+                          envAllowed:
+                            type: boolean
+                          envInputPresent:
+                            type: boolean
+                          missingFields:
+                            type: array
+                            items:
+                              type: string
+                          overrideKinds:
+                            type: array
+                            items:
+                              type: string
+                          state:
+                            type: string
+                      name:
+                        type: string
+                      traces:
+                        type: object
+                        properties:
+                          blockedReasons:
+                            type: array
+                            items:
+                              type: string
+                          enabled:
+                            type: boolean
+                          envAllowed:
+                            type: boolean
+                          envInputPresent:
+                            type: boolean
+                          missingFields:
+                            type: array
+                            items:
+                              type: string
+                          overrideKinds:
+                            type: array
+                            items:
+                              type: string
+                          state:
+                            type: string
+                    type: object
             subscriptions:
               description: List of ADS subscriptions created by a given Dataplane.
               type: array
@@ -14031,7 +14725,7 @@ components:
                     type: object
                     properties:
                       dependencies:
-                        description: 'Versions of other dependencies, i.e. CoreDNS'
+                        description: Versions of other dependencies, i.e. CoreDNS
                         type: object
                         additionalProperties:
                           type: string
@@ -14094,7 +14788,7 @@ components:
         - name
         - mesh
     HostnameGeneratorItem:
-      description: 'HostnameGenerator automatically generates DNS hostnames for services in the mesh based on customizable templates. It provides a consistent naming scheme for service discovery by creating predictable hostnames from service labels and metadata, supporting both MeshService, MeshExternalService, and MeshMultiZoneService resources.'
+      description: HostnameGenerator automatically generates DNS hostnames for services in the mesh based on customizable templates. It provides a consistent naming scheme for service discovery by creating predictable hostnames from service labels and metadata, supporting both MeshService, MeshExternalService, and MeshMultiZoneService resources.
       type: object
       properties:
         type:
@@ -14163,20 +14857,20 @@ components:
           description: Time at which the resource was created
           type: string
           format: date-time
-          example: '0001-01-01T00:00:00Z'
+          example: 0001-01-01T00:00:00Z
           readOnly: true
         modificationTime:
           description: Time at which the resource was updated
           type: string
           format: date-time
-          example: '0001-01-01T00:00:00Z'
+          example: 0001-01-01T00:00:00Z
           readOnly: true
       required:
         - type
         - name
         - spec
     MeshExternalServiceItem:
-      description: 'MeshExternalService represents external services (outside the mesh) that mesh services can communicate with securely. It enables mesh services to reach external APIs, databases, or third-party services by defining endpoints, ports, protocols, and optional TLS configuration for secure outbound connections with hostname-based routing support.'
+      description: MeshExternalService represents external services (outside the mesh) that mesh services can communicate with securely. It enables mesh services to reach external APIs, databases, or third-party services by defining endpoints, ports, protocols, and optional TLS configuration for secure outbound connections with hostname-based routing support.
       type: object
       properties:
         type:
@@ -14211,7 +14905,7 @@ components:
               items:
                 properties:
                   address:
-                    description: 'Address defines an address to which a user want to send a request. Is possible to provide `domain`, `ip`.'
+                    description: Address defines an address to which a user want to send a request. Is possible to provide `domain`, `ip`.
                     type: string
                     example: example.com
                     minLength: 1
@@ -14221,12 +14915,21 @@ components:
                     format: int32
                     maximum: 65535
                     minimum: 1
+                  priority:
+                    description: |-
+                      Priority maps to Envoy's priority levels to enable endpoint failover.
+                      Lower values have higher priority (0 is the default/primary).
+                      When the primary endpoints become unhealthy, traffic fails over to the next priority level.
+                    type: integer
+                    format: int32
+                    maximum: 128
+                    minimum: 0
                 required:
                   - address
                   - port
                 type: object
             extension:
-              description: 'Extension struct for a plugin configuration, in the presence of an extension `endpoints` and `tls` are not required anymore - it''s up to the extension to validate them independently.'
+              description: Extension struct for a plugin configuration, in the presence of an extension `endpoints` and `tls` are not required anymore - it's up to the extension to validate them independently.
               type: object
               properties:
                 config:
@@ -14257,7 +14960,7 @@ components:
                     - http
                     - http2
                 type:
-                  description: 'Type of the match, only `HostnameGenerator` is available at the moment.'
+                  description: Type of the match, only `HostnameGenerator` is available at the moment.
                   type: string
                   default: HostnameGenerator
                   enum:
@@ -14325,7 +15028,7 @@ components:
                           description: Data source is a secret with given Secret key.
                           type: string
                     mode:
-                      description: 'Mode defines if proxy should skip verification, one of `SkipSAN`, `SkipCA`, `Secured`, `SkipAll`. Default `Secured`.'
+                      description: Mode defines if proxy should skip verification, one of `SkipSAN`, `SkipCA`, `Secured`, `SkipAll`. Default `Secured`.
                       type: string
                       default: Secured
                       enum:
@@ -14359,7 +15062,7 @@ components:
                   type: object
                   properties:
                     max:
-                      description: 'Max defines maximum supported version. One of `TLSAuto`, `TLS10`, `TLS11`, `TLS12`, `TLS13`.'
+                      description: Max defines maximum supported version. One of `TLSAuto`, `TLS10`, `TLS11`, `TLS12`, `TLS13`.
                       type: string
                       default: TLSAuto
                       enum:
@@ -14369,7 +15072,7 @@ components:
                         - TLS12
                         - TLS13
                     min:
-                      description: 'Min defines minimum supported version. One of `TLSAuto`, `TLS10`, `TLS11`, `TLS12`, `TLS13`.'
+                      description: Min defines minimum supported version. One of `TLSAuto`, `TLS10`, `TLS11`, `TLS12`, `TLS13`.
                       type: string
                       default: TLSAuto
                       enum:
@@ -14384,13 +15087,13 @@ components:
           description: Time at which the resource was created
           type: string
           format: date-time
-          example: '0001-01-01T00:00:00Z'
+          example: 0001-01-01T00:00:00Z
           readOnly: true
         modificationTime:
           description: Time at which the resource was updated
           type: string
           format: date-time
-          example: '0001-01-01T00:00:00Z'
+          example: 0001-01-01T00:00:00Z
           readOnly: true
         status:
           description: Status is the current status of the Kuma MeshExternalService resource.
@@ -14438,9 +15141,9 @@ components:
                           type: string
                           maxLength: 1024
                           minLength: 1
-                          pattern: '^[A-Za-z]([A-Za-z0-9_,:]*[A-Za-z0-9_])?$'
+                          pattern: ^[A-Za-z]([A-Za-z0-9_,:]*[A-Za-z0-9_])?$
                         status:
-                          description: 'status of the condition, one of True, False, Unknown.'
+                          description: status of the condition, one of True, False, Unknown.
                           type: string
                           enum:
                             - 'True'
@@ -14450,7 +15153,7 @@ components:
                           description: type of condition in CamelCase or in foo.example.com/CamelCase.
                           type: string
                           maxLength: 316
-                          pattern: '^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$'
+                          pattern: ^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$
                       required:
                         - message
                         - reason
@@ -14483,7 +15186,7 @@ components:
         - name
         - spec
     MeshIdentityItem:
-      description: 'MeshIdentity manages service identity and certificate provisioning for workloads in the mesh. It configures how services obtain their identity certificates, supporting multiple providers including bundled certificates (self-signed or user-provided CA), SPIRE integration, and custom SPIFFE ID configuration for secure service-to-service authentication.'
+      description: MeshIdentity manages service identity and certificate provisioning for workloads in the mesh. It configures how services obtain their identity certificates, supporting multiple providers including bundled certificates (self-signed or user-provided CA), SPIRE integration, and custom SPIFFE ID configuration for secure service-to-service authentication.
       type: object
       properties:
         type:
@@ -14640,6 +15343,18 @@ components:
                       enum:
                         - Enabled
                         - Disabled
+                extension:
+                  description: Extension indicates that custom provider is used.
+                  type: object
+                  properties:
+                    config:
+                      description: Config is a freeform configuration for the extension.
+                      x-kubernetes-preserve-unknown-fields: true
+                    name:
+                      description: Name is the name of the extension provider.
+                      type: string
+                  required:
+                    - name
                 spire:
                   description: Spire indicates that SPIRE is used for certificate delivery.
                   type: object
@@ -14659,6 +15374,7 @@ components:
                   enum:
                     - Bundled
                     - Spire
+                    - Extension
               required:
                 - type
             selector:
@@ -14682,13 +15398,13 @@ components:
           description: Time at which the resource was created
           type: string
           format: date-time
-          example: '0001-01-01T00:00:00Z'
+          example: 0001-01-01T00:00:00Z
           readOnly: true
         modificationTime:
           description: Time at which the resource was updated
           type: string
           format: date-time
-          example: '0001-01-01T00:00:00Z'
+          example: 0001-01-01T00:00:00Z
           readOnly: true
         status:
           description: Status is the current status of the Kuma MeshIdentity resource.
@@ -14715,9 +15431,9 @@ components:
                     type: string
                     maxLength: 1024
                     minLength: 1
-                    pattern: '^[A-Za-z]([A-Za-z0-9_,:]*[A-Za-z0-9_])?$'
+                    pattern: ^[A-Za-z]([A-Za-z0-9_,:]*[A-Za-z0-9_])?$
                   status:
-                    description: 'status of the condition, one of True, False, Unknown.'
+                    description: status of the condition, one of True, False, Unknown.
                     type: string
                     enum:
                       - 'True'
@@ -14727,7 +15443,7 @@ components:
                     description: type of condition in CamelCase or in foo.example.com/CamelCase.
                     type: string
                     maxLength: 316
-                    pattern: '^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$'
+                    pattern: ^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$
                 required:
                   - message
                   - reason
@@ -14813,13 +15529,13 @@ components:
           description: Time at which the resource was created
           type: string
           format: date-time
-          example: '0001-01-01T00:00:00Z'
+          example: 0001-01-01T00:00:00Z
           readOnly: true
         modificationTime:
           description: Time at which the resource was updated
           type: string
           format: date-time
-          example: '0001-01-01T00:00:00Z'
+          example: 0001-01-01T00:00:00Z
           readOnly: true
         status:
           description: Status is the current status of the Kuma MeshMultiZoneService resource.
@@ -14863,9 +15579,9 @@ components:
                     type: string
                     maxLength: 1024
                     minLength: 1
-                    pattern: '^[A-Za-z]([A-Za-z0-9_,:]*[A-Za-z0-9_])?$'
+                    pattern: ^[A-Za-z]([A-Za-z0-9_,:]*[A-Za-z0-9_])?$
                   status:
-                    description: 'status of the condition, one of True, False, Unknown.'
+                    description: status of the condition, one of True, False, Unknown.
                     type: string
                     enum:
                       - 'True'
@@ -14875,7 +15591,7 @@ components:
                     description: type of condition in CamelCase or in foo.example.com/CamelCase.
                     type: string
                     maxLength: 316
-                    pattern: '^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$'
+                    pattern: ^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$
                 required:
                   - message
                   - reason
@@ -14908,9 +15624,9 @@ components:
                           type: string
                           maxLength: 1024
                           minLength: 1
-                          pattern: '^[A-Za-z]([A-Za-z0-9_,:]*[A-Za-z0-9_])?$'
+                          pattern: ^[A-Za-z]([A-Za-z0-9_,:]*[A-Za-z0-9_])?$
                         status:
-                          description: 'status of the condition, one of True, False, Unknown.'
+                          description: status of the condition, one of True, False, Unknown.
                           type: string
                           enum:
                             - 'True'
@@ -14920,7 +15636,7 @@ components:
                           description: type of condition in CamelCase or in foo.example.com/CamelCase.
                           type: string
                           maxLength: 316
-                          pattern: '^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$'
+                          pattern: ^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$
                       required:
                         - message
                         - reason
@@ -14973,8 +15689,159 @@ components:
         - type
         - name
         - spec
+    MeshOpenTelemetryBackendItem:
+      description: |-
+        MeshOpenTelemetryBackend defines a shared OTel collector endpoint for observability policies.
+        An empty spec is valid and represents the node-local default flow
+        (kuma-dp resolves the address at runtime using HOST_IP or 127.0.0.1).
+      type: object
+      properties:
+        type:
+          description: the type of the resource
+          type: string
+          enum:
+            - MeshOpenTelemetryBackend
+        mesh:
+          description: Mesh is the name of the Kuma mesh this resource belongs to. It may be omitted for cluster-scoped resources.
+          type: string
+          default: default
+        kri:
+          description: A unique identifier for this resource instance used by internal tooling and integrations. Typically derived from resource attributes and may be used for cross-references or indexing
+          type: string
+          example: kri_motb_default_zone-east_kuma-system_myresource1_
+          readOnly: true
+        name:
+          description: Name of the Kuma resource
+          type: string
+        labels:
+          description: The labels to help identity resources
+          type: object
+          additionalProperties:
+            type: string
+        spec:
+          description: Spec is the specification of the Kuma MeshOpenTelemetryBackend resource.
+          type: object
+          properties:
+            endpoint:
+              description: |-
+                Endpoint optionally defines the OTel collector address and port.
+                When omitted, the CP defaults port to 4317 and leaves address empty;
+                kuma-dp resolves the address at runtime using HOST_IP or 127.0.0.1.
+              type: object
+              properties:
+                address:
+                  description: |-
+                    Address of the OTel collector (hostname or IP).
+                    When omitted, kuma-dp resolves it at runtime using HOST_IP or 127.0.0.1.
+                  type: string
+                path:
+                  description: |-
+                    Path is an optional base path prefix for HTTP endpoints.
+                    The CP appends signal-specific suffixes (/v1/traces, /v1/metrics, /v1/logs).
+                    Non-empty value is rejected by validation when protocol is grpc.
+                  type: string
+                port:
+                  description: Port of the OTel collector. Defaults to 4317 when omitted.
+                  type: integer
+                  format: int32
+            env:
+              description: |-
+                Env controls whether standard OTEL exporter env vars participate in the
+                final exporter config for this backend.
+              type: object
+              properties:
+                allowSignalOverrides:
+                  description: |-
+                    AllowSignalOverrides controls whether signal-specific OTEL env vars such
+                    as `OTEL_EXPORTER_OTLP_TRACES_*` may diverge from the shared config.
+                  type: boolean
+                mode:
+                  description: Mode controls whether OTEL env vars are ignored, allowed, or required.
+                  type: string
+                  default: Optional
+                  enum:
+                    - Disabled
+                    - Optional
+                    - Required
+                precedence:
+                  description: |-
+                    Precedence controls whether explicit backend fields or env vars win when
+                    both are present for the same field.
+                  type: string
+                  default: EnvFirst
+                  enum:
+                    - ExplicitFirst
+                    - EnvFirst
+            protocol:
+              description: |-
+                Protocol selects gRPC or HTTP transport for the collector connection.
+                Defaults to grpc when omitted.
+              type: string
+              enum:
+                - grpc
+                - http
+        creationTime:
+          description: Time at which the resource was created
+          type: string
+          format: date-time
+          example: 0001-01-01T00:00:00Z
+          readOnly: true
+        modificationTime:
+          description: Time at which the resource was updated
+          type: string
+          format: date-time
+          example: 0001-01-01T00:00:00Z
+          readOnly: true
+        status:
+          description: Status is the current status of the Kuma MeshOpenTelemetryBackend resource.
+          type: object
+          properties:
+            conditions:
+              type: array
+              items:
+                properties:
+                  message:
+                    description: |-
+                      message is a human readable message indicating details about the transition.
+                      This may be an empty string.
+                    type: string
+                    maxLength: 32768
+                  reason:
+                    description: |-
+                      reason contains a programmatic identifier indicating the reason for the condition's last transition.
+                      Producers of specific condition types may define expected values and meanings for this field,
+                      and whether the values are considered a guaranteed API.
+                      The value should be a CamelCase string.
+                      This field may not be empty.
+                    type: string
+                    maxLength: 1024
+                    minLength: 1
+                    pattern: ^[A-Za-z]([A-Za-z0-9_,:]*[A-Za-z0-9_])?$
+                  status:
+                    description: status of the condition, one of True, False, Unknown.
+                    type: string
+                    enum:
+                      - 'True'
+                      - 'False'
+                      - Unknown
+                  type:
+                    description: type of condition in CamelCase or in foo.example.com/CamelCase.
+                    type: string
+                    maxLength: 316
+                    pattern: ^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$
+                required:
+                  - message
+                  - reason
+                  - status
+                  - type
+                type: object
+          readOnly: true
+      required:
+        - type
+        - name
+        - spec
     MeshServiceItem:
-      description: 'MeshService represents a service in the mesh with its connectivity and health information. It defines service endpoints by selecting data plane proxies through labels or direct references, configures service ports and protocols, tracks service availability and health status, and provides automatic VIP assignment and hostname generation for service discovery.'
+      description: MeshService represents a service in the mesh with its connectivity and health information. It defines service endpoints by selecting data plane proxies through labels or direct references, configures service ports and protocols, tracks service availability and health status, and provides automatic VIP assignment and hostname generation for service discovery.
       type: object
       properties:
         type:
@@ -15075,13 +15942,13 @@ components:
           description: Time at which the resource was created
           type: string
           format: date-time
-          example: '0001-01-01T00:00:00Z'
+          example: 0001-01-01T00:00:00Z
           readOnly: true
         modificationTime:
           description: Time at which the resource was updated
           type: string
           format: date-time
-          example: '0001-01-01T00:00:00Z'
+          example: 0001-01-01T00:00:00Z
           readOnly: true
         status:
           description: Status is the current status of the Kuma MeshService resource.
@@ -15141,9 +16008,9 @@ components:
                           type: string
                           maxLength: 1024
                           minLength: 1
-                          pattern: '^[A-Za-z]([A-Za-z0-9_,:]*[A-Za-z0-9_])?$'
+                          pattern: ^[A-Za-z]([A-Za-z0-9_,:]*[A-Za-z0-9_])?$
                         status:
-                          description: 'status of the condition, one of True, False, Unknown.'
+                          description: status of the condition, one of True, False, Unknown.
                           type: string
                           enum:
                             - 'True'
@@ -15153,7 +16020,7 @@ components:
                           description: type of condition in CamelCase or in foo.example.com/CamelCase.
                           type: string
                           maxLength: 316
-                          pattern: '^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$'
+                          pattern: ^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$
                       required:
                         - message
                         - reason
@@ -15194,7 +16061,7 @@ components:
         - name
         - spec
     MeshTrustItem:
-      description: 'MeshTrust defines trusted Certificate Authority (CA) bundles for a trust domain in the mesh. It establishes trust relationships for service-to-service mTLS authentication by specifying which CA certificates are trusted to verify service identities, supporting PEM-encoded CA bundles and enabling secure cross-service communication within the trust domain.'
+      description: MeshTrust defines trusted Certificate Authority (CA) bundles for a trust domain in the mesh. It establishes trust relationships for service-to-service mTLS authentication by specifying which CA certificates are trusted to verify service identities, supporting PEM-encoded CA bundles and enabling secure cross-service communication within the trust domain.
       type: object
       properties:
         type:
@@ -15269,13 +16136,13 @@ components:
           description: Time at which the resource was created
           type: string
           format: date-time
-          example: '0001-01-01T00:00:00Z'
+          example: 0001-01-01T00:00:00Z
           readOnly: true
         modificationTime:
           description: Time at which the resource was updated
           type: string
           format: date-time
-          example: '0001-01-01T00:00:00Z'
+          example: 0001-01-01T00:00:00Z
           readOnly: true
         status:
           description: Status is the current status of the Kuma MeshTrust resource.
@@ -15293,8 +16160,67 @@ components:
         - type
         - name
         - spec
+    MeshZoneAddressItem:
+      description: MeshZoneAddress holds the public address and port for a mesh-scoped zone ingress proxy.
+      type: object
+      properties:
+        type:
+          description: the type of the resource
+          type: string
+          enum:
+            - MeshZoneAddress
+        mesh:
+          description: Mesh is the name of the Kuma mesh this resource belongs to. It may be omitted for cluster-scoped resources.
+          type: string
+          default: default
+        kri:
+          description: A unique identifier for this resource instance used by internal tooling and integrations. Typically derived from resource attributes and may be used for cross-references or indexing
+          type: string
+          example: kri_mza_default_zone-east_kuma-demo_myresource1_
+          readOnly: true
+        name:
+          description: Name of the Kuma resource
+          type: string
+        labels:
+          description: The labels to help identity resources
+          type: object
+          additionalProperties:
+            type: string
+        spec:
+          description: Spec is the specification of the Kuma MeshZoneAddress resource.
+          type: object
+          properties:
+            address:
+              description: Address is the publicly reachable address of the zone ingress.
+              type: string
+              minLength: 1
+            port:
+              description: Port is the publicly reachable port of the zone ingress.
+              type: integer
+              format: int32
+              maximum: 65535
+              minimum: 1
+          required:
+            - address
+            - port
+        creationTime:
+          description: Time at which the resource was created
+          type: string
+          format: date-time
+          example: 0001-01-01T00:00:00Z
+          readOnly: true
+        modificationTime:
+          description: Time at which the resource was updated
+          type: string
+          format: date-time
+          example: 0001-01-01T00:00:00Z
+          readOnly: true
+      required:
+        - type
+        - name
+        - spec
     WorkloadItem:
-      description: 'Workload represents a logical grouping of data plane proxies in the mesh, providing visibility into their operational status. It tracks statistics about the data plane proxies that belong to a workload, including the number of connected, healthy, and total proxies, enabling monitoring and health assessment of your workload deployments. Workloads is also the primary way data-planes are grouped together in metrics and traces.'
+      description: Workload represents a logical grouping of data plane proxies in the mesh, providing visibility into their operational status. It tracks statistics about the data plane proxies that belong to a workload, including the number of connected, healthy, and total proxies, enabling monitoring and health assessment of your workload deployments. Workloads is also the primary way data-planes are grouped together in metrics and traces.
       type: object
       properties:
         type:
@@ -15326,13 +16252,13 @@ components:
           description: Time at which the resource was created
           type: string
           format: date-time
-          example: '0001-01-01T00:00:00Z'
+          example: 0001-01-01T00:00:00Z
           readOnly: true
         modificationTime:
           description: Time at which the resource was updated
           type: string
           format: date-time
-          example: '0001-01-01T00:00:00Z'
+          example: 0001-01-01T00:00:00Z
           readOnly: true
         status:
           description: Status is the current status of the Kuma Workload resource.
@@ -15465,7 +16391,7 @@ components:
         - total
         - items
     TargetRefPolicy:
-      description: 'MeshAccessLog configures access logging for traffic between services in the mesh. It allows you to capture and export request/response logs to various backends (file, TCP, or OpenTelemetry) for monitoring, debugging, and auditing purposes.'
+      description: MeshAccessLog configures access logging for traffic between services in the mesh. It allows you to capture and export request/response logs to various backends (file, TCP, or OpenTelemetry) for monitoring, debugging, and auditing purposes.
       type: object
       properties:
         type:
@@ -15492,13 +16418,57 @@ components:
           description: Time at which the resource was created
           type: string
           format: date-time
-          example: '0001-01-01T00:00:00Z'
+          example: 0001-01-01T00:00:00Z
           readOnly: true
         modificationTime:
           description: Time at which the resource was updated
           type: string
           format: date-time
-          example: '0001-01-01T00:00:00Z'
+          example: 0001-01-01T00:00:00Z
+          readOnly: true
+        status:
+          description: Status is the current status of the Kuma MeshAccessLog resource.
+          type: object
+          properties:
+            conditions:
+              type: array
+              items:
+                properties:
+                  message:
+                    description: |-
+                      message is a human readable message indicating details about the transition.
+                      This may be an empty string.
+                    type: string
+                    maxLength: 32768
+                  reason:
+                    description: |-
+                      reason contains a programmatic identifier indicating the reason for the condition's last transition.
+                      Producers of specific condition types may define expected values and meanings for this field,
+                      and whether the values are considered a guaranteed API.
+                      The value should be a CamelCase string.
+                      This field may not be empty.
+                    type: string
+                    maxLength: 1024
+                    minLength: 1
+                    pattern: ^[A-Za-z]([A-Za-z0-9_,:]*[A-Za-z0-9_])?$
+                  status:
+                    description: status of the condition, one of True, False, Unknown.
+                    type: string
+                    enum:
+                      - 'True'
+                      - 'False'
+                      - Unknown
+                  type:
+                    description: type of condition in CamelCase or in foo.example.com/CamelCase.
+                    type: string
+                    maxLength: 316
+                    pattern: ^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$
+                required:
+                  - message
+                  - reason
+                  - status
+                  - type
+                type: object
           readOnly: true
         spec:
           description: Spec is the specification of the Kuma Policy resource.
@@ -15510,7 +16480,7 @@ components:
         - name
         - spec
     LegacyPolicy:
-      description: 'MeshAccessLog configures access logging for traffic between services in the mesh. It allows you to capture and export request/response logs to various backends (file, TCP, or OpenTelemetry) for monitoring, debugging, and auditing purposes.'
+      description: MeshAccessLog configures access logging for traffic between services in the mesh. It allows you to capture and export request/response logs to various backends (file, TCP, or OpenTelemetry) for monitoring, debugging, and auditing purposes.
       type: object
       properties:
         type:
@@ -15532,13 +16502,57 @@ components:
           description: Time at which the resource was created
           type: string
           format: date-time
-          example: '0001-01-01T00:00:00Z'
+          example: 0001-01-01T00:00:00Z
           readOnly: true
         modificationTime:
           description: Time at which the resource was updated
           type: string
           format: date-time
-          example: '0001-01-01T00:00:00Z'
+          example: 0001-01-01T00:00:00Z
+          readOnly: true
+        status:
+          description: Status is the current status of the Kuma MeshAccessLog resource.
+          type: object
+          properties:
+            conditions:
+              type: array
+              items:
+                properties:
+                  message:
+                    description: |-
+                      message is a human readable message indicating details about the transition.
+                      This may be an empty string.
+                    type: string
+                    maxLength: 32768
+                  reason:
+                    description: |-
+                      reason contains a programmatic identifier indicating the reason for the condition's last transition.
+                      Producers of specific condition types may define expected values and meanings for this field,
+                      and whether the values are considered a guaranteed API.
+                      The value should be a CamelCase string.
+                      This field may not be empty.
+                    type: string
+                    maxLength: 1024
+                    minLength: 1
+                    pattern: ^[A-Za-z]([A-Za-z0-9_,:]*[A-Za-z0-9_])?$
+                  status:
+                    description: status of the condition, one of True, False, Unknown.
+                    type: string
+                    enum:
+                      - 'True'
+                      - 'False'
+                      - Unknown
+                  type:
+                    description: type of condition in CamelCase or in foo.example.com/CamelCase.
+                    type: string
+                    maxLength: 316
+                    pattern: ^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$
+                required:
+                  - message
+                  - reason
+                  - status
+                  - type
+                type: object
           readOnly: true
         spec:
           description: Spec is the specification of the Kuma Policy resource.
@@ -15573,7 +16587,7 @@ components:
   examples:
     GlobalInsightExample:
       value:
-        createdAt: '2023-01-11T02:30:42.227Z'
+        createdAt: 2023-01-11T02:30:42.227Z
         services:
           total: 5
           internal:
@@ -15636,7 +16650,7 @@ components:
     InspectDataplanesForPolicyExample:
       value:
         total: 100
-        next: 'http://localhost:5681/meshes/default/meshretries/_resources/dataplanes?offset=100'
+        next: http://localhost:5681/meshes/default/meshretries/_resources/dataplanes?offset=100
         items:
           - type: Dataplane
             mesh: default
@@ -15686,7 +16700,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/GlobalInsight'
+            $ref: '#/components/schemas/GlobalInsightBase'
           examples:
             Single control plane response:
               $ref: '#/components/examples/GlobalInsightExample'
@@ -16928,6 +17942,50 @@ components:
               next:
                 description: URL to the next page
                 type: string
+    MeshOpenTelemetryBackendItem:
+      description: Successful response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/MeshOpenTelemetryBackendItem'
+    MeshOpenTelemetryBackendCreateOrUpdateSuccessResponse:
+      description: Successful response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              warnings:
+                description: |
+                  warnings is a list of warning messages to return to the requesting Kuma API clients.
+                  Warning messages describe a problem the client making the API request should correct or be aware of.
+                type: array
+                items:
+                  type: string
+                readOnly: true
+    MeshOpenTelemetryBackendDeleteSuccessResponse:
+      description: Successful response
+      content:
+        application/json:
+          schema:
+            type: object
+    MeshOpenTelemetryBackendList:
+      description: List
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              items:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MeshOpenTelemetryBackendItem'
+              total:
+                description: The total number of entities
+                type: number
+              next:
+                description: URL to the next page
+                type: string
     MeshServiceItem:
       description: Successful response
       content:
@@ -17010,6 +18068,50 @@ components:
                 type: array
                 items:
                   $ref: '#/components/schemas/MeshTrustItem'
+              total:
+                description: The total number of entities
+                type: number
+              next:
+                description: URL to the next page
+                type: string
+    MeshZoneAddressItem:
+      description: Successful response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/MeshZoneAddressItem'
+    MeshZoneAddressCreateOrUpdateSuccessResponse:
+      description: Successful response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              warnings:
+                description: |
+                  warnings is a list of warning messages to return to the requesting Kuma API clients.
+                  Warning messages describe a problem the client making the API request should correct or be aware of.
+                type: array
+                items:
+                  type: string
+                readOnly: true
+    MeshZoneAddressDeleteSuccessResponse:
+      description: Successful response
+      content:
+        application/json:
+          schema:
+            type: object
+    MeshZoneAddressList:
+      description: List
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              items:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MeshZoneAddressItem'
               total:
                 description: The total number of entities
                 type: number

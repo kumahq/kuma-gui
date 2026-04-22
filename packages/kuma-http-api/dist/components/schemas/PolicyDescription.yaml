@@ -14,7 +14,7 @@ properties:
     description: indicates that the policy has a rules targetRef field for matching
     type: boolean
   isFromAsRules:
-    description: 'If set to `true`, performs a backward compatibility conversion from the deprecated ''from'' array to the new ''rules'' array. This ensures older policies remain functional under the updated schema.'
+    description: If set to `true`, performs a backward compatibility conversion from the deprecated 'from' array to the new 'rules' array. This ensures older policies remain functional under the updated schema.
     type: boolean
 required:
   - hasToTargetRef

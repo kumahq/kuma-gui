@@ -1,4 +1,4 @@
-description: 'MeshFaultInjection allows you to test the resiliency of your services by injecting faults like delays, connection aborts, and response bandwidth limits into the traffic. This is useful for chaos testing and validating that your applications handle failures gracefully.'
+description: MeshFaultInjection allows you to test the resiliency of your services by injecting faults like delays, connection aborts, and response bandwidth limits into the traffic. This is useful for chaos testing and validating that your applications handle failures gracefully.
 type: object
 properties:
   type:
@@ -490,13 +490,13 @@ properties:
     description: Time at which the resource was created
     type: string
     format: date-time
-    example: '0001-01-01T00:00:00Z'
+    example: 0001-01-01T00:00:00Z
     readOnly: true
   modificationTime:
     description: Time at which the resource was updated
     type: string
     format: date-time
-    example: '0001-01-01T00:00:00Z'
+    example: 0001-01-01T00:00:00Z
     readOnly: true
 required:
   - type

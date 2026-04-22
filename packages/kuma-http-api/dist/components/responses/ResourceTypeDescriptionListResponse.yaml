@@ -2,4 +2,4 @@ description: A response containing a list of all resources installed in Kuma
 content:
   application/json:
     schema:
-      $ref: "../schemas/ResourceTypeDescriptionList.yaml"
+      $ref: ../schemas/ResourceTypeDescriptionList.yaml

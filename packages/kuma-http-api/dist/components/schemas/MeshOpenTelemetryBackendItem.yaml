@@ -1,0 +1,150 @@
+description: |-
+  MeshOpenTelemetryBackend defines a shared OTel collector endpoint for observability policies.
+  An empty spec is valid and represents the node-local default flow
+  (kuma-dp resolves the address at runtime using HOST_IP or 127.0.0.1).
+type: object
+properties:
+  type:
+    description: the type of the resource
+    type: string
+    enum:
+      - MeshOpenTelemetryBackend
+  mesh:
+    description: Mesh is the name of the Kuma mesh this resource belongs to. It may be omitted for cluster-scoped resources.
+    type: string
+    default: default
+  kri:
+    description: A unique identifier for this resource instance used by internal tooling and integrations. Typically derived from resource attributes and may be used for cross-references or indexing
+    type: string
+    example: kri_motb_default_zone-east_kuma-system_myresource1_
+    readOnly: true
+  name:
+    description: Name of the Kuma resource
+    type: string
+  labels:
+    description: The labels to help identity resources
+    type: object
+    additionalProperties:
+      type: string
+  spec:
+    description: Spec is the specification of the Kuma MeshOpenTelemetryBackend resource.
+    type: object
+    properties:
+      endpoint:
+        description: |-
+          Endpoint optionally defines the OTel collector address and port.
+          When omitted, the CP defaults port to 4317 and leaves address empty;
+          kuma-dp resolves the address at runtime using HOST_IP or 127.0.0.1.
+        type: object
+        properties:
+          address:
+            description: |-
+              Address of the OTel collector (hostname or IP).
+              When omitted, kuma-dp resolves it at runtime using HOST_IP or 127.0.0.1.
+            type: string
+          path:
+            description: |-
+              Path is an optional base path prefix for HTTP endpoints.
+              The CP appends signal-specific suffixes (/v1/traces, /v1/metrics, /v1/logs).
+              Non-empty value is rejected by validation when protocol is grpc.
+            type: string
+          port:
+            description: Port of the OTel collector. Defaults to 4317 when omitted.
+            type: integer
+            format: int32
+      env:
+        description: |-
+          Env controls whether standard OTEL exporter env vars participate in the
+          final exporter config for this backend.
+        type: object
+        properties:
+          allowSignalOverrides:
+            description: |-
+              AllowSignalOverrides controls whether signal-specific OTEL env vars such
+              as `OTEL_EXPORTER_OTLP_TRACES_*` may diverge from the shared config.
+            type: boolean
+          mode:
+            description: Mode controls whether OTEL env vars are ignored, allowed, or required.
+            type: string
+            default: Optional
+            enum:
+              - Disabled
+              - Optional
+              - Required
+          precedence:
+            description: |-
+              Precedence controls whether explicit backend fields or env vars win when
+              both are present for the same field.
+            type: string
+            default: EnvFirst
+            enum:
+              - ExplicitFirst
+              - EnvFirst
+      protocol:
+        description: |-
+          Protocol selects gRPC or HTTP transport for the collector connection.
+          Defaults to grpc when omitted.
+        type: string
+        enum:
+          - grpc
+          - http
+  creationTime:
+    description: Time at which the resource was created
+    type: string
+    format: date-time
+    example: 0001-01-01T00:00:00Z
+    readOnly: true
+  modificationTime:
+    description: Time at which the resource was updated
+    type: string
+    format: date-time
+    example: 0001-01-01T00:00:00Z
+    readOnly: true
+  status:
+    description: Status is the current status of the Kuma MeshOpenTelemetryBackend resource.
+    type: object
+    properties:
+      conditions:
+        type: array
+        items:
+          properties:
+            message:
+              description: |-
+                message is a human readable message indicating details about the transition.
+                This may be an empty string.
+              type: string
+              maxLength: 32768
+            reason:
+              description: |-
+                reason contains a programmatic identifier indicating the reason for the condition's last transition.
+                Producers of specific condition types may define expected values and meanings for this field,
+                and whether the values are considered a guaranteed API.
+                The value should be a CamelCase string.
+                This field may not be empty.
+              type: string
+              maxLength: 1024
+              minLength: 1
+              pattern: ^[A-Za-z]([A-Za-z0-9_,:]*[A-Za-z0-9_])?$
+            status:
+              description: status of the condition, one of True, False, Unknown.
+              type: string
+              enum:
+                - 'True'
+                - 'False'
+                - Unknown
+            type:
+              description: type of condition in CamelCase or in foo.example.com/CamelCase.
+              type: string
+              maxLength: 316
+              pattern: ^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$
+          required:
+            - message
+            - reason
+            - status
+            - type
+          type: object
+    readOnly: true
+required:
+  - type
+  - name
+  - spec

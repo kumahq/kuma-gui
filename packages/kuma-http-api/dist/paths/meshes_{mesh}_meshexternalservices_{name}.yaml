@@ -16,9 +16,9 @@ get:
         type: string
   responses:
     '200':
-      $ref: "../components/responses/MeshExternalServiceItem.yaml"
+      $ref: ../components/responses/MeshExternalServiceItem.yaml
     '404':
-      $ref: "../components/responses/NotFound.yaml"
+      $ref: ../components/responses/NotFound.yaml
   tags:
     - MeshExternalService
 put:
@@ -43,12 +43,12 @@ put:
     content:
       application/json:
         schema:
-          $ref: "../components/schemas/MeshExternalServiceItem.yaml"
+          $ref: ../components/schemas/MeshExternalServiceItem.yaml
   responses:
     '200':
-      $ref: "../components/responses/MeshExternalServiceCreateOrUpdateSuccessResponse.yaml"
+      $ref: ../components/responses/MeshExternalServiceCreateOrUpdateSuccessResponse.yaml
     '201':
-      $ref: "../components/responses/MeshExternalServiceCreateOrUpdateSuccessResponse.yaml"
+      $ref: ../components/responses/MeshExternalServiceCreateOrUpdateSuccessResponse.yaml
   tags:
     - MeshExternalService
 delete:
@@ -69,8 +69,8 @@ delete:
         type: string
   responses:
     '200':
-      $ref: "../components/responses/MeshExternalServiceDeleteSuccessResponse.yaml"
+      $ref: ../components/responses/MeshExternalServiceDeleteSuccessResponse.yaml
     '404':
-      $ref: "../components/responses/NotFound.yaml"
+      $ref: ../components/responses/NotFound.yaml
   tags:
     - MeshExternalService

@@ -1,5 +1,5 @@
 allOf:
-  - $ref: "Error.yaml"
+  - $ref: Error.yaml
   - type: object
     properties:
       status:
@@ -14,7 +14,7 @@ allOf:
         example: Not Found
       type:
         type: string
-        example: 'https://httpstatuses.com/404'
+        example: https://httpstatuses.com/404
       detail:
         type: string
         example: The requested resource was not found

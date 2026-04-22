@@ -7,7 +7,7 @@ content:
         items:
           type: array
           items:
-            $ref: "../schemas/MeshHealthCheckItem.yaml"
+            $ref: ../schemas/MeshHealthCheckItem.yaml
         total:
           description: The total number of entities
           type: number

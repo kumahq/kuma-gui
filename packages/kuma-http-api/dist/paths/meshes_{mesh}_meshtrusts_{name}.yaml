@@ -16,9 +16,9 @@ get:
         type: string
   responses:
     '200':
-      $ref: "../components/responses/MeshTrustItem.yaml"
+      $ref: ../components/responses/MeshTrustItem.yaml
     '404':
-      $ref: "../components/responses/NotFound.yaml"
+      $ref: ../components/responses/NotFound.yaml
   tags:
     - MeshTrust
 put:
@@ -43,12 +43,12 @@ put:
     content:
       application/json:
         schema:
-          $ref: "../components/schemas/MeshTrustItem.yaml"
+          $ref: ../components/schemas/MeshTrustItem.yaml
   responses:
     '200':
-      $ref: "../components/responses/MeshTrustCreateOrUpdateSuccessResponse.yaml"
+      $ref: ../components/responses/MeshTrustCreateOrUpdateSuccessResponse.yaml
     '201':
-      $ref: "../components/responses/MeshTrustCreateOrUpdateSuccessResponse.yaml"
+      $ref: ../components/responses/MeshTrustCreateOrUpdateSuccessResponse.yaml
   tags:
     - MeshTrust
 delete:
@@ -69,8 +69,8 @@ delete:
         type: string
   responses:
     '200':
-      $ref: "../components/responses/MeshTrustDeleteSuccessResponse.yaml"
+      $ref: ../components/responses/MeshTrustDeleteSuccessResponse.yaml
     '404':
-      $ref: "../components/responses/NotFound.yaml"
+      $ref: ../components/responses/NotFound.yaml
   tags:
     - MeshTrust

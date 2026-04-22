@@ -4,7 +4,7 @@ properties:
   internal:
     description: Internal services statistics
     allOf:
-      - $ref: "FullStatus.yaml"
+      - $ref: FullStatus.yaml
   external:
     description: External services statistics
     type: object
@@ -17,11 +17,11 @@ properties:
   gatewayBuiltin:
     description: Builtin Gateway services statistics
     allOf:
-      - $ref: "FullStatus.yaml"
+      - $ref: FullStatus.yaml
   gatewayDelegated:
     description: Delegated Gateway services statistics
     allOf:
-      - $ref: "FullStatus.yaml"
+      - $ref: FullStatus.yaml
 required:
   - total
   - internal
