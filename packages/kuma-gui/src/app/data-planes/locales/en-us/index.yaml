@@ -128,6 +128,8 @@ data-planes:
         supported_backends:
           title: Supported CAs
         managed_externally: The certificate is managed externally
+        spiffeId:
+          title: SPIFFE ID
       subscriptions:
         title: XDS connections
         description: !!text/markdown |

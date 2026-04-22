@@ -47,6 +47,7 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
         name: displayName,
         sectionName: 'default',
       }),
+      spiffeId: fake.kuma.spiffeId({ mesh, namespace: nspace, sa: displayName }),
       labels: {
         'kuma.io/display-name': displayName,
         'kuma.io/origin': fake.kuma.origin(),
