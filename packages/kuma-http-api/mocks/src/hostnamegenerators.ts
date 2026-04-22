@@ -26,20 +26,24 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
         const displayName = `${nameQuery?.padEnd(nameQuery.length + 1, '-') ?? ''}${fake.science.chemicalElement().name.toLowerCase()}-${offset + i}-service`
         const creationTime = fake.date.past()
         const zone = zoneQuery ?? fake.word.noun()
+        const origin = zoneQuery ? 'zone' : fake.kuma.origin()
 
         return {
           type: 'HostnameGenerator',
           name: `${displayName}${k8s ? `.${namespace}` : ''}`,
-          labels: k8s
-            ? {
-              'kuma.io/display-name': displayName,
+          kri: fake.kuma.kri({ resourceName: 'HostnameGenerator', mesh: '', zone: origin === 'zone' ? zone : '', namespace: k8s ? namespace : '', name: displayName, sectionName: '' }),
+          labels: {
+            ...(k8s && {
               'k8s.kuma.io/namespace': namespace,
-              'kuma.io/env': fake.kuma.env(),
-              'kuma.io/mesh': 'default',
-              'kuma.io/origin': zoneQuery ? 'zone' : fake.kuma.origin(),
-              'kuma.io/zone': zone,
-            }
-            : {},
+            }),
+            'kuma.io/display-name': displayName,
+            'kuma.io/env': fake.kuma.env(),
+            'kuma.io/mesh': 'default',
+            'kuma.io/origin': origin,
+            ...(origin === 'zone' && {
+              'kuma.io/zone': zone
+            }),
+          },
           spec: {
             selector: {
               [meshServiceTypeSelector]: {

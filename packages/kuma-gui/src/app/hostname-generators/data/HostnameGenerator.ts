@@ -2,7 +2,7 @@ import { Resource } from '@/app/resources/data/Resource'
 import type { components } from '@kumahq/kuma-http-api'
 
 type HostnameGeneratorList = components['responses']['HostnameGeneratorList']['content']['application/json']
-type HostnameGeneratorItem = components['responses']['HostnameGeneratorItem']['content']['application/json']
+export type HostnameGeneratorItem = components['responses']['HostnameGeneratorItem']['content']['application/json']
 
 export const HostnameGenerator = {
   search(query: string) {
