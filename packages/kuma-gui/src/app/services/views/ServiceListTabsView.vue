@@ -7,7 +7,9 @@
     v-slot="{ route, t }"
   >
     <AppView>
-      <template #actions>
+      <XLayout
+        variant="action-group"
+      >
         <XActionGroup
           :expanded="true"
         >
@@ -32,7 +34,7 @@
             </XAction>
           </template>
         </XActionGroup>
-      </template>
+      </XLayout>
 
       <XI18n
         :path="`services.routes.items.navigation.${route.child()?.name}.description`"
