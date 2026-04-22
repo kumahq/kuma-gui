@@ -51,10 +51,6 @@
           <XCard
             data-testid="hostname-generator-about-section"
           >
-            <XTimespan
-              :start="sourceData?.creationTime"
-              :end="sourceData?.modificationTime"
-            />
             <template #title>
               {{ t('hostname-generators.routes.item.about.title') }}
             </template>
@@ -63,12 +59,16 @@
               :errors="[error]"
               v-slot="{ data: [data] }"
             >
+              <XTimespan
+                :start="data.creationTime"
+                :end="data.modificationTime"
+              />
               <XLayout
                 variant="y-stack"
               >
                 <XLayout variant="y-stack">
                   <XDl>
-                    <div>
+                    <div v-if="data.namespace">
                       <dt>
                         {{ t('http.api.property.namespace') }}
                       </dt>
