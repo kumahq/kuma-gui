@@ -4,7 +4,7 @@ info:
   description: Kuma API
   version: v1alpha1
   x-ref-schema-name: DataplaneOverview
-  x-oas-source: kumahq/kuma@d9db25dd25de9e3fd99fb01bda4b4c01233067e1
+  x-oas-source: kumahq/kuma@84ada43c9b742f4c30a7c1f40091a761f2728a87
 paths:
   /:
     get:
@@ -4674,9 +4674,6 @@ components:
         - meshes
         - resources
       title: GlobalInsightBase
-    GlobalInsight:
-      allOf:
-        - $ref: '#/components/schemas/GlobalInsightBase'
     Meta:
       type: object
       properties:
@@ -16703,7 +16700,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/GlobalInsight'
+            $ref: '#/components/schemas/GlobalInsightBase'
           examples:
             Single control plane response:
               $ref: '#/components/examples/GlobalInsightExample'
