@@ -38,7 +38,7 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
       'kuma.io/origin': origin,
       ...(origin === 'zone' && {
         'kuma.io/zone': zone,
-      })
+      }),
     },
     spec: {
       selector: {

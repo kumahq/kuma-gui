@@ -2,7 +2,7 @@ import createClient from 'openapi-fetch'
 
 import { Kri } from '../kuma'
 import { HostnameGenerator } from './data/HostnameGenerator'
-import type { HostnameGeneratorItem } from './data/HostnameGenerator'
+import type { KumaHostnameGenerator } from './data/HostnameGenerator'
 import { defineSources } from '@/app/application'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import type { paths } from '@kumahq/kuma-http-api'
@@ -55,7 +55,7 @@ export const sources = (api: KumaApi) => {
         })
       }
 
-      return HostnameGenerator.fromObject(response.data as HostnameGeneratorItem)
+      return HostnameGenerator.fromObject(response.data as KumaHostnameGenerator)
     },
 
     '/hostname-generators/:name/as/kubernetes': async (params) => {

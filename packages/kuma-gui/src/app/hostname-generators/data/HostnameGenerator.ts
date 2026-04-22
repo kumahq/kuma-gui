@@ -1,15 +1,15 @@
 import { Resource } from '@/app/resources/data/Resource'
 import type { components } from '@kumahq/kuma-http-api'
 
-type HostnameGeneratorList = components['responses']['HostnameGeneratorList']['content']['application/json']
-export type HostnameGeneratorItem = components['responses']['HostnameGeneratorItem']['content']['application/json']
+type KumaHostnameGeneratorCollection = components['responses']['HostnameGeneratorList']['content']['application/json']
+export type KumaHostnameGenerator = components['responses']['HostnameGeneratorItem']['content']['application/json']
 
 export const HostnameGenerator = {
   search(query: string) {
     return Resource.search(query)
   },
 
-  fromObject(item: HostnameGeneratorItem) {
+  fromObject(item: KumaHostnameGenerator) {
     const labels = item.labels ?? {}
     const name = labels['kuma.io/display-name'] ?? item.name
     const namespace = labels['k8s.kuma.io/namespace'] ?? ''
@@ -45,7 +45,7 @@ export const HostnameGenerator = {
     }
   },
 
-  fromCollection(collection: HostnameGeneratorList) {
+  fromCollection(collection: KumaHostnameGeneratorCollection) {
     const items = Array.isArray(collection.items) ? collection.items.map(HostnameGenerator.fromObject) : []
     return {
       ...collection,
