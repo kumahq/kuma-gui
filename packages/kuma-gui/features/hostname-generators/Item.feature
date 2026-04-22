@@ -24,7 +24,7 @@ Feature: hostname-generators / item
               matchLabels:
                 kuma.io/origin: zone
       """
-      And the URL "/_kri/kri_hg__zone-1_kuma-system_local-mesh-external-service_" responds with
+    And the URL "/_kri/kri_hg__zone-1_kuma-system_local-mesh-external-service_" responds with
       """
       body:
         name: local-mesh-external-service
@@ -49,8 +49,8 @@ Feature: hostname-generators / item
     And the "$about-section" element contains "kuma.io/env:kubernetes"
 
     Examples:
-      | Name           |
-      | local-mesh-external-service |
+      | Name                                                    |
+      | local-mesh-external-service                             |
       | kri_hg__zone-1_kuma-system_local-mesh-external-service_ |
 
   Scenario Outline: Visiting the detail view of HostnameGenerator
@@ -59,8 +59,8 @@ Feature: hostname-generators / item
     And the "$title-bar" element contains "local-mesh-external-service"
 
     Examples:
-      | Name           |
-      | local-mesh-external-service |
+      | Name                                                    |
+      | local-mesh-external-service                             |
       | kri_hg__zone-1_kuma-system_local-mesh-external-service_ |
 
   Scenario Outline: Shows config with format based on environment
@@ -73,6 +73,6 @@ Feature: hostname-generators / item
     And the URL contains "?environment=k8s"
 
     Examples:
-      | Name           |
-      | local-mesh-external-service |
+      | Name                                                    |
+      | local-mesh-external-service                             |
       | kri_hg__zone-1_kuma-system_local-mesh-external-service_ |

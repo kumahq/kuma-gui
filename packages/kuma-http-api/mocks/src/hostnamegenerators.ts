@@ -43,7 +43,7 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
             'kuma.io/mesh': 'default',
             'kuma.io/origin': origin,
             ...(origin === 'zone' && {
-              'kuma.io/zone': zone
+              'kuma.io/zone': zone,
             }),
           },
           spec: {
