@@ -199,8 +199,6 @@ components:
       $ref: components/schemas/MeshesStats.yaml
     GlobalInsightBase:
       $ref: components/schemas/GlobalInsightBase.yaml
-    GlobalInsight:
-      $ref: components/schemas/GlobalInsight.yaml
     InspectHostnames:
       $ref: components/schemas/InspectHostnames.yaml
     InspectHostname:
