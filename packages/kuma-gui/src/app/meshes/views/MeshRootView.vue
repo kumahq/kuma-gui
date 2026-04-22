@@ -4,7 +4,7 @@
     v-slot="{ t }"
   >
     <AppView
-      :breadcrumbs="[
+      :breadcrumbs="['mesh-list-view'].includes(String(router.currentRoute.value.name ?? '')) ? [] : [
         {
           to: {
             name: 'mesh-list-view',
@@ -17,3 +17,7 @@
     </AppView>
   </RouteView>
 </template>
+<script lang="ts" setup>
+import { useRouter } from 'vue-router'
+const router = useRouter()
+</script>
