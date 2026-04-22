@@ -1,4 +1,4 @@
-description: 'MeshTrace enables distributed tracing to track requests as they flow through multiple services in the mesh. It supports exporting trace data to backends like Zipkin, Datadog, and OpenTelemetry, with configurable sampling rates and custom tags for detailed observability and debugging of service interactions.'
+description: MeshTrace enables distributed tracing to track requests as they flow through multiple services in the mesh. It supports exporting trace data to backends like Zipkin, Datadog, and OpenTelemetry, with configurable sampling rates and custom tags for detailed observability and debugging of service interactions.
 type: object
 properties:
   type:
@@ -40,7 +40,7 @@ properties:
               array for now.
             type: array
             items:
-              description: 'Only one of zipkin, datadog or openTelemetry can be used.'
+              description: Only one of zipkin, datadog or openTelemetry can be used.
               properties:
                 datadog:
                   description: Datadog backend configuration.
@@ -66,13 +66,40 @@ properties:
                   description: OpenTelemetry backend configuration.
                   type: object
                   properties:
+                    backendRef:
+                      description: |-
+                        BackendRef is a reference to a MeshOpenTelemetryBackend resource that
+                        defines the collector endpoint. Mutually exclusive with Endpoint.
+                      type: object
+                      properties:
+                        kind:
+                          description: Kind of the backend resource.
+                          type: string
+                          enum:
+                            - MeshOpenTelemetryBackend
+                        labels:
+                          description: |-
+                            Labels to match the referenced resource. Use for cross-zone references
+                            where KDS adds a hash suffix to metadata.name. Mutually exclusive with
+                            Name. When multiple resources match, the oldest by creation time wins.
+                          type: object
+                          additionalProperties:
+                            type: string
+                        name:
+                          description: |-
+                            Name of the referenced resource (metadata.name). Use for same-cluster
+                            references. Mutually exclusive with Labels.
+                          type: string
+                      required:
+                        - kind
                     endpoint:
-                      description: Address of OpenTelemetry collector.
+                      description: |-
+                        Address of OpenTelemetry collector.
+
+                        Deprecated: use BackendRef instead.
                       type: string
-                      example: 'otel-collector:4317'
-                      minLength: 1
-                  required:
-                    - endpoint
+                      example: otel-collector:4317
+                      default: ''
                 type:
                   type: string
                   enum:
@@ -260,13 +287,57 @@ properties:
     description: Time at which the resource was created
     type: string
     format: date-time
-    example: '0001-01-01T00:00:00Z'
+    example: 0001-01-01T00:00:00Z
     readOnly: true
   modificationTime:
     description: Time at which the resource was updated
     type: string
     format: date-time
-    example: '0001-01-01T00:00:00Z'
+    example: 0001-01-01T00:00:00Z
+    readOnly: true
+  status:
+    description: Status is the current status of the Kuma MeshTrace resource.
+    type: object
+    properties:
+      conditions:
+        type: array
+        items:
+          properties:
+            message:
+              description: |-
+                message is a human readable message indicating details about the transition.
+                This may be an empty string.
+              type: string
+              maxLength: 32768
+            reason:
+              description: |-
+                reason contains a programmatic identifier indicating the reason for the condition's last transition.
+                Producers of specific condition types may define expected values and meanings for this field,
+                and whether the values are considered a guaranteed API.
+                The value should be a CamelCase string.
+                This field may not be empty.
+              type: string
+              maxLength: 1024
+              minLength: 1
+              pattern: ^[A-Za-z]([A-Za-z0-9_,:]*[A-Za-z0-9_])?$
+            status:
+              description: status of the condition, one of True, False, Unknown.
+              type: string
+              enum:
+                - 'True'
+                - 'False'
+                - Unknown
+            type:
+              description: type of condition in CamelCase or in foo.example.com/CamelCase.
+              type: string
+              maxLength: 316
+              pattern: ^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$
+          required:
+            - message
+            - reason
+            - status
+            - type
+          type: object
     readOnly: true
 required:
   - type

@@ -143,6 +143,10 @@ paths:
     $ref: paths/meshes_{mesh}_meshmultizoneservices_{name}.yaml
   /meshes/{mesh}/meshmultizoneservices:
     $ref: paths/meshes_{mesh}_meshmultizoneservices.yaml
+  /meshes/{mesh}/meshopentelemetrybackends/{name}:
+    $ref: paths/meshes_{mesh}_meshopentelemetrybackends_{name}.yaml
+  /meshes/{mesh}/meshopentelemetrybackends:
+    $ref: paths/meshes_{mesh}_meshopentelemetrybackends.yaml
   /meshes/{mesh}/meshservices/{name}:
     $ref: paths/meshes_{mesh}_meshservices_{name}.yaml
   /meshes/{mesh}/meshservices:
@@ -151,6 +155,10 @@ paths:
     $ref: paths/meshes_{mesh}_meshtrusts_{name}.yaml
   /meshes/{mesh}/meshtrusts:
     $ref: paths/meshes_{mesh}_meshtrusts.yaml
+  /meshes/{mesh}/meshzoneaddresses/{name}:
+    $ref: paths/meshes_{mesh}_meshzoneaddresses_{name}.yaml
+  /meshes/{mesh}/meshzoneaddresses:
+    $ref: paths/meshes_{mesh}_meshzoneaddresses.yaml
   /meshes/{mesh}/workloads/{name}:
     $ref: paths/meshes_{mesh}_workloads_{name}.yaml
   /meshes/{mesh}/workloads:
@@ -189,8 +197,8 @@ components:
       $ref: components/schemas/ResourceStats.yaml
     MeshesStats:
       $ref: components/schemas/MeshesStats.yaml
-    schemas-GlobalInsight:
-      $ref: components/schemas/schemas-GlobalInsight.yaml
+    GlobalInsightBase:
+      $ref: components/schemas/GlobalInsightBase.yaml
     GlobalInsight:
       $ref: components/schemas/GlobalInsight.yaml
     InspectHostnames:
@@ -337,10 +345,14 @@ components:
       $ref: components/schemas/MeshIdentityItem.yaml
     MeshMultiZoneServiceItem:
       $ref: components/schemas/MeshMultiZoneServiceItem.yaml
+    MeshOpenTelemetryBackendItem:
+      $ref: components/schemas/MeshOpenTelemetryBackendItem.yaml
     MeshServiceItem:
       $ref: components/schemas/MeshServiceItem.yaml
     MeshTrustItem:
       $ref: components/schemas/MeshTrustItem.yaml
+    MeshZoneAddressItem:
+      $ref: components/schemas/MeshZoneAddressItem.yaml
     WorkloadItem:
       $ref: components/schemas/WorkloadItem.yaml
     Policy:
@@ -603,6 +615,14 @@ components:
       $ref: components/responses/MeshMultiZoneServiceCreateOrUpdateSuccessResponse.yaml
     MeshMultiZoneServiceDeleteSuccessResponse:
       $ref: components/responses/MeshMultiZoneServiceDeleteSuccessResponse.yaml
+    MeshOpenTelemetryBackendItem:
+      $ref: components/responses/MeshOpenTelemetryBackendItem.yaml
+    MeshOpenTelemetryBackendList:
+      $ref: components/responses/MeshOpenTelemetryBackendList.yaml
+    MeshOpenTelemetryBackendCreateOrUpdateSuccessResponse:
+      $ref: components/responses/MeshOpenTelemetryBackendCreateOrUpdateSuccessResponse.yaml
+    MeshOpenTelemetryBackendDeleteSuccessResponse:
+      $ref: components/responses/MeshOpenTelemetryBackendDeleteSuccessResponse.yaml
     MeshServiceItem:
       $ref: components/responses/MeshServiceItem.yaml
     MeshServiceList:
@@ -619,6 +639,14 @@ components:
       $ref: components/responses/MeshTrustCreateOrUpdateSuccessResponse.yaml
     MeshTrustDeleteSuccessResponse:
       $ref: components/responses/MeshTrustDeleteSuccessResponse.yaml
+    MeshZoneAddressItem:
+      $ref: components/responses/MeshZoneAddressItem.yaml
+    MeshZoneAddressList:
+      $ref: components/responses/MeshZoneAddressList.yaml
+    MeshZoneAddressCreateOrUpdateSuccessResponse:
+      $ref: components/responses/MeshZoneAddressCreateOrUpdateSuccessResponse.yaml
+    MeshZoneAddressDeleteSuccessResponse:
+      $ref: components/responses/MeshZoneAddressDeleteSuccessResponse.yaml
     WorkloadItem:
       $ref: components/responses/WorkloadItem.yaml
     WorkloadList:

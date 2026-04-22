@@ -16,9 +16,9 @@ get:
         type: string
   responses:
     '200':
-      $ref: "../components/responses/MeshFaultInjectionItem.yaml"
+      $ref: ../components/responses/MeshFaultInjectionItem.yaml
     '404':
-      $ref: "../components/responses/NotFound.yaml"
+      $ref: ../components/responses/NotFound.yaml
   tags:
     - MeshFaultInjection
 put:
@@ -43,12 +43,12 @@ put:
     content:
       application/json:
         schema:
-          $ref: "../components/schemas/MeshFaultInjectionItem.yaml"
+          $ref: ../components/schemas/MeshFaultInjectionItem.yaml
   responses:
     '200':
-      $ref: "../components/responses/MeshFaultInjectionCreateOrUpdateSuccessResponse.yaml"
+      $ref: ../components/responses/MeshFaultInjectionCreateOrUpdateSuccessResponse.yaml
     '201':
-      $ref: "../components/responses/MeshFaultInjectionCreateOrUpdateSuccessResponse.yaml"
+      $ref: ../components/responses/MeshFaultInjectionCreateOrUpdateSuccessResponse.yaml
   tags:
     - MeshFaultInjection
 delete:
@@ -69,8 +69,8 @@ delete:
         type: string
   responses:
     '200':
-      $ref: "../components/responses/MeshFaultInjectionDeleteSuccessResponse.yaml"
+      $ref: ../components/responses/MeshFaultInjectionDeleteSuccessResponse.yaml
     '404':
-      $ref: "../components/responses/NotFound.yaml"
+      $ref: ../components/responses/NotFound.yaml
   tags:
     - MeshFaultInjection

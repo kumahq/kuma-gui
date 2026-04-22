@@ -2,4 +2,4 @@ description: A response containing dataplane networking layout.
 content:
   application/json:
     schema:
-      $ref: "../schemas/DataplaneNetworkingLayout.yaml"
+      $ref: ../schemas/DataplaneNetworkingLayout.yaml

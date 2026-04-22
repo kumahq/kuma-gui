@@ -16,9 +16,9 @@ delete:
         type: string
   responses:
     '200':
-      $ref: "../components/responses/MeshGatewayDeleteSuccessResponse.yaml"
+      $ref: ../components/responses/MeshGatewayDeleteSuccessResponse.yaml
     '404':
-      $ref: "../components/responses/NotFound.yaml"
+      $ref: ../components/responses/NotFound.yaml
   tags:
     - MeshGateway
 get:
@@ -39,9 +39,9 @@ get:
         type: string
   responses:
     '200':
-      $ref: "../components/responses/MeshGatewayItem.yaml"
+      $ref: ../components/responses/MeshGatewayItem.yaml
     '404':
-      $ref: "../components/responses/NotFound.yaml"
+      $ref: ../components/responses/NotFound.yaml
   tags:
     - MeshGateway
 put:
@@ -66,11 +66,11 @@ put:
     content:
       application/json:
         schema:
-          $ref: "../components/schemas/MeshGatewayItem.yaml"
+          $ref: ../components/schemas/MeshGatewayItem.yaml
   responses:
     '200':
-      $ref: "../components/responses/MeshGatewayCreateOrUpdateSuccessResponse.yaml"
+      $ref: ../components/responses/MeshGatewayCreateOrUpdateSuccessResponse.yaml
     '201':
-      $ref: "../components/responses/MeshGatewayCreateOrUpdateSuccessResponse.yaml"
+      $ref: ../components/responses/MeshGatewayCreateOrUpdateSuccessResponse.yaml
   tags:
     - MeshGateway

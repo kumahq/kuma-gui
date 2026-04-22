@@ -10,9 +10,9 @@ get:
         type: string
   responses:
     '200':
-      $ref: "../components/responses/HostnameGeneratorItem.yaml"
+      $ref: ../components/responses/HostnameGeneratorItem.yaml
     '404':
-      $ref: "../components/responses/NotFound.yaml"
+      $ref: ../components/responses/NotFound.yaml
   tags:
     - HostnameGenerator
 put:
@@ -31,12 +31,12 @@ put:
     content:
       application/json:
         schema:
-          $ref: "../components/schemas/HostnameGeneratorItem.yaml"
+          $ref: ../components/schemas/HostnameGeneratorItem.yaml
   responses:
     '200':
-      $ref: "../components/responses/HostnameGeneratorCreateOrUpdateSuccessResponse.yaml"
+      $ref: ../components/responses/HostnameGeneratorCreateOrUpdateSuccessResponse.yaml
     '201':
-      $ref: "../components/responses/HostnameGeneratorCreateOrUpdateSuccessResponse.yaml"
+      $ref: ../components/responses/HostnameGeneratorCreateOrUpdateSuccessResponse.yaml
   tags:
     - HostnameGenerator
 delete:
@@ -51,8 +51,8 @@ delete:
         type: string
   responses:
     '200':
-      $ref: "../components/responses/HostnameGeneratorDeleteSuccessResponse.yaml"
+      $ref: ../components/responses/HostnameGeneratorDeleteSuccessResponse.yaml
     '404':
-      $ref: "../components/responses/NotFound.yaml"
+      $ref: ../components/responses/NotFound.yaml
   tags:
     - HostnameGenerator

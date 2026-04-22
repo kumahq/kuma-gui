@@ -7,7 +7,7 @@ content:
         items:
           type: array
           items:
-            $ref: "../schemas/MeshTrafficPermissionItem.yaml"
+            $ref: ../schemas/MeshTrafficPermissionItem.yaml
         total:
           description: The total number of entities
           type: number

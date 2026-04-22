@@ -12,4 +12,4 @@ content:
         items:
           type: array
           items:
-            $ref: "../schemas/DataplaneOverviewWithMeta.yaml"
+            $ref: ../schemas/DataplaneOverviewWithMeta.yaml

@@ -16,11 +16,14 @@ properties:
   inbounds:
     type: array
     items:
-      $ref: "DataplaneInbound.yaml"
+      $ref: DataplaneInbound.yaml
   outbounds:
     type: array
     items:
-      $ref: "DataplaneOutbound.yaml"
+      $ref: DataplaneOutbound.yaml
+  spiffeId:
+    description: SPIFFE ID of the dataplane's workload identity certificate
+    type: string
 required:
   - kri
   - labels

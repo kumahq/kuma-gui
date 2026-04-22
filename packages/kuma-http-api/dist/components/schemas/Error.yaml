@@ -22,7 +22,7 @@ properties:
     description: |
       Used to return the correlation ID back to the user, in the format `<app>:trace:<correlation_id>`.
     type: string
-    example: 'portal:trace:2287285207635123011'
+    example: portal:trace:2287285207635123011
   detail:
     description: |
       A human readable explanation specific to this occurrence of the problem.
@@ -37,7 +37,7 @@ properties:
       Used to indicate which fields have invalid values when validated.
     type: array
     items:
-      $ref: "InvalidParameters.yaml"
+      $ref: InvalidParameters.yaml
 required:
   - status
   - title
@@ -49,6 +49,6 @@ x-examples:
   Example 1:
     status: 404
     title: Not Found
-    type: 'https://kongapi.info/konnect/not-found'
-    instance: 'portal:trace:2287285207635123011'
+    type: https://kongapi.info/konnect/not-found
+    instance: portal:trace:2287285207635123011
     detail: The requested document was not found

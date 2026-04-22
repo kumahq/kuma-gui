@@ -68,13 +68,13 @@ properties:
     description: Time at which the resource was created
     type: string
     format: date-time
-    example: '0001-01-01T00:00:00Z'
+    example: 0001-01-01T00:00:00Z
     readOnly: true
   modificationTime:
     description: Time at which the resource was updated
     type: string
     format: date-time
-    example: '0001-01-01T00:00:00Z'
+    example: 0001-01-01T00:00:00Z
     readOnly: true
   status:
     description: Status is the current status of the Kuma MeshMultiZoneService resource.
@@ -118,9 +118,9 @@ properties:
               type: string
               maxLength: 1024
               minLength: 1
-              pattern: '^[A-Za-z]([A-Za-z0-9_,:]*[A-Za-z0-9_])?$'
+              pattern: ^[A-Za-z]([A-Za-z0-9_,:]*[A-Za-z0-9_])?$
             status:
-              description: 'status of the condition, one of True, False, Unknown.'
+              description: status of the condition, one of True, False, Unknown.
               type: string
               enum:
                 - 'True'
@@ -130,7 +130,7 @@ properties:
               description: type of condition in CamelCase or in foo.example.com/CamelCase.
               type: string
               maxLength: 316
-              pattern: '^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$'
+              pattern: ^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$
           required:
             - message
             - reason
@@ -163,9 +163,9 @@ properties:
                     type: string
                     maxLength: 1024
                     minLength: 1
-                    pattern: '^[A-Za-z]([A-Za-z0-9_,:]*[A-Za-z0-9_])?$'
+                    pattern: ^[A-Za-z]([A-Za-z0-9_,:]*[A-Za-z0-9_])?$
                   status:
-                    description: 'status of the condition, one of True, False, Unknown.'
+                    description: status of the condition, one of True, False, Unknown.
                     type: string
                     enum:
                       - 'True'
@@ -175,7 +175,7 @@ properties:
                     description: type of condition in CamelCase or in foo.example.com/CamelCase.
                     type: string
                     maxLength: 316
-                    pattern: '^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$'
+                    pattern: ^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$
                 required:
                   - message
                   - reason

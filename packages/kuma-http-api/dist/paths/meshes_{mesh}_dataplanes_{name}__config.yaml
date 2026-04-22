@@ -1,7 +1,7 @@
 get:
   operationId: get-dataplanes-xds-config
-  summary: 'Get a proxy XDS config on a CP, this endpoint is only available on zone CPs.'
-  description: 'Returns the [xds](https://www.envoyproxy.io/docs/envoy/latest/api-docs/xds_protocol) configuration of the proxy.'
+  summary: Get a proxy XDS config on a CP, this endpoint is only available on zone CPs.
+  description: Returns the [xds](https://www.envoyproxy.io/docs/envoy/latest/api-docs/xds_protocol) configuration of the proxy.
   parameters:
     - name: mesh
       in: path
@@ -35,8 +35,8 @@ get:
             - diff
   responses:
     '200':
-      $ref: "../components/responses/GetDataplaneXDSConfigResponse.yaml"
+      $ref: ../components/responses/GetDataplaneXDSConfigResponse.yaml
     '400':
-      $ref: "../components/responses/BadRequest.yaml"
+      $ref: ../components/responses/BadRequest.yaml
     '500':
-      $ref: "../components/responses/Internal.yaml"
+      $ref: ../components/responses/Internal.yaml

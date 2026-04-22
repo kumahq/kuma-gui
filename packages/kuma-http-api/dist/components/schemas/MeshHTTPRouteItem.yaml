@@ -213,7 +213,7 @@ properties:
                                         type: string
                                         maxLength: 256
                                         minLength: 1
-                                        pattern: '^[a-z0-9!#$%&''*+\-.^_\x60|~]+$'
+                                        pattern: ^[a-z0-9!#$%&'*+\-.^_\x60|~]+$
                                       value:
                                         type: string
                                     required:
@@ -237,7 +237,7 @@ properties:
                                         type: string
                                         maxLength: 256
                                         minLength: 1
-                                        pattern: '^[a-z0-9!#$%&''*+\-.^_\x60|~]+$'
+                                        pattern: ^[a-z0-9!#$%&'*+\-.^_\x60|~]+$
                                       value:
                                         type: string
                                     required:
@@ -345,7 +345,7 @@ properties:
                                   type: string
                                   maxLength: 253
                                   minLength: 1
-                                  pattern: '^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$'
+                                  pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$
                                 path:
                                   description: |-
                                     Path defines parameters used to modify the path of the incoming request.
@@ -403,7 +403,7 @@ properties:
                                         type: string
                                         maxLength: 256
                                         minLength: 1
-                                        pattern: '^[a-z0-9!#$%&''*+\-.^_\x60|~]+$'
+                                        pattern: ^[a-z0-9!#$%&'*+\-.^_\x60|~]+$
                                       value:
                                         type: string
                                     required:
@@ -427,7 +427,7 @@ properties:
                                         type: string
                                         maxLength: 256
                                         minLength: 1
-                                        pattern: '^[a-z0-9!#$%&''*+\-.^_\x60|~]+$'
+                                        pattern: ^[a-z0-9!#$%&'*+\-.^_\x60|~]+$
                                       value:
                                         type: string
                                     required:
@@ -459,7 +459,7 @@ properties:
                                   type: string
                                   maxLength: 253
                                   minLength: 1
-                                  pattern: '^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$'
+                                  pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$
                                 path:
                                   description: Path defines a path rewrite.
                                   type: object
@@ -499,7 +499,7 @@ properties:
                                 type: string
                                 maxLength: 256
                                 minLength: 1
-                                pattern: '^[a-z0-9!#$%&''*+\-.^_\x60|~]+$'
+                                pattern: ^[a-z0-9!#$%&'*+\-.^_\x60|~]+$
                               type:
                                 description: Type specifies how to match against the value of the header.
                                 type: string
@@ -645,13 +645,13 @@ properties:
     description: Time at which the resource was created
     type: string
     format: date-time
-    example: '0001-01-01T00:00:00Z'
+    example: 0001-01-01T00:00:00Z
     readOnly: true
   modificationTime:
     description: Time at which the resource was updated
     type: string
     format: date-time
-    example: '0001-01-01T00:00:00Z'
+    example: 0001-01-01T00:00:00Z
     readOnly: true
 required:
   - type

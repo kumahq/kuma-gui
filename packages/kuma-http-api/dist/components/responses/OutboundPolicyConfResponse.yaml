@@ -2,4 +2,4 @@ description: A response containing policies configuration for selected outbound
 content:
   application/json:
     schema:
-      $ref: "../schemas/PoliciesList.yaml"
+      $ref: ../schemas/PoliciesList.yaml

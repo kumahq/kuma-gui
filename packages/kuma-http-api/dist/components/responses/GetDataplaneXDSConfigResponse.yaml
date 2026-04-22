@@ -2,4 +2,4 @@ description: Successfully retrieved proxy XDS config.
 content:
   application/json:
     schema:
-      $ref: "../schemas/DataplaneXDSConfig.yaml"
+      $ref: ../schemas/DataplaneXDSConfig.yaml

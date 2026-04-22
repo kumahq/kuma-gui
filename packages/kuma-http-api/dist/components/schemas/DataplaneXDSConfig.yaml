@@ -9,7 +9,7 @@ properties:
       By default, the field is empty. To include the diff in the response, use the `include=diff` query parameter.
     type: array
     items:
-      $ref: "JsonPatchItem.yaml"
+      $ref: JsonPatchItem.yaml
 required:
   - xds
 title: DataplaneXDSConfig

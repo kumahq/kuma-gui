@@ -2,4 +2,4 @@ description: Successful response
 content:
   application/json:
     schema:
-      $ref: "../schemas/MeshHTTPRouteItem.yaml"
+      $ref: ../schemas/MeshHTTPRouteItem.yaml
