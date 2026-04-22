@@ -1799,7 +1799,6 @@ export interface components {
                 [key: string]: components["schemas"]["ResourceStats"];
             };
         };
-        GlobalInsight: components["schemas"]["GlobalInsightBase"];
         Meta: {
             /**
              * @description the type of this resource
@@ -10511,7 +10510,7 @@ export interface components {
                 [name: string]: unknown;
             };
             content: {
-                "application/json": components["schemas"]["GlobalInsight"];
+                "application/json": components["schemas"]["GlobalInsightBase"];
             };
         };
         /** @description A response containing policies that match a resource */
