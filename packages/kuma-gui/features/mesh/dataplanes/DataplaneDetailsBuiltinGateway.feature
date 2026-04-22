@@ -22,7 +22,7 @@ Feature: Dataplane details for built-in gateway
       KUMA_DATAPLANEINBOUND_COUNT: 0
       KUMA_MODE: global
       """
-    And the URL "/meshes/default/dataplanes/dataplane-gateway_builtin-1/_overview" responds with
+    And the URL "/meshes/default/dataplanes/dataplane-gateway-builtin-1/_overview" responds with
       """
       body:
         mesh: default
@@ -55,23 +55,23 @@ Feature: Dataplane details for built-in gateway
                   kumaDpCompatible: true
       """
     And the date is "2023-10-14T00:00:00Z"
-    When I visit the "/meshes/default/data-planes/dataplane-gateway_builtin-1/overview" URL
-    Then the page title contains "dataplane-gateway_builtin-1"
-    And the "$detail-view" element contains "dataplane-gateway_builtin-1"
+    When I visit the "/meshes/default/data-planes/dataplane-gateway-builtin-1/overview" URL
+    Then the page title contains "dataplane-gateway-builtin-1"
+    And the "$detail-view" element contains "dataplane-gateway-builtin-1"
     And the "$details" element contains
       | Value                 |
       | Online                |
-      |       193.107.134.106 |
+      | 193.107.134.106       |
       | kuma.io/protocol:http |
       | kuma.io/zone:zone-1   |
     And the "$detail-view" element exists but the "$warnings" element doesn't exist
 
   Scenario: Overview tab shows warning when no mTLS is set
-    And the URL "/meshes/default/dataplanes/dataplane-gateway_builtin-1/_overview" responds with
+    And the URL "/meshes/default/dataplanes/dataplane-gateway-builtin-1/_overview" responds with
       """
       body:
         dataplaneInsight:
           mTLS: !!js/undefined
       """
-    When I visit the "/meshes/default/data-planes/dataplane-gateway_builtin-1/overview" URL
+    When I visit the "/meshes/default/data-planes/dataplane-gateway-builtin-1/overview" URL
     Then the "$warnings" element exists

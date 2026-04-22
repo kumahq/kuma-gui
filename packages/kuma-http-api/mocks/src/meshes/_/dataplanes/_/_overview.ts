@@ -2,7 +2,7 @@ import type { Dependencies, ResponseHandler } from '#mocks'
 export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
   const name = req.params.name as string
   const mesh = req.params.mesh as string
-
+  
   // use a seed based on the name to keep ports and ip address the same across
   // _overview, stats and rules
   fake.kuma.seed(name as string)
@@ -13,7 +13,7 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
   }))
   const address = fake.internet.ip()
   //
-
+  
   fake.kuma.seed()
   const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
   const isMtlsEnabledOverride = env('KUMA_MTLS_ENABLED', '')
@@ -24,10 +24,10 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
   const isTransparentProxyingEnabled = env('KUMA_DATAPLANE_TRANSPARENT_PROXY', `${fake.datatype.boolean()}`) === 'true'
   const isBindOutboundsEnabled = env('KUMA_DATAPLANE_BIND_OUTBOUNDS', `${fake.datatype.boolean()}`) === 'true'
   const isTcpAccesslogViaNamedPipeEnabled = env('KUMA_DATAPLANE_TCP_ACCESSLOG_VIA_NAMED_PIPE', `${fake.datatype.boolean()}`) === 'true'
-
+  
   const outboundCount = parseInt(env('KUMA_DATAPLANEOUTBOUND_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
   const subscriptionCount = parseInt(env('KUMA_SUBSCRIPTION_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
-
+  
   const type = (() => {
     switch (true) {
       case defaultType === 'builtin':
@@ -40,16 +40,16 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
         return 'STANDARD'
     }
   })()
-
+  
   const isMultizone = fake.datatype.boolean()
   const isMtlsEnabled = isTlsIssuedMeshIdentity || (isMtlsEnabledOverride !== '' ? isMtlsEnabledOverride === 'true' : fake.datatype.boolean())
-
+  
   const service = fake.word.noun()
-
+  
   const parts = String(name).split('.')
-  const displayName = parts.slice(0, -1).join('.')
-  const nspace = parts.pop()
-
+  const displayName = parts.length > 1 ? parts.slice(0, -1).join('.') : name
+  const nspace = parts.length > 1 ? parts.pop() : fake.k8s.namespace()
+  
   return {
     headers: {},
     body: {
@@ -60,6 +60,9 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
         creationTime: fake.kuma.date({ refDate: modificationTime }),
         modificationTime,
       }))(fake.kuma.date()),
+      labels: {
+        'kuma.io/display-name': displayName,
+      },
       dataplane: {
         networking: {
           address,

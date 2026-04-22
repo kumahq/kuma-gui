@@ -4,22 +4,26 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
   const [
     mesh = req.params.mesh as string,
     zone = '',
-    namespace = fake.k8s.namespace(),
+    namespace = '',
     name = req.params.name as string,
   ] = kri?.split('_') ?? ''
-
+  
   const inbounds = parseInt(env('KUMA_DATAPLANEINBOUND_COUNT', `${fake.number.int({ min: 1, max: 5 })}`))
   const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
-
+  
   let type: 'gateway_builtin' | 'gateway_delegated' | 'proxy' = 'proxy'
   if (name.includes('-gateway_builtin')) {
     type = 'gateway_builtin'
   } else if (name.includes('-gateway_delegated')) {
     type = 'gateway_delegated'
   }
-
+  
   const isMultizone = fake.datatype.boolean() || zone.length > 0
-
+  
+  const parts = String(name).split('.')
+  const displayName = parts.length > 1 ? parts.slice(0, -1).join('.') : name
+  const nspace = parts.length > 1 ? parts.pop() : namespace
+  
   return {
     headers: {},
     body: {
@@ -28,12 +32,12 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
       }),
       type: 'Dataplane',
       mesh,
-      name: `${name}.${namespace}`,
+      name,
       creationTime: '2021-02-17T08:33:36.442044+01:00',
       modificationTime: '2021-02-17T08:33:36.442044+01:00',
-      kri: fake.kuma.kri({ resourceName: 'Dataplane', mesh, zone, namespace, name, sectionName: '' }),
+      kri: fake.kuma.kri({ resourceName: 'Dataplane', mesh, zone, namespace: nspace, name: displayName, sectionName: '' }),
       labels: {
-        'kuma.io/display-name': name,
+        'kuma.io/display-name': displayName,
         'kuma.io/mesh': mesh,
         ...(isMultizone ? {
           'kuma.io/origin': 'zone',
@@ -43,7 +47,7 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
           {
             'k8s.kuma.io/namespace': namespace,
           } : {
-            ...(k8s ? { 'k8s.kuma.io/namespace': fake.helpers.arrayElement([fake.k8s.namespace(), 'kuma-demo']) } : {}),
+            ...(k8s ? { 'k8s.kuma.io/namespace': nspace || fake.k8s.namespace() } : {}),
           }
         ),
       },
@@ -51,7 +55,7 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
         const address = fake.internet.ipv4()
         const advertisedAddress = fake.datatype.boolean({ probability: 0.25 }) ? fake.internet.ipv4() : undefined
         const dataplaneType = type === 'gateway_builtin' ? 'BUILTIN' : type === 'gateway_delegated' ? 'DELEGATED' : undefined
-
+  
         return {
           address,
           ...(advertisedAddress && { advertisedAddress }),
@@ -79,7 +83,7 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
                   service: fake.kuma.serviceName(),
                   zone: isMultizone && fake.datatype.boolean() ? fake.word.noun() : undefined,
                 })
-
+  
                 return {
                   port,
                   tags,
