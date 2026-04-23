@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.NOTIFY_BOT_PAT_TOKEN }}
         run: |
           gh api repos/${{ vars.NOTIFY_REPO_OWNER }}/${{ vars.NOTIFY_REPO_NAME }}/dispatches \
             -X POST \
