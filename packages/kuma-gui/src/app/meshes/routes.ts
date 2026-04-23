@@ -22,7 +22,6 @@ export const routes = (
       path: 'meshes',
       name: 'mesh-index-view',
       redirect: { name: 'mesh-list-view' },
-      component: () => import('@/app/meshes/views/MeshRootView.vue'),
       children: [
         {
           path: '',
