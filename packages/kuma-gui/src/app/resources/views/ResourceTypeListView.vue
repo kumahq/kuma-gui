@@ -29,7 +29,7 @@
               variant="x-stack"
               size="large"
             >
-              <XCard class="resource-types-collection">
+              <XCard class="resource-type-collection">
                 <template #actions>
                   <XLayout
                     variant="separated"
@@ -167,11 +167,9 @@ import { sources as meshesSources } from '@/app/meshes/sources'
 import { sources } from '@/app/resources/sources'
 </script>
 <style lang="scss" scoped>
-.resource-types-collection {
-  flex-grow: 1;
-  overflow-y: auto;
-  min-height: 0;
+.resource-type-collection {
   max-width: 500px;
+  align-self: flex-start;
 }
 
 ul {
