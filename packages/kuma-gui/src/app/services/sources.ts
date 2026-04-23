@@ -8,6 +8,8 @@ import {
   ServiceInsight,
   Hostname,
 } from './data'
+import type { KumaMeshMultiZoneService, KumaMeshService, KumaMeshExternalService } from './data'
+import { Kri } from '../kuma'
 import type { DataSourceResponse } from '@/app/application'
 import { defineSources } from '@/app/application'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
@@ -59,31 +61,62 @@ export const sources = (api: KumaApi) => {
     '/meshes/:mesh/mesh-service/:name': async (params) => {
       const { mesh, name } = params
 
-      const res = await http.GET('/meshes/{mesh}/meshservices/{name}', {
-        params: {
-          path: {
-            mesh,
-            name,
+      let res
+
+      if(Kri.isKriString(name)) {
+        res = await http.GET('/_kri/{kri}', {
+          params: {
+            path: {
+              kri: name,
+            },
           },
-        },
-      })
-      return MeshService.fromObject(res.data!)
+        })
+      } else {
+        res = await http.GET('/meshes/{mesh}/meshservices/{name}', {
+          params: {
+            path: {
+              mesh,
+              name,
+            },
+          },
+        })
+      }
+
+      return MeshService.fromObject(res.data as KumaMeshService)
     },
 
     '/meshes/:mesh/mesh-service/:name/as/kubernetes': async (params) => {
       const { mesh, name } = params
-      const res = await http.GET('/meshes/{mesh}/meshservices/{name}', {
-        params: {
-          path: {
-            mesh,
-            name,
+
+      let res
+
+      if(Kri.isKriString(name)) {
+        res = await http.GET('/_kri/{kri}', {
+          params: {
+            path: {
+              kri: name,
+            },
+            // @ts-ignore
+            query: {
+              format: 'kubernetes',
+            },
           },
-          // @ts-ignore
-          query: {
-            format: 'kubernetes',
+        })
+      } else {
+        res = await http.GET('/meshes/{mesh}/meshservices/{name}', {
+          params: {
+            path: {
+              mesh,
+              name,
+            },
+            // @ts-ignore
+            query: {
+              format: 'kubernetes',
+            },
           },
-        },
-      })
+        })
+      }
+
       return res.data!
     },
 
@@ -113,31 +146,62 @@ export const sources = (api: KumaApi) => {
     '/meshes/:mesh/mesh-multi-zone-service/:name': async (params) => {
       const { mesh, name } = params
 
-      const res = await http.GET('/meshes/{mesh}/meshmultizoneservices/{name}', {
-        params: {
-          path: {
-            mesh,
-            name,
+      let res
+
+      if(Kri.isKriString(name)) {
+        res = await http.GET('/_kri/{kri}', {
+          params: {
+            path: {
+              kri: name,
+            },
           },
-        },
-      })
-      return MeshMultiZoneService.fromObject(res.data!)
+        })
+      } else {
+        res = await http.GET('/meshes/{mesh}/meshmultizoneservices/{name}', {
+          params: {
+            path: {
+              mesh,
+              name,
+            },
+          },
+        })
+      }
+
+      return MeshMultiZoneService.fromObject(res.data! as KumaMeshMultiZoneService)
     },
 
     '/meshes/:mesh/mesh-multi-zone-service/:name/as/kubernetes': async (params) => {
       const { mesh, name } = params
-      const res = await http.GET('/meshes/{mesh}/meshmultizoneservices/{name}', {
-        params: {
-          path: {
-            mesh,
-            name,
+
+      let res
+
+      if(Kri.isKriString(name)) {
+        res = await http.GET('/_kri/{kri}', {
+          params: {
+            path: {
+              kri: name,
+            },
+            // @ts-ignore
+            query: {
+              format: 'kubernetes',
+            },
           },
-          // @ts-ignore
-          query: {
-            format: 'kubernetes',
+        })
+      } else {
+        res = await http.GET('/meshes/{mesh}/meshmultizoneservices/{name}', {
+          params: {
+            path: {
+              mesh,
+              name,
+            },
+            // @ts-ignore
+            query: {
+              format: 'kubernetes',
+            },
           },
-        },
-      })
+        })
+      }
+
       return res.data!
     },
 
@@ -166,33 +230,62 @@ export const sources = (api: KumaApi) => {
     '/meshes/:mesh/mesh-external-service/:name': async (params) => {
       const { mesh, name } = params
 
-      const res = await http.GET('/meshes/{mesh}/meshexternalservices/{name}', {
-        params: {
-          path: {
-            mesh,
-            name,
-          },
-        },
-      })
+      let res
 
-      return MeshExternalService.fromObject(res.data!)
+      if(Kri.isKriString(name)) {
+        res = await http.GET('/_kri/{kri}', {
+          params: {
+            path: {
+              kri: name,
+            },
+          },
+        })
+      } else {
+        res = await http.GET('/meshes/{mesh}/meshexternalservices/{name}', {
+          params: {
+            path: {
+              mesh,
+              name,
+            },
+          },
+        })
+      }
+
+      return MeshExternalService.fromObject(res.data! as KumaMeshExternalService)
     },
 
     '/meshes/:mesh/mesh-external-service/:name/as/kubernetes': async (params) => {
       const { mesh, name } = params
 
-      const res = await http.GET('/meshes/{mesh}/meshexternalservices/{name}', {
-        params: {
-          path: {
-            mesh,
-            name,
+      let res 
+
+      if(Kri.isKriString(name)) {
+        res = await http.GET('/_kri/{kri}', {
+          params: {
+            path: {
+              kri: name,
+            },
+            // @ts-ignore
+            query: {
+              format: 'kubernetes',
+            },
           },
-          // @ts-ignore
-          query: {
-            format: 'kubernetes',
+        })
+      } else {
+        res = await http.GET('/meshes/{mesh}/meshexternalservices/{name}', {
+          params: {
+            path: {
+              mesh,
+              name,
+            },
+            // @ts-ignore
+            query: {
+              format: 'kubernetes',
+            },
           },
-        },
-      })
+        })
+      }
+      
       return res.data!
     },
 

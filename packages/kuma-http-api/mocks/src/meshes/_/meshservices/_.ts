@@ -7,7 +7,7 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
   const kri = req.params.kri as string | undefined
   const [
     mesh = req.params.mesh as string,
-    zone,
+    zone = fake.word.noun(),
     ns,
     name = req.params.name as string,
   ] = kri?.split('_') ?? ''
@@ -28,6 +28,7 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
       type: 'MeshService',
       mesh,
       name,
+      kri: fake.kuma.kri({ resourceName: 'MeshService', mesh, zone, namespace: nspace, name: displayName || name, sectionName: '' }),
       creationTime: '2021-02-19T08:06:15.14624+01:00',
       modificationTime: '2021-02-19T08:07:37.539229+01:00',
       ...(k8s
@@ -36,7 +37,7 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
             'kuma.io/display-name': displayName,
             'k8s.kuma.io/namespace': nspace,
             'kuma.io/origin': 'zone',
-            'kuma.io/zone': zone ?? fake.word.noun(),
+            'kuma.io/zone': zone,
           },
         }
         : {}),
