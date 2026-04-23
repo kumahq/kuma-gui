@@ -101,8 +101,8 @@
                 {{ t('data-planes.routes.item.about.title') }}
               </template>
               <DataLoader
-                :data="[traffic, sourceDataplaneLayout]"
-                v-slot="{ data: [, dataplaneLayout] }"
+                :data="[sourceDataplaneLayout, traffic]"
+                v-slot="{ data: [dataplaneLayout] }"
               >
                 <XLayout
                   variant="y-stack"
