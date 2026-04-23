@@ -37,12 +37,18 @@ Feature: mesh / dataplanes / overview / TLS
       body: |
         cluster.kri_msvc_default_east_kuma-demo_my-service_5050.ssl.certificate.spiffe://default.local-zone.mesh.local/ns/kuma-demo/sa/default.expiration_unix_time_seconds: 1765823243
       """
+    And the URL "/meshes/default/dataplanes/backend/_layout" responds with
+      """
+      body:
+        spiffeId: spiffe://default.local-zone.mesh.local/ns/kuma-demo/sa/default
+      """
     When I visit the "/meshes/default/data-planes/backend/overview" URL
     Then the "$tls-section" element exists
     And the "$tls-section" element contains "The certificate is managed externally"
     And the "$tls-section" element contains "kri_mid_default_east_kuma-demo_identity-1_"
     And the "$tls-section" element contains "Certificate expires at"
     And the "$tls-section" element doesn't contain "Supported CAs"
+    And the "$tls-section" element contains "spiffe://default.local-zone.mesh.local/ns/kuma-demo/sa/default"
 
   Scenario: Link to MeshIdentity from TLS section
     When I visit the "/meshes/default/data-planes/backend/overview" URL
