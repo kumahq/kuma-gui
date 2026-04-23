@@ -24,4 +24,4 @@ jobs:
           gh api repos/${{ vars.NOTIFY_REPO_OWNER }}/${{ vars.NOTIFY_REPO_NAME }}/dispatches \
             -X POST \
             -f event_type=${{ vars.NOTIFY_EVENT_TYPE }} \
-            -f client_payload[branch]=${{ github.ref_name }}
+            -f 'client_payload[branch]=${{ github.ref_name }}'
