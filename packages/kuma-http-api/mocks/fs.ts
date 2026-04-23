@@ -239,7 +239,7 @@ export const fs = {
   // MeshService
   '/_kri/kri_msvc_:kri': _137,
   // Dataplane
-  '/_kri/kri_dp_:kri': _22,
+  '/_kri/kri_dp_:kri': _19,
   // MeshExternalService
   '/_kri/kri_extsvc_:kri': _139,
   // MeshFaultInjection
@@ -254,6 +254,8 @@ export const fs = {
   '/_kri/kri_mzsvc_:kri': _141,
   // MeshTrust
   '/_kri/kri_mtrust_:kri': _244,
+  // Zone
+  '/_kri/kri_z_:kri': _50,
   // ZoneEgress
   '/_kri/kri_ze_:kri': _127,
   // ZoneIngress

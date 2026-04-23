@@ -85,7 +85,7 @@
             <DataSource
               :src="uri(sources, '/meshes/:mesh/rules/for/:dataplane', {
                 mesh: route.params.mesh,
-                dataplane: route.params.proxy,
+                dataplane: props.overview.id,
               })"
               v-slot="{ data: rulesData, error: rulesError }"
             >
@@ -212,13 +212,15 @@ import { YAML } from '@/app/application'
 import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
 import TagList from '@/app/common/TagList.vue'
-import type { DataplaneInbound } from '@/app/data-planes/data'
+import type { DataplaneInbound, DataplaneOverview } from '@/app/data-planes/data'
 import { sources as policySources } from '@/app/policies/sources'
 import RuleMatchers from '@/app/rules/components/RuleMatchers.vue'
 import { sources } from '@/app/rules/sources'
 
 const props = defineProps<{
   data: DataplaneInbound
+  foo: string
+  overview: DataplaneOverview
   routeName: string
 }>()
 </script>

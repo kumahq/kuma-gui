@@ -341,6 +341,7 @@
                         :is="child.Component"
                         :data="route.params.subscription.length > 0 ? zoneEgress.zoneEgressInsight.subscriptions : (child.route.name as string).includes('-inbound-') ? [zoneEgress.zoneEgress] : traffic?.outbounds || {}"
                         :networking="zoneEgress.zoneEgress.networking"
+                        :overview="props.data"
                       />
                     </XDrawer>
                   </RouterView>

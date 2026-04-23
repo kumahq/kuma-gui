@@ -30,7 +30,7 @@
       ]"
     >
       <template
-        v-if="data"
+        v-if="props.data"
         #title
       >
         <XLayout
@@ -142,7 +142,7 @@
                           variant="spinner"
                           :src="downloading ? uri(sources, '/meshes/:mesh/dataplanes/:name/as/tarball/:spec', {
                             mesh: route.params.mesh,
-                            name: route.params.proxy,
+                            name: props.data.id,
                             spec: JSON.stringify(
                               specs,
                             ),

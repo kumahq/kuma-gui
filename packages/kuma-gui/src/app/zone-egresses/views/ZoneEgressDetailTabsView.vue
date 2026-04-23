@@ -7,11 +7,11 @@
     }"
     v-slot="{ route, can, t, uri }"
   >
-    <DataSource
-      :src="uri(sources, '/zone-egress-overviews/:name', {
+    <DataLoader
+      :src="uri(sources, '/zone-egresses/:name', {
         name: route.params.proxy,
       })"
-      v-slot="{ data, error, result }"
+      v-slot="{ data: [zoneEgress] }"
     >
       <AppView
         :docs="t('zone-ingresses.href.docs')"
@@ -48,25 +48,27 @@
           #title
         >
           <DataLoader
-            :data="[data]"
+            :src="uri(sources, '/zone-egress-overviews/:name', {
+              name: zoneEgress.id,
+            })"
             variant="header"
-            v-slot="{ data: [zoneEgress] }"
+            v-slot="{ data: [zoneEgressOverview] }"
           >
             <XLayout
               variant="y-stack"
               size="small"
             >
               <h1>
-                <XCopyButton :text="zoneEgress.name">
+                <XCopyButton :text="zoneEgressOverview.name">
                   <RouteTitle
-                    :title="t('zone-egresses.routes.item.title', { name: zoneEgress.name })"
+                    :title="t('zone-egresses.routes.item.title', { name: zoneEgressOverview.name })"
                   />
                 </XCopyButton>
               </h1>
               <XBadge
-                :appearance="t(`common.status.appearance.${zoneEgress.state}`, undefined, { defaultMessage: 'neutral' })"
+                :appearance="t(`common.status.appearance.${zoneEgressOverview.state}`, undefined, { defaultMessage: 'neutral' })"
               >
-                {{ t(`http.api.value.${zoneEgress.state}`) }}
+                {{ t(`http.api.value.${zoneEgressOverview.state}`) }}
               </XBadge>
             </XLayout>
           </DataLoader>
@@ -151,7 +153,7 @@
                           <DataLoader
                             variant="spinner"
                             :src="downloading ? uri(sources, '/zone-egresses/:name/as/tarball/:spec', {
-                              name: route.params.proxy,
+                              name: zoneEgress.id,
                               spec: JSON.stringify(
                                 specs,
                               ),
@@ -169,7 +171,7 @@
                                 show-icon
                               >
                                 <XI18n
-                                  t="zone-ingresses.routes.item.download.error"
+                                  t="zone-egresses.routes.item.download.error"
                                 />
                               </XAlert>
                             </template>
@@ -191,32 +193,39 @@
           </XDisclosure>
         </template>
 
-        <XTabs
-          :selected="route.child()?.name"
+        <DataSource
+          :src="uri(sources, '/zone-egress-overviews/:name', {
+            name: zoneEgress.id,
+          })"
+          v-slot="{ data, result, error }"
         >
-          <template
-            v-for="{ name } in route.children"
-            :key="name"
-            #[`${name}-tab`]
+          <XTabs
+            :selected="route.child()?.name"
           >
-            <XAction
-              :to="{ name }"
+            <template
+              v-for="{ name } in route.children"
+              :key="name"
+              #[`${name}-tab`]
             >
-              {{ t(`zone-egresses.routes.item.navigation.${name}`) }}
-            </XAction>
-          </template>
-        </XTabs>
+              <XAction
+                :to="{ name }"
+              >
+                {{ t(`zone-egresses.routes.item.navigation.${name}`) }}
+              </XAction>
+            </template>
+          </XTabs>
 
-        <RouterView v-slot="child">
-          <component
-            :is="child.Component"
-            :networking="error ?? data?.zoneEgress.networking"
-            :data="result"
-            :subscriptions="data?.zoneEgressInsight?.subscriptions"
-          />
-        </RouterView>
+          <RouterView v-slot="child">
+            <component
+              :is="child.Component"
+              :networking="error ?? data?.zoneEgress.networking"
+              :data="result"
+              :subscriptions="data?.zoneEgressInsight?.subscriptions"
+            />
+          </RouterView>
+        </DataSource>
       </AppView>
-    </DataSource>
+    </DataLoader>
   </RouteView>
 </template>
 

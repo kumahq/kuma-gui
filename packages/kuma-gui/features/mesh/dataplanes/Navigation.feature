@@ -15,7 +15,7 @@ Feature: mesh / dataplanes / navigation
       KUMA_DATAPLANE_COUNT: 1
       """
 
-  Rule: In a namepaced environment
+  Rule: In a namespaced environment
 
     Background:
       Given the environment

@@ -8,24 +8,32 @@
     v-slot="{ route, uri }"
   >
     <DataLoader
-      :src="uri(sources, '/meshes/:mesh/dataplane-overviews/:name', {
+      :src="uri(sources, '/meshes/:mesh/dataplanes/:name', {
         mesh: route.params.mesh,
         name: route.params.proxy,
       })"
-      v-slot="{ data: [data] }"
+      v-slot="{ data: [dataPlane] }"
     >
-      <DataPlaneRouteGuard
-        :data="data"
-        :mesh="props.mesh"
+      <DataLoader
+        :src="uri(sources, '/meshes/:mesh/dataplane-overviews/:name', {
+          mesh: route.params.mesh,
+          name: dataPlane.id,
+        })"
+        v-slot="{ data: [data] }"
       >
-        <RouterView v-slot="{ Component }">
-          <component
-            :is="Component"
-            :data="data"
-            :mesh="props.mesh"
-          />
-        </RouterView>
-      </DataPlaneRouteGuard>
+        <DataPlaneRouteGuard
+          :data="data"
+          :mesh="props.mesh"
+        >
+          <RouterView v-slot="{ Component }">
+            <component
+              :is="Component"
+              :data="data"
+              :mesh="props.mesh"
+            />
+          </RouterView>
+        </DataPlaneRouteGuard>
+      </DataLoader>
     </DataLoader>
   </RouteView>
 </template>

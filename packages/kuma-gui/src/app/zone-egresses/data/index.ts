@@ -16,6 +16,7 @@ export const ZoneEgress = {
     return {
       ...item,
       config: item,
+      id: item.name,
       socketAddress: item.networking?.address && item.networking?.port ? `${item.networking.address}:${item.networking.port}` : '',
       networking: {
         ...item.networking,

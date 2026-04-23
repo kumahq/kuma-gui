@@ -1,10 +1,13 @@
 import { TarWriter } from '@gera2ld/tarjs'
+import createClient from 'openapi-fetch'
 
 import { ZoneEgressOverview, ZoneEgress } from './data'
+import { Kri } from '../kuma'
 import type { DataSourceResponse } from '@/app/application'
 import { YAML , defineSources } from '@/app/application'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
+import type { paths } from '@kumahq/kuma-http-api'
 
 export type ZoneEgressSource = DataSourceResponse<ZoneEgress>
 export type ZoneEgressOverviewCollection = CollectionResponse<ZoneEgressOverview>
@@ -17,6 +20,10 @@ const includes = <T extends readonly string[]>(arr: T, item: string): item is T[
   return arr.includes(item as T[number])
 }
 export const sources = (api: KumaApi) => {
+  const http = createClient<paths>({
+    baseUrl: '',
+    fetch: api.client.fetch,
+  })
   return defineSources({
     '/zone-cps/:name/egresses': async (params) => {
       const { name, size, page } = params
@@ -33,11 +40,38 @@ export const sources = (api: KumaApi) => {
     '/zone-egresses/:name': async (params) => {
       const { name } = params
 
-      return ZoneEgress.fromObject(await api.getZoneEgress({ name }))
+      let response
+      if(Kri.isKriString(name)) {
+        response = (await http.GET('/_kri/{kri}', {
+          params: {
+            path: {
+              kri: name,
+            },
+          },
+        })).data
+      } else {
+        response = await api.getZoneEgress({ name })
+      }
+
+      return ZoneEgress.fromObject(response as ZoneEgress)
     },
 
     '/zone-egresses/:name/as/kubernetes': async (params) => {
       const { name } = params
+
+      if(Kri.isKriString(name)) {
+        return (await http.GET('/_kri/{kri}', {
+          params: {
+            path: {
+              kri: name,
+            },
+            // @ts-expect-error - missing types for format query parameter
+            query: {
+              format: 'kubernetes',
+            },
+          },
+        })).data
+      }
 
       return await api.getZoneEgress({ name }, { format: 'kubernetes' })
     },

@@ -34,7 +34,7 @@ Feature: Zone Ingress summary
     When I navigate "forward"
     Then the "$item" element exists but the "$summary" element doesn't exist
 
-  Scenario: Summary URL goes to page with open summary
+  Scenario Outline: Summary URL goes to page with open summary
     Given the environment
       """
       KUMA_ZONEINGRESS_COUNT: 51

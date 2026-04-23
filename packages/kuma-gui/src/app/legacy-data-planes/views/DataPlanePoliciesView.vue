@@ -26,7 +26,7 @@
           <DataLoader
             :src="uri(sources, '/meshes/:mesh/rules/for/:dataplane', {
               mesh: route.params.mesh,
-              dataplane: route.params.proxy,
+              dataplane: props.data.id,
             })"
             :data="[policyTypesData]"
             :errors="[policyTypesError]"
@@ -138,7 +138,7 @@
                 <DataLoader
                   :src="uri(dataplaneSources, '/meshes/:mesh/dataplanes/:name/gateway-dataplane-policies', {
                     mesh: route.params.mesh,
-                    name: route.params.proxy,
+                    name: props.data.id,
                   })"
                   :data="[policyTypesData]"
                   :errors="[policyTypesError]"
@@ -169,7 +169,7 @@
                 <DataLoader
                   :src="uri(dataplaneSources, '/meshes/:mesh/dataplanes/:name/sidecar-dataplane-policies', {
                     mesh: route.params.mesh,
-                    name: route.params.proxy,
+                    name: props.data.id,
                   })"
                   :data="[policyTypesData]"
                   :errors="[policyTypesError]"

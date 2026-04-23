@@ -7,11 +7,11 @@
     }"
     v-slot="{ route, t, uri }"
   >
-    <DataSource
-      :src="uri(sources, `/zone-ingress-overviews/:name`, {
+    <DataLoader
+      :src="uri(sources, `/zone-ingresses/:name`, {
         name: route.params.proxy,
       })"
-      v-slot="{ data, error, result }"
+      v-slot="{ data: [zoneIngress] }"
     >
       <AppView
         :docs="t('zone-ingresses.href.docs')"
@@ -46,9 +46,11 @@
           #title
         >
           <DataLoader
-            :data="[data]"
+            :src="uri(sources, `/zone-ingress-overviews/:name`, {
+              name: zoneIngress.id,
+            })"
             variant="header"
-            v-slot="{ data: [zoneIngress] }"
+            v-slot="{ data: [zoneIngressOverview] }"
           >
             <XLayout
               variant="y-stack"
@@ -56,17 +58,17 @@
             >
               <h1>
                 <XCopyButton
-                  :text="zoneIngress.name"
+                  :text="zoneIngressOverview.name"
                 >
                   <RouteTitle
-                    :title="t('zone-ingresses.routes.item.title', { name: zoneIngress.name })"
+                    :title="t('zone-ingresses.routes.item.title', { name: zoneIngressOverview.name })"
                   />
                 </XCopyButton>
               </h1>
               <XBadge
-                :appearance="t(`common.status.appearance.${zoneIngress.state}`, undefined, { defaultMessage: 'neutral' })"
+                :appearance="t(`common.status.appearance.${zoneIngressOverview.state}`, undefined, { defaultMessage: 'neutral' })"
               >
-                {{ t(`http.api.value.${zoneIngress.state}`) }}
+                {{ t(`http.api.value.${zoneIngressOverview.state}`) }}
               </XBadge>
             </XLayout>
           </DataLoader>
@@ -150,7 +152,7 @@
                           <DataLoader
                             variant="spinner"
                             :src="downloading ? uri(sources, '/zone-ingresses/:name/as/tarball/:spec', {
-                              name: route.params.proxy,
+                              name: zoneIngress.id,
                               spec: JSON.stringify(
                                 specs,
                               ),
@@ -190,33 +192,41 @@
           </XDisclosure>
         </template>
 
-        <XTabs
-          :selected="route.child()?.name"
-          data-testid="zone-ingress-tabs"
+        <DataSource
+          :src="uri(sources, '/zone-ingress-overviews/:name', {
+            name: zoneIngress.id,
+          })"
+          variant="header"
+          v-slot="{ data, result, error }"
         >
-          <template
-            v-for="{ name } in route.children"
-            :key="name"
-            #[`${name}-tab`]
+          <XTabs
+            :selected="route.child()?.name"
+            data-testid="zone-ingress-tabs"
           >
-            <XAction
-              :to="{ name }"
+            <template
+              v-for="{ name } in route.children"
+              :key="name"
+              #[`${name}-tab`]
             >
-              {{ t(`zone-ingresses.routes.item.navigation.${name}`) }}
-            </XAction>
-          </template>
-        </XTabs>
+              <XAction
+                :to="{ name }"
+              >
+                {{ t(`zone-ingresses.routes.item.navigation.${name}`) }}
+              </XAction>
+            </template>
+          </XTabs>
 
-        <RouterView v-slot="child">
-          <component
-            :is="child.Component"
-            :networking="error ?? data?.zoneIngress.networking"
-            :data="result"
-            :subscriptions="data?.zoneIngressInsight?.subscriptions"
-          />
-        </RouterView>
+          <RouterView v-slot="child">
+            <component
+              :is="child.Component"
+              :networking="error ?? data?.zoneIngress.networking"
+              :data="result"
+              :subscriptions="data?.zoneIngressInsight?.subscriptions"
+            />
+          </RouterView>
+        </DataSource>
       </AppView>
-    </DataSource>
+    </DataLoader>
   </RouteView>
 </template>
 

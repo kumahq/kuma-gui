@@ -26,8 +26,16 @@ Feature: mesh / dataplanes / connections / Traffic
           - name: MeshMultiZoneService
             shortName: mzsvc
       """
+    And the URL "/_kri/kri_dp_default_zone-1_kuma-demo_service-less_" responds with
+      """
+      body:
+        name: service-less
+        kri: kri_dp_default_zone-1_kuma-demo_service-less_
+        labels:
+          kuma.io/display-name: service-less
+      """
 
-  Scenario: Traffic listing shows expected content
+  Scenario Outline: Traffic listing shows expected content
     And the URL "/meshes/default/dataplanes/service-less/_layout" responds with
       """
       body:
@@ -42,7 +50,7 @@ Feature: mesh / dataplanes / connections / Traffic
             protocol: tcp
             proxyResourceName: kri_msvc_default_scenario_kuma-system_service-less_ipv6
       """
-    When I visit the "/meshes/default/data-planes/service-less/overview" URL
+    When I visit the "/meshes/default/data-planes/<Name>/overview" URL
     Then the "$traffic" element exists
     And the "$inbound" element exists 1 times
     And the "$inbound" element contains "12345"
@@ -54,7 +62,12 @@ Feature: mesh / dataplanes / connections / Traffic
     And the "$outbound" element contains "Type MeshService"
     And the "$outbound" element contains "service-less"
 
-  Scenario: Abnormal traffic stats are detected
+    Examples:
+      | Name                                          |
+      | service-less                                  |
+      | kri_dp_default_zone-1_kuma-demo_service-less_ |
+
+  Scenario Outline: Abnormal traffic stats are detected
     Given the URL "/meshes/default/dataplanes/service-less/_layout" responds with
       """
       body:
@@ -74,6 +87,11 @@ Feature: mesh / dataplanes / connections / Traffic
       body: |
         cluster.kri_msvc_default_abnormal-traffic_kuma-system_service-less_ipv6.circuit_breakers.default.cx_open: 5
       """
-    When I visit the "/meshes/default/data-planes/service-less/overview" URL
+    When I visit the "/meshes/default/data-planes/<Name>/overview" URL
     Then the "$traffic" element exists
     And the "$warning" element exists
+
+    Examples:
+      | Name                                          |
+      | service-less                                  |
+      | kri_dp_default_zone-1_kuma-demo_service-less_ |

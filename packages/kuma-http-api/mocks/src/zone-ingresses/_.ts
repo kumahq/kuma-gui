@@ -5,7 +5,7 @@ export default ({ fake }: Dependencies): ResponseHandler => (req) => {
   const [
     _mesh,
     zone = req.params.zone as string | undefined,
-    _namespace,
+    namespace = '',
     name = req.params.name as string,
   ] = kri?.split('_') ?? ''
   
@@ -19,6 +19,7 @@ export default ({ fake }: Dependencies): ResponseHandler => (req) => {
       }),
       type: 'ZoneIngress',
       name,
+      kri: fake.kuma.kri({ resourceName: 'ZoneIngress', mesh: '', zone: zoneName, namespace: namespace || fake.helpers.arrayElement([fake.k8s.namespace(), 'kuma-system']), name }),
       creationTime: '2021-07-13T08:40:59Z',
       modificationTime: '2021-07-13T08:40:59Z',
       zone: zoneName,

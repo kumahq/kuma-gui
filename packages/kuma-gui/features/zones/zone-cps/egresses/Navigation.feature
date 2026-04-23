@@ -16,7 +16,7 @@ Feature: zones / egresses / navigation
       KUMA_ZONEEGRESS_COUNT: 1
       """
 
-  Rule: In a namepaced environment
+  Rule: In a namespaced environment
 
     Background:
       Given the environment

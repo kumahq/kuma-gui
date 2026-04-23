@@ -10,173 +10,187 @@
     }"
     v-slot="{ route, t, uri }"
   >
-    <DataCollection
-      :items="props.items"
-      :predicate="item => item.id === route.params.proxy"
-      :find="true"
+    <DataLoader
+      :src="typeof props.items === 'undefined' ? uri(sources, '/zone-egresses/:name', {
+        name: route.params.proxy,
+      }) : undefined"
+      v-slot="{ data: [zoneEgress] }"
     >
-      <template #empty>
-        <XEmptyState>
-          <template #title>
-            <h2>
-              {{ t('common.collection.summary.empty_title', { type: 'ZoneEgress' }) }}
-            </h2>
-          </template>
-
-          <p>
-            {{ t('common.collection.summary.empty_message', { type: 'ZoneEgress' }) }}
-          </p>
-        </XEmptyState>
-      </template>
-      <template
-        #default="{ items: proxies }"
+      <DataLoader
+        :src="typeof props.items === 'undefined' ? uri(sources, '/zone-egress-overviews/:name', {
+          name: zoneEgress.id,
+        }) : undefined"
+        v-slot="{ data: [zoneEgressOverview] }"
       >
-        <template
-          v-for="item in [proxies[0]]"
-          :key="item.id"
+        <DataCollection
+          :items="typeof props.items !== 'undefined' ? props.items : [zoneEgressOverview]"
+          :predicate="item => item.id === route.params.proxy"
+          :find="true"
         >
-          <AppView>
-            <template #title>
-              <XLayout
-                variant="y-stack"
-                size="small"
-              >
-                <h2
-                  v-icon-start="`zone`"
-                >
-                  <XAction
-                    :to="{
-                      name: 'zone-egress-detail-view',
-                      params: {
-                        zone: item.zoneEgress.zone,
-                        proxyType: 'egresses',
-                        proxy: item.id,
-                      },
-                    }"
-                  >
-                    <RouteTitle
-                      :title="t('zone-egresses.routes.item.title', { name: item.name })"
-                    />
-                  </XAction>
+          <template #empty>
+            <XEmptyState>
+              <template #title>
+                <h2>
+                  {{ t('common.collection.summary.empty_title', { type: 'ZoneEgress' }) }}
                 </h2>
-                <XBadge
-                  :appearance="t(`common.status.appearance.${item.state}`, undefined, { defaultMessage: 'neutral' })"
-                >
-                  {{ t(`http.api.value.${item.state}`) }}
-                </XBadge>
-              </XLayout>
-            </template>
+              </template>
 
-            <XLayout
-              variant="y-stack"
+              <p>
+                {{ t('common.collection.summary.empty_message', { type: 'ZoneEgress' }) }}
+              </p>
+            </XEmptyState>
+          </template>
+          <template
+            #default="{ items: proxies }"
+          >
+            <template
+              v-for="item in [proxies[0]]"
+              :key="item.id"
             >
-              <header>
-                <XLayout
-                  variant="separated"
-                  size="max"
-                >
-                  <h3>
-                    {{ t('zone-egresses.routes.item.config') }}
-                  </h3>
-                  <div
-                    v-for="options in [['structured', 'universal', 'k8s']]"
-                    :key="typeof options"
+              <AppView>
+                <template #title>
+                  <XLayout
+                    variant="y-stack"
+                    size="small"
                   >
-                    <XSelect
-                      :label="t('zone-egresses.routes.items.format')"
-                      :selected="route.params.format"
-                      @change="(value) => {
-                        route.update({ format: value })
-                      }"
-                      @vue:before-mount="$event?.props?.selected && options.includes($event.props.selected) && $event.props.selected !== route.params.format && route.update({ format: $event.props.selected })"
+                    <h2
+                      v-icon-start="`zone`"
                     >
-                      <template
-                        v-for="value in options"
-                        :key="value"
-                        #[`${value}-option`]
+                      <XAction
+                        :to="{
+                          name: 'zone-egress-detail-view',
+                          params: {
+                            zone: item.zoneEgress.zone,
+                            proxyType: 'egresses',
+                            proxy: item.id,
+                          },
+                        }"
                       >
-                        {{ t(`zone-egresses.routes.items.formats.${value}`) }}
-                      </template>
-                    </XSelect>
-                  </div>
-                </XLayout>
-              </header>
-
-              <template v-if="route.params.format === 'structured'">
-                <XTable
-                  data-testid="structured-view"
-                  variant="kv"
-                >
-                  <tr
-                    v-if="item.namespace.length > 0"
-                  >
-                    <th scope="row">
-                      {{ t('data-planes.routes.item.namespace') }}
-                    </th>
-                    <td>{{ item.namespace }}</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      {{ t('http.api.property.address') }}
-                    </th>
-                    <td>
-                      <template
-                        v-if="item.zoneEgress.socketAddress.length > 0"
-                      >
-                        <XCopyButton
-                          :text="item.zoneEgress.socketAddress"
+                        <RouteTitle
+                          :title="t('zone-egresses.routes.item.title', { name: item.name })"
                         />
-                      </template>
+                      </XAction>
+                    </h2>
+                    <XBadge
+                      :appearance="t(`common.status.appearance.${item.state}`, undefined, { defaultMessage: 'neutral' })"
+                    >
+                      {{ t(`http.api.value.${item.state}`) }}
+                    </XBadge>
+                  </XLayout>
+                </template>
 
-                      <template v-else>
-                        {{ t('common.detail.none') }}
-                      </template>
-                    </td>
-                  </tr>
-                </XTable>
-              </template>
-
-              <template v-else-if="route.params.format === 'universal'">
-                <XCodeBlock
-                  data-testid="codeblock-yaml-universal"
-                  language="yaml"
-                  :code="YAML.stringify(item.config)"
-                  is-searchable
-                  :query="route.params.codeSearch"
-                  :is-filter-mode="route.params.codeFilter"
-                  :is-reg-exp-mode="route.params.codeRegExp"
-                  @query-change="route.update({ codeSearch: $event })"
-                  @filter-mode-change="route.update({ codeFilter: $event })"
-                  @reg-exp-mode-change="route.update({ codeRegExp: $event })"
-                />
-              </template>
-
-              <template v-else>
-                <DataLoader
-                  :src="uri(sources, '/zone-egresses/:name/as/kubernetes', {
-                    name: route.params.proxy,
-                  })"
-                  v-slot="{ data: [k8sConfig] }"
+                <XLayout
+                  variant="y-stack"
                 >
-                  <XCodeBlock
-                    data-testid="codeblock-yaml-k8s"
-                    language="yaml"
-                    :code="YAML.stringify(k8sConfig)"
-                    is-searchable
-                    :query="route.params.codeSearch"
-                    :is-filter-mode="route.params.codeFilter"
-                    :is-reg-exp-mode="route.params.codeRegExp"
-                    @query-change="route.update({ codeSearch: $event })"
-                    @filter-mode-change="route.update({ codeFilter: $event })"
-                    @reg-exp-mode-change="route.update({ codeRegExp: $event })"
-                  />
-                </DataLoader>
-              </template>
-            </XLayout>
-          </AppView>
-        </template>
-      </template>
-    </DataCollection>
+                  <header>
+                    <XLayout
+                      variant="separated"
+                      size="max"
+                    >
+                      <h3>
+                        {{ t('zone-egresses.routes.item.config') }}
+                      </h3>
+                      <div
+                        v-for="options in [['structured', 'universal', 'k8s']]"
+                        :key="typeof options"
+                      >
+                        <XSelect
+                          :label="t('zone-egresses.routes.items.format')"
+                          :selected="route.params.format"
+                          @change="(value) => {
+                            route.update({ format: value })
+                          }"
+                          @vue:before-mount="$event?.props?.selected && options.includes($event.props.selected) && $event.props.selected !== route.params.format && route.update({ format: $event.props.selected })"
+                        >
+                          <template
+                            v-for="value in options"
+                            :key="value"
+                            #[`${value}-option`]
+                          >
+                            {{ t(`zone-egresses.routes.items.formats.${value}`) }}
+                          </template>
+                        </XSelect>
+                      </div>
+                    </XLayout>
+                  </header>
+
+                  <template v-if="route.params.format === 'structured'">
+                    <XTable
+                      data-testid="structured-view"
+                      variant="kv"
+                    >
+                      <tr
+                        v-if="item.namespace.length > 0"
+                      >
+                        <th scope="row">
+                          {{ t('data-planes.routes.item.namespace') }}
+                        </th>
+                        <td>{{ item.namespace }}</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">
+                          {{ t('http.api.property.address') }}
+                        </th>
+                        <td>
+                          <template
+                            v-if="item.zoneEgress.socketAddress.length > 0"
+                          >
+                            <XCopyButton
+                              :text="item.zoneEgress.socketAddress"
+                            />
+                          </template>
+
+                          <template v-else>
+                            {{ t('common.detail.none') }}
+                          </template>
+                        </td>
+                      </tr>
+                    </XTable>
+                  </template>
+
+                  <template v-else-if="route.params.format === 'universal'">
+                    <XCodeBlock
+                      data-testid="codeblock-yaml-universal"
+                      language="yaml"
+                      :code="YAML.stringify(item.config)"
+                      is-searchable
+                      :query="route.params.codeSearch"
+                      :is-filter-mode="route.params.codeFilter"
+                      :is-reg-exp-mode="route.params.codeRegExp"
+                      @query-change="route.update({ codeSearch: $event })"
+                      @filter-mode-change="route.update({ codeFilter: $event })"
+                      @reg-exp-mode-change="route.update({ codeRegExp: $event })"
+                    />
+                  </template>
+
+                  <template v-else>
+                    <DataLoader
+                      :src="uri(sources, '/zone-egresses/:name/as/kubernetes', {
+                        name: route.params.proxy,
+                      })"
+                      v-slot="{ data: [k8sConfig] }"
+                    >
+                      <XCodeBlock
+                        data-testid="codeblock-yaml-k8s"
+                        language="yaml"
+                        :code="YAML.stringify(k8sConfig)"
+                        is-searchable
+                        :query="route.params.codeSearch"
+                        :is-filter-mode="route.params.codeFilter"
+                        :is-reg-exp-mode="route.params.codeRegExp"
+                        @query-change="route.update({ codeSearch: $event })"
+                        @filter-mode-change="route.update({ codeFilter: $event })"
+                        @reg-exp-mode-change="route.update({ codeRegExp: $event })"
+                      />
+                    </DataLoader>
+                  </template>
+                </XLayout>
+              </AppView>
+            </template>
+          </template>
+        </DataCollection>
+      </DataLoader>
+    </DataLoader>
   </RouteView>
 </template>
 
@@ -186,6 +200,6 @@ import { sources } from '../sources'
 import { YAML } from '@/app/application'
 
 const props = defineProps<{
-  items: ZoneEgressOverview[]
+  items: ZoneEgressOverview[] | undefined
 }>()
 </script>

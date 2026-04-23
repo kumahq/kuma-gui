@@ -13,7 +13,7 @@
     <DataSource
       :src="uri(sources, '/connections/stats/for/:proxyType/:name/:mesh/:socketAddress', {
         proxyType: ({ ingresses: 'zone-ingress', egresses: 'zone-egress' })[route.params.proxyType] ?? 'dataplane',
-        name: route.params.proxy,
+        name: props.data.id,
         mesh: route.params.mesh || '*',
         socketAddress: props.data.dataplane.networking.inboundAddress,
       })"
@@ -825,6 +825,8 @@
                 :is="child.Component"
                 :data="route.params.subscription.length > 0 ? props.data.dataplaneInsight.subscriptions : (child.route.name as string).includes('-inbound-') ? props.data.dataplane.networking.inbounds : traffic?.outbounds || {}"
                 :networking="props.data.dataplane.networking"
+                :overview="props.data"
+                :foo="'bar'"
               />
             </XDrawer>
           </RouterView>

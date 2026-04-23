@@ -494,6 +494,7 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
       ['MeshTrafficPermission', 'mtp'],
       ['MeshTrust', 'mtrust'],
       ['Workload', 'wl'],
+      ['Zone', 'z'],
       ['ZoneEgress', 'ze'],
       ['ZoneIngress', 'zi'],
     ])

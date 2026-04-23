@@ -25,10 +25,18 @@ Feature: Dataplane policies
       """
         KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: false
       """
+    And the URL "/_kri/kri_dp_default_zone-1_kuma-demo_dataplane-1_" responds with
+      """
+      body:
+        name: dataplane-1
+        kri: kri_dp_default_zone-1_kuma-demo_dataplane-1_
+        labels:
+          kuma.io/display-name: dataplane-1
+      """
 
   Rule: Any networking type
 
-    Scenario: Policies tab has expected content (MeshHTTPRoute with to rules)
+    Scenario Outline: Policies tab has expected content (MeshHTTPRoute with to rules)
       Given the environment
         """
         KUMA_DATAPLANE_PROXY_RULE_ENABLED: false
@@ -86,7 +94,7 @@ Feature: Dataplane policies
                       name: on-service
                       type: MeshTimeout
         """
-      When I visit the "/meshes/default/data-planes/dataplane-1/policies" URL
+      When I visit the "/meshes/default/data-planes/<Name>/policies" URL
       Then the "$policies-view" element contains "MeshHTTPRoute"
       And the "$policies-view" element contains "MeshTimeout"
       When I click the "$to-rule-item:nth-child(1) [data-testid='accordion-item-button']" element
@@ -97,6 +105,11 @@ Feature: Dataplane policies
       Then the "$to-rule-item:nth-child(2)" element contains "kuma.io/service:backend_kuma-demo_svc_3001"
       And the "$to-rule-item:nth-child(2)" element contains "!__rule-matches-hash__:waFsoIISmZDTfFWYqxvY265/GASHYEWvHQTwMh/bpuU= and"
       And the "$to-rule-item:nth-child(2)" element contains "kuma.io/service:backend_kuma-demo_svc_3001"
+
+      Examples:
+        | Name                                         |
+        | dataplane-1                                  |
+        | kri_dp_default_zone-1_kuma-demo_dataplane-1_ |
 
     Scenario: Policies tab has expected content (MeshTimeout with from & to rules)
       Given the environment
@@ -216,7 +229,7 @@ Feature: Dataplane policies
                     http:
                       requestTimeout: 10s
         """
-      When I visit the "/meshes/default/data-planes/dataplane-1/policies" URL
+      When I visit the "/meshes/default/data-planes/<Name>/policies" URL
       Then the "$policies-view" element contains "MeshTrace"
       When I click the "$to-rule-item:nth-child(1) [data-testid='accordion-item-button']" element
       Then the "$to-rule-item:nth-child(1)" element contains "kuma.io/service:foo"
@@ -225,7 +238,12 @@ Feature: Dataplane policies
       Then the "$from-rule-item:nth-child(1)" element contains "kuma.io/service:one and"
       Then the "$from-rule-item:nth-child(1)" element contains "!kuma.io/service:two"
 
-    Scenario: Policies tab has expected content (MeshTimeout with proxy & to rule)
+      Examples:
+        | Name                                         |
+        | dataplane-1                                  |
+        | kri_dp_default_zone-1_kuma-demo_dataplane-1_ |
+
+    Scenario Outline: Policies tab has expected content (MeshTimeout with proxy & to rule)
       Given the environment
         """
         KUMA_DATAPLANE_PROXY_RULE_ENABLED: true
@@ -267,14 +285,19 @@ Feature: Dataplane policies
                           connectTimeout: 5s
                           type: STATIC
         """
-      When I visit the "/meshes/default/data-planes/dataplane-1/policies" URL
+      When I visit the "/meshes/default/data-planes/<Name>/policies" URL
       Then the "$policies-view" element contains "MeshTimeout"
       When I click the "$proxy-rule-item:nth-child(1) [data-testid='accordion-item-button']" element
       Then the "$proxy-rule-item:nth-child(1)" element contains "mpp-on-gateway"
       When I click the "$to-rule-item:nth-child(1) [data-testid='accordion-item-button']" element
       Then the "$to-rule-item:nth-child(1)" element contains "!kuma.io/service:bar"
 
-    Scenario: The origin policies link in the policies rules' policy list opens the policy summary panel
+      Examples:
+        | Name                                         |
+        | dataplane-1                                  |
+        | kri_dp_default_zone-1_kuma-demo_dataplane-1_ |
+
+    Scenario Outline: The origin policies link in the policies rules' policy list opens the policy summary panel
       Given the environment
         """
         KUMA_DATAPLANE_PROXY_RULE_ENABLED: false
@@ -297,7 +320,7 @@ Feature: Dataplane policies
                       name: the-other-http-route
                       type: MeshHTTPRoute
         """
-      When I visit the "/meshes/default/data-planes/dataplane-1/policies" URL
+      When I visit the "/meshes/default/data-planes/<Name>/policies" URL
       Then the "$policies-view" element contains "MeshHTTPRoute"
       When I click the "$to-rule-item-button" element
       Then the "$to-rule-item-content" element exists
@@ -307,7 +330,12 @@ Feature: Dataplane policies
       And the "$summary-slideout-container [data-testid='slideout-title']" element exists
       And the "$summary-slideout-container [data-testid='slideout-title'] h2 a" element contains "the-other-http-route"
 
-    Scenario: Policies tab has expected content (inbound rules & partial from rules)
+      Examples:
+        | Name                                         |
+        | dataplane-1                                  |
+        | kri_dp_default_zone-1_kuma-demo_dataplane-1_ |
+
+    Scenario Outline: Policies tab has expected content (inbound rules & partial from rules)
       Given the environment
         """
         KUMA_DATAPLANE_PROXY_RULE_ENABLED: false
@@ -332,9 +360,14 @@ Feature: Dataplane policies
                     tags:
                       kuma.io/service: foo
         """
-      When I visit the "/meshes/default/data-planes/dataplane-1/policies" URL
+      When I visit the "/meshes/default/data-planes/<Name>/policies" URL
       Then the "$inbound-rule-item" element exists but the "$to-rule-item-content" element doesn't exist
       And the "$from-rule-item" element exists
+
+      Examples:
+        | Name                                         |
+        | dataplane-1                                  |
+        | kri_dp_default_zone-1_kuma-demo_dataplane-1_ |
 
   Rule: Standard proxy
 
@@ -345,23 +378,33 @@ Feature: Dataplane policies
         KUMA_DATAPLANE_TO_RULE_COUNT: 1
         """
 
-    Scenario: Federated shows the rules but no legacy content
+    Scenario Outline: Federated shows the rules but no legacy content
       Given the environment
         """
         KUMA_MODE: global
         """
-      When I visit the "/meshes/default/data-planes/dataplane-1/policies" URL
+      When I visit the "/meshes/default/data-planes/<Name>/policies" URL
       Then the "$to-rules" element exists but the "$legacy-sidecar-policies" element doesn't exist
       And the "$to-rules" element exists but the "$legacy-gateway-policies" element doesn't exist
 
-    Scenario: Non-federated shows the rules and only sidecar legacy content
+      Examples:
+        | Name                                         |
+        | dataplane-1                                  |
+        | kri_dp_default_zone-1_kuma-demo_dataplane-1_ |
+
+    Scenario Outline: Non-federated shows the rules and only sidecar legacy content
       Given the environment
         """
         KUMA_MODE: zone
         """
-      When I visit the "/meshes/default/data-planes/dataplane-1/policies" URL
+      When I visit the "/meshes/default/data-planes/<Name>/policies" URL
       Then the "$to-rules" element exists
       And the "$legacy-sidecar-policies" element exists but the "$legacy-gateway-policies" element doesn't exist
+
+      Examples:
+        | Name                                         |
+        | dataplane-1                                  |
+        | kri_dp_default_zone-1_kuma-demo_dataplane-1_ |
 
   Rule: Delegated gateway
 
@@ -372,19 +415,24 @@ Feature: Dataplane policies
         KUMA_DATAPLANE_TO_RULE_COUNT: 1
         """
 
-    Scenario: Federated shows the rules but no legacy content
+    Scenario Outline: Federated shows the rules but no legacy content
       Given the environment
         """
         KUMA_MODE: global
         """
-      When I visit the "/meshes/default/data-planes/dataplane-1/policies" URL
+      When I visit the "/meshes/default/data-planes/<Name>/policies" URL
       Then the "$to-rules" element exists but the "$legacy-sidecar-policies" element doesn't exist
       And the "$to-rules" element exists but the "$legacy-gateway-policies" element doesn't exist
     # We repeat the same test as the one before but with an omitted so we can test
     # an omitted gateway.type. If we ever stop folks accessing gateway.type and rely on the
     # data layer unit test for this instead, we can remove this test.
 
-    Scenario: Federated (with a default/delegated type) shows the rules but no legacy content
+      Examples:
+        | Name                                         |
+        | dataplane-1                                  |
+        | kri_dp_default_zone-1_kuma-demo_dataplane-1_ |
+
+    Scenario Outline: Federated (with a default/delegated type) shows the rules but no legacy content
       Given the environment
         """
         KUMA_MODE: global
@@ -397,18 +445,28 @@ Feature: Dataplane policies
               gateway:
                 type: !!js/undefined
         """
-      When I visit the "/meshes/default/data-planes/dataplane-1/policies" URL
+      When I visit the "/meshes/default/data-planes/<Name>/policies" URL
       Then the "$to-rules" element exists but the "$legacy-sidecar-policies" element doesn't exist
       And the "$to-rules" element exists but the "$legacy-gateway-policies" element doesn't exist
 
-    Scenario: Non-federated shows the rules and only sidecar-like (i.e. delegated) gateway legacy content
+      Examples:
+        | Name                                         |
+        | dataplane-1                                  |
+        | kri_dp_default_zone-1_kuma-demo_dataplane-1_ |
+
+    Scenario Outline: Non-federated shows the rules and only sidecar-like (i.e. delegated) gateway legacy content
       Given the environment
         """
         KUMA_MODE: zone
         """
-      When I visit the "/meshes/default/data-planes/dataplane-1/policies" URL
+      When I visit the "/meshes/default/data-planes/<Name>/policies" URL
       Then the "$to-rules" element exists
       And the "$legacy-sidecar-policies" element exists but the "$legacy-gateway-policies" element doesn't exist
+
+      Examples:
+        | Name                                         |
+        | dataplane-1                                  |
+        | kri_dp_default_zone-1_kuma-demo_dataplane-1_ |
 
   Rule: Built-in gateway
 
@@ -418,21 +476,39 @@ Feature: Dataplane policies
         KUMA_DATAPLANE_TYPE: builtin
         KUMA_DATAPLANE_TO_RULE_COUNT: 1
         """
+      And the URL "/_kri/kri_dp_default_zone-1_kuma-demo_dataplane-gateway_builtin-1_" responds with
+        """
+        body:
+          name: dataplane-gateway_builtin-1
+          kri: kri_dp_default_zone-1_kuma-demo_dataplane-gateway_builtin-1_
+          labels:
+            kuma.io/display-name: dataplane-gateway_builtin-1
+        """
 
-    Scenario: Federated shows the rules but no legacy content
+    Scenario Outline: Federated shows the rules but no legacy content
       Given the environment
         """
         KUMA_MODE: global
         """
-      When I visit the "/meshes/default/data-planes/dataplane-gateway_builtin-1/policies" URL
+      When I visit the "/meshes/default/data-planes/<Name>/policies" URL
       Then the "$to-rules" element exists but the "$legacy-sidecar-policies" element doesn't exist
       And the "$to-rules" element exists but the "$legacy-gateway-policies" element doesn't exist
 
-    Scenario: Non-federated shows the rules and only builtin gateway legacy content
+      Examples:
+        | Name                                                         |
+        | dataplane-gateway_builtin-1                                  |
+        | kri_dp_default_zone-1_kuma-demo_dataplane-gateway_builtin-1_ |
+
+    Scenario Outline: Non-federated shows the rules and only builtin gateway legacy content
       Given the environment
         """
         KUMA_MODE: zone
         """
-      When I visit the "/meshes/default/data-planes/dataplane-gateway-builtin-1/policies" URL
+      When I visit the "/meshes/default/data-planes/<Name>/policies" URL
       Then the "$to-rules" element exists
       And the "$legacy-gateway-policies" element exists but the "$legacy-sidecar-policies" element doesn't exist
+
+      Examples:
+        | Name                                                         |
+        | dataplane-gateway-builtin-1                                  |
+        | kri_dp_default_zone-1_kuma-demo_dataplane-gateway-builtin-1_ |

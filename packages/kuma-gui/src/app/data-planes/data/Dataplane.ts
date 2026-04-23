@@ -8,6 +8,7 @@ export const Dataplane = {
   fromObject(partialDataplane: KumaDataplane) {
     return {
       ...partialDataplane,
+      id: partialDataplane.name,
       config: partialDataplane,
       networking: DataplaneNetworking.fromObject(partialDataplane.networking as KumaDataplaneNetworking),
     }

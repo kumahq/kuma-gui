@@ -16,8 +16,16 @@ Feature: dataplanes / subscriptions
       KUMA_SUBSCRIPTION_COUNT: 1
       KUMA_DATAPLANEINBOUND_COUNT: 1
       """
+    And the URL "/_kri/kri_dp_default_zone-1_kuma-demo_backend_" responds with
+      """
+      body:
+        name: backend
+        kri: kri_dp_default_zone-1_kuma-demo_backend_
+        labels:
+          kuma.io/display-name: backend
+      """
 
-  Scenario: When there are subscription the about section has expected content
+  Scenario Outline: When there are subscription the about section has expected content
     Given the URL "/meshes/default/dataplanes/backend/_overview" responds with
       """
       body:
@@ -26,11 +34,16 @@ Feature: dataplanes / subscriptions
             - controlPlaneInstanceId: foo
               disconnectTime: !!js/undefined
       """
-    When I visit the "/meshes/default/data-planes/backend/overview" URL
+    When I visit the "/meshes/default/data-planes/<Name>/overview" URL
     Then the "$about-section" element contains "XDS connections"
     And the "$about-dp-subscriptions" element contains "foo"
 
-  Scenario: Go to subscription detail and back
+    Examples:
+      | Name                                     |
+      | backend                                  |
+      | kri_dp_default_zone-1_kuma-demo_backend_ |
+
+  Scenario Outline: Go to subscription detail and back
     Given the URL "/meshes/default/dataplanes/backend/_overview" responds with
       """
       body:
@@ -39,14 +52,19 @@ Feature: dataplanes / subscriptions
             - controlPlaneInstanceId: foo
               id: bar
       """
-    When I visit the "/meshes/default/data-planes/backend/overview" URL
+    When I visit the "/meshes/default/data-planes/<Name>/overview" URL
     Then the "$about-dp-subscriptions" element exists
     Then I click the "$about-dp-subscriptions a" element
-    Then the URL contains "/meshes/default/data-planes/backend/subscriptions"
+    Then the URL contains "/meshes/default/data-planes/<Name>/subscriptions"
     And the "$dp-subscriptions" element exists
     And I wait for 500 ms
     Then I click the "$dp-subscriptions table tbody tr a" element
-    Then the URL contains "/meshes/default/data-planes/backend/subscriptions/subscription/bar"
+    Then the URL contains "/meshes/default/data-planes/<Name>/subscriptions/subscription/bar"
     And the "$dp-subscription-summary" element exists
     Then I navigate "back"
-    Then the URL contains "/meshes/default/data-planes/backend/subscriptions"
+    Then the URL contains "/meshes/default/data-planes/<Name>/subscriptions"
+
+    Examples:
+      | Name                                     |
+      | backend                                  |
+      | kri_dp_default_zone-1_kuma-demo_backend_ |

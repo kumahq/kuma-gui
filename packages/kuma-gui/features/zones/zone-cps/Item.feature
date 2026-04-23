@@ -17,16 +17,22 @@ Feature: zones / item
     And the URL "/zones/zone-cp-1/_overview" responds with
       """
       body:
+        name: zone-cp-1
         labels:
           kuma.io/display-name: default
       """
 
-  Scenario: The about section has the expected content
-    When I visit the "/zones/zone-cp-1/overview" URL
+  Scenario Outline: The about section has the expected content
+    When I visit the "/zones/<Name>/overview" URL
     Then the "$about-section" element exists
     And the "$about-section" element contains "kuma.io/display-name:default"
 
-  Scenario: Detail view has expected content
+    Examples:
+      | Name                |
+      | zone-cp-1           |
+      | kri_z____zone-cp-1_ |
+
+  Scenario Outline: Detail view has expected content
     # We always use the final subscription
     # If the disconnectTime is empty then we are online
     Given the environment
@@ -56,7 +62,7 @@ Feature: zones / item
                     responsesSent: '12'
                     responsesAcknowledged: '10'
       """
-    When I visit the "/zones/zone-cp-1/overview" URL
+    When I visit the "/zones/<Name>/overview" URL
     Then the page title contains "zone-cp-1"
     And the "$tabs-view" element contains "zone-cp-1"
     And the "$detail-view" element contains
@@ -68,7 +74,12 @@ Feature: zones / item
     And the "$detail-view" element contains "Jul 28, 2020, 4:18 PM"
     And the "$detail-view" element exists but the "$version-outdated" element doesn't exist
 
-  Scenario: Outdated versions are highlighted
+    Examples:
+      | Name                |
+      | zone-cp-1           |
+      | kri_z____zone-cp-1_ |
+
+  Scenario Outline: Outdated versions are highlighted
     And the URL "/zones/zone-cp-1/_overview" responds with
       """
       body:
@@ -79,10 +90,15 @@ Feature: zones / item
                 kumaCp:
                   version: 0.0.0
       """
-    When I visit the "/zones/zone-cp-1/overview" URL
+    When I visit the "/zones/<Name>/overview" URL
     And the "$version-outdated" element contains "0.0.0"
 
-  Scenario: Config view has expected content
+    Examples:
+      | Name                |
+      | zone-cp-1           |
+      | kri_z____zone-cp-1_ |
+
+  Scenario Outline: Config view has expected content
     Given the URL "/zones/zone-cp-1/_overview" responds with
       """
       body:
@@ -94,6 +110,11 @@ Feature: zones / item
               config: |
                 { "multizone": { "zone": { "globalAddress": "grpcs://localhost:123" } } }
       """
-    When I visit the "/zones/zone-cp-1/config" URL
+    When I visit the "/zones/<Name>/config" URL
     Then the "$config-view" element contains "globalAddress"
     And the "$config-view" element contains "grpcs://localhost:123"
+
+    Examples:
+      | Name                |
+      | zone-cp-1           |
+      | kri_z____zone-cp-1_ |

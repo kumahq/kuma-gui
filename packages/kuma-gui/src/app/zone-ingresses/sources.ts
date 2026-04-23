@@ -1,10 +1,13 @@
 import { TarWriter } from '@gera2ld/tarjs'
+import createClient from 'openapi-fetch'
 
 import { ZoneIngressOverview, ZoneIngress } from './data'
+import { Kri } from '../kuma'
 import type { DataSourceResponse } from '@/app/application'
 import { YAML , defineSources } from '@/app/application'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
+import type { paths } from '@kumahq/kuma-http-api'
 
 const includes = <T extends readonly string[]>(arr: T, item: string): item is T[number] => {
   return arr.includes(item as T[number])
@@ -17,6 +20,10 @@ export type ZoneIngressOverviewCollectionSource = DataSourceResponse<ZoneIngress
 export type EnvoyDataSource = DataSourceResponse<object | string>
 
 export const sources = (api: KumaApi) => {
+  const http = createClient<paths>({
+    baseUrl: '',
+    fetch: api.client.fetch,
+  })
   return defineSources({
     '/zone-cps/:name/ingresses': async (params) => {
       const { name, size, page } = params
@@ -33,7 +40,20 @@ export const sources = (api: KumaApi) => {
     '/zone-ingresses/:name': async (params) => {
       const { name } = params
 
-      return ZoneIngress.fromObject(await api.getZoneIngress({ name }))
+      let response
+      if(Kri.isKriString(name)) {
+        response = (await http.GET('/_kri/{kri}', {
+          params: {
+            path: {
+              kri: name,
+            },
+          },
+        })).data
+      } else {
+        response = await api.getZoneIngress({ name })
+      }
+
+      return ZoneIngress.fromObject(response as ZoneIngress)
     },
 
     '/zone-ingresses/:name/data-path/:dataPath': (params) => {
