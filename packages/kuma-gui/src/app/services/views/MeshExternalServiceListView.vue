@@ -99,7 +99,7 @@
                           name: 'mesh-external-service-summary-view',
                           params: {
                             mesh: item.mesh,
-                            service: item.kri,
+                            service: item.id,
                           },
                           query: {
                             page: route.params.page,
@@ -155,7 +155,7 @@
                           name: 'mesh-external-service-detail-view',
                           params: {
                             mesh: item.mesh,
-                            service: item.kri,
+                            service: item.id,
                           },
                         }"
                       >
