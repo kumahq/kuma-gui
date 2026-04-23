@@ -13,92 +13,101 @@
   >
     <AppView>
       <XLayout variant="y-stack">
-        <XAboutCard
-          :title="t('services.mesh-multi-zone-service.about.title')"
-          :created="props.data.creationTime"
-          :modified="props.data.modificationTime"
+        <XCard
           data-testid="mesh-multi-zone-service-about-section"
         >
-          <XDl variant="x-stack">
-            <div>
-              <dt>
-                {{ t('http.api.property.ports') }}
-              </dt>
-              <dd>
-                <template v-if="props.data.spec.ports.length">
-                  <XLayout
-                    variant="separated"
-                    truncate
-                  >
-                    <KumaPort
-                      v-for="connection in props.data.spec.ports"
-                      :key="connection.port"
-                      :port="{
-                        ...connection,
-                        targetPort: undefined,
-                      }"
-                    />
-                  </XLayout>
-                </template>
-                <template v-else>
-                  {{ t('common.detail.none') }}
-                </template>
-              </dd>
-            </div>
-            <div>
-              <dt>
-                {{ t('http.api.property.selector') }}
-              </dt>
-              <dd>
-                <template v-if="Object.keys(data.spec.selector.meshService.matchLabels ?? {}).length">
-                  <XLayout
-                    variant="separated"
-                    truncate
-                  >
-                    <XBadge
-                      v-for="(value, key) in data.spec.selector.meshService.matchLabels"
-                      :key="`${key}:${value}`"
-                      appearance="info"
-                    >
-                      {{ key }}:{{ value }}
-                    </XBadge>
-                  </XLayout>
-                </template>
-                <template v-else>
-                  {{ t('common.detail.none') }}
-                </template>
-              </dd>
-            </div>
-
-            <template
-              v-for="labels in [Object.entries(props.data.labels)]"
-              :key="typeof labels"
-            >
-              <div v-if="labels.length > 0">
-                <dt>{{ t('services.routes.item.labels') }}</dt>
+          <template #title>
+            {{ t('services.mesh-multi-zone-service.about.title') }}
+          </template>
+          <DataLoader
+            :data="[props.data]"
+            v-slot="{ data: [service] }"
+          >
+            <XTimespan
+              :start="service.creationTime"
+              :end="service.modificationTime"
+            />
+            <XDl variant="x-stack">
+              <div>
+                <dt>
+                  {{ t('http.api.property.ports') }}
+                </dt>
                 <dd>
-                  <XLayout
-                    variant="separated"
-                    truncate
-                  >
-                    <template
-                      v-for="kumaRe in [/^(.+\.)?kuma\.io\//]"
-                      :key="typeof kumaRe"
+                  <template v-if="service.spec.ports.length">
+                    <XLayout
+                      variant="separated"
+                      truncate
+                    >
+                      <KumaPort
+                        v-for="connection in service.spec.ports"
+                        :key="connection.port"
+                        :port="{
+                          ...connection,
+                          targetPort: undefined,
+                        }"
+                      />
+                    </XLayout>
+                  </template>
+                  <template v-else>
+                    {{ t('common.detail.none') }}
+                  </template>
+                </dd>
+              </div>
+              <div>
+                <dt>
+                  {{ t('http.api.property.selector') }}
+                </dt>
+                <dd>
+                  <template v-if="Object.keys(service.spec.selector.meshService.matchLabels ?? {}).length">
+                    <XLayout
+                      variant="separated"
+                      truncate
                     >
                       <XBadge
-                        v-for="[key, value] in labels"
-                        :key="key"
-                        :appearance="kumaRe.test(key) ? 'info' : 'decorative'"
+                        v-for="(value, key) in service.spec.selector.meshService.matchLabels"
+                        :key="`${key}:${value}`"
+                        appearance="info"
                       >
                         {{ key }}:{{ value }}
                       </XBadge>
-                    </template>
-                  </XLayout>
+                    </XLayout>
+                  </template>
+                  <template v-else>
+                    {{ t('common.detail.none') }}
+                  </template>
                 </dd>
               </div>
-            </template>
-          </XDl>
-        </XAboutCard>
+        
+              <template
+                v-for="labels in [Object.entries(service.labels)]"
+                :key="typeof labels"
+              >
+                <div v-if="labels.length > 0">
+                  <dt>{{ t('services.routes.item.labels') }}</dt>
+                  <dd>
+                    <XLayout
+                      variant="separated"
+                      truncate
+                    >
+                      <template
+                        v-for="kumaRe in [/^(.+\.)?kuma\.io\//]"
+                        :key="typeof kumaRe"
+                      >
+                        <XBadge
+                          v-for="[key, value] in labels"
+                          :key="key"
+                          :appearance="kumaRe.test(key) ? 'info' : 'decorative'"
+                        >
+                          {{ key }}:{{ value }}
+                        </XBadge>
+                      </template>
+                    </XLayout>
+                  </dd>
+                </div>
+              </template>
+            </XDl>
+          </DataLoader>
+        </XCard>
 
         <XCard>
           <template #title>
@@ -190,23 +199,31 @@
             </XLayout>
 
             <template v-if="route.params.environment === 'universal'">
-              <XCodeBlock
-                data-testid="codeblock-yaml-universal"
-                language="yaml"
-                :code="YAML.stringify(props.data.config)"
-                is-searchable
-                :query="route.params.codeSearch"
-                :is-filter-mode="route.params.codeFilter"
-                :is-reg-exp-mode="route.params.codeRegExp"
-                @query-change="route.update({ codeSearch: $event })"
-                @filter-mode-change="route.update({ codeFilter: $event })"
-                @reg-exp-mode-change="route.update({ codeRegExp: $event })"
-              />
+              <DataLoader
+                :data="[props.data]"
+                v-slot="{ data: [service] }"
+              >
+                <XCodeBlock
+                  data-testid="codeblock-yaml-universal"
+                  language="yaml"
+                  :code="YAML.stringify(service.config)"
+                  is-searchable
+                  :query="route.params.codeSearch"
+                  :is-filter-mode="route.params.codeFilter"
+                  :is-reg-exp-mode="route.params.codeRegExp"
+                  @query-change="route.update({ codeSearch: $event })"
+                  @filter-mode-change="route.update({ codeFilter: $event })"
+                  @reg-exp-mode-change="route.update({ codeRegExp: $event })"
+                />
+              </DataLoader>
             </template>
 
             <template v-else>
               <DataLoader
-                :src="`/meshes/${props.data.mesh}/mesh-multi-zone-service/${props.data.id}/as/kubernetes`"
+                :src="uri(servicesSources, '/meshes/:mesh/mesh-multi-zone-service/:name/as/kubernetes', {
+                  mesh: route.params.mesh,
+                  name: route.params.service,
+                })"
                 v-slot="{ data: [k8sConfig] }"
               >
                 <XCodeBlock
@@ -237,7 +254,7 @@ import AppCollection from '@/app/application/components/app-collection/AppCollec
 import { sources as servicesSources } from '@/app/services/sources'
 
 const props = defineProps<{
-  data: MeshMultiZoneService
+  data: MeshMultiZoneService | Error | undefined
 }>()
 </script>
 

@@ -16,9 +16,9 @@ get:
         type: string
   responses:
     '200':
-      $ref: "../components/responses/MeshTCPRouteItem.yaml"
+      $ref: ../components/responses/MeshTCPRouteItem.yaml
     '404':
-      $ref: "../components/responses/NotFound.yaml"
+      $ref: ../components/responses/NotFound.yaml
   tags:
     - MeshTCPRoute
 put:
@@ -43,12 +43,12 @@ put:
     content:
       application/json:
         schema:
-          $ref: "../components/schemas/MeshTCPRouteItem.yaml"
+          $ref: ../components/schemas/MeshTCPRouteItem.yaml
   responses:
     '200':
-      $ref: "../components/responses/MeshTCPRouteCreateOrUpdateSuccessResponse.yaml"
+      $ref: ../components/responses/MeshTCPRouteCreateOrUpdateSuccessResponse.yaml
     '201':
-      $ref: "../components/responses/MeshTCPRouteCreateOrUpdateSuccessResponse.yaml"
+      $ref: ../components/responses/MeshTCPRouteCreateOrUpdateSuccessResponse.yaml
   tags:
     - MeshTCPRoute
 delete:
@@ -69,8 +69,8 @@ delete:
         type: string
   responses:
     '200':
-      $ref: "../components/responses/MeshTCPRouteDeleteSuccessResponse.yaml"
+      $ref: ../components/responses/MeshTCPRouteDeleteSuccessResponse.yaml
     '404':
-      $ref: "../components/responses/NotFound.yaml"
+      $ref: ../components/responses/NotFound.yaml
   tags:
     - MeshTCPRoute

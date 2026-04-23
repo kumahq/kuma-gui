@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "@types/markdown-it": "^14.1.2",
-    "@types/node": "^25.5.2"
+    "@types/node": "^25.6.0"
   },
   "dependencies": {
     "@apidevtools/json-schema-ref-parser": "^15.3.5",
@@ -58,22 +58,22 @@
     "eslint-plugin-json-schema-validator": "^6.2.0",
     "eslint-plugin-no-unsanitized": "^4.1.5",
     "eslint-plugin-vue": "^10.8.0",
-    "globals": "^17.4.0",
+    "globals": "^17.5.0",
     "husky": "^9.1.7",
     "js-yaml": "^4.1.1",
     "lint-staged": "^16.4.0",
     "lockfile-lint": "^5.0.0",
     "markdown-it": "^14.1.1",
-    "openapi-format": "^1.30.1",
+    "openapi-format": "^1.31.0",
     "openapi-typescript": "^7.13.0",
     "playwright-bdd": "^8.5.0",
-    "stylelint": "^17.6.0",
+    "stylelint": "^17.8.0",
     "stylelint-config-html": "^1.1.0",
-    "stylelint-config-recommended-scss": "^17.0.0",
+    "stylelint-config-recommended-scss": "^17.0.1",
     "stylelint-config-recommended-vue": "^1.6.1",
     "typescript": "^5.9.3",
     "vite": "^7.3.2",
-    "vitest": "^4.1.2",
+    "vitest": "^4.1.4",
     "vue-tsc": "^3.2.6"
   }
 }

@@ -4,15 +4,15 @@ properties:
   standard:
     description: Standard dataplane proxy statistics
     allOf:
-      - $ref: "FullStatus.yaml"
+      - $ref: FullStatus.yaml
   gatewayBuiltin:
     description: Builtin Gateway dataplane proxy statistics
     allOf:
-      - $ref: "FullStatus.yaml"
+      - $ref: FullStatus.yaml
   gatewayDelegated:
     description: Delegated Gateway dataplane proxy statistics
     allOf:
-      - $ref: "FullStatus.yaml"
+      - $ref: FullStatus.yaml
 required:
   - standard
   - gatewayBuiltin

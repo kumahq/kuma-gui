@@ -16,9 +16,9 @@ delete:
         type: string
   responses:
     '200':
-      $ref: "../components/responses/DataplaneDeleteSuccessResponse.yaml"
+      $ref: ../components/responses/DataplaneDeleteSuccessResponse.yaml
     '404':
-      $ref: "../components/responses/NotFound.yaml"
+      $ref: ../components/responses/NotFound.yaml
   tags:
     - Dataplane
 get:
@@ -39,9 +39,9 @@ get:
         type: string
   responses:
     '200':
-      $ref: "../components/responses/DataplaneItem.yaml"
+      $ref: ../components/responses/DataplaneItem.yaml
     '404':
-      $ref: "../components/responses/NotFound.yaml"
+      $ref: ../components/responses/NotFound.yaml
   tags:
     - Dataplane
 put:
@@ -66,11 +66,11 @@ put:
     content:
       application/json:
         schema:
-          $ref: "../components/schemas/DataplaneItem.yaml"
+          $ref: ../components/schemas/DataplaneItem.yaml
   responses:
     '200':
-      $ref: "../components/responses/DataplaneCreateOrUpdateSuccessResponse.yaml"
+      $ref: ../components/responses/DataplaneCreateOrUpdateSuccessResponse.yaml
     '201':
-      $ref: "../components/responses/DataplaneCreateOrUpdateSuccessResponse.yaml"
+      $ref: ../components/responses/DataplaneCreateOrUpdateSuccessResponse.yaml
   tags:
     - Dataplane

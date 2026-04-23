@@ -80,6 +80,9 @@ provide('x-card', {
 
 /* smaller fonts for AppAboutSection */
 :deep(.about-section-content) {
+  & {
+    display: block !important;
+  }
   * {
     font-size: var(--x-font-size-20);
   }

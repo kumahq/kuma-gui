@@ -20,7 +20,7 @@ get:
         minimum: 1
     - name: filter
       in: query
-      description: 'filter by labels when multiple filters are present, they are ANDed'
+      description: filter by labels when multiple filters are present, they are ANDed
       required: false
       schema:
         type: object
@@ -39,6 +39,6 @@ get:
         type: string
   responses:
     '200':
-      $ref: "../components/responses/MeshTrafficPermissionList.yaml"
+      $ref: ../components/responses/MeshTrafficPermissionList.yaml
   tags:
     - MeshTrafficPermission

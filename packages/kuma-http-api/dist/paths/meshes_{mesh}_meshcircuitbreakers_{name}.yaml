@@ -16,9 +16,9 @@ get:
         type: string
   responses:
     '200':
-      $ref: "../components/responses/MeshCircuitBreakerItem.yaml"
+      $ref: ../components/responses/MeshCircuitBreakerItem.yaml
     '404':
-      $ref: "../components/responses/NotFound.yaml"
+      $ref: ../components/responses/NotFound.yaml
   tags:
     - MeshCircuitBreaker
 put:
@@ -43,12 +43,12 @@ put:
     content:
       application/json:
         schema:
-          $ref: "../components/schemas/MeshCircuitBreakerItem.yaml"
+          $ref: ../components/schemas/MeshCircuitBreakerItem.yaml
   responses:
     '200':
-      $ref: "../components/responses/MeshCircuitBreakerCreateOrUpdateSuccessResponse.yaml"
+      $ref: ../components/responses/MeshCircuitBreakerCreateOrUpdateSuccessResponse.yaml
     '201':
-      $ref: "../components/responses/MeshCircuitBreakerCreateOrUpdateSuccessResponse.yaml"
+      $ref: ../components/responses/MeshCircuitBreakerCreateOrUpdateSuccessResponse.yaml
   tags:
     - MeshCircuitBreaker
 delete:
@@ -69,8 +69,8 @@ delete:
         type: string
   responses:
     '200':
-      $ref: "../components/responses/MeshCircuitBreakerDeleteSuccessResponse.yaml"
+      $ref: ../components/responses/MeshCircuitBreakerDeleteSuccessResponse.yaml
     '404':
-      $ref: "../components/responses/NotFound.yaml"
+      $ref: ../components/responses/NotFound.yaml
   tags:
     - MeshCircuitBreaker

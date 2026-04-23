@@ -13,63 +13,71 @@
   >
     <AppView>
       <XLayout variant="y-stack">
-        <DataLoader
+        <DataSource
           :src="uri(serviceSources, '/meshes/:mesh/service-insights/:name', {
             mesh: route.params.mesh,
             name: route.params.service,
           })"
-          v-slot="{ data: [data] }"
+          v-slot="{ data: sourceData, error }"
         >
-          <XAboutCard
-            v-if="data"
-            :title="t('delegated-gateways.detail.about.title')"
-            :created="data.creationTime"
-            :modified="data.modificationTime"
-          >
-            <XDl variant="x-stack">
-              <div>
-                <dt>
-                  {{ t('http.api.property.status') }}
-                </dt>
-                <dd>
-                  <StatusBadge :status="data.status" />
-                </dd>
-              </div>
-              <div>
-                <dt>
-                  {{ t('http.api.property.address') }}
-                </dt>
-                <dd>
-                  <XCopyButton
-                    v-if="data.addressPort"
-                    variant="badge"
-                    format="default"
-                    :text="data.addressPort"
-                  />
+          <XCard>
+            <template #title>
+              {{ t('delegated-gateways.detail.about.title') }}
+            </template>
+            <DataLoader
+              :data="[sourceData]"
+              :errors="[error]"
+              v-slot="{ data: [data] }"
+            >
+              <XTimespan
+                :start="data.creationTime"
+                :end="data.modificationTime"
+              />
+              <XDl variant="x-stack">
+                <div>
+                  <dt>
+                    {{ t('http.api.property.status') }}
+                  </dt>
+                  <dd>
+                    <StatusBadge :status="data.status" />
+                  </dd>
+                </div>
+                <div>
+                  <dt>
+                    {{ t('http.api.property.address') }}
+                  </dt>
+                  <dd>
+                    <XCopyButton
+                      v-if="data.addressPort"
+                      variant="badge"
+                      format="default"
+                      :text="data.addressPort"
+                    />
 
-                  <template v-else>
-                    {{ t('common.detail.none') }}
-                  </template>
-                </dd>
-              </div>
-              <div>
-                <dt>
-                  {{ t('http.api.property.dataPlaneProxies') }}
-                </dt>
-                <dd
-                  v-for="[online, total] in [[data.dataplanes?.online ?? 0, data.dataplanes?.total ?? 0]]"
-                  :key="typeof online"
-                >
-                  <XBadge
-                    :appearance="online === 0 ? 'danger' : online !== total ? 'warning' : 'success'"
+                    <template v-else>
+                      {{ t('common.detail.none') }}
+                    </template>
+                  </dd>
+                </div>
+                <div>
+                  <dt>
+                    {{ t('http.api.property.dataPlaneProxies') }}
+                  </dt>
+                  <dd
+                    v-for="[online, total] in [[data.dataplanes?.online ?? 0, data.dataplanes?.total ?? 0]]"
+                    :key="typeof online"
                   >
-                    {{ online ?? 0 }}/{{ total ?? 0 }}
-                  </XBadge>
-                </dd>
-              </div>
-            </XDl>
-          </XAboutCard>
-        </DataLoader>
+                    <XBadge
+                      :appearance="online === 0 ? 'danger' : online !== total ? 'warning' : 'success'"
+                    >
+                      {{ online ?? 0 }}/{{ total ?? 0 }}
+                    </XBadge>
+                  </dd>
+                </div>
+              </XDl>
+            </DataLoader>
+          </XCard>
+        </DataSource>
 
         <XCard>
           <template #title>

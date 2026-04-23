@@ -16,9 +16,9 @@ get:
         type: string
   responses:
     '200':
-      $ref: "../components/responses/MeshLoadBalancingStrategyItem.yaml"
+      $ref: ../components/responses/MeshLoadBalancingStrategyItem.yaml
     '404':
-      $ref: "../components/responses/NotFound.yaml"
+      $ref: ../components/responses/NotFound.yaml
   tags:
     - MeshLoadBalancingStrategy
 put:
@@ -43,12 +43,12 @@ put:
     content:
       application/json:
         schema:
-          $ref: "../components/schemas/MeshLoadBalancingStrategyItem.yaml"
+          $ref: ../components/schemas/MeshLoadBalancingStrategyItem.yaml
   responses:
     '200':
-      $ref: "../components/responses/MeshLoadBalancingStrategyCreateOrUpdateSuccessResponse.yaml"
+      $ref: ../components/responses/MeshLoadBalancingStrategyCreateOrUpdateSuccessResponse.yaml
     '201':
-      $ref: "../components/responses/MeshLoadBalancingStrategyCreateOrUpdateSuccessResponse.yaml"
+      $ref: ../components/responses/MeshLoadBalancingStrategyCreateOrUpdateSuccessResponse.yaml
   tags:
     - MeshLoadBalancingStrategy
 delete:
@@ -69,8 +69,8 @@ delete:
         type: string
   responses:
     '200':
-      $ref: "../components/responses/MeshLoadBalancingStrategyDeleteSuccessResponse.yaml"
+      $ref: ../components/responses/MeshLoadBalancingStrategyDeleteSuccessResponse.yaml
     '404':
-      $ref: "../components/responses/NotFound.yaml"
+      $ref: ../components/responses/NotFound.yaml
   tags:
     - MeshLoadBalancingStrategy

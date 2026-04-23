@@ -29,6 +29,16 @@ Feature: mesh / mesh-identity
         items:
           - name: identity-1
             mesh: default
+            kri: kri_mid_default___identity-1_
+      """
+    And the URL "/mesh-insight/default" responds with
+      """
+      body:
+        mTLS:
+          issuedBackends:
+            identity-1:
+              total: 1
+              online: 1
       """
     When I visit the "/meshes/default" URL
     Then I click the "$mesh-mtls a:first-child" element

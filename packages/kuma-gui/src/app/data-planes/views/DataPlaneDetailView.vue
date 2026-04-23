@@ -83,13 +83,16 @@
           variant="y-stack"
           data-testid="dataplane-details"
         >
-          <XAboutCard
-            :title="t('data-planes.routes.item.about.title')"
-            :created="props.data.creationTime"
-            :modified="props.data.modificationTime"
-            class="about-section"
+          <XCard
             data-testid="dataplane-about-section"
           >
+            <XTimespan
+              :start="props.data.creationTime"
+              :end="props.data.modificationTime"
+            />
+            <template #title>
+              {{ t('data-planes.routes.item.about.title') }}
+            </template>
             <DataLoader
               :data="[traffic]"
             >
@@ -489,10 +492,10 @@
                 </DataSource>
               </XLayout>
             </DataLoader>
-          </XAboutCard>
+          </XCard>
 
           <DataSource
-            :src="uri(resourceSources, '/resources', {})"
+            :src="uri(resourceSources, '/resource-type-descriptors', {})"
             v-slot="{ result: resourceTypes }"
           >
             <DataSource
@@ -907,13 +910,5 @@ const resources = ref<DataplanePolicies | undefined>()
 .about-subsection {
   border-top: var(--x-border-width-10) solid var(--x-color-border);
   padding-top: var(--x-space-70);
-}
-
-:deep(.about-section .about-section-content) {
-  display: block !important;
-
-  h3 {
-    color: var(--x-color-text);
-  }
 }
 </style>

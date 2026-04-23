@@ -9,8 +9,8 @@ get:
         type: string
   responses:
     '200':
-      $ref: "../components/responses/GetDataplaneOverviewListResponse.yaml"
+      $ref: ../components/responses/GetDataplaneOverviewListResponse.yaml
     '400':
-      $ref: "../components/responses/BadRequest.yaml"
+      $ref: ../components/responses/BadRequest.yaml
     '500':
-      $ref: "../components/responses/Internal.yaml"
+      $ref: ../components/responses/Internal.yaml

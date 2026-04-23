@@ -16,9 +16,9 @@ get:
         type: string
   responses:
     '200':
-      $ref: "../components/responses/MeshMultiZoneServiceItem.yaml"
+      $ref: ../components/responses/MeshMultiZoneServiceItem.yaml
     '404':
-      $ref: "../components/responses/NotFound.yaml"
+      $ref: ../components/responses/NotFound.yaml
   tags:
     - MeshMultiZoneService
 put:
@@ -43,12 +43,12 @@ put:
     content:
       application/json:
         schema:
-          $ref: "../components/schemas/MeshMultiZoneServiceItem.yaml"
+          $ref: ../components/schemas/MeshMultiZoneServiceItem.yaml
   responses:
     '200':
-      $ref: "../components/responses/MeshMultiZoneServiceCreateOrUpdateSuccessResponse.yaml"
+      $ref: ../components/responses/MeshMultiZoneServiceCreateOrUpdateSuccessResponse.yaml
     '201':
-      $ref: "../components/responses/MeshMultiZoneServiceCreateOrUpdateSuccessResponse.yaml"
+      $ref: ../components/responses/MeshMultiZoneServiceCreateOrUpdateSuccessResponse.yaml
   tags:
     - MeshMultiZoneService
 delete:
@@ -69,8 +69,8 @@ delete:
         type: string
   responses:
     '200':
-      $ref: "../components/responses/MeshMultiZoneServiceDeleteSuccessResponse.yaml"
+      $ref: ../components/responses/MeshMultiZoneServiceDeleteSuccessResponse.yaml
     '404':
-      $ref: "../components/responses/NotFound.yaml"
+      $ref: ../components/responses/NotFound.yaml
   tags:
     - MeshMultiZoneService

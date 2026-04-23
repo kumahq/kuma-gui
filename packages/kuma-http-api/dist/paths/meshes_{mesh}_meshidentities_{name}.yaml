@@ -16,9 +16,9 @@ get:
         type: string
   responses:
     '200':
-      $ref: "../components/responses/MeshIdentityItem.yaml"
+      $ref: ../components/responses/MeshIdentityItem.yaml
     '404':
-      $ref: "../components/responses/NotFound.yaml"
+      $ref: ../components/responses/NotFound.yaml
   tags:
     - MeshIdentity
 put:
@@ -43,12 +43,12 @@ put:
     content:
       application/json:
         schema:
-          $ref: "../components/schemas/MeshIdentityItem.yaml"
+          $ref: ../components/schemas/MeshIdentityItem.yaml
   responses:
     '200':
-      $ref: "../components/responses/MeshIdentityCreateOrUpdateSuccessResponse.yaml"
+      $ref: ../components/responses/MeshIdentityCreateOrUpdateSuccessResponse.yaml
     '201':
-      $ref: "../components/responses/MeshIdentityCreateOrUpdateSuccessResponse.yaml"
+      $ref: ../components/responses/MeshIdentityCreateOrUpdateSuccessResponse.yaml
   tags:
     - MeshIdentity
 delete:
@@ -69,8 +69,8 @@ delete:
         type: string
   responses:
     '200':
-      $ref: "../components/responses/MeshIdentityDeleteSuccessResponse.yaml"
+      $ref: ../components/responses/MeshIdentityDeleteSuccessResponse.yaml
     '404':
-      $ref: "../components/responses/NotFound.yaml"
+      $ref: ../components/responses/NotFound.yaml
   tags:
     - MeshIdentity

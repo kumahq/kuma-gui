@@ -11,7 +11,9 @@
       :title="t(`${route.child()?.name === 'builtin-gateway-list-view' ? 'builtin' : 'delegated'}-gateways.routes.items.title`)"
     />
     <AppView>
-      <template #actions>
+      <XLayout
+        variant="action-group"
+      >
         <DataCollection
           :items="route.children"
           :empty="false"
@@ -38,7 +40,7 @@
             </XAction>
           </XActionGroup>
         </DataCollection>
-      </template>
+      </XLayout>
 
       <XI18n
         :path="`gateways.routes.items.navigation.${route.child()?.name}.description`"

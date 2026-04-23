@@ -11,7 +11,7 @@
       :src="uri(sources, `/zone-ingress-overviews/:name`, {
         name: route.params.proxy,
       })"
-      v-slot="{ data, error }"
+      v-slot="{ data, error, result }"
     >
       <AppView
         :docs="t('zone-ingresses.href.docs')"
@@ -45,26 +45,31 @@
         <template
           #title
         >
-          <XLayout
-            v-if="data"
-            variant="y-stack"
-            size="small"
+          <DataLoader
+            :data="[data]"
+            variant="header"
+            v-slot="{ data: [zoneIngress] }"
           >
-            <h1>
-              <XCopyButton
-                :text="data.name"
-              >
-                <RouteTitle
-                  :title="t('zone-ingresses.routes.item.title', { name: data.name })"
-                />
-              </XCopyButton>
-            </h1>
-            <XBadge
-              :appearance="t(`common.status.appearance.${data.state}`, undefined, { defaultMessage: 'neutral' })"
+            <XLayout
+              variant="y-stack"
+              size="small"
             >
-              {{ t(`http.api.value.${data.state}`) }}
-            </XBadge>
-          </XLayout>
+              <h1>
+                <XCopyButton
+                  :text="zoneIngress.name"
+                >
+                  <RouteTitle
+                    :title="t('zone-ingresses.routes.item.title', { name: zoneIngress.name })"
+                  />
+                </XCopyButton>
+              </h1>
+              <XBadge
+                :appearance="t(`common.status.appearance.${zoneIngress.state}`, undefined, { defaultMessage: 'neutral' })"
+              >
+                {{ t(`http.api.value.${zoneIngress.state}`) }}
+              </XBadge>
+            </XLayout>
+          </DataLoader>
         </template>
         <template
           #actions
@@ -185,36 +190,31 @@
           </XDisclosure>
         </template>
 
-        <DataLoader
-          :data="[data]"
-          :errors="[error]"
+        <XTabs
+          :selected="route.child()?.name"
+          data-testid="zone-ingress-tabs"
         >
-          <XTabs
-            :selected="route.child()?.name"
-            data-testid="zone-ingress-tabs"
+          <template
+            v-for="{ name } in route.children"
+            :key="name"
+            #[`${name}-tab`]
           >
-            <template
-              v-for="{ name } in route.children"
-              :key="name"
-              #[`${name}-tab`]
+            <XAction
+              :to="{ name }"
             >
-              <XAction
-                :to="{ name }"
-              >
-                {{ t(`zone-ingresses.routes.item.navigation.${name}`) }}
-              </XAction>
-            </template>
-          </XTabs>
+              {{ t(`zone-ingresses.routes.item.navigation.${name}`) }}
+            </XAction>
+          </template>
+        </XTabs>
 
-          <RouterView v-slot="child">
-            <component
-              :is="child.Component"
-              :networking="data?.zoneIngress.networking"
-              :data="data"
-              :subscriptions="data?.zoneIngressInsight?.subscriptions"
-            />
-          </RouterView>
-        </DataLoader>
+        <RouterView v-slot="child">
+          <component
+            :is="child.Component"
+            :networking="error ?? data?.zoneIngress.networking"
+            :data="result"
+            :subscriptions="data?.zoneIngressInsight?.subscriptions"
+          />
+        </RouterView>
       </AppView>
     </DataSource>
   </RouteView>

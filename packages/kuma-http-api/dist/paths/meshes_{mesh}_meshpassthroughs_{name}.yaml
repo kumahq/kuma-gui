@@ -16,9 +16,9 @@ get:
         type: string
   responses:
     '200':
-      $ref: "../components/responses/MeshPassthroughItem.yaml"
+      $ref: ../components/responses/MeshPassthroughItem.yaml
     '404':
-      $ref: "../components/responses/NotFound.yaml"
+      $ref: ../components/responses/NotFound.yaml
   tags:
     - MeshPassthrough
 put:
@@ -43,12 +43,12 @@ put:
     content:
       application/json:
         schema:
-          $ref: "../components/schemas/MeshPassthroughItem.yaml"
+          $ref: ../components/schemas/MeshPassthroughItem.yaml
   responses:
     '200':
-      $ref: "../components/responses/MeshPassthroughCreateOrUpdateSuccessResponse.yaml"
+      $ref: ../components/responses/MeshPassthroughCreateOrUpdateSuccessResponse.yaml
     '201':
-      $ref: "../components/responses/MeshPassthroughCreateOrUpdateSuccessResponse.yaml"
+      $ref: ../components/responses/MeshPassthroughCreateOrUpdateSuccessResponse.yaml
   tags:
     - MeshPassthrough
 delete:
@@ -69,8 +69,8 @@ delete:
         type: string
   responses:
     '200':
-      $ref: "../components/responses/MeshPassthroughDeleteSuccessResponse.yaml"
+      $ref: ../components/responses/MeshPassthroughDeleteSuccessResponse.yaml
     '404':
-      $ref: "../components/responses/NotFound.yaml"
+      $ref: ../components/responses/NotFound.yaml
   tags:
     - MeshPassthrough

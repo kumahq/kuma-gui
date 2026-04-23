@@ -1,4 +1,4 @@
-description: 'MeshExternalService represents external services (outside the mesh) that mesh services can communicate with securely. It enables mesh services to reach external APIs, databases, or third-party services by defining endpoints, ports, protocols, and optional TLS configuration for secure outbound connections with hostname-based routing support.'
+description: MeshExternalService represents external services (outside the mesh) that mesh services can communicate with securely. It enables mesh services to reach external APIs, databases, or third-party services by defining endpoints, ports, protocols, and optional TLS configuration for secure outbound connections with hostname-based routing support.
 type: object
 properties:
   type:
@@ -33,7 +33,7 @@ properties:
         items:
           properties:
             address:
-              description: 'Address defines an address to which a user want to send a request. Is possible to provide `domain`, `ip`.'
+              description: Address defines an address to which a user want to send a request. Is possible to provide `domain`, `ip`.
               type: string
               example: example.com
               minLength: 1
@@ -43,12 +43,21 @@ properties:
               format: int32
               maximum: 65535
               minimum: 1
+            priority:
+              description: |-
+                Priority maps to Envoy's priority levels to enable endpoint failover.
+                Lower values have higher priority (0 is the default/primary).
+                When the primary endpoints become unhealthy, traffic fails over to the next priority level.
+              type: integer
+              format: int32
+              maximum: 128
+              minimum: 0
           required:
             - address
             - port
           type: object
       extension:
-        description: 'Extension struct for a plugin configuration, in the presence of an extension `endpoints` and `tls` are not required anymore - it''s up to the extension to validate them independently.'
+        description: Extension struct for a plugin configuration, in the presence of an extension `endpoints` and `tls` are not required anymore - it's up to the extension to validate them independently.
         type: object
         properties:
           config:
@@ -79,7 +88,7 @@ properties:
               - http
               - http2
           type:
-            description: 'Type of the match, only `HostnameGenerator` is available at the moment.'
+            description: Type of the match, only `HostnameGenerator` is available at the moment.
             type: string
             default: HostnameGenerator
             enum:
@@ -147,7 +156,7 @@ properties:
                     description: Data source is a secret with given Secret key.
                     type: string
               mode:
-                description: 'Mode defines if proxy should skip verification, one of `SkipSAN`, `SkipCA`, `Secured`, `SkipAll`. Default `Secured`.'
+                description: Mode defines if proxy should skip verification, one of `SkipSAN`, `SkipCA`, `Secured`, `SkipAll`. Default `Secured`.
                 type: string
                 default: Secured
                 enum:
@@ -181,7 +190,7 @@ properties:
             type: object
             properties:
               max:
-                description: 'Max defines maximum supported version. One of `TLSAuto`, `TLS10`, `TLS11`, `TLS12`, `TLS13`.'
+                description: Max defines maximum supported version. One of `TLSAuto`, `TLS10`, `TLS11`, `TLS12`, `TLS13`.
                 type: string
                 default: TLSAuto
                 enum:
@@ -191,7 +200,7 @@ properties:
                   - TLS12
                   - TLS13
               min:
-                description: 'Min defines minimum supported version. One of `TLSAuto`, `TLS10`, `TLS11`, `TLS12`, `TLS13`.'
+                description: Min defines minimum supported version. One of `TLSAuto`, `TLS10`, `TLS11`, `TLS12`, `TLS13`.
                 type: string
                 default: TLSAuto
                 enum:
@@ -206,13 +215,13 @@ properties:
     description: Time at which the resource was created
     type: string
     format: date-time
-    example: '0001-01-01T00:00:00Z'
+    example: 0001-01-01T00:00:00Z
     readOnly: true
   modificationTime:
     description: Time at which the resource was updated
     type: string
     format: date-time
-    example: '0001-01-01T00:00:00Z'
+    example: 0001-01-01T00:00:00Z
     readOnly: true
   status:
     description: Status is the current status of the Kuma MeshExternalService resource.
@@ -260,9 +269,9 @@ properties:
                     type: string
                     maxLength: 1024
                     minLength: 1
-                    pattern: '^[A-Za-z]([A-Za-z0-9_,:]*[A-Za-z0-9_])?$'
+                    pattern: ^[A-Za-z]([A-Za-z0-9_,:]*[A-Za-z0-9_])?$
                   status:
-                    description: 'status of the condition, one of True, False, Unknown.'
+                    description: status of the condition, one of True, False, Unknown.
                     type: string
                     enum:
                       - 'True'
@@ -272,7 +281,7 @@ properties:
                     description: type of condition in CamelCase or in foo.example.com/CamelCase.
                     type: string
                     maxLength: 316
-                    pattern: '^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$'
+                    pattern: ^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$
                 required:
                   - message
                   - reason

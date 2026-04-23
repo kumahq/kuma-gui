@@ -1,21 +1,30 @@
 <template>
-  <div class="listener-routes-card">
+  <XCard class="listener-routes-card">
     <div class="listener-routes">
-      <div class="column">
-        <div class="header">
+      <header>
+        <DataLoader
+          :data="[props.meshGateway]"
+          variant="header"
+          v-slot="{ data: [meshGatewayData] }"
+        >
           <h2 class="title">
             {{ t('builtin-gateways.detail.listeners') }}
           </h2>
 
           <p class="count">
-            {{ meshGateway.conf.listeners.length }}
+            {{ meshGatewayData.conf.listeners.length }}
           </p>
-        </div>
+        </DataLoader>
+      </header>
 
-        <div class="content">
+      <div class="content">
+        <DataLoader
+          :data="[props.meshGateway]"
+          v-slot="{ data: [meshGatewayData] }"
+        >
           <div class="listener-list">
             <template
-              v-for="(listener, index) in meshGateway.conf.listeners"
+              v-for="(listener, index) in meshGatewayData.conf.listeners"
               :key="index"
             >
               <div
@@ -70,11 +79,14 @@
               </div>
             </template>
           </div>
-        </div>
+        </DataLoader>
       </div>
 
-      <div class="column">
-        <div class="header">
+      <header>
+        <DataLoader
+          :data="[props.inspectRules]"
+          variant="header"
+        >
           <h2 class="title">
             {{ t('builtin-gateways.detail.routes') }}
           </h2>
@@ -82,9 +94,14 @@
           <p class="count">
             {{ toRules.length }}
           </p>
-        </div>
+        </DataLoader>
+      </header>
 
-        <div class="content">
+      <div class="content">
+        <DataLoader
+          :data="[props.policyTypesByName]"
+          v-slot="{ data: [policyTypesByNameData] }"
+        >
           <div class="to-rule-list">
             <XEmptyState
               v-if="toRules.length === 0"
@@ -152,7 +169,7 @@
                                   name: 'policy-detail-view',
                                   params: {
                                     mesh: origin.mesh,
-                                    policyPath: props.policyTypesByName[origin.type]!.path,
+                                    policyPath: policyTypesByNameData[origin.type]!.path,
                                     policy: origin.name,
                                   },
                                 }"
@@ -246,10 +263,10 @@
               </template>
             </template>
           </div>
-        </div>
+        </DataLoader>
       </div>
     </div>
-  </div>
+  </XCard>
 </template>
 
 <script lang="ts" setup>
@@ -276,15 +293,22 @@ type RouteRule = Rule & {
   }
 }
 const props = defineProps<{
-  meshGateway: MeshGateway
+  meshGateway: MeshGateway | Error | undefined
   selectedListenerIndex: number
-  policyTypesByName: Partial<Record<string, PolicyResourceType>>
-  inspectRules: Rule[]
+  policyTypesByName: Partial<Record<string, PolicyResourceType>> | undefined
+  inspectRules: Rule[] | undefined
 }>()
 
 const toRules = computed(() => {
+  if(typeof props.meshGateway === 'undefined' || props.meshGateway instanceof Error) {
+    return []
+  }
   const listener = props.meshGateway.conf.listeners[props.selectedListenerIndex]
   if (!listener) {
+    return []
+  }
+
+  if(typeof props.inspectRules === 'undefined') {
     return []
   }
 
@@ -315,22 +339,26 @@ function triggerAction(event: Event) {
 
 <style lang="scss" scoped>
 .listener-routes-card {
-  border: 1px solid var(--x-color-border);
-  border-radius: var(--x-border-radius-20);
+  padding: 0;
 }
 
 .listener-routes {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  grid-template-areas:
+    "header-left header-right"
+    "content-left content-right";
 }
 
-.column + .column {
-  border-left: 1px solid var(--x-color-border);
-}
-
-.header {
+header {
+  grid-area: header-left;
   padding: var(--x-space-60) var(--x-space-60) var(--x-space-40) var(--x-space-60);
   border-bottom: 1px solid var(--x-color-border);
+
+  &:nth-of-type(2) {
+    grid-area: header-right;
+    border-left: 1px solid var(--x-color-border);
+  }
 }
 
 .title {
@@ -344,7 +372,13 @@ function triggerAction(event: Event) {
 }
 
 .content {
+  grid-area: content-left;
   padding: var(--x-space-60);
+
+  &:nth-of-type(2) {
+    grid-area: content-right;
+    border-left: 1px solid var(--x-color-border);
+  }
 }
 
 .listener-list>*+*,

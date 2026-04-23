@@ -16,9 +16,9 @@ get:
         type: string
   responses:
     '200':
-      $ref: "../components/responses/MeshRateLimitItem.yaml"
+      $ref: ../components/responses/MeshRateLimitItem.yaml
     '404':
-      $ref: "../components/responses/NotFound.yaml"
+      $ref: ../components/responses/NotFound.yaml
   tags:
     - MeshRateLimit
 put:
@@ -43,12 +43,12 @@ put:
     content:
       application/json:
         schema:
-          $ref: "../components/schemas/MeshRateLimitItem.yaml"
+          $ref: ../components/schemas/MeshRateLimitItem.yaml
   responses:
     '200':
-      $ref: "../components/responses/MeshRateLimitCreateOrUpdateSuccessResponse.yaml"
+      $ref: ../components/responses/MeshRateLimitCreateOrUpdateSuccessResponse.yaml
     '201':
-      $ref: "../components/responses/MeshRateLimitCreateOrUpdateSuccessResponse.yaml"
+      $ref: ../components/responses/MeshRateLimitCreateOrUpdateSuccessResponse.yaml
   tags:
     - MeshRateLimit
 delete:
@@ -69,8 +69,8 @@ delete:
         type: string
   responses:
     '200':
-      $ref: "../components/responses/MeshRateLimitDeleteSuccessResponse.yaml"
+      $ref: ../components/responses/MeshRateLimitDeleteSuccessResponse.yaml
     '404':
-      $ref: "../components/responses/NotFound.yaml"
+      $ref: ../components/responses/NotFound.yaml
   tags:
     - MeshRateLimit
