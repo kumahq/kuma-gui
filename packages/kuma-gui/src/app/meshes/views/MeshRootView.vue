@@ -4,7 +4,7 @@
     v-slot="{ t }"
   >
     <AppView
-      :breadcrumbs="['mesh-list-view'].includes(String(router.currentRoute.value.name ?? '')) ? [] : [
+      :breadcrumbs="['mesh-list-view'].includes(String(router.currentRoute.value.name ?? '')) ? undefined : [
         {
           to: {
             name: 'mesh-list-view',
