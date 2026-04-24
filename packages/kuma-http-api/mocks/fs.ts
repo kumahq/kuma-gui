@@ -260,6 +260,8 @@ export const fs = {
   '/_kri/kri_zi_:kri': _126,
   // Workload
   '/_kri/kri_wl_:kri': _401,
+  // HostnameGenerator
+  '/_kri/kri_hg_:kri': _201,
   // generic kri -> catches anything that is not matched above
   '/_kri/:kri': _999,
 }

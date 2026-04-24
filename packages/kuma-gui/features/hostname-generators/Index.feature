@@ -16,7 +16,13 @@ Feature: hostname-generators / index
       body:
         items:
           - name: local-mesh-external-service
+            kri: kri_____local-mesh-external-service_
+            labels:
+              kuma.io/display-name: local-mesh-external-service
           - name: synced-kube-mesh-service
+            kri: kri_____synced-kube-mesh-service_
+            labels:
+              kuma.io/display-name: synced-kube-mesh-service
       """
     When I visit the "/hostname-generators" URL
     When I click the "<Selector> [data-testid='x-action-group-control']" element
@@ -36,6 +42,9 @@ Feature: hostname-generators / index
       body:
         items:
           - name: local-mesh-external-service
+            kri: kri_____local-mesh-external-service_
+            labels:
+              kuma.io/display-name: local-mesh-external-service
       """
     When I visit the "/hostname-generators" URL
     When I click the "<Selector> td:nth-child(1)" element
