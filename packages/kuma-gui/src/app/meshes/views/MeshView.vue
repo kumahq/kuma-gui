@@ -4,7 +4,7 @@
     :params="{
       mesh: '',
     }"
-    v-slot="{ route, uri }"
+    v-slot="{ route, uri, t }"
   >
     <DataLoader
       :src="uri(
@@ -16,7 +16,16 @@
       )"
       v-slot="{ data: [mesh] }"
     >
-      <AppView>
+      <AppView
+        :breadcrumbs="[
+          {
+            to: {
+              name: 'mesh-list-view',
+            },
+            text: t('meshes.routes.item.breadcrumbs'),
+          },
+        ]"
+      >
         <RouterView
           v-slot="{ Component }"
         >
