@@ -12,7 +12,7 @@
   "dependencies": {
     "@gera2ld/tarjs": "^0.3.1",
     "@kong-ui-public/i18n": "^2.4.6",
-    "@kong/icons": "^1.51.0",
+    "@kong/icons": "^1.52.0",
     "@kong/kongponents": "^9.52.11",
     "@kumahq/container": "*",
     "@kumahq/data": "*",
