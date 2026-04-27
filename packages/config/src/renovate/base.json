@@ -1,8 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:recommended",
-    ":semanticCommits",
     "Kong/public-shared-renovate//base/github-actions",
     "Kong/public-shared-renovate//base/javascript"
   ],
