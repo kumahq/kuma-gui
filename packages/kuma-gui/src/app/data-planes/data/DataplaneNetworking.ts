@@ -14,6 +14,7 @@ export const DataplaneNetworkingLayout = {
     // https://github.com/kumahq/kuma/issues/14469
     return {
       ...dataplaneNetworkingLayout,
+      spiffeId: dataplaneNetworkingLayout.spiffeId ?? '',
       // don't show a card for anything on port 49151 as those are service-less inbounds
       // we currently only do this on the layout endpoint
       inbounds: dataplaneNetworkingLayout.inbounds.filter(item => item.port !== 49151).map(item => {
