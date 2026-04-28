@@ -1,30 +1,11 @@
 import eslint from '@eslint/js'
+import { defineConfig as packageConstraints, npmWorkspaceJSON } from '@kumahq/eslint-package-constraints'
 import stylistic from '@stylistic/eslint-plugin'
 import { defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript'
-import escape from 'escape-string-regexp'
 import importPlugin from 'eslint-plugin-import'
-import jsonSchemaValidatorPlugin from 'eslint-plugin-json-schema-validator'
 import nounsanitized from 'eslint-plugin-no-unsanitized'
 import vuePlugin from 'eslint-plugin-vue'
 import globals from 'globals'
-import { execSync } from 'node:child_process'
-import { readFileSync as read } from 'node:fs'
-import { resolve, dirname } from 'node:path'
-import { fileURLToPath } from 'node:url'
-
-const $config = dirname(fileURLToPath(import.meta.resolve('@kumahq/config')))
-
-const workspace = JSON.parse(
-  execSync('npm query :root').toString(),
-).at(0)
-
-const packageSchema = JSON.parse(
-  read(resolve(`${$config}/package.schema.json`), 'utf-8'),
-)
-
-const workflowSchema = JSON.parse(
-  read(resolve(`${$config}/workflow.schema.json`), 'utf-8'),
-)
 
 // Taken from https://github.com/vuejs/eslint-plugin-vue/blob/master/lib/utils/inline-non-void-elements.json.
 const INLINE_NON_VOID_ELEMENTS = [
@@ -76,39 +57,16 @@ export function createEslintConfig(
   {
     tsConfigPath = 'tsconfig.json',
     componentIgnorePatterns = [],
-    versionIgnorePatterns = {},
+    dependencyIgnorePatterns = {},
     workspaceRoot = false,
   } = {
     tsConfigPath: 'tsconfig.json',
     componentIgnorePatterns: [],
-    versionIgnorePatterns: {},
+    dependencyIgnorePatterns: {},
     workspaceRoot: false,
   },
 ) {
 
-  // amend our package.json schema depending on arguments
-  ((schema) => {
-    // 1. include any ignored version patterns
-    ['dependencies', 'devDependencies', 'peerDependencies'].forEach((item) => {
-      schema.properties[item].patternProperties = {
-        ...schema.properties[item].patternProperties,
-        ...versionIgnorePatterns[item] ?? {},
-      }
-    })
-
-    // 2. Take engines from the root of kumahq/kuma-gui and make sure
-    // any other workspace root using this linter use the same engines
-    Object.entries(workspace.engines).forEach(([key, value]) => {
-      schema.definitions[key].pattern = `^${escape(value)}$`
-    })
-
-    // 3. Any non-root package.json files shouldn't ever specify `engines`
-    if (!workspaceRoot) {
-      schema.properties.engines = {
-        not: {},
-      }
-    }
-  })(packageSchema)
 
   const vueTsConfig = defineConfigWithVueTs(
     ...vuePlugin.configs['flat/recommended'],
@@ -120,30 +78,6 @@ export function createEslintConfig(
     {
       rules: {
         'import/no-extraneous-dependencies': 'error',
-      },
-    },
-  ]
-
-  const jsonSchemaValidatorConfig = [
-    ...jsonSchemaValidatorPlugin.configs['flat/recommended'],
-    {
-      rules: {
-        'json-schema-validator/no-invalid': ['error', {
-          useSchemastoreCatalog: false,
-          mergeSchemas: true,
-          schemas: [
-            {
-              fileMatch: ['package.json'],
-              // our schema allows for ignoring individual dependencies if required
-              // see ./package.schema.json patternProperties examples
-              schema: packageSchema,
-            },
-            {
-              fileMatch: ['.github/**/*.{yaml,yml}'],
-              schema: workflowSchema,
-            },
-          ],
-        }],
       },
     },
   ]
@@ -181,19 +115,24 @@ export function createEslintConfig(
       '@stylistic/semi': ['error', 'never'],
     },
   }
-
+  const workspaceJSON = npmWorkspaceJSON()
   return [
     // when linting workspaceRoots we want to ignore
     // sub-packages which are linted separately
     workspaceRoot ? {
-      ignores: workspace.workspaces,
+      ignores: workspaceJSON.workspaces,
     } : {},
-    //
     eslint.configs.recommended,
     nounsanitized.configs.recommended,
     ...vueTsConfig,
     ...importConfig,
-    ...jsonSchemaValidatorConfig,
+    //
+    ...packageConstraints({
+      workspaceRoot,
+      dependencyIgnorePatterns,
+      workspaceJSON,
+    }),
+    //
     stylisticConfig,
     {
       languageOptions: {
