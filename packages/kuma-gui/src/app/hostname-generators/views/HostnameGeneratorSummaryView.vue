@@ -10,79 +10,102 @@
     }"
     v-slot="{ route, t, can, uri, r }"
   >
-    <DataLoader
-      :src="typeof props.items === 'undefined' ? uri(sources, '/hostname-generators/:name', {
-        name: route.params.name,
-      }) : undefined"
-      v-slot="{ data: [hostnameGenerator] }"
+    <DataCollection
+      :items="props.items"
+      :predicate="item => item.id === route.params.name"
     >
-      <DataCollection
-        :items="props.items ?? [hostnameGenerator]"
-        :predicate="item => item.id === route.params.name || item.kri === route.params.name"
+      <template
+        #item="{ item }"
       >
-        <template
-          #item="{ item }"
-        >
-          <AppView>
-            <template #title>
-              <h2>
-                <XAction
-                  :to="{
-                    name: 'hostname-generator-detail-view',
-                    params: {
-                      name: route.params.name,
-                    },
+        <AppView>
+          <template #title>
+            <h2>
+              <XAction
+                :to="{
+                  name: 'hostname-generator-detail-view',
+                  params: {
+                    name: route.params.name,
+                  },
 
-                  }"
-                >
-                  <RouteTitle
-                    :title="t('hostname-generators.routes.item.title', { name: item.name })"
-                  />
-                </XAction>
-              </h2>
-            </template>
+                }"
+              >
+                <RouteTitle
+                  :title="t('hostname-generators.routes.item.title', { name: item.name })"
+                />
+              </XAction>
+            </h2>
+          </template>
 
-            <XLayout
-              variant="y-stack"
-            >
-              <header>
-                <XLayout
-                  variant="separated"
-                  size="max"
+          <XLayout
+            variant="y-stack"
+          >
+            <header>
+              <XLayout
+                variant="separated"
+                size="max"
+              >
+                <h3>
+                  {{ t('hostname-generators.routes.item.config') }}
+                </h3>
+                <div
+                  v-for="options in [['structured', 'universal', 'k8s']]"
+                  :key="typeof options"
                 >
-                  <h3>
-                    {{ t('hostname-generators.routes.item.config') }}
-                  </h3>
-                  <div
-                    v-for="options in [['structured', 'universal', 'k8s']]"
-                    :key="typeof options"
+                  <XSelect
+                    :label="t('hostname-generators.routes.item.format')"
+                    :selected="route.params.format"
+                    @change="(value) => {
+                      route.update({ format: value })
+                    }"
+                    @vue:before-mount="$event?.props?.selected && options.includes($event.props.selected) && $event.props.selected !== route.params.format && route.update({ format: $event.props.selected })"
                   >
-                    <XSelect
-                      :label="t('hostname-generators.routes.item.format')"
-                      :selected="route.params.format"
-                      @change="(value) => {
-                        route.update({ format: value })
-                      }"
-                      @vue:before-mount="$event?.props?.selected && options.includes($event.props.selected) && $event.props.selected !== route.params.format && route.update({ format: $event.props.selected })"
+                    <template
+                      v-for="value in options"
+                      :key="value"
+                      #[`${value}-option`]
                     >
-                      <template
-                        v-for="value in options"
-                        :key="value"
-                        #[`${value}-option`]
-                      >
-                        {{ t(`hostname-generators.routes.item.formats.${value}`) }}
-                      </template>
-                    </XSelect>
-                  </div>
-                </XLayout>
-              </header>
+                      {{ t(`hostname-generators.routes.item.formats.${value}`) }}
+                    </template>
+                  </XSelect>
+                </div>
+              </XLayout>
+            </header>
 
-              <template v-if="route.params.format === 'structured'">
-                <XTable
-                  variant="kv"
-                  data-testid="structured-view"
+            <template v-if="route.params.format === 'structured'">
+              <XTable
+                variant="kv"
+                data-testid="structured-view"
+              >
+                <tr
+                  v-if="item.namespace.length > 0"
                 >
-<<<<<<< HEAD
+                  <th scope="row">
+                    {{ t('hostname-generators.common.namespace') }}
+                  </th>
+                  <td>{{ item.namespace }}</td>
+                </tr>
+                <tr
+                  v-if="can('use zones') && item.zone"
+                >
+                  <th scope="row">
+                    {{ t('hostname-generators.common.zone') }}
+                  </th>
+                  <td>
+                    <XAction
+                      :to="{
+                        name: 'zone-cp-detail-view',
+                        params: {
+                          zone: item.zone,
+                        },
+                      }"
+                    >
+                      {{ item.zone }}
+                    </XAction>
+                  </td>
+                </tr>
+                <tr
+                  v-if="item.spec.template"
+                >
                   <th scope="row">
                     {{ t('hostname-generators.common.template') }}
                   </th>
@@ -119,51 +142,33 @@
                 </tr>
               </XTable>
             </template>
-=======
-                  <tr
-                    v-if="item.namespace.length > 0"
-                  >
-                    <th scope="row">
-                      {{ t('hostname-generators.common.namespace') }}
-                    </th>
-                    <td>{{ item.namespace }}</td>
-                  </tr>
-                  <tr
-                    v-if="can('use zones') && item.zone"
-                  >
-                    <th scope="row">
-                      {{ t('hostname-generators.common.zone') }}
-                    </th>
-                    <td>
-                      <XAction
-                        :to="{
-                          name: 'zone-cp-detail-view',
-                          params: {
-                            zone: item.zone,
-                          },
-                        }"
-                      >
-                        {{ item.zone }}
-                      </XAction>
-                    </td>
-                  </tr>
-                  <tr
-                    v-if="item.spec.template"
-                  >
-                    <th scope="row">
-                      {{ t('hostname-generators.common.template') }}
-                    </th>
-                    <td>{{ item.spec.template }}</td>
-                  </tr>
-                </XTable>
-              </template>
->>>>>>> 1dec9c39a (feat(hostname-generators): support KRIs)
 
-              <template v-else-if="route.params.format === 'universal'">
+            <template v-else-if="route.params.format === 'universal'">
+              <XCodeBlock
+                data-testid="codeblock-yaml-universal"
+                language="yaml"
+                :code="YAML.stringify(item.$raw)"
+                is-searchable
+                :query="route.params.codeSearch"
+                :is-filter-mode="route.params.codeFilter"
+                :is-reg-exp-mode="route.params.codeRegExp"
+                @query-change="route.update({ codeSearch: $event })"
+                @filter-mode-change="route.update({ codeFilter: $event })"
+                @reg-exp-mode-change="route.update({ codeRegExp: $event })"
+              />
+            </template>
+
+            <template v-else>
+              <DataLoader
+                :src="uri(sources, '/hostname-generators/:name/as/kubernetes', {
+                  name: route.params.name,
+                })"
+                v-slot="{ data: [k8sConfig] }"
+              >
                 <XCodeBlock
-                  data-testid="codeblock-yaml-universal"
+                  data-testid="codeblock-yaml-k8s"
                   language="yaml"
-                  :code="YAML.stringify(item.$raw)"
+                  :code="YAML.stringify(k8sConfig)"
                   is-searchable
                   :query="route.params.codeSearch"
                   :is-filter-mode="route.params.codeFilter"
@@ -172,34 +177,12 @@
                   @filter-mode-change="route.update({ codeFilter: $event })"
                   @reg-exp-mode-change="route.update({ codeRegExp: $event })"
                 />
-              </template>
-
-              <template v-else>
-                <DataLoader
-                  :src="uri(sources, '/hostname-generators/:name/as/kubernetes', {
-                    name: route.params.name,
-                  })"
-                  v-slot="{ data: [k8sConfig] }"
-                >
-                  <XCodeBlock
-                    data-testid="codeblock-yaml-k8s"
-                    language="yaml"
-                    :code="YAML.stringify(k8sConfig)"
-                    is-searchable
-                    :query="route.params.codeSearch"
-                    :is-filter-mode="route.params.codeFilter"
-                    :is-reg-exp-mode="route.params.codeRegExp"
-                    @query-change="route.update({ codeSearch: $event })"
-                    @filter-mode-change="route.update({ codeFilter: $event })"
-                    @reg-exp-mode-change="route.update({ codeRegExp: $event })"
-                  />
-                </DataLoader>
-              </template>
-            </XLayout>
-          </AppView>
-        </template>
-      </DataCollection>
-    </DataLoader>
+              </DataLoader>
+            </template>
+          </XLayout>
+        </AppView>
+      </template>
+    </DataCollection>
   </RouteView>
 </template>
 
@@ -208,6 +191,6 @@ import { sources } from '../sources'
 import { YAML } from '@/app/application'
 import type { HostnameGenerator } from '@/app/hostname-generators/data'
 const props = defineProps<{
-  items: HostnameGenerator[] | undefined
+  items: HostnameGenerator[]
 }>()
 </script>
