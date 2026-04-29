@@ -1,6 +1,8 @@
 import createClient from 'openapi-fetch'
 
+import { Kri } from '../kuma'
 import { HostnameGenerator } from './data/HostnameGenerator'
+import type { KumaHostnameGenerator } from './data/HostnameGenerator'
 import { defineSources } from '@/app/application'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import type { paths } from '@kumahq/kuma-http-api'
@@ -34,33 +36,59 @@ export const sources = (api: KumaApi) => {
     '/hostname-generators/:name': async (params) => {
       const { name } = params
 
-      const res = await http.GET('/hostnamegenerators/{name}', {
-        params: {
-          path: {
-            name,
+      let response
+      if(Kri.isKriString(name)) {
+        response = await http.GET('/_kri/{kri}', {
+          params: {
+            path: {
+              kri: name,
+            },
           },
-        },
-      })
+        })
+      } else {
+        response = await http.GET('/hostnamegenerators/{name}', {
+          params: {
+            path: {
+              name,
+            },
+          },
+        })
+      }
 
-      return HostnameGenerator.fromObject(res.data!)
+      return HostnameGenerator.fromObject(response.data as KumaHostnameGenerator)
     },
 
     '/hostname-generators/:name/as/kubernetes': async (params) => {
       const { name } = params
 
-      const res = await http.GET('/hostnamegenerators/{name}', {
-        params: {
-          path: {
-            name,
+      let response
+      if(Kri.isKriString(name)) {
+        response = await http.GET('/_kri/{kri}', {
+          params: {
+            path: {
+              kri: name,
+            },
+            // @ts-ignore
+            query: {
+              format: 'kubernetes',
+            },
           },
-          // @ts-ignore
-          query: {
-            format: 'kubernetes',
+        })
+      } else {
+        response = await http.GET('/hostnamegenerators/{name}', {
+          params: {
+            path: {
+              name,
+            },
+            // @ts-ignore
+            query: {
+              format: 'kubernetes',
+            },
           },
-        },
-      })
+        })
+      }
 
-      return res.data!
+      return response.data!
     },
   })
 }
