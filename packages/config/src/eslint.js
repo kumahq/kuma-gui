@@ -1,5 +1,5 @@
 import eslint from '@eslint/js'
-import { defineConfig as packageConstraints, npmWorkspaceJSON } from '@kumahq/eslint-package-constraints'
+import { defineConfig as packageConstraints, getNpmWorkspaceJSON } from '@kumahq/eslint-package-constraints'
 import stylistic from '@stylistic/eslint-plugin'
 import { defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript'
 import importPlugin from 'eslint-plugin-import'
@@ -115,7 +115,7 @@ export function createEslintConfig(
       '@stylistic/semi': ['error', 'never'],
     },
   }
-  const workspaceJSON = npmWorkspaceJSON()
+  const workspaceJSON = getNpmWorkspaceJSON()
   return [
     // when linting workspaceRoots we want to ignore
     // sub-packages which are linted separately

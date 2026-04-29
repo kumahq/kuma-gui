@@ -18,7 +18,7 @@ type Options = {
   >
   workspaceJSON?: Record<string, unknown>
 }
-export const npmWorkspaceJSON = () => JSON.parse(execSync('npm query :root').toString()).at(0)
+export const getNpmWorkspaceJSON = () => JSON.parse(execSync('npm query :root').toString()).at(0)
 export const defineConfig = ({
   workspaceRoot = false,
   dependencyIgnorePatterns = {},
