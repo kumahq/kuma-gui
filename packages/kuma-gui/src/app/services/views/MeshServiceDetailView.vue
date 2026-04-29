@@ -162,57 +162,63 @@
           </template>
 
           <DataLoader
-            :src="uri(servicesSources, '/meshes/:mesh/:serviceType/:serviceName/_hostnames', {
-              mesh: route.params.mesh,
-              serviceType: 'meshservices',
-              serviceName: route.params.service,
-            })"
+            :data="[props.data]"
             variant="list"
-            v-slot="{ data: [hostnames] }"
+            v-slot="{ data: [service] }"
           >
-            <DataCollection
-              type="hostnames"
-              :items="hostnames.items"
+            <DataLoader
+              :src="uri(servicesSources, '/meshes/:mesh/:serviceType/:serviceName/_hostnames', {
+                mesh: route.params.mesh,
+                serviceType: 'meshservices',
+                serviceName: service.id,
+              })"
+              variant="list"
+              v-slot="{ data: [hostnames] }"
             >
-              <AppCollection
-                type="hostnames-collection"
-                data-testid="hostnames-collection"
+              <DataCollection
+                type="hostnames"
                 :items="hostnames.items"
-                :headers="[
-                  { ...me.get('headers.hostname'), label: t('services.detail.hostnames.hostname'), key: 'hostname' },
-                  { ...me.get('headers.zones'), label: t('services.detail.hostnames.zone'), key: 'zones' },
-                ]"
-                @resize="me.set"
               >
-                <template #hostname="{ row: item }">
-                  <b>
-                    <XCopyButton
-                      :text="item.hostname"
-                    />
-                  </b>
-                </template>
-                <template #zones="{ row: item }">
-                  <XLayout variant="separated">
-                    <XBadge
-                      v-for="(zone, index) of item.zones"
-                      :key="index"
-                      appearance="decorative"
-                    >
-                      <XAction
-                        :to="{
-                          name: 'zone-cp-detail-view',
-                          params: {
-                            zone: zone.name,
-                          },
-                        }"
+                <AppCollection
+                  type="hostnames-collection"
+                  data-testid="hostnames-collection"
+                  :items="hostnames.items"
+                  :headers="[
+                    { ...me.get('headers.hostname'), label: t('services.detail.hostnames.hostname'), key: 'hostname' },
+                    { ...me.get('headers.zones'), label: t('services.detail.hostnames.zone'), key: 'zones' },
+                  ]"
+                  @resize="me.set"
+                >
+                  <template #hostname="{ row: item }">
+                    <b>
+                      <XCopyButton
+                        :text="item.hostname"
+                      />
+                    </b>
+                  </template>
+                  <template #zones="{ row: item }">
+                    <XLayout variant="separated">
+                      <XBadge
+                        v-for="(zone, index) of item.zones"
+                        :key="index"
+                        appearance="decorative"
                       >
-                        {{ zone.name }}
-                      </XAction>
-                    </XBadge>
-                  </XLayout>
-                </template>
-              </AppCollection>
-            </DataCollection>
+                        <XAction
+                          :to="{
+                            name: 'zone-cp-detail-view',
+                            params: {
+                              zone: zone.name,
+                            },
+                          }"
+                        >
+                          {{ zone.name }}
+                        </XAction>
+                      </XBadge>
+                    </XLayout>
+                  </template>
+                </AppCollection>
+              </DataCollection>
+            </DataLoader>
           </DataLoader>
         </XCard>
 
@@ -506,7 +512,6 @@ import ResourceStatus from '@/app/common/ResourceStatus.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import { sources } from '@/app/data-planes/sources'
 import { sources as servicesSources } from '@/app/services/sources'
-
 
 const props = defineProps<{
   data: MeshService | Error | undefined
