@@ -12,6 +12,9 @@ BrandiJS with token-based service registration for managing application
 dependencies.
 - **[@kumahq/data](./data)** - Vue components (`DataSource` and `DataLoader`) for
 handling external data fetching, loading states, and error handling.
+- **[@kumahq/eslint-package-constraints](./eslint-package-constraints)** - ESLint flat config for
+enforcing `package.json` and GitHub workflow version constraints across a monorepo, including
+dependency version range rules and SHA pinning for third-party actions.
 - **[@kumahq/fake-api](./fake-api)** - Utilities for loading and serving mock HTTP API
 responses with generated fake data via FakerJS for development and testing.
 - **[@kumahq/gherkin-web](./gherkin-web)** - Gherkin/Cucumber step definitions for testing web
