@@ -1975,9 +1975,16 @@ export interface components {
             protocol: string;
             proxyResourceName: string;
         };
+        DataplaneListener: {
+            kri: string;
+            /** @enum {string} */
+            type: "ZoneIngress" | "ZoneEgress";
+            port: number;
+            proxyResourceName: string;
+        };
         /**
          * DataplaneLayout
-         * @description Dataplane networking layout. It contains information most important information about dataplane and lists of available inbounds and outbounds
+         * @description Dataplane networking layout. It contains the most important information about the dataplane and lists the available inbounds, outbounds, and zone proxy listeners
          */
         DataplaneNetworkingLayout: {
             /** @example kri_dp_default_default_kuma-demo_demo-app-75ff54499c-ttwd7_http-port */
@@ -1995,6 +2002,7 @@ export interface components {
             };
             inbounds: components["schemas"]["DataplaneInbound"][];
             outbounds: components["schemas"]["DataplaneOutbound"][];
+            listeners: components["schemas"]["DataplaneListener"][];
             /** @description SPIFFE ID of the dataplane's workload identity certificate */
             spiffeId?: string;
         };

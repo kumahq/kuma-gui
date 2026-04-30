@@ -4,7 +4,7 @@ info:
   description: Kuma API
   version: v1alpha1
   x-ref-schema-name: DataplaneOverview
-  x-oas-source: kumahq/kuma@84ada43c9b742f4c30a7c1f40091a761f2728a87
+  x-oas-source: kumahq/kuma@60567d73ec7a8928f2b11c7904bc7fe995424a44
 paths:
   /:
     get:
@@ -4995,8 +4995,28 @@ components:
         - port
         - protocol
         - proxyResourceName
+    DataplaneListener:
+      type: object
+      properties:
+        kri:
+          type: string
+        type:
+          type: string
+          enum:
+            - ZoneIngress
+            - ZoneEgress
+        port:
+          type: integer
+          x-go-type: int32
+        proxyResourceName:
+          type: string
+      required:
+        - kri
+        - type
+        - port
+        - proxyResourceName
     DataplaneNetworkingLayout:
-      description: Dataplane networking layout. It contains information most important information about dataplane and lists of available inbounds and outbounds
+      description: Dataplane networking layout. It contains the most important information about the dataplane and lists the available inbounds, outbounds, and zone proxy listeners
       type: object
       properties:
         kri:
@@ -5019,6 +5039,10 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/DataplaneOutbound'
+        listeners:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataplaneListener'
         spiffeId:
           description: SPIFFE ID of the dataplane's workload identity certificate
           type: string
@@ -5027,6 +5051,7 @@ components:
         - labels
         - inbounds
         - outbounds
+        - listeners
       title: DataplaneLayout
     PolicyOrigin:
       description: The list of policies KRI that contributed to the 'conf'. The order is important as it reflects in what order confs were merged to get the resulting 'conf'.
