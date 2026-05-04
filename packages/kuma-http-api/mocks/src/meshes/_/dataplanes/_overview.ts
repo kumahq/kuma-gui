@@ -13,6 +13,7 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
   const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
   const defaultType = env('KUMA_DATAPLANE_TYPE', '')
   const inboundCount = parseInt(env('KUMA_DATAPLANEINBOUND_COUNT', `${fake.number.int({ min: 1, max: 5 })}`))
+  const listenersCount = parseInt(env('KUMA_DATAPLANELISTENER_COUNT', `${fake.number.int({ min: 1, max: 5 })}`))
   const outboundCount = parseInt(env('KUMA_DATAPLANEOUTBOUND_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
   const subscriptionCount = parseInt(env('KUMA_SUBSCRIPTION_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
   const isMtlsEnabledOverride = env('KUMA_MTLS_ENABLED', '')
@@ -41,6 +42,15 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
         return 'DELEGATED'
       case tags['kuma.io/service']?.includes('-builtin'):
         return 'BUILTIN'
+      case query.get('filter[labels.kuma.io/listener-zoneingress]') === 'enabled' && query.get('filter[labels.kuma.io/listener-zoneegress]') === 'enabled':
+      case _name.includes('ingress') && _name.includes('egress'):
+        return 'INGRESS-EGRESS'
+      case query.get('filter[labels.kuma.io/listener-zoneingress]') === 'enabled':
+      case _name.includes('ingress'):
+        return 'INGRESS'
+      case query.get('filter[labels.kuma.io/listener-zoneegress]') === 'enabled':
+      case _name.includes('egress'):
+        return 'EGRESS'
       default:
         return ''
     }
@@ -56,7 +66,7 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
         const isMultizone = fake.datatype.boolean()
         const isMtlsEnabled = isMtlsEnabledOverride !== '' ? isMtlsEnabledOverride === 'true' : fake.datatype.boolean()
 
-        const type = filterType || fake.helpers.arrayElement(['BUILTIN', 'DELEGATED', 'STANDARD'])
+        const type = filterType || fake.helpers.arrayElement(['BUILTIN', 'DELEGATED', 'STANDARD', 'INGRESS', 'EGRESS', 'INGRESS-EGRESS'])
         // we include the type in the name so when we link using the name
         // we keep the type in the URL so the corresponding item mock knows the type
         const name = `${fake.word.noun()}-${type.toLowerCase()}`
@@ -87,6 +97,19 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
                   ipFamilyMode: fake.helpers.arrayElement(['UnSpecified', 'DualStack', 'IPv4', 'IPv6']),
                 },
               }),
+              ...((type.includes('INGRESS') || type.includes('EGRESS')) && {
+                listeners: Array.from({ length: listenersCount }).map((_) => {
+                  const isIngress = type === 'INGRESS-EGRESS' ? fake.datatype.boolean() : type.includes('INGRESS')
+                  const port = fake.internet.port()
+                  return {
+                    address,
+                    port,
+                    name: fake.helpers.arrayElement([String(port), `${isIngress ? 'ingress' : 'egress'}-port`]),
+                    state: fake.kuma.state(),
+                    type: isIngress ? 'ZoneIngress' : 'ZoneEgress',
+                  }
+                }),
+              }),
               ...(type === 'STANDARD' ? {
                 // normal proxies have inbound and outbound
                 inbound: Array.from({ length: inboundCount }).map((_) => {
@@ -105,7 +128,7 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
                       zone: zoneQuery || (isMultizone && fake.datatype.boolean()) ? zone : undefined,
                     }),
                     ...(fake.datatype.boolean() ? {
-                      state: fake.kuma.inboundState(),
+                      state: fake.kuma.state(),
                     } : {}),
                   }
                 }),
