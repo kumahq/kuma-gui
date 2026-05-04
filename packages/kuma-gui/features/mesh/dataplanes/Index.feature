@@ -20,6 +20,7 @@ Feature: mesh / dataplanes / index
       KUMA_MODE: global
       KUMA_DATAPLANE_COUNT: 9
       KUMA_DATAPLANEINBOUND_COUNT: 1
+      KUMA_DATAPLANELISTENER_COUNT: 0
       KUMA_SUBSCRIPTION_COUNT: 2
       """
     And the URL "/meshes/default/dataplanes/_overview" responds with
@@ -62,6 +63,49 @@ Feature: mesh / dataplanes / index
       | zone-1               |
       | Nov 3, 2023, 9:10 AM |
       | Online               |
+
+  Scenario Outline: The proxy listing shows the correct status
+    Given the environment
+      """
+      KUMA_DATAPLANE_COUNT: 1
+      KUMA_SUBSCRIPTION_COUNT: 1
+      KUMA_DATAPLANEINBOUND_COUNT: 1
+      KUMA_DATAPLANELISTENER_COUNT: 1
+      """
+    And the URL "/meshes/default/dataplanes/_overview" responds with
+      """
+      body:
+        items:
+          - name: dpp-1
+            mesh: fake-default
+            dataplane:
+              networking:
+                gateway: !!js/undefined
+                inbound: <Inbound>
+                listeners: <Listeners>
+            dataplaneInsight:
+              mTLS: !!js/undefined
+              subscriptions:
+                - connectTime: 2021-02-17T07:33:36.412683Z
+                  disconnectTime: <DisconnectTime>
+      """
+    When I visit the "/meshes/default/data-planes" URL
+    Then the "$item:nth-child(1)" element contains
+      | Value    |
+      | dpp-1    |
+      | Proxy    |
+      | <Status> |
+
+    Examples:
+      | Status             | DisconnectTime              | Inbound                                | Listeners                              |
+      | Online             | !!js/undefined              | !!js/undefined                         | !!js/undefined                         |
+      | Online             | !!js/undefined              | [{ state: Ready }]                     | !!js/undefined                         |
+      | Online             | !!js/undefined              | !!js/undefined                         | [{ state: Ready }]                     |
+      | Offline            | 2021-02-17T07:33:36.412683Z | !!js/undefined                         | !!js/undefined                         |
+      | Offline            | 2021-02-17T07:33:36.412683Z | [{ state: NotReady }]                  | !!js/undefined                         |
+      | Offline            | 2021-02-17T07:33:36.412683Z | !!js/undefined                         | [{ state: NotReady }]                  |
+      | Partially degraded | 2021-02-17T07:33:36.412683Z | [{ state: Ready },{ state: NotReady }] | !!js/undefined                         |
+      | Partially degraded | 2021-02-17T07:33:36.412683Z | !!js/undefined                         | [{ state: Ready },{ state: NotReady }] |
 
   Scenario: The Data Plane Proxy list has the expected minimal content
     Given the environment

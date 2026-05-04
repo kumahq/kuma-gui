@@ -68,6 +68,7 @@ Feature: mesh / dataplanes / index
       """
       KUMA_DATAPLANE_COUNT: 1
       KUMA_SUBSCRIPTION_COUNT: 1
+      KUMA_DATAPLANELISTENER_COUNT: 0
       """
     And the URL "/meshes/default/dataplanes/_overview" responds with
       """
