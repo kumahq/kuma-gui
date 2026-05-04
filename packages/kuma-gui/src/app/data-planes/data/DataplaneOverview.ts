@@ -49,12 +49,19 @@ export const DataplaneOverview = {
         }
 
         const unhealthyInbounds = networking.inbounds.filter((inbound) => inbound.state !== 'Ready')
+        const unhealthyListeners = networking.listeners.filter((listener) => listener.state !== 'Ready')
         switch (true) {
-          case unhealthyInbounds.length === networking.inbounds.length:
+          case networking.inbounds.length > 0 && unhealthyInbounds.length === networking.inbounds.length:
             // All inbounds being unhealthy means the Dataplane is offline.
             return states.offline
           case unhealthyInbounds.length > 0:
             // Some inbounds being unhealthy means the Dataplane is partially degraded.
+            return states.partiallyDegraded
+          case networking.listeners.length > 0 && unhealthyListeners.length === networking.listeners.length:
+            // All listeners being unhealthy means the Dataplane is offline.
+            return states.offline
+          case unhealthyListeners.length > 0:
+            // Some listeners being unhealthy means the Dataplane is partially degraded.
             return states.partiallyDegraded
           default:
             // All inbounds being healthy means the Dataplane’s status is determined by whether it’s connected to a control plane.

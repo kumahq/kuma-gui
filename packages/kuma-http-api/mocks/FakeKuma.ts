@@ -156,6 +156,13 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
     return k8s ? this.k8s.dataplaneSuffix() : ''
   }
 
+  state() {
+    return this.faker.helpers.arrayElement(['Ready', 'NotReady', 'Ignored'])
+  }
+
+  /**
+   * @deprecated use `fake.kuma.state()` instead
+   */
   inboundState() {
     return this.faker.helpers.arrayElement(['Ready', 'NotReady', 'Ignored'])
   }

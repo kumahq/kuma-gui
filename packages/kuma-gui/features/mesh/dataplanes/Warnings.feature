@@ -147,8 +147,9 @@ Feature: mesh / dataplanes / warnings
           networking:
             outbound: !!js/undefined
             inbound: !!js/undefined
+            listeners: !!js/undefined
         dataplaneInsight:
-          connectedSubscription: !!js/undefined
+          subscriptions: !!js/undefined
           metadata:
             features: !!js/undefined
       """
