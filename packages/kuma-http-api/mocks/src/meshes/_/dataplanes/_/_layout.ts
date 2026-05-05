@@ -4,6 +4,7 @@ import type { components } from '@kumahq/kuma-http-api'
 type DataplaneNetworkingLayout = components['schemas']['DataplaneNetworkingLayout']
 type DataplaneInbound = components['schemas']['DataplaneInbound']
 type DataplaneOutbound = components['schemas']['DataplaneOutbound']
+type DataplaneListener = components['schemas']['DataplaneListener']
 
 export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
   const mesh = req.params.mesh as string
@@ -36,6 +37,7 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
       }),
     }
   })
+  const listeners = parseInt(env('KUMA_DATAPLANELISTENERS_COUNT', `${fake.number.int({ min: 0, max: 50 })}`))
 
   return {
     headers: {},
@@ -81,6 +83,20 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
           protocol,
           proxyResourceName: kri,
         } satisfies DataplaneOutbound
+      }),
+      listeners: Array.from({ length: listeners }).map(() => {
+        const port = fake.number.int({ min: 1, max: 65535 })
+        const type = fake.helpers.arrayElement(['ZoneIngress', 'ZoneEgress'])
+        const kri = fake.kuma.kri({
+          resourceName: type,
+          sectionName: String(port),
+        })
+        return {
+          kri,
+          type,
+          port,
+          proxyResourceName: kri,
+        } satisfies DataplaneListener
       }),
     } satisfies DataplaneNetworkingLayout,
   }
