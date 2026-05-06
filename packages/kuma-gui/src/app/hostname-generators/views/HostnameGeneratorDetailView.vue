@@ -21,7 +21,17 @@
       })"
       v-slot="{ data: sourceData, error }"
     >
-      <AppView :docs="t('hostname-generators.href.docs')">
+      <AppView
+        :docs="t('hostname-generators.href.docs')"
+        :breadcrumbs="[
+          {
+            to: {
+              name: 'hostname-generator-list-view',
+            },
+            text: t('hostname-generators.routes.item.breadcrumbs'),
+          },
+        ]"
+      >
         <template #title>
           <DataLoader
             :data="[sourceData]"
