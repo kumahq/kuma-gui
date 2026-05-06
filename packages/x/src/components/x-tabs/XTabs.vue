@@ -8,6 +8,7 @@
         :key="`${name}`"
         :class="{'active': name === `${props.selected}-tab`}"
         role="none"
+        :data-testid="`${name}`"
       >
         <slot :name="name" />
       </li>
