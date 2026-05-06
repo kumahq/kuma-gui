@@ -67,6 +67,7 @@ export const sources = (api: KumaApi) => {
         }
       })()
       const connections = ConnectionCollection.fromObject(Stat.fromCollection(res))
+      console.log("🚀 ~ sources ~ connections:", connections)
 
       let inbounds, outbounds, passthrough
       if (proxyType === 'dataplane') {
@@ -74,6 +75,11 @@ export const sources = (api: KumaApi) => {
         inbounds = params.socketAddress === 'localhost' || params.socketAddress === 'self_inbound'
           ? Object.fromEntries(Object.entries(connections.cluster).filter(([key, _value]) => key.startsWith('localhost_') || key.startsWith('self_inbound')))
           : Object.fromEntries(Object.entries(connections.listener).filter(([key, value]) => key.startsWith(`${params.socketAddress}_`) && !value.$clusterName.startsWith('_')))
+
+        inbounds = {
+          ...inbounds,
+          ...Object.fromEntries(Object.entries(connections.listener).filter(([key]) => key.startsWith('self_zone'))),
+        }
 
         outbounds = Object.fromEntries(Object.entries(connections.cluster).filter(([key, _value]) => ![
           // if we don't exclude localhost_ we end up with  a `localhost_`

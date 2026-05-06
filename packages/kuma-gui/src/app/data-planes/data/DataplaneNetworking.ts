@@ -33,6 +33,14 @@ export const DataplaneNetworkingLayout = {
           portName: kri.sectionName !== String(item.port) ? kri.sectionName : undefined,
         }
       }),
+      listeners: dataplaneNetworkingLayout.listeners.map(item => {
+        const kri = Kri.fromString(item.kri)
+        return {
+          ...item,
+          stat_prefix: item.proxyResourceName,
+          portName: kri.sectionName !== String(item.port) ? kri.sectionName : undefined,
+        }
+      }),
     } satisfies KumaDataplaneNetworkingLayout
   },
 }
@@ -152,3 +160,31 @@ export type DataplaneNetworking = ReturnType<typeof DataplaneNetworking['fromObj
 export type DataplaneInbound = DataplaneNetworking['inbounds'][number]
 export type DataplaneListener = DataplaneNetworking['listeners'][number]
 
+
+// apiVersion: v1
+// kind: Service
+// metadata:
+//   name: zone-ingress
+//   namespace: kuma-demo
+//   labels:
+//     k8s.kuma.io/zone-proxy-type: ingress
+// spec:
+//   selector:
+//     app: demo-app
+//   ports:
+//     - port: 10001
+//       targetPort: 10001
+// ---
+// apiVersion: v1
+// kind: Service
+// metadata:
+//   name: zone-egress
+//   namespace: kuma-demo
+//   labels:
+//     k8s.kuma.io/zone-proxy-type: egress
+// spec:
+//   selector:
+//     app: demo-app
+//   ports:
+//     - port: 10002
+//       targetPort: 10002

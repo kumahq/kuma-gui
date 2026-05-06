@@ -687,6 +687,114 @@
                           </ConnectionGroup>
                         </template>
                       </template>
+                        <!-- LISTENERS -->
+
+                      <template
+                        v-for="(listenersByPort, port) in [Object.groupBy(props.data.dataplane.networking.listeners, (item) => item.port)]"
+                        :key="port"
+                      >
+                      {{ console.log(traffic, listenersByPort) }}
+                        <template
+                          v-for="listeners in [dataplaneLayout.listeners]"
+                          :key="typeof listeners"
+                        >
+                          <ConnectionGroup
+                            type="inbound"
+                            data-testid="dataplane-inbounds"
+                          >
+                            <XLayout
+                              variant="y-stack"
+                              size="small"
+                            >
+                              <template
+                                v-for="item in listeners"
+                                :key="`${item.proxyResourceName}`"
+                              >
+                                <template
+                                  v-for="listener in [listenersByPort[item.port]?.[0]]"
+                                  :key="listener?.port"
+                                >
+                                  <ConnectionCard
+                                    data-testid="dataplane-inbound"
+                                    :protocol="'tcp'"
+                                    :port-name="listener?.portName"
+                                    :traffic="traffic?.inbounds[item.proxyResourceName]"
+                                    data-actionable
+                                  >
+                                  <!--
+                                    <template #state>
+                                      <XIcon
+                                        v-if="listener?.state !== 'Ready'"
+                                        name="danger"
+                                        :size="KUI_ICON_SIZE_40"
+                                        placement="right"
+                                      >
+                                        {{ t('data-planes.routes.item.unhealthy_inbound', { port: listener?.port }) }}
+                                      </XIcon>
+                                      <template
+                                        v-for="reports in [traffic?.inbounds[item.stat_prefix]?.$meta.alerts.reports ?? []]"
+                                        v-else
+                                        :key="typeof reports"
+                                      >
+                                        <XNotification
+                                          :notify="reports.length > 0"
+                                          :data-testid="`warning-abnormal-traffic-stats`"
+                                          :uri="`data-planes.notifications.abnormal-traffic-stats.${props.data.id}`"
+                                        >
+                                          <XI18n
+                                            :path="`data-planes.notifications.abnormal-traffic-stats`"
+                                          />
+                                        </XNotification>
+                                        <XAction
+                                          v-if="reports.length"
+                                          data-action
+                                          :to="{
+                                            name: 'data-plane-connection-inbound-summary-stats-view',
+                                            params: {
+                                              connection: item.stat_prefix,
+                                            },
+                                            query: {
+                                              codeSearch: reports.join('|'),
+                                              codeFilter: true,
+                                              codeRegExp: true,
+                                            },
+                                          }"
+                                        >
+                                          <XIcon
+                                            name="warning"
+                                            :size="KUI_ICON_SIZE_40"
+                                            placement="right"
+                                          />
+                                        </XAction>
+                                      </template>
+                                    </template>
+                                    -->
+
+                                    <template #body>
+                                      <XBadge variant="decorative">{{ item.type }}</XBadge>
+                                    </template>
+
+                                    <XAction
+                                      data-action
+                                      :to="{
+                                        name: ((name) => name.includes('bound') ? name.replace('-outbound-', '-inbound-') : 'data-plane-connection-inbound-summary-overview-view')(String(_route.name)),
+                                        params: {
+                                          connection: item.proxyResourceName,
+                                        },
+                                        query: {
+                                          inactive: route.params.inactive,
+                                        },
+                                      }"
+                                    >
+                                      :{{ item.port }}
+                                    </XAction>
+                                  </ConnectionCard>
+                                </template>
+                              </template>
+                            </XLayout>
+                          </ConnectionGroup>
+                        </template>
+                      </template>
                     </ConnectionTraffic>
 
                     <ConnectionTraffic>
@@ -874,6 +982,153 @@
                   </XLayout>
                 </DataLoader>
               </XCard>
+
+              <XCard>
+                <template #title>
+                  Listeners  
+                </template>
+                <DataLoader
+                  :data="[sourceDataplaneLayout, traffic, resourceTypes]"
+                  v-slot="{ data: [dataplaneLayout] }"
+                >
+                  <AppCollection
+                    :items="dataplaneLayout.listeners"
+                    :headers="[
+                      { key: 'type', label: 'Type' },
+                      { key: 'port', label: 'Port' },
+                      { key: 'connections', label: 'Connections' },
+                    ]"
+                  >
+                    <template #type="{ row: item }">
+                      {{ item.type }}
+                    </template>
+                    <template #port="{ row: item }">
+                      {{ item.port }}
+                    </template>
+                    <template #connections="{ row: item }">
+                      {{ traffic?.inbounds[item.proxyResourceName]?.tcp?.['downstream_cx_total'] }}
+                    </template>
+                  </AppCollection>
+                </DataLoader>
+              </XCard>
+
+              <XCard>
+                <template #title>
+                  Listeners
+                </template>
+                <DataLoader
+                  :data="[sourceDataplaneLayout, traffic, resourceTypes]"
+                  v-slot="{ data: [dataplaneLayout] }"
+                >
+                  <template
+                    v-for="(inboundsByPort, port) in [Object.groupBy(props.data.dataplane.networking.inbounds, (item) => item.port)]"
+                    :key="port"
+                  >
+                    <XLayout variant="columns">
+                    <template
+                      v-for="listeners in [dataplaneLayout.listeners]"
+                      :key="typeof listeners"
+                    >
+                      <ConnectionGroup
+                        type="inbound"
+                        data-testid="dataplane-inbounds"
+                      >
+                        <XLayout
+                          variant="y-stack"
+                          size="small"
+                        >
+                          <template
+                            v-for="item in listeners"
+                            :key="`${item.proxyResourceName}`"
+                          >
+                            <template
+                              v-for="inbound in [inboundsByPort[item.port]?.[0]]"
+                              :key="inbound?.port"
+                            >
+                              <ConnectionCard
+                                data-testid="dataplane-inbound"
+                                :protocol="'tcp'"
+                                :port-name="inbound?.portName"
+                                :traffic="traffic?.inbounds[item.proxyResourceName]"
+                                data-actionable
+                              >
+                              <!--
+                                <template #state>
+                                  <XIcon
+                                    v-if="inbound?.state !== 'Ready'"
+                                    name="danger"
+                                    :size="KUI_ICON_SIZE_40"
+                                    placement="right"
+                                  >
+                                    {{ t('data-planes.routes.item.unhealthy_inbound', { port: inbound?.port }) }}
+                                  </XIcon>
+                                  <template
+                                    v-for="reports in [traffic?.inbounds[item.stat_prefix]?.$meta.alerts.reports ?? []]"
+                                    v-else
+                                    :key="typeof reports"
+                                  >
+                                    <XNotification
+                                      :notify="reports.length > 0"
+                                      :data-testid="`warning-abnormal-traffic-stats`"
+                                      :uri="`data-planes.notifications.abnormal-traffic-stats.${props.data.id}`"
+                                    >
+                                      <XI18n
+                                        :path="`data-planes.notifications.abnormal-traffic-stats`"
+                                      />
+                                    </XNotification>
+                                    <XAction
+                                      v-if="reports.length"
+                                      data-action
+                                      :to="{
+                                        name: 'data-plane-connection-inbound-summary-stats-view',
+                                        params: {
+                                          connection: item.stat_prefix,
+                                        },
+                                        query: {
+                                          codeSearch: reports.join('|'),
+                                          codeFilter: true,
+                                          codeRegExp: true,
+                                        },
+                                      }"
+                                    >
+                                      <XIcon
+                                        name="warning"
+                                        :size="KUI_ICON_SIZE_40"
+                                        placement="right"
+                                      />
+                                    </XAction>
+                                  </template>
+                                </template>
+                                -->
+
+                                <template #body>
+                                  <XBadge variant="decorative">{{ item.type }}</XBadge>
+                                </template>
+
+                                <XAction
+                                  data-action
+                                  :to="{
+                                    name: ((name) => name.includes('bound') ? name.replace('-outbound-', '-inbound-') : 'data-plane-connection-inbound-summary-overview-view')(String(_route.name)),
+                                    params: {
+                                      connection: item.proxyResourceName,
+                                    },
+                                    query: {
+                                      inactive: route.params.inactive,
+                                    },
+                                  }"
+                                >
+                                  :{{ item.port }}
+                                </XAction>
+                              </ConnectionCard>
+                            </template>
+                          </template>
+                        </XLayout>
+                      </ConnectionGroup>
+                    </template>
+                    </XLayout>
+                  </template>
+                </DataLoader>
+              </XCard>
               <RouterView
                 v-slot="child"
               >
@@ -929,6 +1184,7 @@ import type { DataplanePolicies } from '@/app/policies/data/DataplanePolicies'
 import { sources as policySources } from '@/app/policies/sources'
 import { sources as resourceSources } from '@/app/resources/sources'
 import { useRoute } from '@/app/vue'
+import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 
 const _route = useRoute()
 
