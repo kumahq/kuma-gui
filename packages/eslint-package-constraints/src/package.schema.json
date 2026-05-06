@@ -1,0 +1,61 @@
+{
+  "type": "object",
+  "definitions": {
+    "node": {
+      "type": "string"
+    },
+    "npm": {
+      "type": "string"
+    },
+    "caretOnlyVersion": {
+      "type": "string",
+      "pattern": "^\\^"
+    },
+    "workspaceOnlyVersion": {
+      "type": "string",
+      "pattern": "(^\\*$)|(^file:)|(^workspace:)"
+    },
+    "caretOrWorkspaceOnlyVersion": {
+      "type": "string",
+      "pattern": "(^\\^)|(^\\*$)|(^file:)|(^workspace:)"
+    },
+    "rangeOnlyVersion": {
+      "type": "string",
+      "pattern": "^(?!\\d+\\.\\d+\\.\\d+).*"
+    },
+    "exactOnlyVersion": {
+      "type": "string",
+      "pattern": "(?!\\d+\\.\\d+\\.\\d+).*"
+    }
+  },
+  "properties": {
+    "engines": {
+      "patternProperties": {
+        "node": {
+          "$ref": "#/definitions/node"
+        },
+        "npm": {
+          "$ref": "#/definitions/npm"
+        }
+      }
+    },
+    "dependencies": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/rangeOnlyVersion"
+      }
+    },
+    "devDependencies": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/caretOrWorkspaceOnlyVersion"
+      }
+    },
+    "peerDependencies": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/rangeOnlyVersion"
+      }
+    }
+  }
+}
