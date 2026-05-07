@@ -8,6 +8,7 @@
     :max-width="props.width"
     offset-top="var(--x-drawer-offset-top, 0)"
     data-testid="summary"
+    :z-index="zIndex"
     @close="emit('close')"
   >
     <template #title>
@@ -20,6 +21,9 @@
 <script lang="ts" setup>
 import { onClickOutside, useThrottleFn } from '@vueuse/core'
 import { ref, provide, useId } from 'vue'
+
+// @ts-ignore pretend this is a number so we can pass it to KSlideout
+const zIndex: number = 'auto'
 
 const id = useId()
 provide('app-summary-view', id)
