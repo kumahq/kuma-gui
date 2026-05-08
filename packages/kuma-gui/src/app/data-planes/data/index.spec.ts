@@ -148,7 +148,7 @@ describe('DataplaneOverview', () => {
       },
     )
     test(
-      'no subscriptions, connectedSubscription remains undefined, status = offline',
+      'no subscriptions, connectedSubscription remains undefined, status = disconnected_cp',
       async ({ fixture }) => {
         const actual = await fixture.setup((item) => {
           if (typeof item.dataplaneInsight !== 'undefined') {
@@ -159,11 +159,11 @@ describe('DataplaneOverview', () => {
         })
         expect(actual.dataplaneInsight.subscriptions.length).toStrictEqual(0)
         expect(actual.dataplaneInsight.connectedSubscription).toBeUndefined()
-        expect(actual.status).toStrictEqual('offline')
+        expect(actual.status).toStrictEqual('disconnected_cp')
       },
     )
     test(
-      'all disconnected subscriptions, connectedSubscription remains undefined, status = offline',
+      'all disconnected subscriptions, connectedSubscription remains undefined, status = disconnected_cp',
       async ({ fixture }) => {
         const actual = await fixture.setup((item) => {
           if (typeof item.dataplaneInsight !== 'undefined') {
@@ -185,7 +185,7 @@ describe('DataplaneOverview', () => {
         })
         expect(actual.dataplaneInsight.subscriptions.length).toStrictEqual(10)
         expect(actual.dataplaneInsight.connectedSubscription).toBeUndefined()
-        expect(actual.status).toStrictEqual('offline')
+        expect(actual.status).toStrictEqual('disconnected_cp')
       },
     )
     test(
