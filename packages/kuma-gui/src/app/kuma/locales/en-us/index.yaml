@@ -100,6 +100,7 @@ common:
       NotReady: danger
       Unavailable: danger
       partially_degraded: warning
+      disconnected_cp: warning
 
 components:
   status-badge:
@@ -162,6 +163,8 @@ http:
       offline: 'Offline'
       partiallyDegraded: 'Partially degraded'
       partially_degraded: 'Partially degraded'
+      disconnectedCp: 'Disconnected from CP'
+      disconnected_cp: 'Disconnected from CP'
       notAvailable: 'Information not available'
       not_available: 'Information not available'
       disabled: 'Disabled'

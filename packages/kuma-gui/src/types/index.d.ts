@@ -5,7 +5,7 @@ type ResourceRule = components['schemas']['ResourceRule']
  */
 export type Unsaved<RT> = Omit<RT, 'creationTime' | 'modificationTime'>
 
-export type StatusKeyword = 'online' | 'offline' | 'partially_degraded' | 'not_available'
+export type StatusKeyword = 'online' | 'offline' | 'partially_degraded' | 'not_available' | 'disconnected_cp'
 
 export type Tags = Record<string, string>
 
