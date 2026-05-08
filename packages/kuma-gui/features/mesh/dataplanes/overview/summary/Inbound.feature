@@ -59,7 +59,7 @@ Feature: mesh / dataplanes / overview / summary / Inbound
     And the "$protocol" element contains "HTTP"
     And the "$inbound-policies-rule" element contains "MeshFaultInjection"
     And the "$inbound-policies-rule" element contains "kri_mfi_default_pigsty_jury_innovation_appliance"
-    And the "$inbound-policies-rule [data-testid='k-code-block']" element exists
+    And the "$inbound-policies-rule table:first-of-type [data-testid='k-code-block']" element exists
 
   Scenario: Clicking on origin leads to policy detail view
     And the URL "/meshes/default/dataplanes/service-less/_layout" responds with
