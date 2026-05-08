@@ -11,6 +11,7 @@ const states = {
   online: 'online',
   offline: 'offline',
   partiallyDegraded: 'partially_degraded',
+  disconnectedCp: 'disconnected_cp',
 } as const
 const dpTypes = {
   builtin: 'builtin',
@@ -43,28 +44,25 @@ export const DataplaneOverview = {
       dataplaneInsight,
       dataplaneType: networking.type === 'gateway' ? dpTypes.builtin : typeof networking.gateway !== 'undefined' ? dpTypes.delegated : dpTypes.standard,
       status: (() => {
-        const state = typeof dataplaneInsight.connectedSubscription !== 'undefined' ? states.online : states.offline
-        if (networking.gateway) {
+        const state = typeof dataplaneInsight.connectedSubscription !== 'undefined' ? states.online : states.disconnectedCp
+        if (networking.gateway || state === states.disconnectedCp) {
           return state
         }
 
-        const unhealthyInbounds = networking.inbounds.filter((inbound) => inbound.state !== 'Ready')
-        const unhealthyListeners = networking.listeners.filter((listener) => listener.state !== 'Ready')
+        const networkEndpoints = [...networking.inbounds, ...networking.listeners]
+        const unhealthy = networkEndpoints.filter((endpoint) => endpoint.state !== 'Ready')
         switch (true) {
-          case networking.inbounds.length > 0 && unhealthyInbounds.length === networking.inbounds.length:
-            // All inbounds being unhealthy means the Dataplane is offline.
+          case unhealthy.length === 0:
+            // All network endpoints being healthy means the Dataplane’s status is online.
+            return states.online
+          case unhealthy.length === networkEndpoints.length:
+            // All network endpoints being unhealthy means the Dataplane is offline.
             return states.offline
-          case unhealthyInbounds.length > 0:
-            // Some inbounds being unhealthy means the Dataplane is partially degraded.
-            return states.partiallyDegraded
-          case networking.listeners.length > 0 && unhealthyListeners.length === networking.listeners.length:
-            // All listeners being unhealthy means the Dataplane is offline.
-            return states.offline
-          case unhealthyListeners.length > 0:
-            // Some listeners being unhealthy means the Dataplane is partially degraded.
+          case unhealthy.length > 0:
+            // Some network endpoints being unhealthy means the Dataplane is partially degraded.
             return states.partiallyDegraded
           default:
-            // All inbounds being healthy means the Dataplane’s status is determined by whether it’s connected to a control plane.
+            // All network endpoints being healthy means the Dataplane’s status is determined by whether it’s connected to a control plane.
             return state
         }
       })(),

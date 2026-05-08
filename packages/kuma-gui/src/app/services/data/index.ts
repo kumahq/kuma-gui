@@ -16,7 +16,7 @@ export type ExternalService = PartialExternalService & {
 
 export type ServiceInsight = PartialServiceInsight & {
   serviceType: 'internal' | 'external' | 'gateway_builtin' | 'gateway_delegated'
-  status: 'online' | 'offline' | 'partially_degraded' | 'not_available'
+  status: 'online' | 'offline' | 'partially_degraded' | 'not_available' | 'disconnected_cp'
 }
 
 export const ExternalService = {
