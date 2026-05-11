@@ -37,7 +37,7 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
       }),
     }
   })
-  const listeners = parseInt(env('KUMA_DATAPLANELISTENERS_COUNT', `${fake.number.int({ min: 0, max: 50 })}`))
+  const listeners = parseInt(env('KUMA_DATAPLANELISTENER_COUNT', `${fake.number.int({ min: 0, max: 50 })}`))
   const zone = fake.word.noun()
 
   return {
