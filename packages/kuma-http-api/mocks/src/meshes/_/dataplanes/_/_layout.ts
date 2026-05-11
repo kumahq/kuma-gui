@@ -8,7 +8,6 @@ type DataplaneListener = components['schemas']['DataplaneListener']
 
 export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
   const mesh = req.params.mesh as string
-  console.log(req.params)
   const name = req.params.name as string
 
   const parts = String(name).split('.')
