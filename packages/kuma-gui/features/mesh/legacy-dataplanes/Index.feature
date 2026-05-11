@@ -36,6 +36,7 @@ Feature: mesh / dataplanes / index
                     kuma.io/service: service-1
                     kuma.io/zone: zone-1
                   state: Ready
+              listeners: !!js/undefined
           dataplaneInsight:
             mTLS:
               certificateExpirationTime: 2023-11-03T09:10:17Z
