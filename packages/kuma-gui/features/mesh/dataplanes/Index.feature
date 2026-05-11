@@ -28,6 +28,8 @@ Feature: mesh / dataplanes / index
         items:
         - name: fake-backend
           mesh: fake-default
+          labels:
+            kuma.io/display-name: !!js/undefined
           dataplane:
             networking:
               gateway: !!js/undefined
@@ -75,6 +77,8 @@ Feature: mesh / dataplanes / index
         items:
           - name: dpp-2
             mesh: fake-default
+            labels:
+              kuma.io/display-name: dpp-2
             dataplane:
               networking:
                 gateway: !!js/undefined
@@ -130,6 +134,8 @@ Feature: mesh / dataplanes / index
         body:
           items:
             - name: fake-transmitter-gateway_builtin-0
+              labels:
+                kuma.io/display-name: fake-transmitter-gateway_builtin-0
               dataplane:
                 networking:
                   gateway:
@@ -163,6 +169,8 @@ Feature: mesh / dataplanes / index
         body:
           items:
             - name: fake-alarm-gateway_delegated-0
+              labels:
+                kuma.io/display-name: fake-alarm-gateway_delegated-0
               dataplane:
                 networking:
                   gateway:
@@ -195,6 +203,8 @@ Feature: mesh / dataplanes / index
         body:
           items:
             - name: fake-system-proxy-0
+              labels:
+                kuma.io/display-name: fake-system-proxy-0
               dataplane:
                 networking:
                   gateway: !!js/undefined
