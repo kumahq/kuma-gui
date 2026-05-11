@@ -27,7 +27,7 @@ data-planes:
     abnormal-traffic-stats: !!text/markdown |
       Abnormal traffic stats detected. Investigate the traffic patterns of individually marked inbounds and outbounds.
     dataplane-offline: !!text/markdown |
-      The dataplane is offline, so we either cannot retrieve any information or the information currently displayed may be out of date.
+      The dataplane is disconnected from the control plane or offline, so we either cannot retrieve any information or the information currently displayed may be out of date.
 
   x-empty-state:
     title: There are no data planes present
