@@ -36,6 +36,8 @@ Feature: mesh / workloads / item / overview
       body:
         items:
           - name: workload-1-dataplane
+            labels:
+              kuma.io/display-name: workload-1-dataplane
             mesh: default
       """
 
@@ -73,10 +75,14 @@ Feature: mesh / workloads / item / overview
             labels:
               kuma.io/display-name: workload-1-dataplane-1
             mesh: default
+            labels:
+              kuma.io/display-name: workload-1-dataplane-1
           - name: workload-1-dataplane-2
             labels:
               kuma.io/display-name: workload-1-dataplane-2
             mesh: default
+            labels:
+              kuma.io/display-name: workload-1-dataplane-2
       """
     When I visit the "/meshes/default/workloads/kri_wl_default_z1_ns1_workload-1_/overview" URL
     Then the "$dataplane-table" element exists

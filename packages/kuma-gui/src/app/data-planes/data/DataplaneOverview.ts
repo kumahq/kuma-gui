@@ -28,9 +28,19 @@ export const DataplaneOverview = {
     const tags = getTags(networking)
     const isCertExpired = getIsCertExpired(dataplaneInsight)
     const isCertExpiresSoon = getIsCertExpiresSoon(dataplaneInsight)
-    const services = tags.filter((tag) => tag.label === 'kuma.io/service').map(({ value }) => value)
-    const zone = tags.find((tag) => tag.label === 'kuma.io/zone')?.value
+
     const labels = typeof item.labels !== 'undefined' ? item.labels : {}
+
+    // get all tags and labels with kuma.io/service
+    // uniquify and and sort
+    const services = Array.from(new Set([
+      ...tags.filter((tag) => tag.label === 'kuma.io/service').map(({ value }) => value),
+      ...(labels['kuma.io/service'] ? [labels['kuma.io/service']] : []),
+    ])).sort((a, b) => a.localeCompare(b))
+
+    // check for label first, fallback to tags
+    const zone = labels['kuma.io/zone'] || tags.find((tag) => tag.label === 'kuma.io/zone')?.value
+
 
     return {
       ...item,
