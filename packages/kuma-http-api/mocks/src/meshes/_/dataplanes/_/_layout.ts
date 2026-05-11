@@ -101,7 +101,7 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
         return {
           kri,
           port,
-          proxyResourceName: fake.kuma.contextualKri({ context: `${type.toLocaleLowerCase()}_dp`, name: String(port) }),
+          proxyResourceName: fake.kuma.contextualKri({ context: `${type.toLowerCase()}_dp`, name: String(port) }),
           type,
         } satisfies DataplaneListener
       }),
