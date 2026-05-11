@@ -12,6 +12,7 @@ Feature: mesh / dataplanes / overview / summary / Inbound
       KUMA_MESHSERVICE_MODE: Exclusive
       KUMA_DATAPLANEINBOUND_COUNT: 1
       KUMA_DATAPLANE_TYPE: standard
+      KUMA_DATAPLANE_RULE_COUNT: 1
       """
 
   Scenario: Inbound summary overview shows expected content
@@ -58,10 +59,6 @@ Feature: mesh / dataplanes / overview / summary / Inbound
     And the "$inbound-policies-rule [data-testid='k-code-block']" element exists
 
   Scenario: Clicking on origin leads to policy detail view
-    Given the environment
-      """
-      KUMA_DATAPLANE_RULE_COUNT: 1
-      """
     And the URL "/meshes/default/dataplanes/service-less/_layout" responds with
       """
       body:
