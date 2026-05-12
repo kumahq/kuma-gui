@@ -1,24 +1,28 @@
+import { Kri } from '@/app/kuma'
 import { Resource } from '@/app/resources/data/Resource'
 import type { components } from '@kumahq/kuma-http-api'
-type GeneratedMeshService = components['schemas']['MeshServiceItem']
-type GeneratedMeshServiceList = components['responses']['MeshServiceList']['content']['application/json']
+export type KumaMeshService = components['schemas']['MeshServiceItem']
+type KumaMeshServiceCollection = components['responses']['MeshServiceList']['content']['application/json']
 
 export const MeshService = {
   search(query: string) {
     return Resource.search(query)
   },
 
-  fromObject(item: GeneratedMeshService) {
+  fromObject(item: KumaMeshService) {
     const labels = item.labels ?? {}
     const name = labels['kuma.io/display-name'] ?? item.name
     const namespace = labels['k8s.kuma.io/namespace'] ?? ''
+    const mesh = labels['kuma.io/mesh'] ?? item.mesh ?? ''
+    const zone = labels['kuma.io/origin'] === 'zone' && labels['kuma.io/zone'] ? labels['kuma.io/zone'] : ''
     return {
       ...item,
       id: item.name,
       name,
       namespace,
       labels,
-      zone: labels['kuma.io/origin'] === 'zone' && labels['kuma.io/zone'] ? labels['kuma.io/zone'] : '',
+      zone,
+      kri: item.kri ?? Kri.toString({ shortName: 'msvc', mesh, zone, namespace, name: name.substring(0, Math.max(name.indexOf('.'), 0) || name.length) }),
       spec: ((item) => {
         return {
           ...item,
@@ -55,7 +59,7 @@ export const MeshService = {
     }
   },
 
-  fromCollection(collection: GeneratedMeshServiceList) {
+  fromCollection(collection: KumaMeshServiceCollection) {
     const items = Array.isArray(collection.items) ? collection.items.map(MeshService.fromObject) : []
     return {
       ...collection,
