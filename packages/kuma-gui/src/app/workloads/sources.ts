@@ -7,7 +7,7 @@ import type { paths } from '@kumahq/kuma-http-api'
 
 export const sources = (api: KumaApi) => {
   const http = createClient<paths>({
-    baseUrl: '',
+    baseUrl: api.client.baseUrl,
     fetch: api.client.fetch,
   })
   return defineSources({
@@ -47,8 +47,8 @@ export const sources = (api: KumaApi) => {
 
       const res = await http.GET('/_kri/{kri}', {
         params: {
-          path: { 
-            kri: wl, 
+          path: {
+            kri: wl,
           },
           // @ts-expect-error -- query type is not defined in openapi spec --
           query: {

@@ -1,8 +1,11 @@
+import createClient from 'openapi-fetch'
+
 import { ConnectionXdsConfig } from './data/ConnectionXdsConfig'
 import type { DataSourceResponse } from '@/app/application'
 import { defineSources } from '@/app/application'
 import { Stat, ConnectionCollection } from '@/app/connections/data/'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
+import type { paths } from '@kumahq/kuma-http-api'
 
 export type StatsSource = DataSourceResponse<{
   inbounds: Record<string, any>
@@ -43,25 +46,47 @@ const filter = (data: Record<string, unknown>, cb: (key: string, arr: unknown[])
   }
 }
 export const sources = (api: KumaApi) => {
+  const http = createClient<paths>({
+    baseUrl: api.client.baseUrl,
+    fetch: api.client.fetch,
+  })
   return defineSources({
     '/connections/stats/for/:proxyType/:name/:mesh/:socketAddress': async (params) => {
       const { name, mesh, socketAddress, proxyType } = params
 
-      const res = await (() => {
+      const res = await (async () => {
         switch (proxyType) {
-          case 'dataplane':
-            return api.getDataplaneStats({
-              mesh,
-              dppName: name,
+          case 'dataplane': {
+            const res = await http.GET('/meshes/{mesh}/dataplanes/{name}/stats', {
+              params: {
+                path: {
+                  mesh,
+                  name,
+                },
+              },
             })
-          case 'zone-ingress':
-            return api.getZoneIngressStats({
-              name,
+            return res.data!
+          }
+          case 'zone-ingress': {
+            const res = await http.GET('/zoneingresses/{name}/stats', {
+              params: {
+                path: {
+                  name,
+                },
+              },
             })
-          case 'zone-egress':
-            return api.getZoneEgressStats({
-              name,
+            return res.data!
+          }
+          case 'zone-egress': {
+            const res = await http.GET('/zoneegresses/{name}/stats', {
+              params: {
+                path: {
+                  name,
+                },
+              },
             })
+            return res.data!
+          }
           default:
             throw new Error('incorrect value for proxyType')
         }
@@ -117,21 +142,39 @@ export const sources = (api: KumaApi) => {
 
     '/connections/clusters/for/:proxyType/:name/:mesh': async (params) => {
       const { name, mesh, proxyType } = params
-      const res = await (() => {
+      const res = await (async () => {
         switch (proxyType) {
-          case 'dataplane':
-            return api.getDataplaneClusters({
-              mesh,
-              dppName: name,
+          case 'dataplane': {
+            const res = await http.GET('/meshes/{mesh}/dataplanes/{name}/clusters', {
+              params: {
+                path: {
+                  mesh,
+                  name,
+                },
+              },
             })
-          case 'zone-ingress':
-            return api.getZoneIngressClusters({
-              name,
+            return res.data!
+          }
+          case 'zone-ingress': {
+            const res = await http.GET('/zoneingresses/{name}/clusters', {
+              params: {
+                path: {
+                  name,
+                },
+              },
             })
-          case 'zone-egress':
-            return api.getZoneEgressClusters({
-              name,
+            return res.data!
+          }
+          case 'zone-egress': {
+            const res = await http.GET('/zoneegresses/{name}/clusters', {
+              params: {
+                path: {
+                  name,
+                },
+              },
             })
+            return res.data!
+          }
           default:
             throw new Error('incorrect value for proxyType')
         }
@@ -140,27 +183,48 @@ export const sources = (api: KumaApi) => {
     },
     '/connections/xds/for/:proxyType/:name/:mesh/:endpoints': async (params) => {
       const { mesh, name, endpoints, proxyType } = params
-      const res = await (() => {
+      const res = await (async () => {
         switch (proxyType) {
-          case 'dataplane':
-            return api.getDataplaneXds({
-              mesh,
-              dppName: name,
-            }, {
-              include_eds: endpoints,
+          case 'dataplane': {
+            const res = await http.GET('/meshes/{mesh}/dataplanes/{name}/xds', {
+              params: {
+                path: {
+                  mesh,
+                  name,
+                },
+                query: {
+                  include_eds: endpoints,
+                },
+              },
             })
-          case 'zone-ingress':
-            return api.getZoneIngressXds({
-              name,
-            }, {
-              include_eds: endpoints,
+            return res.data!
+          }
+          case 'zone-ingress': {
+            const res = await http.GET('/zoneingresses/{name}/xds', {
+              params: {
+                path: {
+                  name,
+                },
+                query: {
+                  include_eds: endpoints,
+                },
+              },
             })
-          case 'zone-egress':
-            return api.getZoneEgressXds({
-              name,
-            }, {
-              include_eds: endpoints,
+            return res.data!
+          }
+          case 'zone-egress': {
+            const res = await http.GET('/zoneegresses/{name}/xds', {
+              params: {
+                path: {
+                  name,
+                },
+                query: {
+                  include_eds: endpoints,
+                },
+              },
             })
+            return res.data!
+          }
           default:
             throw new Error('incorrect value for proxyType')
         }
@@ -171,27 +235,48 @@ export const sources = (api: KumaApi) => {
     '/connections/xds/for/:proxyType/:name/:mesh/outbound/:outbound/endpoints/:endpoints': async (params) => {
       const { name, mesh, outbound, endpoints, proxyType } = params
 
-      const res = await (() => {
+      const res = await (async () => {
         switch (proxyType) {
-          case 'dataplane':
-            return api.getDataplaneXds({
-              mesh,
-              dppName: name,
-            }, {
-              include_eds: endpoints,
+          case 'dataplane': {
+            const res = await http.GET('/meshes/{mesh}/dataplanes/{name}/xds', {
+              params: {
+                path: {
+                  mesh,
+                  name,
+                },
+                query: {
+                  include_eds: endpoints,
+                },
+              },
             })
-          case 'zone-ingress':
-            return api.getZoneIngressXds({
-              name,
-            }, {
-              include_eds: endpoints,
+            return res.data!
+          }
+          case 'zone-ingress': {
+            const res = await http.GET('/zoneingresses/{name}/xds', {
+              params: {
+                path: {
+                  name,
+                },
+                query: {
+                  include_eds: endpoints,
+                },
+              },
             })
-          case 'zone-egress':
-            return api.getZoneEgressXds({
-              name,
-            }, {
-              include_eds: endpoints,
+            return res.data!
+          }
+          case 'zone-egress': {
+            const res = await http.GET('/zoneegresses/{name}/xds', {
+              params: {
+                path: {
+                  name,
+                },
+                query: {
+                  include_eds: endpoints,
+                },
+              },
             })
+            return res.data!
+          }
           default:
             throw new Error('incorrect value for proxyType')
         }
@@ -222,27 +307,48 @@ export const sources = (api: KumaApi) => {
       const { name, mesh, inbound, proxyType } = params
 
       // we don't ask for endpoints because we don't need them for inbound filtering
-      const res = await (() => {
+      const res = await (async () => {
         switch (proxyType) {
-          case 'dataplane':
-            return api.getDataplaneXds({
-              mesh,
-              dppName: name,
-            }, {
-              include_eds: false,
+          case 'dataplane': {
+            const res = await http.GET('/meshes/{mesh}/dataplanes/{name}/xds', {
+              params: {
+                path: {
+                  mesh,
+                  name,
+                },
+                query: {
+                  include_eds: false,
+                },
+              },
             })
-          case 'zone-ingress':
-            return api.getZoneIngressXds({
-              name,
-            }, {
-              include_eds: false,
+            return res.data!
+          }
+          case 'zone-ingress': {
+            const res = await http.GET('/zoneingresses/{name}/xds', {
+              params: {
+                path: {
+                  name,
+                },
+                query: {
+                  include_eds: false,
+                },
+              },
             })
-          case 'zone-egress':
-            return api.getZoneEgressXds({
-              name,
-            }, {
-              include_eds: false,
+            return res.data!
+          }
+          case 'zone-egress': {
+            const res = await http.GET('/zoneegresses/{name}/xds', {
+              params: {
+                path: {
+                  name,
+                },
+                query: {
+                  include_eds: false,
+                },
+              },
             })
+            return res.data!
+          }
           default:
             throw new Error('incorrect value for proxyType')
         }
@@ -252,7 +358,7 @@ export const sources = (api: KumaApi) => {
         switch (key) {
           case 'dynamic_listeners':
             // dynamic_listeners[].name === 'inbound:<ignored>:0000'
-            return arr.filter((item = {}) => prop(item, 'name') && typeof item.name === 'string' && ((item.name.startsWith('inbound:') && item.name?.endsWith(`:${inbound}`) || item.name === inbound )))
+            return arr.filter((item = {}) => prop(item, 'name') && typeof item.name === 'string' && ((item.name.startsWith('inbound:') && item.name?.endsWith(`:${inbound}`) || item.name === inbound)))
           case 'dynamic_active_clusters':
             // dynamic_active_clusters[].cluster.name === '<ignored>:0000'
             return arr.filter(item => prop(item, 'cluster') && prop(item.cluster, 'name') && ((typeof item.cluster.name === 'string' && item.cluster?.name?.endsWith(`:${inbound}`) || item.cluster.name === inbound)))

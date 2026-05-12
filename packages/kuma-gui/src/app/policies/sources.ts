@@ -21,7 +21,7 @@ export type PolicyDataplaneCollectionSource = DataSourceResponse<PolicyDataplane
 
 export const sources = (api: KumaApi) => {
   const http = createClient<paths>({
-    baseUrl: '',
+    baseUrl: api.client.baseUrl,
     fetch: api.client.fetch,
   })
 
@@ -97,7 +97,20 @@ export const sources = (api: KumaApi) => {
     '/meshes/:mesh/policy-path/:path/policy/:name/dataplanes': async (params) => {
       const { mesh, path, name, size } = params
       const offset = params.size * (params.page - 1)
-      return PolicyDataplane.fromCollection(await api.getPolicyConnections({ mesh, path, name }, { offset, size }))
+      const res = await http.GET(`/meshes/${mesh}/${path}/${name}/_resources/dataplanes`, {
+        params: {
+          path: {
+            mesh,
+            path,
+            name,
+          },
+          query: {
+            size,
+            offset,
+          },
+        },
+      })
+      return PolicyDataplane.fromCollection(res.data!)
     },
 
 
