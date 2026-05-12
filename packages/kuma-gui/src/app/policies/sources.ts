@@ -79,15 +79,26 @@ export const sources = (api: KumaApi) => {
 
     '/meshes/:mesh/policy-path/:path/policy/:name/as/kubernetes': async (params) => {
       const { mesh, path, name } = params
-      const res = await http.GET(`/meshes/{mesh}/${path as DynamicPath}/{name}`, {
-        params: {
-          path: {
-            mesh,
-            name,
+      if (Kri.isKriString(name)) {
+        const res = await http.GET('/_kri/{kri}', {
+          params: {
+            path: {
+              kri: name,
+            },
           },
-        },
-      })
-      return YAML.stringify(res.data)
+        })
+        return YAML.stringify(res.data)
+      } else {
+        const res = await http.GET(`/meshes/{mesh}/${path as DynamicPath}/{name}`, {
+          params: {
+            path: {
+              mesh,
+              name,
+            },
+          },
+        })
+        return YAML.stringify(res.data)
+      }
     },
 
     '/meshes/:mesh/policy-path/:path/policy/:name/dataplanes': async (params) => {
