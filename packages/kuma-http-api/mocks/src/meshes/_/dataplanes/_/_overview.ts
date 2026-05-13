@@ -111,7 +111,7 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
                   zone: isMultizone && fake.datatype.boolean() ? fake.word.noun() : undefined,
                 }),
                 ...(fake.datatype.boolean() ? {
-                  state: fake.kuma.inboundState(),
+                  state: fake.kuma.state(),
                 } : {}),
                 ...(fake.datatype.boolean() && { name: `${fake.word.noun()}-port` }),
               }
