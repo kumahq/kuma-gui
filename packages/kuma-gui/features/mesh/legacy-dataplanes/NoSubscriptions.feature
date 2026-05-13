@@ -24,4 +24,4 @@ Feature: dataplanes / no-subscriptions
       """
     When I visit the "/meshes/default/data-planes/backend/overview" URL
     And the "$detail-view" element contains "backend"
-    And the "$overview-content" element contains "Disconnected from CP"
+    And the "$overview-content" element contains "Not connected to CP"

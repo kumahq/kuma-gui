@@ -93,10 +93,10 @@ Feature: mesh / dataplanes / index
     When I visit the "/meshes/default/data-planes" URL
     Then the "$service-cell" element is empty
     Then the "$item:nth-child(1)" element contains
-      | Value                |
-      | dpp-2                |
-      | <mTLSColText>        |
-      | Disconnected from CP |
+      | Value               |
+      | dpp-2               |
+      | <mTLSColText>       |
+      | Not connected to CP |
 
     Examples:
       | mTLS                                                | mTLSColText          |
