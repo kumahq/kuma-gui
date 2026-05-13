@@ -713,10 +713,9 @@
                                   v-for="listener in [listenersByPort[item.port]?.[0]]"
                                   :key="listener?.port"
                                 >
-                                {{ console.log('listener', traffic) }}
                                   <ConnectionCard
                                     data-testid="dataplane-listener"
-                                    :protocol="traffic?.listeners[item.proxyResourceName] &&'http' in traffic.listeners[item.proxyResourceName] ? 'http' : 'tcp'"
+                                    :protocol="traffic?.listeners[item.proxyResourceName] && 'http' in traffic.listeners[item.proxyResourceName] ? 'http' : 'tcp'"
                                     :traffic="traffic?.listeners[item.proxyResourceName]"
                                     data-actionable
                                   >
@@ -742,7 +741,7 @@
                                     <XAction
                                       data-action
                                       :to="{
-                                        name: ((name) => name.includes('bound') ? name.replace('-outbound-', '-inbound-') : 'data-plane-connection-inbound-summary-overview-view')(String(_route.name)),
+                                        name: 'data-plane-connection-listener-summary-overview-view',
                                         params: {
                                           connection: item.proxyResourceName,
                                         },
@@ -969,7 +968,7 @@
                 >
                   <component
                     :is="child.Component"
-                    :data="(child.route.name as string).includes('-inbound-') ? sourceDataplaneLayout?.inbounds : sourceDataplaneLayout?.outbounds"
+                    :data="(child.route.name as string).includes('-inbound-') ? sourceDataplaneLayout?.inbounds : (child.route.name as string).includes('-listener-') ? sourceDataplaneLayout?.listeners : sourceDataplaneLayout?.outbounds"
                     :data-plane-overview="props.data"
                     :networking="props.data.dataplane.networking"
                     :policies="resources?.policies"
@@ -986,7 +985,7 @@
 
 <script lang="ts" setup>
 import { KUI_ICON_SIZE_40 } from '@kong/design-tokens'
-import { ref } from 'vue'
+import { getTransitionRawChildren, ref } from 'vue'
 
 import { sources } from '../sources'
 import StatusBadge from '@/app/common/StatusBadge.vue'

@@ -87,6 +87,22 @@ export const dataplaneRoutes = (): RouteRecordRaw[] => {
                   },
                 )
               }
+              if (item.name === 'data-plane-connection-listener-summary-view' && item.children) {
+                item.component = () => import('@/app/data-planes/views/DataPlaneTrafficSummaryView.vue')
+                // temporarily exclude all children but overview
+                // item.children = [{
+                //   path: 'overview',
+                //   name: 'data-plane-connection-outbound-summary-overview-view',
+                //   component: () => import('@/app/data-planes/views/DataPlaneOutboundSummaryOverviewView.vue'),
+                // }]
+                item.children.unshift(
+                  {
+                    path: 'overview',
+                    name: 'data-plane-connection-listener-summary-overview-view',
+                    component: () => import('@/app/data-planes/views/DataplaneListenerSummaryOverviewView.vue'),
+                  },
+                )
+              }
               return item
             }),
             {

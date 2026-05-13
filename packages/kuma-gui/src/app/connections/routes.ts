@@ -66,5 +66,27 @@ export const routes = (prefix: string): RouteRecordRaw[] => {
         },
       ],
     },
+    {
+      path: 'listener/:connection',
+      name: `${prefix}-connection-listener-summary-view`,
+      // component: () => import('@/app/connections/views/ConnectionListenerSummaryView.vue'),
+      children: [
+        {
+          path: 'stats',
+          name: `${prefix}-connection-listener-summary-stats-view`,
+          component: () => import('@/app/connections/views/ConnectionListenerSummaryStatsView.vue'),
+        },
+        {
+          path: 'clusters',
+          name: `${prefix}-connection-listener-summary-clusters-view`,
+          component: () => import('@/app/connections/views/ConnectionListenerSummaryClustersView.vue'),
+        },
+        {
+          path: 'xds-config',
+          name: `${prefix}-connection-listener-summary-xds-config-view`,
+          component: () => import('@/app/connections/views/ConnectionListenerSummaryXdsConfigView.vue'),
+        },
+      ],
+    },
   ]
 }
