@@ -67,13 +67,19 @@ export const sources = (api: KumaApi) => {
         }
       })()
       const connections = ConnectionCollection.fromObject(Stat.fromCollection(res))
+      console.log("🚀 ~ sources ~ connections:", connections)
 
-      let inbounds, outbounds, passthrough
+      let inbounds, outbounds, passthrough, listeners
       if (proxyType === 'dataplane') {
         // pick out the listeners/inbounds that start with our ip address (the.ip.address.1_port000)
         inbounds = params.socketAddress === 'localhost' || params.socketAddress === 'self_inbound'
           ? Object.fromEntries(Object.entries(connections.cluster).filter(([key, _value]) => key.startsWith('localhost_') || key.startsWith('self_inbound')))
           : Object.fromEntries(Object.entries(connections.listener).filter(([key, value]) => key.startsWith(`${params.socketAddress}_`) && !value.$clusterName.startsWith('_')))
+
+        listeners = {
+          ...Object.fromEntries(Object.entries(connections.listener).filter(([key]) => key.startsWith('self_zone'))),
+          ...connections.cluster,
+        }
 
         outbounds = Object.fromEntries(Object.entries(connections.cluster).filter(([key, _value]) => ![
           // if we don't exclude localhost_ we end up with  a `localhost_`
@@ -94,6 +100,7 @@ export const sources = (api: KumaApi) => {
         inbounds = Object.fromEntries(Object.entries(connections.listener).filter(([key, _value]) => key.startsWith(socketAddress.replace(':', '_'))))
         outbounds = connections.cluster
         passthrough = {}
+        listeners = {}
       }
 
       return {
@@ -101,6 +108,7 @@ export const sources = (api: KumaApi) => {
         passthrough,
         inbounds,
         outbounds,
+        listeners,
         $raw: res,
         raw: res,
       }
@@ -247,6 +255,48 @@ export const sources = (api: KumaApi) => {
           case 'dynamic_active_clusters':
             // dynamic_active_clusters[].cluster.name === '<ignored>:0000'
             return arr.filter(item => prop(item, 'cluster') && prop(item.cluster, 'name') && ((typeof item.cluster.name === 'string' && item.cluster?.name?.endsWith(`:${inbound}`) || item.cluster.name === inbound)))
+        }
+        return []
+      })
+    },
+    '/connections/xds/for/:proxyType/:name/:mesh/listener/:listener': async (params) => {
+      const { name, mesh, listener, proxyType } = params
+
+      // we don't ask for endpoints because we don't need them for inbound filtering
+      const res = await (() => {
+        switch (proxyType) {
+          case 'dataplane':
+            return api.getDataplaneXds({
+              mesh,
+              dppName: name,
+            }, {
+              include_eds: false,
+            })
+          case 'zone-ingress':
+            return api.getZoneIngressXds({
+              name,
+            }, {
+              include_eds: false,
+            })
+          case 'zone-egress':
+            return api.getZoneEgressXds({
+              name,
+            }, {
+              include_eds: false,
+            })
+          default:
+            throw new Error('incorrect value for proxyType')
+        }
+      })()
+
+      return filter(res, (key: string, arr: unknown[]) => {
+        switch (key) {
+          case 'dynamic_listeners':
+            // dynamic_listeners[].name === 'inbound:<ignored>:0000'
+            return arr.filter((item = {}) => prop(item, 'name') && typeof item.name === 'string' && ((item.name.startsWith('inbound:') && item.name?.endsWith(`:${listener}`) || item.name === listener )))
+          case 'dynamic_active_clusters':
+            // dynamic_active_clusters[].cluster.name === '<ignored>:0000'
+            return arr.filter(item => prop(item, 'cluster') && prop(item.cluster, 'name') && ((typeof item.cluster.name === 'string' && item.cluster?.name?.endsWith(`:${listener}`) || item.cluster.name === listener)))
         }
         return []
       })

@@ -24,7 +24,7 @@
               size="small"
             >
               <h2>
-                {{ props.routeName.includes('inbound') ? `Inbound ${'port' in items[0] ? `:${items[0].port}` : route.params.connection}` : `Outbound ${Kri.fromString(route.params.connection).name}` }}
+                {{ props.routeName.includes('inbound') ? `Inbound ${'port' in items[0] ? `:${items[0].port}` : route.params.connection}` : props.routeName.includes('listener') ? `Listener ${'port' in items[0] ? `:${items[0].port}` : route.params.connection}` : `Outbound ${Kri.fromString(route.params.connection).name}` }}
               </h2>
               <template v-if="'state' in items[0]">
                 <XBadge

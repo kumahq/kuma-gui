@@ -3,6 +3,7 @@ import type { components } from '@kumahq/kuma-http-api'
 
 type KumaDataplaneNetworking = NonNullable<components['schemas']['DataplaneItem']['networking']>
 type KumaDataplaneOutbound = NonNullable<NonNullable<NonNullable<components['schemas']['DataplaneOverviewWithMeta']['dataplane']>['networking']>['outbound']>[number]
+type KumaDataplaneListener = NonNullable<NonNullable<components['schemas']['DataplaneItem']['networking']>['listeners']>
 type KumaDataplaneNetworkingLayout = components['schemas']['DataplaneNetworkingLayout']
 
 export const DataplaneNetworkingLayout = {
@@ -33,7 +34,27 @@ export const DataplaneNetworkingLayout = {
           portName: kri.sectionName !== String(item.port) ? kri.sectionName : undefined,
         }
       }),
+      listeners: dataplaneNetworkingLayout.listeners.map(item => {
+        const kri = Kri.fromString(item.kri)
+        return {
+          ...item,
+          stat_prefix: item.proxyResourceName,
+          portName: kri.sectionName !== String(item.port) ? kri.sectionName : undefined,
+        }
+      })
     } satisfies KumaDataplaneNetworkingLayout
+  },
+}
+
+const DataplaneListener = {
+  fromObject(item: KumaDataplaneListener[number]) {
+    return {
+      ...item,
+      state: typeof item.state !== 'undefined' ? String(item.state) : 'Ready',
+    }
+  },
+  fromCollection(items: KumaDataplaneListener = []) {
+    return Array.isArray(items) ? items.map(item => DataplaneListener.fromObject(item)) : []
   },
 }
 
@@ -133,6 +154,7 @@ export const DataplaneNetworking = {
           }
         }),
       outbounds: DataplaneOutbound.fromCollection(outbounds),
+      listeners: DataplaneListener.fromCollection(networking.listeners),
     }
   },
 }
@@ -141,3 +163,31 @@ export type DataplaneOutbound = ReturnType<typeof DataplaneOutbound['fromObject'
 export type DataplaneNetworking = ReturnType<typeof DataplaneNetworking['fromObject']>
 export type DataplaneInbound = DataplaneNetworking['inbounds'][number]
 
+
+// apiVersion: v1
+// kind: Service
+// metadata:
+//   name: zone-ingress
+//   namespace: kuma-demo
+//   labels:
+//     k8s.kuma.io/zone-proxy-type: ingress
+// spec:
+//   selector:
+//     app: demo-app
+//   ports:
+//     - port: 10001
+//       targetPort: 10001
+// ---
+// apiVersion: v1
+// kind: Service
+// metadata:
+//   name: zone-egress
+//   namespace: kuma-demo
+//   labels:
+//     k8s.kuma.io/zone-proxy-type: egress
+// spec:
+//   selector:
+//     app: demo-app
+//   ports:
+//     - port: 10002
+//       targetPort: 10002

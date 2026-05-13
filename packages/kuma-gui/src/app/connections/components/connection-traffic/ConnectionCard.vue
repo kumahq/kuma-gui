@@ -159,9 +159,11 @@
       </XDl>
     </template>
     <template v-else>
-      <XProgress
-        variant="line"
-      />
+      <slot name="empty">
+        <XProgress
+          variant="line"
+        />
+      </slot>
     </template>
   </DataCard>
 </template>
