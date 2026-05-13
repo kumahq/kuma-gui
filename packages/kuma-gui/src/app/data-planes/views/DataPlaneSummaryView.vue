@@ -144,6 +144,23 @@
                       </XAction>
                     </td>
                   </tr>
+                  <tr v-if="item.labels['kuma.io/listener-zoneingress'] || item.labels['kuma.io/listener-zoneegress']">
+                    <th scope="row">
+                      {{ t('http.api.property.zone-proxy') }}
+                    </th>
+                    <td>
+                      <XBadge
+                        v-if="item.labels['kuma.io/listener-zoneingress']"
+                      >
+                        {{ t(`data-planes.type.zone-ingress`) }}
+                      </XBadge>
+                      <XBadge
+                        v-if="item.labels['kuma.io/listener-zoneegress']"
+                      >
+                        {{ t(`data-planes.type.zone-egress`) }}
+                      </XBadge>
+                    </td>
+                  </tr>
                   <tr>
                     <th scope="row">
                       {{ t('http.api.property.modificationTime') }}

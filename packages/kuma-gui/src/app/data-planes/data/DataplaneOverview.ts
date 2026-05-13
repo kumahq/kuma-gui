@@ -51,6 +51,10 @@ export const DataplaneOverview = {
             return dpTypes.standard
         }
       })(),
+      zoneProxyTypes: [
+        ...labels['kuma.io/listener-zoneingress'] ? ['zone-ingress'] : [],
+        ...labels['kuma.io/listener-zoneegress'] ? ['zone-egress'] : [],
+      ],
       status: (() => {
         const state = typeof dataplaneInsight.connectedSubscription !== 'undefined' ? states.online : states.offline
         if (networking.gateway) {
