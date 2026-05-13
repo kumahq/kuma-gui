@@ -160,13 +160,6 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
     return this.faker.helpers.arrayElement(['Ready', 'NotReady', 'Ignored'])
   }
 
-  /**
-   * @deprecated use `fake.kuma.state()` instead
-   */
-  inboundState() {
-    return this.faker.helpers.arrayElement(['Ready', 'NotReady', 'Ignored'])
-  }
-
   nanodate(options: { refDate?: string | Date } = {}) {
     if (options.refDate) {
       options.refDate = new Date(Date.parse(String(options.refDate)))
