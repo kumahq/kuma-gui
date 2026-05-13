@@ -690,17 +690,16 @@
                         <!-- LISTENERS -->
 
                       <template
-                        v-for="(listenersByPort, port) in [Object.groupBy(props.data.dataplane.networking.listeners, (item) => item.port)]"
+                        v-for="(listenersByPort, port) in [Object.groupBy(props.data.dataplane.networking.listeners.filter((item) => !!item.port), (item) => item.port!)]"
                         :key="port"
                       >
-                      {{ console.log(traffic, listenersByPort) }}
                         <template
                           v-for="listeners in [dataplaneLayout.listeners]"
                           :key="typeof listeners"
                         >
                           <ConnectionGroup
                             type="inbound"
-                            data-testid="dataplane-inbounds"
+                            data-testid="dataplane-listeners"
                           >
                             <XLayout
                               variant="y-stack"
@@ -714,14 +713,13 @@
                                   v-for="listener in [listenersByPort[item.port]?.[0]]"
                                   :key="listener?.port"
                                 >
+                                {{ console.log('listener', traffic) }}
                                   <ConnectionCard
-                                    data-testid="dataplane-inbound"
-                                    :protocol="'tcp'"
-                                    :port-name="listener?.portName"
-                                    :traffic="traffic?.inbounds[item.proxyResourceName]"
+                                    data-testid="dataplane-listener"
+                                    :protocol="traffic?.listeners[item.proxyResourceName] &&'http' in traffic.listeners[item.proxyResourceName] ? 'http' : 'tcp'"
+                                    :traffic="traffic?.listeners[item.proxyResourceName]"
                                     data-actionable
                                   >
-                                  <!--
                                     <template #state>
                                       <XIcon
                                         v-if="listener?.state !== 'Ready'"
@@ -731,47 +729,14 @@
                                       >
                                         {{ t('data-planes.routes.item.unhealthy_inbound', { port: listener?.port }) }}
                                       </XIcon>
-                                      <template
-                                        v-for="reports in [traffic?.inbounds[item.stat_prefix]?.$meta.alerts.reports ?? []]"
-                                        v-else
-                                        :key="typeof reports"
-                                      >
-                                        <XNotification
-                                          :notify="reports.length > 0"
-                                          :data-testid="`warning-abnormal-traffic-stats`"
-                                          :uri="`data-planes.notifications.abnormal-traffic-stats.${props.data.id}`"
-                                        >
-                                          <XI18n
-                                            :path="`data-planes.notifications.abnormal-traffic-stats`"
-                                          />
-                                        </XNotification>
-                                        <XAction
-                                          v-if="reports.length"
-                                          data-action
-                                          :to="{
-                                            name: 'data-plane-connection-inbound-summary-stats-view',
-                                            params: {
-                                              connection: item.stat_prefix,
-                                            },
-                                            query: {
-                                              codeSearch: reports.join('|'),
-                                              codeFilter: true,
-                                              codeRegExp: true,
-                                            },
-                                          }"
-                                        >
-                                          <XIcon
-                                            name="warning"
-                                            :size="KUI_ICON_SIZE_40"
-                                            placement="right"
-                                          />
-                                        </XAction>
-                                      </template>
                                     </template>
-                                    -->
 
                                     <template #body>
                                       <XBadge variant="decorative">{{ item.type }}</XBadge>
+                                    </template>
+
+                                    <template #empty>
+                                      No traffic data available for this listener
                                     </template>
 
                                     <XAction

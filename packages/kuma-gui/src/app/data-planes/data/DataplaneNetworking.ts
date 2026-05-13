@@ -3,6 +3,7 @@ import type { components } from '@kumahq/kuma-http-api'
 
 type KumaDataplaneNetworking = NonNullable<components['schemas']['DataplaneItem']['networking']>
 type KumaDataplaneOutbound = NonNullable<NonNullable<NonNullable<components['schemas']['DataplaneOverviewWithMeta']['dataplane']>['networking']>['outbound']>[number]
+type KumaDataplaneListener = NonNullable<NonNullable<components['schemas']['DataplaneItem']['networking']>['listeners']>
 type KumaDataplaneNetworkingLayout = components['schemas']['DataplaneNetworkingLayout']
 
 export const DataplaneNetworkingLayout = {
@@ -42,6 +43,18 @@ export const DataplaneNetworkingLayout = {
         }
       }),
     } satisfies KumaDataplaneNetworkingLayout
+  },
+}
+
+const DataplaneListener = {
+  fromObject(item: KumaDataplaneListener[number]) {
+    return {
+      ...item,
+      state: typeof item.state !== 'undefined' ? String(item.state) : 'Ready',
+    }
+  },
+  fromCollection(items: KumaDataplaneListener = []) {
+    return Array.isArray(items) ? items.map(item => DataplaneListener.fromObject(item)) : []
   },
 }
 
