@@ -97,19 +97,19 @@ Feature: mesh / dataplanes / index
       | <Status> |
 
     Examples:
-      | Status               | DisconnectTime              | Inbound                                | Listeners                              |
-      | Online               | !!js/undefined              | !!js/undefined                         | !!js/undefined                         |
-      | Online               | !!js/undefined              | [{ state: Ready }]                     | !!js/undefined                         |
-      | Online               | !!js/undefined              | !!js/undefined                         | [{ state: Ready }]                     |
-      | Online               | !!js/undefined              | !!js/undefined                         | !!js/undefined                         |
-      | Offline              | !!js/undefined              | [{ state: NotReady }]                  | !!js/undefined                         |
-      | Offline              | !!js/undefined              | !!js/undefined                         | [{ state: NotReady }]                  |
-      | Partially degraded   | !!js/undefined              | [{ state: Ready },{ state: NotReady }] | !!js/undefined                         |
-      | Partially degraded   | !!js/undefined              | !!js/undefined                         | [{ state: Ready },{ state: NotReady }] |
-      | Partially degraded   | !!js/undefined              | [{ state: Ready },{ state: NotReady }] | [{ state: Ready },{ state: NotReady }] |
-      | Disconnected from CP | 2021-02-17T07:33:36.412683Z | [{ state: Ready }]                     | !!js/undefined                         |
-      | Disconnected from CP | 2021-02-17T07:33:36.412683Z | !!js/undefined                         | [{ state: Ready }]                     |
-      | Disconnected from CP | 2021-02-17T07:33:36.412683Z | [{ state: Ready },{ state: NotReady }] | [{ state: Ready },{ state: NotReady }] |
+      | Status              | DisconnectTime              | Inbound                                | Listeners                              |
+      | Online              | !!js/undefined              | !!js/undefined                         | !!js/undefined                         |
+      | Online              | !!js/undefined              | [{ state: Ready }]                     | !!js/undefined                         |
+      | Online              | !!js/undefined              | !!js/undefined                         | [{ state: Ready }]                     |
+      | Online              | !!js/undefined              | !!js/undefined                         | !!js/undefined                         |
+      | Offline             | !!js/undefined              | [{ state: NotReady }]                  | !!js/undefined                         |
+      | Offline             | !!js/undefined              | !!js/undefined                         | [{ state: NotReady }]                  |
+      | Partially degraded  | !!js/undefined              | [{ state: Ready },{ state: NotReady }] | !!js/undefined                         |
+      | Partially degraded  | !!js/undefined              | !!js/undefined                         | [{ state: Ready },{ state: NotReady }] |
+      | Partially degraded  | !!js/undefined              | [{ state: Ready },{ state: NotReady }] | [{ state: Ready },{ state: NotReady }] |
+      | Not connected to CP | 2021-02-17T07:33:36.412683Z | [{ state: Ready }]                     | !!js/undefined                         |
+      | Not connected to CP | 2021-02-17T07:33:36.412683Z | !!js/undefined                         | [{ state: Ready }]                     |
+      | Not connected to CP | 2021-02-17T07:33:36.412683Z | [{ state: Ready },{ state: NotReady }] | [{ state: Ready },{ state: NotReady }] |
 
   Scenario: The Data Plane Proxy list has the expected minimal content
     Given the environment
@@ -139,10 +139,10 @@ Feature: mesh / dataplanes / index
     When I visit the "/meshes/default/data-planes" URL
     Then the "$service-cell" element is empty
     Then the "$item:nth-child(1)" element contains
-      | Value                |
-      | dpp-2                |
-      | <mTLSColText>        |
-      | Disconnected from CP |
+      | Value               |
+      | dpp-2               |
+      | <mTLSColText>       |
+      | Not connected to CP |
 
     Examples:
       | mTLS                                                | mTLSColText          |
