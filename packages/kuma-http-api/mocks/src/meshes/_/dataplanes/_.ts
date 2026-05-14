@@ -9,9 +9,7 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
 
   const inbounds = parseInt(env('KUMA_DATAPLANEINBOUND_COUNT', `${fake.number.int({ min: 1, max: 5 })}`))
 
-  const parts = String(name).split('.')
-  const displayName = parts.slice(0, -1).join('.')
-  const nspace = parts.at(-1) ?? k8s ? fake.word.noun() : ''
+  const [displayName, nspace = k8s ? fake.word.noun() : ''] = String(name).split('.')
   const zone = fake.word.noun()
 
   const type = name.includes('-gateway_builtin') ? 'gateway_builtin' :

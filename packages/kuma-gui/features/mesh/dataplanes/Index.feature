@@ -30,6 +30,7 @@ Feature: mesh / dataplanes / index
           mesh: fake-default
           labels:
             kuma.io/display-name: !!js/undefined
+            kuma.io/zone: !!js/undefined
           dataplane:
             networking:
               gateway: !!js/undefined
