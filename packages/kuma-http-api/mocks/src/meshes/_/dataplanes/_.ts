@@ -1,27 +1,38 @@
 import type { Dependencies, ResponseHandler } from '#mocks'
 export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
+  const query = req.url.searchParams
   const { mesh, name } = req.params
+
+  const format = query.get('format')
+  const k8s = format === 'kubernetes' || (env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes')
+  const multizone = fake.datatype.boolean()
 
   const inbounds = parseInt(env('KUMA_DATAPLANEINBOUND_COUNT', `${fake.number.int({ min: 1, max: 5 })}`))
 
-  let type: 'gateway_builtin' | 'gateway_delegated' | 'proxy' = 'proxy'
-  if (name.includes('-gateway_builtin')) {
-    type = 'gateway_builtin'
-  } else if (name.includes('-gateway_delegated')) {
-    type = 'gateway_delegated'
-  }
+  const [displayName, nspace = k8s ? fake.word.noun() : ''] = String(name).split('.')
+  const zone = fake.word.noun()
 
-  const isMultizone = fake.datatype.boolean()
+  const type = name.includes('-gateway_builtin') ? 'gateway_builtin' :
+    name.includes('-gateway_delegated') ? 'gateway_delegated' :
+      'proxy'
+
 
   return {
     headers: {},
     body: {
-      ...(req.url.searchParams.get('format') === 'kubernetes' && {
+      ...(k8s ? {
         apiVersion: 'kuma.io/v1alpha1',
-      }),
+      } : {}),
       type: 'Dataplane',
       mesh,
       name,
+      labels: {
+        ...fake.kuma.labels({
+          name: displayName,
+          ...(multizone ? { zone } : {}),
+          ...(k8s ? { namespace: nspace } : {}),
+        }),
+      },
       creationTime: '2021-02-17T08:33:36.442044+01:00',
       modificationTime: '2021-02-17T08:33:36.442044+01:00',
       networking: (() => {
@@ -37,7 +48,7 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
               gateway: {
                 tags: fake.kuma.tags({
                   service: fake.kuma.serviceName(type),
-                  zone: isMultizone && fake.datatype.boolean() ? fake.word.noun() : undefined,
+                  zone: multizone && fake.datatype.boolean() ? fake.word.noun() : undefined,
                 }),
                 ...(dataplaneType && { type: dataplaneType }),
               },
@@ -54,7 +65,7 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
                 const tags = fake.kuma.tags({
                   protocol: fake.kuma.protocol(),
                   service: fake.kuma.serviceName(),
-                  zone: isMultizone && fake.datatype.boolean() ? fake.word.noun() : undefined,
+                  zone: multizone && fake.datatype.boolean() ? fake.word.noun() : undefined,
                 })
 
                 return {

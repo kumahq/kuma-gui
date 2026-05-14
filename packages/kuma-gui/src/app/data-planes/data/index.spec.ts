@@ -383,6 +383,9 @@ describe('DataplaneOverview', () => {
           type: 'Dataplane',
           name: 'dp-name',
           mesh: 'dp-mesh',
+          labels: {
+            'kuma.io/display-name': 'dp-name',
+          },
           creationTime: '2021-02-19T07:06:16.384057Z',
           modificationTime: '2021-02-29T07:06:00.00Z',
           networking: {
@@ -400,6 +403,9 @@ describe('DataplaneOverview', () => {
           item.creationTime = expected.creationTime
           item.modificationTime = expected.modificationTime
           item.dataplane.networking = expected.networking
+          item.labels = {
+            'kuma.io/display-name': 'dp-name',
+          }
 
           return item
         })

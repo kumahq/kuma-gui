@@ -3,6 +3,7 @@ import type { Dependencies, ResponseHandler } from '#mocks'
 export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) => {
   const { mesh } = req.params
   const query = req.url.searchParams
+
   const _gateway = query.get('gateway') ?? ''
   const _name = query.get('name') ?? ''
   const _tags = query.get('tag') ?? ''
@@ -11,6 +12,8 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
   const zoneQuery = query.get('filter[labels.kuma.io/zone]')
 
   const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
+  const multizone = zoneQuery || fake.datatype.boolean()
+
   const defaultType = env('KUMA_DATAPLANE_TYPE', '')
   const inboundCount = parseInt(env('KUMA_DATAPLANEINBOUND_COUNT', `${fake.number.int({ min: 1, max: 5 })}`))
   const outboundCount = parseInt(env('KUMA_DATAPLANEOUTBOUND_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
@@ -53,7 +56,6 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
       items: Array.from({ length: pageTotal }).map((_, i) => {
         const id = offset + i
 
-        const isMultizone = fake.datatype.boolean()
         const isMtlsEnabled = isMtlsEnabledOverride !== '' ? isMtlsEnabledOverride === 'true' : fake.datatype.boolean()
 
         const type = filterType || fake.helpers.arrayElement(['BUILTIN', 'DELEGATED', 'STANDARD'])
@@ -69,6 +71,13 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
         return {
           type: 'DataplaneOverview',
           mesh,
+          labels: {
+            ...fake.kuma.labels({
+              name: displayName,
+              ...(multizone ? { zone } : {}),
+              ...(k8s ? { namespace: nspace } : {}),
+            }),
+          },
           name: `${displayName}${k8s ? `.${nspace}` : ''}`,
           ...((modificationTime) => ({
             creationTime: fake.kuma.date({ refDate: modificationTime }),
@@ -102,7 +111,7 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
                     tags: fake.kuma.tags({
                       protocol: fake.kuma.protocol(),
                       service,
-                      zone: zoneQuery || (isMultizone && fake.datatype.boolean()) ? zone : undefined,
+                      zone: multizone && fake.datatype.boolean() ? zone : undefined,
                     }),
                     ...(fake.datatype.boolean() ? {
                       state: fake.kuma.inboundState(),
@@ -123,21 +132,13 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
                 gateway: {
                   tags: fake.kuma.tags({
                     service,
-                    zone: zoneQuery || (isMultizone && fake.datatype.boolean()) ? zone : undefined,
+                    zone: multizone && fake.datatype.boolean() ? zone : undefined,
                   }),
                   type,
                 },
               }),
             },
           },
-          ...(k8s
-            ? {
-              labels: {
-                'kuma.io/display-name': displayName,
-                'k8s.kuma.io/namespace': nspace,
-              },
-            }
-            : {}),
           dataplaneInsight: {
             ...(isMtlsEnabled ? { mTLS: fake.kuma.dataplaneMtls() } : {}),
             subscriptions: Array.from({ length: subscriptionCount }).map((item, i, arr) => {

@@ -1,5 +1,17 @@
 import _124 from './kuma.io/latest_version'
 import _999 from './src/_kri/_'
+import _997 from './src/_kri/kri_dp__.ts'
+import _996 from './src/_kri/kri_extsvc__.ts'
+import _995 from './src/_kri/kri_mfi__.ts'
+import _994 from './src/_kri/kri_mgw__.ts'
+import _993 from './src/_kri/kri_mhttpr__.ts'
+import _992 from './src/_kri/kri_mid__.ts'
+import _998 from './src/_kri/kri_msvc__.ts'
+import _990 from './src/_kri/kri_mtrust__.ts'
+import _991 from './src/_kri/kri_mzsvc__.ts'
+import _987 from './src/_kri/kri_wl__.ts'
+import _989 from './src/_kri/kri_ze__.ts'
+import _988 from './src/_kri/kri_zi__.ts'
 import _3 from './src/_resources'
 import _1 from './src/config'
 import _4 from './src/dataplanes/_overview'
@@ -88,8 +100,8 @@ import _44 from './src/meshes/_/traffic-routes'
 import _45 from './src/meshes/_/traffic-traces'
 import _46 from './src/meshes/_/traffic-traces/_'
 import _47 from './src/meshes/_/virtual-outbounds'
-import _400 from './src/meshes/_/workloads/_'
-import _401 from './src/meshes/_/workloads/_/index'
+import _400 from './src/meshes/_/workloads'
+import _401 from './src/meshes/_/workloads/_'
 import _2 from './src/policies'
 import _126 from './src/zone-ingresses/_'
 import _48 from './src/zone-ingresses/_/_overview'
@@ -237,29 +249,29 @@ export const fs = {
   // Mesh
   '/_kri/kri_m_:kri': _16,
   // MeshService
-  '/_kri/kri_msvc_:kri': _137,
+  '/_kri/kri_msvc_:kri': _998,
   // Dataplane
-  '/_kri/kri_dp_:kri': _22,
+  '/_kri/kri_dp_:kri': _997,
   // MeshExternalService
-  '/_kri/kri_extsvc_:kri': _139,
+  '/_kri/kri_extsvc_:kri': _996,
   // MeshFaultInjection
-  '/_kri/kri_mfi_:kri': _53,
+  '/_kri/kri_mfi_:kri': _995,
   // MeshGateway
-  '/_kri/kri_mgw_:kri': _34,
+  '/_kri/kri_mgw_:kri': _994,
   // MeshHTTPRoute
-  '/_kri/kri_mhttpr_:kri': _133,
+  '/_kri/kri_mhttpr_:kri': _993,
   // MeshIdentity
-  '/_kri/kri_mid_:kri': _242,
+  '/_kri/kri_mid_:kri': _992,
   // MeshMultiZoneService
-  '/_kri/kri_mzsvc_:kri': _141,
+  '/_kri/kri_mzsvc_:kri': _991,
   // MeshTrust
-  '/_kri/kri_mtrust_:kri': _244,
+  '/_kri/kri_mtrust_:kri': _990,
   // ZoneEgress
-  '/_kri/kri_ze_:kri': _127,
+  '/_kri/kri_ze_:kri': _989,
   // ZoneIngress
-  '/_kri/kri_zi_:kri': _126,
+  '/_kri/kri_zi_:kri': _988,
   // Workload
-  '/_kri/kri_wl_:kri': _401,
+  '/_kri/kri_wl_:kri': _987,
   // generic kri -> catches anything that is not matched above
   '/_kri/:kri': _999,
 }

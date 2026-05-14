@@ -1,12 +1,26 @@
 import type { Dependencies, ResponseHandler } from '#mocks'
 export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
-  const kri = req.params.kri as string | undefined
+  const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
+  // this template can be called via the /_kri/kri_<shortName>_:kri endpoint or
+  // the legacy endpoint
+  const kri = req.params.kri ? `kri_dp_${req.params.kri}` : undefined
   const [
-    mesh = req.params.mesh as string,
-    _zone,
-    _namespace,
-    name = req.params.name as string,
-  ] = kri?.split('_') ?? ''
+    _prefix,
+    _shortName,
+    mesh,
+    zone,
+    // if its not a kri (which always has a nspace, even if it's ''), or the
+    // name has no '.', then, if its k8s use a random nspace, otherwise ''
+    nspace = k8s ? fake.word.noun() : '',
+    displayName,
+  ] = kri ? kri.split('_') : [
+    'kri', // prefix
+    'dp', // shortName
+    String(req.params.mesh), // mesh
+    fake.helpers.arrayElement(['', fake.word.noun()]), // zone
+    ...String(req.params.name).split('.').toReversed(), // nspace, displayName
+  ]
+  const name = kri ? `${displayName}${nspace ? `.${nspace}` : ''}` : String(req.params.name)
 
   // use a seed based on the name to keep ports and ip address the same across
   // _overview, stats and rules
@@ -20,7 +34,7 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
   //
 
   fake.kuma.seed()
-  const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
+
   const isMtlsEnabledOverride = env('KUMA_MTLS_ENABLED', '')
   const defaultType = env('KUMA_DATAPLANE_TYPE', '')
   const unifiedResourceNaming = env('KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED', '')
@@ -46,14 +60,9 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
     }
   })()
 
-  const isMultizone = fake.datatype.boolean()
   const isMtlsEnabled = isTlsIssuedMeshIdentity || (isMtlsEnabledOverride !== '' ? isMtlsEnabledOverride === 'true' : fake.datatype.boolean())
 
   const service = fake.word.noun()
-
-  const parts = String(name).split('.')
-  const displayName = parts.slice(0, -1).join('.')
-  const nspace = parts.pop()
 
   return {
     headers: {},
@@ -61,6 +70,13 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
       type: 'DataplaneOverview',
       mesh,
       name,
+      labels: {
+        ...fake.kuma.labels({
+          name: displayName,
+          ...(zone ? { zone } : {}),
+          ...(k8s ? { namespace: nspace } : {}),
+        }),
+      },
       ...((modificationTime) => ({
         creationTime: fake.kuma.date({ refDate: modificationTime }),
         modificationTime,
@@ -88,7 +104,7 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
                 tags: fake.kuma.tags({
                   protocol: ports[i].protocol,
                   service,
-                  zone: isMultizone && fake.datatype.boolean() ? fake.word.noun() : undefined,
+                  zone: zone && fake.datatype.boolean() ? fake.word.noun() : undefined,
                 }),
                 ...(fake.datatype.boolean() ? {
                   state: fake.kuma.inboundState(),
@@ -107,21 +123,13 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
             gateway: {
               tags: fake.kuma.tags({
                 service,
-                zone: isMultizone && fake.datatype.boolean() ? fake.word.noun() : undefined,
+                zone: zone && fake.datatype.boolean() ? fake.word.noun() : undefined,
               }),
               type,
             },
           }),
         },
       },
-      ...(k8s
-        ? {
-          labels: {
-            'kuma.io/display-name': displayName,
-            'k8s.kuma.io/namespace': nspace,
-          },
-        }
-        : {}),
       dataplaneInsight: {
         ...(isMtlsEnabled ? {
           mTLS: isTlsIssuedMeshIdentity ? {
