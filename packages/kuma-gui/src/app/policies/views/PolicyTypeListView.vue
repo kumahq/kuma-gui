@@ -71,7 +71,6 @@
                             :data-testid="`policy-type-link-${policyType.name}`"
                             @vue:mounted="async (vNode) => {
                               if(route.params.policyPath.length === 0 && i === 0 && vNode.props?.to) {
-                                await nextTick()
                                 route.replace(vNode.props.to)
                               }
                             }"
@@ -110,7 +109,6 @@
   </RouteView>
 </template>
 <script lang="ts" setup>
-import { nextTick } from 'vue'
 
 import { sources as meshSources } from '@/app/meshes/sources'
 import { sources } from '@/app/policies/sources'
