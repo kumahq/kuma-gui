@@ -5,6 +5,8 @@ Feature: mesh / policies / index
       | Alias            | Selector                                                                                 |
       | policy-type-list | [data-testid='policy-type-list']                                                         |
       | items            | [data-testid='app-collection']                                                           |
+      | dataplanes-tab   | [data-testid='data-plane-list-view-tab'] a                                               |
+      | policies-tab     | [data-testid='policy-list-index-view-tab'] a                                             |
       | detail-view      | [data-testid='policy-detail-tabs-view']                                                  |
       | items-header     | $items th                                                                                |
       | item             | $items tbody tr                                                                          |
@@ -14,6 +16,7 @@ Feature: mesh / policies / index
       | button-docs      | [data-testid='policy-documentation-link']                                                |
       | breadcrumbs      | .k-breadcrumbs                                                                           |
       | input-search     | [data-testid='filter-bar-filter-input']                                                  |
+
     And the environment
       """
       KUMA_MODE: global
@@ -44,6 +47,62 @@ Feature: mesh / policies / index
       | Value     |
       | fake-cb-1 |
     Then the URL contains "/meshes/default/policies/circuit-breakers"
+
+  Scenario: Navigating from `/dataplanes` to `/policies` redirects
+    Given the environment
+      """
+      KUMA_RESOURCE_COUNT: 2
+      """
+    Given the URL "/_resources" responds with
+      """
+      body:
+        resources:
+          - includeInFederation: true
+            name: MeshFaultInjection
+            path: meshfaultinjections
+            pluralDisplayName: Mesh Fault Injections
+            policy:
+              hasFromTargetRef: true
+              hasRulesTargetRef: true
+              hasToTargetRef: true
+              isFromAsRules: false
+              isTargetRef: true
+            readOnly: false
+            scope: Mesh
+            shortName: mfi
+            singularDisplayName: Mesh Fault Injection
+          - includeInFederation: true
+            name: MeshCircuitBreaker
+            path: meshcircuitbreakers
+            pluralDisplayName: Mesh Circuit Breakers
+            policy:
+              hasFromTargetRef: true
+              hasRulesTargetRef: true
+              hasToTargetRef: true
+              isFromAsRules: true
+              isTargetRef: true
+            readOnly: false
+            scope: Mesh
+            shortName: mcb
+            singularDisplayName: Mesh Circuit Breaker
+      """
+    And the URL "/mesh-insights/default" responds with
+      """
+      body:
+        policies:
+          MeshFaultInjection:
+            total: 0
+          MeshCircuitBreaker:
+            total: 100
+      """
+    When I visit the "/meshes/default/data-planes" URL
+    And I wait for 100 ms
+    And I click the "$policies-tab" element
+    And I wait for 100 ms
+    And I click the "$dataplanes-tab" element
+    And I wait for 100 ms
+    And I click the "$policies-tab" element
+    Then the URL contains "/meshes/default/policies/meshfaultinjections"
 
   Scenario: Listing has expected content
     When I visit the "/meshes/default/policies/circuit-breakers" URL
