@@ -1,14 +1,30 @@
 import type { Dependencies, ResponseHandler } from '#mocks'
 
-export default ({ fake }: Dependencies): ResponseHandler => (req) => {
-  const kri = req.params.kri as string | undefined
+export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
+  const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
+
+  // this template can be called via the /_kri/kri_<shortName>_:kri endpoint or
+  // the legacy endpoint
+  const kri = req.params.kri ? `kri_zi_${req.params.kri}` : undefined
   const [
+    _prefix,
+    _shortName,
     _mesh,
-    zone = req.params.zone as string | undefined,
-    _namespace,
-    name = req.params.name as string,
-  ] = kri?.split('_') ?? ''
-  
+    zone,
+    // if its not a kri (which always has a nspace, even if it's ''), or the
+    // name has no '.', then, if its k8s use a random nspace, otherwise ''
+    nspace = k8s ? fake.word.noun() : '',
+    displayName,
+  ] = kri ? kri.split('_') : [
+    'kri', // prefix
+    'zi', // shortName
+    String(req.params.mesh), // mesh
+    // @TODO
+    String(req.params.zone), // zone
+    ...String(req.params.name).split('.').toReversed(), // nspace, displayName
+  ]
+  const name = kri ? `${displayName}${nspace ? `.${nspace}` : ''}` : String(req.params.name)
+
   const zoneName = zone ?? fake.word.noun()
 
   return {

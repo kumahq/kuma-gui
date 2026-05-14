@@ -4,18 +4,28 @@ type Entity = components['schemas']['MeshServiceItem']
 
 export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
   const query = req.url.searchParams
-  const kri = req.params.kri as string | undefined
-  const [
-    mesh = req.params.mesh as string,
-    zone,
-    ns,
-    name = req.params.name as string,
-  ] = kri?.split('_') ?? ''
-
   const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
-  const parts = String(name).split('.')
-  const displayName = parts.slice(0, -1).join('.')
-  const nspace = ns ?? parts.at(-1) ?? ''
+
+  // this template can be called via the /_kri/kri_<shortName>_:kri endpoint or
+  // the legacy endpoint
+  const kri = req.params.kri ? `kri_msvc_${req.params.kri}` : undefined
+  const [
+    _prefix,
+    _shortName,
+    mesh,
+    zone,
+    // if its not a kri (which always has a nspace, even if it's ''), or the
+    // name has no '.', then, if its k8s use a random nspace, otherwise ''
+    nspace = k8s ? fake.word.noun() : '',
+    displayName,
+  ] = kri ? kri.split('_') : [
+    'kri', // prefix
+    'msvc', // shortName
+    String(req.params.mesh), // mesh
+    fake.helpers.arrayElement(['', fake.word.noun()]), // zone
+    ...String(req.params.name).split('.').toReversed(), // nspace, displayName
+  ]
+  const name = kri ? `${displayName}${nspace ? `.${nspace}` : ''}` : String(req.params.name)
 
   const proxies = fake.number.int({ min: 1, max: 120 })
 
@@ -30,16 +40,13 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
       name,
       creationTime: '2021-02-19T08:06:15.14624+01:00',
       modificationTime: '2021-02-19T08:07:37.539229+01:00',
-      ...(k8s
-        ? {
-          labels: {
-            'kuma.io/display-name': displayName,
-            'k8s.kuma.io/namespace': nspace,
-            'kuma.io/origin': 'zone',
-            'kuma.io/zone': zone ?? fake.word.noun(),
-          },
-        }
-        : {}),
+      labels: {
+        ...fake.kuma.labels({
+          name: displayName,
+          ...(zone ? { zone } : {}),
+          ...(k8s ? { namespace: nspace } : {}),
+        }),
+      },
       spec: {
         ports: Array.from({ length: 5 }).map(_ => (
           {

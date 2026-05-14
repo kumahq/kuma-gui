@@ -1,12 +1,26 @@
 import type { Dependencies, ResponseHandler } from '#mocks'
 export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
-  const kri = req.params.kri as string | undefined
+  const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
+  // this template can be called via the /_kri/kri_<shortName>_:kri endpoint or
+  // the legacy endpoint
+  const kri = req.params.kri ? `kri_dp_${req.params.kri}` : undefined
   const [
-    mesh = req.params.mesh as string,
-    _zone,
-    _namespace,
-    name = req.params.name as string,
-  ] = kri?.split('_') ?? ''
+    _prefix,
+    _shortName,
+    mesh,
+    zone,
+    // if its not a kri (which always has a nspace, even if it's ''), or the
+    // name has no '.', then, if its k8s use a random nspace, otherwise ''
+    nspace = k8s ? fake.word.noun() : '',
+    displayName,
+  ] = kri ? kri.split('_') : [
+    'kri', // prefix
+    'dp', // shortName
+    String(req.params.mesh), // mesh
+    fake.helpers.arrayElement(['', fake.word.noun()]), // zone
+    ...String(req.params.name).split('.').toReversed(), // nspace, displayName
+  ]
+  const name = kri ? `${displayName}${nspace ? `.${nspace}` : ''}` : String(req.params.name)
 
   // use a seed based on the name to keep ports and ip address the same across
   // _overview, stats and rules
@@ -20,8 +34,6 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
   //
 
   fake.kuma.seed()
-  const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
-  const multizone = fake.datatype.boolean()
 
   const isMtlsEnabledOverride = env('KUMA_MTLS_ENABLED', '')
   const defaultType = env('KUMA_DATAPLANE_TYPE', '')
@@ -67,12 +79,6 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
 
   const isMtlsEnabled = isTlsIssuedMeshIdentity || (isMtlsEnabledOverride !== '' ? isMtlsEnabledOverride === 'true' : fake.datatype.boolean())
 
-
-  const parts = String(name).split('.')
-  const displayName = parts.slice(0, -1).join('.')
-  const nspace = parts.at(-1) ?? k8s ? fake.word.noun() : ''
-  const zone = fake.word.noun()
-
   const service = fake.word.noun()
 
   return {
@@ -86,7 +92,7 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
           ...(name.includes('ingress') && { 'kuma.io/listener-zoneingress': 'enabled' }),
           ...(name.includes('egress') && { 'kuma.io/listener-zoneegress': 'enabled' }),
           name: displayName,
-          ...(multizone ? { zone } : {}),
+          ...(zone ? { zone } : {}),
           ...(k8s ? { namespace: nspace } : {}),
         }),
       },
@@ -130,7 +136,7 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
                 tags: fake.kuma.tags({
                   protocol: ports[i].protocol,
                   service,
-                  zone: multizone && fake.datatype.boolean() ? fake.word.noun() : undefined,
+                  zone: zone && fake.datatype.boolean() ? fake.word.noun() : undefined,
                 }),
                 ...(fake.datatype.boolean() ? {
                   state: fake.kuma.state(),
@@ -149,7 +155,7 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
             gateway: {
               tags: fake.kuma.tags({
                 service,
-                zone: multizone && fake.datatype.boolean() ? fake.word.noun() : undefined,
+                zone: zone && fake.datatype.boolean() ? fake.word.noun() : undefined,
               }),
               type,
             },
