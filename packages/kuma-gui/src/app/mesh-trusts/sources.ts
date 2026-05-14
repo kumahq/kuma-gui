@@ -8,13 +8,13 @@ import type { paths } from '@kumahq/kuma-http-api'
 
 export const sources = (api: KumaApi) => {
   const http = createClient<paths>({
-    baseUrl: '',
+    baseUrl: api.client.baseUrl,
     fetch: api.client.fetch,
   })
   return defineSources({
     '/meshes/:mesh/meshtrusts': async (params) => {
       const { mesh } = params
-  
+
       const res = await http.GET('/meshes/{mesh}/meshtrusts', {
         params: {
           path: {
@@ -22,13 +22,13 @@ export const sources = (api: KumaApi) => {
           },
         },
       })
-  
+
       return MeshTrust.fromCollection(res.data!)
     },
 
     '/meshtrusts/:mtrust': async (params) => {
       const { mtrust } = params
-  
+
       const res = await http.GET('/_kri/{kri}', {
         params: {
           path: {
@@ -36,13 +36,13 @@ export const sources = (api: KumaApi) => {
           },
         },
       })
-  
+
       return MeshTrust.fromObject(res.data as KumaMeshTrust)
     },
 
     '/meshtrusts/:mtrust/as/kubernetes': async (params) => {
       const { mtrust } = params
-  
+
       const res = await http.GET('/_kri/{kri}', {
         params: {
           path: {
@@ -54,7 +54,7 @@ export const sources = (api: KumaApi) => {
           },
         },
       })
-  
+
       return res.data
     },
   })

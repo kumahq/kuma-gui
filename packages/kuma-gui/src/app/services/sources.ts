@@ -28,7 +28,7 @@ const includes = <T extends readonly string[]>(arr: T, item: string): item is T[
 
 export const sources = (api: KumaApi) => {
   const http = createClient<paths>({
-    baseUrl: '',
+    baseUrl: api.client.baseUrl,
     fetch: api.client.fetch,
   })
 
@@ -78,6 +78,7 @@ export const sources = (api: KumaApi) => {
             mesh,
             name,
           },
+          // @TODO
           // @ts-ignore
           query: {
             format: 'kubernetes',
@@ -197,35 +198,67 @@ export const sources = (api: KumaApi) => {
     },
 
     '/meshes/:mesh/service-insights/of/:serviceType': async (params) => {
-      const { mesh, size, serviceType, search } = params
+      const { mesh, size, serviceType } = params
       const offset = params.size * (params.page - 1)
 
+      const search = ServiceInsight.search(params.search)
       const filterParams: ServiceInsightsParameters = {
         size,
         offset,
-        ...ServiceInsight.search(search),
+        ...search,
       }
 
       if (serviceType !== 'all') {
         filterParams.type = serviceType
       }
 
-      return ServiceInsight.fromCollection(await api.getAllServiceInsightsFromMesh({ mesh }, filterParams))
+      const res = await http.GET('/meshes/{mesh}/service-insights', {
+        params: {
+          path: {
+            mesh,
+          },
+          query: {
+            ...filterParams,
+          }
+        },
+      })
+      return ServiceInsight.fromCollection(res.data!)
     },
 
     '/meshes/:mesh/service-insights/:name': async (params) => {
       const { mesh, name } = params
+      const res = await http.GET('/meshes/{mesh}/service-insights/{name}', {
+        params: {
+          path: {
+            mesh,
+            name,
+          },
+        },
+      })
 
-      return ServiceInsight.fromObject(await api.getServiceInsight({ mesh, name }))
+      return ServiceInsight.fromObject(res.data!)
     },
 
     // TODO: Remove this when removing external services from the Services tab.
     '/meshes/:mesh/external-services/for/:service': async (params) => {
       const { mesh, service } = params
 
-      const { items } = await api.getAllExternalServicesFromMesh({ mesh }, {
-        tag: [`kuma.io/service:${service}`],
+      const res = await http.GET('/meshes/${mesh}/external-services', {
+        params: {
+          path: {
+            mesh,
+          },
+          // @TODO
+          query: {
+            tag: [`kuma.io/service:${service}`]
+          }
+        },
       })
+
+      // const { items } = await api.getAllExternalServicesFromMesh({ mesh }, {
+      //   tag: [`kuma.io/service:${service}`],
+      // })
+      const { items } = res.data!
 
       return items.length > 0 ? ExternalService.fromObject(items[0]) : null
     },
@@ -234,9 +267,19 @@ export const sources = (api: KumaApi) => {
     '/meshes/:mesh/external-service/:name/as/kubernetes': async (params) => {
       const { mesh, name } = params
 
-      return api.getExternalService({ mesh, name }, {
-        format: 'kubernetes',
+      const res = await http.GET('/meshes/{mesh}/external-services/{name}', {
+        params: {
+          path: {
+            mesh,
+            name
+          },
+          query: {
+            format: 'kubernetes'
+          }
+        },
       })
+      // TODO
+      return res.data
     },
 
     '/meshes/:mesh/:serviceType/:serviceName/_hostnames': async (params) => {
