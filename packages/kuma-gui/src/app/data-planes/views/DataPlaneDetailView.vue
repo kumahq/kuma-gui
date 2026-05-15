@@ -217,21 +217,22 @@
                         <dt>{{ t('data-planes.routes.item.labels') }}</dt>
                         <dd>
                           <XLayout
+                            v-for="kumaRe in [/^(.+\.)?kuma\.io\//]"
+                            :key="typeof kumaRe"
                             variant="separated"
                             truncate
                           >
-                            <template
-                              v-for="kumaRe in [/^(.+\.)?kuma\.io\//]"
-                              :key="typeof kumaRe"
+                            <XAction
+                              v-for="[key, value] in labels"
+                              :key="key"
+                              :href="t(`common.kri.labelHrefs.${key.replaceAll('.', '~')}`, { name: value }, { defaultMessage: '' })"
                             >
                               <XBadge
-                                v-for="[key, value] in labels"
-                                :key="key"
                                 :appearance="kumaRe.test(key) ? 'info' : 'decorative'"
                               >
                                 {{ key }}:{{ value }}
                               </XBadge>
-                            </template>
+                            </XAction>
                           </XLayout>
                         </dd>
                       </div>
