@@ -7,11 +7,12 @@ Feature: mesh / dataplanes / connections / Traffic
       | inbound  | [data-testid='dataplane-inbound']       |
       | outbound | [data-testid='dataplane-outbound']      |
       | warning  | [data-testid*='abnormal-traffic-stats'] |
+      | loading-warning | [data-testid^='notification-data-planes.notifications.stats-not-enhanced'] |
+      | about-section   | [data-testid='dataplane-about-section']                                    |
     And the environment
       """
       KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: true
       KUMA_MESHSERVICE_MODE: Exclusive
-      KUMA_DATAPLANEINBOUND_COUNT: 1
       KUMA_SERVICE_COUNT: 1
       KUMA_DATAPLANE_TYPE: standard
       """
@@ -53,6 +54,39 @@ Feature: mesh / dataplanes / connections / Traffic
     And the "$outbound" element contains "Namespace kuma-system"
     And the "$outbound" element contains "Type MeshService"
     And the "$outbound" element contains "service-less"
+
+  Scenario: Standard sidecar proxy shows the traffic component and an error warning when _stats fails
+    Given the environment
+      """
+      KUMA_DATAPLANEINBOUND_COUNT: 1
+      KUMA_SUBSCRIPTION_COUNT: 1
+      """
+    And the URL "/meshes/default/dataplanes/dpp-1-name-of-dataplane/_overview" responds with
+      """
+      body:
+        dataplane:
+          networking:
+            address: 58.25.181.133
+            gateway: !!js/undefined
+        dataplaneInsight:
+          mTLS: !!js/undefined
+          subscriptions:
+            - version:
+                kumaDp:
+                  kumaCpCompatible: true
+                envoy:
+                  kumaDpCompatible: true
+      """
+    And the URL "/meshes/default/dataplanes/dpp-1-name-of-dataplane/stats" responds with
+      """
+      headers:
+        Status-Code: '504'
+      body: upstream request timeout
+      """
+    When I visit the "/meshes/default/data-planes/dpp-1-name-of-dataplane/overview" URL
+    And the "$traffic" element exists
+    And the "$loading-warning" element exists
+    And the "$about-section" element contains "58.25.181.133"
 
   Scenario: Abnormal traffic stats are detected
     Given the URL "/meshes/default/dataplanes/service-less/_layout" responds with
