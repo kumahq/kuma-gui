@@ -42,13 +42,13 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
       case tags['kuma.io/service']?.includes('-builtin'):
         return 'BUILTIN'
       case query.get('filter[labels.kuma.io/listener-zoneingress]') === 'enabled' && query.get('filter[labels.kuma.io/listener-zoneegress]') === 'enabled':
-      case _name.includes('ingress') && _name.includes('egress'):
+      case _name.includes('-ingress') && _name.includes('-egress'):
         return 'STANDARD-INGRESS-EGRESS'
       case query.get('filter[labels.kuma.io/listener-zoneingress]') === 'enabled':
-      case _name.includes('ingress'):
+      case _name.includes('-ingress'):
         return 'STANDARD-INGRESS'
       case query.get('filter[labels.kuma.io/listener-zoneegress]') === 'enabled':
-      case _name.includes('egress'):
+      case _name.includes('-egress'):
         return 'STANDARD-EGRESS'
       default:
         return ''
