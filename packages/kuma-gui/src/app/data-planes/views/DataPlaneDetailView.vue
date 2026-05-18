@@ -170,18 +170,18 @@
                         </XBadge>
                       </dd>
                     </div>
-                    <div v-if="props.data.labels['kuma.io/listener-zoneingress'] || props.data.labels['kuma.io/listener-zoneegress']">
+                    <div v-if="props.data.zoneProxyTypes.length > 0">
                       <dt>
                         {{ t('http.api.property.zone-proxy') }}
                       </dt>
                       <dd>
                         <XBadge
-                          v-if="props.data.labels['kuma.io/listener-zoneingress']"
+                          v-if="props.data.zoneProxyTypes.includes('zone-ingress')"
                         >
                           {{ t(`data-planes.type.zone-ingress`) }}
                         </XBadge>
                         <XBadge
-                          v-if="props.data.labels['kuma.io/listener-zoneegress']"
+                          v-if="props.data.zoneProxyTypes.includes('zone-egress')"
                         >
                           {{ t(`data-planes.type.zone-egress`) }}
                         </XBadge>

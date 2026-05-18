@@ -202,16 +202,16 @@
 
               <template #zone-proxy="{ row: item }">
                 <XLayout
-                  v-if="item.labels['kuma.io/listener-zoneingress'] || item.labels['kuma.io/listener-zoneegress']"
+                  v-if="item.zoneProxyTypes.length > 0"
                   variant="x-stack"
                 >
                   <XBadge
-                    v-if="item.labels['kuma.io/listener-zoneingress']"
+                    v-if="item.zoneProxyTypes.includes('zone-ingress')"
                   >
                     {{ t(`data-planes.type.zone-ingress`) }}
                   </XBadge>
                   <XBadge
-                    v-if="item.labels['kuma.io/listener-zoneegress']"
+                    v-if="item.zoneProxyTypes.includes('zone-egress')"
                   >
                     {{ t(`data-planes.type.zone-egress`) }}
                   </XBadge>

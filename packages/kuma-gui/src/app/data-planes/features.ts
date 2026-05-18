@@ -18,7 +18,7 @@ export const features = () => {
       return mesh.meshServices.mode === 'Exclusive' &&
         dataplaneOverview.dataplaneType === 'standard' &&
         (dataplaneOverview.dataplaneInsight.metadata.features.includes('feature-unified-resource-naming') ||
-          ['kuma.io/listener-zoneingress', 'kuma.io/listener-zoneegress'].some(label => label in dataplaneOverview.labels))
+          dataplaneOverview.zoneProxyTypes.length > 0)
     },
   }
 }
