@@ -4,49 +4,45 @@ type KumaResourceTypeDescriptorCollection = paths['/_resources']['get']['respons
 type KumaResourceTypeDescriptor = KumaResourceTypeDescriptorCollection['resources'][number]
 
 const resourceCategories = new Map<string, string[]>([
-  ['circuitbreaker', ['reliability', 'performance']],
-  ['meshcircuitbreaker', ['reliability', 'performance']],
-  ['dataplane', ['traffic']],
-  ['externalservice', ['traffic']],
-  ['meshexternalservice', ['traffic']],
-  ['faultinjection', ['reliability']],
-  ['meshfaultinjection', ['reliability']],
-  ['globalsecret', ['security']],
-  ['healthcheck', ['reliability']],
-  ['meshhealthcheck', ['reliability']],
-  ['hostnamegenerator', ['traffic']],
-  ['mesh', ['traffic']],
-  ['meshaccesslog', ['observability']],
-  ['trafficlog', ['observability']],
-  ['meshgateway', ['traffic']],
-  ['meshgatewayroute', ['traffic']],
+  // resilience
+  ['circuitbreaker', ['resilience']],
+  ['meshcircuitbreaker', ['resilience']],
+  ['ratelimit', ['resilience']],
+  ['meshratelimit', ['resilience']],
+  ['retry', ['resilience']],
+  ['meshretry', ['resilience']],
+  ['healthcheck', ['resilience']],
+  ['meshhealthcheck', ['resilience']],
+  ['timeout', ['resilience']],
+  ['meshtimeout', ['resilience']],
+
+  // traffic
+  ['trafficroute', ['traffic']],
   ['meshhttproute', ['traffic']],
-  ['meshidentity', ['security']],
-  ['meshloadbalancingstrategy', ['performance', 'traffic']],
-  ['meshmetric', ['observability']],
-  ['meshmultizoneservice', ['traffic']],
-  ['meshpassthrough', ['traffic', 'performance']],
-  ['meshproxypatches', ['traffic', 'performance']],
-  ['meshratelimit', ['performance', 'reliability']],
-  ['ratelimit', ['performance', 'reliability']],
-  ['meshretry', ['reliability']],
-  ['retry', ['reliability']],
-  ['meshservice', ['traffic']],
   ['meshtcproute', ['traffic']],
+  ['meshloadbalancingstrategy', ['traffic']],
+  ['meshpassthrough', ['traffic']],
+  ['meshgatewayroute', ['traffic']],
+  
+  // security
+  ['trafficpermission', ['security']],
+  ['meshtrafficpermission', ['security']],
   ['meshtls', ['security']],
-  ['meshtimeout', ['performance', 'reliability']],
-  ['timeout', ['performance', 'reliability']],
+
+  // o11y
+  ['meshaccesslog', ['observability']],
+  ['meshmetric', ['observability']],
   ['meshtrace', ['observability']],
   ['traffictrace', ['observability']],
-  ['meshtrafficpermission', ['security']],
-  ['trafficpermission', ['security']],
-  ['meshtrust', ['security']],
-  ['proxytemplate', ['performance', 'traffic']],
-  ['secret', ['security']],
-  ['trafficroute', ['traffic']],
-  ['virtualoutbound', ['traffic']],
-  ['workload', ['traffic']],
-  ['zone', ['traffic']],
+  ['trafficlog', ['observability']],
+
+  // testing
+  ['faultinjection', ['testing']],
+  ['meshfaultinjection', ['testing']],
+
+  // advanced
+  ['meshproxypatch', ['advanced']],
+  ['proxytemplate', ['advanced']],
 ])
 
 export const ResourceTypeDescriptor = {
