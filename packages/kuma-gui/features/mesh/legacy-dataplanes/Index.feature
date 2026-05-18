@@ -36,6 +36,7 @@ Feature: mesh / dataplanes / index
                     kuma.io/service: service-1
                     kuma.io/zone: zone-1
                   state: Ready
+              listeners: !!js/undefined
           dataplaneInsight:
             mTLS:
               certificateExpirationTime: 2023-11-03T09:10:17Z
@@ -68,6 +69,7 @@ Feature: mesh / dataplanes / index
       """
       KUMA_DATAPLANE_COUNT: 1
       KUMA_SUBSCRIPTION_COUNT: 1
+      KUMA_DATAPLANELISTENER_COUNT: 0
       """
     And the URL "/meshes/default/dataplanes/_overview" responds with
       """
@@ -91,10 +93,10 @@ Feature: mesh / dataplanes / index
     When I visit the "/meshes/default/data-planes" URL
     Then the "$service-cell" element is empty
     Then the "$item:nth-child(1)" element contains
-      | Value         |
-      | dpp-2         |
-      | <mTLSColText> |
-      | Offline       |
+      | Value               |
+      | dpp-2               |
+      | <mTLSColText>       |
+      | Not connected to CP |
 
     Examples:
       | mTLS                                                | mTLSColText          |

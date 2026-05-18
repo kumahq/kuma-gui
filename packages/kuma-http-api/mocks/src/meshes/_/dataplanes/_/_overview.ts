@@ -31,6 +31,7 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
   const isTcpAccesslogViaNamedPipeEnabled = env('KUMA_DATAPLANE_TCP_ACCESSLOG_VIA_NAMED_PIPE', `${fake.datatype.boolean()}`) === 'true'
 
   const outboundCount = parseInt(env('KUMA_DATAPLANEOUTBOUND_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
+  const listenersCount = parseInt(env('KUMA_DATAPLANELISTENER_COUNT', `${fake.number.int({ min: 1, max: 5 })}`))
   const subscriptionCount = parseInt(env('KUMA_SUBSCRIPTION_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
 
   const type = (() => {
@@ -43,6 +44,18 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
         return 'DELEGATED'
       default:
         return 'STANDARD'
+    }
+  })()
+  const zoneProxyType = (() => {
+    switch(true) {
+      case name.includes('-ingress') && name.includes('-egress'):
+        return 'INGRESS-EGRESS'
+      case name.includes('-ingress'):
+        return 'INGRESS'
+      case name.includes('-egress'):
+        return 'EGRESS'
+      default:
+        return ''
     }
   })()
 
@@ -71,6 +84,19 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
           ...(fake.datatype.boolean() ? {
             advertisedAddress: fake.internet.ip(),
           } : {}),
+          ...(zoneProxyType !== '' && {
+            listeners: Array.from({ length: listenersCount }).map((_, i) => {
+              const isIngress = zoneProxyType === 'INGRESS-EGRESS' ? fake.datatype.boolean() : zoneProxyType.includes('INGRESS')
+              const port = fake.internet.port()
+              return {
+                address,
+                port,
+                name: fake.helpers.arrayElement([String(port), `${isIngress ? 'ingress' : 'egress'}-port`]),
+                state: fake.kuma.state(),
+                type: isIngress ? 'ZoneIngress' : 'ZoneEgress',
+              }
+            }),
+          }),
           ...(type === 'STANDARD' ? {
             // normal proxies have inbound and outbound
             inbound: Array.from({ length: inboundCount }).map((_, i) => {
@@ -91,7 +117,7 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
                   zone: isMultizone && fake.datatype.boolean() ? fake.word.noun() : undefined,
                 }),
                 ...(fake.datatype.boolean() ? {
-                  state: fake.kuma.inboundState(),
+                  state: fake.kuma.state(),
                 } : {}),
                 ...(fake.datatype.boolean() && { name: `${fake.word.noun()}-port` }),
               }

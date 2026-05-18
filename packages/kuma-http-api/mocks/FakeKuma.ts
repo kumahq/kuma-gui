@@ -156,7 +156,7 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
     return k8s ? this.k8s.dataplaneSuffix() : ''
   }
 
-  inboundState() {
+  state() {
     return this.faker.helpers.arrayElement(['Ready', 'NotReady', 'Ignored'])
   }
 
