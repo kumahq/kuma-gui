@@ -100,7 +100,6 @@ const icons = {
   unhealthy: RemoveIcon,
   submit: KeyboardReturnIcon,
   link: LinkIcon,
-  'zone-proxy': NetworkIcon,
   'zone-ingress': NetworkIcon,
   'zone-egress': NetworkIcon,
 } as const
