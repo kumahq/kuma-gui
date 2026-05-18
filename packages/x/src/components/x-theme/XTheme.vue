@@ -89,6 +89,13 @@ import '@kong-ui-public/app-layout/dist/style.css'
       background-color: var(--icon-color, var(--icon-color-zone, currentColor));
     }
   }
+  @keyframes icon-zone-egress {
+    100% {
+      -webkit-mask-image: var(--icon-zone-egress-glyph);
+      mask-image: var(--icon-zone-egress-glyph);
+      background-color: var(--icon-color, var(--icon-color-zone-egress, currentColor));
+    }
+  }
   @keyframes icon-mesh {
     100% {
       -webkit-mask-image: var(--icon-mesh-glyph);
@@ -295,6 +302,7 @@ import '@kong-ui-public/app-layout/dist/style.css'
     --icon-home-glyph: url('@/assets/images/navigation/icon-home.svg?inline');
     --icon-zone-glyph: url('@/assets/images/zone.svg?inline');
     --icon-mesh-glyph: url('@/assets/images/mesh.svg?inline');
+    --icon-zone-egress-glyph: url('@/assets/images/navigation/icon-zone-egresses.svg?inline');
     --icon-configuration-glyph: url('@/assets/images/navigation/icon-configuration.svg?inline');
     --icon-dataplane-standard-glyph: url('@/assets/images/east-west.svg?inline'); 
     --icon-dataplane-builtin-glyph: url('@/assets/images/gateway.svg?inline');
@@ -322,6 +330,7 @@ import '@kong-ui-public/app-layout/dist/style.css'
     --icon-home: icon-home;
     --icon-zone: icon-zone;
     --icon-mesh: icon-mesh;
+    --icon-zone-egress: icon-zone-egress;
     --icon-configuration: icon-configuration;
     --icon-workload: icon-workload;
     --icon-mesh-identity: icon-mesh-identity;
