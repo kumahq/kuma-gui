@@ -52,9 +52,6 @@ export const DataplaneOverview = {
         const networkEndpoints = [...networking.inbounds, ...networking.listeners]
         const unhealthy = networkEndpoints.filter((endpoint) => endpoint.state !== 'Ready')
         switch (true) {
-          case unhealthy.length === 0:
-            // All network endpoints being healthy means the Dataplane’s status is online.
-            return states.online
           case unhealthy.length === networkEndpoints.length:
             // All network endpoints being unhealthy means the Dataplane is offline.
             return states.offline
