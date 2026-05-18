@@ -296,6 +296,11 @@ export type DataplaneInbound = {
   name?: string
 }
 
+export type DataplaneListener = {
+  state: 'Ready' | 'NotReady' | 'Ignored'
+  port: number
+}
+
 export type DataplaneOutbound = {
   port: number
   tags: ServiceTags
@@ -306,6 +311,7 @@ export type DataplaneNetworking = {
   advertisedAddress?: string
   inbound?: DataplaneInbound[]
   outbound?: DataplaneOutbound[]
+  listeners?: DataplaneListener[]
   admin?: {
     port?: number
   }

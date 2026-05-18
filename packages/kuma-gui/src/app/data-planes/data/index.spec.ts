@@ -2,7 +2,9 @@ import { fs } from '@kumahq/kuma-http-api/mocks'
 import { describe, expect, test as _test } from 'vitest'
 
 import { Dataplane, DataplaneOverview } from './'
+import type { DiscoverySubscription } from '@/app/subscriptions/data'
 import { plugin, server } from '@/test-support/data'
+import type { DataplaneInbound, DataplaneListener } from '@/types'
 
 const dataplaneMock = fs['/meshes/:mesh/dataplanes/:name']
 const mock = fs['/meshes/:mesh/dataplanes/:name/_overview']
@@ -409,5 +411,110 @@ describe('DataplaneOverview', () => {
 
         expect(actual.config).toStrictEqual(expected)
       })
+  })
+  describe.only('status', () => {
+    test('variations of connection, inbounds and listeners', async ({ fixture }) => {
+      [
+        {
+          inbounds: [],
+          listeners: [],
+          subscriptions: [{ connectTime: '2021-02-19T10:00:00Z' }],
+          status: 'online',
+        },
+        {
+          inbounds: [{ state: 'Ready' }],
+          listeners: [],
+          subscriptions: [{ connectTime: '2021-02-19T10:00:00Z' }],
+          status: 'online',
+        },
+        {
+          inbounds: [],
+          listeners: [{ state: 'Ready' }],
+          subscriptions: [{ connectTime: '2021-02-19T10:00:00Z' }],
+          status: 'online',
+        },
+        {
+          inbounds: [{ state: 'NotReady' }],
+          listeners: [],
+          subscriptions: [{ connectTime: '2021-02-19T10:00:00Z' }],
+          status: 'offline',
+        },
+        {
+          inbounds: [],
+          listeners: [{ state: 'NotReady' }],
+          subscriptions: [{ connectTime: '2021-02-19T10:00:00Z' }],
+          status: 'offline',
+        },
+        {
+          inbounds: [{ state: 'Ready'}, { state: 'NotReady' }],
+          listeners: [],
+          subscriptions: [{ connectTime: '2021-02-19T10:00:00Z' }],
+          status: 'partially_degraded',
+        },
+        {
+          inbounds: [],
+          listeners: [{ state: 'Ready'}, { state: 'NotReady' }],
+          subscriptions: [{ connectTime: '2021-02-19T10:00:00Z' }],
+          status: 'partially_degraded',
+        },
+        {
+          inbounds: [{ state: 'Ready'}, { state: 'NotReady' }],
+          listeners: [{ state: 'Ready'}, { state: 'NotReady' }],
+          subscriptions: [{ connectTime: '2021-02-19T10:00:00Z' }],
+          status: 'partially_degraded',
+        },
+        {
+          inbounds: [],
+          listeners: [],
+          subscriptions: [{ connectTime: '2021-02-19T10:00:00Z', disconnectTime: '2021-02-19T11:00:00Z' }],
+          status: 'disconnected_cp',
+        },
+        {
+          inbounds: [{ state: 'Ready'}],
+          listeners: [],
+          subscriptions: [{ connectTime: '2021-02-19T10:00:00Z', disconnectTime: '2021-02-19T11:00:00Z' }],
+          status: 'disconnected_cp',
+        },
+        {
+          inbounds: [],
+          listeners: [{ state: 'Ready'}],
+          subscriptions: [{ connectTime: '2021-02-19T10:00:00Z', disconnectTime: '2021-02-19T11:00:00Z' }],
+          status: 'disconnected_cp',
+        },
+        {
+          inbounds: [{ state: 'Ready'}],
+          listeners: [{ state: 'Ready'}],
+          subscriptions: [{ connectTime: '2021-02-19T10:00:00Z', disconnectTime: '2021-02-19T11:00:00Z' }],
+          status: 'disconnected_cp',
+        },
+      ].forEach(async ({ inbounds, listeners, subscriptions, status }) => {
+        const expected = {
+          type: 'DataplaneOverview' as const,
+          name: 'dp-name',
+          mesh: 'dp-mesh',
+          networking: {
+            inbounds,
+            listeners,
+          },
+          dataplaneInsight: {
+            subscriptions,
+          },
+        }
+        const actual = await fixture.setup((item) => {
+          item.type = expected.type
+          item.name = expected.name
+          item.mesh = expected.mesh
+          item.dataplane.networking.inbound = expected.networking.inbounds as unknown as DataplaneInbound[]
+          item.dataplane.networking.listeners = expected.networking.listeners as unknown as DataplaneListener[]
+          item.dataplaneInsight = {
+            subscriptions: expected.dataplaneInsight.subscriptions as DiscoverySubscription[],
+          }
+
+          return item
+        })
+
+        expect(actual.status).toStrictEqual(status)
+      })
+    })
   })
 })

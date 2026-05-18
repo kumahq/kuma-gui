@@ -105,17 +105,9 @@ Feature: mesh / dataplanes / index
     Examples:
       | Status              | DisconnectTime              | Inbound                                | Listeners                              |
       | Online              | !!js/undefined              | !!js/undefined                         | !!js/undefined                         |
-      | Online              | !!js/undefined              | [{ state: Ready }]                     | !!js/undefined                         |
-      | Online              | !!js/undefined              | !!js/undefined                         | [{ state: Ready }]                     |
-      | Online              | !!js/undefined              | !!js/undefined                         | !!js/undefined                         |
       | Offline             | !!js/undefined              | [{ state: NotReady }]                  | !!js/undefined                         |
-      | Offline             | !!js/undefined              | !!js/undefined                         | [{ state: NotReady }]                  |
       | Partially degraded  | !!js/undefined              | [{ state: Ready },{ state: NotReady }] | !!js/undefined                         |
-      | Partially degraded  | !!js/undefined              | !!js/undefined                         | [{ state: Ready },{ state: NotReady }] |
-      | Partially degraded  | !!js/undefined              | [{ state: Ready },{ state: NotReady }] | [{ state: Ready },{ state: NotReady }] |
       | Not connected to CP | 2021-02-17T07:33:36.412683Z | [{ state: Ready }]                     | !!js/undefined                         |
-      | Not connected to CP | 2021-02-17T07:33:36.412683Z | !!js/undefined                         | [{ state: Ready }]                     |
-      | Not connected to CP | 2021-02-17T07:33:36.412683Z | [{ state: Ready },{ state: NotReady }] | [{ state: Ready },{ state: NotReady }] |
 
   Scenario: The Data Plane Proxy list has the expected minimal content
     Given the environment
