@@ -3,7 +3,6 @@ import { token, createInjections } from '@kumahq/container'
 import MeshActionGroup from './components/MeshActionGroup.vue'
 import MeshInsightsList from './components/MeshInsightsList.vue'
 import MeshStatus from './components/MeshStatus.vue'
-import { features } from './features'
 import locales from './locales/en-us/index.yaml'
 import { routes } from './routes'
 import type { SplitRouteRecordRaw } from './routes'
@@ -58,18 +57,17 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       ],
     }],
     [token('meshes.routes'), {
-      service: (r, can) => {
+      service: (r) => {
         return [
           (item: RouteRecordRaw) => {
             if (item.name === 'control-plane-root-view') {
-              item.children = (item.children ?? []).concat(routes(can, r[0], r[1], r[2], r[3], r[4], r[5]))
+              item.children = (item.children ?? []).concat(routes(r[0], r[1], r[2], r[3], r[4], r[5]))
             }
           },
         ]
       },
       arguments: [
         mesh.routes,
-        app.can,
       ],
       labels: [
         app.routeWalkers,
@@ -79,15 +77,6 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       service: () => locales,
       labels: [
         app.enUs,
-      ],
-    }],
-    [token('meshes.features'), {
-      service: features,
-      arguments: [
-        app.env,
-      ],
-      labels: [
-        app.features,
       ],
     }],
     ...servicesModule(mesh),
