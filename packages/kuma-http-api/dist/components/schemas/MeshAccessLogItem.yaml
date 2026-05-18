@@ -95,14 +95,18 @@ properties:
                         properties:
                           attributes:
                             description: |-
-                              Attributes can contain placeholders available on
+                              Attributes defines custom OpenTelemetry attributes. Keys must be static
+                              OpenTelemetry attribute names. Values can contain placeholders available on
                               https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
                             type: array
                             items:
                               properties:
                                 key:
+                                  description: Key is the OpenTelemetry attribute name.
                                   type: string
+                                  pattern: ^[a-z]([a-z0-9]|[._][a-z0-9])*$
                                 value:
+                                  description: Value can contain Kuma placeholders.
                                   type: string
                               required:
                                 - key
@@ -349,14 +353,18 @@ properties:
                         properties:
                           attributes:
                             description: |-
-                              Attributes can contain placeholders available on
+                              Attributes defines custom OpenTelemetry attributes. Keys must be static
+                              OpenTelemetry attribute names. Values can contain placeholders available on
                               https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
                             type: array
                             items:
                               properties:
                                 key:
+                                  description: Key is the OpenTelemetry attribute name.
                                   type: string
+                                  pattern: ^[a-z]([a-z0-9]|[._][a-z0-9])*$
                                 value:
+                                  description: Value can contain Kuma placeholders.
                                   type: string
                               required:
                                 - key
@@ -603,14 +611,18 @@ properties:
                         properties:
                           attributes:
                             description: |-
-                              Attributes can contain placeholders available on
+                              Attributes defines custom OpenTelemetry attributes. Keys must be static
+                              OpenTelemetry attribute names. Values can contain placeholders available on
                               https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
                             type: array
                             items:
                               properties:
                                 key:
+                                  description: Key is the OpenTelemetry attribute name.
                                   type: string
+                                  pattern: ^[a-z]([a-z0-9]|[._][a-z0-9])*$
                                 value:
+                                  description: Value can contain Kuma placeholders.
                                   type: string
                               required:
                                 - key
