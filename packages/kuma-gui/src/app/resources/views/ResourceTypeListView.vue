@@ -36,7 +36,15 @@
                     size="large"
                   >
                     <template
-                      v-for="options in [['all', 'security', 'traffic', 'observability', 'performance', 'reliability']]"
+                      v-for="options in [[
+                        'all',
+                        'resilience',
+                        'traffic',
+                        'security',
+                        'observability',
+                        'testing',
+                        'advanced',
+                      ]]"
                       :key="typeof options"
                     >
                       <XSelect
