@@ -409,7 +409,7 @@ describe('DataplaneOverview', () => {
         expect(actual.config).toStrictEqual(expected)
       })
   })
-  describe.only('status', () => {
+  describe('status', () => {
     test('variations of connection, inbounds and listeners', async ({ fixture }) => {
       [
         {
