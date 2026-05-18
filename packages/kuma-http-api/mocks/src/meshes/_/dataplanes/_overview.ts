@@ -41,6 +41,15 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
         return 'DELEGATED'
       case tags['kuma.io/service']?.includes('-builtin'):
         return 'BUILTIN'
+      case query.get('filter[labels.kuma.io/listener-zoneingress]') === 'enabled' && query.get('filter[labels.kuma.io/listener-zoneegress]') === 'enabled':
+      case _name.includes('-ingress') && _name.includes('-egress'):
+        return 'STANDARD-INGRESS-EGRESS'
+      case query.get('filter[labels.kuma.io/listener-zoneingress]') === 'enabled':
+      case _name.includes('-ingress'):
+        return 'STANDARD-INGRESS'
+      case query.get('filter[labels.kuma.io/listener-zoneegress]') === 'enabled':
+      case _name.includes('-egress'):
+        return 'STANDARD-EGRESS'
       default:
         return ''
     }
@@ -56,7 +65,7 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
         const isMultizone = fake.datatype.boolean()
         const isMtlsEnabled = isMtlsEnabledOverride !== '' ? isMtlsEnabledOverride === 'true' : fake.datatype.boolean()
 
-        const type = filterType || fake.helpers.arrayElement(['BUILTIN', 'DELEGATED', 'STANDARD'])
+        const type = filterType || fake.helpers.arrayElement(['BUILTIN', 'DELEGATED', 'STANDARD', 'INGRESS', 'EGRESS', 'INGRESS-EGRESS'])
         // we include the type in the name so when we link using the name
         // we keep the type in the URL so the corresponding item mock knows the type
         const name = `${fake.word.noun()}-${type.toLowerCase()}`
@@ -87,7 +96,7 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
                   ipFamilyMode: fake.helpers.arrayElement(['UnSpecified', 'DualStack', 'IPv4', 'IPv6']),
                 },
               }),
-              ...(type === 'STANDARD' ? {
+              ...(type.includes('STANDARD') ? {
                 // normal proxies have inbound and outbound
                 inbound: Array.from({ length: inboundCount }).map((_) => {
                   return {
@@ -130,14 +139,12 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
               }),
             },
           },
-          ...(k8s
-            ? {
-              labels: {
-                'kuma.io/display-name': displayName,
-                'k8s.kuma.io/namespace': nspace,
-              },
-            }
-            : {}),
+          labels: {
+            'kuma.io/display-name': displayName,
+            ...(k8s && { 'k8s.kuma.io/namespace': nspace }),
+            ...(type.includes('INGRESS') && { 'kuma.io/listener-zoneingress': 'enabled' }),
+            ...(type.includes('EGRESS') && { 'kuma.io/listener-zoneegress': 'enabled' }),
+          },
           dataplaneInsight: {
             ...(isMtlsEnabled ? { mTLS: fake.kuma.dataplaneMtls() } : {}),
             subscriptions: Array.from({ length: subscriptionCount }).map((item, i, arr) => {

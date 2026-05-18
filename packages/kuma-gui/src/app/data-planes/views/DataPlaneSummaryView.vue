@@ -144,6 +144,23 @@
                       </XAction>
                     </td>
                   </tr>
+                  <tr v-if="item.zoneProxyTypes.length > 0">
+                    <th scope="row">
+                      {{ t('http.api.property.zone-proxy') }}
+                    </th>
+                    <td>
+                      <XBadge
+                        v-if="item.zoneProxyTypes.includes('zone-ingress')"
+                      >
+                        {{ t(`data-planes.type.zone-ingress`) }}
+                      </XBadge>
+                      <XBadge
+                        v-if="item.zoneProxyTypes.includes('zone-egress')"
+                      >
+                        {{ t(`data-planes.type.zone-egress`) }}
+                      </XBadge>
+                    </td>
+                  </tr>
                   <tr>
                     <th scope="row">
                       {{ t('http.api.property.modificationTime') }}

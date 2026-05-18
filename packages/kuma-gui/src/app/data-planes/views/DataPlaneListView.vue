@@ -41,7 +41,7 @@
               :selected="route.params.dataplaneType"
               @change="(value: string) => route.update({ page: 1, dataplaneType: value })"
             >
-              <template #selected="{ item }: { item: 'all' | 'standard' | 'builtin' | 'delegated'}">
+              <template #selected="{ item }: { item: 'all' | 'standard' | 'builtin' | 'delegated' | 'zone-ingress' | 'zone-egress' }">
                 <XIcon
                   v-if="item !== 'all'"
                   :size="KUI_ICON_SIZE_40"
@@ -50,7 +50,7 @@
                 {{ t(`data-planes.type.${item}`) }}
               </template>
               <template
-                v-for="item in (['all', 'standard', 'builtin', 'delegated'] as const)"
+                v-for="item in (['all', 'standard', 'builtin', 'delegated', 'zone-ingress', 'zone-egress'] as const)"
                 :key="item"
                 #[`${item}-option`]
               >
@@ -92,6 +92,7 @@
                 { ...me.get('headers.namespace'), label: 'Namespace', key: 'namespace' },
                 ...(can('use zones') ? [{ ...me.get('headers.zone'), label: 'Zone', key: 'zone' }] : []),
                 ...(can('use service-insights', props.mesh) ? [{ ...me.get('headers.services'), label: 'Services', key: 'services' }] : []),
+                { ...me.get('headers.zone-proxy'), label: t('http.api.property.zone-proxy'), key: 'zone-proxy' },
                 { ...me.get('headers.certificate'), label: 'Certificate info', key: 'certificate' },
                 { ...me.get('headers.status'), label: 'Status', key: 'status' },
                 { ...me.get('headers.warnings'), label: 'Warnings', key: 'warnings', hideLabel: true },
@@ -197,6 +198,24 @@
                 <template v-else>
                   {{ t('common.collection.none') }}
                 </template>
+              </template>
+
+              <template #zone-proxy="{ row: item }">
+                <XLayout
+                  v-if="item.zoneProxyTypes.length > 0"
+                  variant="x-stack"
+                >
+                  <XBadge
+                    v-if="item.zoneProxyTypes.includes('zone-ingress')"
+                  >
+                    {{ t(`data-planes.type.zone-ingress`) }}
+                  </XBadge>
+                  <XBadge
+                    v-if="item.zoneProxyTypes.includes('zone-egress')"
+                  >
+                    {{ t(`data-planes.type.zone-egress`) }}
+                  </XBadge>
+                </XLayout>
               </template>
 
               <template #certificate="{ row }">

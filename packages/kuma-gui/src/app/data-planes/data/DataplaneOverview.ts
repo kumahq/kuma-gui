@@ -34,14 +34,27 @@ export const DataplaneOverview = {
     return {
       ...item,
       id: item.name,
-      name: labels['kuma.io/display-name'] ?? item.name,
+      name: labels['kuma.io/display-name'] || item.name,
       namespace: labels['k8s.kuma.io/namespace'] ?? '',
       dataplane: {
         networking,
       },
       labels,
       dataplaneInsight,
-      dataplaneType: networking.type === 'gateway' ? dpTypes.builtin : typeof networking.gateway !== 'undefined' ? dpTypes.delegated : dpTypes.standard,
+      dataplaneType: (() => {
+        switch (true) {
+          case networking.type === 'gateway':
+            return dpTypes.builtin
+          case typeof networking.gateway !== 'undefined':
+            return dpTypes.delegated
+          default:
+            return dpTypes.standard
+        }
+      })(),
+      zoneProxyTypes: [
+        ...labels['kuma.io/listener-zoneingress'] ? ['zone-ingress'] : [],
+        ...labels['kuma.io/listener-zoneegress'] ? ['zone-egress'] : [],
+      ],
       status: (() => {
         const state = typeof dataplaneInsight.connectedSubscription !== 'undefined' ? states.online : states.offline
         if (networking.gateway) {
