@@ -53,12 +53,21 @@
           </XBadge>
         </XLayout>
         <XNotification
-          :notify="props.data.status === 'disconnected_cp' || props.data.status === 'offline'"
+          :notify="props.data.status === 'offline'"
           data-testid="warning-dataplane-offline"
           :uri="`data-planes.notifications.dataplane-offline.${props.data.id}`"
         >
           <XI18n
             path="data-planes.notifications.dataplane-offline"
+          />
+        </XNotification>
+        <XNotification
+          :notify="props.data.status === 'disconnected_cp'"
+          data-testid="warning-dataplane-disconnected-cp"
+          :uri="`data-planes.notifications.dataplane-disconnected-cp.${props.data.id}`"
+        >
+          <XI18n
+            path="data-planes.notifications.dataplane-disconnected-cp"
           />
         </XNotification>
       </template>
