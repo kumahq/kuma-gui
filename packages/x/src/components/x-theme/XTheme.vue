@@ -304,7 +304,7 @@ import '@kong-ui-public/app-layout/dist/style.css'
     --icon-mesh-glyph: url('@/assets/images/mesh.svg?inline');
     --icon-zone-egress-glyph: url('@/assets/images/navigation/icon-zone-egresses.svg?inline');
     --icon-configuration-glyph: url('@/assets/images/navigation/icon-configuration.svg?inline');
-    --icon-dataplane-standard-glyph: url('@/assets/images/east-west.svg?inline'); 
+    --icon-dataplane-standard-glyph: url('@/assets/images/east-west.svg?inline');
     --icon-dataplane-builtin-glyph: url('@/assets/images/gateway.svg?inline');
     --icon-dataplane-delegated-glyph: url('@/assets/images/gateway.svg?inline');
     --icon-subscription-glyph: url('@/assets/images/subscriptions.svg?inline');
