@@ -416,12 +416,6 @@ describe('DataplaneOverview', () => {
     test('variations of connection, inbounds and listeners', async ({ fixture }) => {
       [
         {
-          inbounds: [],
-          listeners: [],
-          subscriptions: [{ connectTime: '2021-02-19T10:00:00Z' }],
-          status: 'online',
-        },
-        {
           inbounds: [{ state: 'Ready' }],
           listeners: [],
           subscriptions: [{ connectTime: '2021-02-19T10:00:00Z' }],
@@ -432,6 +426,12 @@ describe('DataplaneOverview', () => {
           listeners: [{ state: 'Ready' }],
           subscriptions: [{ connectTime: '2021-02-19T10:00:00Z' }],
           status: 'online',
+        },
+        {
+          inbounds: [],
+          listeners: [],
+          subscriptions: [{ connectTime: '2021-02-19T10:00:00Z' }],
+          status: 'offline',
         },
         {
           inbounds: [{ state: 'NotReady' }],
