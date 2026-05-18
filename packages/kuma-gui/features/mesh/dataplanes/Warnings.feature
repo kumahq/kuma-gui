@@ -11,6 +11,7 @@ Feature: mesh / dataplanes / warnings
       | unsupported-zone-warning        | [data-testid^='notification-data-planes.notifications.dp-zone-cp-incompatible']         |
       | networking-transparent-proxying | [data-testid^='notification-data-planes.notifications.networking-transparent-proxying'] |
       | dataplane-offline               | [data-testid^='notification-data-planes.notifications.dataplane-offline']               |
+      | dataplane-disconnected-cp       | [data-testid^='notification-data-planes.notifications.dataplane-disconnected-cp']       |
     And the environment
       """
       KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: true
@@ -140,6 +141,31 @@ Feature: mesh / dataplanes / warnings
     Then the "$networking-transparent-proxying" element exists
 
   Scenario: Dataplane offline notification
+    And the environment
+      """
+      KUMA_DATAPLANEINBOUND_COUNT: 1
+      """
+    And the URL "/meshes/default/dataplanes/dpp-1/_overview" responds with
+      """
+      body:
+        dataplane:
+          networking:
+            outbound: !!js/undefined
+            inbound:
+              - state: NotReady
+            listeners: !!js/undefined
+        dataplaneInsight:
+          subscriptions:
+            - connectTime: 2022-10-03T12:40:13Z
+              disconnectTime: !!js/undefined
+          metadata:
+            features: !!js/undefined
+      """
+    When I visit the "/meshes/default/data-planes/dpp-1/overview" URL
+    Then the "$dataplane-offline" element exists
+    Then the "$networking-transparent-proxying" element exists
+
+  Scenario: Dataplane disconnected CP notification
     And the URL "/meshes/default/dataplanes/dpp-1/_overview" responds with
       """
       body:
@@ -154,4 +180,4 @@ Feature: mesh / dataplanes / warnings
             features: !!js/undefined
       """
     When I visit the "/meshes/default/data-planes/dpp-1/overview" URL
-    Then the "$dataplane-offline" element exists
+    Then the "$dataplane-disconnected-cp" element exists
