@@ -42,14 +42,20 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
       case defaultType === 'delegated':
       case name.includes('-delegated'):
         return 'DELEGATED'
-      case name.includes('ingress') && name.includes('egress'):
-        return 'INGRESS-EGRESS'
-      case name.includes('ingress'):
-        return 'INGRESS'
-      case name.includes('egress'):
-        return 'EGRESS'
       default:
         return 'STANDARD'
+    }
+  })()
+  const zoneProxyType = (() => {
+    switch(true) {
+      case name.includes('-ingress') && name.includes('-egress'):
+        return 'INGRESS-EGRESS'
+      case name.includes('-ingress'):
+        return 'INGRESS'
+      case name.includes('-egress'):
+        return 'EGRESS'
+      default:
+        return ''
     }
   })()
 
@@ -78,9 +84,9 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
           ...(fake.datatype.boolean() ? {
             advertisedAddress: fake.internet.ip(),
           } : {}),
-          ...((type.includes('INGRESS') || type.includes('EGRESS')) && {
+          ...(zoneProxyType !== '' && {
             listeners: Array.from({ length: listenersCount }).map((_, i) => {
-              const isIngress = type === 'INGRESS-EGRESS' ? fake.datatype.boolean() : type.includes('INGRESS')
+              const isIngress = zoneProxyType === 'INGRESS-EGRESS' ? fake.datatype.boolean() : zoneProxyType.includes('INGRESS')
               const port = fake.internet.port()
               return {
                 address,
