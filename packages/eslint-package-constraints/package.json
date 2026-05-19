@@ -1,0 +1,16 @@
+{
+  "name": "@kumahq/eslint-package-constraints",
+  "version": "0.1.0",
+  "private": true,
+  "description": "ESLint flat config for enforcing package.json and workflow constraints",
+  "author": "Kong",
+  "type": "module",
+  "main": "src/index.ts",
+  "dependencies": {
+    "escape-string-regexp": "^4.0.0",
+    "eslint-plugin-json-schema-validator": "^6.2.0"
+  },
+  "devDependencies": {
+    "@kumahq/config": "*"
+  }
+}

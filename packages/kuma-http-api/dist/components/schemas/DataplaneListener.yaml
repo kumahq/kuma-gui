@@ -1,0 +1,19 @@
+type: object
+properties:
+  kri:
+    type: string
+  type:
+    type: string
+    enum:
+      - ZoneIngress
+      - ZoneEgress
+  port:
+    type: integer
+    x-go-type: int32
+  proxyResourceName:
+    type: string
+required:
+  - kri
+  - type
+  - port
+  - proxyResourceName

@@ -3,7 +3,16 @@
 import { eslint } from '@kumahq/config'
 
 const config = [
-  ...eslint({}),
+  ...eslint({
+    dependencyIgnorePatterns: {
+      dependencies: {
+        '@kong-ui-public/app-layout': {
+          '$ref': '#/definitions/exactOnlyVersion',
+        },
+      },
+    },
+  }),
 ]
+
 
 export default config

@@ -4,13 +4,14 @@ import type { components } from '@kumahq/kuma-http-api'
 type DataplaneNetworkingLayout = components['schemas']['DataplaneNetworkingLayout']
 type DataplaneInbound = components['schemas']['DataplaneInbound']
 type DataplaneOutbound = components['schemas']['DataplaneOutbound']
+type DataplaneListener = components['schemas']['DataplaneListener']
 
 export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
   const mesh = req.params.mesh as string
   const name = req.params.name as string
 
   const parts = String(name).split('.')
-  const displayName = parts.slice(0, -1).join('.')
+  const displayName = parts.slice(0, -1).join('.') || name
   const nspace = parts.at(-1) ?? ''
 
   const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
@@ -36,6 +37,8 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
       }),
     }
   })
+  const listeners = parseInt(env('KUMA_DATAPLANELISTENER_COUNT', `${fake.number.int({ min: 0, max: 50 })}`))
+  const zone = fake.word.noun()
 
   return {
     headers: {},
@@ -43,16 +46,17 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
       kri: fake.kuma.kri({
         resourceName: 'Dataplane',
         mesh,
+        zone,
         namespace: nspace,
         name: displayName,
-        sectionName: 'default',
+        sectionName: '',
       }),
       spiffeId: fake.kuma.spiffeId({ mesh, namespace: nspace, sa: displayName }),
       labels: {
         'kuma.io/display-name': displayName,
         'kuma.io/origin': fake.kuma.origin(),
         'kuma.io/mesh': mesh || fake.word.noun(),
-        'kuma.io/zone': fake.word.noun(),
+        'kuma.io/zone': zone,
         ...(k8s
           ? {
             'k8s.kuma.io/namespace': nspace,
@@ -65,6 +69,7 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
           kri: fake.kuma.kri({
             resourceName: 'Dataplane',
             mesh,
+            zone,
             namespace: nspace,
             name: displayName,
             sectionName,
@@ -81,6 +86,24 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
           protocol,
           proxyResourceName: kri,
         } satisfies DataplaneOutbound
+      }),
+      listeners: Array.from({ length: listeners }).map(() => {
+        const port = fake.number.int({ min: 1, max: 65535 })
+        const type = fake.helpers.arrayElement(['ZoneIngress', 'ZoneEgress'])
+        const kri = fake.kuma.kri({
+          resourceName: 'Dataplane',
+          mesh,
+          zone,
+          namespace: nspace,
+          name: displayName,
+          sectionName: String(port),
+        })
+        return {
+          kri,
+          port,
+          proxyResourceName: fake.kuma.contextualKri({ context: `${type.toLowerCase()}_dp`, name: String(port) }),
+          type,
+        } satisfies DataplaneListener
       }),
     } satisfies DataplaneNetworkingLayout,
   }
