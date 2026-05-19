@@ -149,16 +149,20 @@
                       {{ t('http.api.property.zone-proxy') }}
                     </th>
                     <td>
-                      <XBadge
-                        v-if="item.zoneProxyTypes.includes('zone-ingress')"
+                      <XLayout
+                        variant="separated"
                       >
-                        {{ t(`data-planes.type.zone-ingress`) }}
-                      </XBadge>
-                      <XBadge
-                        v-if="item.zoneProxyTypes.includes('zone-egress')"
-                      >
-                        {{ t(`data-planes.type.zone-egress`) }}
-                      </XBadge>
+                        <XBadge
+                          v-if="item.zoneProxyTypes.includes('zone-ingress')"
+                        >
+                          {{ t(`data-planes.type.zone-ingress`) }}
+                        </XBadge>
+                        <XBadge
+                          v-if="item.zoneProxyTypes.includes('zone-egress')"
+                        >
+                          {{ t(`data-planes.type.zone-egress`) }}
+                        </XBadge>
+                      </XLayout>
                     </td>
                   </tr>
                   <tr>

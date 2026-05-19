@@ -203,7 +203,7 @@
               <template #zone-proxy="{ row: item }">
                 <XLayout
                   v-if="item.zoneProxyTypes.length > 0"
-                  variant="x-stack"
+                  variant="separated"
                 >
                   <XBadge
                     v-if="item.zoneProxyTypes.includes('zone-ingress')"
