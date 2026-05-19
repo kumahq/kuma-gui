@@ -45,11 +45,13 @@ export default ({ fake }: Dependencies): ResponseHandler => (req) => {
           },
           type: 'Pem',
         }],
-        origin: {
-          kri: fake.kuma.kri({ resourceName: 'MeshIdentity', mesh, namespace, zone }),
-        },
         trustDomain: `${mesh}.${fake.word.noun()}.mesh.local`,
       } satisfies components['schemas']['MeshTrustItem']['spec'],
+      status: {
+        origin: {
+          kri: fake.kuma.kri({ shortName: 'mid', mesh, namespace, zone }),
+        }
+      } satisfies components['schemas']['MeshTrustItem']['status']
     },
   }
 }
