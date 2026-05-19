@@ -25,6 +25,10 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
       return `${fake.word.noun()}_svc_${fake.number.int({ min: 1, max: 65535 })}`
     }
   })
+  const listenerCount = parseInt(env('KUMA_DATAPLANELISTENER_COUNT', `${fake.number.int({ min: 0, max: 50 })}`))
+  const listeners = Array.from({ length: listenerCount }).map(() => ({
+    port: fake.number.int({ min: 1, max: 65535 }),
+  }))
   const address = fake.internet.ip()
   fake.kuma.seed()
   if (env('KUMA_CLUSTER_NAME', '').length > 0) {
@@ -35,6 +39,15 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
     min: 0,
     max: fake.number.int({ max: 100000 }),
   }
+
+  const listenerStats = listeners.map(({ port }) => {
+    return `
+listener.self_zoneingress_dp_${port}.downstream.cx_active: ${fake.number.int(minMax)}
+listener.self_zoneingress_dp_${port}.downstream.cx_total: ${fake.number.int(minMax)}
+listener.self_zoneegress_dp_${port}.downstream.cx_active: ${fake.number.int(minMax)}
+listener.self_zoneegress_dp_${port}.downstream.cx_total: ${fake.number.int(minMax)}
+    `
+  })
 
   const inbounds = ports.map(item => {
     const port = item.port
@@ -672,6 +685,7 @@ tcp.${service}.${direction}_cx_rx_bytes_total: ${fake.number.int(minMax)}`
     },
     body: `${outbounds}
 ${inbounds}
+${listenerStats}
 ${passthrough}
 ${stats()}${isSpireEnabled ? `\n${spireStats({ service: services[0] })}` : ''}`,
   }

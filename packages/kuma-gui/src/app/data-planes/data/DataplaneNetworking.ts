@@ -38,6 +38,7 @@ export const DataplaneNetworkingLayout = {
         const kri = Kri.fromString(item.kri)
         return {
           ...item,
+          protocol: item.type === 'ZoneIngress' ? 'tcp' : '',
           stat_prefix: item.proxyResourceName,
           portName: kri.sectionName !== String(item.port) ? kri.sectionName : undefined,
         }

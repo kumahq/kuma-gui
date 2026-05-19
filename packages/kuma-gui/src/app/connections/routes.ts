@@ -77,11 +77,6 @@ export const routes = (prefix: string): RouteRecordRaw[] => {
           component: () => import('@/app/connections/views/ConnectionListenerSummaryStatsView.vue'),
         },
         {
-          path: 'clusters',
-          name: `${prefix}-connection-listener-summary-clusters-view`,
-          component: () => import('@/app/connections/views/ConnectionListenerSummaryClustersView.vue'),
-        },
-        {
           path: 'xds-config',
           name: `${prefix}-connection-listener-summary-xds-config-view`,
           component: () => import('@/app/connections/views/ConnectionListenerSummaryXdsConfigView.vue'),

@@ -568,7 +568,12 @@
                   <XLayout
                     variant="columns"
                   >
-                    <ConnectionTraffic>
+                  <XLayout
+                    variant="y-stack"
+                  >
+                    <ConnectionTraffic
+                      v-if="dataplaneLayout.inbounds.length > 0 || dataplaneLayout.listeners.length === 0"
+                    >
                       <template
                         #title
                       >
@@ -687,8 +692,22 @@
                           </ConnectionGroup>
                         </template>
                       </template>
-                        <!-- LISTENERS -->
+                      </ConnectionTraffic>
 
+                      <ConnectionTraffic
+                        v-if="dataplaneLayout.listeners.length > 0"
+                      >
+                      <template #title>
+                        <XLayout
+                          variant="separated"
+                        >
+                          <XIcon
+                            name="listener"
+                          />
+                          <span>Listeners</span>
+                        </XLayout>
+                      </template>
+                      
                       <template
                         v-for="(listenersByPort, port) in [Object.groupBy(props.data.dataplane.networking.listeners.filter((item) => !!item.port), (item) => item.port!)]"
                         :key="port"
@@ -715,7 +734,7 @@
                                 >
                                   <ConnectionCard
                                     data-testid="dataplane-listener"
-                                    :protocol="traffic?.listeners[item.proxyResourceName] && 'http' in traffic.listeners[item.proxyResourceName] ? 'http' : 'tcp'"
+                                    :protocol="item.protocol"
                                     :traffic="traffic?.listeners[item.proxyResourceName]"
                                     data-actionable
                                   >
@@ -760,6 +779,7 @@
                         </template>
                       </template>
                     </ConnectionTraffic>
+                    </XLayout>
 
                     <ConnectionTraffic>
                       <template
@@ -985,7 +1005,7 @@
 
 <script lang="ts" setup>
 import { KUI_ICON_SIZE_40 } from '@kong/design-tokens'
-import { getTransitionRawChildren, ref } from 'vue'
+import { ref } from 'vue'
 
 import { sources } from '../sources'
 import StatusBadge from '@/app/common/StatusBadge.vue'

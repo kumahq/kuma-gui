@@ -6,7 +6,7 @@
       connection: '',
     }"
     :name="props.routeName"
-    v-slot="{ t, route, uri }"
+    v-slot="{ t }"
   >
     <AppView>
       <XLayout variant="y-stack">
@@ -14,14 +14,13 @@
           v-for="listener in [props.dataPlaneOverview.dataplane.networking.listeners.find((item) => item.port === props.data.port)]"
           :key="typeof listener"
         >
-          {{ console.log(listener) }}
           <XTable
             v-if="listener"
             variant="kv"
           >
             <tr>
               <th scope="row">
-                Type
+                {{ t('http.api.property.type') }}
               </th>
               <td>
                 <XBadge>
@@ -29,9 +28,19 @@
                 </XBadge>
               </td>
             </tr>
+            <tr v-if="listener.type === 'ZoneIngress'">
+              <th scope="row">
+                {{ t('http.api.property.protocol') }}
+              </th>
+              <td>
+                <XBadge>
+                  TCP
+                </XBadge>
+              </td>
+            </tr>
             <tr>
               <th scope="row">
-                Address
+                {{ t('http.api.property.address') }}
               </th>
               <td>
                 <XCopyButton
@@ -43,7 +52,7 @@
               v-if="listener.port"
             >
               <th scope="row">
-                Port
+                {{ t('http.api.property.port') }}
               </th>
               <td>
                 <XCopyButton

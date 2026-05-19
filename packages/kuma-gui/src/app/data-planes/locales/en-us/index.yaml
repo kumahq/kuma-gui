@@ -41,6 +41,7 @@ data-planes:
       4xx: 4xx
       5xx: 5xx
       cx: Total connections
+      cx_active: Active connections
       tx: Bytes sent
       rx: Bytes received
       grpc_success: Successful
