@@ -50,8 +50,8 @@ export default ({ fake }: Dependencies): ResponseHandler => (req) => {
       status: {
         origin: {
           kri: fake.kuma.kri({ shortName: 'mid', mesh, namespace, zone }),
-        }
-      } satisfies components['schemas']['MeshTrustItem']['status']
+        },
+      } satisfies components['schemas']['MeshTrustItem']['status'],
     },
   }
 }

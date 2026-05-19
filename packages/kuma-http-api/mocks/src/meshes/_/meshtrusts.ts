@@ -39,8 +39,8 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
         status: {
           origin: {
             kri: fake.kuma.kri({ shortName: 'mid', mesh, namespace, zone }),
-          }
-        }
+          },
+        },
       }) satisfies components['schemas']['MeshTrustItem']),
     },
   }
