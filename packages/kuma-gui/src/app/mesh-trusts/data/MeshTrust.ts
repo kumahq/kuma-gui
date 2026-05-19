@@ -9,12 +9,8 @@ export const MeshTrust = {
     return {
       kri: Kri.toString({ shortName: 'mtrust', mesh: item.mesh, name: item.name }),
       ...item,
-      status: {
-        ...item.status,
-        origin: {
-          ...item.status?.origin,
-          kri: item.status?.origin?.kri ?? '',
-        },
+      origin: {
+        kri: item.status?.origin?.kri ?? item.spec.origin?.kri ?? '',
       },
       raw: item,
     }
