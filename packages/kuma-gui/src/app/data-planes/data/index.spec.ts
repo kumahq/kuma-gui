@@ -2,9 +2,7 @@ import { fs } from '@kumahq/kuma-http-api/mocks'
 import { describe, expect, test as _test } from 'vitest'
 
 import { Dataplane, DataplaneOverview } from './'
-import type { DiscoverySubscription } from '@/app/subscriptions/data'
 import { plugin, server } from '@/test-support/data'
-import type { DataplaneInbound, DataplaneListener } from '@/types'
 
 const dataplaneMock = fs['/meshes/:mesh/dataplanes/:name']
 const mock = fs['/meshes/:mesh/dataplanes/:name/_overview']
@@ -422,44 +420,44 @@ describe('DataplaneOverview', () => {
           status: 'online',
         },
         {
-          inbounds: [{ state: 'Ready' }],
+          inbounds: [{ state: 'Ready' as const }],
           listeners: [],
           subscriptions: [{ connectTime: '2021-02-19T10:00:00Z' }],
           status: 'online',
         },
         {
           inbounds: [],
-          listeners: [{ state: 'Ready' }],
+          listeners: [{ state: 'Ready' as const }],
           subscriptions: [{ connectTime: '2021-02-19T10:00:00Z' }],
           status: 'online',
         },
         {
-          inbounds: [{ state: 'NotReady' }],
+          inbounds: [{ state: 'NotReady' as const }],
           listeners: [],
           subscriptions: [{ connectTime: '2021-02-19T10:00:00Z' }],
           status: 'offline',
         },
         {
           inbounds: [],
-          listeners: [{ state: 'NotReady' }],
+          listeners: [{ state: 'NotReady' as const }],
           subscriptions: [{ connectTime: '2021-02-19T10:00:00Z' }],
           status: 'offline',
         },
         {
-          inbounds: [{ state: 'Ready'}, { state: 'NotReady' }],
+          inbounds: [{ state: 'Ready' as const }, { state: 'NotReady' as const }],
           listeners: [],
           subscriptions: [{ connectTime: '2021-02-19T10:00:00Z' }],
           status: 'partially_degraded',
         },
         {
           inbounds: [],
-          listeners: [{ state: 'Ready'}, { state: 'NotReady' }],
+          listeners: [{ state: 'Ready' as const }, { state: 'NotReady' as const }],
           subscriptions: [{ connectTime: '2021-02-19T10:00:00Z' }],
           status: 'partially_degraded',
         },
         {
-          inbounds: [{ state: 'Ready'}, { state: 'NotReady' }],
-          listeners: [{ state: 'Ready'}, { state: 'NotReady' }],
+          inbounds: [{ state: 'Ready' as const } , { state: 'NotReady' as const }],
+          listeners: [{ state: 'Ready' as const }, { state: 'NotReady' as const }],
           subscriptions: [{ connectTime: '2021-02-19T10:00:00Z' }],
           status: 'partially_degraded',
         },
@@ -470,47 +468,51 @@ describe('DataplaneOverview', () => {
           status: 'disconnected_cp',
         },
         {
-          inbounds: [{ state: 'Ready'}],
+          inbounds: [{ state: 'Ready' as const }],
           listeners: [],
           subscriptions: [{ connectTime: '2021-02-19T10:00:00Z', disconnectTime: '2021-02-19T11:00:00Z' }],
           status: 'disconnected_cp',
         },
         {
           inbounds: [],
-          listeners: [{ state: 'Ready'}],
+          listeners: [{ state: 'Ready' as const }],
           subscriptions: [{ connectTime: '2021-02-19T10:00:00Z', disconnectTime: '2021-02-19T11:00:00Z' }],
           status: 'disconnected_cp',
         },
         {
-          inbounds: [{ state: 'Ready'}],
-          listeners: [{ state: 'Ready'}],
+          inbounds: [{ state: 'Ready' as const }],
+          listeners: [{ state: 'Ready' as const }],
           subscriptions: [{ connectTime: '2021-02-19T10:00:00Z', disconnectTime: '2021-02-19T11:00:00Z' }],
           status: 'disconnected_cp',
         },
       ].forEach(async ({ inbounds, listeners, subscriptions, status }) => {
-        const expected = {
-          type: 'DataplaneOverview' as const,
-          name: 'dp-name',
-          mesh: 'dp-mesh',
-          networking: {
-            inbounds,
-            listeners,
-          },
-          dataplaneInsight: {
-            subscriptions,
-          },
-        }
         const actual = await fixture.setup((item) => {
-          item.type = expected.type
-          item.name = expected.name
-          item.mesh = expected.mesh
-          item.dataplane.networking.inbound = expected.networking.inbounds as unknown as DataplaneInbound[]
-          item.dataplane.networking.listeners = expected.networking.listeners as unknown as DataplaneListener[]
+          item.name = 'test-zone-ingress'
+          item.dataplane.networking.inbound?.forEach((item, i) => {
+            item.state = inbounds[i]?.state
+            return item
+          })
+          item.dataplane.networking.listeners = item.dataplane.networking.listeners?.map((item, i) => {
+            item.state = listeners[i]?.state
+            return item
+          })
           item.dataplaneInsight = {
-            subscriptions: expected.dataplaneInsight.subscriptions as DiscoverySubscription[],
+            ...item.dataplaneInsight,
+            subscriptions: item.dataplaneInsight?.subscriptions.map((item, i) => {
+              item.connectTime = subscriptions[i]?.connectTime
+              item.disconnectTime = 'disconnectTime' in subscriptions[i] ? subscriptions[i]?.disconnectTime : undefined
+              return item
+            }) ?? [],
           }
 
           return item
+        }, {
+          env: {
+            KUMA_DATAPLANE_ZONEPROXY_TYPE: 'ingress',
+            KUMA_SUBSCRIPTION_COUNT: String(subscriptions.length),
+            KUMA_DATAPLANEINBOUND_COUNT: String(inbounds.length),
+            KUMA_DATAPLANELISTENER_COUNT: String(listeners.length),
+          },
         })
 
         expect(actual.status).toStrictEqual(status)

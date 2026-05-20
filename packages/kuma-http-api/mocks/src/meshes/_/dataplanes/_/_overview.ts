@@ -23,6 +23,7 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
   const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
   const isMtlsEnabledOverride = env('KUMA_MTLS_ENABLED', '')
   const defaultType = env('KUMA_DATAPLANE_TYPE', '')
+  const defaultZoneProxyType = env('KUMA_DATAPLANE_ZONEPROXY_TYPE', '')
   const unifiedResourceNaming = env('KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED', '')
   const isTlsIssuedMeshIdentity = env('KUMA_DATAPLANE_TLS_ISSUED_MESHIDENTITY', `${fake.datatype.boolean()}`) === 'true'
   const isUnifiedResourceNamingEnabled = unifiedResourceNaming.length ? unifiedResourceNaming === 'true' : fake.datatype.boolean()
@@ -34,30 +35,33 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
   const listenersCount = parseInt(env('KUMA_DATAPLANELISTENER_COUNT', `${fake.number.int({ min: 1, max: 5 })}`))
   const subscriptionCount = parseInt(env('KUMA_SUBSCRIPTION_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
 
-  const type = (() => {
+  const type = ((type) => {
     switch (true) {
-      case defaultType === 'builtin':
+      case type === 'builtin':
       case name.includes('-builtin'):
         return 'BUILTIN'
-      case defaultType === 'delegated':
+      case type === 'delegated':
       case name.includes('-delegated'):
         return 'DELEGATED'
       default:
         return 'STANDARD'
     }
-  })()
-  const zoneProxyType = (() => {
+  })(defaultType)
+  const zoneProxyType = ((type) => {
     switch(true) {
+      case type === 'ingress-egress':
       case name.includes('-ingress') && name.includes('-egress'):
         return 'INGRESS-EGRESS'
+      case type === 'ingress':
       case name.includes('-ingress'):
         return 'INGRESS'
+      case type === 'egress':
       case name.includes('-egress'):
         return 'EGRESS'
       default:
         return ''
     }
-  })()
+  })(defaultZoneProxyType)
 
   const isMultizone = fake.datatype.boolean()
   const isMtlsEnabled = isTlsIssuedMeshIdentity || (isMtlsEnabledOverride !== '' ? isMtlsEnabledOverride === 'true' : fake.datatype.boolean())
