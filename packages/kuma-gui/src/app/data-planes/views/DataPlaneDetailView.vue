@@ -170,6 +170,27 @@
                         </XBadge>
                       </dd>
                     </div>
+                    <div v-if="props.data.zoneProxyTypes.length > 0">
+                      <dt>
+                        {{ t('http.api.property.zone-proxy') }}
+                      </dt>
+                      <dd>
+                        <XLayout
+                          variant="separated"
+                        >
+                          <XBadge
+                            v-if="props.data.zoneProxyTypes.includes('zone-ingress')"
+                          >
+                            {{ t(`data-planes.type.zone-ingress`) }}
+                          </XBadge>
+                          <XBadge
+                            v-if="props.data.zoneProxyTypes.includes('zone-egress')"
+                          >
+                            {{ t(`data-planes.type.zone-egress`) }}
+                          </XBadge>
+                        </XLayout>
+                      </dd>
+                    </div>
                     <div
                       v-if="props.data.namespace.length > 0"
                     >

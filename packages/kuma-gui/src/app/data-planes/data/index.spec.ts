@@ -385,6 +385,9 @@ describe('DataplaneOverview', () => {
           mesh: 'dp-mesh',
           creationTime: '2021-02-19T07:06:16.384057Z',
           modificationTime: '2021-02-29T07:06:00.00Z',
+          labels: {
+            'kuma.io/display-name': 'zone',
+          },
           networking: {
             address: '167.61.18.108',
             type: 'sidecar',

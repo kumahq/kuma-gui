@@ -70,8 +70,12 @@ Feature: mesh / workloads / item / overview
       body:
         items:
           - name: workload-1-dataplane-1
+            labels:
+              kuma.io/display-name: workload-1-dataplane-1
             mesh: default
           - name: workload-1-dataplane-2
+            labels:
+              kuma.io/display-name: workload-1-dataplane-2
             mesh: default
       """
     When I visit the "/meshes/default/workloads/kri_wl_default_z1_ns1_workload-1_/overview" URL

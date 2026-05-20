@@ -7,6 +7,8 @@ Feature: mesh / dataplanes / item / overview
     And the environment
       """
       KUMA_DATAPLANE_COUNT: 1
+      KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: true
+      KUMA_MESHSERVICE_MODE: Exclusive
       """
     And the URL "/meshes/default/dataplanes/dataplane-1/_overview" responds with
       """
@@ -19,6 +21,8 @@ Feature: mesh / dataplanes / item / overview
           kuma.io/display-name: dataplane-1
           kuma.io/zone: zone-1
           kuma.io/origin: zone
+          kuma.io/listener-zoneingress: enabled
+          kuma.io/listener-zoneegress: enabled
         dataplane:
           networking:
             inbound:
@@ -31,3 +35,5 @@ Feature: mesh / dataplanes / item / overview
     Then the "$about-section" element exists
     And the "$about-section" element contains "zone-1"
     And the "$about-section" element contains "kuma.io/origin:zone"
+    And the "$about-section" element contains "Zone ingress"
+    And the "$about-section" element contains "Zone egress"
