@@ -84,6 +84,8 @@ Feature: mesh / dataplanes / index
         items:
           - name: dpp-1
             mesh: fake-default
+            labels:
+              kuma.io/display-name: dpp-1
             dataplane:
               networking:
                 gateway: !!js/undefined
