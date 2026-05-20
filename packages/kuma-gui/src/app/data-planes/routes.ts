@@ -92,8 +92,8 @@ export const dataplaneRoutes = (): RouteRecordRaw[] => {
                 // temporarily exclude all children but overview
                 // item.children = [{
                 //   path: 'overview',
-                //   name: 'data-plane-connection-outbound-summary-overview-view',
-                //   component: () => import('@/app/data-planes/views/DataPlaneOutboundSummaryOverviewView.vue'),
+                //   name: 'data-plane-connection-listener-summary-overview-view',
+                //   component: () => import('@/app/data-planes/views/DataplaneListenerSummaryOverviewView.vue'),
                 // }]
                 item.children.unshift(
                   {

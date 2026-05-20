@@ -67,7 +67,6 @@ export const sources = (api: KumaApi) => {
         }
       })()
       const connections = ConnectionCollection.fromObject(Stat.fromCollection(res))
-      console.log("🚀 ~ sources ~ connections:", connections)
 
       let inbounds, outbounds, passthrough, listeners
       if (proxyType === 'dataplane') {
@@ -78,7 +77,6 @@ export const sources = (api: KumaApi) => {
 
         listeners = {
           ...Object.fromEntries(Object.entries(connections.listener).filter(([key]) => key.startsWith('self_zone'))),
-          ...connections.cluster,
         }
 
         outbounds = Object.fromEntries(Object.entries(connections.cluster).filter(([key, _value]) => ![
