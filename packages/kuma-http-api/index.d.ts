@@ -1898,6 +1898,10 @@ export interface components {
             conf: {
                 [key: string]: unknown;
             }[];
+            /** @description The incoming traffic match for this effective rule. Null means the rule matches all incoming traffic (catch-all). */
+            match?: {
+                [key: string]: unknown;
+            };
             /** @description The list of policies that contributed to the 'conf'. The order is important as it reflects in what order confs were merged to get the resulting 'conf'. */
             origin: components["schemas"]["ResourceRuleOrigin"][];
         };
