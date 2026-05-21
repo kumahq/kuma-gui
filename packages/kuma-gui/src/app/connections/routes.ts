@@ -74,11 +74,15 @@ export const routes = (prefix: string): RouteRecordRaw[] => {
         {
           path: 'stats',
           name: `${prefix}-connection-listener-summary-stats-view`,
+          // Note: This uses the same component as the inbound summary stats view because they are practically the same,
+          // but for now we have to handle them as different summary views. This will likely change in the future.
           component: () => import('@/app/connections/views/ConnectionInboundSummaryStatsView.vue'),
         },
         {
           path: 'xds-config',
           name: `${prefix}-connection-listener-summary-xds-config-view`,
+          // Note: This uses the same component as the inbound summary xds view because they are practically the same,
+          // but for now we have to handle them as different summary views. This will likely change in the future.
           component: () => import('@/app/connections/views/ConnectionInboundSummaryXdsConfigView.vue'),
         },
       ],
