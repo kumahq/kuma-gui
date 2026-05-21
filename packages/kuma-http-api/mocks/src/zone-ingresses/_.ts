@@ -19,13 +19,11 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
     'kri', // prefix
     'zi', // shortName
     String(req.params.mesh), // mesh
-    // @TODO
-    String(req.params.zone), // zone
+    // we can't know the zone for a non-KRI version of this request
+    fake.word.noun(), // zone.
     ...String(req.params.name).split('.').toReversed(), // nspace, displayName
   ]
   const name = kri ? `${displayName}${nspace ? `.${nspace}` : ''}` : String(req.params.name)
-
-  const zoneName = zone ?? fake.word.noun()
 
   return {
     headers: {},
@@ -37,7 +35,7 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
       name,
       creationTime: '2021-07-13T08:40:59Z',
       modificationTime: '2021-07-13T08:40:59Z',
-      zone: zoneName,
+      zone,
       networking: {
         address: fake.internet.ip(),
         advertisedAddress: fake.internet.ip(),
@@ -50,7 +48,7 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
             app: 'demo-app',
             'kuma.io/protocol': fake.kuma.protocol(),
             'kuma.io/service': 'demo-app_kuma-demo_svc_5000',
-            'kuma.io/zone': zoneName,
+            'kuma.io/zone': zone,
             'pod-template-hash': '5845d6447b',
           },
           instances: 1,
@@ -61,7 +59,7 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
             app: 'redis',
             'kuma.io/protocol': fake.kuma.protocol(),
             'kuma.io/service': 'redis_kuma-demo_svc_6379',
-            'kuma.io/zone': zoneName,
+            'kuma.io/zone': zone,
             'pod-template-hash': '59c9d56fc',
           },
           instances: 1,

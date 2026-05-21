@@ -40,9 +40,7 @@ export const DataplaneNetworkingLayout = {
 const DataplaneOutbound = {
   fromObject(item: KumaDataplaneOutbound) {
     const address = item.address ?? '127.0.0.1'
-    // @TODO Move to labels
     const tags = item.tags ?? {}
-    // const labels = item.labels ?? {}
     return {
       ...item,
       tags,
@@ -88,7 +86,6 @@ export const DataplaneNetworking = {
         gateway: {
           ...networking.gateway,
           tags: networking.gateway.tags ?? {},
-          // labels: networking.gateway.labels ?? {},
         },
       } : {}),
       type: type as 'sidecar' | 'gateway',
@@ -102,7 +99,6 @@ export const DataplaneNetworking = {
         ? ((tags = {}) => [{
           address: networking.address ?? '',
           tags,
-          // labels,
           name: tags['kuma.io/service'] ?? '',
           service: tags['kuma.io/service'] ?? '',
           protocol: tags['kuma.io/protocol'] ?? 'tcp',
@@ -126,7 +122,6 @@ export const DataplaneNetworking = {
           const address = item.address ?? networking.advertisedAddress ?? networking.address ?? ''
           const name = `localhost_${item.port}`
           const tags = item.tags ?? {}
-          // const labels = item.labels ?? {}
           return {
             ...item,
             tags,

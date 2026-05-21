@@ -19,8 +19,8 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
     'kri', // prefix
     'ze', // shortName
     String(req.params.mesh), // mesh
-    // @TODO
-    String(req.params.zone), // zone
+    // we can't know the zone for a non-KRI version of this request
+    fake.word.noun(), // zone.
     ...String(req.params.name).split('.').toReversed(), // nspace, displayName
   ]
   const name = kri ? `${displayName}${nspace ? `.${nspace}` : ''}` : String(req.params.name)
@@ -35,7 +35,7 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
       name,
       creationTime: '2021-07-13T08:40:59Z',
       modificationTime: '2021-07-13T08:40:59Z',
-      zone: zone ?? fake.word.noun(),
+      zone,
       networking: {
         address: fake.internet.ip(),
         port: fake.internet.port(),
