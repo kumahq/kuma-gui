@@ -1,6 +1,7 @@
 import type { Dependencies, ResponseHandler } from '#mocks'
-import type { components } from '@kumahq/kuma-http-api'
+import type { paths } from '@kumahq/kuma-http-api'
 
+type MeshTrustsResponse = paths['/meshes/{mesh}/meshtrusts']['get']['responses']['200']['content']['application/json']
 
 export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
   const params = req.params
@@ -41,7 +42,7 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
             kri: fake.kuma.kri({ shortName: 'mid', mesh, namespace, zone }),
           },
         },
-      }) satisfies components['schemas']['MeshTrustItem']),
-    },
+      })),
+    } satisfies MeshTrustsResponse,
   }
 }
