@@ -284,6 +284,7 @@ Feature: mesh / dataplanes / index
             - name: fake-zone-ingress-0
               labels:
                 kuma.io/display-name: fake-zone-ingress-0
+                kuma.io/listener-zoneingress: enabled
               dataplane:
                 networking:
                   gateway: !!js/undefined
@@ -315,6 +316,7 @@ Feature: mesh / dataplanes / index
             - name: fake-zone-egress-0
               labels:
                 kuma.io/display-name: fake-zone-egress-0
+                kuma.io/listener-zoneegress: enabled
               dataplane:
                 networking:
                   gateway: !!js/undefined
