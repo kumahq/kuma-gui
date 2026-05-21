@@ -101,7 +101,7 @@
                 {{ t('data-planes.routes.item.about.title') }}
               </template>
               <DataLoader
-                :data="[sourceDataplaneLayout, traffic]"
+                :data="[sourceDataplaneLayout]"
                 v-slot="{ data: [dataplaneLayout] }"
               >
                 <XLayout
@@ -168,6 +168,27 @@
                         <XBadge appearance="decorative">
                           {{ t(`data-planes.type.${props.data.dataplaneType}`) }}
                         </XBadge>
+                      </dd>
+                    </div>
+                    <div v-if="props.data.zoneProxyTypes.length > 0">
+                      <dt>
+                        {{ t('http.api.property.zone-proxy') }}
+                      </dt>
+                      <dd>
+                        <XLayout
+                          variant="separated"
+                        >
+                          <XBadge
+                            v-if="props.data.zoneProxyTypes.includes('zone-ingress')"
+                          >
+                            {{ t(`data-planes.type.zone-ingress`) }}
+                          </XBadge>
+                          <XBadge
+                            v-if="props.data.zoneProxyTypes.includes('zone-egress')"
+                          >
+                            {{ t(`data-planes.type.zone-egress`) }}
+                          </XBadge>
+                        </XLayout>
                       </dd>
                     </div>
                     <div
@@ -283,7 +304,7 @@
                           <XI18n
                             path="data-planes.routes.item.mtls.managed_externally"
                           />
-
+                          <!-- purposefully don't block on `traffic` loading -->
                           <XDl
                             v-if="typeof traffic?.$meta?.tls?.certificateExpirationTime !== 'undefined'"
                             variant="x-stack"
@@ -535,7 +556,7 @@
                 data-testid="dataplane-traffic"
               >
                 <DataLoader
-                  :data="[sourceDataplaneLayout, traffic, resourceTypes]"
+                  :data="[sourceDataplaneLayout, resourceTypes]"
                   v-slot="{ data: [dataplaneLayout] }"
                 >
                   <XLayout
@@ -582,7 +603,15 @@
                                     data-testid="dataplane-inbound"
                                     :protocol="item.protocol"
                                     :port-name="inbound?.portName"
-                                    :traffic="traffic?.inbounds[item.stat_prefix]"
+                                    :traffic="typeof trafficError === 'undefined' ?
+                                      traffic?.inbounds[item.stat_prefix] :
+                                      {
+                                        name: '',
+                                        protocol: item.protocol,
+                                        port: `${item.port}`,
+                                      }
+                                    "
+
                                     data-actionable
                                   >
                                     <template #state>

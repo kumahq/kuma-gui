@@ -4,7 +4,7 @@ info:
   description: Kuma API
   version: v1alpha1
   x-ref-schema-name: DataplaneOverview
-  x-oas-source: kumahq/kuma@f7bb665421a7339b7e9e9f473815a8127535f389
+  x-oas-source: kumahq/kuma@c60e95c43cdc942130d911b275bda8fe2b0d74ab
 paths:
   /:
     get:
@@ -4837,6 +4837,14 @@ components:
             type: object
             additionalProperties: true
             x-go-type: interface{}
+        match:
+          description: The incoming traffic match for this effective rule. Null means the rule matches all incoming traffic (catch-all).
+          type: object
+          additionalProperties: true
+          x-go-type: common_api.Match
+          x-go-type-import:
+            name: common_api
+            path: github.com/kumahq/kuma/v2/api/common/v1alpha1
         origin:
           description: The list of policies that contributed to the 'conf'. The order is important as it reflects in what order confs were merged to get the resulting 'conf'.
           type: array

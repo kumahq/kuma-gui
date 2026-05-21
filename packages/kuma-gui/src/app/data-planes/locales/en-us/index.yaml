@@ -168,3 +168,6 @@ data-planes:
     standard: 'Proxy'
     builtin: 'Built-in gateway'
     delegated: 'Delegated gateway'
+    zone-proxy: 'Zone proxy'
+    zone-ingress: 'Zone ingress'
+    zone-egress: 'Zone egress'
