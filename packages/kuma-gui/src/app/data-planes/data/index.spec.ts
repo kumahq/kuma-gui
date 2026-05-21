@@ -412,7 +412,7 @@ describe('DataplaneOverview', () => {
   })
   describe('status', () => {
     test('variations of connection, inbounds and listeners', async ({ fixture }) => {
-      [
+      ([
         {
           inbounds: [],
           listeners: [],
@@ -420,44 +420,44 @@ describe('DataplaneOverview', () => {
           status: 'online',
         },
         {
-          inbounds: [{ state: 'Ready' as const }],
+          inbounds: [{ state: 'Ready' }],
           listeners: [],
           subscriptions: [{ connectTime: '2021-02-19T10:00:00Z' }],
           status: 'online',
         },
         {
           inbounds: [],
-          listeners: [{ state: 'Ready' as const }],
+          listeners: [{ state: 'Ready' }],
           subscriptions: [{ connectTime: '2021-02-19T10:00:00Z' }],
           status: 'online',
         },
         {
-          inbounds: [{ state: 'NotReady' as const }],
+          inbounds: [{ state: 'NotReady' }],
           listeners: [],
           subscriptions: [{ connectTime: '2021-02-19T10:00:00Z' }],
           status: 'offline',
         },
         {
           inbounds: [],
-          listeners: [{ state: 'NotReady' as const }],
+          listeners: [{ state: 'NotReady' }],
           subscriptions: [{ connectTime: '2021-02-19T10:00:00Z' }],
           status: 'offline',
         },
         {
-          inbounds: [{ state: 'Ready' as const }, { state: 'NotReady' as const }],
+          inbounds: [{ state: 'Ready' }, { state: 'NotReady' }],
           listeners: [],
           subscriptions: [{ connectTime: '2021-02-19T10:00:00Z' }],
           status: 'partially_degraded',
         },
         {
           inbounds: [],
-          listeners: [{ state: 'Ready' as const }, { state: 'NotReady' as const }],
+          listeners: [{ state: 'Ready' }, { state: 'NotReady' }],
           subscriptions: [{ connectTime: '2021-02-19T10:00:00Z' }],
           status: 'partially_degraded',
         },
         {
-          inbounds: [{ state: 'Ready' as const } , { state: 'NotReady' as const }],
-          listeners: [{ state: 'Ready' as const }, { state: 'NotReady' as const }],
+          inbounds: [{ state: 'Ready' } , { state: 'NotReady' }],
+          listeners: [{ state: 'Ready' }, { state: 'NotReady' }],
           subscriptions: [{ connectTime: '2021-02-19T10:00:00Z' }],
           status: 'partially_degraded',
         },
@@ -468,24 +468,24 @@ describe('DataplaneOverview', () => {
           status: 'disconnected_cp',
         },
         {
-          inbounds: [{ state: 'Ready' as const }],
+          inbounds: [{ state: 'Ready' }],
           listeners: [],
           subscriptions: [{ connectTime: '2021-02-19T10:00:00Z', disconnectTime: '2021-02-19T11:00:00Z' }],
           status: 'disconnected_cp',
         },
         {
           inbounds: [],
-          listeners: [{ state: 'Ready' as const }],
+          listeners: [{ state: 'Ready' }],
           subscriptions: [{ connectTime: '2021-02-19T10:00:00Z', disconnectTime: '2021-02-19T11:00:00Z' }],
           status: 'disconnected_cp',
         },
         {
-          inbounds: [{ state: 'Ready' as const }],
-          listeners: [{ state: 'Ready' as const }],
+          inbounds: [{ state: 'Ready' }],
+          listeners: [{ state: 'Ready' }],
           subscriptions: [{ connectTime: '2021-02-19T10:00:00Z', disconnectTime: '2021-02-19T11:00:00Z' }],
           status: 'disconnected_cp',
         },
-      ].forEach(async ({ inbounds, listeners, subscriptions, status }) => {
+      ] as const).forEach(async ({ inbounds, listeners, subscriptions, status }) => {
         const actual = await fixture.setup((item) => {
           item.name = 'test-zone-ingress'
           item.dataplane.networking.inbound?.forEach((item, i) => {
