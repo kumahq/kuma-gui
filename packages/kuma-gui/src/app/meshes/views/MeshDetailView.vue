@@ -102,16 +102,16 @@
                       </template>
                       <template #origin="{ row: item }">
                         <XAction
-                          v-if="item.origin.kri.length > 0"
+                          v-if="item.status.origin.kri.length > 0"
                           :to="{
                             name: 'mesh-mesh-identity-summary-view',
                             params: {
-                              mid: item.origin.kri,
+                              mid: item.status.origin.kri,
                             },
                           }"
                         >
                           <XBadge appearance="decorative">
-                            {{ item.origin.kri }}
+                            {{ item.status.origin.kri }}
                           </XBadge>
                         </XAction>
                       </template>

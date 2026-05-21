@@ -19,7 +19,10 @@ export default ({ fake }: Dependencies): ResponseHandler => (req) => {
     headers: {},
     body: {
       ...(k8s && { apiVersion: 'kuma.io/v1alpha1' }),
-      ...(k8s ? { kind: 'MeshTrust' } : { type: 'MeshTrust' }),
+      ...(k8s && { kind: 'MeshTrust' }),
+      type: 'MeshTrust',
+      mesh,
+      name,
       ...((() => {
         const metadata = {
           mesh,
@@ -46,12 +49,12 @@ export default ({ fake }: Dependencies): ResponseHandler => (req) => {
           type: 'Pem',
         }],
         trustDomain: `${mesh}.${fake.word.noun()}.mesh.local`,
-      } satisfies components['schemas']['MeshTrustItem']['spec'],
+      },
       status: {
         origin: {
           kri: fake.kuma.kri({ shortName: 'mid', mesh, namespace, zone }),
         },
-      } satisfies components['schemas']['MeshTrustItem']['status'],
-    },
+      },
+    } satisfies components['schemas']['MeshTrustItem'],
   }
 }
