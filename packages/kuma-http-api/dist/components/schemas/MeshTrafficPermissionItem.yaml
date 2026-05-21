@@ -124,6 +124,21 @@ properties:
                   type: array
                   items:
                     properties:
+                      sni:
+                        description: SNI defines a matcher configuration for matching by SNI value carried on the TLS connection
+                        type: object
+                        properties:
+                          type:
+                            description: Type defines how to match traffic by SNI. Only `Exact` is supported.
+                            type: string
+                            enum:
+                              - Exact
+                          value:
+                            description: Value is the SNI carried on the TLS connection that needs to match for the configuration to be applied
+                            type: string
+                        required:
+                          - type
+                          - value
                       spiffeID:
                         description: SpiffeID defines a matcher configuration for SpiffeID matching
                         type: object
@@ -148,6 +163,21 @@ properties:
                   type: array
                   items:
                     properties:
+                      sni:
+                        description: SNI defines a matcher configuration for matching by SNI value carried on the TLS connection
+                        type: object
+                        properties:
+                          type:
+                            description: Type defines how to match traffic by SNI. Only `Exact` is supported.
+                            type: string
+                            enum:
+                              - Exact
+                          value:
+                            description: Value is the SNI carried on the TLS connection that needs to match for the configuration to be applied
+                            type: string
+                        required:
+                          - type
+                          - value
                       spiffeID:
                         description: SpiffeID defines a matcher configuration for SpiffeID matching
                         type: object
@@ -170,6 +200,21 @@ properties:
                   type: array
                   items:
                     properties:
+                      sni:
+                        description: SNI defines a matcher configuration for matching by SNI value carried on the TLS connection
+                        type: object
+                        properties:
+                          type:
+                            description: Type defines how to match traffic by SNI. Only `Exact` is supported.
+                            type: string
+                            enum:
+                              - Exact
+                          value:
+                            description: Value is the SNI carried on the TLS connection that needs to match for the configuration to be applied
+                            type: string
+                        required:
+                          - type
+                          - value
                       spiffeID:
                         description: SpiffeID defines a matcher configuration for SpiffeID matching
                         type: object

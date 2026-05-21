@@ -114,14 +114,12 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
           }),
         },
       },
-      ...(k8s
-        ? {
-          labels: {
-            'kuma.io/display-name': displayName,
-            'k8s.kuma.io/namespace': nspace,
-          },
-        }
-        : {}),
+      labels: {
+        'kuma.io/display-name': displayName || name,
+        ...(k8s && { 'k8s.kuma.io/namespace': nspace }),
+        ...(name.includes('ingress') && { 'kuma.io/listener-zoneingress': 'enabled' }),
+        ...(name.includes('egress') && { 'kuma.io/listener-zoneegress': 'enabled' }),
+      },
       dataplaneInsight: {
         ...(isMtlsEnabled ? {
           mTLS: isTlsIssuedMeshIdentity ? {

@@ -39,6 +39,8 @@ Feature: mesh / services / item
           body:
             items:
               - name: fake-dataplane
+                labels:
+                  kuma.io/display-name: fake-dataplane
                 dataplane:
                   networking:
                     gateway: !!js/undefined

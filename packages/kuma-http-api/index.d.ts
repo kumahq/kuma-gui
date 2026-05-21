@@ -1898,6 +1898,10 @@ export interface components {
             conf: {
                 [key: string]: unknown;
             }[];
+            /** @description The incoming traffic match for this effective rule. Null means the rule matches all incoming traffic (catch-all). */
+            match?: {
+                [key: string]: unknown;
+            };
             /** @description The list of policies that contributed to the 'conf'. The order is important as it reflects in what order confs were merged to get the resulting 'conf'. */
             origin: components["schemas"]["ResourceRuleOrigin"][];
         };
@@ -2896,7 +2900,8 @@ export interface components {
                             /** @description Defines an OpenTelemetry logging backend. */
                             openTelemetry?: {
                                 /**
-                                 * @description Attributes can contain placeholders available on
+                                 * @description Attributes defines custom OpenTelemetry attributes. Keys must be static
+                                 *     OpenTelemetry attribute names. Values can contain placeholders available on
                                  *     https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
                                  * @example [
                                  *       {
@@ -2906,7 +2911,9 @@ export interface components {
                                  *     ]
                                  */
                                 attributes?: {
+                                    /** @description Key is the OpenTelemetry attribute name. */
                                     key: string;
+                                    /** @description Value can contain Kuma placeholders. */
                                     value: string;
                                 }[];
                                 /**
@@ -3096,7 +3103,8 @@ export interface components {
                             /** @description Defines an OpenTelemetry logging backend. */
                             openTelemetry?: {
                                 /**
-                                 * @description Attributes can contain placeholders available on
+                                 * @description Attributes defines custom OpenTelemetry attributes. Keys must be static
+                                 *     OpenTelemetry attribute names. Values can contain placeholders available on
                                  *     https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
                                  * @example [
                                  *       {
@@ -3106,7 +3114,9 @@ export interface components {
                                  *     ]
                                  */
                                 attributes?: {
+                                    /** @description Key is the OpenTelemetry attribute name. */
                                     key: string;
+                                    /** @description Value can contain Kuma placeholders. */
                                     value: string;
                                 }[];
                                 /**
@@ -3297,7 +3307,8 @@ export interface components {
                             /** @description Defines an OpenTelemetry logging backend. */
                             openTelemetry?: {
                                 /**
-                                 * @description Attributes can contain placeholders available on
+                                 * @description Attributes defines custom OpenTelemetry attributes. Keys must be static
+                                 *     OpenTelemetry attribute names. Values can contain placeholders available on
                                  *     https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
                                  * @example [
                                  *       {
@@ -3307,7 +3318,9 @@ export interface components {
                                  *     ]
                                  */
                                 attributes?: {
+                                    /** @description Key is the OpenTelemetry attribute name. */
                                     key: string;
+                                    /** @description Value can contain Kuma placeholders. */
                                     value: string;
                                 }[];
                                 /**
@@ -4576,6 +4589,16 @@ export interface components {
                     };
                     /** @description Matches defines list of matches for which fault injection will be applied */
                     matches?: {
+                        /** @description SNI defines a matcher configuration for matching by SNI value carried on the TLS connection */
+                        sni?: {
+                            /**
+                             * @description Type defines how to match traffic by SNI. Only `Exact` is supported.
+                             * @enum {string}
+                             */
+                            type: "Exact";
+                            /** @description Value is the SNI carried on the TLS connection that needs to match for the configuration to be applied */
+                            value: string;
+                        };
                         /** @description SpiffeID defines a matcher configuration for SpiffeID matching */
                         spiffeID?: {
                             /**
@@ -6000,7 +6023,10 @@ export interface components {
             spec: {
                 /** @description MeshMetric configuration. */
                 default?: {
-                    /** @description Applications is a list of application that Dataplane Proxy will scrape */
+                    /**
+                     * @description Applications is a list of applications that Dataplane Proxy will scrape.
+                     *     Ignored on zone-proxy-only Dataplanes (zone ingress/egress exist without a co-located workload).
+                     */
                     applications?: {
                         /** @description Address on which an application listens. */
                         address?: string;
@@ -8578,6 +8604,16 @@ export interface components {
                     default: {
                         /** @description Allow definees a list of matches for which access will be allowed */
                         allow?: {
+                            /** @description SNI defines a matcher configuration for matching by SNI value carried on the TLS connection */
+                            sni?: {
+                                /**
+                                 * @description Type defines how to match traffic by SNI. Only `Exact` is supported.
+                                 * @enum {string}
+                                 */
+                                type: "Exact";
+                                /** @description Value is the SNI carried on the TLS connection that needs to match for the configuration to be applied */
+                                value: string;
+                            };
                             /** @description SpiffeID defines a matcher configuration for SpiffeID matching */
                             spiffeID?: {
                                 /**
@@ -8594,6 +8630,16 @@ export interface components {
                          *     requests are denied
                          */
                         allowWithShadowDeny?: {
+                            /** @description SNI defines a matcher configuration for matching by SNI value carried on the TLS connection */
+                            sni?: {
+                                /**
+                                 * @description Type defines how to match traffic by SNI. Only `Exact` is supported.
+                                 * @enum {string}
+                                 */
+                                type: "Exact";
+                                /** @description Value is the SNI carried on the TLS connection that needs to match for the configuration to be applied */
+                                value: string;
+                            };
                             /** @description SpiffeID defines a matcher configuration for SpiffeID matching */
                             spiffeID?: {
                                 /**
@@ -8607,6 +8653,16 @@ export interface components {
                         }[];
                         /** @description Deny defines a list of matches for which access will be denied */
                         deny?: {
+                            /** @description SNI defines a matcher configuration for matching by SNI value carried on the TLS connection */
+                            sni?: {
+                                /**
+                                 * @description Type defines how to match traffic by SNI. Only `Exact` is supported.
+                                 * @enum {string}
+                                 */
+                                type: "Exact";
+                                /** @description Value is the SNI carried on the TLS connection that needs to match for the configuration to be applied */
+                                value: string;
+                            };
                             /** @description SpiffeID defines a matcher configuration for SpiffeID matching */
                             spiffeID?: {
                                 /**
@@ -9917,22 +9973,41 @@ export interface components {
                 /**
                  * @description Env controls whether standard OTEL exporter env vars participate in the
                  *     final exporter config for this backend.
+                 *     Defaults to mode: Optional, precedence: EnvFirst, allowSignalOverrides: true
+                 *     when omitted.
                  */
                 env?: {
                     /**
-                     * @description AllowSignalOverrides controls whether signal-specific OTEL env vars such
-                     *     as `OTEL_EXPORTER_OTLP_TRACES_*` may diverge from the shared config.
+                     * @description AllowSignalOverrides controls whether per-signal OTEL env vars
+                     *     (OTEL_EXPORTER_OTLP_TRACES_*, OTEL_EXPORTER_OTLP_METRICS_*,
+                     *     OTEL_EXPORTER_OTLP_LOGS_*) may diverge from the shared
+                     *     OTEL_EXPORTER_OTLP_* values.
+                     *     true (default): per-signal vars override the shared values for that
+                     *     signal.
+                     *     false: per-signal vars are ignored; the shared values apply to all
+                     *     signals. When per-signal overrides are dropped this way,
+                     *     SignalOverridesDisallowed appears in blockedReasons (a soft block -
+                     *     export still works via the shared config).
                      */
                     allowSignalOverrides?: boolean;
                     /**
-                     * @description Mode controls whether OTEL env vars are ignored, allowed, or required.
+                     * @description Mode controls whether OTEL env vars participate in the merge.
+                     *     Disabled: env vars are skipped entirely; only explicit backend fields and
+                     *     built-in defaults apply.
+                     *     Optional (default): env vars are used when present; absence is fine.
+                     *     Required: env vars must supply the missing fields - if any required field
+                     *     is missing the signal is blocked (state: missing, RequiredEnvMissing in
+                     *     blockedReasons) even when an explicit value or default could fill it.
                      * @default Optional
                      * @enum {string}
                      */
                     mode: "Disabled" | "Optional" | "Required";
                     /**
-                     * @description Precedence controls whether explicit backend fields or env vars win when
-                     *     both are present for the same field.
+                     * @description Precedence controls which source wins when both an explicit backend field
+                     *     and an env var are present for the same field.
+                     *     EnvFirst (default): env vars win; explicit backend fields fill gaps.
+                     *     ExplicitFirst: explicit backend fields win; env vars fill gaps.
+                     *     In either case, built-in defaults are the last fallback.
                      * @default EnvFirst
                      * @enum {string}
                      */

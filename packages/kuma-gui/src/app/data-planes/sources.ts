@@ -156,9 +156,13 @@ export const sources = (api: KumaApi) => {
       const gatewayParams = includes(['delegated', 'builtin', 'false'] as const, type)
         ? { gateway: type }
         : {}
+      const zoneIngress = type === 'zone-ingress' ? Resource.search('kuma.io/listener-zoneingress:enabled') : {}
+      const zoneEgress = type === 'zone-egress' ? Resource.search('kuma.io/listener-zoneegress:enabled') : {}
 
       return DataplaneOverview.fromCollection(await api.getAllDataplaneOverviewsFromMesh({ mesh }, {
         ...search,
+        ...zoneIngress,
+        ...zoneEgress,
         ...gatewayParams,
         offset,
         size,
