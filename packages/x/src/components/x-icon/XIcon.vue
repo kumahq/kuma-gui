@@ -57,7 +57,6 @@ import {
   LinkIcon,
   KeyboardReturnIcon,
   NetworkIcon,
-  SyncAltIcon,
 } from '@kong/icons'
 import { useSlots, useAttrs, useId } from 'vue'
 
@@ -78,7 +77,6 @@ const icons = {
   'policy-role-workload-owner': 'span',
   inbound: ForwardIcon,
   outbound: GatewayIcon,
-  listener: SyncAltIcon,
   builtin: PortalIcon,
   delegated: PortalIcon,
   warning: WarningIcon,
