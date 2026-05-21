@@ -74,12 +74,12 @@ export const routes = (prefix: string): RouteRecordRaw[] => {
         {
           path: 'stats',
           name: `${prefix}-connection-listener-summary-stats-view`,
-          component: () => import('@/app/connections/views/ConnectionListenerSummaryStatsView.vue'),
+          component: () => import('@/app/connections/views/ConnectionInboundSummaryStatsView.vue'),
         },
         {
           path: 'xds-config',
           name: `${prefix}-connection-listener-summary-xds-config-view`,
-          component: () => import('@/app/connections/views/ConnectionListenerSummaryXdsConfigView.vue'),
+          component: () => import('@/app/connections/views/ConnectionInboundSummaryXdsConfigView.vue'),
         },
       ],
     },

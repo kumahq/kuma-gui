@@ -38,6 +38,7 @@ export const DataplaneNetworkingLayout = {
         const kri = Kri.fromString(item.kri)
         return {
           ...item,
+          // protocol of ZoneIngress listeners is always tcp, for ZoneEgress it depends and therefore it's not set
           protocol: item.type === 'ZoneIngress' ? 'tcp' : '',
           stat_prefix: item.proxyResourceName,
           portName: kri.sectionName !== String(item.port) ? kri.sectionName : undefined,
@@ -75,18 +76,6 @@ const DataplaneOutbound = {
   },
   fromCollection(items: KumaDataplaneOutbound[]) {
     return Array.isArray(items) ? items.map(item => DataplaneOutbound.fromObject(item)) : []
-  },
-}
-
-const DataplaneListener = {
-  fromObject(item: NonNullable<KumaDataplaneNetworking['listeners']>[number]) {
-    return {
-      ...item,
-      state: (typeof item.state !== 'undefined' ? String(item.state) : 'Ready'),
-    }
-  },
-  fromCollection(items: KumaDataplaneNetworking['listeners']) {
-    return Array.isArray(items) ? items.map(item => DataplaneListener.fromObject(item)) : []
   },
 }
 
@@ -173,32 +162,3 @@ export type DataplaneOutbound = ReturnType<typeof DataplaneOutbound['fromObject'
 export type DataplaneNetworking = ReturnType<typeof DataplaneNetworking['fromObject']>
 export type DataplaneInbound = DataplaneNetworking['inbounds'][number]
 export type DataplaneListener = DataplaneNetworking['listeners'][number]
-
-
-// apiVersion: v1
-// kind: Service
-// metadata:
-//   name: zone-ingress
-//   namespace: kuma-demo
-//   labels:
-//     k8s.kuma.io/zone-proxy-type: ingress
-// spec:
-//   selector:
-//     app: demo-app
-//   ports:
-//     - port: 10001
-//       targetPort: 10001
-// ---
-// apiVersion: v1
-// kind: Service
-// metadata:
-//   name: zone-egress
-//   namespace: kuma-demo
-//   labels:
-//     k8s.kuma.io/zone-proxy-type: egress
-// spec:
-//   selector:
-//     app: demo-app
-//   ports:
-//     - port: 10002
-//       targetPort: 10002
