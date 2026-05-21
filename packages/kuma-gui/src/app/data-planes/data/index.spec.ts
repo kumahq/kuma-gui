@@ -490,11 +490,9 @@ describe('DataplaneOverview', () => {
           item.name = 'test-zone-ingress'
           item.dataplane.networking.inbound?.forEach((item, i) => {
             item.state = inbounds[i]?.state
-            return item
           })
-          item.dataplane.networking.listeners = item.dataplane.networking.listeners?.map((item, i) => {
+          item.dataplane.networking.listeners?.forEach((item, i) => {
             item.state = listeners[i]?.state
-            return item
           })
           item.dataplaneInsight = {
             ...item.dataplaneInsight,
