@@ -1,2 +1,2 @@
-export { default } from '../meshes/_/dataplanes/_/_overview'
+export { default } from '../meshes/_/dataplanes/_'
 

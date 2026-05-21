@@ -1,26 +1,17 @@
 import type { Dependencies, ResponseHandler } from '#mocks'
 export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
   const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
-  // this template can be called via the /_kri/kri_<shortName>_:kri endpoint or
-  // the legacy endpoint
-  const kri = req.params.kri ? `kri_dp_${req.params.kri}` : undefined
   const [
-    _prefix,
-    _shortName,
     mesh,
     zone,
-    // if its not a kri (which always has a nspace, even if it's ''), or the
-    // name has no '.', then, if its k8s use a random nspace, otherwise ''
-    nspace = k8s ? fake.word.noun() : '',
+    nspace = '',
     displayName,
-  ] = kri ? kri.split('_') : [
-    'kri', // prefix
-    'dp', // shortName
+  ] = [
     String(req.params.mesh), // mesh
     fake.helpers.arrayElement(['', fake.word.noun()]), // zone
     ...String(req.params.name).split('.').toReversed(), // nspace, displayName
   ]
-  const name = kri ? `${displayName}${nspace ? `.${nspace}` : ''}` : String(req.params.name)
+  const name = String(req.params.name)
 
   // use a seed based on the name to keep ports and ip address the same across
   // _overview, stats and rules

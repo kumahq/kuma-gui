@@ -1,16 +1,32 @@
 import type { Dependencies, ResponseHandler } from '#mocks'
 export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
-  const query = req.url.searchParams
-  const { mesh, name } = req.params
+  const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
+  // this template can be called via the /_kri/kri_<shortName>_:kri endpoint or
+  // the legacy endpoint
+  const kri = req.params.kri ? `kri_dp_${req.params.kri}` : undefined
+  const [
+    _prefix,
+    _shortName,
+    mesh,
+    zone,
+    // if its not a kri (which always has a nspace, even if it's ''), or the
+    // name has no '.', then, if its k8s use a random nspace, otherwise ''
+    nspace = k8s ? fake.word.noun() : '',
+    displayName,
+  ] = kri ? kri.split('_') : [
+    'kri', // prefix
+    'dp', // shortName
+    String(req.params.mesh), // mesh
+    fake.helpers.arrayElement(['', fake.word.noun()]), // zone
+    ...String(req.params.name).split('.').toReversed(), // nspace, displayName
+  ]
+  const name = kri ? `${displayName}${nspace ? `.${nspace}` : ''}` : String(req.params.name)
 
-  const format = query.get('format')
-  const k8s = format === 'kubernetes' || (env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes')
+  const k8sFormat = req.url.searchParams.get('format') === 'kubernetes'
+
   const multizone = fake.datatype.boolean()
 
   const inbounds = parseInt(env('KUMA_DATAPLANEINBOUND_COUNT', `${fake.number.int({ min: 1, max: 5 })}`))
-
-  const [displayName, nspace = k8s ? fake.word.noun() : ''] = String(name).split('.')
-  const zone = fake.word.noun()
 
   const type = name.includes('-gateway_builtin') ? 'gateway_builtin' :
     name.includes('-gateway_delegated') ? 'gateway_delegated' :
@@ -20,7 +36,7 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
   return {
     headers: {},
     body: {
-      ...(k8s ? {
+      ...(k8sFormat ? {
         apiVersion: 'kuma.io/v1alpha1',
       } : {}),
       type: 'Dataplane',
