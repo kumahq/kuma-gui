@@ -8039,8 +8039,8 @@ export interface components {
                     };
                 }[];
                 /**
-                 * @description Rules defines inbound timeout configurations. Currently limited to exactly one rule containing
-                 *     default timeouts that apply to all inbound traffic, as L7 matching is not yet implemented.
+                 * @description Rules defines inbound timeout configurations. When matches are present, the rule is applied only
+                 *     to traffic selected by the given source and destination matchers.
                  */
                 rules?: {
                     /** @description Default contains configuration of the inbound timeouts */
@@ -8090,6 +8090,29 @@ export interface components {
                          */
                         idleTimeout?: string;
                     };
+                    /** @description Matches define predicates for selecting traffic this configuration applies to. */
+                    matches?: {
+                        /** @description SNI defines a matcher configuration for matching by SNI value carried on the TLS connection */
+                        sni?: {
+                            /**
+                             * @description Type defines how to match traffic by SNI. Only `Exact` is supported.
+                             * @enum {string}
+                             */
+                            type: "Exact";
+                            /** @description Value is the SNI carried on the TLS connection that needs to match for the configuration to be applied */
+                            value: string;
+                        };
+                        /** @description SpiffeID defines a matcher configuration for SpiffeID matching */
+                        spiffeID?: {
+                            /**
+                             * @description Type defines how to match incoming traffic by SpiffeID. `Exact` or `Prefix` are allowed.
+                             * @enum {string}
+                             */
+                            type: "Exact" | "Prefix";
+                            /** @description Value is SpiffeId of a client that needs to match for the configuration to be applied */
+                            value: string;
+                        };
+                    }[];
                 }[];
                 /**
                  * @description TargetRef is a reference to the resource the policy takes an effect on.
