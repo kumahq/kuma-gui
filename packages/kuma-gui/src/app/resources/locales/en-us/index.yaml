@@ -10,11 +10,12 @@ resources:
         title: Category
         options:
           all: All
-          security: Security
+          resilience: Resilience
           traffic: Traffic
+          security: Security
           observability: Observability
-          performance: Performance
-          reliability: Reliability
+          testing: Testing
+          advanced: Advanced
       empty: This resource type does not exist.
       types:
         policy:
