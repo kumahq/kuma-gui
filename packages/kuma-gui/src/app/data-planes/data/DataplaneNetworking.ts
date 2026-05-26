@@ -56,6 +56,17 @@ const DataplaneOutbound = {
   },
 }
 
+const DataplaneListener = {
+  fromObject(item: NonNullable<KumaDataplaneNetworking['listeners']>[number]) {
+    return {
+      ...item,
+      state: (typeof item.state !== 'undefined' ? String(item.state) : 'Ready'),
+    }
+  },
+  fromCollection(items: KumaDataplaneNetworking['listeners']) {
+    return Array.isArray(items) ? items.map(item => DataplaneListener.fromObject(item)) : []
+  },
+}
 
 export const DataplaneNetworking = {
   fromObject(networking: KumaDataplaneNetworking) {
@@ -133,6 +144,7 @@ export const DataplaneNetworking = {
           }
         }),
       outbounds: DataplaneOutbound.fromCollection(outbounds),
+      listeners: DataplaneListener.fromCollection(networking.listeners),
     }
   },
 }
@@ -140,4 +152,5 @@ export type DataplaneNetworkingLayout = ReturnType<typeof DataplaneNetworkingLay
 export type DataplaneOutbound = ReturnType<typeof DataplaneOutbound['fromObject']>
 export type DataplaneNetworking = ReturnType<typeof DataplaneNetworking['fromObject']>
 export type DataplaneInbound = DataplaneNetworking['inbounds'][number]
+export type DataplaneListener = DataplaneNetworking['listeners'][number]
 

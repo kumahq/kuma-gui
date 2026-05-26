@@ -23,6 +23,7 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
   const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
   const isMtlsEnabledOverride = env('KUMA_MTLS_ENABLED', '')
   const defaultType = env('KUMA_DATAPLANE_TYPE', '')
+  const defaultZoneProxyType = env('KUMA_DATAPLANE_ZONEPROXY_TYPE', '')
   const unifiedResourceNaming = env('KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED', '')
   const isTlsIssuedMeshIdentity = env('KUMA_DATAPLANE_TLS_ISSUED_MESHIDENTITY', `${fake.datatype.boolean()}`) === 'true'
   const isUnifiedResourceNamingEnabled = unifiedResourceNaming.length ? unifiedResourceNaming === 'true' : fake.datatype.boolean()
@@ -31,20 +32,36 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
   const isTcpAccesslogViaNamedPipeEnabled = env('KUMA_DATAPLANE_TCP_ACCESSLOG_VIA_NAMED_PIPE', `${fake.datatype.boolean()}`) === 'true'
 
   const outboundCount = parseInt(env('KUMA_DATAPLANEOUTBOUND_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
+  const listenersCount = parseInt(env('KUMA_DATAPLANELISTENER_COUNT', `${fake.number.int({ min: 1, max: 5 })}`))
   const subscriptionCount = parseInt(env('KUMA_SUBSCRIPTION_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
 
-  const type = (() => {
+  const type = ((type) => {
     switch (true) {
-      case defaultType === 'builtin':
+      case type === 'builtin':
       case name.includes('-builtin'):
         return 'BUILTIN'
-      case defaultType === 'delegated':
+      case type === 'delegated':
       case name.includes('-delegated'):
         return 'DELEGATED'
       default:
         return 'STANDARD'
     }
-  })()
+  })(defaultType)
+  const zoneProxyType = ((type) => {
+    switch(true) {
+      case type === 'ingress-egress':
+      case name.includes('-ingress') && name.includes('-egress'):
+        return 'INGRESS-EGRESS'
+      case type === 'ingress':
+      case name.includes('-ingress'):
+        return 'INGRESS'
+      case type === 'egress':
+      case name.includes('-egress'):
+        return 'EGRESS'
+      default:
+        return ''
+    }
+  })(defaultZoneProxyType)
 
   const isMultizone = fake.datatype.boolean()
   const isMtlsEnabled = isTlsIssuedMeshIdentity || (isMtlsEnabledOverride !== '' ? isMtlsEnabledOverride === 'true' : fake.datatype.boolean())
@@ -71,6 +88,19 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
           ...(fake.datatype.boolean() ? {
             advertisedAddress: fake.internet.ip(),
           } : {}),
+          ...(zoneProxyType !== '' && {
+            listeners: Array.from({ length: listenersCount }).map((_, i) => {
+              const isIngress = zoneProxyType === 'INGRESS-EGRESS' ? fake.datatype.boolean() : zoneProxyType.includes('INGRESS')
+              const port = fake.internet.port()
+              return {
+                address,
+                port,
+                name: fake.helpers.arrayElement([String(port), `${isIngress ? 'ingress' : 'egress'}-port`]),
+                state: fake.kuma.state(),
+                type: isIngress ? 'ZoneIngress' : 'ZoneEgress',
+              }
+            }),
+          }),
           ...(type === 'STANDARD' ? {
             // normal proxies have inbound and outbound
             inbound: Array.from({ length: inboundCount }).map((_, i) => {
@@ -91,7 +121,7 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
                   zone: isMultizone && fake.datatype.boolean() ? fake.word.noun() : undefined,
                 }),
                 ...(fake.datatype.boolean() ? {
-                  state: fake.kuma.inboundState(),
+                  state: fake.kuma.state(),
                 } : {}),
                 ...(fake.datatype.boolean() && { name: `${fake.word.noun()}-port` }),
               }

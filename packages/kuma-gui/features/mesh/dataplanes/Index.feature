@@ -22,6 +22,7 @@ Feature: mesh / dataplanes / index
       KUMA_MODE: global
       KUMA_DATAPLANE_COUNT: 9
       KUMA_DATAPLANEINBOUND_COUNT: 1
+      KUMA_DATAPLANELISTENER_COUNT: 0
       KUMA_SUBSCRIPTION_COUNT: 2
       """
     And the URL "/meshes/default/dataplanes/_overview" responds with
@@ -69,6 +70,47 @@ Feature: mesh / dataplanes / index
       | Nov 3, 2023, 9:10 AM |
       | Online               |
 
+  Scenario Outline: The proxy listing shows the correct status
+    Given the environment
+      """
+      KUMA_DATAPLANE_COUNT: 1
+      KUMA_SUBSCRIPTION_COUNT: 1
+      KUMA_DATAPLANEINBOUND_COUNT: 1
+      KUMA_DATAPLANELISTENER_COUNT: 1
+      """
+    And the URL "/meshes/default/dataplanes/_overview" responds with
+      """
+      body:
+        items:
+          - name: dpp-1
+            mesh: fake-default
+            labels:
+              kuma.io/display-name: dpp-1
+            dataplane:
+              networking:
+                gateway: !!js/undefined
+                inbound: <Inbound>
+                listeners: <Listeners>
+            dataplaneInsight:
+              mTLS: !!js/undefined
+              subscriptions:
+                - connectTime: 2021-02-17T07:33:36.412683Z
+                  disconnectTime: <DisconnectTime>
+      """
+    When I visit the "/meshes/default/data-planes" URL
+    Then the "$item:nth-child(1)" element contains
+      | Value    |
+      | dpp-1    |
+      | Proxy    |
+      | <Status> |
+
+    Examples:
+      | Status              | DisconnectTime              | Inbound               | Listeners                              |
+      | Online              | !!js/undefined              | [{ state: Ready }]    | !!js/undefined                         |
+      | Offline             | !!js/undefined              | [{ state: NotReady }] | !!js/undefined                         |
+      | Partially degraded  | !!js/undefined              | !!js/undefined        | [{ state: Ready },{ state: NotReady }] |
+      | Not connected to CP | 2021-02-17T07:33:36.412683Z | [{ state: Ready }]    | !!js/undefined                         |
+
   Scenario: The Data Plane Proxy list has the expected minimal content
     Given the environment
       """
@@ -99,10 +141,10 @@ Feature: mesh / dataplanes / index
     When I visit the "/meshes/default/data-planes" URL
     Then the "$service-cell" element is empty
     Then the "$item:nth-child(1)" element contains
-      | Value         |
-      | dpp-2         |
-      | <mTLSColText> |
-      | Offline       |
+      | Value               |
+      | dpp-2               |
+      | <mTLSColText>       |
+      | Not connected to CP |
 
     Examples:
       | mTLS                                                | mTLSColText          |
