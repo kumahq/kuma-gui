@@ -87,7 +87,7 @@ export const legacyDataplaneRoutes = (): RouteRecordRaw[] => {
                   {
                     path: 'overview',
                     name: 'data-plane-connection-listener-summary-overview-view',
-                    component: () => import('@/app/data-planes/views/DataplaneListenerSummaryOverviewView.vue'),
+                    component: () => import('@/app/data-planes/views/DataPlaneInboundSummaryOverviewView.vue'),
                   },
                 )
               }
