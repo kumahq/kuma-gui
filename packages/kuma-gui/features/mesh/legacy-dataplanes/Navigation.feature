@@ -73,6 +73,10 @@ Feature: mesh / dataplanes / navigation
         body:
           items:
           - name: monitor-proxy-0
+            labels:
+              kuma.io/display-name: monitor-proxy-0
+
+
         """
 
     Scenario Outline: clicking the detail link

@@ -36,6 +36,8 @@ Feature: mesh / workloads / item / overview
       body:
         items:
           - name: workload-1-dataplane
+            labels:
+              kuma.io/display-name: workload-1-dataplane
             mesh: default
       """
 

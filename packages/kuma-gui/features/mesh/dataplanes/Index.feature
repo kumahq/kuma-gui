@@ -25,6 +25,7 @@ Feature: mesh / dataplanes / index
       KUMA_DATAPLANELISTENER_COUNT: 0
       KUMA_SUBSCRIPTION_COUNT: 2
       """
+    # we use an undefined display-name here to show that things will fallback
     And the URL "/meshes/default/dataplanes/_overview" responds with
       """
       body:
@@ -32,7 +33,8 @@ Feature: mesh / dataplanes / index
         - name: fake-backend
           mesh: fake-default
           labels:
-            kuma.io/display-name: fake-backend
+            kuma.io/display-name: !!js/undefined
+            kuma.io/zone: !!js/undefined
           dataplane:
             networking:
               gateway: !!js/undefined
@@ -282,6 +284,7 @@ Feature: mesh / dataplanes / index
             - name: fake-zone-ingress-0
               labels:
                 kuma.io/display-name: fake-zone-ingress-0
+                kuma.io/listener-zoneingress: enabled
               dataplane:
                 networking:
                   gateway: !!js/undefined
@@ -313,6 +316,7 @@ Feature: mesh / dataplanes / index
             - name: fake-zone-egress-0
               labels:
                 kuma.io/display-name: fake-zone-egress-0
+                kuma.io/listener-zoneegress: enabled
               dataplane:
                 networking:
                   gateway: !!js/undefined

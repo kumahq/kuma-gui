@@ -2,32 +2,48 @@ import type { Dependencies, ResponseHandler } from '#mocks'
 import type { components } from '@kumahq/kuma-http-api'
 
 
-export default ({ fake }: Dependencies): ResponseHandler => (req) => {
-  const kri = req.params.kri as string | undefined
+export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
+  const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
+
+  // this template can be called via the /_kri/kri_<shortName>_:kri endpoint or
+  // the legacy endpoint
+  const kri = req.params.kri ? `kri_mid_${req.params.kri}` : undefined
   const [
-    mesh = req.params.mesh as string,
-    _zone,
-    _namespace,
-    name = req.params.name as string,
-  ] = kri?.split('_') ?? ''
-  const k8s = req.url.searchParams.get('format') === 'kubernetes'
+    _prefix,
+    _shortName,
+    mesh,
+    zone,
+    nspace,
+    displayName,
+  ] = kri ? kri.split('_') : [
+    'kri', // prefix
+    'mid', // shortName
+    String(req.params.mesh), // mesh
+    fake.helpers.arrayElement(['', fake.word.noun()]), // zone
+    // with k8s the request.name MUST be use the correct `name.ns` format
+    ...(k8s ? String(req.params.name).split('.').toReversed() : ['', String(req.params.name)]), // nspace, displayName
+  ]
+  const name = kri ? `${displayName}${nspace ? `.${nspace}` : ''}` : String(req.params.name)
+
+  const k8sFormat = req.url.searchParams.get('format') === 'kubernetes'
   return {
     headers: {},
     body: {
-      ...(k8s && { apiVersion: 'kuma.io/v1alpha1' }),
-      ...(k8s ? { kind: 'MeshIdentity' } : { type: 'MeshIdentity' }),
+      ...(k8sFormat && { apiVersion: 'kuma.io/v1alpha1' }),
+      ...(k8sFormat ? { kind: 'MeshIdentity' } : { type: 'MeshIdentity' }),
       ...((() => {
         const metadata = {
           name,
           labels: {
-            'kuma.io/mesh': mesh,
-            'kuma.io/zone': fake.word.noun(),
-            'kuma.io/origin': 'zone',
-            'kuma.io/namespace': fake.word.noun(),
+            ...fake.kuma.labels({
+              name: displayName,
+              ...(zone ? { zone } : {}),
+              ...(k8s ? { namespace: nspace } : {}),
+            }),
           }}
-        return k8s ? { metadata } : metadata
+        return k8sFormat ? { metadata } : metadata
       })()),
-      ...(!k8s && {
+      ...(!k8sFormat && {
         creationTime: fake.date.past().toISOString(),
         modificationTime: fake.date.recent().toISOString(),
       }),

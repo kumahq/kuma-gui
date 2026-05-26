@@ -1,12 +1,18 @@
 import type { Dependencies, ResponseHandler } from '#mocks'
 export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
-  const kri = req.params.kri as string | undefined
+  const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
   const [
-    mesh = req.params.mesh as string,
-    _zone,
-    _namespace,
-    name = req.params.name as string,
-  ] = kri?.split('_') ?? ''
+    mesh,
+    zone,
+    nspace,
+    displayName,
+  ] = [
+    String(req.params.mesh), // mesh
+    fake.helpers.arrayElement(['', fake.word.noun()]), // zone
+    // with k8s the request.name MUST be use the correct `name.ns` format
+    ...(k8s ? String(req.params.name).split('.').toReversed() : ['', String(req.params.name)]), // nspace, displayName
+  ]
+  const name = String(req.params.name)
 
   // use a seed based on the name to keep ports and ip address the same across
   // _overview, stats and rules
@@ -20,7 +26,7 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
   //
 
   fake.kuma.seed()
-  const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
+
   const isMtlsEnabledOverride = env('KUMA_MTLS_ENABLED', '')
   const defaultType = env('KUMA_DATAPLANE_TYPE', '')
   const defaultZoneProxyType = env('KUMA_DATAPLANE_ZONEPROXY_TYPE', '')
@@ -63,14 +69,9 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
     }
   })(defaultZoneProxyType)
 
-  const isMultizone = fake.datatype.boolean()
   const isMtlsEnabled = isTlsIssuedMeshIdentity || (isMtlsEnabledOverride !== '' ? isMtlsEnabledOverride === 'true' : fake.datatype.boolean())
 
   const service = fake.word.noun()
-
-  const parts = String(name).split('.')
-  const displayName = parts.slice(0, -1).join('.')
-  const nspace = parts.pop()
 
   return {
     headers: {},
@@ -78,6 +79,15 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
       type: 'DataplaneOverview',
       mesh,
       name,
+      labels: {
+        ...fake.kuma.labels({
+          ...(name.includes('ingress') && { 'kuma.io/listener-zoneingress': 'enabled' }),
+          ...(name.includes('egress') && { 'kuma.io/listener-zoneegress': 'enabled' }),
+          name: displayName,
+          ...(zone ? { zone } : {}),
+          ...(k8s ? { namespace: nspace } : {}),
+        }),
+      },
       ...((modificationTime) => ({
         creationTime: fake.kuma.date({ refDate: modificationTime }),
         modificationTime,
@@ -118,7 +128,7 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
                 tags: fake.kuma.tags({
                   protocol: ports[i].protocol,
                   service,
-                  zone: isMultizone && fake.datatype.boolean() ? fake.word.noun() : undefined,
+                  zone: zone && fake.datatype.boolean() ? fake.word.noun() : undefined,
                 }),
                 ...(fake.datatype.boolean() ? {
                   state: fake.kuma.state(),
@@ -137,18 +147,12 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
             gateway: {
               tags: fake.kuma.tags({
                 service,
-                zone: isMultizone && fake.datatype.boolean() ? fake.word.noun() : undefined,
+                zone: zone && fake.datatype.boolean() ? fake.word.noun() : undefined,
               }),
               type,
             },
           }),
         },
-      },
-      labels: {
-        'kuma.io/display-name': displayName || name,
-        ...(k8s && { 'k8s.kuma.io/namespace': nspace }),
-        ...(name.includes('ingress') && { 'kuma.io/listener-zoneingress': 'enabled' }),
-        ...(name.includes('egress') && { 'kuma.io/listener-zoneegress': 'enabled' }),
       },
       dataplaneInsight: {
         ...(isMtlsEnabled ? {
