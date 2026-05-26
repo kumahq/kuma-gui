@@ -25,6 +25,13 @@ Feature: control-planes / DetailView
                 online: 1
                 partiallyDegraded: 1
                 offline: 1
+            resources:
+              MeshService:
+                total: 1
+              MeshMultiZoneService:
+                total: 2
+              MeshExternalService:
+                total: 3
           - name: mesh-2
             services:
               external: 0
@@ -94,6 +101,11 @@ Feature: control-planes / DetailView
     And the "[data-testid='data-plane-proxies-status']" element contains "9"
     And the "[data-testid='policies-status']" element contains "2"
     And the "$meshes-details" element exists
+    And the "$meshes-details table tbody tr:nth-child(1)" element contains
+      | Value  |
+      | mesh-1 |
+      |      6 |
+      |  1 / 3 |
 
   Scenario: Shows expected content in non-federated mode
     Given the environment

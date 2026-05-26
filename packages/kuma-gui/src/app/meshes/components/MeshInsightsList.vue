@@ -36,7 +36,7 @@
         <template
           #services="{ row: item }"
         >
-          {{ item.services.internal }}
+          {{ item.resources.MeshServiceGeneric.total }}
         </template>
 
         <template

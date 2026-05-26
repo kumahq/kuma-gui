@@ -16,7 +16,6 @@ Feature: mesh / policies / index
       | button-docs      | [data-testid='policy-documentation-link']                                                |
       | breadcrumbs      | .k-breadcrumbs                                                                           |
       | input-search     | [data-testid='filter-bar-filter-input']                                                  |
-
     And the environment
       """
       KUMA_MODE: global

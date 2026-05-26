@@ -2,11 +2,11 @@ Feature: mesh / dataplanes / connections / Traffic
 
   Background:
     Given the CSS selectors
-      | Alias    | Selector                                |
-      | traffic  | [data-testid='dataplane-traffic']       |
-      | inbound  | [data-testid='dataplane-inbound']       |
-      | outbound | [data-testid='dataplane-outbound']      |
-      | warning  | [data-testid*='abnormal-traffic-stats'] |
+      | Alias           | Selector                                                                   |
+      | traffic         | [data-testid='dataplane-traffic']                                          |
+      | inbound         | [data-testid='dataplane-inbound']                                          |
+      | outbound        | [data-testid='dataplane-outbound']                                         |
+      | warning         | [data-testid*='abnormal-traffic-stats']                                    |
       | loading-warning | [data-testid^='notification-data-planes.notifications.stats-not-enhanced'] |
       | about-section   | [data-testid='dataplane-about-section']                                    |
     And the environment
