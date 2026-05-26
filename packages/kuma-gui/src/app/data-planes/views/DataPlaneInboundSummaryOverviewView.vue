@@ -37,7 +37,7 @@
                 <XBadge
                   appearance="info"
                 >
-                  {{ t(`http.api.value.${inbound.protocol}`) }}
+                  {{ t(`http.api.value.${props.data.protocol}`) }}
                 </XBadge>
               </td>
             </tr>

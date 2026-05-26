@@ -137,7 +137,7 @@
                             <ul>
                               <li
                                 v-for="inbound in unhealthyInbounds"
-                                :key="`${inbound.service}:${inbound.port}`"
+                                :key="`${inbound.name}:${inbound.port}`"
                               >
                                 {{ t('data-planes.routes.item.unhealthy_inbound', { port: inbound.port }) }}
                               </li>
@@ -512,17 +512,26 @@
                       if (port === String(props.data.dataplane.networking.admin?.port ?? 9901)) {
                         return prev
                       }
+                      const keys = Object.keys(value ?? {})
                       return prev.concat([
                         {
                           ...props.data.dataplane.networking.inbounds[0],
                           name: key,
                           clusterName: key,
                           port: Number(port),
-                          protocol: ['http', 'tcp'].find(item => typeof value[item] !== 'undefined') ?? 'tcp',
+                          protocol: keys.includes('grpc') ? 'grpc' : keys.includes('http') ? 'http' : 'tcp',
                           addressPort: `${props.data.dataplane.networking.inbounds[0].address}:${port}`,
                         },
                       ])
-                    }, []) : props.data.dataplane.networking.inbounds]"
+                    }, []) : props.data.dataplane.networking.inbounds.map(item => {
+                      // if http stats exist then its a http inbound
+                      // otherwise assume tcp
+                      const keys = Object.keys(traffic?.inbounds[item.name] ?? {})
+                      return {
+                        ...item,
+                        protocol: keys.includes('grpc') ? 'grpc' : keys.includes('http') ? 'http' : 'tcp',
+                      }
+                    })]"
                     :key="typeof inbounds"
                   >
                     <ConnectionGroup
