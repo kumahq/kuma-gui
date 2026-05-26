@@ -205,9 +205,11 @@ import '@kong-ui-public/app-layout/dist/style.css'
 
   /* border-width */
   --x-border-width-10: var(--kui-border-width-10, #{$kui-border-width-10});
+  --x-border-width-20: var(--kui-border-width-20, #{$kui-border-width-20});
 
   /* color-background */
   --x-color-background: var(--kui-color-background, #{$kui-color-background});
+  --x-color-background-transparent: var(--kui-color-background-transparent, #{$kui-color-background-transparent});
   --x-color-background-inverse: var(--kui-color-background-inverse, #{$kui-color-background-inverse});
   --x-color-background-neutral-weak: var(--kui-color-background-neutral-weak, #{$kui-color-background-neutral-weak});
   --x-color-background-neutral-weaker: var(--kui-color-background-neutral-weaker, #{$kui-color-background-neutral-weaker});
@@ -220,9 +222,11 @@ import '@kong-ui-public/app-layout/dist/style.css'
 
   /* color-border */
   --x-color-border: var(--kui-color-border, #{$kui-color-border});
+  --x-color-border-transparent: var(--kui-color-border-transparent, #{$kui-color-border-transparent});
   --x-color-border-primary: var(--kui-color-border-primary, #{$kui-color-border-primary});
   --x-color-border-primary-strong: var(--kui-color-border-primary-strong, #{$kui-color-border-primary-strong});
   --x-color-border-primary-weak: var(--kui-color-border-primary-weak, #{$kui-color-border-primary-weak});
+  --x-color-border-decorative-purple: var(--kui-color-border-decorative-purple, #{$kui-color-border-decorative-purple});
 
   /* color-text */
   /* TODO(jc): This border color is in the design but doesn't seem to be exported from @kong/design-tokens */
@@ -235,6 +239,7 @@ import '@kong-ui-public/app-layout/dist/style.css'
   --x-color-text-inverse: var(--kui-color-text-inverse, #{$kui-color-text-inverse});
   --x-color-text-neutral: var(--kui-color-text-neutral, #{$kui-color-text-neutral});
   --x-color-text-neutral-strong: var(--kui-color-text-neutral-strong, #{$kui-color-text-neutral-strong});
+  --x-color-text-neutral-stronger: var(--kui-color-text-neutral-stronger, #{$kui-color-text-neutral-stronger});
   --x-color-text-primary: var(--kui-color-text-primary, #{$kui-color-text-primary});
 
 
@@ -278,6 +283,7 @@ import '@kong-ui-public/app-layout/dist/style.css'
   --x-shadow-focus: var(--kui-shadow-focus, #{$kui-shadow-focus});
 
   /* spacing */
+  --x-space-0: var(--kui-space-0, #{$kui-space-0});
   --x-space-10: var(--kui-space-10, #{$kui-space-10});
   --x-space-20: var(--kui-space-20, #{$kui-space-20});
   --x-space-30: var(--kui-space-30, #{$kui-space-30});
@@ -461,6 +467,11 @@ import '@kong-ui-public/app-layout/dist/style.css'
   }
   :where(p, td, dd, li) a:where(:hover, :focus) {
     text-decoration: underline;
+  }
+  /* focus ring */
+  :focus-visible {
+    box-shadow: var(--x-shadow-focus);
+    outline: none;
   }
   /* make sure k-buttons are never underlined */
   a.k-button {

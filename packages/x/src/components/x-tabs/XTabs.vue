@@ -30,21 +30,21 @@ const slots = defineSlots()
 
   &.default {
     /* initial */
-    :deep(a) {
+    :deep(:where(a, span)) {
       border: none;
-      border-radius: var(--kui-border-radius-30, $kui-border-radius-30);
+      border-radius: var(--x-border-radius-30);
 
-      background-color: var(--kui-color-background-transparent, $kui-color-background-transparent);
-      color: var(--kui-color-text-neutral, $kui-color-text-neutral);
+      background-color: var(--x-color-background-transparent);
+      color: var(--x-color-text-neutral);
 
       transition:
-        color var(--kui-animation-duration-20, $kui-animation-duration-20) ease-in-out,
-        background-color var(--kui-animation-duration-20, $kui-animation-duration-20) ease-in-out;
+        color var(--x-animation-duration-20) ease-in-out,
+        background-color var(--x-animation-duration-20) ease-in-out;
 
-      font-family: var(--kui-font-family-text, $kui-font-family-text);
-      font-size: var(--kui-font-size-30, $kui-font-size-30);
-      font-weight: var(--kui-font-weight-semibold, $kui-font-weight-semibold);
-      line-height: var(--kui-line-height-40, $kui-line-height-40);
+      font-family: var(--x-font-family-text);
+      font-size: var(--x-font-size-30);
+      font-weight: var(--x-font-weight-semibold);
+      line-height: var(--x-line-height-40);
 
       text-decoration: none;
       cursor: pointer;
@@ -52,72 +52,60 @@ const slots = defineSlots()
 
       display: inline-flex;
       align-items: center;
-      gap: var(--kui-space-40, $kui-space-40);
-      padding: var(--kui-space-30, $kui-space-30) var(--kui-space-50, $kui-space-50);
-
-  /* ? */
-      :slotted(a),
-      :deep(a) {
-        color: var(--kui-color-text-neutral, $kui-color-text-neutral);
-        text-decoration: none;
-      }
-  /* ? */
-
+      gap: var(--x-space-40);
+      padding: var(--x-space-30) var(--x-space-50);
     }
 
     /* disabled */
-    :deep(a.disabled) {
-      color: var(--kui-color-text-disabled, $kui-color-text-disabled);
+    :deep(span) {
+      color: var(--x-color-text-disabled);
       cursor: not-allowed;
     }
 
+
     /* hover/focus */
-    :deep(a:hover:not(.disabled)),
+    :deep(a:hover),
     :deep(a:focus-visible) {
-      background-color: var(--kui-color-background-neutral-weaker, $kui-color-background-neutral-weaker);
+      background-color: var(--x-color-background-neutral-weaker);
     }
 
-    /* focus ring */
-    :deep(a:focus-visible) {
-      box-shadow: var(--kui-shadow-focus, $kui-shadow-focus);
-      outline: none;
-    }
 
     /* selected / active / current */
     li.active :deep(a),
     :deep(a:focus-visible) {
-      color: var(--kui-color-text, $kui-color-text);
+      color: var(--x-color-text);
     }
-
 
   }
 
   &.small {
     /* initial */
-    :deep(a) {
-      border-radius: var(--kui-border-radius-20, $kui-border-radius-20);
-      color: var(--kui-color-text-neutral, $kui-color-text-neutral);
-      font-size: var(--kui-font-size-20, $kui-font-size-20);
-      font-weight: var(--kui-font-weight-medium, $kui-font-weight-medium);
-      line-height: var(--kui-line-height-30, $kui-line-height-30);
+    :deep(:where(a, span)) {
+      border-radius: var(--x-border-radius-20);
+      color: var(--x-color-text-neutral);
+      font-size: var(--x-font-size-20);
+      font-weight: var(--x-font-weight-medium);
+      line-height: var(--x-line-height-30);
       transition:
-        color var(--kui-animation-duration-20, $kui-animation-duration-20) ease-in-out,
-        font-weight var(--kui-animation-duration-20, $kui-animation-duration-20) ease-in-out;
+        color var(--x-animation-duration-20) ease-in-out,
+        font-weight var(--x-animation-duration-20) ease-in-out;
+    }
 
-      &:hover:not(.disabled) {
-        color: var(--kui-color-text-neutral-stronger, $kui-color-text-neutral-stronger);
-      }
+    /* hover/focus */
+    :deep(a:hover),
+    :deep(a:focus-visible) {
+      color: var(--x-color-text-neutral-stronger);
     }
 
     /* disabled */
-    :deep(a.disabled) {
-      color: var(--kui-color-text-disabled, $kui-color-text-disabled);
+    :deep(span) {
+      color: var(--x-color-text-disabled);
       cursor: not-allowed;
     }
 
     /* selected / active / current */
     li.active :deep(a) {
-      color: var(--kui-color-text, $kui-color-text);
+      color: var(--x-color-text);
     }
 
   }
@@ -130,13 +118,13 @@ const slots = defineSlots()
     overflow-y: hidden;
 
     display: flex;
-    gap: var(--kui-space-40, $kui-space-40);
+    gap: var(--x-space-40);
     list-style: none;
 
     padding: 0;
     margin: 0;
-    margin-top: var(--kui-space-0, $kui-space-0);
-    padding-top: var(--kui-space-20, $kui-space-20);
+    margin-top: var(--x-space-0);
+    padding-top: var(--x-space-20);
 
     li {
       white-space: nowrap;
@@ -145,25 +133,25 @@ const slots = defineSlots()
 
   &.default {
     ul {
-      border-bottom: var(--kui-border-width-10, $kui-border-width-10) solid var(--kui-color-border, $kui-color-border);
+      border-bottom: var(--x-border-width-10) solid var(--x-color-border);
 
-      margin-bottom: var(--kui-space-70, $kui-space-70);
-      padding: var(--kui-space-0, $kui-space-0) var(--kui-space-70, $kui-space-70);
-      padding-top: var(--kui-space-20, $kui-space-20);
+      margin-bottom: var(--x-space-70);
+      padding: var(--x-space-0) var(--x-space-70);
+      padding-top: var(--x-space-20);
 
       li {
-        border-bottom-color: var(--kui-color-border-transparent, $kui-color-border-transparent);
+        border-bottom-color: var(--x-color-border-transparent);
         border-bottom-style: solid;
-        border-bottom-width: var(--kui-border-width-20, $kui-border-width-20);
+        border-bottom-width: var(--x-border-width-20);
 
         transition:
-          border-bottom-color var(--kui-animation-duration-20, $kui-animation-duration-20) ease-in-out;
+          border-bottom-color var(--x-animation-duration-20) ease-in-out;
 
         position: relative;
-        padding-bottom: var(--kui-space-40, $kui-space-40);
+        padding-bottom: var(--x-space-40);
 
         &.active {
-          border-bottom-color: var(--kui-color-border-decorative-purple, $kui-color-border-decorative-purple);
+          border-bottom-color: var(--x-color-border-decorative-purple);
         }
       }
     }
@@ -171,8 +159,8 @@ const slots = defineSlots()
 
   &.small {
     ul {
-      gap: var(--kui-space-70, $kui-space-70);
-      margin-bottom: var(--kui-space-50, $kui-space-50);
+      gap: var(--x-space-70);
+      margin-bottom: var(--x-space-50);
     }
   }
 }
