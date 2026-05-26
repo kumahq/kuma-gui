@@ -53,6 +53,9 @@ const DataplaneListener = {
     return {
       ...item,
       state: typeof item.state !== 'undefined' ? String(item.state) : 'Ready',
+      addressPort: `${item.address ?? ''}:${item.port}`,
+      protocol: item.type === 'ZoneIngress' ? 'tcp' : '',
+      portName: item.name ?? '',
     }
   },
   fromCollection(items: KumaDataplaneListener = []) {

@@ -11,16 +11,26 @@
     <AppView>
       <XLayout variant="y-stack">
         <template
-          v-for="inbound in [props.dataPlaneOverview.dataplane.networking.inbounds.find((item) => item.port === props.data.port)]"
+          v-for="inbound in [[...props.dataPlaneOverview.dataplane.networking.inbounds, ...props.dataPlaneOverview.dataplane.networking.listeners].find((item) => item.port === props.data.port)]"
           :key="typeof inbound"
         >
           <XTable
             v-if="inbound"
             variant="kv"
           >
-            <tr
-              v-if="Object.keys(inbound.tags).length > 0"
-            >
+            <tr v-if="'type' in inbound">
+              <th scope="row">
+                Type
+              </th>
+              <td>
+                <XBadge
+                  appearance="info"
+                >
+                  {{ inbound.type }}
+                </XBadge>
+              </td>
+            </tr>
+            <tr v-if="'tags' in inbound">
               <th scope="row">
                 Tags
               </th>
@@ -31,7 +41,7 @@
                 />
               </td>
             </tr>
-            <tr>
+            <tr v-if="'protocol' in inbound && inbound.protocol.length > 0">
               <th scope="row">
                 Protocol
               </th>
@@ -44,7 +54,7 @@
                 </XBadge>
               </td>
             </tr>
-            <tr>
+            <tr v-if="'addressPort' in inbound">
               <th scope="row">
                 Address
               </th>
@@ -55,7 +65,7 @@
               </td>
             </tr>
             <tr
-              v-if="inbound.serviceAddressPort.length > 0"
+              v-if="'serviceAddressPort' in inbound && inbound.serviceAddressPort.length > 0"
             >
               <th scope="row">
                 Service address
@@ -67,7 +77,7 @@
               </td>
             </tr>
             <tr
-              v-if="inbound.portName.length > 0"
+              v-if="'portName' in inbound && inbound.portName.length > 0"
             >
               <th scope="row">
                 Name
@@ -210,7 +220,7 @@ import { Kri } from '@/app/kuma'
 import { sources as policySources } from '@/app/policies/sources'
 
 const props = defineProps<{
-  data: DataplaneNetworkingLayout['inbounds'][number]
+  data: DataplaneNetworkingLayout['inbounds'][number] | DataplaneNetworkingLayout['listeners'][number]
   dataPlaneOverview: DataplaneOverview
   routeName: string
 }>()

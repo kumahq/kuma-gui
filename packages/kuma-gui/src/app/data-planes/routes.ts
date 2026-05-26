@@ -93,13 +93,13 @@ export const dataplaneRoutes = (): RouteRecordRaw[] => {
                 // item.children = [{
                 //   path: 'overview',
                 //   name: 'data-plane-connection-listener-summary-overview-view',
-                //   component: () => import('@/app/data-planes/views/DataplaneListenerSummaryOverviewView.vue'),
+                //   component: () => import('@/app/data-planes/views/DataPlaneInboundSummaryOverviewView.vue'),
                 // }]
                 item.children.unshift(
                   {
                     path: 'overview',
                     name: 'data-plane-connection-listener-summary-overview-view',
-                    component: () => import('@/app/data-planes/views/DataplaneListenerSummaryOverviewView.vue'),
+                    component: () => import('@/app/data-planes/views/DataPlaneInboundSummaryOverviewView.vue'),
                   },
                 )
               }
