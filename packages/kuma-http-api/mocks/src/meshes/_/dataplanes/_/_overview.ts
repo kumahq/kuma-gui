@@ -4,12 +4,13 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
   const [
     mesh,
     zone,
-    nspace = '',
+    nspace,
     displayName,
   ] = [
     String(req.params.mesh), // mesh
     fake.helpers.arrayElement(['', fake.word.noun()]), // zone
-    ...String(req.params.name).split('.').toReversed(), // nspace, displayName
+    // with k8s the request.name MUST be use the correct `name.ns` format
+    ...(k8s ? String(req.params.name).split('.').toReversed() : ['', String(req.params.name)]), // nspace, displayName
   ]
   const name = String(req.params.name)
 

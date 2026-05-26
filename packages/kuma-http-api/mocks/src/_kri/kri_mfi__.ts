@@ -1,2 +1,2 @@
-export { default } from '../meshes/_/meshservices/_'
+export { default } from '../meshes/_/meshfaultinjections/_'
 

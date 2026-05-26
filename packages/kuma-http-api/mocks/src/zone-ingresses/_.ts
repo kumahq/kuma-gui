@@ -11,9 +11,7 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
     _shortName,
     _mesh,
     zone,
-    // if its not a kri (which always has a nspace, even if it's ''), or the
-    // name has no '.', then, if its k8s use a random nspace, otherwise ''
-    nspace = k8s ? fake.word.noun() : '',
+    nspace,
     displayName,
   ] = kri ? kri.split('_') : [
     'kri', // prefix
@@ -21,7 +19,8 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
     String(req.params.mesh), // mesh
     // we can't know the zone for a non-KRI version of this request
     fake.word.noun(), // zone.
-    ...String(req.params.name).split('.').toReversed(), // nspace, displayName
+    // with k8s the request.name MUST be use the correct `name.ns` format
+    ...(k8s ? String(req.params.name).split('.').toReversed() : ['', String(req.params.name)]), // nspace, displayName
   ]
   const name = kri ? `${displayName}${nspace ? `.${nspace}` : ''}` : String(req.params.name)
 
