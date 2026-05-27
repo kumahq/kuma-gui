@@ -38,7 +38,7 @@
                   data-testid="protocol"
                   appearance="info"
                 >
-                  {{ t(`http.api.value.${props.data.protocol}`) }}
+                  {{ t(`http.api.value.${inbound.protocol}`) }}
                 </XBadge>
               </td>
             </tr>

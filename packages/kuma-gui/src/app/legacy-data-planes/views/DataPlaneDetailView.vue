@@ -523,15 +523,7 @@
                           addressPort: `${props.data.dataplane.networking.inbounds[0].address}:${port}`,
                         },
                       ])
-                    }, []) : props.data.dataplane.networking.inbounds.map(item => {
-                      // if http stats exist then its a http inbound
-                      // otherwise assume tcp
-                      const keys = Object.keys(traffic?.inbounds[item.name] ?? {})
-                      return {
-                        ...item,
-                        protocol: keys.includes('grpc') ? 'grpc' : keys.includes('http') ? 'http' : 'tcp',
-                      }
-                    })]"
+                    }, []) : props.data.dataplane.networking.inbounds]"
                     :key="typeof inbounds"
                   >
                     <ConnectionGroup

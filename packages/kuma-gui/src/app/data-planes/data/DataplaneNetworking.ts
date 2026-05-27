@@ -134,7 +134,7 @@ export const DataplaneNetworking = {
             clusterName: item.servicePort && item.servicePort !== item.port ? `localhost_${item.servicePort}` : name,
             // If a health property is unset the inbound is considered healthy
             state: (typeof item.state !== 'undefined' ? String(item.state) : 'Ready'),
-            protocol: '',
+            protocol: item.protocol ?? '',
             address,
             addressPort: `${address}:${item.port}`,
             // inbound serviceAddress, inbound address, networkingAddress because the internal services accessible address
