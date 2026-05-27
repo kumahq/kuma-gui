@@ -1,4 +1,4 @@
-Feature: mesh / mesh-identity
+Feature: mesh / mesh-trust
 
   Background:
     Given the CSS selectors
@@ -6,6 +6,7 @@ Feature: mesh / mesh-identity
       | meshtrusts-listing | [data-testid="mesh-trusts-listing"] |
       | item               | $meshtrusts-listing tbody tr        |
       | summary            | [data-testid="slideout-container"]  |
+      | summary-title      | $summary [data-testid='slideout-title']  |
 
   Scenario: MeshTrusts are listed in mesh overview
     Given the URL "/meshes/default/meshtrusts" responds with
@@ -13,6 +14,10 @@ Feature: mesh / mesh-identity
       body:
         items:
           - name: trust-1
+            mesh: default
+            kri: kri_mtrust_default___trust-1_
+            labels:
+              kuma.io/display-name: trust-1
             status:
               origin:
                 kri: kri_mid_default_default_foo_bar_baz
@@ -29,6 +34,9 @@ Feature: mesh / mesh-identity
         items:
           - name: trust-1
             mesh: default
+            kri: kri_mtrust_default___trust-1_
+            labels:
+              kuma.io/display-name: trust-1
             status:
               origin:
                 kri: kri_mid_default_default_foo_bar_baz
@@ -37,7 +45,7 @@ Feature: mesh / mesh-identity
     Then I click the "$item:nth-child(1) td:first-child a" element
     Then the URL contains "/meshes/default/overview/meshtrust/kri_mtrust_default___trust-1_"
     And the "$summary" element exists
-    And the "$summary" element contains "trust-1"
+    And the "$summary-title" element contains "trust-1"
     And the "$summary [data-testid='k-code-block']" element exists
     And the "$summary [data-testid='k-code-block']" element contains "type: MeshTrust"
     And the "$summary [data-testid='k-code-block']" element contains "mesh: default"
@@ -63,8 +71,9 @@ Feature: mesh / mesh-identity
     Then I click the "$item:nth-child(1) td:nth-child(3) a" element
     Then the URL contains "/meshes/default/overview/meshidentity/kri_mid_default_default_foo_bar_baz"
     And the "$summary" element exists
-    And the "$summary" element contains "bar"
+    And the "$summary-title" element contains "bar"
     And the "$summary [data-testid='k-code-block']" element exists
     And the "$summary [data-testid='k-code-block']" element contains "type: MeshIdentity"
     And the "$summary [data-testid='k-code-block']" element contains "mesh: default"
     And the "$summary [data-testid='k-code-block']" element contains "name: bar"
+    Then pause
