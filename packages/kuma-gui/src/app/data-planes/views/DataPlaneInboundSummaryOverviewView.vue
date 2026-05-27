@@ -18,7 +18,9 @@
             v-if="inbound"
             variant="kv"
           >
-            <tr>
+            <tr
+              v-if="Object.keys(inbound.tags).length > 0"
+            >
               <th scope="row">
                 Tags
               </th>

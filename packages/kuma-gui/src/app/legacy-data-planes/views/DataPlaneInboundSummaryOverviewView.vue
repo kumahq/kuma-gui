@@ -15,7 +15,9 @@
         <XTable
           variant="kv"
         >
-          <tr>
+          <tr
+            v-if="Object.keys(props.data.tags).length > 0"
+          >
             <th scope="row">
               Tags
             </th>

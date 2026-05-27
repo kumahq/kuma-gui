@@ -173,6 +173,31 @@
                       {{ t('common.formats.datetime', { value: Date.parse(item.modificationTime) }) }}
                     </td>
                   </tr>
+                  <tr
+                    v-if="Object.keys(item.labels).length > 0"
+                  >
+                    <th scope="row">
+                      Labels
+                    </th>
+                    <td>
+                      <XLayout
+                        variant="separated"
+                      >
+                        <template
+                          v-for="kumaRe in [/^(.+\.)?kuma\.io\//]"
+                          :key="typeof kumaRe"
+                        >
+                          <XBadge
+                            v-for="(value, key) in item.labels"
+                            :key="key"
+                            :appearance="kumaRe.test(key) ? 'info' : 'decorative'"
+                          >
+                            {{ key }}:{{ value }}
+                          </XBadge>
+                        </template>
+                      </XLayout>
+                    </td>
+                  </tr>
                 </XTable>
 
                 <XLayout
@@ -184,7 +209,9 @@
                   <XTable
                     variant="kv"
                   >
-                    <tr>
+                    <tr
+                      v-if="Object.keys(item.dataplane.networking.gateway.tags ?? {}).length > 0"
+                    >
                       <th scope="row">
                         {{ t('http.api.property.tags') }}
                       </th>
@@ -256,7 +283,9 @@
                             </XBadge>
                           </td>
                         </tr>
-                        <tr>
+                        <tr
+                          v-if="Object.keys(inbound.tags).length > 0"
+                        >
                           <th scope="row">
                             {{ t('http.api.property.tags') }}
                           </th>
@@ -309,7 +338,7 @@
                         variant="kv"
                       >
                         <tr
-                          v-if="Object.keys(outbound.tags).length"
+                          v-if="Object.keys(outbound.tags).length > 0"
                         >
                           <th scope="row">
                             {{ t('http.api.property.tags') }}
