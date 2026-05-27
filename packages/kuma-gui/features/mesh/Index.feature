@@ -20,7 +20,6 @@ Feature: mesh / index
           - name: default
           - name: another-mesh
       """
-    When I visit the "/meshes" URL
 
   Rule: Shows expected content
     Scenario: Shows expected content for Mesh*Services
@@ -45,6 +44,7 @@ Feature: mesh / index
                   total: 4
                   online: 4
         """
+      When I visit the "/meshes" URL
       Then the "$item" element exists 1 time
       And the "$item" element contains
         | Value   |
@@ -76,6 +76,7 @@ Feature: mesh / index
                   total: 4
                   online: 4
         """
+      When I visit the "/meshes" URL
       Then the "$item" element exists 1 time
       And the "$item" element contains
         | Value   |
@@ -84,6 +85,7 @@ Feature: mesh / index
         |   4 / 4 |
 
   Scenario: Clicking a mesh and back again for <Mesh>
+    When I visit the "/meshes" URL
     Then the "$item" element exists 2 times
     When I click the "<Selector> [data-testid='x-action-group-control']" element
     And I click the "<Selector> [data-testid='x-action-group'] li:nth-child(1) [data-testid='x-action']" element
@@ -102,6 +104,7 @@ Feature: mesh / index
       | default      | $item:nth-child(1) |
 
   Scenario: Sending filters
+    When I visit the "/meshes" URL
     Then the "$input-search" element exists
     And I "type" "foo kuma.io/service-name:bar" into the "$input-search" element
     And I "type" "{enter}" into the "$input-search" element
