@@ -1,6 +1,7 @@
 import type { Dependencies, ResponseHandler } from '#mocks'
-import type { components } from '@kumahq/kuma-http-api'
+import type { paths } from '@kumahq/kuma-http-api'
 
+type MeshIdentityResponse = paths['/meshes/{mesh}/meshidentities/{name}']['get']['responses']['200']['content']['application/json']
 
 export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
   const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
@@ -10,7 +11,7 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
   const kri = req.params.kri ? `kri_mid_${req.params.kri}` : undefined
   const [
     _prefix,
-    _shortName,
+    shortName,
     mesh,
     zone,
     nspace,
@@ -30,24 +31,25 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
     headers: {},
     body: {
       ...(k8sFormat && { apiVersion: 'kuma.io/v1alpha1' }),
-      ...(k8sFormat ? { kind: 'MeshIdentity' } : { type: 'MeshIdentity' }),
+      ...fake.kuma.timespan(),
+      type: 'MeshIdentity',
+      mesh,
+      name,
+      kri: fake.kuma.kri({ shortName, mesh, zone, namespace: nspace, displayName }),
       ...((() => {
         const metadata = {
           name,
           labels: {
             ...fake.kuma.labels({
               name: displayName,
+              mesh,
+              env: k8s ? 'kubernetes' : 'universal',
               ...(zone ? { zone } : {}),
               ...(k8s ? { namespace: nspace } : {}),
             }),
           }}
         return k8sFormat ? { metadata } : metadata
       })()),
-      ...(!k8sFormat && {
-        creationTime: fake.date.past().toISOString(),
-        modificationTime: fake.date.recent().toISOString(),
-      }),
-      kri: fake.kuma.kri({ resourceName: 'MeshIdentity', mesh, name }),
       spec: {
         provider: {
           bundled: {
@@ -103,17 +105,27 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
         },
         selector: {
           dataplane: {
-            matchLabels: {
-              'kuma.io/mesh': mesh,
-              'kuma.io/zone': fake.word.noun(),
-            },
+            matchLabels: fake.kuma.labels({
+              mesh,
+              ...(zone ? { zone } : {}),
+            }),
           },
         },
         spiffeID: {
-          path: fake.kuma.spiffeId({ mesh }),
-          trustDomain: fake.word.noun(),
+          path: '/ns/{{ .Namespace }}/sa/{{ .ServiceAccount }}',
+          trustDomain: '{{ .Mesh }}.{{ .Zone }}.mesh.local',
         },
-      } satisfies components['schemas']['MeshIdentityItem']['spec'],
-    },
+      },
+      status: {
+        conditions: [
+          {
+            type: 'Ready',
+            message: 'Successfully initialized',
+            reason: 'Ready',
+            status: 'True',
+          },
+        ],
+      },
+    } satisfies MeshIdentityResponse,
   }
 }
