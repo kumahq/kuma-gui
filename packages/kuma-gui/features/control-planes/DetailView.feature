@@ -104,7 +104,7 @@ Feature: control-planes / DetailView
     And the "$meshes-details table tbody tr:nth-child(1)" element contains
       | Value  |
       | mesh-1 |
-      |      6 |
+      |     11 |
       |  1 / 3 |
 
   Scenario: Shows expected content in non-federated mode

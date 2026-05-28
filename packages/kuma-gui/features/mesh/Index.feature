@@ -21,68 +21,37 @@ Feature: mesh / index
           - name: another-mesh
       """
 
-  Rule: Shows expected content
-    Scenario: Shows expected content for Mesh*Services
-      Given the environment
-        """
-        KUMA_MESH_COUNT: 1
-        """
-      And the URL "/mesh-insights" responds with
-        """
-        body:
-          items:
-            - name: default
-              resources:
-                MeshService:
-                  total: 1
-                MeshExternalService:
-                  total: 2
-                MeshMultiZoneService:
-                  total: 3
-              dataplanesByType:
-                standard:
-                  total: 4
-                  online: 4
-        """
-      When I visit the "/meshes" URL
-      Then the "$item" element exists 1 time
-      And the "$item" element contains
-        | Value   |
-        | default |
-        |       6 |
-        |   4 / 4 |
-
-    Scenario: Shows expected content for internal services
-      Given the environment
-        """
-        KUMA_MESH_COUNT: 1
-        """
-      And the URL "/mesh-insights" responds with
-        """
-        body:
-          items:
-            - name: default
-              services:
-                internal: 3
-              resources:
-                MeshService:
-                  total: 0
-                MeshExternalService:
-                  total: 0
-                MeshMultiZoneService:
-                  total: 0
-              dataplanesByType:
-                standard:
-                  total: 4
-                  online: 4
-        """
-      When I visit the "/meshes" URL
-      Then the "$item" element exists 1 time
-      And the "$item" element contains
-        | Value   |
-        | default |
-        |       3 |
-        |   4 / 4 |
+  Scenario: Shows expected content
+    Given the environment
+      """
+      KUMA_MESH_COUNT: 1
+      """
+    And the URL "/mesh-insights" responds with
+      """
+      body:
+        items:
+          - name: default
+            services:
+              internal: 3
+            resources:
+              MeshService:
+                total: 1
+              MeshExternalService:
+                total: 2
+              MeshMultiZoneService:
+                total: 3
+            dataplanesByType:
+              standard:
+                total: 4
+                online: 4
+      """
+    When I visit the "/meshes" URL
+    Then the "$item" element exists 1 time
+    And the "$item" element contains
+      | Value   |
+      | default |
+      |       9 |
+      |   4 / 4 |
 
   Scenario: Clicking a mesh and back again for <Mesh>
     When I visit the "/meshes" URL
