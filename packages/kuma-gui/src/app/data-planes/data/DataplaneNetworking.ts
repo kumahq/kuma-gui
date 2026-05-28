@@ -134,7 +134,7 @@ export const DataplaneNetworking = {
             clusterName: item.servicePort && item.servicePort !== item.port ? `localhost_${item.servicePort}` : name,
             // If a health property is unset the inbound is considered healthy
             state: (typeof item.state !== 'undefined' ? String(item.state) : 'Ready'),
-            protocol: item.protocol ?? '',
+            protocol: item.protocol ?? tags['kuma.io/protocol'] ?? 'tcp',
             address,
             addressPort: `${address}:${item.port}`,
             // inbound serviceAddress, inbound address, networkingAddress because the internal services accessible address

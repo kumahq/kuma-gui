@@ -49,8 +49,10 @@ Feature: mesh / dataplanes / overview / summary / Inbound
             inbound:
               - name: http
                 port: 12345
+                protocol: http
+      # prove that we use protocol over the tag
                 tags:
-                  kuma.io/protocol: http
+                  kuma.io/protocol: tcp
       """
     When I visit the "/meshes/default/data-planes/service-less/overview/inbound/self_inbound_http/overview" URL
     And the "$title" element contains "Inbound :12345"
