@@ -117,6 +117,7 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
               return {
                 address,
                 port: ports[i].port,
+                protocol: ports[i].protocol,
                 // these aren't synced, if they need seed syncing please move
                 // above with address
                 ...(fake.datatype.boolean() ? {

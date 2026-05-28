@@ -77,14 +77,16 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
                 const hasServiceAddress = fake.datatype.boolean({ probability: 0.25 })
                 const serviceAddress = hasServiceAddress ? fake.internet.ipv4() : undefined
                 const servicePort = hasServiceAddress ? fake.internet.port() : undefined
+                const protocol = fake.kuma.protocol()
                 const tags = fake.kuma.tags({
-                  protocol: fake.kuma.protocol(),
+                  protocol,
                   service: fake.kuma.serviceName(),
                   zone: multizone && fake.datatype.boolean() ? fake.word.noun() : undefined,
                 })
 
                 return {
                   port,
+                  protocol,
                   tags,
                   ...(fake.datatype.boolean()
                     ? {
