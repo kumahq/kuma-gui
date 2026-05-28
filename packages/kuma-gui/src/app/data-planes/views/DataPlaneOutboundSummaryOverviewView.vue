@@ -81,7 +81,7 @@
           <h3>Policies</h3>
           <DataSource
             :src="uri(policySources, '/policy-types', {})"
-            v-slot="{ data: policyTypesData, error: policyTypesError }"
+            v-slot="{ data: sourcePolicyTypes, error: policyTypesError }"
           >
             <DataSource
               :src="uri(policySources, '/meshes/:mesh/dataplanes/:name/policies/for/outbound/:kri', {
@@ -89,14 +89,15 @@
                 name: route.params.proxy,
                 kri: props.data.kri,
               })"
-              v-slot="{ data: policiesData, error: policiesError }"
+              v-slot="{ data: sourcePolicies, error: policiesError }"
             >
               <DataLoader
-                :data="[policyTypesData, policiesData]"
+                :data="[sourcePolicyTypes, sourcePolicies]"
                 :errors="[policyTypesError, policiesError]"
+                v-slot="{ data: [policyTypesData, policiesData] }"
               >
                 <template
-                  v-for="policyTypes in [Object.groupBy((policyTypesData?.policyTypes ?? []), ({ name }) => name)]"
+                  v-for="policyTypes in [Object.groupBy((policyTypesData.policyTypes), ({ name }) => name)]"
                   :key="`${typeof policyTypes}`"
                 >
                   <AccordionList
@@ -105,81 +106,86 @@
                     class="stack"
                     data-testid="outbound-policies-rules"
                   >
-                    <template
-                      v-for="({ conf, kind, origins }) in policiesData?.policies || []"
-                      :key="kind"
+                    <DataCollection
+                      :items="policiesData.policies"
+                      v-slot="{ items }"
                     >
-                      <AccordionItem
-                        :card="true"
+                      <template
+                        v-for="({ conf, kind, origins }) in items"
+                        :key="kind"
                       >
-                        <template #accordion-header>
-                          <span
-                            v-icon-start="{name: kind, size: '60', default: 'policy'}"
-                          >
-                            {{ kind }}
-                          </span>
-                        </template>
-                        <template #accordion-content>
-                          <XTable
-                            v-if="origins.length > 0"
-                            variant="kv"
-                          >
-                            <tr>
-                              <th scope="row">
-                                Origin policies
-                              </th>
-                              <td>
-                                <ul>
-                                  <li
-                                    v-for="origin in origins"
-                                    :key="origin.kri"
-                                  >
-                                    <template
-                                      v-for="kri in [Kri.fromString(origin.kri)]"
-                                      :key="typeof kri"
+                        <AccordionItem
+                          :card="true"
+                        >
+                          <template #accordion-header>
+                            <span
+                              v-icon-start="{name: kind, size: '60', default: 'policy'}"
+                            >
+                              {{ kind }}
+                            </span>
+                          </template>
+                          <template #accordion-content>
+                            <XTable
+                              v-if="origins.length > 0"
+                              variant="kv"
+                            >
+                              <tr>
+                                <th scope="row">
+                                  Origin policies
+                                </th>
+                                <td>
+                                  <ul>
+                                    <li
+                                      v-for="origin in origins"
+                                      :key="origin.kri"
                                     >
-                                      <XAction
-                                        v-if="policyTypes[kind]"
-                                        :to="{
-                                          name: 'policy-detail-view',
-                                          params: {
-                                            mesh: kri.mesh,
-                                            policyPath: policyTypes[kind]![0].path,
-                                            policy: origin.kri,
-                                          },
-                                        }"
-                                      >
-                                        {{ origin.kri }}
-                                      </XAction>
                                       <template
-                                        v-else
+                                        v-for="kri in [Kri.fromString(origin.kri)]"
+                                        :key="typeof kri"
                                       >
-                                        {{ origin.kri }}
+                                        <XAction
+                                          v-if="policyTypes[kind]"
+                                          :to="{
+                                            name: 'policy-detail-view',
+                                            params: {
+                                              mesh: kri.mesh,
+                                              policyPath: policyTypes[kind]![0].path,
+                                              policy: origin.kri,
+                                            },
+                                          }"
+                                        >
+                                          {{ origin.kri }}
+                                        </XAction>
+                                        <template
+                                          v-else
+                                        >
+                                          {{ origin.kri }}
+                                        </template>
                                       </template>
-                                    </template>
-                                  </li>
-                                </ul>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td colspan="2">
-                                <XLayout
-                                  variant="y-stack"
-                                  size="small"
-                                >
-                                  <span>Config</span>
-                                  <XCodeBlock
-                                    :code="YAML.stringify(conf)"
-                                    language="yaml"
-                                    :show-copy-button="false"
-                                  />
-                                </XLayout>
-                              </td>
-                            </tr>
-                          </XTable>
-                        </template>
-                      </AccordionItem>
-                    </template>
+                                    </li>
+                                  </ul>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td colspan="2">
+                                  <XLayout
+                                    variant="y-stack"
+                                    size="small"
+                                  >
+                                    <span>Config</span>
+                                    <XCodeBlock
+                                      :code="YAML.stringify(conf)"
+                                      language="yaml"
+                                      :show-copy-button="false"
+                                    />
+                                  </XLayout>
+                                </td>
+                              </tr>
+                            </XTable>
+                          </template>
+                        </AccordionItem>
+                      </template>
+                    </DataCollection>
                   </AccordionList>
                 </template>
               </DataLoader>
