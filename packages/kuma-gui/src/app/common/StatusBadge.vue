@@ -33,6 +33,7 @@ const BADGE_APPEARANCE: Record<StatusKeyword | 'disabled', BadgeAppearance> = {
   offline: 'danger',
   partially_degraded: 'warning',
   not_available: 'neutral',
+  disconnected_cp: 'warning',
   disabled: 'neutral',
 }
 

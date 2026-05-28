@@ -61,6 +61,15 @@
             path="data-planes.notifications.dataplane-offline"
           />
         </XNotification>
+        <XNotification
+          :notify="props.data.status === 'disconnected_cp'"
+          data-testid="warning-dataplane-disconnected-cp"
+          :uri="`data-planes.notifications.dataplane-disconnected-cp.${props.data.id}`"
+        >
+          <XI18n
+            path="data-planes.notifications.dataplane-disconnected-cp"
+          />
+        </XNotification>
       </template>
       <template
         #actions

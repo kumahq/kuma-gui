@@ -1,11 +1,18 @@
 import type { Dependencies, ResponseHandler } from '#mocks'
 import type { components } from '@kumahq/kuma-http-api'
 
-export default (_dependencies: Dependencies): ResponseHandler => (request) => {
-  const kri = request.params.kri as string | undefined
+export default (_dependencies: Dependencies): ResponseHandler => (req) => {
+  const kri = req.params.kri ? String(req.params.kri) : undefined
   const [
-    shortName = '',
-  ] = kri?.split('_').slice(1) ?? ''
+    // we skip the prefix here because the mocks routes are of the form
+    // `/_kri/kri_m_:kri`. If they were of the form `/_kri/:kri` we would uncomment these
+    // _prefix,
+    shortName,
+    // mesh,
+    // zone,
+    // namespace,
+    // name,
+  ] = kri?.split('_') ?? []
 
   return {
     headers: {
@@ -22,7 +29,7 @@ export default (_dependencies: Dependencies): ResponseHandler => (request) => {
           field: 'kri',
           reason: `The provided KRI includes a [shortName] ([resourceType]) that is not supported in the mock API. Given [${shortName}] is not supported yet.`,
           source: 'path',
-        },        
+        },
       ],
     } satisfies components['schemas']['Error'],
   }

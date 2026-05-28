@@ -348,8 +348,8 @@ import '@kong-ui-public/app-layout/dist/style.css'
     /*end deprecated */
 
     --icon-dataplane-standard: icon-dataplane-standard;
-    --icon-dataplane-builtin: icon-dataplane-standard;
-    --icon-dataplane-delegated: icon-dataplane-standard;
+    --icon-dataplane-builtin: icon-dataplane-builtin;
+    --icon-dataplane-delegated: icon-dataplane-delegated;
     --icon-subscription: icon-subscription;
     --icon-policy: icon-policy;
 

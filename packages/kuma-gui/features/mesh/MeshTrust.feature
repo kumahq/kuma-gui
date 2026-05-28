@@ -13,7 +13,7 @@ Feature: mesh / mesh-identity
       body:
         items:
           - name: trust-1
-            spec:
+            status:
               origin:
                 kri: kri_mid_default_default_foo_bar_baz
       """
@@ -29,7 +29,7 @@ Feature: mesh / mesh-identity
         items:
           - name: trust-1
             mesh: default
-            spec:
+            status:
               origin:
                 kri: kri_mid_default_default_foo_bar_baz
       """
@@ -49,7 +49,7 @@ Feature: mesh / mesh-identity
       body:
         items:
           - name: trust-1
-            spec:
+            status:
               origin:
                 kri: kri_mid_default_default_foo_bar_baz
       """

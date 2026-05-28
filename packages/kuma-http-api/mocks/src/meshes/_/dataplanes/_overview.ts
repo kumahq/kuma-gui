@@ -3,6 +3,7 @@ import type { Dependencies, ResponseHandler } from '#mocks'
 export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) => {
   const { mesh } = req.params
   const query = req.url.searchParams
+
   const _gateway = query.get('gateway') ?? ''
   const _name = query.get('name') ?? ''
   const _tags = query.get('tag') ?? ''
@@ -11,8 +12,11 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
   const zoneQuery = query.get('filter[labels.kuma.io/zone]')
 
   const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
+  const multizone = zoneQuery || fake.datatype.boolean()
+
   const defaultType = env('KUMA_DATAPLANE_TYPE', '')
   const inboundCount = parseInt(env('KUMA_DATAPLANEINBOUND_COUNT', `${fake.number.int({ min: 1, max: 5 })}`))
+  const listenersCount = parseInt(env('KUMA_DATAPLANELISTENER_COUNT', `${fake.number.int({ min: 1, max: 5 })}`))
   const outboundCount = parseInt(env('KUMA_DATAPLANEOUTBOUND_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
   const subscriptionCount = parseInt(env('KUMA_SUBSCRIPTION_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
   const isMtlsEnabledOverride = env('KUMA_MTLS_ENABLED', '')
@@ -41,6 +45,15 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
         return 'DELEGATED'
       case tags['kuma.io/service']?.includes('-builtin'):
         return 'BUILTIN'
+      case query.get('filter[labels.kuma.io/listener-zoneingress]') === 'enabled' && query.get('filter[labels.kuma.io/listener-zoneegress]') === 'enabled':
+      case _name.includes('ingress') && _name.includes('egress'):
+        return 'INGRESS-EGRESS'
+      case query.get('filter[labels.kuma.io/listener-zoneingress]') === 'enabled':
+      case _name.includes('ingress'):
+        return 'INGRESS'
+      case query.get('filter[labels.kuma.io/listener-zoneegress]') === 'enabled':
+      case _name.includes('egress'):
+        return 'EGRESS'
       default:
         return ''
     }
@@ -53,10 +66,9 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
       items: Array.from({ length: pageTotal }).map((_, i) => {
         const id = offset + i
 
-        const isMultizone = fake.datatype.boolean()
         const isMtlsEnabled = isMtlsEnabledOverride !== '' ? isMtlsEnabledOverride === 'true' : fake.datatype.boolean()
 
-        const type = filterType || fake.helpers.arrayElement(['BUILTIN', 'DELEGATED', 'STANDARD'])
+        const type = filterType || fake.helpers.arrayElement(['BUILTIN', 'DELEGATED', 'STANDARD', 'INGRESS', 'EGRESS', 'INGRESS-EGRESS'])
         // we include the type in the name so when we link using the name
         // we keep the type in the URL so the corresponding item mock knows the type
         const name = `${fake.word.noun()}-${type.toLowerCase()}`
@@ -69,6 +81,15 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
         return {
           type: 'DataplaneOverview',
           mesh,
+          labels: {
+            ...fake.kuma.labels({
+              ...(type.includes('INGRESS') && { 'kuma.io/listener-zoneingress': 'enabled' }),
+              ...(type.includes('EGRESS') && { 'kuma.io/listener-zoneegress': 'enabled' }),
+              name: displayName,
+              ...(multizone ? { zone } : {}),
+              ...(k8s ? { namespace: nspace } : {}),
+            }),
+          },
           name: `${displayName}${k8s ? `.${nspace}` : ''}`,
           ...((modificationTime) => ({
             creationTime: fake.kuma.date({ refDate: modificationTime }),
@@ -87,6 +108,19 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
                   ipFamilyMode: fake.helpers.arrayElement(['UnSpecified', 'DualStack', 'IPv4', 'IPv6']),
                 },
               }),
+              ...((type.includes('INGRESS') || type.includes('EGRESS')) && {
+                listeners: Array.from({ length: listenersCount }).map((_) => {
+                  const isIngress = type === 'INGRESS-EGRESS' ? fake.datatype.boolean() : type.includes('INGRESS')
+                  const port = fake.internet.port()
+                  return {
+                    address,
+                    port,
+                    name: fake.helpers.arrayElement([String(port), `${isIngress ? 'ingress' : 'egress'}-port`]),
+                    state: fake.kuma.state(),
+                    type: isIngress ? 'ZoneIngress' : 'ZoneEgress',
+                  }
+                }),
+              }),
               ...(type === 'STANDARD' ? {
                 // normal proxies have inbound and outbound
                 inbound: Array.from({ length: inboundCount }).map((_) => {
@@ -102,10 +136,10 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
                     tags: fake.kuma.tags({
                       protocol: fake.kuma.protocol(),
                       service,
-                      zone: zoneQuery || (isMultizone && fake.datatype.boolean()) ? zone : undefined,
+                      zone: multizone && fake.datatype.boolean() ? zone : undefined,
                     }),
                     ...(fake.datatype.boolean() ? {
-                      state: fake.kuma.inboundState(),
+                      state: fake.kuma.state(),
                     } : {}),
                   }
                 }),
@@ -123,21 +157,13 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
                 gateway: {
                   tags: fake.kuma.tags({
                     service,
-                    zone: zoneQuery || (isMultizone && fake.datatype.boolean()) ? zone : undefined,
+                    zone: multizone && fake.datatype.boolean() ? zone : undefined,
                   }),
                   type,
                 },
               }),
             },
           },
-          ...(k8s
-            ? {
-              labels: {
-                'kuma.io/display-name': displayName,
-                'k8s.kuma.io/namespace': nspace,
-              },
-            }
-            : {}),
           dataplaneInsight: {
             ...(isMtlsEnabled ? { mTLS: fake.kuma.dataplaneMtls() } : {}),
             subscriptions: Array.from({ length: subscriptionCount }).map((item, i, arr) => {

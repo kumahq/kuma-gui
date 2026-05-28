@@ -11,6 +11,7 @@ const states = {
   online: 'online',
   offline: 'offline',
   partiallyDegraded: 'partially_degraded',
+  disconnectedCp: 'disconnected_cp',
 } as const
 const dpTypes = {
   builtin: 'builtin',
@@ -27,37 +28,64 @@ export const DataplaneOverview = {
     const tags = getTags(networking)
     const isCertExpired = getIsCertExpired(dataplaneInsight)
     const isCertExpiresSoon = getIsCertExpiresSoon(dataplaneInsight)
-    const services = tags.filter((tag) => tag.label === 'kuma.io/service').map(({ value }) => value)
-    const zone = tags.find((tag) => tag.label === 'kuma.io/zone')?.value
+
     const labels = typeof item.labels !== 'undefined' ? item.labels : {}
+
+    // get all tags and labels with kuma.io/service
+    // uniquify and and sort
+    const services = Array.from(new Set([
+      ...tags.filter((tag) => tag.label === 'kuma.io/service').map(({ value }) => value),
+      ...(labels['kuma.io/service'] ? [labels['kuma.io/service']] : []),
+    ])).sort((a, b) => a.localeCompare(b))
+
+    // check for label first, fallback to tags
+    const zone = labels['kuma.io/zone'] || tags.find((tag) => tag.label === 'kuma.io/zone')?.value
+
 
     return {
       ...item,
       id: item.name,
-      name: labels['kuma.io/display-name'] ?? item.name,
+      name: labels['kuma.io/display-name'] || item.name,
       namespace: labels['k8s.kuma.io/namespace'] ?? '',
       dataplane: {
         networking,
       },
       labels,
       dataplaneInsight,
-      dataplaneType: networking.type === 'gateway' ? dpTypes.builtin : typeof networking.gateway !== 'undefined' ? dpTypes.delegated : dpTypes.standard,
+      dataplaneType: (() => {
+        switch (true) {
+          case networking.type === 'gateway':
+            return dpTypes.builtin
+          case typeof networking.gateway !== 'undefined':
+            return dpTypes.delegated
+          default:
+            return dpTypes.standard
+        }
+      })(),
+      zoneProxyTypes: [
+        ...labels['kuma.io/listener-zoneingress'] ? ['zone-ingress'] : [],
+        ...labels['kuma.io/listener-zoneegress'] ? ['zone-egress'] : [],
+      ],
       status: (() => {
-        const state = typeof dataplaneInsight.connectedSubscription !== 'undefined' ? states.online : states.offline
-        if (networking.gateway) {
+        const state = typeof dataplaneInsight.connectedSubscription !== 'undefined' ? states.online : states.disconnectedCp
+        if (networking.gateway || state === states.disconnectedCp) {
           return state
         }
 
-        const unhealthyInbounds = networking.inbounds.filter((inbound) => inbound.state !== 'Ready')
+        const networkEndpoints = [...networking.inbounds, ...networking.listeners]
+        const unhealthy = networkEndpoints.filter((endpoint) => endpoint.state !== 'Ready')
         switch (true) {
-          case unhealthyInbounds.length === networking.inbounds.length:
-            // All inbounds being unhealthy means the Dataplane is offline.
+          case unhealthy.length === 0:
+            // No unhealthy network endpoints means the Dataplane is online.
+            return states.online
+          case unhealthy.length === networkEndpoints.length:
+            // All network endpoints being unhealthy means the Dataplane is offline.
             return states.offline
-          case unhealthyInbounds.length > 0:
-            // Some inbounds being unhealthy means the Dataplane is partially degraded.
+          case unhealthy.length > 0:
+            // Some network endpoints being unhealthy means the Dataplane is partially degraded.
             return states.partiallyDegraded
           default:
-            // All inbounds being healthy means the Dataplane’s status is determined by whether it’s connected to a control plane.
+            // All network endpoints being healthy means the Dataplane’s status is determined by whether it’s connected to a control plane.
             return state
         }
       })(),

@@ -66,4 +66,7 @@ const emit = defineEmits<{
     height: fit-content;
   }
 }
+:deep(.slideout-container) {
+  z-index: auto !important;
+}
 </style>

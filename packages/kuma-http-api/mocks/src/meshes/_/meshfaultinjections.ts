@@ -1,7 +1,7 @@
 import type { Dependencies, ResponseHandler } from '#mocks'
 
 export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) => {
-  const { mesh } = req.params
+  const mesh = String(req.params.mesh)
   const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
   const { offset, total, next, pageTotal } = pager(
     env('KUMA_MESHFAULTINJECTION_COUNT', `${fake.number.int({ min: 1, max: 1000 })}`),
@@ -24,6 +24,7 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
         const nspace = queryNamespace ?? fake.k8s.namespace()
         return {
           type: 'MeshFaultInjection',
+          kri: fake.kuma.kri({resourceName: 'MeshFaultInjection', mesh, zone: fake.word.noun(), namespace: nspace, name: displayName}),
           mesh,
           name: `${displayName}${k8s ? `.${nspace}` : ''}`,
           creationTime: '2022-01-25T13:58:29.381342+01:00',

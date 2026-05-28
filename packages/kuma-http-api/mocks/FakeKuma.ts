@@ -156,7 +156,7 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
     return k8s ? this.k8s.dataplaneSuffix() : ''
   }
 
-  inboundState() {
+  state() {
     return this.faker.helpers.arrayElement(['Ready', 'NotReady', 'Ignored'])
   }
 
@@ -289,6 +289,52 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
       ...(protocol && { 'kuma.io/protocol': protocol }),
       ...(zone && { 'kuma.io/zone': zone }),
       ...additionalTags,
+    }
+  }
+  labels({ name, zone, namespace }: { name?: string, zone?: string, namespace?: string }): Record<string, string> {
+    const additional = Object.fromEntries(
+      this.faker.helpers.multiple(
+        () => [
+          this.faker.helpers.arrayElement([
+            this.faker.word.noun(),
+            'k8s.kuma.io/service-name',
+            'not-kuma.io/service',
+            'not/kuma.io/service',
+          ]),
+          this.faker.word.noun(),
+        ],
+        { count: this.faker.number.int({ min: 1, max: 3 }) },
+      ),
+    )
+
+    // example labels from a dataplane
+    // we don't currently use them all in the app itself
+
+    // app: grpc-service
+    // k8s.kuma.io/namespace: kuma-runner-ns
+    // k8s.kuma.io/service-account: default
+    // kuma.io/display-name: grpc-service-84d864559f-j8hnd
+    // kuma.io/env: kubernetes
+    // kuma.io/mesh: kuma-runner
+    // kuma.io/origin: zone
+    // kuma.io/proxy-type: sidecar
+    // kuma.io/workload: default
+    // kuma.io/zone: east
+
+    return {
+      ...(zone ? {
+        'kuma.io/origin': 'zone',
+        'kuma.io/zone': zone,
+      } : {
+        'kuma.io/origin': 'global',
+      }),
+      ...(name ? {
+        'kuma.io/display-name': name,
+      } : {}),
+      ...(namespace ? {
+        'k8s.kuma.io/namespace': namespace,
+      } : {}),
+      ...additional,
     }
   }
   /**

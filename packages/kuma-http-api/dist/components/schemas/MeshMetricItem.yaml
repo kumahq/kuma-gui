@@ -32,7 +32,9 @@ properties:
         type: object
         properties:
           applications:
-            description: Applications is a list of application that Dataplane Proxy will scrape
+            description: |-
+              Applications is a list of applications that Dataplane Proxy will scrape.
+              Ignored on zone-proxy-only Dataplanes (zone ingress/egress exist without a co-located workload).
             type: array
             items:
               properties:

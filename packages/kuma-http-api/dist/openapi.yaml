@@ -245,6 +245,8 @@ components:
       $ref: components/schemas/DataplaneInbound.yaml
     DataplaneOutbound:
       $ref: components/schemas/DataplaneOutbound.yaml
+    DataplaneListener:
+      $ref: components/schemas/DataplaneListener.yaml
     PolicyOrigin:
       $ref: components/schemas/PolicyOrigin.yaml
     PolicyConf:

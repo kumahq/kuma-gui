@@ -4,7 +4,7 @@ info:
   description: Kuma API
   version: v1alpha1
   x-ref-schema-name: DataplaneOverview
-  x-oas-source: kumahq/kuma@84ada43c9b742f4c30a7c1f40091a761f2728a87
+  x-oas-source: kumahq/kuma@6fe28c5968340597b6b85ecd09122a7fd86bffed
 paths:
   /:
     get:
@@ -4837,6 +4837,14 @@ components:
             type: object
             additionalProperties: true
             x-go-type: interface{}
+        match:
+          description: The incoming traffic match for this effective rule. Null means the rule matches all incoming traffic (catch-all).
+          type: object
+          additionalProperties: true
+          x-go-type: common_api.Match
+          x-go-type-import:
+            name: common_api
+            path: github.com/kumahq/kuma/v2/api/common/v1alpha1
         origin:
           description: The list of policies that contributed to the 'conf'. The order is important as it reflects in what order confs were merged to get the resulting 'conf'.
           type: array
@@ -4995,8 +5003,28 @@ components:
         - port
         - protocol
         - proxyResourceName
+    DataplaneListener:
+      type: object
+      properties:
+        kri:
+          type: string
+        type:
+          type: string
+          enum:
+            - ZoneIngress
+            - ZoneEgress
+        port:
+          type: integer
+          x-go-type: int32
+        proxyResourceName:
+          type: string
+      required:
+        - kri
+        - type
+        - port
+        - proxyResourceName
     DataplaneNetworkingLayout:
-      description: Dataplane networking layout. It contains information most important information about dataplane and lists of available inbounds and outbounds
+      description: Dataplane networking layout. It contains the most important information about the dataplane and lists the available inbounds, outbounds, and zone proxy listeners
       type: object
       properties:
         kri:
@@ -5019,6 +5047,10 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/DataplaneOutbound'
+        listeners:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataplaneListener'
         spiffeId:
           description: SPIFFE ID of the dataplane's workload identity certificate
           type: string
@@ -5027,6 +5059,7 @@ components:
         - labels
         - inbounds
         - outbounds
+        - listeners
       title: DataplaneLayout
     PolicyOrigin:
       description: The list of policies KRI that contributed to the 'conf'. The order is important as it reflects in what order confs were merged to get the resulting 'conf'.
@@ -6229,14 +6262,18 @@ components:
                               properties:
                                 attributes:
                                   description: |-
-                                    Attributes can contain placeholders available on
+                                    Attributes defines custom OpenTelemetry attributes. Keys must be static
+                                    OpenTelemetry attribute names. Values can contain placeholders available on
                                     https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
                                   type: array
                                   items:
                                     properties:
                                       key:
+                                        description: Key is the OpenTelemetry attribute name.
                                         type: string
+                                        pattern: ^[a-z]([a-z0-9]|[._][a-z0-9])*$
                                       value:
+                                        description: Value can contain Kuma placeholders.
                                         type: string
                                     required:
                                       - key
@@ -6483,14 +6520,18 @@ components:
                               properties:
                                 attributes:
                                   description: |-
-                                    Attributes can contain placeholders available on
+                                    Attributes defines custom OpenTelemetry attributes. Keys must be static
+                                    OpenTelemetry attribute names. Values can contain placeholders available on
                                     https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
                                   type: array
                                   items:
                                     properties:
                                       key:
+                                        description: Key is the OpenTelemetry attribute name.
                                         type: string
+                                        pattern: ^[a-z]([a-z0-9]|[._][a-z0-9])*$
                                       value:
+                                        description: Value can contain Kuma placeholders.
                                         type: string
                                     required:
                                       - key
@@ -6737,14 +6778,18 @@ components:
                               properties:
                                 attributes:
                                   description: |-
-                                    Attributes can contain placeholders available on
+                                    Attributes defines custom OpenTelemetry attributes. Keys must be static
+                                    OpenTelemetry attribute names. Values can contain placeholders available on
                                     https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
                                   type: array
                                   items:
                                     properties:
                                       key:
+                                        description: Key is the OpenTelemetry attribute name.
                                         type: string
+                                        pattern: ^[a-z]([a-z0-9]|[._][a-z0-9])*$
                                       value:
+                                        description: Value can contain Kuma placeholders.
                                         type: string
                                     required:
                                       - key
@@ -8240,6 +8285,21 @@ components:
                     type: array
                     items:
                       properties:
+                        sni:
+                          description: SNI defines a matcher configuration for matching by SNI value carried on the TLS connection
+                          type: object
+                          properties:
+                            type:
+                              description: Type defines how to match traffic by SNI. Only `Exact` is supported.
+                              type: string
+                              enum:
+                                - Exact
+                            value:
+                              description: Value is the SNI carried on the TLS connection that needs to match for the configuration to be applied
+                              type: string
+                          required:
+                            - type
+                            - value
                         spiffeID:
                           description: SpiffeID defines a matcher configuration for SpiffeID matching
                           type: object
@@ -10317,7 +10377,9 @@ components:
               type: object
               properties:
                 applications:
-                  description: Applications is a list of application that Dataplane Proxy will scrape
+                  description: |-
+                    Applications is a list of applications that Dataplane Proxy will scrape.
+                    Ignored on zone-proxy-only Dataplanes (zone ingress/egress exist without a co-located workload).
                   type: array
                   items:
                     properties:
@@ -13086,8 +13148,8 @@ components:
                 type: object
             rules:
               description: |-
-                Rules defines inbound timeout configurations. Currently limited to exactly one rule containing
-                default timeouts that apply to all inbound traffic, as L7 matching is not yet implemented.
+                Rules defines inbound timeout configurations. When matches are present, the rule is applied only
+                to traffic selected by the given source and destination matchers.
               type: array
               items:
                 properties:
@@ -13140,6 +13202,43 @@ components:
                           Setting this timeout to 0 will disable it. Be cautious when disabling it because
                           it can lead to connection leaking. Default value is 1h.
                         type: string
+                  matches:
+                    description: Matches define predicates for selecting traffic this configuration applies to.
+                    type: array
+                    items:
+                      properties:
+                        sni:
+                          description: SNI defines a matcher configuration for matching by SNI value carried on the TLS connection
+                          type: object
+                          properties:
+                            type:
+                              description: Type defines how to match traffic by SNI. Only `Exact` is supported.
+                              type: string
+                              enum:
+                                - Exact
+                            value:
+                              description: Value is the SNI carried on the TLS connection that needs to match for the configuration to be applied
+                              type: string
+                          required:
+                            - type
+                            - value
+                        spiffeID:
+                          description: SpiffeID defines a matcher configuration for SpiffeID matching
+                          type: object
+                          properties:
+                            type:
+                              description: Type defines how to match incoming traffic by SpiffeID. `Exact` or `Prefix` are allowed.
+                              type: string
+                              enum:
+                                - Exact
+                                - Prefix
+                            value:
+                              description: Value is SpiffeId of a client that needs to match for the configuration to be applied
+                              type: string
+                          required:
+                            - type
+                            - value
+                      type: object
                 type: object
             targetRef:
               description: |-
@@ -13816,6 +13915,21 @@ components:
                         type: array
                         items:
                           properties:
+                            sni:
+                              description: SNI defines a matcher configuration for matching by SNI value carried on the TLS connection
+                              type: object
+                              properties:
+                                type:
+                                  description: Type defines how to match traffic by SNI. Only `Exact` is supported.
+                                  type: string
+                                  enum:
+                                    - Exact
+                                value:
+                                  description: Value is the SNI carried on the TLS connection that needs to match for the configuration to be applied
+                                  type: string
+                              required:
+                                - type
+                                - value
                             spiffeID:
                               description: SpiffeID defines a matcher configuration for SpiffeID matching
                               type: object
@@ -13840,6 +13954,21 @@ components:
                         type: array
                         items:
                           properties:
+                            sni:
+                              description: SNI defines a matcher configuration for matching by SNI value carried on the TLS connection
+                              type: object
+                              properties:
+                                type:
+                                  description: Type defines how to match traffic by SNI. Only `Exact` is supported.
+                                  type: string
+                                  enum:
+                                    - Exact
+                                value:
+                                  description: Value is the SNI carried on the TLS connection that needs to match for the configuration to be applied
+                                  type: string
+                              required:
+                                - type
+                                - value
                             spiffeID:
                               description: SpiffeID defines a matcher configuration for SpiffeID matching
                               type: object
@@ -13862,6 +13991,21 @@ components:
                         type: array
                         items:
                           properties:
+                            sni:
+                              description: SNI defines a matcher configuration for matching by SNI value carried on the TLS connection
+                              type: object
+                              properties:
+                                type:
+                                  description: Type defines how to match traffic by SNI. Only `Exact` is supported.
+                                  type: string
+                                  enum:
+                                    - Exact
+                                value:
+                                  description: Value is the SNI carried on the TLS connection that needs to match for the configuration to be applied
+                                  type: string
+                              required:
+                                - type
+                                - value
                             spiffeID:
                               description: SpiffeID defines a matcher configuration for SpiffeID matching
                               type: object
@@ -15748,15 +15892,32 @@ components:
               description: |-
                 Env controls whether standard OTEL exporter env vars participate in the
                 final exporter config for this backend.
+                Defaults to mode: Optional, precedence: EnvFirst, allowSignalOverrides: true
+                when omitted.
               type: object
               properties:
                 allowSignalOverrides:
                   description: |-
-                    AllowSignalOverrides controls whether signal-specific OTEL env vars such
-                    as `OTEL_EXPORTER_OTLP_TRACES_*` may diverge from the shared config.
+                    AllowSignalOverrides controls whether per-signal OTEL env vars
+                    (OTEL_EXPORTER_OTLP_TRACES_*, OTEL_EXPORTER_OTLP_METRICS_*,
+                    OTEL_EXPORTER_OTLP_LOGS_*) may diverge from the shared
+                    OTEL_EXPORTER_OTLP_* values.
+                    true (default): per-signal vars override the shared values for that
+                    signal.
+                    false: per-signal vars are ignored; the shared values apply to all
+                    signals. When per-signal overrides are dropped this way,
+                    SignalOverridesDisallowed appears in blockedReasons (a soft block -
+                    export still works via the shared config).
                   type: boolean
                 mode:
-                  description: Mode controls whether OTEL env vars are ignored, allowed, or required.
+                  description: |-
+                    Mode controls whether OTEL env vars participate in the merge.
+                    Disabled: env vars are skipped entirely; only explicit backend fields and
+                    built-in defaults apply.
+                    Optional (default): env vars are used when present; absence is fine.
+                    Required: env vars must supply the missing fields - if any required field
+                    is missing the signal is blocked (state: missing, RequiredEnvMissing in
+                    blockedReasons) even when an explicit value or default could fill it.
                   type: string
                   default: Optional
                   enum:
@@ -15765,8 +15926,11 @@ components:
                     - Required
                 precedence:
                   description: |-
-                    Precedence controls whether explicit backend fields or env vars win when
-                    both are present for the same field.
+                    Precedence controls which source wins when both an explicit backend field
+                    and an env var are present for the same field.
+                    EnvFirst (default): env vars win; explicit backend fields fill gaps.
+                    ExplicitFirst: explicit backend fields win; env vars fill gaps.
+                    In either case, built-in defaults are the last fallback.
                   type: string
                   default: EnvFirst
                   enum:

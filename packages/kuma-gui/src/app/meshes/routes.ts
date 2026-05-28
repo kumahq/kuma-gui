@@ -1,4 +1,3 @@
-import type { Can } from '@/app/application'
 import { routes as meshIdentity } from '@/app/mesh-identities/routes'
 import { routes as meshTrust } from '@/app/mesh-trusts/routes'
 import type { RouteRecordRaw } from 'vue-router'
@@ -9,7 +8,6 @@ export type SplitRouteRecordRaw = {
 }
 
 export const routes = (
-  can: Can,
   services: SplitRouteRecordRaw,
   gateways: SplitRouteRecordRaw,
   dataplanes: SplitRouteRecordRaw,
@@ -54,7 +52,7 @@ export const routes = (
                 ...gateways.items(),
                 ...dataplanes.items(),
                 ...policies.items(),
-                ...(can('use resources route') ? resources.items() : []),
+                ...resources.items(),
               ],
             },
             ...services.item(),
@@ -62,7 +60,7 @@ export const routes = (
             ...dataplanes.item(),
             ...policies.item(),
             ...workloads.item(),
-            ...(can('use resources route') ? resources.item() : []),
+            ...resources.item(),
           ],
         },
       ],

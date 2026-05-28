@@ -148,7 +148,7 @@ describe('DataplaneOverview', () => {
       },
     )
     test(
-      'no subscriptions, connectedSubscription remains undefined, status = offline',
+      'no subscriptions, connectedSubscription remains undefined, status = disconnected_cp',
       async ({ fixture }) => {
         const actual = await fixture.setup((item) => {
           if (typeof item.dataplaneInsight !== 'undefined') {
@@ -159,11 +159,11 @@ describe('DataplaneOverview', () => {
         })
         expect(actual.dataplaneInsight.subscriptions.length).toStrictEqual(0)
         expect(actual.dataplaneInsight.connectedSubscription).toBeUndefined()
-        expect(actual.status).toStrictEqual('offline')
+        expect(actual.status).toStrictEqual('disconnected_cp')
       },
     )
     test(
-      'all disconnected subscriptions, connectedSubscription remains undefined, status = offline',
+      'all disconnected subscriptions, connectedSubscription remains undefined, status = disconnected_cp',
       async ({ fixture }) => {
         const actual = await fixture.setup((item) => {
           if (typeof item.dataplaneInsight !== 'undefined') {
@@ -185,7 +185,7 @@ describe('DataplaneOverview', () => {
         })
         expect(actual.dataplaneInsight.subscriptions.length).toStrictEqual(10)
         expect(actual.dataplaneInsight.connectedSubscription).toBeUndefined()
-        expect(actual.status).toStrictEqual('offline')
+        expect(actual.status).toStrictEqual('disconnected_cp')
       },
     )
     test(
@@ -383,6 +383,9 @@ describe('DataplaneOverview', () => {
           type: 'Dataplane',
           name: 'dp-name',
           mesh: 'dp-mesh',
+          labels: {
+            'kuma.io/display-name': 'dp-name',
+          },
           creationTime: '2021-02-19T07:06:16.384057Z',
           modificationTime: '2021-02-29T07:06:00.00Z',
           networking: {
@@ -400,11 +403,121 @@ describe('DataplaneOverview', () => {
           item.creationTime = expected.creationTime
           item.modificationTime = expected.modificationTime
           item.dataplane.networking = expected.networking
+          item.labels = {
+            'kuma.io/display-name': 'dp-name',
+          }
 
           return item
         })
 
         expect(actual.config).toStrictEqual(expected)
       })
+  })
+  describe('status', () => {
+    test('variations of connection, inbounds and listeners', async ({ fixture }) => {
+      ([
+        {
+          inbounds: [],
+          listeners: [],
+          subscriptions: [{ connectTime: '2021-02-19T10:00:00Z' }],
+          status: 'online',
+        },
+        {
+          inbounds: [{ state: 'Ready' }],
+          listeners: [],
+          subscriptions: [{ connectTime: '2021-02-19T10:00:00Z' }],
+          status: 'online',
+        },
+        {
+          inbounds: [],
+          listeners: [{ state: 'Ready' }],
+          subscriptions: [{ connectTime: '2021-02-19T10:00:00Z' }],
+          status: 'online',
+        },
+        {
+          inbounds: [{ state: 'NotReady' }],
+          listeners: [],
+          subscriptions: [{ connectTime: '2021-02-19T10:00:00Z' }],
+          status: 'offline',
+        },
+        {
+          inbounds: [],
+          listeners: [{ state: 'NotReady' }],
+          subscriptions: [{ connectTime: '2021-02-19T10:00:00Z' }],
+          status: 'offline',
+        },
+        {
+          inbounds: [{ state: 'Ready' }, { state: 'NotReady' }],
+          listeners: [],
+          subscriptions: [{ connectTime: '2021-02-19T10:00:00Z' }],
+          status: 'partially_degraded',
+        },
+        {
+          inbounds: [],
+          listeners: [{ state: 'Ready' }, { state: 'NotReady' }],
+          subscriptions: [{ connectTime: '2021-02-19T10:00:00Z' }],
+          status: 'partially_degraded',
+        },
+        {
+          inbounds: [{ state: 'Ready' } , { state: 'NotReady' }],
+          listeners: [{ state: 'Ready' }, { state: 'NotReady' }],
+          subscriptions: [{ connectTime: '2021-02-19T10:00:00Z' }],
+          status: 'partially_degraded',
+        },
+        {
+          inbounds: [],
+          listeners: [],
+          subscriptions: [{ connectTime: '2021-02-19T10:00:00Z', disconnectTime: '2021-02-19T11:00:00Z' }],
+          status: 'disconnected_cp',
+        },
+        {
+          inbounds: [{ state: 'Ready' }],
+          listeners: [],
+          subscriptions: [{ connectTime: '2021-02-19T10:00:00Z', disconnectTime: '2021-02-19T11:00:00Z' }],
+          status: 'disconnected_cp',
+        },
+        {
+          inbounds: [],
+          listeners: [{ state: 'Ready' }],
+          subscriptions: [{ connectTime: '2021-02-19T10:00:00Z', disconnectTime: '2021-02-19T11:00:00Z' }],
+          status: 'disconnected_cp',
+        },
+        {
+          inbounds: [{ state: 'Ready' }],
+          listeners: [{ state: 'Ready' }],
+          subscriptions: [{ connectTime: '2021-02-19T10:00:00Z', disconnectTime: '2021-02-19T11:00:00Z' }],
+          status: 'disconnected_cp',
+        },
+      ] as const).forEach(async ({ inbounds, listeners, subscriptions, status }) => {
+        const actual = await fixture.setup((item) => {
+          item.name = 'test-zone-ingress'
+          item.dataplane.networking.inbound?.forEach((item, i) => {
+            item.state = inbounds[i]?.state
+          })
+          item.dataplane.networking.listeners?.forEach((item, i) => {
+            item.state = listeners[i]?.state
+          })
+          item.dataplaneInsight = {
+            ...item.dataplaneInsight,
+            subscriptions: item.dataplaneInsight?.subscriptions.map((item, i) => {
+              item.connectTime = subscriptions[i]?.connectTime
+              item.disconnectTime = 'disconnectTime' in subscriptions[i] ? subscriptions[i]?.disconnectTime : undefined
+              return item
+            }) ?? [],
+          }
+
+          return item
+        }, {
+          env: {
+            KUMA_DATAPLANE_ZONEPROXY_TYPE: 'ingress',
+            KUMA_SUBSCRIPTION_COUNT: String(subscriptions.length),
+            KUMA_DATAPLANEINBOUND_COUNT: String(inbounds.length),
+            KUMA_DATAPLANELISTENER_COUNT: String(listeners.length),
+          },
+        })
+
+        expect(actual.status).toStrictEqual(status)
+      })
+    })
   })
 })

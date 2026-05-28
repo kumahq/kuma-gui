@@ -2,32 +2,39 @@ Feature: mesh / dataplanes / index
 
   Background:
     Given the CSS selectors
-      | Alias            | Selector                                         |
-      | table            | [data-testid='data-plane-collection']            |
-      | table-header     | $table th                                        |
-      | item             | $table tbody tr                                  |
-      | service-cell     | $item:nth-child(1) td:nth-child(3) .cell-wrapper |
-      | select-type      | [data-testid='select-input']                     |
-      | select-option    | .select-item                                     |
-      | select-standard  | [data-testid='select-item-standard'] button      |
-      | select-builtin   | [data-testid='select-item-builtin'] button       |
-      | select-delegated | [data-testid='select-item-delegated'] button     |
-      | input-search     | [data-testid='filter-bar-filter-input']          |
-      | button-search    | [data-testid='filter-bar-submit-query-button']   |
+      | Alias               | Selector                                         |
+      | table               | [data-testid='data-plane-collection']            |
+      | table-header        | $table th                                        |
+      | item                | $table tbody tr                                  |
+      | service-cell        | $item:nth-child(1) td:nth-child(3) .cell-wrapper |
+      | select-type         | [data-testid='select-input']                     |
+      | select-option       | .select-item                                     |
+      | select-standard     | [data-testid='select-item-standard'] button      |
+      | select-builtin      | [data-testid='select-item-builtin'] button       |
+      | select-delegated    | [data-testid='select-item-delegated'] button     |
+      | select-zone-ingress | [data-testid='select-item-zone-ingress'] button  |
+      | select-zone-egress  | [data-testid='select-item-zone-egress'] button   |
+      | input-search        | [data-testid='filter-bar-filter-input']          |
+      | button-search       | [data-testid='filter-bar-submit-query-button']   |
     And the environment
       """
       KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: true
       KUMA_MODE: global
       KUMA_DATAPLANE_COUNT: 9
       KUMA_DATAPLANEINBOUND_COUNT: 1
+      KUMA_DATAPLANELISTENER_COUNT: 0
       KUMA_SUBSCRIPTION_COUNT: 2
       """
+    # we use an undefined display-name here to show that things will fallback
     And the URL "/meshes/default/dataplanes/_overview" responds with
       """
       body:
         items:
         - name: fake-backend
           mesh: fake-default
+          labels:
+            kuma.io/display-name: !!js/undefined
+            kuma.io/zone: !!js/undefined
           dataplane:
             networking:
               gateway: !!js/undefined
@@ -45,11 +52,13 @@ Feature: mesh / dataplanes / index
               - connectTime: 2021-02-17T07:33:36.412683Z
                 disconnectTime: !!js/undefined
         - name: fake-frontend
+          labels:
+            kuma.io/display-name: fake-frontend
       """
 
   Scenario: The Proxy listing table has the correct columns
     When I visit the "/meshes/default/data-planes" URL
-    Then the "$table-header" element exists 9 times
+    Then the "$table-header" element exists 10 times
 
   Scenario: The Proxy listing has the expected content and UI elements
     When I visit the "/meshes/default/data-planes" URL
@@ -63,6 +72,47 @@ Feature: mesh / dataplanes / index
       | Nov 3, 2023, 9:10 AM |
       | Online               |
 
+  Scenario Outline: The proxy listing shows the correct status
+    Given the environment
+      """
+      KUMA_DATAPLANE_COUNT: 1
+      KUMA_SUBSCRIPTION_COUNT: 1
+      KUMA_DATAPLANEINBOUND_COUNT: 1
+      KUMA_DATAPLANELISTENER_COUNT: 1
+      """
+    And the URL "/meshes/default/dataplanes/_overview" responds with
+      """
+      body:
+        items:
+          - name: dpp-1
+            mesh: fake-default
+            labels:
+              kuma.io/display-name: dpp-1
+            dataplane:
+              networking:
+                gateway: !!js/undefined
+                inbound: <Inbound>
+                listeners: <Listeners>
+            dataplaneInsight:
+              mTLS: !!js/undefined
+              subscriptions:
+                - connectTime: 2021-02-17T07:33:36.412683Z
+                  disconnectTime: <DisconnectTime>
+      """
+    When I visit the "/meshes/default/data-planes" URL
+    Then the "$item:nth-child(1)" element contains
+      | Value    |
+      | dpp-1    |
+      | Proxy    |
+      | <Status> |
+
+    Examples:
+      | Status              | DisconnectTime              | Inbound               | Listeners                              |
+      | Online              | !!js/undefined              | [{ state: Ready }]    | !!js/undefined                         |
+      | Offline             | !!js/undefined              | [{ state: NotReady }] | !!js/undefined                         |
+      | Partially degraded  | !!js/undefined              | !!js/undefined        | [{ state: Ready },{ state: NotReady }] |
+      | Not connected to CP | 2021-02-17T07:33:36.412683Z | [{ state: Ready }]    | !!js/undefined                         |
+
   Scenario: The Data Plane Proxy list has the expected minimal content
     Given the environment
       """
@@ -75,6 +125,8 @@ Feature: mesh / dataplanes / index
         items:
           - name: dpp-2
             mesh: fake-default
+            labels:
+              kuma.io/display-name: dpp-2
             dataplane:
               networking:
                 gateway: !!js/undefined
@@ -91,10 +143,10 @@ Feature: mesh / dataplanes / index
     When I visit the "/meshes/default/data-planes" URL
     Then the "$service-cell" element is empty
     Then the "$item:nth-child(1)" element contains
-      | Value         |
-      | dpp-2         |
-      | <mTLSColText> |
-      | Offline       |
+      | Value               |
+      | dpp-2               |
+      | <mTLSColText>       |
+      | Not connected to CP |
 
     Examples:
       | mTLS                                                | mTLSColText          |
@@ -130,6 +182,8 @@ Feature: mesh / dataplanes / index
         body:
           items:
             - name: fake-transmitter-gateway_builtin-0
+              labels:
+                kuma.io/display-name: fake-transmitter-gateway_builtin-0
               dataplane:
                 networking:
                   gateway:
@@ -139,7 +193,7 @@ Feature: mesh / dataplanes / index
         """
       When I visit the "/meshes/default/data-planes" URL
       And I click the "$select-type" element
-      Then the "$select-option" element exists 4 times
+      Then the "$select-option" element exists 6 times
       When I click the "$select-builtin" element
       Then the URL "/meshes/default/dataplanes/_overview" was requested with
         """
@@ -163,6 +217,8 @@ Feature: mesh / dataplanes / index
         body:
           items:
             - name: fake-alarm-gateway_delegated-0
+              labels:
+                kuma.io/display-name: fake-alarm-gateway_delegated-0
               dataplane:
                 networking:
                   gateway:
@@ -172,7 +228,7 @@ Feature: mesh / dataplanes / index
         """
       When I visit the "/meshes/default/data-planes" URL
       And I click the "$select-type" element
-      Then the "$select-option" element exists 4 times
+      Then the "$select-option" element exists 6 times
       When I click the "$select-delegated" element
       Then the URL "/meshes/default/dataplanes/_overview" was requested with
         """
@@ -195,13 +251,15 @@ Feature: mesh / dataplanes / index
         body:
           items:
             - name: fake-system-proxy-0
+              labels:
+                kuma.io/display-name: fake-system-proxy-0
               dataplane:
                 networking:
                   gateway: !!js/undefined
         """
       When I visit the "/meshes/default/data-planes" URL
       And I click the "$select-type" element
-      Then the "$select-option" element exists 4 times
+      Then the "$select-option" element exists 6 times
       When I click the "$select-standard" element
       Then the URL "/meshes/default/dataplanes/_overview" was requested with
         """
@@ -213,3 +271,67 @@ Feature: mesh / dataplanes / index
         | Value               |
         | fake-system-proxy-0 |
         | Proxy               |
+
+    Scenario: Filtering by "zone-ingress"
+      Given the environment
+        """
+        KUMA_DATAPLANE_COUNT: 1
+        """
+      And the URL "/meshes/default/dataplanes/_overview" responds with
+        """
+        body:
+          items:
+            - name: fake-zone-ingress-0
+              labels:
+                kuma.io/display-name: fake-zone-ingress-0
+                kuma.io/listener-zoneingress: enabled
+              dataplane:
+                networking:
+                  gateway: !!js/undefined
+        """
+      When I visit the "/meshes/default/data-planes" URL
+      And I click the "$select-type" element
+      Then the "$select-option" element exists 6 times
+      When I click the "$select-zone-ingress" element
+      Then the URL "/meshes/default/dataplanes/_overview" was requested with
+        """
+        searchParams:
+          filter[labels.kuma.io/listener-zoneingress]: 'enabled'
+        """
+      And the "$item" element exists 1 time
+      And the "$item:nth-child(1)" element contains
+        | Value               |
+        | fake-zone-ingress-0 |
+        | Zone ingress        |
+
+    Scenario: Filtering by "zone-egress"
+      Given the environment
+        """
+        KUMA_DATAPLANE_COUNT: 1
+        """
+      And the URL "/meshes/default/dataplanes/_overview" responds with
+        """
+        body:
+          items:
+            - name: fake-zone-egress-0
+              labels:
+                kuma.io/display-name: fake-zone-egress-0
+                kuma.io/listener-zoneegress: enabled
+              dataplane:
+                networking:
+                  gateway: !!js/undefined
+        """
+      When I visit the "/meshes/default/data-planes" URL
+      And I click the "$select-type" element
+      Then the "$select-option" element exists 6 times
+      When I click the "$select-zone-egress" element
+      Then the URL "/meshes/default/dataplanes/_overview" was requested with
+        """
+        searchParams:
+          filter[labels.kuma.io/listener-zoneegress]: 'enabled'
+        """
+      And the "$item" element exists 1 time
+      And the "$item:nth-child(1)" element contains
+        | Value              |
+        | fake-zone-egress-0 |
+        | Zone egress        |
