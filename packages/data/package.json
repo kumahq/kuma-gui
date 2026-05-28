@@ -27,7 +27,7 @@
     "@kumahq/config": "*",
     "@vitejs/plugin-vue": "^6.0.6",
     "@vue/test-utils": "^2.4.10",
-    "vite": "^7.3.2",
+    "vite": "^7.3.3",
     "vitest": "^4.1.5"
   }
 }
