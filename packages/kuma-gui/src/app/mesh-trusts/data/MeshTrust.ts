@@ -14,15 +14,13 @@ export const MeshTrust = {
     const name = labels['kuma.io/display-name'] ?? item.name
 
     return {
-      // defaults
-      kri: Kri.toString({ shortName: 'mtrust', mesh, zone, namespace, name }),
-      creationTime: '',
-      modificationTime: '',
-      labels,
-      // overwrite
       ...item,
+      kri: item.kri ?? Kri.toString({ shortName: 'mtrust', mesh, zone, namespace, name }),
       name,
       mesh,
+      labels,
+      creationTime: item.creationTime ?? '',
+      modificationTime: item.modificationTime ?? '',
       // aliases
       id,
       namespace,
