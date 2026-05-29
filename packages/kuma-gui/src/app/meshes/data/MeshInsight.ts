@@ -40,9 +40,7 @@ export const MeshInsight = {
   fromObject(item: PartialMeshInsight) {
     return {
       ...item,
-      mTLS: {
-        ...item.mTLS,
-      },
+      mTLS: item.mTLS ?? {},
       dataplanes: MeshInsightDataplaneStatistics.fromObject(item.dataplanes ?? {}),
       dataplanesByType: {
         ...item.dataplanesByType,
