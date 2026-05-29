@@ -10,7 +10,7 @@
       codeFilter: false,
       codeRegExp: false,
     }"
-    v-slot="{ route, t, uri }"
+    v-slot="{ route, t, uri, can }"
   >
     <DataSource
       :src="uri(sources, '/resource/:kri', { kri: route.params.kri })"
@@ -75,7 +75,7 @@
               :end="data.modificationTime"
             />
             <XDl>
-              <div v-if="data.zone.length">
+              <div v-if="can('use zones') && data.zone.length">
                 <dt>{{ t('http.api.property.zone') }}</dt>
                 <dd>
                   <XAction
