@@ -102,6 +102,16 @@
         "engines"
       ],
       "rangeStrategy": "bump"
+    },
+    {
+      "description": [
+        " Group vue and @vue/shared"
+      ],
+      "groupName": "vue",
+      "matchPackageNames": [
+        "vue",
+        "@vue/shared"
+      ]
     }
   ]
 }
