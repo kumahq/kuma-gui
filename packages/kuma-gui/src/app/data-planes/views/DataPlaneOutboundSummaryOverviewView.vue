@@ -100,15 +100,15 @@
                   v-for="policyTypes in [Object.groupBy((policyTypesData.policyTypes), ({ name }) => name)]"
                   :key="`${typeof policyTypes}`"
                 >
-                  <AccordionList
-                    :initially-open="0"
-                    multiple-open
-                    class="stack"
-                    data-testid="outbound-policies-rules"
+                  <DataCollection
+                    :items="policiesData.policies"
+                    v-slot="{ items }"
                   >
-                    <DataCollection
-                      :items="policiesData.policies"
-                      v-slot="{ items }"
+                    <AccordionList
+                      :initially-open="0"
+                      multiple-open
+                      class="stack"
+                      data-testid="outbound-policies-rules"
                     >
                       <template
                         v-for="({ conf, kind, origins }) in items"
@@ -185,8 +185,8 @@
                           </template>
                         </AccordionItem>
                       </template>
-                    </DataCollection>
-                  </AccordionList>
+                    </AccordionList>
+                  </DataCollection>
                 </template>
               </DataLoader>
             </DataSource>
