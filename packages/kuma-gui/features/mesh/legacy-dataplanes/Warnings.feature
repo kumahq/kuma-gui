@@ -15,7 +15,7 @@ Feature: mesh / dataplanes / warnings
       KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: false
       """
 
-  Scenario: With a certificate expires soon (at least 1 week before) a cert warning is shown
+  Scenario: With a certificate expires soon (at least 6 hours before) a cert warning is shown
     Given the URL "/meshes/default/dataplanes/dpp-1/_overview" responds with
       """
       body:
@@ -24,7 +24,7 @@ Feature: mesh / dataplanes / warnings
             certificateExpirationTime: 2022-10-03T12:40:13Z
             lastCertificateRegeneration: 2021-10-03T12:40:13Z
       """
-    When the date is "2022-10-02T12:40:13Z"
+    When the date is "2022-10-03T06:45:13Z"
     And I visit the "/meshes/default/data-planes/dpp-1/overview" URL
     Then the "$expires-soon-cert-warning" element exists
 
