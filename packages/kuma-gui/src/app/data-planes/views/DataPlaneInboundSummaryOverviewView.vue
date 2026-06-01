@@ -11,14 +11,14 @@
     <AppView>
       <XLayout variant="y-stack">
         <template
-          v-for="inbound in [[...props.dataPlaneOverview.dataplane.networking.inbounds, ...props.dataPlaneOverview.dataplane.networking.listeners].find((item) => item.port === props.data.port)]"
+          v-for="inbound in [props.dataPlaneOverview.dataplane.networking.inbounds.find((item) => item.port === props.data.port)]"
           :key="typeof inbound"
         >
           <XTable
             v-if="inbound"
             variant="kv"
           >
-            <tr v-if="'type' in inbound">
+            <tr v-if="inbound.type.length > 0">
               <th scope="row">
                 Type
               </th>
@@ -30,7 +30,7 @@
                 </XBadge>
               </td>
             </tr>
-            <tr v-if="'tags' in inbound">
+            <tr v-if="Object.keys(inbound.tags).length > 0">
               <th scope="row">
                 Tags
               </th>
@@ -65,7 +65,7 @@
               </td>
             </tr>
             <tr
-              v-if="'serviceAddressPort' in inbound && inbound.serviceAddressPort.length > 0"
+              v-if="inbound.serviceAddressPort.length > 0"
             >
               <th scope="row">
                 Service address
