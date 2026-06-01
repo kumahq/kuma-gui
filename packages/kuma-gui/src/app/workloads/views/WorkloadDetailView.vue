@@ -42,7 +42,7 @@
                 </dd>
               </div>
 
-              <div v-if="props.data.zone.length">
+              <div v-if="can('use zones') && props.data.zone.length">
                 <dt>{{ t('http.api.property.zone') }}</dt>
                 <dd>
                   <XAction

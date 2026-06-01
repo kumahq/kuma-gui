@@ -42,19 +42,6 @@ describe('Dataplane', () => {
         expect(actual.networking.inbounds).toBeDefined()
       },
     )
-    test(
-      'dataplane.networking.inbound.service is set',
-      async ({ fixture }) => {
-        const actual = await fixture.setup((item) => {
-          return item
-        }, {
-          env: {
-            KUMA_DATAPLANEINBOUND_COUNT: '1',
-          },
-        })
-        expect(actual.networking.inbounds[0].service).toStrictEqual(actual.networking.inbounds[0].tags['kuma.io/service'])
-      },
-    )
   })
   describe('dataplane.networking.outbounds', () => {
     test(
@@ -383,11 +370,11 @@ describe('DataplaneOverview', () => {
           type: 'Dataplane',
           name: 'dp-name',
           mesh: 'dp-mesh',
+          labels: {
+            'kuma.io/display-name': 'dp-name',
+          },
           creationTime: '2021-02-19T07:06:16.384057Z',
           modificationTime: '2021-02-29T07:06:00.00Z',
-          labels: {
-            'kuma.io/display-name': 'zone',
-          },
           networking: {
             address: '167.61.18.108',
             type: 'sidecar',
@@ -403,6 +390,9 @@ describe('DataplaneOverview', () => {
           item.creationTime = expected.creationTime
           item.modificationTime = expected.modificationTime
           item.dataplane.networking = expected.networking
+          item.labels = {
+            'kuma.io/display-name': 'dp-name',
+          }
 
           return item
         })

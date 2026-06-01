@@ -21,9 +21,9 @@ Feature: Dataplane summary
       body:
         items:
           - name: test-data-plane-1
-            modificationTime: 2021-02-18T08:33:36.442044+01:00
             labels:
               kuma.io/display-name: test-data-plane-1
+            modificationTime: 2021-02-18T08:33:36.442044+01:00
       """
 
   Scenario: Clicking a row opens the summary
@@ -83,6 +83,8 @@ Feature: Dataplane summary
       body:
         items:
           - name: test-data-plane-1
+            labels:
+              kuma.io/display-name: test-data-plane-1
             dataplane:
               networking:
                 type: standard

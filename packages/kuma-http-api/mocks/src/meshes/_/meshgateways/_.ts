@@ -2,19 +2,29 @@ import type { Dependencies, ResponseHandler } from '#mocks'
 import type { MeshGateway } from '@/types/index.d'
 
 export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
-  const kri = req.params.kri as string | undefined
-  const [
-    mesh = req.params.mesh as string,
-    _zone,
-    ns,
-    name = req.params.name as string,
-  ] = kri?.split('_') ?? ''
-  const listenerCount = parseInt(env('KUMA_LISTENER_COUNT', `${fake.number.int({ min: 1, max: 3 })}`))
-
   const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
-  const parts = String(name).split('.')
-  const displayName = parts.slice(0, -1).join('.')
-  const nspace = ns ?? parts.at(-1) ?? ''
+
+  // this template can be called via the /_kri/kri_<shortName>_:kri endpoint or
+  // the legacy endpoint
+  const kri = req.params.kri ? `kri_mgw_${req.params.kri}` : undefined
+  const [
+    _prefix,
+    _shortName,
+    mesh,
+    zone,
+    nspace,
+    displayName,
+  ] = kri ? kri.split('_') : [
+    'kri', // prefix
+    'mgw', // shortName
+    String(req.params.mesh), // mesh
+    fake.helpers.arrayElement(['', fake.word.noun()]), // zone
+    // with k8s the request.name MUST be use the correct `name.ns` format
+    ...(k8s ? String(req.params.name).split('.').toReversed() : ['', String(req.params.name)]), // nspace, displayName
+  ]
+  const name = kri ? `${displayName}${nspace ? `.${nspace}` : ''}` : String(req.params.name)
+
+  const listenerCount = parseInt(env('KUMA_LISTENER_COUNT', `${fake.number.int({ min: 1, max: 3 })}`))
 
   return {
     headers: {},
@@ -29,14 +39,11 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
       creationTime: '2022-01-25T13:55:51.798701+01:00',
       modificationTime: '2022-01-25T13:55:51.798701+01:00',
       labels: {
-        'kuma.io/display-name': displayName,
-        'kuma.io/origin': fake.kuma.origin(),
-        'kuma.io/zone': fake.word.noun(),
-        ...(k8s
-          ? {
-            'k8s.kuma.io/namespace': nspace,
-          }
-          : {}),
+        ...fake.kuma.labels({
+          name: displayName,
+          ...(zone ? { zone } : {}),
+          ...(k8s ? { namespace: nspace } : {}),
+        }),
       },
       selectors: [{ match: fake.kuma.tags({ service: name }) }],
       conf: {
