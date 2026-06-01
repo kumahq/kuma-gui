@@ -40,6 +40,7 @@ meshes:
     mesh-insights-list:
       name: 'Name'
       services: 'Services'
+      services-hybrid: 'Services (MeshServices/Services)'
       dataplanes: 'Data plane proxies (online/total)'
 
   routes:
@@ -75,6 +76,7 @@ meshes:
         Meshes are logical groupings of services that define the scope of traffic management and security.
       collection:
         services: 'Services'
+        services-hybrid: 'Services (MeshServices/Services)'
         dataplanes: 'Data plane proxies (online/total)'
 
     overview:

@@ -3,11 +3,17 @@
     <DataCollection
       :items="props.items"
       type="meshes"
+      @vue:mounted="() => {
+        props.items.forEach((item) => {
+          hasLegacyServices ||= item.services.internal > 0
+          hasMeshServices ||= item.resources.MeshServiceGeneric.total > 0
+        })
+      }"
     >
       <AppCollection
         :headers="[
           { ...storage.get('mesh.headers.name') ,label: t('meshes.components.mesh-insights-list.name'), key: 'name'},
-          { ...storage.get('mesh.headers.services') ,label: t('meshes.components.mesh-insights-list.services'), key: 'services'},
+          { ...storage.get('mesh.headers.services') ,label: t(`meshes.components.mesh-insights-list.services${hasLegacyServices && hasMeshServices ? '-hybrid' : ''}`), key: 'services'},
           { ...storage.get('mesh.headers.dataplanes') ,label: t('meshes.components.mesh-insights-list.dataplanes'), key: 'dataplanes'},
         ]"
         :items="props.items"
@@ -36,7 +42,12 @@
         <template
           #services="{ row: item }"
         >
-          {{ item.resources.MeshServiceGeneric.total + item.services.internal }}
+          <template v-if="hasLegacyServices && hasMeshServices">
+            {{ item.resources.MeshServiceGeneric.total }} / {{ item.services.internal }}
+          </template>
+          <template v-else>
+            {{ item.resources.MeshServiceGeneric.total || item.services.internal }}
+          </template>
         </template>
 
         <template
@@ -50,11 +61,15 @@
 </template>
 
 <script lang="ts" setup>
+import { ref } from 'vue'
+
 import type { MeshInsight } from '../data'
 import { useI18n } from '@/app/application'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 
 const { t } = useI18n()
+const hasLegacyServices = ref<boolean>(false)
+const hasMeshServices = ref<boolean>(false)
 
 const props = withDefaults(defineProps<{
   items: MeshInsight[]

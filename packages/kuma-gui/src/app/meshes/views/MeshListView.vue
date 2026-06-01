@@ -55,25 +55,32 @@
               :data="[data]"
               :errors="[error]"
               variant="list"
+              v-slot="{ data: [meshes] }"
             >
               <DataCollection
                 type="meshes"
-                :items="data?.items ?? [undefined]"
+                :items="meshes.items"
                 :page="route.params.page"
                 :page-size="route.params.size"
-                :total="data?.total"
+                :total="meshes.total"
                 @change="route.update"
+                @vue:mounted="() => {
+                  meshes.items.forEach((item) => {
+                    hasLegacyServices ||= item.services.internal > 0
+                    hasMeshServices ||= item.resources.MeshServiceGeneric.total > 0
+                  })
+                }"
               >
                 <AppCollection
                   class="mesh-collection"
                   data-testid="mesh-collection"
                   :headers="[
                     { ...me.get('headers.name'), label: t('meshes.common.name'), key: 'name' },
-                    { ...me.get('headers.services'), label: t('meshes.routes.items.collection.services'), key: 'services'},
+                    { ...me.get('headers.services'), label: t(`meshes.routes.items.collection.services${hasLegacyServices && hasMeshServices ? '-hybrid' : ''}`), key: 'services'},
                     { ...me.get('headers.dataplanes'), label: t('meshes.routes.items.collection.dataplanes'), key: 'dataplanes'},
                     { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
                   ]"
-                  :items="data?.items"
+                  :items="meshes.items"
                   :is-selected-row="(row) => row.name === route.params.mesh"
                   @resize="me.set"
                 >
@@ -96,7 +103,12 @@
                   <template
                     #services="{ row: item }"
                   >
-                    {{ item.resources.MeshServiceGeneric.total + item.services.internal }}
+                    <template v-if="hasLegacyServices && hasMeshServices">
+                      {{ item.resources.MeshServiceGeneric.total }} / {{ item.services.internal }}
+                    </template>
+                    <template v-else>
+                      {{ item.resources.MeshServiceGeneric.total || item.services.internal }}
+                    </template>
                   </template>
 
                   <template
@@ -134,8 +146,12 @@
 </template>
 
 <script lang="ts" setup>
+import { ref } from 'vue'
+
 import { useMeshActionGroup } from '../'
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 const MeshActionGroup = useMeshActionGroup()
+const hasLegacyServices = ref<boolean>(false)
+const hasMeshServices = ref<boolean>(false)
 </script>

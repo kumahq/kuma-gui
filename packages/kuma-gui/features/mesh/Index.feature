@@ -50,7 +50,7 @@ Feature: mesh / index
     And the "$item" element contains
       | Value   |
       | default |
-      |       9 |
+      |   6 / 3 |
       |   4 / 4 |
 
   Scenario: Clicking a mesh and back again for <Mesh>
