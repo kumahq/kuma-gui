@@ -41,7 +41,7 @@
                 />
               </td>
             </tr>
-            <tr v-if="'protocol' in inbound && inbound.protocol.length > 0">
+            <tr v-if="inbound.protocol.length > 0">
               <th scope="row">
                 Protocol
               </th>
@@ -54,7 +54,7 @@
                 </XBadge>
               </td>
             </tr>
-            <tr v-if="'addressPort' in inbound">
+            <tr v-if="inbound.addressPort.length > 0">
               <th scope="row">
                 Address
               </th>
@@ -77,7 +77,7 @@
               </td>
             </tr>
             <tr
-              v-if="'portName' in inbound && inbound.portName.length > 0"
+              v-if="inbound.portName.length > 0"
             >
               <th scope="row">
                 Name
