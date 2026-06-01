@@ -1,11 +1,11 @@
 data-planes:
   notifications:
     recommend-reachable: !!text/markdown |
-      We've identified outbound services that would benefit from using { mode, select,
+      To ensure optimal performance and resource usage, this data plane proxy should be configured with { mode, select,
         Exclusive { <a href="{KUMA_DOCS_URL}/production/dp-config/transparent-proxying/#reachable-backends" target="_blank">Reachable Backends</a> }
         ReachableBackends { <a href="{KUMA_DOCS_URL}/production/dp-config/transparent-proxying/#reachable-backends" target="_blank">Reachable Backends</a> }
         other { <a href="{KUMA_DOCS_URL}/production/dp-config/transparent-proxying/#reachable-services" target="_blank">Reachable Services</a> }
-      } to dramatically improve performance.
+      } for its outbound services.
     dp-cp-incompatible: !!text/markdown |
       Unsupported version of Kuma DP (**{ kumaDp }**)
     envoy-dp-incompatible: !!text/markdown |
