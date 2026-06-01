@@ -147,8 +147,8 @@ function getIsCertExpired({ mTLS }: DataplaneInsight): boolean {
 function getIsCertExpiresSoon({ mTLS }: DataplaneInsight): boolean {
   if (!mTLS?.certificateExpirationTime) return false
   const expiryTime = new Date(mTLS.certificateExpirationTime).getTime()
-  const weekBefore = expiryTime - 3_600_000 * 24 * 7
-  return Date.now() > weekBefore && Date.now() < expiryTime
+  const expiresSoonThreshold = 1_000 * 60 * 60 * 6 // 6 hours
+  return Date.now() > expiryTime - expiresSoonThreshold && Date.now() < expiryTime
 }
 
 export type DataplaneOverview = ReturnType<typeof DataplaneOverview.fromObject>
