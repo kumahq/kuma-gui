@@ -44,8 +44,8 @@ const DataplaneOutbound = {
     return {
       ...item,
       tags,
-      name: tags['kuma.io/service'],
-      service: tags['kuma.io/service'],
+      // @TODO how do we get the name of the outbound?
+      name: tags['kuma.io/service'] ?? '',
       protocol: tags['kuma.io/protocol'] ?? 'tcp',
       address,
       addressPort: `${address}${typeof item.port === 'number' ? `:${item.port}` : ''}`,
@@ -99,9 +99,8 @@ export const DataplaneNetworking = {
         ? ((tags = {}) => [{
           address: networking.address ?? '',
           tags,
-          name: tags['kuma.io/service'] ?? '',
-          service: tags['kuma.io/service'] ?? '',
-          protocol: tags['kuma.io/protocol'] ?? 'tcp',
+          name: '',
+          protocol: '',
           state: 'Ready',
           // these could be filled out during 'cloning'
           // i.e. these are like template variables to be filled out
@@ -135,8 +134,7 @@ export const DataplaneNetworking = {
             clusterName: item.servicePort && item.servicePort !== item.port ? `localhost_${item.servicePort}` : name,
             // If a health property is unset the inbound is considered healthy
             state: (typeof item.state !== 'undefined' ? String(item.state) : 'Ready'),
-            service: tags['kuma.io/service'] ?? '',
-            protocol: tags['kuma.io/protocol'] ?? 'tcp',
+            protocol: item.protocol ?? tags['kuma.io/protocol'] ?? 'tcp',
             address,
             addressPort: `${address}:${item.port}`,
             // inbound serviceAddress, inbound address, networkingAddress because the internal services accessible address

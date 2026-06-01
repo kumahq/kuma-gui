@@ -129,7 +129,7 @@
                               <ul>
                                 <li
                                   v-for="inbound in unhealthyInbounds"
-                                  :key="`${inbound.service}:${inbound.port}`"
+                                  :key="`${inbound.name}:${inbound.port}`"
                                 >
                                   {{ t('data-planes.routes.item.unhealthy_inbound', { port: inbound.port }) }}
                                 </li>

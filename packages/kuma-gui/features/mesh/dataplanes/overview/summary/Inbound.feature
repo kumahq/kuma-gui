@@ -4,6 +4,8 @@ Feature: mesh / dataplanes / overview / summary / Inbound
     Given the CSS selectors
       | Alias                  | Selector                                        |
       | summary                | [data-testid='slideout-container']              |
+      | title                  | $summary [data-testid='slideout-title']         |
+      | protocol               | $summary [data-testid='protocol']               |
       | inbound-policies-rules | $summary [data-testid='inbound-policies-rules'] |
       | inbound-policies-rule  | $inbound-policies-rules li:first-of-type        |
     And the environment
@@ -47,13 +49,14 @@ Feature: mesh / dataplanes / overview / summary / Inbound
             inbound:
               - name: http
                 port: 12345
+                protocol: http
+      # prove that we use protocol over the tag
                 tags:
-                  kuma.io/protocol: http
+                  kuma.io/protocol: tcp
       """
     When I visit the "/meshes/default/data-planes/service-less/overview/inbound/self_inbound_http/overview" URL
-    And the "$summary" element exists
-    And the "$summary" element contains "Inbound :12345"
-    And the "$summary" element contains "HTTP"
+    And the "$title" element contains "Inbound :12345"
+    And the "$protocol" element contains "HTTP"
     And the "$inbound-policies-rule" element contains "MeshFaultInjection"
     And the "$inbound-policies-rule" element contains "kri_mfi_default_pigsty_jury_innovation_appliance"
     And the "$inbound-policies-rule [data-testid='k-code-block']" element exists

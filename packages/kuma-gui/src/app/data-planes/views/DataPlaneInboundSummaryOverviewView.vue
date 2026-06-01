@@ -18,7 +18,9 @@
             v-if="inbound"
             variant="kv"
           >
-            <tr>
+            <tr
+              v-if="Object.keys(inbound.tags).length > 0"
+            >
               <th scope="row">
                 Tags
               </th>
@@ -35,6 +37,7 @@
               </th>
               <td>
                 <XBadge
+                  data-testid="protocol"
                   appearance="info"
                 >
                   {{ t(`http.api.value.${inbound.protocol}`) }}

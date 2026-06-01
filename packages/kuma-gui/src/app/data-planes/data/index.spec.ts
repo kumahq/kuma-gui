@@ -42,19 +42,6 @@ describe('Dataplane', () => {
         expect(actual.networking.inbounds).toBeDefined()
       },
     )
-    test(
-      'dataplane.networking.inbound.service is set',
-      async ({ fixture }) => {
-        const actual = await fixture.setup((item) => {
-          return item
-        }, {
-          env: {
-            KUMA_DATAPLANEINBOUND_COUNT: '1',
-          },
-        })
-        expect(actual.networking.inbounds[0].service).toStrictEqual(actual.networking.inbounds[0].tags['kuma.io/service'])
-      },
-    )
   })
   describe('dataplane.networking.outbounds', () => {
     test(

@@ -78,6 +78,7 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
         const address = fake.internet.ip()
         const zone = tags['kuma.io/zone'] ?? zoneQuery ?? fake.word.noun()
 
+
         return {
           type: 'DataplaneOverview',
           mesh,
@@ -124,8 +125,11 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
               ...(type === 'STANDARD' ? {
                 // normal proxies have inbound and outbound
                 inbound: Array.from({ length: inboundCount }).map((_) => {
+                  const protocol = fake.kuma.protocol()
+
                   return {
                     address,
+                    protocol,
                     port: fake.number.int({ min: 1, max: 65535 }),
                     ...(fake.datatype.boolean() ? {
                       serviceAddress: fake.internet.ip(),
@@ -134,7 +138,7 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
                       servicePort: fake.number.int({ min: 1, max: 65535 }),
                     } : {}),
                     tags: fake.kuma.tags({
-                      protocol: fake.kuma.protocol(),
+                      protocol,
                       service,
                       zone: multizone && fake.datatype.boolean() ? zone : undefined,
                     }),
