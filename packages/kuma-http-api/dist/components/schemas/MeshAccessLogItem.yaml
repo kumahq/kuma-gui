@@ -286,9 +286,7 @@ properties:
             - targetRef
           type: object
       rules:
-        description: |-
-          Rules defines inbound access log configurations. Currently limited to
-          selecting all inbound traffic, as L7 matching is not yet implemented.
+        description: Rules defines inbound access log configurations.
         type: array
         items:
           properties:
@@ -476,6 +474,46 @@ properties:
                     required:
                       - type
                     type: object
+            matches:
+              description: |-
+                Matches defines a list of conditions (by SpiffeID or SNI) that select the
+                traffic this rule applies to. Rules fire independently: a connection that
+                satisfies multiple rules is logged to every matching rule's backends.
+              type: array
+              items:
+                properties:
+                  sni:
+                    description: SNI defines a matcher configuration for matching by SNI value carried on the TLS connection
+                    type: object
+                    properties:
+                      type:
+                        description: Type defines how to match traffic by SNI. Only `Exact` is supported.
+                        type: string
+                        enum:
+                          - Exact
+                      value:
+                        description: Value is the SNI carried on the TLS connection that needs to match for the configuration to be applied
+                        type: string
+                    required:
+                      - type
+                      - value
+                  spiffeID:
+                    description: SpiffeID defines a matcher configuration for SpiffeID matching
+                    type: object
+                    properties:
+                      type:
+                        description: Type defines how to match incoming traffic by SpiffeID. `Exact` or `Prefix` are allowed.
+                        type: string
+                        enum:
+                          - Exact
+                          - Prefix
+                      value:
+                        description: Value is SpiffeID of a client that needs to match for the configuration to be applied
+                        type: string
+                    required:
+                      - type
+                      - value
+                type: object
           required:
             - default
           type: object
