@@ -65,6 +65,8 @@
                 :total="meshes.total"
                 @change="route.update"
                 @vue:mounted="() => {
+                  hasLegacyServices = false
+                  hasMeshServices = false
                   meshes.items.forEach((item) => {
                     hasLegacyServices ||= item.services.internal > 0
                     hasMeshServices ||= item.resources.MeshServiceGeneric.total > 0

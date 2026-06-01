@@ -4,6 +4,8 @@
       :items="props.items"
       type="meshes"
       @vue:mounted="() => {
+        hasLegacyServices = false
+        hasMeshServices = false
         props.items.forEach((item) => {
           hasLegacyServices ||= item.services.internal > 0
           hasMeshServices ||= item.resources.MeshServiceGeneric.total > 0
