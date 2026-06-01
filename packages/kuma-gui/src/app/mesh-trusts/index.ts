@@ -4,11 +4,11 @@ import { sources } from './sources'
 import type { ServiceDefinition } from '@kumahq/container'
 
 type Token = ReturnType<typeof token>
-type ResourcesSources = ReturnType<typeof sources>
+type Sources = ReturnType<typeof sources>
 
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   return [
-    [token<ResourcesSources>('mesh-trusts.sources'), {
+    [token<Sources>('mesh-trusts.sources'), {
       service: sources,
       arguments: [
         app.api,

@@ -178,6 +178,13 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
     return `${d.toISOString().slice(0, -5)}Z`
   }
 
+  timespan() {
+    return ((modificationTime) => ({
+      creationTime: this.date({ refDate: modificationTime }),
+      modificationTime,
+    }))(this.date())
+  }
+
   connection<T>(_: T, i: number, arr: T[]) {
     const connected = this.faker.date.past()
     const times: {
@@ -291,7 +298,7 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
       ...additionalTags,
     }
   }
-  labels({ name, zone, namespace }: { name?: string, zone?: string, namespace?: string }): Record<string, string> {
+  labels({ name, mesh, zone, namespace, env }: { name?: string, mesh?: string, zone?: string, namespace?: string, env?: string }): Record<string, string> {
     const additional = Object.fromEntries(
       this.faker.helpers.multiple(
         () => [
@@ -331,8 +338,14 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
       ...(name ? {
         'kuma.io/display-name': name,
       } : {}),
+      ...(mesh ? {
+        'kuma.io/mesh': mesh,
+      } : {}),
       ...(namespace ? {
         'k8s.kuma.io/namespace': namespace,
+      } : {}),
+      ...(env ? {
+        'kuma.io/env': env,
       } : {}),
       ...additional,
     }
@@ -546,8 +559,8 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
     return resourceNames.get(resourceName ?? this.faker.helpers.arrayElement([...resourceNames.keys()])) ?? ''
   }
 
-  kri({ resourceName, shortName, mesh, zone, namespace, name, sectionName }: Partial<{ resourceName: string, shortName: string, mesh: string, zone: string, namespace: string, name: string, sectionName: string }> = {}) {
-    return `kri_${shortName ?? this.shortName(resourceName)}_${mesh ?? this.faker.word.noun()}_${zone ?? this.faker.word.noun()}_${namespace ?? this.k8s.namespace()}_${name ?? this.faker.word.noun()}_${sectionName ?? this.faker.word.noun()}`
+  kri({ resourceName, shortName, mesh, zone, namespace, name, displayName, sectionName }: Partial<{ resourceName: string, shortName: string, mesh: string, zone: string, namespace: string, name: string, displayName: string, sectionName: string }> = {}) {
+    return `kri_${shortName ?? this.shortName(resourceName)}_${mesh ?? this.faker.word.noun()}_${zone ?? this.faker.word.noun()}_${namespace ?? this.k8s.namespace()}_${displayName ?? name ?? this.faker.word.noun()}_${sectionName ?? ''}`
   }
 
   contextualKri({ context, name }: { context: string, name: string }) {
