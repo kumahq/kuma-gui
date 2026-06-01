@@ -27,15 +27,7 @@
             />
           </h1>
         </template>
-
-        <DataSource
-          :src="`/zone-ingress-overviews?page=1&size=100`"
-          @change="getIngresses"
-        />
-        <DataSource
-          :src="`/zone-egress-overviews?page=1&size=100`"
-          @change="getEgresses"
-        />
+        
         <XI18n
           path="zone-cps.routes.items.intro"
           default-path="common.i18n.ignore-error"
@@ -78,8 +70,6 @@
                     { ...me.get('headers.type'), label: '&nbsp;', key: 'type' },
                     { ...me.get('headers.name'), label: 'Name', key: 'name' },
                     { ...me.get('headers.zoneCpVersion'), label: 'Zone leader CP version', key: 'zoneCpVersion' },
-                    { ...me.get('headers.ingress'), label: 'Ingresses (online / total)', key: 'ingress' },
-                    { ...me.get('headers.egress'), label: 'Egresses (online / total)', key: 'egress' },
                     { ...me.get('headers.state'), label: 'Status', key: 'state' },
                     { ...me.get('headers.warnings'), label: 'Warnings', key: 'warnings', hideLabel: true },
                     { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
@@ -118,22 +108,6 @@
 
                   <template #zoneCpVersion="{ row: item }">
                     {{ get(item.zoneInsight, 'version.kumaCp.version', t('common.collection.none')) }}
-                  </template>
-
-                  <template #ingress="{ row: item }">
-                    <template
-                      v-for="proxies in [ingresses[item.name] || {online: [], offline: []}]"
-                    >
-                      {{ proxies.online.length }} / {{ proxies.online.length + proxies.offline.length }}
-                    </template>
-                  </template>
-
-                  <template #egress="{ row: item }">
-                    <template
-                      v-for="proxies in [egresses[item.name] || {online: [], offline: []}]"
-                    >
-                      {{ proxies.online.length }} / {{ proxies.online.length + proxies.offline.length }}
-                    </template>
                   </template>
 
                   <template #state="{ row: item }">
@@ -230,55 +204,12 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
-
 import { useZoneActionGroup } from '../'
 import { sources as zoneSources } from '../sources'
 import { get } from '@/app/application'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
-import type { ZoneEgressOverview } from '@/app/zone-egresses/data'
-import type { ZoneIngressOverview } from '@/app/zone-ingresses/data'
-
-type ZoneProxies<T> = Record<string, {online: T[], offline: T[]}>
-const ingresses = ref<ZoneProxies<ZoneIngressOverview>>({})
-const egresses = ref<ZoneProxies<ZoneEgressOverview>>({})
 const ZoneActionGroup = useZoneActionGroup()
-
-const getIngresses = (data: {items: ZoneIngressOverview[]}) => {
-  const prop = 'zoneIngress'
-  ingresses.value = data.items.reduce((prev, item) => {
-    const name = item[prop]?.zone
-    if (typeof name !== 'undefined') {
-      if (typeof prev[name] === 'undefined') {
-        prev[name] = {
-          online: [],
-          offline: [],
-        }
-      }
-      const state = typeof item[`${prop}Insight`].connectedSubscription !== 'undefined' ? 'online' : 'offline'
-      prev[name][state].push(item)
-    }
-    return prev
-  }, {} as ZoneProxies<ZoneIngressOverview>)
-}
-const getEgresses = (data: {items: ZoneEgressOverview[]}) => {
-  const prop = 'zoneEgress'
-  egresses.value = data.items.reduce((prev, item) => {
-    const name = item[prop]?.zone
-    if (typeof name !== 'undefined') {
-      if (typeof prev[name] === 'undefined') {
-        prev[name] = {
-          online: [],
-          offline: [],
-        }
-      }
-      const state = typeof item[`${prop}Insight`].connectedSubscription !== 'undefined' ? 'online' : 'offline'
-      prev[name][state].push(item)
-    }
-    return prev
-  }, {} as ZoneProxies<ZoneEgressOverview>)
-}
 </script>
 
 <style lang="scss" scoped>
