@@ -12,7 +12,7 @@
   "dependencies": {
     "@gera2ld/tarjs": "^0.3.1",
     "@kong-ui-public/i18n": "^2.4.6",
-    "@kong/icons": "^1.55.1",
+    "@kong/icons": "^1.56.0",
     "@kong/kongponents": "^9.56.1",
     "@kumahq/container": "*",
     "@kumahq/data": "*",
@@ -24,7 +24,7 @@
     "js-yaml": "^4.1.1",
     "openapi-fetch": "^0.15.0",
     "pretty-bytes": "^7.1.0",
-    "shiki": "^4.0.2",
+    "shiki": "^4.1.0",
     "urlpattern-polyfill": "^10.1.0",
     "vue": "^3.5.33",
     "vue-github-button": "^3.1.3",

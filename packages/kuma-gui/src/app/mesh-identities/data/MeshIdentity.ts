@@ -6,17 +6,36 @@ export type KumaMeshIdentity = components['schemas']['MeshIdentityItem']
 
 export const MeshIdentity = {
   fromObject: (item: KumaMeshIdentity) => {
+    const labels = item.labels ?? {}
+    const id = item.name
+    const mesh = item.mesh
+    const zone = labels['kuma.io/origin'] === 'zone' && labels['kuma.io/zone'] ? labels['kuma.io/zone'] : ''
+    const namespace = labels['k8s.kuma.io/namespace'] ?? ''
+    const name = labels['kuma.io/display-name'] ?? item.name
+
     return {
-      kri: Kri.toString({ shortName: 'mid', mesh: item.mesh, name: item.name}),
       ...item,
+      kri: item.kri ?? Kri.toString({ shortName: 'mid', mesh, zone, namespace, name }),
+      name,
+      mesh,
+      labels,
+      creationTime: item.creationTime ?? '',
+      modificationTime: item.modificationTime ?? '',
+      // aliases
+      id,
+      namespace,
+      zone,
       raw: item,
+      //
     }
   },
 
   fromCollection: (collection: KumaMeshIdentityList) => {
+    const items = Array.isArray(collection.items) ? collection.items.map(MeshIdentity.fromObject) : []
     return {
       ...collection,
-      items: collection.items?.map((item) => MeshIdentity.fromObject(item)) ?? [],
+      items,
+      total: collection.total ?? items.length,
     }
   },
 }

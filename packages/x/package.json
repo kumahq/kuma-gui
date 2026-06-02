@@ -14,8 +14,8 @@
   "dependencies": {
     "@kong-ui-public/app-layout": "4.11.5",
     "@kong/kongponents": "^9.56.1",
-    "@kong/icons": "^1.55.1",
-    "shiki": "^4.0.2",
+    "@kong/icons": "^1.56.0",
+    "shiki": "^4.1.0",
     "@vueuse/core": "^14.3.0",
     "@vue/shared": "^3.5.33",
     "vue-global-events": "^3.0.1",

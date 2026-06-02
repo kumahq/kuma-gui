@@ -90,6 +90,4 @@ services:
     notifications:
       mtls-warning: !!text/markdown |
         mTLS is not enabled on this mesh. <a href="{KUMA_DOCS_URL}/policies/mutual-tls/?{KUMA_UTM_QUERY_PARAMS}" target="_blank">Enable mTLS for MeshExternalService to work</a>
-      no-zone-egress: !!text/markdown |
-        There is no connected ZoneEgress in this mesh. <a href="{KUMA_DOCS_URL}/production/cp-deployment/zoneegress?{KUMA_UTM_QUERY_PARAMS}" target="_blank">Add a ZoneEgress for MeshExternalService to work</a>
 

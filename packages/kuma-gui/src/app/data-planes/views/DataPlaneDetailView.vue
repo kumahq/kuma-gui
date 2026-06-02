@@ -238,21 +238,27 @@
                         <dt>{{ t('data-planes.routes.item.labels') }}</dt>
                         <dd>
                           <XLayout
+                            v-for="kumaRe in [/^(.+\.)?kuma\.io\//]"
+                            :key="typeof kumaRe"
                             variant="separated"
                             truncate
                           >
-                            <template
-                              v-for="kumaRe in [/^(.+\.)?kuma\.io\//]"
-                              :key="typeof kumaRe"
+                            <XAction
+                              v-for="[key, value] in labels"
+                              :key="key"
+                              :href="t(`common.kri.labelHrefs.${key.replaceAll('.', '~')}`, {
+                                mesh: props.data.mesh,
+                                zone: props.data.zone,
+                                namespace: props.data.namespace,
+                                name: value,
+                              }, { defaultMessage: '' })"
                             >
                               <XBadge
-                                v-for="[key, value] in labels"
-                                :key="key"
                                 :appearance="kumaRe.test(key) ? 'info' : 'decorative'"
                               >
                                 {{ key }}:{{ value }}
                               </XBadge>
-                            </template>
+                            </XAction>
                           </XLayout>
                         </dd>
                       </div>
@@ -723,6 +729,21 @@
                             Non mesh traffic
                           </ConnectionCard>
                         </ConnectionGroup>
+                        <template
+                          v-for="direction in ['upstream'] as const"
+                          :key="direction"
+                        >
+                          <XNotification
+                            :notify="!!Object.values(traffic?.outbounds ?? {}).find(item => (typeof item.tcp !== 'undefined' ? item.tcp?.[`${direction}_cx_rx_bytes_total`] : item.http?.[`${direction}_rq_total`]) ?? 0 > 0)"
+                            variant="warning"
+                            :uri="`data-planes.notifications.recommend-reachable-services:${props.data.id}`"
+                          >
+                            <XI18n
+                              path="data-planes.notifications.recommend-reachable"
+                              :params="{ mode: props.mesh.meshServices.mode }"
+                            />
+                          </XNotification>
+                        </template>
                         <DataCollection
                           type="outbounds"
                           :items="dataplaneLayout.outbounds"
