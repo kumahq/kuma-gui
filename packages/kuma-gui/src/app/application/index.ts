@@ -84,6 +84,7 @@ const $ = {
   errorHandler: token<(e: Error) => void>('application.error.handler'),
 
   i18n: token<{t: ReturnType<typeof I18n>['t']}>('i18n'),
+  regexp: token<{r: (str: string) => RegExp}>('i18n'),
   enUs: token('i18n.locale.enUs'),
 
   storage: token<ReturnType<typeof storage>>('application.storage'),
@@ -131,10 +132,10 @@ const addRouteName = (item: RouteRecordRaw) => {
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   return [
     [token('application.plugins'), {
-      service: (dataSourcePool, can, env, i18n) => {
+      service: (dataSourcePool, can, env, i18n, regexp) => {
         return [
           [Data, { dataSourcePool }],
-          [Routing, { can, env, i18n }],
+          [Routing, { can, env, i18n, regexp}],
         ]
       },
       arguments: [
@@ -142,6 +143,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
         $.can,
         $.env,
         $.i18n,
+        $.regexp,
       ],
       labels: [
         app.plugins,
@@ -203,6 +205,16 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
         $.enUs,
         app.env,
       ],
+    }],
+    [$.regexp, {
+      service: () => {
+        // @TODO regexps will move to locales/yaml
+        const re = new Map<string, RegExp>([
+          ['kuma.label', /^(.+\.)?kuma\.io\//],
+        ])
+        //
+        return { r: (str: string) => re.has(str) ? re.get(str) : new RegExp('') }
+      },
     }],
 
     [$.fetch, {
@@ -275,11 +287,13 @@ export const [
   useEnv,
   useCan,
   useI18n,
+  useRegExp,
   useDataEmptyState,
 ] = createInjections(
   $.env,
   $.can,
   $.i18n,
+  $.regexp,
   $.DataEmptyState,
 )
 export { YAML, get } from './utilities'

@@ -7,7 +7,7 @@
       proxyType: '',
     }"
     name="data-plane-detail-view"
-    v-slot="{ route, t, can, uri }"
+    v-slot="{ route, t, can, uri, r }"
   >
     <DataSource
       :src="uri(connectionSources, '/connections/stats/for/:proxyType/:name/:mesh/:socketAddress', {
@@ -217,6 +217,32 @@
                         />
                       </dd>
                     </div>
+                    <div v-if="Object.keys(props.data.labels).length > 0">
+                      <dt>{{ t('data-planes.routes.item.labels') }}</dt>
+                      <dd>
+                        <XLayout
+                          variant="separated"
+                        >
+                          <XAction
+                            v-for="(value, key) in props.data.labels"
+                            :key="key"
+                            :href="t(`common.label.href.${key.replaceAll('.', '~')}`, {
+                              mesh: props.data.mesh,
+                              zone: props.data.zone,
+                              namespace: props.data.namespace,
+                              name: value,
+                            }, { defaultMessage: '' })"
+                          >
+                            <XBadge
+                              :variant="r('kuma.label').test(key) ? 'kuma-label' : 'label'"
+                            >
+                              {{ key }}:<strong>{{ value }}</strong>
+                            </XBadge>
+                          </XAction>
+                        </XLayout>
+                      </dd>
+                    </div>
+                    <!-- @TODO gateways don't use this view at the moment, but we want move away from the legacy view -->
                     <div
                       v-if="props.data.dataplane.networking.gateway"
                     >
@@ -224,45 +250,29 @@
                         {{ t('http.api.property.tags') }}
                       </dt>
                       <dd>
-                        <TagList
-                          :tags="props.data.dataplane.networking.gateway.tags"
-                        />
+                        <XLayout
+                          variant="separated"
+                        >
+                          <XAction
+                            v-for="(value, key) in props.data.dataplane.networking.gateway.tags"
+                            :key="key"
+                            :href="t(`common.label.href.${key.replaceAll('.', '~')}`, {
+                              mesh: props.data.mesh,
+                              zone: props.data.zone,
+                              namespace: props.data.namespace,
+                              name: value.replaceAll('_', '~'),
+                            }, { defaultMessage: '' })"
+                          >
+                            <XBadge
+                              :variant="r('kuma.label').test(key) ? 'kuma-label' : 'label'"
+                            >
+                              {{ key }}:<strong>{{ value }}</strong>
+                            </XBadge>
+                          </XAction>
+                        </XLayout>
                       </dd>
                     </div>
-
-                    <template
-                      v-for="labels in [Object.entries(props.data.labels)]"
-                      :key="typeof labels"
-                    >
-                      <div v-if="labels.length > 0">
-                        <dt>{{ t('data-planes.routes.item.labels') }}</dt>
-                        <dd>
-                          <XLayout
-                            v-for="kumaRe in [/^(.+\.)?kuma\.io\//]"
-                            :key="typeof kumaRe"
-                            variant="separated"
-                            truncate
-                          >
-                            <XAction
-                              v-for="[key, value] in labels"
-                              :key="key"
-                              :href="t(`common.kri.labelHrefs.${key.replaceAll('.', '~')}`, {
-                                mesh: props.data.mesh,
-                                zone: props.data.zone,
-                                namespace: props.data.namespace,
-                                name: value,
-                              }, { defaultMessage: '' })"
-                            >
-                              <XBadge
-                                :appearance="kumaRe.test(key) ? 'info' : 'decorative'"
-                              >
-                                {{ key }}:{{ value }}
-                              </XBadge>
-                            </XAction>
-                          </XLayout>
-                        </dd>
-                      </div>
-                    </template>
+                    <!-- -->
                   </XDl>
 
                   <XLayout
@@ -994,7 +1004,6 @@ import { ref } from 'vue'
 
 import { sources } from '../sources'
 import StatusBadge from '@/app/common/StatusBadge.vue'
-import TagList from '@/app/common/TagList.vue'
 import ConnectionCard from '@/app/connections/components/connection-traffic/ConnectionCard.vue'
 import ConnectionGroup from '@/app/connections/components/connection-traffic/ConnectionGroup.vue'
 import ConnectionTraffic from '@/app/connections/components/connection-traffic/ConnectionTraffic.vue'

@@ -9,7 +9,7 @@
       codeRegExp: false,
       environment: String,
     }"
-    v-slot="{ route, t, uri }"
+    v-slot="{ route, t, uri, r }"
   >
     <AppView>
       <DataSource
@@ -53,10 +53,26 @@
                   {{ t('http.api.property.tags') }}
                 </dt>
                 <dd>
-                  <TagList
-                    :tags="service.tags"
-                    should-truncate
-                  />
+                  <XLayout
+                    variant="separated"
+                  >
+                    <XAction
+                      v-for="(value, key) in service.tags"
+                      :key="key"
+                      :href="t(`common.label.href.${key.replaceAll('.', '~')}`, {
+                        mesh: '',
+                        zone: '',
+                        namespace: '',
+                        name: value.replaceAll('_', '~'),
+                      }, { defaultMessage: '' })"
+                    >
+                      <XBadge
+                        :variant="r('kuma.label').test(key) ? 'kuma-label' : 'label'"
+                      >
+                        {{ key }}:<strong>{{ value }}</strong>
+                      </XBadge>
+                    </XAction>
+                  </XLayout>
                 </dd>
               </div>
             </XDl>
@@ -148,5 +164,4 @@
 <script lang="ts" setup>
 import { sources } from '../sources'
 import { YAML } from '@/app/application'
-import TagList from '@/app/common/TagList.vue'
 </script>

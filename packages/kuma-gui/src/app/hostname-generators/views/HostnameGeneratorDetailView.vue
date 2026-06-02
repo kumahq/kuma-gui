@@ -8,7 +8,7 @@
       codeRegExp: false,
       environment: String,
     }"
-    v-slot="{ route, t, uri, can }"
+    v-slot="{ route, t, uri, can, r }"
   >
     <RouteTitle
       :title="t('hostname-generators.routes.items.title')"
@@ -122,13 +122,13 @@
                       <dd>
                         <XLayout
                           variant="separated"
-                          truncate
                         >
                           <XBadge
-                            v-for="([label, value], index) in Object.entries(labels)"
-                            :key="`${label}${value}${index}`"
+                            v-for="([key, value], index) in Object.entries(labels)"
+                            :key="`${key}${value}${index}`"
+                            :variant="r('kuma.label').test(key) ? 'kuma-label' : 'label'"
                           >
-                            {{ label }}:{{ value }}
+                            {{ key }}:<strong>{{ value }}</strong>
                           </XBadge>
                         </XLayout>
                       </dd>
@@ -136,33 +136,31 @@
                   </XDl>
                 </template>
                 <XDl>
-                  <template
-                    v-for="labels in [Object.entries(data.labels)]"
-                    :key="typeof labels"
-                  >
-                    <div v-if="labels.length">
-                      <dt>{{ t('hostname-generators.routes.item.labels') }}</dt>
-                      <dd>
-                        <XLayout
-                          variant="separated"
-                          truncate
+                  <div v-if="Object.keys(data.labels).length">
+                    <dt>{{ t('hostname-generators.routes.item.labels') }}</dt>
+                    <dd>
+                      <XLayout
+                        variant="separated"
+                      >
+                        <XAction
+                          v-for="(value, key) in data.labels"
+                          :key="key"
+                          :href="t(`common.label.href.${key.replaceAll('.', '~')}`, {
+                            mesh: '',
+                            zone: data.zone,
+                            namespace: data.namespace,
+                            name: value,
+                          }, { defaultMessage: '' })"
                         >
-                          <template
-                            v-for="kumaRe in [/^(.+\.)?kuma\.io\//]"
-                            :key="typeof kumaRe"
+                          <XBadge
+                            :variant="r('kuma.label').test(key) ? 'kuma-label' : 'label'"
                           >
-                            <XBadge
-                              v-for="[key, value] in labels"
-                              :key="key"
-                              :appearance="kumaRe.test(key) ? 'info' : 'decorative'"
-                            >
-                              {{ key }}:{{ value }}
-                            </XBadge>
-                          </template>
-                        </XLayout>
-                      </dd>
-                    </div>
-                  </template>
+                            {{ key }}:<strong>{{ value }}</strong>
+                          </XBadge>
+                        </XAction>
+                      </XLayout>
+                    </dd>
+                  </div>
                 </XDl>
               </XLayout>
             </DataLoader>

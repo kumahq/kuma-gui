@@ -6,7 +6,7 @@
       connection: '',
     }"
     :name="props.routeName"
-    v-slot="{ t, route, uri }"
+    v-slot="{ t, route, uri, r }"
   >
     <AppView>
       <XLayout
@@ -22,10 +22,26 @@
               Tags
             </th>
             <td>
-              <TagList
-                :tags="props.data.tags"
-                alignment="right"
-              />
+              <XLayout
+                variant="separated"
+              >
+                <XAction
+                  v-for="(value, key) in props.data.tags"
+                  :key="key"
+                  :href="t(`common.label.href.${key.replaceAll('.', '~')}`, {
+                    mesh: '',
+                    zone: '',
+                    namespace: '',
+                    name: value.replaceAll('_', '~'),
+                  }, { defaultMessage: '' })"
+                >
+                  <XBadge
+                    :variant="r('kuma.label').test(key) ? 'kuma-label' : 'label'"
+                  >
+                    {{ key }}:<strong>{{ value }}</strong>
+                  </XBadge>
+                </XAction>
+              </XLayout>
             </td>
           </tr>
           <tr>
@@ -213,7 +229,6 @@
 import { YAML } from '@/app/application'
 import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
-import TagList from '@/app/common/TagList.vue'
 import type { DataplaneInbound } from '@/app/data-planes/data'
 import { sources as policySources } from '@/app/policies/sources'
 import RuleMatchers from '@/app/rules/components/RuleMatchers.vue'
