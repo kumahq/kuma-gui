@@ -176,15 +176,83 @@
     </template>
   </template>
 </template>
+<script lang="ts">
+// eslint-disable-next-line import/order
+import SharedPool from '../../utilities/SharedPool'
+// eslint-disable-next-line import/order
+import type { Router , RouteLocationNamedRaw } from 'vue-router'
+
+const findAnchor = (target: HTMLElement) => {
+  // we look for anchors, or any other element that has [data-actionable]
+  const $el = target.tagName.toLowerCase() === 'a' ? target : target.closest('a,[data-actionable]')
+  if($el) {
+    switch(true) {
+      // if its a data-action element we "bubble down" to find a child [data-action]
+      case $el.hasAttribute('data-actionable'):
+        return $el.querySelector('[data-action]')
+      // otherwise we check for rel="x-internal"
+      // which allows us to use vue-router links in our i18n locales files via
+      // <a href="http-link" rel="x-internal" />
+      // and helps us support custom protocols
+      case ($el.getAttribute('rel') ?? '').includes('x-internal'):
+        return $el
+    }
+  }
+  // anything else we do nothing special
+  return null
+}
+const createListener = (router: Router) => {
+  return (e: Event) => {
+    // if its not a user generated event return
+    // if we ever need this listener to also fire on non-user generated events
+    // we'll have to refine findAnchor and remove this
+    if(!e.isTrusted) {
+      return
+    }
+    const $a = findAnchor(e.target as HTMLElement)
+    if($a) {
+      // anything with x-internal is something for whatever reason we can't/don't want to use RouterLink
+      if (($a.getAttribute('rel') ?? '').includes('x-internal')) {
+        const href = $a.getAttribute('href')
+        if(href) {
+          e.preventDefault()
+          e.stopPropagation()
+          const base = router.options.history.base
+          router.push(href.startsWith(base) ? href.substring(base.length) : href)
+        }
+      // anything else
+      } else if('click' in $a && typeof $a.click === 'function') {
+        $a.click()
+      }
+    }
+
+  }
+}
+const pool = new SharedPool<Router, (e: Event) => void>((state, router, item) => {
+  switch (state) {
+    case 'creating': {
+      const listener = createListener(router)
+      document.body.addEventListener('click', listener)
+      return listener
+    }
+    case 'acquiring':
+      return item
+    case 'releasing':
+      return item
+    case 'destroying':
+      document.body.removeEventListener('click', item)
+      return item
+  }
+})
+</script>
 <script lang="ts" setup>
 import { KUI_ICON_SIZE_40 } from '@kong/design-tokens'
 import { KDropdownItem, KButton } from '@kong/kongponents'
-import { computed, watch, inject, provide, useAttrs } from 'vue'
+import { computed, watch, inject, provide, useAttrs, onMounted, onBeforeUnmount } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
 
 import { useProtocolHandler } from '../../'
 import type { ButtonAppearance } from '@kong/kongponents'
-import type { RouteLocationNamedRaw } from 'vue-router'
 
 type BooleanLocationQueryValue = string | number | undefined | boolean
 type BooleanLocationQueryRaw = Record<string | number, BooleanLocationQueryValue | BooleanLocationQueryValue[]>
@@ -221,12 +289,16 @@ const group = inject<{
 
 const router = useRouter()
 
+const sym = Symbol('protocolHandler')
+onMounted(() => pool.acquire(router, sym))
+onBeforeUnmount(() => pool.release(router, sym))
+
 const protocolHandler = useProtocolHandler()
 const href = computed(() => props.href.includes('://') ? protocolHandler(props.href) : props.href)
 const target = computed(() => props.href.length > 0 && props.href === href.value ? '_blank' : undefined)
 const rel = computed(() => target.value === '_blank' ? 'noopener noreferrer' : href.value.length > 0 && props.href === href.value ? undefined : 'x-internal')
 
-if(href.value.length > 0 || typeof attrs.onClick === 'function' || props.for || props.to) {
+if(href.value.length > 0 || typeof attrs.onClick === 'function' || props.for || Object.keys(props.to).length) {
   provide('x-action', {})
 }
 

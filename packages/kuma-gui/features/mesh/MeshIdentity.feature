@@ -5,6 +5,7 @@ Feature: mesh / mesh-identity
       | Alias     | Selector                           |
       | mesh-mtls | [data-testid="mesh-mtls"]          |
       | summary   | [data-testid="slideout-container"] |
+      | summary-title      | $summary [data-testid='slideout-title']  |
     And the environment
       """
       KUMA_MTLS_ENABLED: false
@@ -17,6 +18,10 @@ Feature: mesh / mesh-identity
       body:
         items:
           - name: identity-1
+            mesh: default
+            kri: kri_mid_default___identity-1_
+            labels:
+              kuma.io/display-name: identity-1
       """
     When I visit the "/meshes/default" URL
     Then the "$mesh-mtls" element exists
@@ -30,6 +35,8 @@ Feature: mesh / mesh-identity
           - name: identity-1
             mesh: default
             kri: kri_mid_default___identity-1_
+            labels:
+              kuma.io/display-name: identity-1
       """
     And the URL "/mesh-insight/default" responds with
       """
@@ -44,7 +51,7 @@ Feature: mesh / mesh-identity
     Then I click the "$mesh-mtls a:first-child" element
     Then the URL contains "/meshes/default/overview/meshidentity/kri_mid_default___identity-1_"
     And the "$summary" element exists
-    And the "$summary" element contains "identity-1"
+    And the "$summary-title" element contains "identity-1"
     And the "$summary [data-testid='k-code-block']" element exists
     And the "$summary [data-testid='k-code-block']" element contains "type: MeshIdentity"
     And the "$summary [data-testid='k-code-block']" element contains "mesh: default"
