@@ -710,7 +710,7 @@
                       >
                         <XNotification
                           :notify="!!Object.values(traffic.outbounds).find(item => (typeof item.tcp !== 'undefined' ? item.tcp?.[`${direction}_cx_rx_bytes_total`] : item.http?.[`${direction}_rq_total`]) ?? 0 > 0)"
-                          variant="info"
+                          variant="warning"
                           :uri="`data-planes.notifications.recommend-reachable-services:${props.data.id}`"
                         >
                           <XI18n

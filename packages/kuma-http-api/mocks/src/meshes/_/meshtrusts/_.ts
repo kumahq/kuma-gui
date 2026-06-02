@@ -11,7 +11,7 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
   const kri = req.params.kri ? `kri_mtrust_${req.params.kri}` : undefined
   const [
     _prefix,
-    _shortName,
+    shortName,
     mesh,
     zone,
     nspace,
@@ -25,20 +25,17 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
     ...(k8s ? String(req.params.name).split('.').toReversed() : ['', String(req.params.name)]), // nspace, displayName
   ]
   const name = kri ? `${displayName}${nspace ? `.${nspace}` : ''}` : String(req.params.name)
-  const namespace = fake.word.noun()
 
   const k8sFormat = req.url.searchParams.get('format') === 'kubernetes'
   return {
     headers: {},
     body: {
-      ...(k8sFormat ? {
-        apiVersion: 'kuma.io/v1alpha1',
-      } : {}),
+      ...(k8sFormat ? { apiVersion: 'kuma.io/v1alpha1' } : {}),
+      ...fake.kuma.timespan(),
       type: 'MeshTrust',
       mesh,
       name,
-      creationTime: fake.date.past().toISOString(),
-      modificationTime: fake.date.recent().toISOString(),
+      kri: fake.kuma.kri({ shortName, mesh, zone, namespace: nspace, displayName }),
       ...((() => {
         const metadata = {
           mesh,
@@ -46,6 +43,8 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
           labels: {
             ...fake.kuma.labels({
               name: displayName,
+              mesh,
+              env: k8s ? 'kubernetes' : 'universal',
               ...(zone ? { zone } : {}),
               ...(k8s ? { namespace: nspace } : {}),
             }),
@@ -64,7 +63,7 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
       },
       status: {
         origin: {
-          kri: fake.kuma.kri({ resourceName: 'MeshIdentity', mesh, namespace, zone }),
+          kri: fake.kuma.kri({ resourceName: 'MeshIdentity', mesh, zone, namespace: fake.word.noun() }),
         },
       },
     } satisfies MeshTrustResponse,
