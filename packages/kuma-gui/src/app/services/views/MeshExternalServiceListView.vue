@@ -50,7 +50,7 @@
               v-slot="{ data: [data, meshInsight] }"
             >
               <XNotification
-                :notify="!props.mesh.mtlsBackend && !meshInsight.mTLS"
+                :notify="!meshInsight.mTLS.issuedBackends"
                 :uri="`mes-mtls-warning.${props.mesh.id}`"
               >
                 <XI18n
