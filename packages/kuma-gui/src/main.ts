@@ -6,9 +6,20 @@ import { createApp } from 'vue'
 
 import { services as application, TOKENS as APPLICATION } from '@/app/application'
 import { services as configuration } from '@/app/configuration'
+import { services as dataplanes } from '@/app/data-planes'
+import { services as externalServices } from '@/app/external-services'
+import { services as gateways } from '@/app/gateways'
 import { TOKENS } from '@/app/kuma'
+import { services as legacyDataplanes } from '@/app/legacy-data-planes'
+import { services as meshIdentities } from '@/app/mesh-identities'
+import { services as meshTrusts } from '@/app/mesh-trusts'
+import { services as policies } from '@/app/policies'
+import { services as resources } from '@/app/resources'
+import { services as rules } from '@/app/rules'
 import { services as serviceMesh } from '@/app/service-mesh'
+import { services as services } from '@/app/services'
 import { services as vue, TOKENS as VUE } from '@/app/vue'
+import { services as workloads } from '@/app/workloads'
 
 async function mountVueApplication() {
   const $ = {
@@ -33,6 +44,17 @@ async function mountVueApplication() {
       ...$,
       routes: $.routesLabel,
     }),
+    services($),
+    externalServices($),
+    gateways($),
+    dataplanes($),
+    legacyDataplanes($),
+    workloads($),
+    policies($),
+    resources($),
+    rules($),
+    meshIdentities($),
+    meshTrusts($),
 
     // any DEV-time only service container configuration
     import.meta.env.MODE !== 'production'
