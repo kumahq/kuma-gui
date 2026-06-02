@@ -210,6 +210,9 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       service: () => {
         // @TODO regexps will move to locales/yaml
         const re = new Map<string, RegExp>([
+          // NOTE: regexp for kuma labels only
+          // we don't use this for matching URLs
+          // only to color labels grey or blue (currently)
           ['kuma.label', /^(.+\.)?kuma\.io\//],
         ])
         //
