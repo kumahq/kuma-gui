@@ -18,9 +18,19 @@
             v-if="inbound"
             variant="kv"
           >
-            <tr
-              v-if="Object.keys(inbound.tags).length > 0"
-            >
+            <tr v-if="inbound.type.length > 0">
+              <th scope="row">
+                Type
+              </th>
+              <td>
+                <XBadge
+                  appearance="info"
+                >
+                  {{ inbound.type }}
+                </XBadge>
+              </td>
+            </tr>
+            <tr v-if="Object.keys(inbound.tags).length > 0">
               <th scope="row">
                 Tags
               </th>
@@ -31,7 +41,7 @@
                 />
               </td>
             </tr>
-            <tr>
+            <tr v-if="inbound.protocol.length > 0">
               <th scope="row">
                 Protocol
               </th>
@@ -44,7 +54,7 @@
                 </XBadge>
               </td>
             </tr>
-            <tr>
+            <tr v-if="inbound.addressPort.length > 0">
               <th scope="row">
                 Address
               </th>
@@ -210,7 +220,7 @@ import { Kri } from '@/app/kuma'
 import { sources as policySources } from '@/app/policies/sources'
 
 const props = defineProps<{
-  data: DataplaneNetworkingLayout['inbounds'][number]
+  data: DataplaneNetworkingLayout['inbounds'][number] | DataplaneNetworkingLayout['listeners'][number]
   dataPlaneOverview: DataplaneOverview
   routeName: string
 }>()

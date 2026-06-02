@@ -141,6 +141,10 @@
             <dt>{{ t('data-planes.components.service_traffic_card.cx') }}</dt>
             <dd>{{ t('common.formats.integer', { value: props.traffic.tcp?.[`${props.direction}_cx_total`] }) }}</dd>
           </div>
+          <div>
+            <dt>{{ t('data-planes.components.service_traffic_card.cx_active') }}</dt>
+            <dd>{{ t('common.formats.integer', { value: props.traffic.tcp?.[`${props.direction}_cx_active`] }) }}</dd>
+          </div>
           <div
             v-if="typeof props.traffic.tcp?.[`${props.direction}_cx_tx_bytes_total`] !== 'undefined'"
             data-testid="bytes-received"
@@ -159,9 +163,11 @@
       </XDl>
     </template>
     <template v-else>
-      <XProgress
-        variant="line"
-      />
+      <slot name="empty">
+        <XProgress
+          variant="line"
+        />
+      </slot>
     </template>
   </DataCard>
 </template>

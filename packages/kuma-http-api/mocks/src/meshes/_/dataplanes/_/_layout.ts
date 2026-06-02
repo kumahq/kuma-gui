@@ -37,7 +37,10 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
       }),
     }
   })
-  const listeners = parseInt(env('KUMA_DATAPLANELISTENER_COUNT', `${fake.number.int({ min: 0, max: 50 })}`))
+  const listenerCount = parseInt(env('KUMA_DATAPLANELISTENER_COUNT', `${fake.number.int({ min: 0, max: 50 })}`))
+  const listeners = Array.from({ length: listenerCount }).map(() => ({
+    port: fake.number.int({ min: 1, max: 65535 }),
+  }))
   const zone = fake.word.noun()
 
   return {
@@ -87,8 +90,7 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
           proxyResourceName: kri,
         } satisfies DataplaneOutbound
       }),
-      listeners: Array.from({ length: listeners }).map(() => {
-        const port = fake.number.int({ min: 1, max: 65535 })
+      listeners: listeners.map(({ port }) => {
         const type = fake.helpers.arrayElement(['ZoneIngress', 'ZoneEgress'])
         const kri = fake.kuma.kri({
           resourceName: 'Dataplane',
