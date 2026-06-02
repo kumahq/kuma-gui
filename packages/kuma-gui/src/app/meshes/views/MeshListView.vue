@@ -55,63 +55,41 @@
               :data="[data]"
               :errors="[error]"
               variant="list"
+              v-slot="{ data: [meshes] }"
             >
               <DataCollection
                 type="meshes"
-                :items="data?.items ?? [undefined]"
+                :items="meshes.items"
                 :page="route.params.page"
                 :page-size="route.params.size"
-                :total="data?.total"
+                :total="meshes.total"
                 @change="route.update"
               >
-                <AppCollection
-                  class="mesh-collection"
-                  data-testid="mesh-collection"
-                  :headers="[
-                    { ...me.get('headers.name'), label: t('meshes.common.name'), key: 'name' },
-                    { ...me.get('headers.services'), label: t('meshes.routes.items.collection.services'), key: 'services'},
-                    { ...me.get('headers.dataplanes'), label: t('meshes.routes.items.collection.dataplanes'), key: 'dataplanes'},
-                    { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
-                  ]"
-                  :items="data?.items"
-                  :is-selected-row="(row) => row.name === route.params.mesh"
-                  @resize="me.set"
+                <template
+                  v-for="[hasLegacyServices, hasMeshServices] in [[
+                    meshes.items.some((item) => item.services.internal > 0),
+                    meshes.items.some((item) => item.resources.MeshServiceGeneric.total > 0),
+                  ]]"
+                  :key="typeof hasLegacyServices"
                 >
-                  <template
-                    #name="{ row: item }"
+                  <AppCollection
+                    class="mesh-collection"
+                    data-testid="mesh-collection"
+                    :headers="[
+                      { ...me.get('headers.name'), label: t('meshes.common.name'), key: 'name' },
+                      { ...me.get('headers.services'), label: t(`meshes.routes.items.collection.services${hasLegacyServices && hasMeshServices ? '-hybrid' : ''}`), key: 'services'},
+                      { ...me.get('headers.dataplanes'), label: t('meshes.routes.items.collection.dataplanes'), key: 'dataplanes'},
+                      { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
+                    ]"
+                    :items="meshes.items"
+                    :is-selected-row="(row) => row.name === route.params.mesh"
+                    @resize="me.set"
                   >
-                    <XAction
-                      data-action
-                      :to="{
-                        name: 'mesh-detail-view',
-                        params: {
-                          mesh: item.name,
-                        },
-                      }"
-                    >
-                      {{ item.name }}
-                    </XAction>
-                  </template>
-
-                  <template
-                    #services="{ row: item }"
-                  >
-                    {{ item.services.internal }}
-                  </template>
-
-                  <template
-                    #dataplanes="{ row: item }"
-                  >
-                    {{ item.dataplanesByType.standard.online }} / {{ item.dataplanesByType.standard.total }}
-                  </template>
-                  <template
-                    #actions="{ row: item }"
-                  >
-                    <MeshActionGroup
-                      :item="item"
-                      @change="refresh"
+                    <template
+                      #name="{ row: item }"
                     >
                       <XAction
+                        data-action
                         :to="{
                           name: 'mesh-detail-view',
                           params: {
@@ -119,11 +97,47 @@
                           },
                         }"
                       >
-                        {{ t('common.collection.actions.view') }}
+                        {{ item.name }}
                       </XAction>
-                    </MeshActionGroup>
-                  </template>
-                </AppCollection>
+                    </template>
+
+                    <template
+                      #services="{ row: item }"
+                    >
+                      <template v-if="hasLegacyServices && hasMeshServices">
+                        {{ item.resources.MeshServiceGeneric.total }} / {{ item.services.internal }}
+                      </template>
+                      <template v-else>
+                        {{ item.resources.MeshServiceGeneric.total || item.services.internal }}
+                      </template>
+                    </template>
+
+                    <template
+                      #dataplanes="{ row: item }"
+                    >
+                      {{ item.dataplanesByType.standard.online }} / {{ item.dataplanesByType.standard.total }}
+                    </template>
+                    <template
+                      #actions="{ row: item }"
+                    >
+                      <MeshActionGroup
+                        :item="item"
+                        @change="refresh"
+                      >
+                        <XAction
+                          :to="{
+                            name: 'mesh-detail-view',
+                            params: {
+                              mesh: item.name,
+                            },
+                          }"
+                        >
+                          {{ t('common.collection.actions.view') }}
+                        </XAction>
+                      </MeshActionGroup>
+                    </template>
+                  </AppCollection>
+                </template>
               </DataCollection>
             </DataLoader>
           </XLayout>
