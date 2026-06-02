@@ -312,6 +312,7 @@
                 <DataCollection
                   v-if="item.dataplaneType === 'standard'"
                   :items="item.dataplane.networking.outbounds"
+                  :empty="false"
                   v-slot="{ items: outbounds }"
                 >
                   <XLayout
