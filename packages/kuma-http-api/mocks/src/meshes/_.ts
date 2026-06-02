@@ -1,7 +1,5 @@
 import type { Dependencies, ResponseHandler } from '#mocks'
 export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
-  const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
-
   // this template can be called via the /_kri/kri_<shortName>_:kri endpoint or
   // the legacy endpoint
   const kri = req.params.kri ? `kri_m_${req.params.kri}` : undefined
