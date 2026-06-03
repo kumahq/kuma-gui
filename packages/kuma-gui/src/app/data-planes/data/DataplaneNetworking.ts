@@ -7,27 +7,56 @@ type KumaDataplaneListener = NonNullable<NonNullable<NonNullable<components['sch
 type KumaDataplaneOutbound = NonNullable<NonNullable<NonNullable<components['schemas']['DataplaneOverviewWithMeta']['dataplane']>['networking']>['outbound']>[number]
 type KumaDataplaneNetworkingLayout = components['schemas']['DataplaneNetworkingLayout']
 
+const DataplaneLayoutInbound = {
+  fromObject(item: KumaDataplaneNetworkingLayout['inbounds'][number]) {
+    const kri = Kri.fromString(item.kri)
+    return {
+      ...item,
+      type: '' as 'ZoneIngress' | 'ZoneEgress',
+      stat_prefix: item.proxyResourceName,
+      portName: kri.sectionName !== String(item.port) ? kri.sectionName : undefined,
+    }
+  },
+
+  fromCollection(items: KumaDataplaneNetworkingLayout['inbounds']) {
+    // don't show a card for anything on port 49151 as those are service-less inbounds
+    // we currently only do this on the layout endpoint
+    return Array.isArray(items) ? items.filter(item => item.port !== 49151).map(item => DataplaneLayoutInbound.fromObject(item)) : []
+  },
+}
+
+const DataplaneLayoutListener = {
+  fromObject(item: KumaDataplaneNetworkingLayout['listeners'][number]) {
+    const kri = Kri.fromString(item.kri)
+    return {
+      ...item,
+      // protocol of ZoneIngress listeners is always tcp, for ZoneEgress it depends and therefore it's not set
+      protocol: item.type === 'ZoneIngress' ? 'tcp' : '',
+      stat_prefix: item.proxyResourceName,
+      portName: kri.sectionName !== String(item.port) ? kri.sectionName : undefined,
+    }
+  },
+
+  fromCollection(items: KumaDataplaneNetworkingLayout['listeners']) {
+    return Array.isArray(items) ? items.map(item => DataplaneLayoutListener.fromObject(item)) : []
+  },
+}
+
 export const DataplaneNetworkingLayout = {
   fromObject(dataplaneNetworkingLayout: KumaDataplaneNetworkingLayout) {
+    const { inbounds, listeners, ...rest } = dataplaneNetworkingLayout
     // `stat_prefix` corresponds to the stat_prefix used in the Envoy stats.
     // proxyResourceName.sectionName can either be a portName or port, so we
     // make sure its always the port as this is what the Envoy stat_prefix
     // uses. Once the following issue is resolved we won't have to do this
     // https://github.com/kumahq/kuma/issues/14469
     return {
-      ...dataplaneNetworkingLayout,
+      ...rest,
       spiffeId: dataplaneNetworkingLayout.spiffeId ?? '',
-      // don't show a card for anything on port 49151 as those are service-less inbounds
-      // we currently only do this on the layout endpoint
-      inbounds: dataplaneNetworkingLayout.inbounds.filter(item => item.port !== 49151).map(item => {
-        const kri = Kri.fromString(item.kri)
-        return {
-          ...item,
-          type: '',
-          stat_prefix: item.proxyResourceName,
-          portName: kri.sectionName !== String(item.port) ? kri.sectionName : undefined,
-        }
-      }),
+      inbounds: [
+        ...DataplaneLayoutInbound.fromCollection(dataplaneNetworkingLayout.inbounds),
+        ...DataplaneLayoutListener.fromCollection(dataplaneNetworkingLayout.listeners),
+      ] satisfies GenericDataplaneLayoutInbound[],
       outbounds: dataplaneNetworkingLayout.outbounds.map(item => {
         const kri = Kri.fromString(item.kri)
         return {
@@ -36,17 +65,7 @@ export const DataplaneNetworkingLayout = {
           portName: kri.sectionName !== String(item.port) ? kri.sectionName : undefined,
         }
       }),
-      listeners: dataplaneNetworkingLayout.listeners.map(item => {
-        const kri = Kri.fromString(item.kri)
-        return {
-          ...item,
-          // protocol of ZoneIngress listeners is always tcp, for ZoneEgress it depends and therefore it's not set
-          protocol: item.type === 'ZoneIngress' ? 'tcp' : '',
-          stat_prefix: item.proxyResourceName,
-          portName: kri.sectionName !== String(item.port) ? kri.sectionName : undefined,
-        }
-      }),
-    } satisfies KumaDataplaneNetworkingLayout
+    }
   },
 }
 
@@ -203,3 +222,7 @@ export type DataplaneInbound = ReturnType<typeof DataplaneInbound['fromObject']>
 export type DataplaneListener = ReturnType<typeof DataplaneListener['fromObject']>
 export type GatewayDataplaneInbound = ReturnType<typeof GatewayDataplaneInbound['fromObject']>
 export type GenericDataplaneInbound = DataplaneInbound & DataplaneListener & GatewayDataplaneInbound
+
+export type DataplaneLayoutInbound = ReturnType<typeof DataplaneLayoutInbound['fromObject']>
+export type DataplaneLayoutListener = ReturnType<typeof DataplaneLayoutListener['fromObject']>
+export type GenericDataplaneLayoutInbound = DataplaneLayoutInbound & DataplaneLayoutListener

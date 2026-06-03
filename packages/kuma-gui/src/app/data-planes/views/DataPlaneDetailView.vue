@@ -602,7 +602,7 @@
                           :key="port"
                         >
                           <template
-                            v-for="inbounds in [[...dataplaneLayout.inbounds, ...dataplaneLayout.listeners]]"
+                            v-for="inbounds in [dataplaneLayout.inbounds]"
                             :key="typeof inbounds"
                           >
                             <ConnectionGroup
@@ -926,7 +926,7 @@
                 >
                   <component
                     :is="child.Component"
-                    :data="(child.route.name as string).includes('-inbound-') ? sourceDataplaneLayout?.inbounds.concat(sourceDataplaneLayout?.listeners ?? []) : sourceDataplaneLayout?.outbounds"
+                    :data="(child.route.name as string).includes('-inbound-') ? sourceDataplaneLayout?.inbounds : sourceDataplaneLayout?.outbounds"
                     :data-plane-overview="props.data"
                     :networking="props.data.dataplane.networking"
                     :policies="resources?.policies"
