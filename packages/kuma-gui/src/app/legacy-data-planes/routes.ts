@@ -73,24 +73,6 @@ export const legacyDataplaneRoutes = (): RouteRecordRaw[] => {
                   },
                 )
               }
-
-              /**
-               * The legacy data planes are not using the listener summary view, but the router requires
-               * the route to be defined, otherwise a deep-link would always lead to the /404 route.
-               * In order to allow deep-linking to the listener summary view in case the dp has `feature-unified-resource-naming` enabled,
-               * we define the route here, but it will never be used in the legacy data planes.
-               * The actual handling of this happens in the `DataPlaneRouteGuard: router.beforeResolve`.
-               */
-              if (item.name === 'data-plane-connection-listener-summary-view' && item.children) {
-                item.component = () => import('@/app/data-planes/views/DataPlaneTrafficSummaryView.vue')
-                item.children.unshift(
-                  {
-                    path: 'overview',
-                    name: 'data-plane-connection-listener-summary-overview-view',
-                    component: () => import('@/app/data-planes/views/DataPlaneInboundSummaryOverviewView.vue'),
-                  },
-                )
-              }
               return item
             }),
 

@@ -130,6 +130,7 @@ Feature: mesh / dataplanes / connections / Traffic
   Scenario: Listener traffic shows expected content
     Given the environment
       """
+      KUMA_DATAPLANEINBOUND_COUNT: 0
       KUMA_DATAPLANELISTENER_COUNT: 2
       """
     And the URL "/meshes/default/dataplanes/service-less/_layout" responds with
@@ -176,17 +177,17 @@ Feature: mesh / dataplanes / connections / Traffic
       """
     When I visit the "/meshes/default/data-planes/service-less/overview" URL
     Then the "$traffic" element exists
-    And the "$listener" element exists 2 times
-    And the "$listener:nth-child(1)" element contains
+    And the "$inbound" element exists 2 times
+    And the "$inbound:nth-child(1)" element contains
       | Value                 |
       | TCP                   |
-      | :12345                |
       | ZoneIngress           |
+      | :12345                |
       | Total connections 20  |
       | Active connections 10 |
-    And the "$listener:nth-child(2)" element contains
+    And the "$inbound:nth-child(2)" element contains
       | Value                |
-      | :54321               |
       | ZoneEgress           |
+      | :54321               |
       | Total connections 10 |
       | Active connections 5 |

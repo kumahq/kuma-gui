@@ -23,6 +23,7 @@ export const DataplaneNetworkingLayout = {
         const kri = Kri.fromString(item.kri)
         return {
           ...item,
+          type: '',
           stat_prefix: item.proxyResourceName,
           portName: kri.sectionName !== String(item.port) ? kri.sectionName : undefined,
         }
@@ -192,7 +193,6 @@ export const DataplaneNetworking = {
         }
       })() satisfies GenericDataplaneInbound[],
       outbounds: DataplaneOutbound.fromCollection(outbounds),
-      listeners: DataplaneListener.fromCollection(networking.listeners),
     }
   },
 }
