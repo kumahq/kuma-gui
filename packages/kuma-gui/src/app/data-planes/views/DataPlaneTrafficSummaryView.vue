@@ -39,9 +39,8 @@
           <XTabs
             :selected="route.child()?.name"
           >
-            <!-- v-for="{ name } in (items[0].type.startsWith('Zone') ? route.children.filter((item) => !item.name.includes('clusters')) : route.children)" -->
             <template
-              v-for="{ name } in route.children"
+              v-for="{ name } in (items[0].type.startsWith('Zone') ? route.children.filter((item) => !item.name.includes('clusters')) : route.children)"
               :key="name"
               #[`${name}-tab`]
             >
