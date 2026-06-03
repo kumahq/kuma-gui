@@ -211,9 +211,7 @@ properties:
             - targetRef
           type: object
       rules:
-        description: |-
-          Rules defines inbound rate limiting configurations. Currently limited to
-          selecting all inbound traffic, as L7 matching is not yet implemented.
+        description: Rules defines inbound rate limiting configurations.
         type: array
         items:
           properties:
@@ -327,6 +325,43 @@ properties:
                             Define if rate limiting should be disabled.
                             Default: false
                           type: boolean
+            matches:
+              description: Matches define additional conditions for applying this rate limit rule.
+              type: array
+              items:
+                properties:
+                  sni:
+                    description: SNI defines a matcher configuration for matching by SNI value carried on the TLS connection
+                    type: object
+                    properties:
+                      type:
+                        description: Type defines how to match traffic by SNI. Only `Exact` is supported.
+                        type: string
+                        enum:
+                          - Exact
+                      value:
+                        description: Value is the SNI carried on the TLS connection that needs to match for the configuration to be applied
+                        type: string
+                    required:
+                      - type
+                      - value
+                  spiffeID:
+                    description: SpiffeID defines a matcher configuration for SpiffeID matching
+                    type: object
+                    properties:
+                      type:
+                        description: Type defines how to match incoming traffic by SpiffeID. `Exact` or `Prefix` are allowed.
+                        type: string
+                        enum:
+                          - Exact
+                          - Prefix
+                      value:
+                        description: Value is SpiffeID of a client that needs to match for the configuration to be applied
+                        type: string
+                    required:
+                      - type
+                      - value
+                type: object
           type: object
       targetRef:
         description: |-
