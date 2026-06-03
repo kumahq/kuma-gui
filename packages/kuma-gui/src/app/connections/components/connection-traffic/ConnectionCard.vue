@@ -17,7 +17,7 @@
             }, { defaultMessage: '' })"
           >
             <XBadge
-              variant="kuma-label"
+              variant="reserved-kv"
             >
               kuma.io/service:<strong>{{ props.service }}</strong>
             </XBadge>

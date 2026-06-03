@@ -22,7 +22,7 @@ import { inject, computed } from 'vue'
 import type { BadgeAppearance } from '@kong/kongponents'
 const props = withDefaults(defineProps<{
   maxWidth?: string
-  variant?: 'label' | 'kuma-label' | 'default'
+  variant?: 'reserved-kv' | 'kv' | 'default'
   appearance?: BadgeAppearance | string
 }>(), {
   maxWidth: 'auto',
@@ -31,9 +31,9 @@ const props = withDefaults(defineProps<{
 const xAction = inject<{} | undefined>('x-action', undefined)
 const appearance = computed<BadgeAppearance>(() => {
   switch(props.variant) {
-    case 'label':
+    case 'kv':
       return 'neutral' as BadgeAppearance
-    case 'kuma-label':
+    case 'reserved-kv':
       return 'info' as BadgeAppearance
     default:
       return props.appearance as BadgeAppearance
@@ -41,7 +41,7 @@ const appearance = computed<BadgeAppearance>(() => {
 })
 </script>
 <style lang="scss" scoped>
-.variant-label, .variant-kuma-label {
+.variant-kv, .variant-reserved-kv {
   &.k-badge {
     font-weight: var(--x-font-weight-regular);
   }

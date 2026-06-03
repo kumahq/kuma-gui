@@ -234,7 +234,7 @@
                             }, { defaultMessage: '' })"
                           >
                             <XBadge
-                              :variant="r('kuma.label').test(key) ? 'kuma-label' : 'label'"
+                              :variant="r('kuma.label').test(key) ? 'reserved-kv' : 'kv'"
                             >
                               {{ key }}:<strong>{{ value }}</strong>
                             </XBadge>
@@ -264,7 +264,7 @@
                             }, { defaultMessage: '' })"
                           >
                             <XBadge
-                              :variant="r('kuma.label').test(key) ? 'kuma-label' : 'label'"
+                              :variant="r('kuma.label').test(key) ? 'reserved-kv' : 'kv'"
                             >
                               {{ key }}:<strong>{{ value }}</strong>
                             </XBadge>
