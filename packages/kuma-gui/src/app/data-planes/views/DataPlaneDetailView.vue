@@ -743,7 +743,7 @@
                                       </template>
 
                                       <template #body>
-                                        <XBadge variant="decorative">
+                                        <XBadge appearance="decorative">
                                           {{ item.type }}
                                         </XBadge>
                                       </template>
