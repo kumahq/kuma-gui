@@ -5,7 +5,7 @@ Feature: mesh / delegated-gateways / item
       | Alias       | Selector                                           |
       | tabs-view   | [data-testid='delegated-gateway-detail-tabs-view'] |
       | detail-view | [data-testid='delegated-gateway-detail-view']      |
-    Given the URL "/meshes/default/service-insights/service-1" responds with
+    Given the URL "/meshes/default/service-insights/gateway-1" responds with
       """
       body:
         name: gateway-1
@@ -19,8 +19,8 @@ Feature: mesh / delegated-gateways / item
       """
 
   Scenario: Overview tab has expected content
-    When I visit the "/meshes/default/gateways/delegated/service-1/overview" URL
-    Then the "$tabs-view" element contains "service-1"
+    When I visit the "/meshes/default/gateways/delegated/gateway-1/overview" URL
+    Then the "$tabs-view" element contains "gateway-1"
     Then the "$detail-view" elements contain
       | Value              |
       |       1.2.3.4:8000 |
