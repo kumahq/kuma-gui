@@ -55,13 +55,9 @@
               size="small"
             >
               <h1>
-                <XCopyButton
-                  :text="zoneIngress.name"
-                >
-                  <RouteTitle
-                    :title="t('zone-ingresses.routes.item.title', { name: zoneIngress.name })"
-                  />
-                </XCopyButton>
+                <RouteTitle
+                  :title="t('zone-ingresses.routes.item.title', { name: zoneIngress.name })"
+                />
               </h1>
               <XBadge
                 :appearance="t(`common.status.appearance.${zoneIngress.state}`, undefined, { defaultMessage: 'neutral' })"

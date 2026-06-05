@@ -38,19 +38,10 @@
           size="small"
         >
           <h1>
-            <XCopyButton
-              :text="props.data.name"
-            >
-              <RouteTitle
-                :title="t('data-planes.routes.item.title', { name: props.data.name })"
-              />
-            </XCopyButton>
+            <RouteTitle
+              :title="t('data-planes.routes.item.title', { name: props.data.name })"
+            />
           </h1>
-          <XBadge
-            :appearance="t(`common.status.appearance.${props.data.status}`, undefined, { defaultMessage: 'neutral' })"
-          >
-            {{ t(`http.api.value.${props.data.status}`) }}
-          </XBadge>
         </XLayout>
         <XNotification
           :notify="props.data.status === 'offline'"

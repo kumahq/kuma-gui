@@ -41,24 +41,17 @@
           <DataLoader
             :data="[data]"
             variant="header"
-            v-slot="{ data: [service] }"
+            v-slot="{ data: [item] }"
           >
             <XLayout
               variant="y-stack"
               size="small"
             >
               <h1>
-                <XCopyButton :text="route.params.service">
-                  <RouteTitle
-                    :title="t('services.routes.item.title', { name: route.params.service })"
-                  />
-                </XCopyButton>
+                <RouteTitle
+                  :title="t('services.routes.item.title', { name: item.name })"
+                />
               </h1>
-              <XBadge
-                :appearance="t(`common.status.appearance.${service.status}`, undefined, { defaultMessage: 'neutral' })"
-              >
-                {{ t(`http.api.value.${service.status}`) }}
-              </XBadge>
             </XLayout>
           </DataLoader>
         </template>

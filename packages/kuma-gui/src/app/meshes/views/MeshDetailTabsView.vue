@@ -9,13 +9,9 @@
     <AppView>
       <template #title>
         <h1>
-          <XCopyButton
-            :text="route.params.mesh"
-          >
-            <RouteTitle
-              :title="t('meshes.routes.item.title', { name: route.params.mesh })"
-            />
-          </XCopyButton>
+          <RouteTitle
+            :title="t('meshes.routes.item.title', { name: route.params.mesh })"
+          />
         </h1>
       </template>
       <template

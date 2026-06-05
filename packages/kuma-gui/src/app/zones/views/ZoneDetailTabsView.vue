@@ -28,32 +28,11 @@
             variant="header"
             v-slot="{ data: [zone] }"
           >
-            <XLayout
-              variant="y-stack"
-              size="small"
-            >
-              <XLayout variant="separated">
-                <template
-                  v-for="env in [(['kubernetes', 'universal'] as const).find(env => env === zone.zoneInsight.environment) ?? 'kubernetes']"
-                  :key="env"
-                >
-                  <XIcon
-                    :name="env"
-                    :size="KUI_ICON_SIZE_50"
-                  >
-                    {{ t(`common.product.environment.${env}`) }}
-                  </XIcon>
-                </template>
-                <h1>
-                  <XCopyButton :text="zone.name" />
-                </h1>
-              </XLayout>
-              <XBadge
-                :appearance="t(`common.status.appearance.${zone.state}`, undefined, { defaultMessage: 'neutral' })"
-              >
-                {{ t(`http.api.value.${zone.state}`) }}
-              </XBadge>
-            </XLayout>
+            <h1>
+              <RouteTitle
+                :title="zone.name"
+              />
+            </h1>
           </DataLoader>
         </template>
 
@@ -106,7 +85,6 @@
 </template>
 
 <script lang="ts" setup>
-import { KUI_ICON_SIZE_50 } from '@kong/design-tokens'
 
 import { useZoneActionGroup } from '../'
 import { sources } from '../sources'

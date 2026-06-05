@@ -57,11 +57,9 @@
               size="small"
             >
               <h1>
-                <XCopyButton :text="zoneEgress.name">
-                  <RouteTitle
-                    :title="t('zone-egresses.routes.item.title', { name: zoneEgress.name })"
-                  />
-                </XCopyButton>
+                <RouteTitle
+                  :title="t('zone-egresses.routes.item.title', { name: zoneEgress.name })"
+                />
               </h1>
               <XBadge
                 :appearance="t(`common.status.appearance.${zoneEgress.state}`, undefined, { defaultMessage: 'neutral' })"

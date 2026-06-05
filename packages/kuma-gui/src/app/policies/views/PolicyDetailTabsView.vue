@@ -46,13 +46,9 @@
             v-slot="{ data: [policy] }"
           >
             <h1>
-              <XCopyButton
-                :text="policy.name"
-              >
-                <RouteTitle
-                  :title="t('policies.routes.item.title', { name: policy.name })"
-                />
-              </XCopyButton>
+              <RouteTitle
+                :title="t('policies.routes.item.title', { name: policy.name })"
+              />
             </h1>
           </DataLoader>
         </template>
