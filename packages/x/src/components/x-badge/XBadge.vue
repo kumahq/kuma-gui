@@ -27,6 +27,7 @@ const props = withDefaults(defineProps<{
 }>(), {
   maxWidth: 'auto',
   variant: 'default',
+  appearance: undefined,
 })
 const xAction = inject<{} | undefined>('x-action', undefined)
 const appearance = computed<BadgeAppearance>(() => {
