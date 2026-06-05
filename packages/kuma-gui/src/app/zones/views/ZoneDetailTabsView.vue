@@ -23,17 +23,11 @@
         ]"
       >
         <template #title>
-          <DataLoader
-            :data="[data]"
-            variant="header"
-            v-slot="{ data: [zone] }"
-          >
-            <h1>
-              <RouteTitle
-                :title="zone.name"
-              />
-            </h1>
-          </DataLoader>
+          <h1>
+            <RouteTitle
+              :title="route.params.zone"
+            />
+          </h1>
         </template>
 
         <template
