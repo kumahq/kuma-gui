@@ -81,11 +81,9 @@
     {
       "description": [
         " Disable:",
-        " - `@kong-ui-public/app-layout`: downstream conflicts due to pinned versions",
         " - `escape-string-regexp`: need to stick with current version because of esm vs cjs"
       ],
       "matchPackageNames": [
-        "@kong-ui-public/app-layout",
         "escape-string-regexp"
       ],
       "enabled": false
