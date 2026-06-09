@@ -19,25 +19,37 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
       total,
       items: Array.from({ length: pageTotal }).map((_, i) => {
         const id = offset + i
-        const name = `${queryName?.padEnd(queryName.length + 1, '-') ?? ''}${fake.word.noun()}-${id}`
-        const displayName = `${name}${fake.kuma.dataplaneSuffix(k8s)}`
-        const nspace = queryNamespace ?? fake.k8s.namespace()
         const backendType = fake.helpers.arrayElement(['Tcp', 'File', 'OpenTelemetry'] as const)
+        const [
+          _prefix,
+          shortName,
+          mesh,
+          zone,
+          nspace,
+          displayName,
+        ] = [
+          'kri', // prefix
+          'mtrust', // shortName
+          String(req.params.mesh), // mesh
+          fake.helpers.arrayElement(['', fake.word.noun()]), // zone
+          ...([queryNamespace ?? (k8s ? fake.word.noun() : ''), `${queryName ? `${queryName}-` : ''}${fake.word.noun()}-${id}`]), // nspace, displayName
+        ]
+        const name = `${displayName}${nspace ? `.${nspace}` : ''}`
         return {
           type: 'MeshAccessLog',
           mesh,
           name: `${displayName}${k8s ? `.${nspace}` : ''}`,
-          creationTime: '2022-01-25T13:58:29.381342+01:00',
-          modificationTime: '2022-01-25T13:58:29.381342+01:00',
-          ...(k8s
-            ? {
-              labels: {
-                'kuma.io/display-name': displayName,
-                'k8s.kuma.io/namespace': nspace,
-                'kuma.io/policy-role': fake.kuma.policyRole(),
-              },
-            }
-            : {}),
+          ...fake.kuma.timespan(),
+          labels: {
+            ...fake.kuma.labels({
+              ...(name.includes('ingress') && { 'kuma.io/listener-zoneingress': 'enabled' }),
+              ...(name.includes('egress') && { 'kuma.io/listener-zoneegress': 'enabled' }),
+              name: displayName,
+              ...(zone ? { zone } : {}),
+              ...(k8s ? { namespace: nspace } : {}),
+            }),
+          },
+          kri: fake.kuma.kri({ shortName, mesh, zone, namespace: nspace, displayName }),
           spec: {
             from: [
               {
