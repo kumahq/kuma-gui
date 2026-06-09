@@ -27,7 +27,7 @@
           >
             <XLayout
               variant="x-stack"
-              size="large"
+              size="max"
             >
               <XCard class="resource-type-collection">
                 <template #actions>

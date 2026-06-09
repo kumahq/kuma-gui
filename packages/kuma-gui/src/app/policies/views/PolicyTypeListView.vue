@@ -25,7 +25,7 @@
         >
           <XLayout
             variant="x-stack"
-            size="large"
+            size="max"
           >
             <XCard
               class="policy-type-list"
