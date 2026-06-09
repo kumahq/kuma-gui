@@ -10,7 +10,7 @@
       codeFilter: false,
       codeRegExp: false,
     }"
-    v-slot="{ route, t, uri, can }"
+    v-slot="{ route, t, uri, can, r }"
   >
     <DataSource
       :src="uri(sources, '/resource/:kri', { kri: route.params.kri })"
@@ -99,33 +99,31 @@
                 </dd>
               </div>
 
-              <template
-                v-for="labels in [Object.entries(data.labels)]"
-                :key="typeof labels"
-              >
-                <div v-if="labels.length > 0">
-                  <dt>{{ t('resources.routes.item.about.labels') }}</dt>
-                  <dd>
-                    <XLayout
-                      variant="separated"
-                      truncate
+              <div v-if="Object.keys(data.labels).length > 0">
+                <dt>{{ t('resources.routes.item.about.labels') }}</dt>
+                <dd>
+                  <XLayout
+                    variant="separated"
+                  >
+                    <XAction
+                      v-for="(value, key) in data.labels"
+                      :key="key"
+                      :href="t(`common.label.href.${key.replaceAll('.', '~')}`, {
+                        mesh: data.mesh,
+                        zone: data.zone,
+                        namespace: data.namespace,
+                        name: value,
+                      }, { defaultMessage: '' })"
                     >
-                      <template
-                        v-for="kumaRe in [/^(.+\.)?kuma\.io\//]"
-                        :key="typeof kumaRe"
+                      <XBadge
+                        :variant="r('kuma.label').test(key) ? 'reserved-kv' : 'kv'"
                       >
-                        <XBadge
-                          v-for="[key, value] in labels"
-                          :key="key"
-                          :appearance="kumaRe.test(key) ? 'info' : 'decorative'"
-                        >
-                          {{ key }}:{{ value }}
-                        </XBadge>
-                      </template>
-                    </XLayout>
-                  </dd>
-                </div>
-              </template>
+                        {{ key }}:<strong>{{ value }}</strong>
+                      </XBadge>
+                    </XAction>
+                  </XLayout>
+                </dd>
+              </div>
             </XDl>
           </DataLoader>
         </XCard>

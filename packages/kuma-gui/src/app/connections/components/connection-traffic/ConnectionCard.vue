@@ -7,10 +7,21 @@
         class="aside"
       >
         <slot name="aside">
-          <TagList
+          <XAction
             v-if="props.service.length > 0"
-            :tags="[{label: 'kuma.io/service', value: props.service}]"
-          />
+            :href="t(`common.label.href.${`kuma.io/service`.replaceAll('.', '~')}`, {
+              mesh: '',
+              zone: '',
+              namespace: '',
+              name: props.service.replaceAll('_', '~'),
+            }, { defaultMessage: '' })"
+          >
+            <XBadge
+              variant="reserved-kv"
+            >
+              kuma.io/service:<strong>{{ props.service }}</strong>
+            </XBadge>
+          </XAction>
         </slot>
       </div>
       <div class="title">
@@ -176,7 +187,6 @@ import formatBytes from 'pretty-bytes'
 
 import { useI18n } from '@/app/application'
 import DataCard from '@/app/common/data-card/DataCard.vue'
-import TagList from '@/app/common/TagList.vue'
 const { t } = useI18n()
 const props = withDefaults(defineProps<{
   protocol: string

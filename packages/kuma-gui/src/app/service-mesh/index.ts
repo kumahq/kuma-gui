@@ -1,7 +1,6 @@
 import Kongponents from '@kong/kongponents'
 import { token } from '@kumahq/container'
 import X from '@kumahq/x'
-import { useLink } from 'vue-router'
 
 import type { Can } from '@/app/application'
 import { services as controlPlanes } from '@/app/control-planes'
@@ -9,6 +8,7 @@ import { services as hostnameGenerators } from '@/app/hostname-generators'
 import { Kri } from '@/app/kuma'
 import { services as me } from '@/app/me'
 import { services as meshes } from '@/app/meshes'
+import { useRouter } from '@/app/vue'
 import { services as zones } from '@/app/zones'
 import type { ServiceDefinition, Token } from '@kumahq/container'
 
@@ -17,9 +17,10 @@ const protocolHandler = (can: Can) => {
     const kriProto = 'kri://'
     switch (true) {
       case href.startsWith(kriProto): {
-        const { mesh, name, zone, namespace, shortName } = Kri.fromString(href.substring(kriProto.length))
+        const { mesh, name: encodedName, zone, namespace, shortName } = Kri.fromString(href.substring(kriProto.length))
+        // old style names can have _ in them that are replaced with `~`
+        const name = encodedName.replaceAll('~', '_')
         const id = `${name}${namespace !== '' ? `.${namespace}`: '' }`
-
         const to = (() => {
           switch (true) {
             case shortName === 'm':
@@ -44,6 +45,13 @@ const protocolHandler = (can: Can) => {
                 name: 'workload-detail-view',
                 params: {
                   wl: Kri.toString({ shortName, mesh, zone, namespace, name }),
+                },
+              }
+            case shortName === '~hostport':
+              return {
+                name: 'data-plane-list-view',
+                query: {
+                  s: `tag:service:${name}`,
                 },
               }
             case shortName === 'msvc':
@@ -75,8 +83,15 @@ const protocolHandler = (can: Can) => {
           }
         })()
         if (to) {
-          const link = useLink({ to })
-          return link.href.value
+          const router = useRouter()
+          try {
+            return router.resolve(to).href
+          } catch(e) {
+            // log the error, don't throw it
+            // anything errors we just don't show the link
+            console.error(e)
+            return ''
+          }
         }
         return ''
       }

@@ -45,15 +45,18 @@ const deps: Dependencies = {
   can: () => false,
   env: () => '',
   i18n: { t: () => '' },
+  regexp: { r: () => new RegExp('') },
 }
 const tokens = {
   can: uri<Dependencies['can']>('routing.can'),
   env: uri<Dependencies['env']>('routing.env'),
   i18n: uri<Dependencies['i18n']>('routing.i18n'),
+  regexp: uri<Dependencies['regexp']>('routing.regexp'),
 }
-export const [ useCan, useI18n, useEnv] = [
+export const [ useCan, useI18n, useRegExp, useEnv] = [
   singleton(tokens.can, () => deps.can),
   singleton(tokens.i18n, () => deps.i18n),
+  singleton(tokens.regexp, () => deps.regexp),
   singleton(tokens.env, () => deps.env),
 ]
 const plugin: Plugin = {
