@@ -27,7 +27,7 @@
           >
             <XLayout
               variant="x-stack"
-              size="max"
+              size="large"
             >
               <XCard class="resource-type-collection">
                 <template #actions>
@@ -178,6 +178,10 @@ import { sources } from '@/app/resources/sources'
 .resource-type-collection {
   max-width: 500px;
   align-self: flex-start;
+
+  & + * {
+    flex: 1;
+  }
 }
 
 ul {

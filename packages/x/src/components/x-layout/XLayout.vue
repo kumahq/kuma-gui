@@ -47,12 +47,6 @@ const justify = computed(() => table?.props.variant === 'kv' || props.variant ==
   display: flex;
   width: 100%;
   flex-wrap: nowrap;
-
-  &.max {
-    > * {
-      flex: 1;
-    }
-  }
 }
 .action-group {
   display: flex;
@@ -76,7 +70,6 @@ const justify = computed(() => table?.props.variant === 'kv' || props.variant ==
   &.normal {
     gap: var(--x-space-40);
   }
-  &.max,
   &.large {
     gap: var(--x-space-80);
   }

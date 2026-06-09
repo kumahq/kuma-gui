@@ -25,7 +25,7 @@
         >
           <XLayout
             variant="x-stack"
-            size="max"
+            size="large"
           >
             <XCard
               class="policy-type-list"
@@ -121,6 +121,10 @@ import { sources } from '@/app/policies/sources'
   top: calc(var(--AppHeaderHeight) + var(--x-space-70));
   align-self: flex-start;
   max-width: 500px;
+
+  & + * {
+    flex: 1;
+  }
 }
 ul {
   list-style-type: none;
