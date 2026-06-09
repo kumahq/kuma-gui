@@ -17,6 +17,7 @@ Feature: mesh / resources / item
         zone: zone-1
         type: MeshAccessLog
         labels:
+          kuma.io/display-name: resource-1
           k8s.kuma.io/namespace: kuma-demo
           kuma.io/origin: zone
           kuma.io/zone: zone-1

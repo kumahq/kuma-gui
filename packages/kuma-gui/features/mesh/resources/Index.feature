@@ -24,6 +24,7 @@ Feature: mesh / resources / index
             kri: kri_mal_default_z1_ns1_resource-1_
             mesh: default
             labels:
+              kuma.io/display-name: resource-1
               k8s.kuma.io/namespace: kuma-demo
               kuma.io/origin: zone
               kuma.io/zone: zone-1
@@ -31,6 +32,7 @@ Feature: mesh / resources / index
             kri: kri_mal_default_z1_ns1_resource-2_
             mesh: default
             labels:
+              kuma.io/display-name: resource-2
               k8s.kuma.io/namespace: kuma-demo
               kuma.io/origin: zone
               kuma.io/zone: zone-2
