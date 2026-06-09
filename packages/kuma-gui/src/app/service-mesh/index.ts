@@ -47,7 +47,7 @@ const protocolHandler = (can: Can) => {
                   wl: Kri.toString({ shortName, mesh, zone, namespace, name }),
                 },
               }
-            case shortName === '~port':
+            case shortName === '~hostport':
               return {
                 name: 'data-plane-list-view',
                 query: {
