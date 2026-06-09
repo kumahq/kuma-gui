@@ -626,9 +626,7 @@
                                       :protocol="item.protocol"
                                       :port-name="inbound?.portName"
                                       :traffic="typeof trafficError === 'undefined' ?
-                                        item.type === 'ZoneIngress' || item.type === 'ZoneEgress' ?
-                                          traffic?.listeners[item.stat_prefix] :
-                                          traffic?.inbounds[item.stat_prefix] :
+                                        traffic?.inbounds[item.stat_prefix] :
                                         {
                                           name: '',
                                           protocol: item.protocol,

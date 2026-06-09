@@ -11,8 +11,8 @@ Feature: mesh / dataplanes / overview / summary / Listener
       KUMA_DATAPLANELISTENER_COUNT: 1
       KUMA_DATAPLANE_TYPE: standard
       """
-
   # Note: A listener is currently treated exactly like an inbound
+
   Scenario: Listener summary overview shows expected content
     Given the URL "/meshes/default/dataplanes/service-less/_layout" responds with
       """
