@@ -1,25 +1,36 @@
+import { Kri } from '@/app/kuma/kri'
 import { Resource } from '@/app/resources/data/Resource'
-import type { PaginatedApiListResponse } from '@/types/api.d'
-import type {
-  MeshGateway as PartialMeshGateway,
-} from '@/types/index.d'
-type PartialMeshGatewayList = PaginatedApiListResponse<PartialMeshGateway>
+import type { components } from '@kumahq/kuma-http-api'
+
+type KumaMeshGatewayList = components['responses']['MeshGatewayList']['content']['application/json']
+type KumaMeshGateway = components['schemas']['MeshGatewayItem']
 
 export const MeshGateway = {
   search(query: string) {
     return Resource.search(query)
   },
 
-  fromObject(item: PartialMeshGateway) {
-    const labels = typeof item.labels !== 'undefined' ? item.labels : {}
+  fromObject(item: KumaMeshGateway) {
+    const labels = item.labels ?? {}
+    const id = item.name
+    const mesh = item.mesh
+    const zone = labels['kuma.io/origin'] === 'zone' && labels['kuma.io/zone'] ? labels['kuma.io/zone'] : ''
+    const namespace = labels['k8s.kuma.io/namespace'] ?? ''
+    const name = labels['kuma.io/display-name'] ?? item.name
+
     return {
       ...item,
+      kri: 'kri' in item ? item.kri ?? Kri.toString({ shortName: 'mgw', mesh, zone, namespace, name }) : '',
+      name,
+      mesh,
       labels,
-      id: item.name,
-      zone: labels['kuma.io/zone'] ?? '',
+      creationTime: String('creationTime' in item ? item.creationTime ?? '' : ''),
+      modificationTime: String('modificationTime' in item ? item.modificationTime ?? '' : ''),
+      // aliases
+      id,
+      namespace,
+      zone,
       origin: labels['kuma.io/origin'] ?? '',
-      name: labels['kuma.io/display-name'] ?? item.name,
-      namespace: labels['k8s.kuma.io/namespace'] ?? '',
       config: item,
       selectors: Array.isArray(item.selectors) ? item.selectors : [],
       conf: ((item = {}) => ({
@@ -30,7 +41,7 @@ export const MeshGateway = {
               ...item,
               // An omitted hostname implies the wildcard hostname (meaning any hostname applies).
               hostname: item.hostname ?? '*',
-              protocol: item.protocol ?? 'TCP',
+              protocol: typeof item.protocol !== 'undefined' ? String(item.protocol) : 'TCP',
             }
           })
           : [],
@@ -38,7 +49,7 @@ export const MeshGateway = {
     }
   },
 
-  fromCollection(collection: PartialMeshGatewayList) {
+  fromCollection(collection: KumaMeshGatewayList) {
     const items = Array.isArray(collection.items) ? collection.items.map(MeshGateway.fromObject) : []
     return {
       ...collection,

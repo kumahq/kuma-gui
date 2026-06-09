@@ -9,7 +9,7 @@
       codeRegExp: false,
       format: String,
     }"
-    v-slot="{ route, t, uri }"
+    v-slot="{ route, t, uri, r }"
   >
     <DataCollection
       :items="props.items"
@@ -142,45 +142,6 @@
                     <td>{{ t('common.formats.datetime', { value: Date.parse(item.modificationTime) }) }}</td>
                   </tr>
                   <tr
-                    v-if="Object.keys(item.labels).length > 0"
-                  >
-                    <th scope="row">
-                      {{ t('gateways.routes.item.labels') }}
-                    </th>
-                    <td>
-                      <XLayout
-                        variant="separated"
-                        justify="end"
-                      >
-                        <template
-                          v-for="([key, value]) in Object.entries(item.labels)"
-                          :key="`${key}:${value}`"
-                        >
-                          <XBadge
-                            appearance="info"
-                            class="label"
-                          >
-                            <template v-if="key.includes('kuma.io/zone')">
-                              <XAction
-                                :to="{
-                                  name: 'builtin-gateway-list-view',
-                                  query: {
-                                    s: `zone:${value}`,
-                                  },
-                                }"
-                              >
-                                {{ key }}:{{ value }}
-                              </XAction>
-                            </template>
-                            <template v-else>
-                              {{ key }}:{{ value }}
-                            </template>
-                          </XBadge>
-                        </template>
-                      </XLayout>
-                    </td>
-                  </tr>
-                  <tr
                     v-if="item.selectors.length > 0"
                   >
                     <th scope="row">
@@ -192,12 +153,41 @@
                         justify="end"
                       >
                         <XBadge
-                          v-for="([key, value]) in Object.entries(item.selectors[0].match)"
+                          v-for="([key, value]) in Object.entries(item.selectors[0].match ?? {})"
                           :key="`${key}:${value}`"
                           appearance="info"
                         >
                           {{ key }}:{{ value }}
                         </XBadge>
+                      </XLayout>
+                    </td>
+                  </tr>
+                  <tr
+                    v-if="Object.keys(item.labels).length > 0"
+                  >
+                    <th scope="row">
+                      Labels
+                    </th>
+                    <td>
+                      <XLayout
+                        variant="separated"
+                      >
+                        <XAction
+                          v-for="(value, key) in item.labels"
+                          :key="key"
+                          :href="t(`common.label.href.${key.replaceAll('.', '~')}`, {
+                            mesh: '',
+                            zone: item.zone,
+                            namespace: item.namespace,
+                            name: value,
+                          }, { defaultMessage: '' })"
+                        >
+                          <XBadge
+                            :variant="r('kuma.label').test(key) ? 'reserved-kv' : 'kv'"
+                          >
+                            {{ key }}:<strong>{{ value }}</strong>
+                          </XBadge>
+                        </XAction>
                       </XLayout>
                     </td>
                   </tr>

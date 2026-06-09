@@ -1,8 +1,8 @@
 import { Kri } from '@/app/kuma/kri'
 import type { components } from '@kumahq/kuma-http-api'
 
-export type KumaMeshTrustList = components['responses']['MeshTrustList']['content']['application/json']
-export type KumaMeshTrust = components['schemas']['MeshTrustItem']
+type KumaMeshTrustList = components['responses']['MeshTrustList']['content']['application/json']
+type KumaMeshTrust = components['schemas']['MeshTrustItem']
 
 export const MeshTrust = {
   fromObject: (item: KumaMeshTrust) => {
