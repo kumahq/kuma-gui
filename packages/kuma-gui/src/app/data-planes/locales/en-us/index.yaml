@@ -172,5 +172,5 @@ data-planes:
     builtin: 'Built-in gateway'
     delegated: 'Delegated gateway'
     zone-proxy: 'Zone proxy'
-    zone-ingress: 'Zone ingress'
-    zone-egress: 'Zone egress'
+    zone-ingress: 'ZoneIngress'
+    zone-egress: 'ZoneEgress'
