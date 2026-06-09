@@ -37,6 +37,7 @@
         :id="UniqueId"
         name="default"
         :t="t"
+        :r="r"
         :env="env"
         :me="{ data: me, set: submit, get: (uri: string, d: unknown = {}) => get(me, uri, d) }"
         :can="can"
@@ -73,7 +74,7 @@ import {
 } from '../../../index'
 import type { URLParamDefinition, URLParamNormalized } from '../../../index'
 import { sources } from '../../../sources'
-import { useCan, useI18n, useEnv } from '../../index'
+import { useCan, useI18n, useEnv, useRegExp } from '../../index'
 import type { RouteViewService } from '../index'
 import type { RouteRecordRaw, RouteLocationNormalizedLoaded, RouteLocationAsRelativeGeneric } from 'vue-router'
 
@@ -96,6 +97,7 @@ const can = useCan()
 const uri = useUri()
 const htmlAttrs = useAttrs()
 const { t } = useI18n()
+const { r } = useRegExp()
 const route = useRoute()
 const router = useRouter()
 const sym = Symbol('route-view')

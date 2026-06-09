@@ -10,7 +10,7 @@
       policyPath: '',
       proxy: '',
     }"
-    v-slot="{ route, t, uri, can, me }"
+    v-slot="{ route, t, uri, can, me, r }"
   >
     <AppView>
       <XCard
@@ -84,33 +84,31 @@
               </dd>
             </div>
 
-            <template
-              v-for="labels in [Object.entries(policy.labels)]"
-              :key="typeof labels"
-            >
-              <div v-if="labels.length > 0">
-                <dt>{{ t('policies.routes.item.labels') }}</dt>
-                <dd>
-                  <XLayout
-                    variant="separated"
-                    truncate
+            <div v-if="Object.keys(policy.labels).length > 0">
+              <dt>{{ t('policies.routes.item.labels') }}</dt>
+              <dd>
+                <XLayout
+                  variant="separated"
+                >
+                  <XAction
+                    v-for="(value, key) in policy.labels"
+                    :key="key"
+                    :href="t(`common.label.href.${key.replaceAll('.', '~')}`, {
+                      mesh: policy.mesh,
+                      zone: policy.zone,
+                      namespace: policy.namespace,
+                      name: value,
+                    }, { defaultMessage: '' })"
                   >
-                    <template
-                      v-for="kumaRe in [/^(.+\.)?kuma\.io\//]"
-                      :key="typeof kumaRe"
+                    <XBadge
+                      :variant="r('kuma.label').test(key) ? 'reserved-kv' : 'kv'"
                     >
-                      <XBadge
-                        v-for="[key, value] in labels"
-                        :key="key"
-                        :appearance="kumaRe.test(key) ? 'info' : 'decorative'"
-                      >
-                        {{ key }}:{{ value }}
-                      </XBadge>
-                    </template>
-                  </XLayout>
-                </dd>
-              </div>
-            </template>
+                      {{ key }}:<strong>{{ value }}</strong>
+                    </XBadge>
+                  </XAction>
+                </XLayout>
+              </dd>
+            </div>
           </XDl>
         </DataLoader>
       </XCard>

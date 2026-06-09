@@ -6,7 +6,7 @@
       connection: '',
     }"
     :name="props.routeName"
-    v-slot="{ t, route, uri }"
+    v-slot="{ t, route, uri, r }"
   >
     <AppView>
       <XLayout variant="y-stack">
@@ -35,10 +35,26 @@
                 Tags
               </th>
               <td>
-                <TagList
-                  :tags="inbound.tags"
-                  alignment="right"
-                />
+                <XLayout
+                  variant="separated"
+                >
+                  <XAction
+                    v-for="(value, key) in inbound.tags"
+                    :key="key"
+                    :href="t(`common.label.href.${key.replaceAll('.', '~')}`, {
+                      mesh: '',
+                      zone: '',
+                      namespace: '',
+                      name: value.replaceAll('_', '~'),
+                    }, { defaultMessage: '' })"
+                  >
+                    <XBadge
+                      :variant="r('kuma.label').test(key) ? 'reserved-kv' : 'kv'"
+                    >
+                      {{ key }}:<strong>{{ value }}</strong>
+                    </XBadge>
+                  </XAction>
+                </XLayout>
               </td>
             </tr>
             <tr v-if="inbound.protocol.length > 0">
@@ -215,7 +231,6 @@ import { DataplaneNetworkingLayout, DataplaneOverview } from '../data'
 import { YAML } from '@/app/application'
 import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
-import TagList from '@/app/common/TagList.vue'
 import { Kri } from '@/app/kuma'
 import { sources as policySources } from '@/app/policies/sources'
 

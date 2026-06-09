@@ -9,7 +9,7 @@
       codeRegExp: false,
       format: String,
     }"
-    v-slot="{ route, t, uri, can }"
+    v-slot="{ route, t, uri, can, r }"
   >
     <DataCollection
       :items="props.items"
@@ -183,18 +183,22 @@
                       <XLayout
                         variant="separated"
                       >
-                        <template
-                          v-for="kumaRe in [/^(.+\.)?kuma\.io\//]"
-                          :key="typeof kumaRe"
+                        <XAction
+                          v-for="(value, key) in item.labels"
+                          :key="key"
+                          :href="t(`common.label.href.${key.replaceAll('.', '~')}`, {
+                            mesh: item.mesh,
+                            zone: item.zone,
+                            namespace: item.namespace,
+                            name: value,
+                          }, { defaultMessage: '' })"
                         >
                           <XBadge
-                            v-for="(value, key) in item.labels"
-                            :key="key"
-                            :appearance="kumaRe.test(key) ? 'info' : 'decorative'"
+                            :variant="r('kuma.label').test(key) ? 'reserved-kv' : 'kv'"
                           >
-                            {{ key }}:{{ value }}
+                            {{ key }}:<strong>{{ value }}</strong>
                           </XBadge>
-                        </template>
+                        </XAction>
                       </XLayout>
                     </td>
                   </tr>
@@ -216,10 +220,26 @@
                         {{ t('http.api.property.tags') }}
                       </th>
                       <td>
-                        <TagList
-                          alignment="right"
-                          :tags="item.dataplane.networking.gateway.tags"
-                        />
+                        <XLayout
+                          variant="separated"
+                        >
+                          <XAction
+                            v-for="(value, key) in item.dataplane.networking.gateway.tags"
+                            :key="key"
+                            :href="t(`common.label.href.${key.replaceAll('.', '~')}`, {
+                              mesh: item.mesh,
+                              zone: item.zone,
+                              namespace: item.namespace,
+                              name: value.replaceAll('_', '~'),
+                            }, { defaultMessage: '' })"
+                          >
+                            <XBadge
+                              :variant="r('kuma.label').test(key) ? 'reserved-kv' : 'kv'"
+                            >
+                              {{ key }}:<strong>{{ value }}</strong>
+                            </XBadge>
+                          </XAction>
+                        </XLayout>
                       </td>
                     </tr>
                     <tr>
@@ -290,10 +310,26 @@
                             {{ t('http.api.property.tags') }}
                           </th>
                           <td>
-                            <TagList
-                              alignment="right"
-                              :tags="inbound.tags"
-                            />
+                            <XLayout
+                              variant="separated"
+                            >
+                              <XAction
+                                v-for="(value, key) in inbound.tags"
+                                :key="key"
+                                :href="t(`common.label.href.${key.replaceAll('.', '~')}`, {
+                                  mesh: item.mesh,
+                                  zone: item.zone,
+                                  namespace: item.namespace,
+                                  name: value.replaceAll('_', '~'),
+                                }, { defaultMessage: '' })"
+                              >
+                                <XBadge
+                                  :variant="r('kuma.label').test(key) ? 'reserved-kv' : 'kv'"
+                                >
+                                  {{ key }}:<strong>{{ value }}</strong>
+                                </XBadge>
+                              </XAction>
+                            </XLayout>
                           </td>
                         </tr>
                         <tr>
@@ -345,10 +381,26 @@
                             {{ t('http.api.property.tags') }}
                           </th>
                           <td>
-                            <TagList
-                              alignment="right"
-                              :tags="outbound.tags"
-                            />
+                            <XLayout
+                              variant="separated"
+                            >
+                              <XAction
+                                v-for="(value, key) in outbound.tags"
+                                :key="key"
+                                :href="t(`common.label.href.${key.replaceAll('.', '~')}`, {
+                                  mesh: item.mesh,
+                                  zone: item.zone,
+                                  namespace: item.namespace,
+                                  name: value.replaceAll('_', '~'),
+                                }, { defaultMessage: '' })"
+                              >
+                                <XBadge
+                                  :variant="r('kuma.label').test(key) ? 'reserved-kv' : 'kv'"
+                                >
+                                  {{ key }}:<strong>{{ value }}</strong>
+                                </XBadge>
+                              </XAction>
+                            </XLayout>
                           </td>
                         </tr>
                         <tr>
@@ -414,7 +466,6 @@
 import { DataplaneOverview } from '../data'
 import { sources } from '../sources'
 import { YAML } from '@/app/application'
-import TagList from '@/app/common/TagList.vue'
 
 const props = defineProps<{
   items: DataplaneOverview[]
