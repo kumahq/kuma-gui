@@ -21,19 +21,17 @@ Feature: mesh / resources / index
       body:
         items:
           - name: resource-1
-            kri: kri_mal_default_z1_ns1_resource-1_
-            mesh: default
+            kri: kri_mal_default_zone-1_kuma-system_resource-1_
             labels:
               kuma.io/display-name: resource-1
-              k8s.kuma.io/namespace: kuma-demo
+              k8s.kuma.io/namespace: kuma-system
               kuma.io/origin: zone
               kuma.io/zone: zone-1
           - name: resource-2
-            kri: kri_mal_default_z1_ns1_resource-2_
-            mesh: default
+            kri: kri_mal_default_zone-2_kuma-system_resource-2_
             labels:
               kuma.io/display-name: resource-2
-              k8s.kuma.io/namespace: kuma-demo
+              k8s.kuma.io/namespace: kuma-system
               kuma.io/origin: zone
               kuma.io/zone: zone-2
       """
@@ -46,24 +44,24 @@ Feature: mesh / resources / index
     And the "$item:nth-child(1)" element contains
       | Value      |
       | resource-1 |
-      | kuma-demo  |
+      | kuma-system  |
       | zone-1     |
     And the "$item:nth-child(2)" element contains
       | Value      |
       | resource-2 |
-      | kuma-demo  |
+      | kuma-system  |
       | zone-2     |
 
   Scenario: Clicking the item name opens the summary
     When I visit the "/meshes/default/resources/meshaccesslogs" URL
     And I click the "$action" element
-    Then the URL contains "meshaccesslogs/kri_mal_default_z1_ns1_resource-1_"
+    Then the URL contains "meshaccesslogs/kri_mal_default_zone-1_kuma-system_resource-1_"
 
   Scenario: Clicking the view action navigates to the detail page
     When I visit the "/meshes/default/resources/meshaccesslogs" URL
     And I click the "$action-group" element
     And I click the "$view" element
-    Then the URL contains "meshaccesslogs/kri_mal_default_z1_ns1_resource-1_/overview"
+    Then the URL contains "meshaccesslogs/kri_mal_default_zone-1_kuma-system_resource-1_/overview"
 
   Scenario: Sending filters
     When I visit the "/meshes/default/resources/meshaccesslogs" URL

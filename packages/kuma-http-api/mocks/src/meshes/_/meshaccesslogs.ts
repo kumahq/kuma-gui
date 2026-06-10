@@ -1,4 +1,7 @@
 import type { Dependencies, ResponseHandler } from '#mocks'
+import type { paths } from '@kumahq/kuma-http-api'
+
+type MeshAccessLogResponse = paths['/meshes/{mesh}/meshaccesslogs']['get']['responses']['200']['content']['application/json']
 
 export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) => {
   const { mesh } = req.params
@@ -28,7 +31,7 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
           displayName,
         ] = [
           'kri', // prefix
-          'mtrust', // shortName
+          'mal', // shortName
           String(req.params.mesh), // mesh
           fake.helpers.arrayElement(['', fake.word.noun()]), // zone
           ...([queryNamespace ?? (k8s ? fake.word.noun() : ''), `${queryName ? `${queryName}-` : ''}${fake.word.noun()}-${id}`]), // nspace, displayName
@@ -41,8 +44,6 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
           ...fake.kuma.timespan(),
           labels: {
             ...fake.kuma.labels({
-              ...(name.includes('ingress') && { 'kuma.io/listener-zoneingress': 'enabled' }),
-              ...(name.includes('egress') && { 'kuma.io/listener-zoneegress': 'enabled' }),
               name: displayName,
               ...(zone ? { zone } : {}),
               ...(k8s ? { namespace: nspace } : {}),
@@ -59,10 +60,25 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
                 default: {
                   backends: [
                     backendType === 'Tcp'
-                      ? { type: 'Tcp' as const, tcp: { address: `${fake.internet.ip()}:5000` } }
+                      ? {
+                          type: 'Tcp' as const,
+                          tcp: {
+                            address: `${fake.internet.ip()}:${fake.internet.port()}`
+                          }
+                        }
                       : backendType === 'File'
-                        ? { type: 'File' as const, file: { path: '/tmp/access.log' } }
-                        : { type: 'OpenTelemetry' as const, openTelemetry: { endpoint: 'otel-collector:4317' } },
+                        ? {
+                            type: 'File' as const,
+                            file: {
+                              path: fake.helpers.arrayElement([fake.system.directoryPath(), `${fake.system.directoryPath()}/${fake.system.fileName()}.log`])
+                            }
+                          }
+                        : { 
+                            type: 'OpenTelemetry' as const,
+                            openTelemetry: {
+                              endpoint: `otel-collector:${fake.internet.port()}`
+                            }
+                          },
                   ],
                 },
               },
@@ -71,6 +87,6 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
         }
       }),
       next,
-    },
+    } satisfies MeshAccessLogResponse,
   }
 }
