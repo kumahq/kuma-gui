@@ -3,7 +3,6 @@ import type { Dependencies, ResponseHandler } from '#mocks'
 export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) => {
   const { mesh } = req.params
   const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
-  console.log('KUMA_MESHACCESSLOG_COUNT', env('KUMA_MESHACCESSLOG_COUNT', `${fake.number.int({ min: 1, max: 100 })}`))
   const { offset, total, next, pageTotal } = pager(
     env('KUMA_MESHACCESSLOG_COUNT', `${fake.number.int({ min: 1, max: 100 })}`),
     req,
