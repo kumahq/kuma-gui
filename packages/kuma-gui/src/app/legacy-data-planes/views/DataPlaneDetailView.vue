@@ -76,6 +76,9 @@
               {
                 bool: !props.data.dataplaneInsight.mTLS,
                 key: 'no-mtls',
+                params: {
+                  mode: props.mesh.meshServices.mode,
+                },
               },
               {
                 bool: !can('use transparent-proxying', props.data),
