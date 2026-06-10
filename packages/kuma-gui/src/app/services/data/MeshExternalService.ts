@@ -1,3 +1,4 @@
+import { Kri } from '@/app/kuma/kri'
 import { Resource } from '@/app/resources/data/Resource'
 import type { components } from '@kumahq/kuma-http-api'
 type GeneratedMeshExternalService = components['schemas']['MeshExternalServiceItem']
@@ -10,15 +11,24 @@ export const MeshExternalService = {
 
   fromObject(item: GeneratedMeshExternalService) {
     const labels = item.labels ?? {}
-    const name = labels['kuma.io/display-name'] ?? item.name
+    const id = item.name
+    const mesh = item.mesh
+    const zone = labels['kuma.io/origin'] === 'zone' && labels['kuma.io/zone'] ? labels['kuma.io/zone'] : ''
     const namespace = labels['k8s.kuma.io/namespace'] ?? ''
+    const name = labels['kuma.io/display-name'] ?? item.name
+
     return {
       ...item,
-      id: item.name,
+      kri: item.kri ?? Kri.toString({ shortName: 'extsvc', mesh, zone, namespace, name }),
       name,
-      namespace,
+      mesh,
       labels,
-      zone: labels['kuma.io/origin'] === 'zone' && labels['kuma.io/zone'] ? labels['kuma.io/zone'] : '',
+      creationTime: item.creationTime ?? '',
+      modificationTime: item.modificationTime ?? '',
+      // aliases
+      id,
+      namespace,
+      zone,
       status: ((item = {}) => {
         return {
           ...item,

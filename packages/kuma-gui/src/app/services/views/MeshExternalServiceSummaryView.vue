@@ -9,7 +9,7 @@
       codeRegExp: false,
       format: String,
     }"
-    v-slot="{ route, t, can, uri }"
+    v-slot="{ route, t, can, uri, r }"
   >
     <DataCollection
       :items="props.items"
@@ -126,6 +126,35 @@
                     >
                       {{ item.spec.tls?.enabled ? 'Enabled' : 'Disabled' }}
                     </XBadge>
+                  </td>
+                </tr>
+                <tr
+                  v-if="Object.keys(item.labels).length > 0"
+                >
+                  <th scope="row">
+                    Labels
+                  </th>
+                  <td>
+                    <XLayout
+                      variant="separated"
+                    >
+                      <XAction
+                        v-for="(value, key) in item.labels"
+                        :key="key"
+                        :href="t(`common.label.href.${key.replaceAll('.', '~')}`, {
+                          mesh: item.mesh,
+                          zone: item.zone,
+                          namespace: item.namespace,
+                          name: value,
+                        }, { defaultMessage: '' })"
+                      >
+                        <XBadge
+                          :variant="r('kuma.label').test(key) ? 'reserved-kv' : 'kv'"
+                        >
+                          {{ key }}:<strong>{{ value }}</strong>
+                        </XBadge>
+                      </XAction>
+                    </XLayout>
                   </td>
                 </tr>
               </XTable>

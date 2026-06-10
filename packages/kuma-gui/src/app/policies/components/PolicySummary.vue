@@ -60,6 +60,35 @@
             </XAction>
           </td>
         </tr>
+        <tr
+          v-if="Object.keys(props.policy.labels).length > 0"
+        >
+          <th scope="row">
+            Labels
+          </th>
+          <td>
+            <XLayout
+              variant="separated"
+            >
+              <XAction
+                v-for="(value, key) in props.policy.labels"
+                :key="key"
+                :href="t(`common.label.href.${key.replaceAll('.', '~')}`, {
+                  mesh: props.policy.mesh,
+                  zone: props.policy.zone,
+                  namespace: props.policy.namespace,
+                  name: value,
+                }, { defaultMessage: '' })"
+              >
+                <XBadge
+                  :variant="r('kuma.label').test(key) ? 'reserved-kv' : 'kv'"
+                >
+                  {{ key }}:<strong>{{ value }}</strong>
+                </XBadge>
+              </XAction>
+            </XLayout>
+          </td>
+        </tr>
       </XTable>
       <XCodeBlock
         language="yaml"
@@ -92,9 +121,10 @@
 <script lang="ts" setup>
 
 import type { Policy } from '../data'
-import { useI18n, useCan, YAML } from '@/app/application'
+import { useI18n, useCan, useRegExp, YAML } from '@/app/application'
 
 const { t } = useI18n()
+const { r } = useRegExp()
 const can = useCan()
 
 const props = defineProps<{
