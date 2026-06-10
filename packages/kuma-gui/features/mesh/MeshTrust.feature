@@ -55,7 +55,7 @@ Feature: mesh / mesh-trust
           - name: bar
       """
     When I visit the "/meshes/default" URL
-    Then I click the "$item:nth-child(1) td:nth-child(3) a" element
+    Then I click the "$item:nth-child(1) td:nth-child(4) a" element
     Then the URL contains "/meshes/default/overview/meshidentity/kri_mid_default_default_foo_bar_baz"
     And the "$summary" element exists
     And the "$summary-title" element contains "bar"
