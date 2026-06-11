@@ -64,6 +64,9 @@
               {
                 bool: !props.data.dataplaneInsight.mTLS,
                 key: 'no-mtls',
+                params: {
+                  mode: props.mesh.meshServices.mode,
+                },
               },
               {
                 bool: props.data.dataplane.networking.gateway?.type !== 'BUILTIN' && !can('use transparent-proxying', props.data),
@@ -172,7 +175,7 @@
                     </div>
                     <div v-if="props.data.zoneProxyTypes.length > 0">
                       <dt>
-                        {{ t('http.api.property.zone-proxy') }}
+                        {{ t('data-planes.type.zone-proxy') }}
                       </dt>
                       <dd>
                         <XLayout

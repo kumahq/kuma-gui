@@ -2,10 +2,10 @@ Feature: mesh / mesh-identity
 
   Background:
     Given the CSS selectors
-      | Alias     | Selector                           |
-      | mesh-mtls | [data-testid="mesh-mtls"]          |
-      | summary   | [data-testid="slideout-container"] |
-      | summary-title      | $summary [data-testid='slideout-title']  |
+      | Alias         | Selector                                |
+      | mesh-mtls     | [data-testid="mesh-mtls"]               |
+      | summary       | [data-testid="slideout-container"]      |
+      | summary-title | $summary [data-testid='slideout-title'] |
     And the environment
       """
       KUMA_MTLS_ENABLED: false

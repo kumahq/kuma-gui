@@ -2,11 +2,11 @@ Feature: mesh / mesh-trust
 
   Background:
     Given the CSS selectors
-      | Alias              | Selector                            |
-      | meshtrusts-listing | [data-testid="mesh-trusts-listing"] |
-      | item               | $meshtrusts-listing tbody tr        |
-      | summary            | [data-testid="slideout-container"]  |
-      | summary-title      | $summary [data-testid='slideout-title']  |
+      | Alias              | Selector                                |
+      | meshtrusts-listing | [data-testid="mesh-trusts-listing"]     |
+      | item               | $meshtrusts-listing tbody tr            |
+      | summary            | [data-testid="slideout-container"]      |
+      | summary-title      | $summary [data-testid='slideout-title'] |
 
   Scenario: MeshTrusts are listed in mesh overview
     Given the URL "/meshes/default/meshtrusts" responds with
