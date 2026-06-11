@@ -54,5 +54,5 @@ Feature: mesh / resources / summary
       When I visit the "/meshes/default/resources/meshaccesslogs/kri_mal_default_zone-1_kuma-system_resource-1_" URL
       And I click the "$select-preference" element
       And I click the "[data-testid='select-item-k8s'] button" element
-      Then the URL contains "format=k8s"
+      Then the URL contains "environment=k8s"
       And the "$summary [data-testid='codeblock-yaml-k8s']" element exists
