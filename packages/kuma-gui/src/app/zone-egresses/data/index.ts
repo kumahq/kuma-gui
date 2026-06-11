@@ -74,6 +74,7 @@ export const ZoneEgressOverview = {
     const name = labels['kuma.io/display-name'] ?? item.name
 
 
+    // temporarily make a KRI until we have those from the backend
     const kri = Kri.toString({ shortName: 'ze', mesh, zone, namespace, name })
 
     return {
@@ -91,17 +92,26 @@ export const ZoneEgressOverview = {
 
       zoneEgressInsight,
       zoneEgress,
+      // config should only contain non-defaulted values
+      // because we want to show what the API responded with
+      // we then copy over things that should be on the Entity, but
+      // are only on the EntityOverview
       config: {
         ...ZoneEgress.fromObject({
+          // bare minimum props to keep TS happy
+          // plus a splat of the original Entity
           type: 'ZoneEgress',
           name: item.name,
           mesh: item.mesh,
-          kri,
-          creationTime: item.creationTime,
-          modificationTime: item.modificationTime,
           ...item.zoneEgress,
         }).config,
+        // the things we copy over
+        // kri is always missing and we always purposefully add and generate ourselves
+        kri,
+        // we only copy these over if they exist
         ...(typeof item.labels !== 'undefined' ? { labels: item.labels } : {}),
+        ...(typeof item.creationTime !== 'undefined' ? { creationTime: item.creationTime } : {}),
+        ...(typeof item.modificationTime !== 'undefined' ? { modificationTime: item.modificationTime } : {}),
       },
       // it is possible to have zoneEgresses on a 'disabled' zone but we don't
       // want to do anything special about that just now at least
