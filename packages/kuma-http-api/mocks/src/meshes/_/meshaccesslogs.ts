@@ -36,7 +36,7 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
           fake.helpers.arrayElement(['', fake.word.noun()]), // zone
           ...([queryNamespace ?? (k8s ? fake.word.noun() : ''), `${queryName ? `${queryName}-` : ''}${fake.word.noun()}-${id}`]), // nspace, displayName
         ]
-        const name = `${displayName}${nspace ? `.${nspace}` : ''}`
+        
         return {
           type: 'MeshAccessLog',
           mesh,
