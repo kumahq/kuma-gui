@@ -34,7 +34,7 @@
             <DataLoader
               :src="uri(dataplaneSources, '/meshes/:mesh/dataplanes/for/service-insight/:service', {
                 mesh: route.params.mesh,
-                service: gatewayData.selectors[0].match['kuma.io/service'],
+                service: gatewayData.selectors[0].match?.['kuma.io/service'] ?? '',
               }, {
                 page: route.params.page,
                 size: route.params.size,

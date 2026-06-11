@@ -1,3 +1,4 @@
+import { Kri } from '@/app/kuma/kri'
 import { Resource } from '@/app/resources/data/Resource'
 import { DiscoverySubscriptionCollection, Subscription } from '@/app/subscriptions/data'
 import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
@@ -27,6 +28,7 @@ export const ZoneEgress = {
 export const ZoneEgressInsight = {
   fromObject: (item: PartialZoneEgressInsight | undefined) => {
     const collection = DiscoverySubscriptionCollection.fromArray(item?.subscriptions)
+
     return {
       ...item,
       ...collection,
@@ -64,25 +66,43 @@ export const ZoneEgressOverview = {
   fromObject: (item: PartialZoneEgressOverview) => {
     const zoneEgressInsight = ZoneEgressInsight.fromObject(item.zoneEgressInsight)
     const zoneEgress = InternalZoneEgress.fromObject(item.zoneEgress)
-    const zoneEgressConfig = ZoneEgress.fromObject({
-      type: 'ZoneEgress',
-      name: item.name,
-      creationTime: item.creationTime,
-      modificationTime: item.modificationTime,
-      mesh: item.mesh,
-      ...item.zoneEgress,
-    }).config
-    const labels = typeof item.labels !== 'undefined' ? item.labels : {}
+    const labels = item.labels ?? {}
+    const id = item.name
+    const mesh = item.mesh
+    const zone = labels['kuma.io/origin'] === 'zone' && labels['kuma.io/zone'] ? labels['kuma.io/zone'] : ''
+    const namespace = labels['k8s.kuma.io/namespace'] ?? ''
+    const name = labels['kuma.io/display-name'] ?? item.name
+
+
+    const kri = Kri.toString({ shortName: 'ze', mesh, zone, namespace, name })
 
     return {
       ...item,
-      config: zoneEgressConfig,
-      id: item.name,
-      name: labels['kuma.io/display-name'] ?? item.name,
-      namespace: labels['k8s.kuma.io/namespace'] ?? '',
+      kri,
+      name,
+      mesh,
       labels,
+      creationTime: item.creationTime ?? '',
+      modificationTime: item.modificationTime ?? '',
+      // aliases
+      id,
+      namespace,
+      zone,
+
       zoneEgressInsight,
       zoneEgress,
+      config: {
+        ...ZoneEgress.fromObject({
+          type: 'ZoneEgress',
+          name: item.name,
+          mesh: item.mesh,
+          kri,
+          creationTime: item.creationTime,
+          modificationTime: item.modificationTime,
+          ...item.zoneEgress,
+        }).config,
+        ...(typeof item.labels !== 'undefined' ? { labels: item.labels } : {}),
+      },
       // it is possible to have zoneEgresses on a 'disabled' zone but we don't
       // want to do anything special about that just now at least
       state: typeof zoneEgressInsight.connectedSubscription !== 'undefined' ? 'online' as const : 'offline' as const,

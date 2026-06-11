@@ -643,6 +643,7 @@ export interface AvailableService {
 
 export interface ZoneIngress extends MeshEntity {
   zone?: string
+  kri?: string
   networking?: ZoneIngressNetworking
   availableServices?: AvailableService[]
 }
@@ -673,6 +674,7 @@ export interface ZoneEgressNetworking {
 
 export interface ZoneEgress extends MeshEntity {
   zone?: string
+  kri?: string
   networking?: ZoneEgressNetworking
 }
 export interface ZoneEgressInsight {
