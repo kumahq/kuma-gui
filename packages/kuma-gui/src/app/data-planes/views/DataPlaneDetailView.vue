@@ -633,7 +633,6 @@
                                           port: `${item.port}`,
                                         }
                                       "
-
                                       data-actionable
                                     >
                                       <template #state>
@@ -682,83 +681,22 @@
                                           </XAction>
                                         </template>
                                       </template>
+
+                                      <template #empty>
+                                        No traffic data available for this inbound
+                                      </template>
+
+                                      <XBadge
+                                        v-if="item.type?.length > 0"
+                                        appearance="info"
+                                      >
+                                        {{ item.type }}
+                                      </XBadge>
+
                                       <XAction
                                         data-action
                                         :to="{
                                           name: ((name) => name.includes('bound') ? name.replace('-outbound-', '-inbound-') : 'data-plane-connection-inbound-summary-overview-view')(String(_route.name)),
-                                          params: {
-                                            connection: item.proxyResourceName,
-                                          },
-                                          query: {
-                                            inactive: route.params.inactive,
-                                          },
-                                        }"
-                                      >
-                                        :{{ item.port }}
-                                      </XAction>
-                                    </ConnectionCard>
-                                  </template>
-                                </template>
-                              </XLayout>
-                            </ConnectionGroup>
-                          </template>
-                        </template>
-
-                        <template
-                          v-for="(listenersByPort, port) in [Object.groupBy(props.data.dataplane.networking.listeners.filter((item) => !!item.port), (item) => item.port!)]"
-                          :key="port"
-                        >
-                          <template
-                            v-for="listeners in [dataplaneLayout.listeners]"
-                            :key="typeof listeners"
-                          >
-                            <ConnectionGroup
-                              type="inbound"
-                              data-testid="dataplane-listeners"
-                            >
-                              <XLayout
-                                variant="y-stack"
-                                size="small"
-                              >
-                                <template
-                                  v-for="item in listeners"
-                                  :key="`${item.proxyResourceName}`"
-                                >
-                                  <template
-                                    v-for="listener in [listenersByPort[item.port]?.[0]]"
-                                    :key="listener?.port"
-                                  >
-                                    <ConnectionCard
-                                      data-testid="dataplane-listener"
-                                      :protocol="item.protocol"
-                                      :traffic="traffic?.listeners[item.proxyResourceName]"
-                                      data-actionable
-                                    >
-                                      <template #state>
-                                        <XIcon
-                                          v-if="listener?.state !== 'Ready'"
-                                          name="danger"
-                                          :size="KUI_ICON_SIZE_40"
-                                          placement="right"
-                                        >
-                                          {{ t('data-planes.routes.item.unhealthy_inbound', { port: listener?.port }) }}
-                                        </XIcon>
-                                      </template>
-
-                                      <template #body>
-                                        <XBadge appearance="decorative">
-                                          {{ item.type }}
-                                        </XBadge>
-                                      </template>
-
-                                      <template #empty>
-                                        No traffic data available for this listener
-                                      </template>
-
-                                      <XAction
-                                        data-action
-                                        :to="{
-                                          name: 'data-plane-connection-listener-summary-overview-view',
                                           params: {
                                             connection: item.proxyResourceName,
                                           },
@@ -986,7 +924,7 @@
                 >
                   <component
                     :is="child.Component"
-                    :data="(child.route.name as string).includes('-inbound-') ? sourceDataplaneLayout?.inbounds : (child.route.name as string).includes('-listener-') ? sourceDataplaneLayout?.listeners : sourceDataplaneLayout?.outbounds"
+                    :data="(child.route.name as string).includes('-inbound-') ? sourceDataplaneLayout?.inbounds : sourceDataplaneLayout?.outbounds"
                     :data-plane-overview="props.data"
                     :networking="props.data.dataplane.networking"
                     :policies="resources?.policies"

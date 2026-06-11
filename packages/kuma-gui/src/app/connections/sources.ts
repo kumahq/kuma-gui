@@ -79,6 +79,11 @@ export const sources = (api: KumaApi) => {
           ...Object.fromEntries(Object.entries(connections.listener).filter(([key]) => key.startsWith('self_zone'))),
         }
 
+        inbounds = {
+          ...inbounds,
+          ...listeners,
+        }
+
         outbounds = Object.fromEntries(Object.entries(connections.cluster).filter(([key, _value]) => ![
           // if we don't exclude localhost_ we end up with  a `localhost_`
           // outbound, which is the cluster of the inbound. Whilst we don't want
@@ -98,7 +103,6 @@ export const sources = (api: KumaApi) => {
         inbounds = Object.fromEntries(Object.entries(connections.listener).filter(([key, _value]) => key.startsWith(socketAddress.replace(':', '_'))))
         outbounds = connections.cluster
         passthrough = {}
-        listeners = {}
       }
 
       return {
@@ -106,7 +110,6 @@ export const sources = (api: KumaApi) => {
         passthrough,
         inbounds,
         outbounds,
-        listeners,
         $raw: res,
         raw: res,
       }
