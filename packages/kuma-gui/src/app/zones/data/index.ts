@@ -1,4 +1,5 @@
 import { get } from '@/app/application'
+import { Kri } from '@/app/kuma/kri'
 import { Resource } from '@/app/resources/data/Resource'
 import { Subscription, SubscriptionCollection } from '@/app/subscriptions/data'
 import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
@@ -83,6 +84,14 @@ export const ZoneOverview = {
   },
 
   fromObject: (item: PartialZoneOverview) => {
+
+    const labels = item.labels ?? {}
+    const id = item.name
+    // check for label first, fallback to tags
+    const name = labels['kuma.io/display-name'] ?? item.name
+
+    const kri = Kri.toString({ shortName: 'z', mesh: '', zone: '', namespace: '', name })
+
     const insight = ZoneInsight.fromObject(item.zoneInsight)
     const zone = Zone.fromObject(item.zone)
     const state = {
@@ -92,8 +101,14 @@ export const ZoneOverview = {
     } as const
     return {
       ...item,
-      id: item.name,
-      labels: item.labels ?? {},
+      kri,
+      name,
+      labels,
+      creationTime: item.creationTime ?? '',
+      modificationTime: item.modificationTime ?? '',
+      // aliases
+      id,
+
       zoneInsight: insight,
       zone,
       // first check see if the zone is disabled, if not look for the connectedSubscription

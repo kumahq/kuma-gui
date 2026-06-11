@@ -1,6 +1,7 @@
 import { Dataplane } from './Dataplane'
 import { DataplaneInsight } from './DataplaneInsight'
 import { DataplaneNetworking } from './DataplaneNetworking'
+import { Kri } from '@/app/kuma/kri'
 import type { PaginatedApiListResponse } from '@/types/api.d'
 import type {
   DataPlaneOverview as PartialDataplaneOverview,
@@ -29,7 +30,16 @@ export const DataplaneOverview = {
     const isCertExpired = getIsCertExpired(dataplaneInsight)
     const isCertExpiresSoon = getIsCertExpiresSoon(dataplaneInsight)
 
-    const labels = typeof item.labels !== 'undefined' ? item.labels : {}
+    const labels = item.labels ?? {}
+    const id = item.name
+    const mesh = item.mesh
+    // check for label first, fallback to tags
+    const zone = labels['kuma.io/origin'] === 'zone' && labels['kuma.io/zone'] ? labels['kuma.io/zone'] : tags.find((tag) => tag.label === 'kuma.io/zone')?.value ?? ''
+    const namespace = labels['k8s.kuma.io/namespace'] ?? ''
+    const name = labels['kuma.io/display-name'] ?? item.name
+
+    const kri = Kri.toString({ shortName: 'dp', mesh, zone, namespace, name })
+
 
     // get all tags and labels with kuma.io/service
     // uniquify and and sort
@@ -38,20 +48,25 @@ export const DataplaneOverview = {
       ...(labels['kuma.io/service'] ? [labels['kuma.io/service']] : []),
     ])).sort((a, b) => a.localeCompare(b))
 
-    // check for label first, fallback to tags
-    const zone = labels['kuma.io/zone'] || tags.find((tag) => tag.label === 'kuma.io/zone')?.value
 
 
     return {
       ...item,
-      id: item.name,
-      name: labels['kuma.io/display-name'] || item.name,
-      namespace: labels['k8s.kuma.io/namespace'] ?? '',
+      kri,
+      name,
+      mesh,
+      labels,
+      creationTime: item.creationTime ?? '',
+      modificationTime: item.modificationTime ?? '',
+      // aliases
+      id,
+      namespace,
+      zone,
+
+      dataplaneInsight,
       dataplane: {
         networking,
       },
-      labels,
-      dataplaneInsight,
       dataplaneType: (() => {
         switch (true) {
           case networking.type === 'gateway':
@@ -92,7 +107,6 @@ export const DataplaneOverview = {
       isCertExpired,
       isCertExpiresSoon,
       services,
-      zone,
       config: {
         ...Dataplane.fromObject({
           type: 'Dataplane',
@@ -100,9 +114,8 @@ export const DataplaneOverview = {
           mesh: item.mesh,
           ...item.dataplane,
         }).config,
+        kri,
         ...(typeof item.labels !== 'undefined' ? { labels: item.labels } : {}),
-        creationTime: item.creationTime,
-        modificationTime: item.modificationTime,
       },
     }
   },

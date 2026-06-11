@@ -102,11 +102,11 @@ export const ZoneIngressOverview = {
           type: 'ZoneIngress',
           name: item.name,
           mesh: item.mesh,
-          kri,
           creationTime: item.creationTime,
           modificationTime: item.modificationTime,
           ...item.zoneIngress,
         }).config,
+        kri,
         ...(typeof item.labels !== 'undefined' ? { labels: item.labels } : {}),
       },
       // it is possible to have zoneIngresses on a 'disabled' zone but we don't

@@ -96,11 +96,11 @@ export const ZoneEgressOverview = {
           type: 'ZoneEgress',
           name: item.name,
           mesh: item.mesh,
-          kri,
           creationTime: item.creationTime,
           modificationTime: item.modificationTime,
           ...item.zoneEgress,
         }).config,
+        kri,
         ...(typeof item.labels !== 'undefined' ? { labels: item.labels } : {}),
       },
       // it is possible to have zoneEgresses on a 'disabled' zone but we don't
