@@ -302,7 +302,7 @@ Feature: mesh / dataplanes / index
       And the "$item:nth-child(1)" element contains
         | Value               |
         | fake-zone-ingress-0 |
-        | ZoneIngress        |
+        | ZoneIngress         |
 
     Scenario: Filtering by "zone-egress"
       Given the environment

@@ -21,7 +21,6 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
       total,
       items: Array.from({ length: pageTotal }).map((_, i) => {
         const id = offset + i
-        const backendType = fake.helpers.arrayElement(['Tcp', 'File', 'OpenTelemetry'] as const)
         const [
           _prefix,
           shortName,
@@ -36,7 +35,7 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
           fake.helpers.arrayElement(['', fake.word.noun()]), // zone
           ...([queryNamespace ?? (k8s ? fake.word.noun() : ''), `${queryName ? `${queryName}-` : ''}${fake.word.noun()}-${id}`]), // nspace, displayName
         ]
-        
+
         return {
           type: 'MeshAccessLog',
           mesh,
@@ -58,28 +57,26 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
                   name: fake.word.noun(),
                 },
                 default: {
-                  backends: [
-                    backendType === 'Tcp'
-                      ? {
-                        type: 'Tcp' as const,
-                        tcp: {
-                          address: `${fake.internet.ip()}:${fake.internet.port()}`,
-                        },
-                      }
-                      : backendType === 'File'
-                        ? {
-                          type: 'File' as const,
-                          file: {
-                            path: fake.helpers.arrayElement([fake.system.directoryPath(), `${fake.system.directoryPath()}/${fake.system.fileName()}.log`]),
-                          },
-                        }
-                        : { 
-                          type: 'OpenTelemetry' as const,
-                          openTelemetry: {
-                            endpoint: `otel-collector:${fake.internet.port()}`,
-                          },
-                        },
-                  ],
+                  backends: fake.helpers.arrayElements([
+                    {
+                      type: 'Tcp' as const,
+                      tcp: {
+                        address: `${fake.internet.ip()}:${fake.internet.port()}`,
+                      },
+                    },
+                    {
+                      type: 'File' as const,
+                      file: {
+                        path: fake.helpers.arrayElement([fake.system.directoryPath(), `${fake.system.directoryPath()}/${fake.system.fileName()}.log`]),
+                      },
+                    },
+                    { 
+                      type: 'OpenTelemetry' as const,
+                      openTelemetry: {
+                        endpoint: `otel-collector:${fake.internet.port()}`,
+                      },
+                    }
+                  ]),
                 },
               },
             ],
