@@ -87,7 +87,7 @@ export const ZoneOverview = {
 
     const labels = item.labels ?? {}
     const id = item.name
-    // check for label first, fallback to tags
+
     const name = labels['kuma.io/display-name'] ?? item.name
 
     // temporarily make a KRI until we have those from the backend
