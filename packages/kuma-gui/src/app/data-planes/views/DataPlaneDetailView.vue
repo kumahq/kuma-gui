@@ -175,7 +175,7 @@
                     </div>
                     <div v-if="props.data.zoneProxyTypes.length > 0">
                       <dt>
-                        {{ t('http.api.property.zone-proxy') }}
+                        {{ t('data-planes.type.zone-proxy') }}
                       </dt>
                       <dd>
                         <XLayout
