@@ -1,8 +1,8 @@
 import { Kri } from '@/app/kuma/kri'
 import type { components } from '@kumahq/kuma-http-api'
 
-export type KumaMeshIdentityList = components['responses']['MeshIdentityList']['content']['application/json']
-export type KumaMeshIdentity = components['schemas']['MeshIdentityItem']
+type KumaMeshIdentityList = components['responses']['MeshIdentityList']['content']['application/json']
+type KumaMeshIdentity = components['schemas']['MeshIdentityItem']
 
 export const MeshIdentity = {
   fromObject: (item: KumaMeshIdentity) => {
