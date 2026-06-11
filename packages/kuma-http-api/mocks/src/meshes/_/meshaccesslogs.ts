@@ -75,7 +75,7 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
                       openTelemetry: {
                         endpoint: `otel-collector:${fake.internet.port()}`,
                       },
-                    }
+                    },
                   ]),
                 },
               },
