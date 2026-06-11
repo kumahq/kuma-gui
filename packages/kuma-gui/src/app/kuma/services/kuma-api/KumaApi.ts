@@ -13,7 +13,6 @@ import type {
   DataPlaneOverview,
   ExternalService,
   InspectRulesForDataplane,
-  MeshGateway,
   MeshGatewayDataplane,
   PolicyDataplane,
   PolicyEntity,
@@ -26,6 +25,9 @@ import type {
   ZoneIngressOverview,
   ZoneOverview,
 } from '@/types/index.d'
+import type { components } from '@kumahq/kuma-http-api'
+type KumaMeshGateway = components['schemas']['MeshGatewayItem']
+type KumaMeshGatewayList = components['responses']['MeshGatewayList']['content']['application/json']
 
 
 export default class KumaApi extends Api {
@@ -208,11 +210,11 @@ export default class KumaApi extends Api {
     return this.client.get(`/meshes/${mesh}/${path}/${name}`, { params })
   }
 
-  getAllMeshGatewaysFromMesh({ mesh }: { mesh: string }, params?: PaginationParameters): Promise<PaginatedApiListResponse<MeshGateway>> {
+  getAllMeshGatewaysFromMesh({ mesh }: { mesh: string }, params?: PaginationParameters): Promise<KumaMeshGatewayList> {
     return this.client.get(`/meshes/${mesh}/meshgateways`, { params })
   }
 
-  getMeshGateway({ mesh, name }: { mesh: string, name: string }, params?: SingleResourceParameters): Promise<MeshGateway> {
+  getMeshGateway({ mesh, name }: { mesh: string, name: string }, params?: SingleResourceParameters): Promise<KumaMeshGateway> {
     return this.client.get(`/meshes/${mesh}/meshgateways/${name}`, { params })
   }
 
