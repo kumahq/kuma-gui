@@ -85,6 +85,10 @@ export const sources = (api: KumaApi) => {
             mesh,
             name,
           },
+          // @ts-expect-error - query parameter not listed in OAS
+          query: {
+            format: 'kubernetes',
+          },
         },
       })
       return YAML.stringify(res.data)

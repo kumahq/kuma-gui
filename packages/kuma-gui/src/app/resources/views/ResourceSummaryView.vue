@@ -6,7 +6,7 @@
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
-      format: String,
+      environment: String,
     }"
     v-slot="{ route, t, uri }"
   >
@@ -73,11 +73,11 @@
                   >
                     <XSelect
                       :label="t('resources.routes.item.format')"
-                      :selected="route.params.format"
+                      :selected="route.params.environment"
                       @change="(value) => {
-                        route.update({ format: value })
+                        route.update({ environment: value })
                       }"
-                      @vue:before-mount="$event?.props?.selected && options.includes($event.props.selected) && $event.props.selected !== route.params.format && route.update({ format: $event.props.selected })"
+                      @vue:before-mount="$event?.props?.selected && options.includes($event.props.selected) && $event.props.selected !== route.params.environment && route.update({ environment: $event.props.selected })"
                     >
                       <template
                         v-for="value in options"
@@ -92,7 +92,7 @@
               </header>
             </XLayout>
 
-            <template v-if="route.params.format !== 'k8s'">
+            <template v-if="route.params.environment !== 'k8s'">
               <XCodeBlock
                 data-testid="codeblock-yaml-universal"
                 language="yaml"
