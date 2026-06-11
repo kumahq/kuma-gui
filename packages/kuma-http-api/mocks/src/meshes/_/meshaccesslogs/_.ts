@@ -1,5 +1,5 @@
 import type { Dependencies, ResponseHandler } from '#mocks'
-import type { components, paths } from '@kumahq/kuma-http-api'
+import type { paths } from '@kumahq/kuma-http-api'
 
 type MeshAccessLogResponse = paths['/meshes/{mesh}/meshaccesslogs/{name}']['get']['responses']['200']['content']['application/json']
 
@@ -50,24 +50,24 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
               backends: [
                 backendType === 'Tcp'
                   ? {
-                      type: 'Tcp' as const,
-                      tcp: {
-                        address: `${fake.internet.ip()}:${fake.internet.port()}`
-                      }
-                    }
+                    type: 'Tcp' as const,
+                    tcp: {
+                      address: `${fake.internet.ip()}:${fake.internet.port()}`,
+                    },
+                  }
                   : backendType === 'File'
                     ? {
-                        type: 'File' as const,
-                        file: {
-                          path: fake.helpers.arrayElement([fake.system.directoryPath(), `${fake.system.directoryPath()}/${fake.system.fileName()}.log`])
-                        }
-                      }
-                    : { 
-                        type: 'OpenTelemetry' as const,
-                        openTelemetry: {
-                          endpoint: `otel-collector:${fake.internet.port()}`
-                        }
+                      type: 'File' as const,
+                      file: {
+                        path: fake.helpers.arrayElement([fake.system.directoryPath(), `${fake.system.directoryPath()}/${fake.system.fileName()}.log`]),
                       },
+                    }
+                    : { 
+                      type: 'OpenTelemetry' as const,
+                      openTelemetry: {
+                        endpoint: `otel-collector:${fake.internet.port()}`,
+                      },
+                    },
               ],
             },
           },

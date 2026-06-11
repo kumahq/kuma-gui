@@ -61,24 +61,24 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
                   backends: [
                     backendType === 'Tcp'
                       ? {
-                          type: 'Tcp' as const,
-                          tcp: {
-                            address: `${fake.internet.ip()}:${fake.internet.port()}`
-                          }
-                        }
+                        type: 'Tcp' as const,
+                        tcp: {
+                          address: `${fake.internet.ip()}:${fake.internet.port()}`,
+                        },
+                      }
                       : backendType === 'File'
                         ? {
-                            type: 'File' as const,
-                            file: {
-                              path: fake.helpers.arrayElement([fake.system.directoryPath(), `${fake.system.directoryPath()}/${fake.system.fileName()}.log`])
-                            }
-                          }
-                        : { 
-                            type: 'OpenTelemetry' as const,
-                            openTelemetry: {
-                              endpoint: `otel-collector:${fake.internet.port()}`
-                            }
+                          type: 'File' as const,
+                          file: {
+                            path: fake.helpers.arrayElement([fake.system.directoryPath(), `${fake.system.directoryPath()}/${fake.system.fileName()}.log`]),
                           },
+                        }
+                        : { 
+                          type: 'OpenTelemetry' as const,
+                          openTelemetry: {
+                            endpoint: `otel-collector:${fake.internet.port()}`,
+                          },
+                        },
                   ],
                 },
               },
