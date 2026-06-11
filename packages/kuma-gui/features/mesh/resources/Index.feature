@@ -20,14 +20,14 @@ Feature: mesh / resources / index
       """
       body:
         items:
-          - name: resource-1
+          - name: resource-1.kuma-system
             kri: kri_mal_default_zone-1_kuma-system_resource-1_
             labels:
               kuma.io/display-name: resource-1
               k8s.kuma.io/namespace: kuma-system
               kuma.io/origin: zone
               kuma.io/zone: zone-1
-          - name: resource-2
+          - name: resource-2.kuma-system
             kri: kri_mal_default_zone-2_kuma-system_resource-2_
             labels:
               kuma.io/display-name: resource-2
@@ -42,15 +42,15 @@ Feature: mesh / resources / index
     Then the "$items-header" element exists 4 times
     And the "$item" element exists 2 times
     And the "$item:nth-child(1)" element contains
-      | Value      |
-      | resource-1 |
-      | kuma-system  |
-      | zone-1     |
+      | Value       |
+      | resource-1  |
+      | kuma-system |
+      | zone-1      |
     And the "$item:nth-child(2)" element contains
-      | Value      |
-      | resource-2 |
-      | kuma-system  |
-      | zone-2     |
+      | Value       |
+      | resource-2  |
+      | kuma-system |
+      | zone-2      |
 
   Scenario: Clicking the item name opens the summary
     When I visit the "/meshes/default/resources/meshaccesslogs" URL

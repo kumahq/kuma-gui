@@ -13,7 +13,7 @@ Feature: mesh / resources / item
       """
       KUMA_ENVIRONMENT: <Env>
       """
-    And the URL "/_kri/kri_mal_default_zone-1_kuma-system_resource-1_" responds with
+    And the URL "/_kri/<Kri>" responds with
       """
       body:
         labels:
@@ -21,16 +21,17 @@ Feature: mesh / resources / item
           kuma.io/origin: zone
           foo: bar
       """
-    When I visit the "/meshes/default/resources/meshaccesslogs/kri_mal_default_zone-1_kuma-system_resource-1_/overview" URL
+    When I visit the "/meshes/default/resources/meshaccesslogs/<Kri>/overview" URL
     Then the "$about-section" element exists
     And the "$about-section" element <Contains> "kuma-system"
     And the "$about-section" element contains "zone-1"
     And the "$about-section" element contains "kuma.io/origin:zone"
     And the "$about-section" element contains "foo:bar"
+
     Examples:
-      | Env        | Contains        | Namespace      |
-      | universal  | doesn't contain | !!js/undefined |
-      | kubernetes | contains        | kuma-system    |
+      | Env        | Contains        | Namespace      | Kri                                            |
+      | universal  | doesn't contain | !!js/undefined | kri_mal_default_zone-1__resource-1_            |
+      | kubernetes | contains        | kuma-system    | kri_mal_default_zone-1_kuma-system_resource-1_ |
 
   Rule: Offering different view formats
 
