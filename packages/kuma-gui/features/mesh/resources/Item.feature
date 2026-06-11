@@ -49,7 +49,8 @@ Feature: mesh / resources / item
 
     Scenario: Switching to k8s format shows the k8s codeblock
       When I visit the "/meshes/default/resources/meshaccesslogs/kri_mal_default_zone-1_kuma-system_resource-1_/overview" URL
-      And I click the "$select-environment" element
-      And I click the "[data-testid='select-item-k8s'] button" element
+      Then the "$config-universal" element exists
+      Then I click the "$select-environment" element
+      Then I click the "[data-testid='select-item-k8s'] button" element
       Then the "$config-k8s" element exists
       And the URL contains "format=k8s"
