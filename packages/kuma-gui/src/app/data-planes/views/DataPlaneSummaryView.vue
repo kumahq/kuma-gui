@@ -146,7 +146,7 @@
                   </tr>
                   <tr v-if="item.zoneProxyTypes.length > 0">
                     <th scope="row">
-                      {{ t('http.api.property.zone-proxy') }}
+                      {{ t('data-planes.type.zone-proxy') }}
                     </th>
                     <td>
                       <XLayout
