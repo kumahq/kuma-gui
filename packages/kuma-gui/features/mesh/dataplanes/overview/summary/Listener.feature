@@ -11,6 +11,7 @@ Feature: mesh / dataplanes / overview / summary / Listener
       KUMA_DATAPLANELISTENER_COUNT: 1
       KUMA_DATAPLANE_TYPE: standard
       """
+  # Note: A listener is currently treated exactly like an inbound
 
   Scenario: Listener summary overview shows expected content
     Given the URL "/meshes/default/dataplanes/service-less/_layout" responds with
@@ -33,9 +34,9 @@ Feature: mesh / dataplanes / overview / summary / Listener
                 type: ZoneIngress
                 address: 10.244.0.21
       """
-    When I visit the "/meshes/default/data-planes/service-less/overview/listener/self_zoneingress_dp_12345/overview" URL
+    When I visit the "/meshes/default/data-planes/service-less/overview/inbound/self_zoneingress_dp_12345/overview" URL
     And the "$summary" element exists
-    And the "$summary" element contains "Listener :12345"
+    And the "$summary" element contains "Inbound :12345"
     And the "$summary" element contains "TCP"
     And the "$summary" element contains "10.244.0.21"
     And the "$summary" element contains "12345"

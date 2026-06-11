@@ -235,7 +235,7 @@ import { Kri } from '@/app/kuma'
 import { sources as policySources } from '@/app/policies/sources'
 
 const props = defineProps<{
-  data: DataplaneNetworkingLayout['inbounds'][number] | DataplaneNetworkingLayout['listeners'][number]
+  data: DataplaneNetworkingLayout['inbounds'][number]
   dataPlaneOverview: DataplaneOverview
   routeName: string
 }>()

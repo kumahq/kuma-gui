@@ -6,7 +6,6 @@ Feature: mesh / dataplanes / connections / Traffic
       | traffic         | [data-testid='dataplane-traffic']                                          |
       | inbound         | [data-testid='dataplane-inbound']                                          |
       | outbound        | [data-testid='dataplane-outbound']                                         |
-      | listener        | [data-testid='dataplane-listener']                                         |
       | warning         | [data-testid*='abnormal-traffic-stats']                                    |
       | loading-warning | [data-testid^='notification-data-planes.notifications.stats-not-enhanced'] |
       | about-section   | [data-testid='dataplane-about-section']                                    |
@@ -37,7 +36,7 @@ Feature: mesh / dataplanes / connections / Traffic
       body:
         listeners:
           - kri: kri_dp_default_numeric_kuma-system_service-less_12345
-            port: 12345
+            port: 12323
             proxyResourceName: self_zoneingress_dp_12345
             type: ZoneIngress
         inbounds:
@@ -53,16 +52,15 @@ Feature: mesh / dataplanes / connections / Traffic
       """
     When I visit the "/meshes/default/data-planes/service-less/overview" URL
     Then the "$traffic" element exists
-    # TODO: These need correcting so that the mock produces a single inbound
-    # and outbound if that is what the intention of the test is
-    # for the moment :nth-child(1) existing 1 time isn't testing anything
-    # and previous to adding :nth-child(1) the element existed 13 times
-    And the "$inbound:nth-child(1)" element exists 1 times
-    And the "$outbound:nth-child(1)" element exists 1 times
-    # end TODO
-    And the "$listener" element exists 1 times
-    And the "$listener" element contains "12345"
+    # inbounds and listeners
+    And the "$inbound" element exists 2 times
     And the "$inbound:nth-child(1)" element contains "12345"
+    And the "$inbound:nth-child(1)" element contains "HTTP"
+    And the "$inbound:nth-child(2)" element contains "12323"
+    And the "$inbound:nth-child(2)" element contains "TCP"
+    And the "$inbound:nth-child(2)" element contains "ZoneIngress"
+    # outbounds
+    And the "$outbound" element exists 1 times
     And the "$outbound:nth-child(1)" element contains "Port 54321 (ipv6)"
     And the "$outbound:nth-child(1)" element contains "Mesh default"
     And the "$outbound:nth-child(1)" element contains "Zone scenario"
@@ -130,6 +128,7 @@ Feature: mesh / dataplanes / connections / Traffic
   Scenario: Listener traffic shows expected content
     Given the environment
       """
+      KUMA_DATAPLANEINBOUND_COUNT: 0
       KUMA_DATAPLANELISTENER_COUNT: 2
       """
     And the URL "/meshes/default/dataplanes/service-less/_layout" responds with
@@ -176,17 +175,17 @@ Feature: mesh / dataplanes / connections / Traffic
       """
     When I visit the "/meshes/default/data-planes/service-less/overview" URL
     Then the "$traffic" element exists
-    And the "$listener" element exists 2 times
-    And the "$listener:nth-child(1)" element contains
+    And the "$inbound" element exists 2 times
+    And the "$inbound:nth-child(1)" element contains
       | Value                 |
       | TCP                   |
-      | :12345                |
       | ZoneIngress           |
+      | :12345                |
       | Total connections 20  |
       | Active connections 10 |
-    And the "$listener:nth-child(2)" element contains
+    And the "$inbound:nth-child(2)" element contains
       | Value                |
-      | :54321               |
       | ZoneEgress           |
+      | :54321               |
       | Total connections 10 |
       | Active connections 5 |
