@@ -72,7 +72,7 @@ export const DataplaneOverview = {
           return state
         }
 
-        const networkEndpoints = [...networking.inbounds, ...networking.listeners]
+        const networkEndpoints = networking.inbounds
         const unhealthy = networkEndpoints.filter((endpoint) => endpoint.state !== 'Ready')
         switch (true) {
           case unhealthy.length === 0:
