@@ -364,12 +364,13 @@ describe('DataplaneOverview', () => {
   })
   describe('dataplane.config', () => {
     test(
-      'config is derived from Dataplane and based on DataplaneOverview data',
+      'config (used for display) contains the correct fields, no more, no less',
       async ({ fixture }) => {
         const expected = {
           type: 'Dataplane',
           name: 'dp-name',
           mesh: 'dp-mesh',
+          kri: 'kri_dp_dp-mesh___dp-name_',
           labels: {
             'kuma.io/display-name': 'dp-name',
           },
@@ -387,6 +388,7 @@ describe('DataplaneOverview', () => {
         const actual = await fixture.setup((item) => {
           item.name = expected.name
           item.mesh = expected.mesh
+          // item.kri = expected.kri
           item.creationTime = expected.creationTime
           item.modificationTime = expected.modificationTime
           item.dataplane.networking = expected.networking

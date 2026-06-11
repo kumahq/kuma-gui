@@ -90,6 +90,7 @@ export const ZoneOverview = {
     // check for label first, fallback to tags
     const name = labels['kuma.io/display-name'] ?? item.name
 
+    // temporarily make a KRI until we have those from the backend
     const kri = Kri.toString({ shortName: 'z', mesh: '', zone: '', namespace: '', name })
 
     const insight = ZoneInsight.fromObject(item.zoneInsight)

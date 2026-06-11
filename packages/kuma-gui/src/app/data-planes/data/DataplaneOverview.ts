@@ -38,6 +38,7 @@ export const DataplaneOverview = {
     const namespace = labels['k8s.kuma.io/namespace'] ?? ''
     const name = labels['kuma.io/display-name'] ?? item.name
 
+    // temporarily make a KRI until we have those from the backend
     const kri = Kri.toString({ shortName: 'dp', mesh, zone, namespace, name })
 
 
@@ -107,15 +108,27 @@ export const DataplaneOverview = {
       isCertExpired,
       isCertExpiresSoon,
       services,
+      // config should only contain non-defaulted values
+      // because we want to show what the API responded with
+      // we then copy over things that should be on the Entity, but
+      // are only on the EntityOverview
       config: {
         ...Dataplane.fromObject({
+          // bare minimum props to keep TS happy
+          // plus a splat of the original Entity
           type: 'Dataplane',
           name: item.name,
           mesh: item.mesh,
           ...item.dataplane,
         }).config,
+
+        // the things we copy over
+        // kri is always missing and we always purposefully add and generate ourselves
         kri,
+        // we only copy these over if they exist
         ...(typeof item.labels !== 'undefined' ? { labels: item.labels } : {}),
+        ...(typeof item.creationTime !== 'undefined' ? { creationTime: item.creationTime } : {}),
+        ...(typeof item.modificationTime !== 'undefined' ? { modificationTime: item.modificationTime } : {}),
       },
     }
   },
