@@ -24,7 +24,7 @@
               size="small"
             >
               <h2>
-                {{ props.routeName.includes('inbound') ? `Inbound ${'port' in items[0] ? `:${items[0].port}` : route.params.connection}` : props.routeName.includes('listener') ? `Listener ${'port' in items[0] ? `:${items[0].port}` : route.params.connection}` : `Outbound ${Kri.fromString(route.params.connection).name}` }}
+                {{ props.routeName.includes('inbound') ? `Inbound ${'port' in items[0] ? `:${items[0].port}` : route.params.connection}` : `Outbound ${Kri.fromString(route.params.connection).name}` }}
               </h2>
               <template v-if="'state' in items[0]">
                 <XBadge
@@ -40,7 +40,7 @@
             :selected="route.child()?.name"
           >
             <template
-              v-for="{ name } in route.children"
+              v-for="{ name } in (items[0].type.startsWith('Zone') ? route.children.filter((item) => !item.name.includes('clusters')) : route.children)"
               :key="name"
               #[`${name}-tab`]
             >
@@ -71,7 +71,7 @@
   </RouteView>
 </template>
 
-<script lang="ts" generic="T extends { proxyResourceName: string }" setup>
+<script lang="ts" generic="T extends { proxyResourceName: string, type: string }" setup>
 import type { DataplaneNetworking, DataplaneOverview } from '@/app/data-planes/data/'
 import { Kri } from '@/app/kuma'
 
