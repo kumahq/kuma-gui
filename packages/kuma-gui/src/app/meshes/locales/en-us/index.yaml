@@ -69,6 +69,7 @@ meshes:
         name: Name
         trust-domain: TrustDomain
         origin: Origin
+        zone: Zone
     items:
       title: Meshes
       breadcrumbs: Meshes
