@@ -5,7 +5,7 @@
       mesh: '',
       environment: String,
     }"
-    v-slot="{ route, t, uri, me }"
+    v-slot="{ route, t, uri, me, can }"
   >
     <RouteTitle
       :title="t('meshes.routes.overview.title')"
@@ -72,6 +72,7 @@
                       :items="items"
                       :headers="[
                         { ...me.get('headers.identity'), label: t('meshes.routes.item.mesh-trusts.name'), key: 'name' },
+                        ...(can('use zones') ? [{ label: t('meshes.routes.item.mesh-trusts.zone'), key: 'zone' }] : []),
                         { ...me.get('headers.type'), label: t('meshes.routes.item.mesh-trusts.trust-domain'), key: 'trustDomain' },
                         { ...me.get('headers.origin'), label: t('meshes.routes.item.mesh-trusts.origin'), key: 'origin' },
                       ]"
@@ -93,6 +94,19 @@
                           data-action
                         >
                           <b>{{ item.name }}</b>
+                        </XAction>
+                      </template>
+                      <template #zone="{ row: item }">
+                        <XAction
+                          v-if="item.zone.length > 0"
+                          :to="{
+                            name: 'zone-cp-detail-view',
+                            params: {
+                              zone: item.zone,
+                            },
+                          }"
+                        >
+                          {{ item.zone }}
                         </XAction>
                       </template>
                       <template #trustDomain="{ row: item }">
