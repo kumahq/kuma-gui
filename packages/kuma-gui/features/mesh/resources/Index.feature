@@ -38,7 +38,7 @@ Feature: mesh / resources / index
 
   Scenario: Listing has expected content
     When I visit the "/meshes/default/resources/meshaccesslogs" URL
-    # Then the "$button-docs" element exists
+    Then the "$button-docs" element exists
     Then the "$items-header" element exists 4 times
     And the "$item" element exists 2 times
     And the "$item:nth-child(1)" element contains

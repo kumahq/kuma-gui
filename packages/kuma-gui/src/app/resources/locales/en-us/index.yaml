@@ -29,22 +29,29 @@ resources:
           href:
             docs: '{KUMA_DOCS_URL}/resources/{name}?{KUMA_UTM_QUERY_PARAMS}'
           description: !!text/markdown |
-            Use mesh-scoped resources to configure services and infrastructure within a specific mesh. These resources like data planes and services are managed by the control plane and define the behavior and properties of components operating within their designated mesh boundary.
+            Use mesh-scoped resources to configure services and infrastructure
+            within a specific mesh. These resources like data planes and
+            services are managed by the control plane and define the behavior
+            and properties of components operating within their designated mesh
+            boundary.
         global:
           title: Global scoped
           href:
             docs: '{KUMA_DOCS_URL}/resources/{name}?{KUMA_UTM_QUERY_PARAMS}'
           description: !!text/markdown |
-            Use global resources to configure cross-mesh infrastructure and mesh management itself. These resources like meshes and zones operate at the cluster level and are managed by the global control plane to coordinate behavior across the entire service mesh deployment.
+            Use global resources to configure cross-mesh infrastructure and
+            mesh management itself. These resources like meshes and zones
+            operate at the cluster level and are managed by the global control
+            plane to coordinate behavior across the entire service mesh
+            deployment.
         others:
           title: Other
-        default:
-          title: '{name}'
           href:
             docs: '{KUMA_DOCS_URL}/resources/{name}?{KUMA_UTM_QUERY_PARAMS}'
           description: !!text/markdown |
-            This resource type is not categorized yet. Please refer to the documentation for more details.
-        
+            This resource type is not categorized yet. Please refer to the
+            documentation for more details.
+
         collection:
           title: 'About {name}'
           inbound: Inbound
