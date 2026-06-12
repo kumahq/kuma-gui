@@ -18,6 +18,17 @@ export const test = base.extend<{
   baseURL: async ({ baseURL }, use) => {
     await use(baseURL)
   },
+  page: async ({ page }, use) => {
+    page.on('pageerror', (err) => {
+      throw err
+    })
+    page.on('console', (msg) => {
+      if(['error'].includes(msg.type()) && msg.args().length !== 0) {
+        throw new Error(msg.text())
+      }
+    })
+    await use(page)
+  },
 })
 
 export async function setupSteps({ dependencies, fs, negativeTimeout = 4000, client = getClient() }: Options) {
