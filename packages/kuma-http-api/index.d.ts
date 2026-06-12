@@ -2188,6 +2188,13 @@ export interface components {
             };
         };
         DataplaneItem: {
+            /**
+             * Format: date-time
+             * @description Time at which the resource was created
+             */
+            readonly creationTime?: string;
+            /** @description Kuma Resource Identifier (KRI) of the given resource */
+            readonly kri?: string;
             labels?: {
                 [key: string]: string;
             };
@@ -2206,6 +2213,11 @@ export interface components {
                 /** @description Type of the backend (Kuma ships with 'prometheus') */
                 type?: string;
             };
+            /**
+             * Format: date-time
+             * @description Time at which the resource was updated
+             */
+            readonly modificationTime?: string;
             name: string;
             /**
              * @description Networking describes inbound and outbound interfaces of the data plane
@@ -2670,6 +2682,13 @@ export interface components {
                     }[];
                 };
             };
+            /**
+             * Format: date-time
+             * @description Time at which the resource was created
+             */
+            readonly creationTime?: string;
+            /** @description Kuma Resource Identifier (KRI) of the given resource */
+            readonly kri?: string;
             labels?: {
                 [key: string]: string;
             };
@@ -2721,6 +2740,11 @@ export interface components {
                 /** @description Name of the enabled backend */
                 enabledBackend?: string;
             };
+            /**
+             * Format: date-time
+             * @description Time at which the resource was updated
+             */
+            readonly modificationTime?: string;
             /**
              * @description mTLS settings.
              *     +optional
@@ -2825,8 +2849,6 @@ export interface components {
                 defaultBackend?: string;
             };
             type: string;
-            creationTime?: string;
-            modificationTime?: string;
         };
         /** @description MeshAccessLog configures access logging for traffic between services in the mesh. It allows you to capture and export request/response logs to various backends (file, TCP, or OpenTelemetry) for monitoring, debugging, and auditing purposes. */
         MeshAccessLogItem: {
@@ -2927,18 +2949,12 @@ export interface components {
                                      */
                                     kind: "MeshOpenTelemetryBackend";
                                     /**
-                                     * @description Labels to match the referenced resource. Use for cross-zone references
-                                     *     where KDS adds a hash suffix to metadata.name. Mutually exclusive with
-                                     *     Name. When multiple resources match, the oldest by creation time wins.
+                                     * @description Labels to match the referenced resource. When multiple resources match,
+                                     *     the oldest by creation time wins.
                                      */
                                     labels?: {
                                         [key: string]: string;
                                     };
-                                    /**
-                                     * @description Name of the referenced resource (metadata.name). Use for same-cluster
-                                     *     references. Mutually exclusive with Labels.
-                                     */
-                                    name?: string;
                                 };
                                 /**
                                  * @description Body is a raw string or an OTLP any value as described at
@@ -3127,18 +3143,12 @@ export interface components {
                                      */
                                     kind: "MeshOpenTelemetryBackend";
                                     /**
-                                     * @description Labels to match the referenced resource. Use for cross-zone references
-                                     *     where KDS adds a hash suffix to metadata.name. Mutually exclusive with
-                                     *     Name. When multiple resources match, the oldest by creation time wins.
+                                     * @description Labels to match the referenced resource. When multiple resources match,
+                                     *     the oldest by creation time wins.
                                      */
                                     labels?: {
                                         [key: string]: string;
                                     };
-                                    /**
-                                     * @description Name of the referenced resource (metadata.name). Use for same-cluster
-                                     *     references. Mutually exclusive with Labels.
-                                     */
-                                    name?: string;
                                 };
                                 /**
                                  * @description Body is a raw string or an OTLP any value as described at
@@ -3358,18 +3368,12 @@ export interface components {
                                      */
                                     kind: "MeshOpenTelemetryBackend";
                                     /**
-                                     * @description Labels to match the referenced resource. Use for cross-zone references
-                                     *     where KDS adds a hash suffix to metadata.name. Mutually exclusive with
-                                     *     Name. When multiple resources match, the oldest by creation time wins.
+                                     * @description Labels to match the referenced resource. When multiple resources match,
+                                     *     the oldest by creation time wins.
                                      */
                                     labels?: {
                                         [key: string]: string;
                                     };
-                                    /**
-                                     * @description Name of the referenced resource (metadata.name). Use for same-cluster
-                                     *     references. Mutually exclusive with Labels.
-                                     */
-                                    name?: string;
                                 };
                                 /**
                                  * @description Body is a raw string or an OTLP any value as described at
@@ -4876,10 +4880,22 @@ export interface components {
                     };
                 }[];
             };
+            /**
+             * Format: date-time
+             * @description Time at which the resource was created
+             */
+            readonly creationTime?: string;
+            /** @description Kuma Resource Identifier (KRI) of the given resource */
+            readonly kri?: string;
             labels?: {
                 [key: string]: string;
             };
             mesh: string;
+            /**
+             * Format: date-time
+             * @description Time at which the resource was updated
+             */
+            readonly modificationTime?: string;
             name: string;
             /**
              * @description Selectors is a list of selectors that are used to match builtin
@@ -6082,18 +6098,12 @@ export interface components {
                                  */
                                 kind: "MeshOpenTelemetryBackend";
                                 /**
-                                 * @description Labels to match the referenced resource. Use for cross-zone references
-                                 *     where KDS adds a hash suffix to metadata.name. Mutually exclusive with
-                                 *     Name. When multiple resources match, the oldest by creation time wins.
+                                 * @description Labels to match the referenced resource. When multiple resources match,
+                                 *     the oldest by creation time wins.
                                  */
                                 labels?: {
                                     [key: string]: string;
                                 };
-                                /**
-                                 * @description Name of the referenced resource (metadata.name). Use for same-cluster
-                                 *     references. Mutually exclusive with Labels.
-                                 */
-                                name?: string;
                             };
                             /**
                              * @description Endpoint for OpenTelemetry collector.
@@ -8385,18 +8395,12 @@ export interface components {
                                  */
                                 kind: "MeshOpenTelemetryBackend";
                                 /**
-                                 * @description Labels to match the referenced resource. Use for cross-zone references
-                                 *     where KDS adds a hash suffix to metadata.name. Mutually exclusive with
-                                 *     Name. When multiple resources match, the oldest by creation time wins.
+                                 * @description Labels to match the referenced resource. When multiple resources match,
+                                 *     the oldest by creation time wins.
                                  */
                                 labels?: {
                                     [key: string]: string;
                                 };
-                                /**
-                                 * @description Name of the referenced resource (metadata.name). Use for same-cluster
-                                 *     references. Mutually exclusive with Labels.
-                                 */
-                                name?: string;
                             };
                             /**
                              * @description Address of OpenTelemetry collector.
@@ -8806,9 +8810,21 @@ export interface components {
             readonly modificationTime?: string;
         };
         ZoneEgressItem: {
+            /**
+             * Format: date-time
+             * @description Time at which the resource was created
+             */
+            readonly creationTime?: string;
+            /** @description Kuma Resource Identifier (KRI) of the given resource */
+            readonly kri?: string;
             labels?: {
                 [key: string]: string;
             };
+            /**
+             * Format: date-time
+             * @description Time at which the resource was updated
+             */
+            readonly modificationTime?: string;
             name: string;
             /** @description Networking defines the address and port of the Egress to listen on. */
             networking?: {
@@ -8846,9 +8862,21 @@ export interface components {
                     [key: string]: string;
                 };
             }[];
+            /**
+             * Format: date-time
+             * @description Time at which the resource was created
+             */
+            readonly creationTime?: string;
+            /** @description Kuma Resource Identifier (KRI) of the given resource */
+            readonly kri?: string;
             labels?: {
                 [key: string]: string;
             };
+            /**
+             * Format: date-time
+             * @description Time at which the resource was updated
+             */
+            readonly modificationTime?: string;
             name: string;
             /**
              * @description Networking defines the address and port of the Ingress to listen on.
@@ -9397,6 +9425,11 @@ export interface components {
         DataplaneOverviewWithMeta: components["schemas"]["Meta"] & components["schemas"]["DataplaneOverview"];
         SecretItem: {
             /**
+             * Format: date-time
+             * @description Time at which the resource was created
+             */
+            readonly creationTime?: string;
+            /**
              * Format: byte
              * @description Value of the secret
              */
@@ -9405,6 +9438,11 @@ export interface components {
                 [key: string]: string;
             };
             mesh: string;
+            /**
+             * Format: date-time
+             * @description Time at which the resource was updated
+             */
+            readonly modificationTime?: string;
             name: string;
             type: string;
         };
