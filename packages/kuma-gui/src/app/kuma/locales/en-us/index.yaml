@@ -14,6 +14,7 @@ common:
     ignore-error: ""
   product:
     name: Kuma
+    # any variables here MUST be added to the debug overwrite in kuma/debug.ts
     docs: |
       https://kuma.io/docs/{ major, select,
         0 {dev}

@@ -39,18 +39,18 @@ Feature: mesh / resources / item
       When I visit the "/meshes/default/resources/meshaccesslogs/kri_mal_default_zone-1_kuma-system_resource-1_/overview" URL
       Then the "$config-universal" element exists
 
-    Scenario: Visiting with format=universal shows the universal codeblock
-      When I visit the "/meshes/default/resources/meshaccesslogs/kri_mal_default_zone-1_kuma-system_resource-1_/overview?format=universal" URL
+    Scenario: Visiting with environment=universal shows the universal codeblock
+      When I visit the "/meshes/default/resources/meshaccesslogs/kri_mal_default_zone-1_kuma-system_resource-1_/overview?environment=universal" URL
       Then the "$config-universal" element exists
 
-    Scenario: Visiting with format=k8s shows the k8s codeblock
-      When I visit the "/meshes/default/resources/meshaccesslogs/kri_mal_default_zone-1_kuma-system_resource-1_/overview?format=k8s" URL
+    Scenario: Visiting with environment=k8s shows the k8s codeblock
+      When I visit the "/meshes/default/resources/meshaccesslogs/kri_mal_default_zone-1_kuma-system_resource-1_/overview?environment=k8s" URL
       Then the "$config-k8s" element exists
 
-    Scenario: Switching to k8s format shows the k8s codeblock
+    Scenario: Switching to k8s environment shows the k8s codeblock
       When I visit the "/meshes/default/resources/meshaccesslogs/kri_mal_default_zone-1_kuma-system_resource-1_/overview" URL
       Then the "$config-universal" element exists
       Then I click the "$select-environment" element
       Then I click the "[data-testid='select-item-k8s'] button" element
       Then the "$config-k8s" element exists
-      And the URL contains "format=k8s"
+      And the URL contains "environment=k8s"

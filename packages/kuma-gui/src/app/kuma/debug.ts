@@ -15,7 +15,9 @@ export const locales = (app: Record<string, Token>): ServiceDefinition[] => [
       return {
         common: {
           product: {
-            docs: 'https://kuma.io/docs/dev',
+            // ensure all variables in kuma/locales/en.us/index.yaml are also
+            // used here
+            docs: 'https://kuma.io/docs/dev{ major, select, other {}}{ minor, select, other {}}',
           },
         },
       }
