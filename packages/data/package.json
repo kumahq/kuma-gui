@@ -28,6 +28,6 @@
     "@vitejs/plugin-vue": "^6.0.7",
     "@vue/test-utils": "^2.4.10",
     "vite": "^7.3.3",
-    "vitest": "^4.1.7"
+    "vitest": "^4.1.8"
   }
 }
