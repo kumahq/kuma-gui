@@ -3,7 +3,7 @@ import { base, en } from '@faker-js/faker'
 import type { Env as Keys } from './Env'
 import FakeKuma from './FakeKuma'
 export { default as FakeKuma } from './FakeKuma'
-export { fs } from './fs'
+export * from './fs'
 
 export interface RestRequest {
   method: string

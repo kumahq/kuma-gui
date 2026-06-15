@@ -1,11 +1,13 @@
 import { token } from '@kumahq/container'
-import { fs } from '@kumahq/kuma-http-api/mocks'
+import { addOrigin } from '@kumahq/fake-api'
+import { fs, remote } from '@kumahq/kuma-http-api/mocks'
 
 import type { Env } from '@/app/application'
 import type { ServiceDefinition, Token } from '@kumahq/container'
 
 
 const $ = {
+  remoteFS: token<typeof remote>('fake.fs.remote'),
   kumaFS: token<typeof fs>('fake.fs.kuma'),
 }
 
@@ -28,7 +30,6 @@ export const locales = (app: Record<string, Token>): ServiceDefinition[] => [
     ],
   }],
 ]
-
 export const services = (app: Record<string, Token>): ServiceDefinition[] => [
   [token('kuma.env.vars'), {
     service: () => {
@@ -40,14 +41,14 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => [
       app.vars,
     ],
   }],
+  [$.remoteFS, {
+    service: () => addOrigin(remote, 'https://kuma.io'),
+    labels: [
+      app.fakeFS,
+    ],
+  }],
   [$.kumaFS, {
-    service: (env: Env) => {
-      // return fs
-      const baseURL = env('KUMA_API_URL')
-      return Object.fromEntries(Object.entries(fs).map(([route, response]) => {
-        return [route.includes('://') ? route : `${baseURL}${route}`, response]
-      }))
-    },
+    service: (env: Env) => addOrigin(fs, env('KUMA_API_URL')),
     arguments: [
       app.env,
     ],

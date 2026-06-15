@@ -30,6 +30,12 @@ export function escapeRoute(route: string): string {
   return route.replaceAll('+', '\\+')
 }
 
+export const addOrigin = <T>(fs: Record<string, T>, origin: string) => {
+  return Object.fromEntries(Object.entries(fs).map(([route, response]) => {
+    return [route.includes('://') ? route : `${origin}${route}`, response]
+  }))
+}
+
 
 export class Router<T> {
   routes: Map<URLPattern, T> = new Map()
