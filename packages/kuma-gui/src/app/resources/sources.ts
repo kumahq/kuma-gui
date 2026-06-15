@@ -83,9 +83,10 @@ export const sources = (api: KumaApi) => {
           path: {
             kri: params.kri,
           },
-        },
-        query: {
-          format: 'kubernetes',
+          // @ts-expect-error - query parameter not listed in OAS
+          query: {
+            format: 'kubernetes',
+          },
         },
       })
 

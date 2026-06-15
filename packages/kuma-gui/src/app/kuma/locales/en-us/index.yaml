@@ -1,17 +1,20 @@
 common:
+  label:
+    href:
+      kuma~io/mesh: kri://kri_m____{name}_
+      kuma~io/zone: kri://kri_z____{name}_
+      kuma~io/workload: kri://kri_wl_{mesh}_{zone}_{namespace}_{name}_
+      kuma~io/service: kri://kri_~hostport_{mesh}_{zone}_{namespace}_{name}_
   kri:
     shortNames:
       mesh: m
       zone: z
       workload: wl
-    labelHrefs:
-      kuma~io/mesh: kri://kri_m____{name}_
-      kuma~io/zone: kri://kri_z____{name}_
-      kuma~io/workload: kri://kri_wl_{mesh}_{zone}_{namespace}_{name}_
   i18n:
     ignore-error: ""
   product:
     name: Kuma
+    # any variables here MUST be added to the debug overwrite in kuma/debug.ts
     docs: |
       https://kuma.io/docs/{ major, select,
         0 {dev}

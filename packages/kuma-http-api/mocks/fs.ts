@@ -2,6 +2,7 @@ import _124 from './kuma.io/latest_version'
 import _999 from './src/_kri/_'
 import _997 from './src/_kri/kri_dp__.ts'
 import _996 from './src/_kri/kri_extsvc__.ts'
+import _986 from './src/_kri/kri_mal__.ts'
 import _995 from './src/_kri/kri_mfi__.ts'
 import _994 from './src/_kri/kri_mgw__.ts'
 import _993 from './src/_kri/kri_mhttpr__.ts'
@@ -59,6 +60,8 @@ import _27 from './src/meshes/_/fault-injections'
 import _28 from './src/meshes/_/fault-injections/_'
 import _29 from './src/meshes/_/health-checks'
 import _30 from './src/meshes/_/health-checks/_'
+import _245 from './src/meshes/_/meshaccesslogs'
+import _246 from './src/meshes/_/meshaccesslogs/_'
 import _138 from './src/meshes/_/meshexternalservices'
 import _139 from './src/meshes/_/meshexternalservices/_'
 import _172 from './src/meshes/_/meshexternalservices/_/_hostnames'
@@ -169,7 +172,7 @@ export const fs = {
   '/mesh-insights': _13,
   '/mesh-insights/:mesh': _14,
   '/meshes': _15,
-  '/meshes/:mesh': _16,
+  '/meshes/:name': _16,
   '/meshes/:mesh/dataplanes/_overview': _21,
   '/meshes/:mesh/dataplanes/:name': _19,
   '/meshes/:mesh/dataplanes/:name/_overview': _22,
@@ -197,6 +200,8 @@ export const fs = {
   '/meshes/:mesh/meshmultizoneservices/:serviceName/_hostnames': _171,
   '/meshes/:mesh/meshexternalservices/:serviceName/_hostnames': _172,
   // policies
+  '/meshes/:mesh/meshaccesslogs': _245,
+  '/meshes/:mesh/meshaccesslogs/:name': _246,
   '/meshes/:mesh/meshfaultinjections': _52,
   '/meshes/:mesh/meshfaultinjections/:name': _53,
   '/meshes/:mesh/meshfaultinjections/:name/_resources/dataplanes': _54,
@@ -272,6 +277,8 @@ export const fs = {
   '/_kri/kri_zi_:kri': _988,
   // Workload
   '/_kri/kri_wl_:kri': _987,
+  // MeshAccessLog
+  '/_kri/kri_mal_:kri': _986,
   // generic kri -> catches anything that is not matched above
   '/_kri/:kri': _999,
 }

@@ -100,43 +100,44 @@
           </dd>
         </div>
 
-        <template
-          v-for="labels in [Object.entries(props.mesh.labels)]"
-          :key="typeof labels"
-        >
-          <div v-if="labels.length > 0">
-            <dt>{{ t('services.routes.item.labels') }}</dt>
-            <dd>
-              <XLayout
-                variant="separated"
-                truncate
+        <div v-if="Object.keys(props.mesh.labels).length > 0">
+          <dt>{{ t('services.routes.item.labels') }}</dt>
+          <dd>
+            <XLayout
+              variant="separated"
+            >
+              <XAction
+                v-for="(value, key) in props.mesh.labels"
+                :key="key"
+                :href="t(`common.label.href.${key.replaceAll('.', '~')}`, {
+                  mesh: '',
+                  zone: '',
+                  namespace: '',
+                  name: value,
+                }, { defaultMessage: '' })"
               >
-                <template
-                  v-for="kumaRe in [/^(.+\.)?kuma\.io\//]"
-                  :key="typeof kumaRe"
+                <XBadge
+                  :variant="r('kuma.label').test(key) ? 'reserved-kv' : 'kv'"
                 >
-                  <XBadge
-                    v-for="[key, value] in labels"
-                    :key="key"
-                    :appearance="kumaRe.test(key) ? 'info' : 'decorative'"
-                  >
-                    {{ key }}:{{ value }}
-                  </XBadge>
-                </template>
-              </XLayout>
-            </dd>
-          </div>
-        </template>
+                  {{ key }}:<strong>{{ value }}</strong>
+                </XBadge>
+              </XAction>
+            </XLayout>
+          </dd>
+        </div>
       </XDl>
     </XCard>
   </XI18n>
 </template>
 <script lang="ts" setup>
 import type { Mesh } from '../data'
+import { useRegExp } from '@/app/application'
 import type { MeshIdentity } from '@/app/mesh-identities/data'
 const props = defineProps<{
   mesh: Mesh
   meshIdentities: MeshIdentity[]
   policies?: Record<string, { total: number }>
 }>()
+
+const { r } = useRegExp()
 </script>

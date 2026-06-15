@@ -7,7 +7,7 @@
       proxyType: '',
     }"
     name="data-plane-detail-view"
-    v-slot="{ route, t, can, uri }"
+    v-slot="{ route, t, can, uri, r }"
   >
     <DataSource
       :src="uri(connectionSources, '/connections/stats/for/:proxyType/:name/:mesh/:socketAddress', {
@@ -64,6 +64,9 @@
               {
                 bool: !props.data.dataplaneInsight.mTLS,
                 key: 'no-mtls',
+                params: {
+                  mode: props.mesh.meshServices.mode,
+                },
               },
               {
                 bool: props.data.dataplane.networking.gateway?.type !== 'BUILTIN' && !can('use transparent-proxying', props.data),
@@ -172,7 +175,7 @@
                     </div>
                     <div v-if="props.data.zoneProxyTypes.length > 0">
                       <dt>
-                        {{ t('http.api.property.zone-proxy') }}
+                        {{ t('data-planes.type.zone-proxy') }}
                       </dt>
                       <dd>
                         <XLayout
@@ -217,6 +220,32 @@
                         />
                       </dd>
                     </div>
+                    <div v-if="Object.keys(props.data.labels).length > 0">
+                      <dt>{{ t('data-planes.routes.item.labels') }}</dt>
+                      <dd>
+                        <XLayout
+                          variant="separated"
+                        >
+                          <XAction
+                            v-for="(value, key) in props.data.labels"
+                            :key="key"
+                            :href="t(`common.label.href.${key.replaceAll('.', '~')}`, {
+                              mesh: props.data.mesh,
+                              zone: props.data.zone,
+                              namespace: props.data.namespace,
+                              name: value,
+                            }, { defaultMessage: '' })"
+                          >
+                            <XBadge
+                              :variant="r('kuma.label').test(key) ? 'reserved-kv' : 'kv'"
+                            >
+                              {{ key }}:<strong>{{ value }}</strong>
+                            </XBadge>
+                          </XAction>
+                        </XLayout>
+                      </dd>
+                    </div>
+                    <!-- @TODO gateways don't use this view at the moment, but we want move away from the legacy view -->
                     <div
                       v-if="props.data.dataplane.networking.gateway"
                     >
@@ -224,45 +253,29 @@
                         {{ t('http.api.property.tags') }}
                       </dt>
                       <dd>
-                        <TagList
-                          :tags="props.data.dataplane.networking.gateway.tags"
-                        />
+                        <XLayout
+                          variant="separated"
+                        >
+                          <XAction
+                            v-for="(value, key) in props.data.dataplane.networking.gateway.tags"
+                            :key="key"
+                            :href="t(`common.label.href.${key.replaceAll('.', '~')}`, {
+                              mesh: props.data.mesh,
+                              zone: props.data.zone,
+                              namespace: props.data.namespace,
+                              name: value.replaceAll('_', '~'),
+                            }, { defaultMessage: '' })"
+                          >
+                            <XBadge
+                              :variant="r('kuma.label').test(key) ? 'reserved-kv' : 'kv'"
+                            >
+                              {{ key }}:<strong>{{ value }}</strong>
+                            </XBadge>
+                          </XAction>
+                        </XLayout>
                       </dd>
                     </div>
-
-                    <template
-                      v-for="labels in [Object.entries(props.data.labels)]"
-                      :key="typeof labels"
-                    >
-                      <div v-if="labels.length > 0">
-                        <dt>{{ t('data-planes.routes.item.labels') }}</dt>
-                        <dd>
-                          <XLayout
-                            v-for="kumaRe in [/^(.+\.)?kuma\.io\//]"
-                            :key="typeof kumaRe"
-                            variant="separated"
-                            truncate
-                          >
-                            <XAction
-                              v-for="[key, value] in labels"
-                              :key="key"
-                              :href="t(`common.kri.labelHrefs.${key.replaceAll('.', '~')}`, {
-                                mesh: props.data.mesh,
-                                zone: props.data.zone,
-                                namespace: props.data.namespace,
-                                name: value,
-                              }, { defaultMessage: '' })"
-                            >
-                              <XBadge
-                                :appearance="kumaRe.test(key) ? 'info' : 'decorative'"
-                              >
-                                {{ key }}:{{ value }}
-                              </XBadge>
-                            </XAction>
-                          </XLayout>
-                        </dd>
-                      </div>
-                    </template>
+                    <!-- -->
                   </XDl>
 
                   <XLayout
@@ -620,7 +633,6 @@
                                           port: `${item.port}`,
                                         }
                                       "
-
                                       data-actionable
                                     >
                                       <template #state>
@@ -669,83 +681,22 @@
                                           </XAction>
                                         </template>
                                       </template>
+
+                                      <template #empty>
+                                        No traffic data available for this inbound
+                                      </template>
+
+                                      <XBadge
+                                        v-if="item.type?.length > 0"
+                                        appearance="info"
+                                      >
+                                        {{ item.type }}
+                                      </XBadge>
+
                                       <XAction
                                         data-action
                                         :to="{
                                           name: ((name) => name.includes('bound') ? name.replace('-outbound-', '-inbound-') : 'data-plane-connection-inbound-summary-overview-view')(String(_route.name)),
-                                          params: {
-                                            connection: item.proxyResourceName,
-                                          },
-                                          query: {
-                                            inactive: route.params.inactive,
-                                          },
-                                        }"
-                                      >
-                                        :{{ item.port }}
-                                      </XAction>
-                                    </ConnectionCard>
-                                  </template>
-                                </template>
-                              </XLayout>
-                            </ConnectionGroup>
-                          </template>
-                        </template>
-
-                        <template
-                          v-for="(listenersByPort, port) in [Object.groupBy(props.data.dataplane.networking.listeners.filter((item) => !!item.port), (item) => item.port!)]"
-                          :key="port"
-                        >
-                          <template
-                            v-for="listeners in [dataplaneLayout.listeners]"
-                            :key="typeof listeners"
-                          >
-                            <ConnectionGroup
-                              type="inbound"
-                              data-testid="dataplane-listeners"
-                            >
-                              <XLayout
-                                variant="y-stack"
-                                size="small"
-                              >
-                                <template
-                                  v-for="item in listeners"
-                                  :key="`${item.proxyResourceName}`"
-                                >
-                                  <template
-                                    v-for="listener in [listenersByPort[item.port]?.[0]]"
-                                    :key="listener?.port"
-                                  >
-                                    <ConnectionCard
-                                      data-testid="dataplane-listener"
-                                      :protocol="item.protocol"
-                                      :traffic="traffic?.listeners[item.proxyResourceName]"
-                                      data-actionable
-                                    >
-                                      <template #state>
-                                        <XIcon
-                                          v-if="listener?.state !== 'Ready'"
-                                          name="danger"
-                                          :size="KUI_ICON_SIZE_40"
-                                          placement="right"
-                                        >
-                                          {{ t('data-planes.routes.item.unhealthy_inbound', { port: listener?.port }) }}
-                                        </XIcon>
-                                      </template>
-
-                                      <template #body>
-                                        <XBadge variant="decorative">
-                                          {{ item.type }}
-                                        </XBadge>
-                                      </template>
-
-                                      <template #empty>
-                                        No traffic data available for this listener
-                                      </template>
-
-                                      <XAction
-                                        data-action
-                                        :to="{
-                                          name: 'data-plane-connection-listener-summary-overview-view',
                                           params: {
                                             connection: item.proxyResourceName,
                                           },
@@ -973,7 +924,7 @@
                 >
                   <component
                     :is="child.Component"
-                    :data="(child.route.name as string).includes('-inbound-') ? sourceDataplaneLayout?.inbounds : (child.route.name as string).includes('-listener-') ? sourceDataplaneLayout?.listeners : sourceDataplaneLayout?.outbounds"
+                    :data="(child.route.name as string).includes('-inbound-') ? sourceDataplaneLayout?.inbounds : sourceDataplaneLayout?.outbounds"
                     :data-plane-overview="props.data"
                     :networking="props.data.dataplane.networking"
                     :policies="resources?.policies"
@@ -994,7 +945,6 @@ import { ref } from 'vue'
 
 import { sources } from '../sources'
 import StatusBadge from '@/app/common/StatusBadge.vue'
-import TagList from '@/app/common/TagList.vue'
 import ConnectionCard from '@/app/connections/components/connection-traffic/ConnectionCard.vue'
 import ConnectionGroup from '@/app/connections/components/connection-traffic/ConnectionGroup.vue'
 import ConnectionTraffic from '@/app/connections/components/connection-traffic/ConnectionTraffic.vue'

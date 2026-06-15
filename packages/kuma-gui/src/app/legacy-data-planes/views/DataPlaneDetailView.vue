@@ -8,7 +8,7 @@
       subscription: '',
     }"
     name="data-plane-detail-view"
-    v-slot="{ route, t, can, uri }"
+    v-slot="{ route, t, can, uri, r }"
   >
     <DataSource
       :src="uri(connectionSources, '/connections/stats/for/:proxyType/:name/:mesh/:socketAddress', {
@@ -76,6 +76,9 @@
               {
                 bool: !props.data.dataplaneInsight.mTLS,
                 key: 'no-mtls',
+                params: {
+                  mode: props.mesh.meshServices.mode,
+                },
               },
               {
                 bool: !can('use transparent-proxying', props.data),
@@ -204,6 +207,33 @@
                       />
                     </dd>
                   </div>
+
+                  <div v-if="Object.keys(props.data.labels).length > 0">
+                    <dt>{{ t('data-planes.routes.item.labels') }}</dt>
+                    <dd>
+                      <XLayout
+                        variant="separated"
+                      >
+                        <XAction
+                          v-for="(value, key) in props.data.labels"
+                          :key="key"
+                          :href="t(`common.label.href.${key.replaceAll('.', '~')}`, {
+                            mesh: props.data.mesh,
+                            zone: props.data.zone,
+                            namespace: props.data.namespace,
+                            name: value,
+                          }, { defaultMessage: '' })"
+                        >
+                          <XBadge
+                            :variant="r('kuma.label').test(key) ? 'reserved-kv' : 'kv'"
+                          >
+                            {{ key }}:<strong>{{ value }}</strong>
+                          </XBadge>
+                        </XAction>
+                      </XLayout>
+                    </dd>
+                  </div>
+
                   <div
                     v-if="props.data.dataplane.networking.gateway"
                   >
@@ -211,39 +241,28 @@
                       {{ t('http.api.property.tags') }}
                     </dt>
                     <dd>
-                      <TagList
-                        :tags="props.data.dataplane.networking.gateway.tags"
-                      />
+                      <XLayout
+                        variant="separated"
+                      >
+                        <XAction
+                          v-for="(value, key) in props.data.dataplane.networking.gateway.tags"
+                          :key="key"
+                          :href="t(`common.label.href.${key.replaceAll('.', '~')}`, {
+                            mesh: props.data.mesh,
+                            zone: props.data.zone,
+                            namespace: props.data.namespace,
+                            name: value.replaceAll('_', '~'),
+                          }, { defaultMessage: '' })"
+                        >
+                          <XBadge
+                            :variant="r('kuma.label').test(key) ? 'reserved-kv' : 'kv'"
+                          >
+                            {{ key }}:<strong>{{ value }}</strong>
+                          </XBadge>
+                        </XAction>
+                      </XLayout>
                     </dd>
                   </div>
-
-                  <template
-                    v-for="labels in [Object.entries(props.data.labels)]"
-                    :key="typeof labels"
-                  >
-                    <div v-if="labels.length > 0">
-                      <dt>{{ t('data-planes.routes.item.labels') }}</dt>
-                      <dd>
-                        <XLayout
-                          variant="separated"
-                          truncate
-                        >
-                          <template
-                            v-for="kumaRe in [/^(.+\.)?kuma\.io\//]"
-                            :key="typeof kumaRe"
-                          >
-                            <XBadge
-                              v-for="[key, value] in labels"
-                              :key="key"
-                              :appearance="kumaRe.test(key) ? 'info' : 'decorative'"
-                            >
-                              {{ key }}:{{ value }}
-                            </XBadge>
-                          </template>
-                        </XLayout>
-                      </dd>
-                    </div>
-                  </template>
                 </XDl>
 
                 <XLayout
@@ -859,7 +878,6 @@
 import { KUI_ICON_SIZE_40 } from '@kong/design-tokens'
 
 import StatusBadge from '@/app/common/StatusBadge.vue'
-import TagList from '@/app/common/TagList.vue'
 import ConnectionCard from '@/app/connections/components/connection-traffic/ConnectionCard.vue'
 import ConnectionGroup from '@/app/connections/components/connection-traffic/ConnectionGroup.vue'
 import ConnectionTraffic from '@/app/connections/components/connection-traffic/ConnectionTraffic.vue'

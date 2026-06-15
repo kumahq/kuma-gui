@@ -40,10 +40,9 @@
                 >
                   {{ t('resources.routes.items.types.collection.outbound') }}
                 </XBadge>
-
                 <XAction
                   action="docs"
-                  :href="t(`resources.routes.items.types.${type.group}.href.docs`, { name: type.name }, { defaultMessage: t('common.product.docs')})"
+                  :href="t(`resources.routes.items.types.${type.group}.href.docs`, { name: type.name }, { defaultMessage: t(`resources.routes.items.types.others.href.docs`, { name: type.name })})"
                   data-testid="policy-documentation-link"
                 >
                   <span class="visually-hidden">{{ t('common.documentation') }}</span>
@@ -57,7 +56,7 @@
             </header>
             <XI18n
               :path="`resources.routes.items.types.${type.group}.description`"
-              default-path="resources.routes.items.types.default.description"
+              default-path="resources.routes.items.types.others.description"
             />
           </XCard>
           <XCard>
@@ -119,7 +118,7 @@
                     >
                       <XAction
                         action="docs"
-                        :href="t(`resources.routes.items.types.${type.group}.href.docs`, { name: type.name })"
+                        :href="t(`resources.routes.items.types.${type.group}.href.docs`, { name: type.name }, { defaultMessage: t(`resources.routes.items.types.others.href.docs`, { name: type.name })})"
                       >
                         {{ t('common.documentation') }}
                       </XAction>

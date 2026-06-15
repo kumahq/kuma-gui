@@ -84,8 +84,10 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
           ...(name.includes('ingress') && { 'kuma.io/listener-zoneingress': 'enabled' }),
           ...(name.includes('egress') && { 'kuma.io/listener-zoneegress': 'enabled' }),
           name: displayName,
+          mesh,
           ...(zone ? { zone } : {}),
           ...(k8s ? { namespace: nspace } : {}),
+          ...(k8s ? { env: 'kubernetes' } : { env: 'universal'}),
         }),
       },
       ...((modificationTime) => ({

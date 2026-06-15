@@ -4,6 +4,9 @@ interface DependencyDefaults {
   i18n: {
     t: (...args: any[]) => string
   }
+  regexp: {
+    r: (str: string) => RegExp
+  }
 }
 
 export interface Dependencies extends DependencyDefaults {}

@@ -5,12 +5,12 @@
       mesh: '',
       kri: '',
       resourcePath: '',
-      format: String,
+      environment: String,
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
     }"
-    v-slot="{ route, t, uri, can }"
+    v-slot="{ route, t, uri, can, r }"
   >
     <DataSource
       :src="uri(sources, '/resource/:kri', { kri: route.params.kri })"
@@ -99,33 +99,31 @@
                 </dd>
               </div>
 
-              <template
-                v-for="labels in [Object.entries(data.labels)]"
-                :key="typeof labels"
-              >
-                <div v-if="labels.length > 0">
-                  <dt>{{ t('resources.routes.item.about.labels') }}</dt>
-                  <dd>
-                    <XLayout
-                      variant="separated"
-                      truncate
+              <div v-if="Object.keys(data.labels).length > 0">
+                <dt>{{ t('resources.routes.item.about.labels') }}</dt>
+                <dd>
+                  <XLayout
+                    variant="separated"
+                  >
+                    <XAction
+                      v-for="(value, key) in data.labels"
+                      :key="key"
+                      :href="t(`common.label.href.${key.replaceAll('.', '~')}`, {
+                        mesh: data.mesh,
+                        zone: data.zone,
+                        namespace: data.namespace,
+                        name: value,
+                      }, { defaultMessage: '' })"
                     >
-                      <template
-                        v-for="kumaRe in [/^(.+\.)?kuma\.io\//]"
-                        :key="typeof kumaRe"
+                      <XBadge
+                        :variant="r('kuma.label').test(key) ? 'reserved-kv' : 'kv'"
                       >
-                        <XBadge
-                          v-for="[key, value] in labels"
-                          :key="key"
-                          :appearance="kumaRe.test(key) ? 'info' : 'decorative'"
-                        >
-                          {{ key }}:{{ value }}
-                        </XBadge>
-                      </template>
-                    </XLayout>
-                  </dd>
-                </div>
-              </template>
+                        {{ key }}:<strong>{{ value }}</strong>
+                      </XBadge>
+                    </XAction>
+                  </XLayout>
+                </dd>
+              </div>
             </XDl>
           </DataLoader>
         </XCard>
@@ -145,11 +143,11 @@
             >
               <XSelect
                 :label="t('resources.routes.item.format')"
-                :selected="route.params.format"
+                :selected="route.params.environment"
                 @change="(value) => {
-                  route.update({ format: value })
+                  route.update({ environment: value })
                 }"
-                @vue:before-mount="$event?.props?.selected && options.includes($event.props.selected) && $event.props.selected !== route.params.format && route.update({ format: $event.props.selected })"
+                @vue:before-mount="$event?.props?.selected && options.includes($event.props.selected) && $event.props.selected !== route.params.environment && route.update({ environment: $event.props.selected })"
               >
                 <template
                   v-for="value in options"
@@ -165,7 +163,7 @@
             :data="[sourceData]"
             v-slot="{ data: [data] }"
           >
-            <template v-if="route.params.format !== 'k8s'">
+            <template v-if="route.params.environment !== 'k8s'">
               <XCodeBlock
                 data-testid="codeblock-yaml-universal"
                 language="yaml"

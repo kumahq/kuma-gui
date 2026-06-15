@@ -284,11 +284,15 @@ describe('ZoneIngressOverview', () => {
     )
   })
   describe('zoneIngressOverview.config', () => {
-    test('config is derived from name, timestamps, mesh and zoneIngress of item', async ({ fixture }) => {
+    test('config (used for display) contains the correct fields, no more, no less', async ({ fixture }) => {
       const expected = {
         type: 'ZoneIngress',
         name: 'zone-ingress-name.zone-ingress-namespace',
         mesh: 'mesh-0',
+        kri: 'kri_zi_mesh-0___zone-ingress-name_',
+        labels: {
+          'kuma.io/display-name': 'zone-ingress-name',
+        },
         zone: 'zone-0',
         creationTime: '2021-07-13T08:40:59Z',
         modificationTime: '2021-07-13T08:40:59Z',
@@ -311,6 +315,8 @@ describe('ZoneIngressOverview', () => {
       const actual = await fixture.setup((item) => {
         item.name = expected.name
         item.mesh = expected.mesh
+        // item.kri = expected.kri
+        item.labels = expected.labels
         item.creationTime = expected.creationTime
         item.modificationTime = expected.modificationTime
         item.zoneIngress = {

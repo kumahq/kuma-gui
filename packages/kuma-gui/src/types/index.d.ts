@@ -341,8 +341,8 @@ export interface LabelValue {
 export interface Entity {
   type: string
   name: string
-  creationTime: string
-  modificationTime: string
+  creationTime?: string
+  modificationTime?: string
 }
 
 export interface MeshEntity extends Entity {
@@ -366,7 +366,7 @@ export interface DataPlaneOverview extends MeshEntity {
   labels?: {
     'kuma.io/display-name'?: string
     'k8s.kuma.io/namespace'?: string
-    [key: string]: string | undefined
+    [key: string]: string
   }
   dataplane: {
     networking: DataplaneNetworking
@@ -643,6 +643,7 @@ export interface AvailableService {
 
 export interface ZoneIngress extends MeshEntity {
   zone?: string
+  kri?: string
   networking?: ZoneIngressNetworking
   availableServices?: AvailableService[]
 }
@@ -673,6 +674,7 @@ export interface ZoneEgressNetworking {
 
 export interface ZoneEgress extends MeshEntity {
   zone?: string
+  kri?: string
   networking?: ZoneEgressNetworking
 }
 export interface ZoneEgressInsight {

@@ -1,6 +1,7 @@
 import { Dataplane } from './Dataplane'
 import { DataplaneInsight } from './DataplaneInsight'
 import { DataplaneNetworking } from './DataplaneNetworking'
+import { Kri } from '@/app/kuma/kri'
 import type { PaginatedApiListResponse } from '@/types/api.d'
 import type {
   DataPlaneOverview as PartialDataplaneOverview,
@@ -29,7 +30,17 @@ export const DataplaneOverview = {
     const isCertExpired = getIsCertExpired(dataplaneInsight)
     const isCertExpiresSoon = getIsCertExpiresSoon(dataplaneInsight)
 
-    const labels = typeof item.labels !== 'undefined' ? item.labels : {}
+    const labels = item.labels ?? {}
+    const id = item.name
+    const mesh = item.mesh
+    // check for label first, fallback to tags
+    const zone = labels['kuma.io/origin'] === 'zone' && labels['kuma.io/zone'] ? labels['kuma.io/zone'] : tags.find((tag) => tag.label === 'kuma.io/zone')?.value ?? ''
+    const namespace = labels['k8s.kuma.io/namespace'] ?? ''
+    const name = labels['kuma.io/display-name'] ?? item.name
+
+    // temporarily make a KRI until we have those from the backend
+    const kri = Kri.toString({ shortName: 'dp', mesh, zone, namespace, name })
+
 
     // get all tags and labels with kuma.io/service
     // uniquify and and sort
@@ -38,20 +49,25 @@ export const DataplaneOverview = {
       ...(labels['kuma.io/service'] ? [labels['kuma.io/service']] : []),
     ])).sort((a, b) => a.localeCompare(b))
 
-    // check for label first, fallback to tags
-    const zone = labels['kuma.io/zone'] || tags.find((tag) => tag.label === 'kuma.io/zone')?.value
 
 
     return {
       ...item,
-      id: item.name,
-      name: labels['kuma.io/display-name'] || item.name,
-      namespace: labels['k8s.kuma.io/namespace'] ?? '',
+      kri,
+      name,
+      mesh,
+      labels,
+      creationTime: item.creationTime ?? '',
+      modificationTime: item.modificationTime ?? '',
+      // aliases
+      id,
+      namespace,
+      zone,
+
+      dataplaneInsight,
       dataplane: {
         networking,
       },
-      labels,
-      dataplaneInsight,
       dataplaneType: (() => {
         switch (true) {
           case networking.type === 'gateway':
@@ -72,7 +88,7 @@ export const DataplaneOverview = {
           return state
         }
 
-        const networkEndpoints = [...networking.inbounds, ...networking.listeners]
+        const networkEndpoints = networking.inbounds
         const unhealthy = networkEndpoints.filter((endpoint) => endpoint.state !== 'Ready')
         switch (true) {
           case unhealthy.length === 0:
@@ -92,17 +108,27 @@ export const DataplaneOverview = {
       isCertExpired,
       isCertExpiresSoon,
       services,
-      zone,
+      // config should only contain non-defaulted values
+      // because we want to show what the API responded with
+      // we then copy over things that should be on the Entity, but
+      // are only on the EntityOverview
       config: {
         ...Dataplane.fromObject({
+          // bare minimum props to keep TS happy
+          // plus a splat of the original Entity
           type: 'Dataplane',
           name: item.name,
           mesh: item.mesh,
           ...item.dataplane,
         }).config,
+
+        // the things we copy over
+        // kri is always missing and we always purposefully add and generate ourselves
+        kri,
+        // we only copy these over if they exist
         ...(typeof item.labels !== 'undefined' ? { labels: item.labels } : {}),
-        creationTime: item.creationTime,
-        modificationTime: item.modificationTime,
+        ...(typeof item.creationTime !== 'undefined' ? { creationTime: item.creationTime } : {}),
+        ...(typeof item.modificationTime !== 'undefined' ? { modificationTime: item.modificationTime } : {}),
       },
     }
   },

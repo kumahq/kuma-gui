@@ -35,5 +35,5 @@ Feature: mesh / dataplanes / item / overview
     Then the "$about-section" element exists
     And the "$about-section" element contains "zone-1"
     And the "$about-section" element contains "kuma.io/origin:zone"
-    And the "$about-section" element contains "Zone ingress"
-    And the "$about-section" element contains "Zone egress"
+    And the "$about-section" element contains "ZoneIngress"
+    And the "$about-section" element contains "ZoneEgress"

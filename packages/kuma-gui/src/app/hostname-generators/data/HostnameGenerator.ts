@@ -1,3 +1,4 @@
+import { Kri } from '@/app/kuma/kri'
 import { Resource } from '@/app/resources/data/Resource'
 import type { components } from '@kumahq/kuma-http-api'
 
@@ -11,18 +12,22 @@ export const HostnameGenerator = {
 
   fromObject(item: HostnameGeneratorItem) {
     const labels = item.labels ?? {}
-    const name = labels['kuma.io/display-name'] ?? item.name
+    const id = item.name
+    const zone = labels['kuma.io/origin'] === 'zone' && labels['kuma.io/zone'] ? labels['kuma.io/zone'] : ''
     const namespace = labels['k8s.kuma.io/namespace'] ?? ''
+    const name = labels['kuma.io/display-name'] ?? item.name
 
     return {
       ...item,
-      id: item.name,
+      kri: item.kri ?? Kri.toString({ shortName: 'hg', mesh: '', zone, namespace, name }),
       name,
-      namespace,
-      zone: labels['kuma.io/origin'] === 'zone' && labels['kuma.io/zone'] ? labels['kuma.io/zone'] : '',
+      labels,
       creationTime: item.creationTime ?? '',
       modificationTime: item.modificationTime ?? '',
-      labels,
+      // aliases
+      id,
+      namespace,
+      zone,
       spec: ((item = { template: '' }) => {
         return {
           ...item,
