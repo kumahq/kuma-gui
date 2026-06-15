@@ -46,6 +46,15 @@ properties:
                   additionalProperties:
                     type: string
               type: object
+  creationTime:
+    description: Time at which the resource was created
+    type: string
+    format: date-time
+    readOnly: true
+  kri:
+    description: Kuma Resource Identifier (KRI) of the given resource
+    type: string
+    readOnly: true
   labels:
     type: object
     additionalProperties:
@@ -124,6 +133,11 @@ properties:
       enabledBackend:
         description: Name of the enabled backend
         type: string
+  modificationTime:
+    description: Time at which the resource was updated
+    type: string
+    format: date-time
+    readOnly: true
   mtls:
     description: |-
       mTLS settings.
@@ -268,10 +282,6 @@ properties:
         description: Name of the default backend
         type: string
   type:
-    type: string
-  creationTime:
-    type: string
-  modificationTime:
     type: string
 required:
   - type
