@@ -17,7 +17,9 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
   const serviceCount = parseInt(env('KUMA_SERVICE_COUNT', `${fake.number.int({ min: 1, max: 120 })}`))
 
   return {
-    headers: {},
+    headers: {
+      ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
+    },
     body: {
       total,
       next,

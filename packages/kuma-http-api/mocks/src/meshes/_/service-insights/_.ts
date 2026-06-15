@@ -11,7 +11,9 @@ export default ({ fake }: Dependencies): ResponseHandler => (req) => {
   const status = serviceType !== 'external' ? fake.kuma.serviceStatusKeyword() : undefined
 
   return {
-    headers: {},
+    headers: {
+      ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
+    },
     body: {
       type: 'ServiceInsight',
       mesh,

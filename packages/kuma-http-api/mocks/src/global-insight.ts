@@ -23,6 +23,7 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (_req) => {
 
   return {
     headers: {
+      ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
     },
     body: {
       createdAt: fake.kuma.nanodate(),

@@ -29,7 +29,9 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
 
   const k8sFormat = req.url.searchParams.get('format') === 'kubernetes'
   return {
-    headers: {},
+    headers: {
+      ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
+    },
     body: {
       ...(k8sFormat ? {
         apiVersion: 'kuma.io/v1alpha1',

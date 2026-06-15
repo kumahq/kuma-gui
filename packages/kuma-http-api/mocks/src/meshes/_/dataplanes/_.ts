@@ -33,7 +33,9 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
 
 
   return {
-    headers: {},
+    headers: {
+      ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
+    },
     body: {
       ...(k8sFormat ? {
         apiVersion: 'kuma.io/v1alpha1',

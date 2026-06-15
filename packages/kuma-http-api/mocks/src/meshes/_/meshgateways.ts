@@ -17,7 +17,9 @@ export default ({ env, fake, pager }: Dependencies): ResponseHandler => (req) =>
   const queryZone = req.url.searchParams.get('filter[labels.kuma.io/zone]')
 
   return {
-    headers: {},
+    headers: {
+      ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
+    },
     body: {
       total,
       next,

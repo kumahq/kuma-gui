@@ -1,15 +1,19 @@
 import type { Dependencies, ResponseHandler } from '#mocks'
 
-export default (_deps: Dependencies): ResponseHandler => (req) => {
+export default ({ fake }: Dependencies): ResponseHandler => (req) => {
   switch (req.method.toUpperCase()) {
     case 'DELETE':
       return {
-        headers: {},
+        headers: {
+          ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
+        },
         body: {},
       }
     default:
       return {
-        headers: {},
+        headers: {
+          ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
+        },
         body: {
           type: 'Zone',
           name: req.params.name,

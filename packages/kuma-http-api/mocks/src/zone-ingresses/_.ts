@@ -25,7 +25,9 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
   const name = kri ? `${displayName}${nspace ? `.${nspace}` : ''}` : String(req.params.name)
 
   return {
-    headers: {},
+    headers: {
+      ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
+    },
     body: {
       ...(req.url.searchParams.get('format') === 'kubernetes' && {
         apiVersion: 'kuma.io/v1alpha1',

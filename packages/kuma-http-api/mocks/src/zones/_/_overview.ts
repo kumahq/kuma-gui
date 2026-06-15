@@ -9,6 +9,7 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
 
   return {
     headers: {
+      ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
       'Status-Code': env('KUMA_STATUS_CODE', '200'),
     },
     body: {

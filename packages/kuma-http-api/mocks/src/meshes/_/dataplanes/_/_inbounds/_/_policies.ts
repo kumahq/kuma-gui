@@ -8,7 +8,9 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
   const mesh = req.params.mesh as string
   const ruleCount = parseInt(env('KUMA_DATAPLANE_RULE_COUNT', `${fake.number.int({ min: 1, max: 5 })}`))
   return {
-    headers: {},
+    headers: {
+      ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
+    },
     body: {
       policies: Array.from({ length: fake.number.int({ min: 1, max: 10 })}).map(() => {
         const kind = fake.kuma.policyName()

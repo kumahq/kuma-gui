@@ -74,7 +74,9 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
   const service = fake.word.noun()
 
   return {
-    headers: {},
+    headers: {
+      ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
+    },
     body: {
       type: 'DataplaneOverview',
       mesh,

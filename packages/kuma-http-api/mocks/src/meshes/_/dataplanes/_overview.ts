@@ -60,7 +60,9 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
   })()
 
   return {
-    headers: {},
+    headers: {
+      ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
+    },
     body: {
       total,
       items: Array.from({ length: pageTotal }).map((_, i) => {

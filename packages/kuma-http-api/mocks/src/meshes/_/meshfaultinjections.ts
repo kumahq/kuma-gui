@@ -13,7 +13,9 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
   const queryNamespace = req.url.searchParams.get('filter[labels.k8s.kuma.io/namespace]')
 
   return {
-    headers: {},
+    headers: {
+      ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
+    },
     body: {
       total,
       items: Array.from({ length: pageTotal }).map((_, i) => {
