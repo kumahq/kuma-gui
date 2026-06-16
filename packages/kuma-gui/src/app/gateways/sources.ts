@@ -62,7 +62,7 @@ export const sources = (api: KumaApi) => {
             mesh,
             name,
           },
-          // @ts-ignore
+          // @ts-expect-error OpenAPI says this is undefined
           query: {
             format: 'kubernetes',
           },

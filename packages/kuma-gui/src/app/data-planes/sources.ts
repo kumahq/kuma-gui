@@ -227,7 +227,7 @@ export const sources = (api: KumaApi) => {
           path: {
             mesh,
           },
-          // @ts-ignore OpenAPI is wrong
+          // @ts-expect-error OpenAPI says query is undefined
           query: {
             ...search,
             ...zoneIngress,
@@ -257,7 +257,7 @@ export const sources = (api: KumaApi) => {
           path: {
             mesh,
           },
-          // @ts-ignore OpenAPI is wrong
+          // @ts-expect-error OpenAPI says query is undefined
           query: {
             ...search,
             // @TODO check these tags
@@ -284,7 +284,7 @@ export const sources = (api: KumaApi) => {
           path: {
             mesh,
           },
-          // @ts-ignore OpenAPI is wrong
+          // @ts-expect-error OpenAPI says query is undefined
           query: {
             ...search,
             // @TODO check these tags
