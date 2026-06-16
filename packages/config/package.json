@@ -59,7 +59,7 @@
     "eslint-plugin-vue": "^10.9.2",
     "globals": "^17.6.0",
     "husky": "^9.1.7",
-    "js-yaml": "^4.1.1",
+    "js-yaml": "^4.2.0",
     "lint-staged": "^17.0.7",
     "lockfile-lint": "^5.0.0",
     "markdown-it": "^14.1.1",
