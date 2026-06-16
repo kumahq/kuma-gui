@@ -15,7 +15,7 @@
     "@kong-ui-public/app-layout": "4.11.5",
     "@kong/kongponents": "^9.56.2",
     "@kong/icons": "^1.56.0",
-    "shiki": "^4.1.0",
+    "shiki": "^4.2.0",
     "@vueuse/core": "^14.3.0",
     "@vue/shared": "^3.5.34",
     "vue-global-events": "^3.0.1",
