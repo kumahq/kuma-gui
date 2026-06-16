@@ -4,7 +4,7 @@ info:
   description: Kuma API
   version: v1alpha1
   x-ref-schema-name: DataplaneOverview
-  x-oas-source: kumahq/kuma@4b7a9d41cbd71752765683211ff56c78a59dedcd
+  x-oas-source: kumahq/kuma@e3e1d3b8291b035017a60ca3386967fbd6e95c86
 paths:
   /:
     get:
@@ -5350,6 +5350,15 @@ components:
     DataplaneItem:
       type: object
       properties:
+        creationTime:
+          description: Time at which the resource was created
+          type: string
+          format: date-time
+          readOnly: true
+        kri:
+          description: Kuma Resource Identifier (KRI) of the given resource
+          type: string
+          readOnly: true
         labels:
           type: object
           additionalProperties:
@@ -5375,6 +5384,11 @@ components:
             type:
               description: Type of the backend (Kuma ships with 'prometheus')
               type: string
+        modificationTime:
+          description: Time at which the resource was updated
+          type: string
+          format: date-time
+          readOnly: true
         name:
           type: string
         networking:
@@ -5934,6 +5948,15 @@ components:
                         additionalProperties:
                           type: string
                     type: object
+        creationTime:
+          description: Time at which the resource was created
+          type: string
+          format: date-time
+          readOnly: true
+        kri:
+          description: Kuma Resource Identifier (KRI) of the given resource
+          type: string
+          readOnly: true
         labels:
           type: object
           additionalProperties:
@@ -6012,6 +6035,11 @@ components:
             enabledBackend:
               description: Name of the enabled backend
               type: string
+        modificationTime:
+          description: Time at which the resource was updated
+          type: string
+          format: date-time
+          readOnly: true
         mtls:
           description: |-
             mTLS settings.
@@ -6157,10 +6185,6 @@ components:
               type: string
         type:
           type: string
-        creationTime:
-          type: string
-        modificationTime:
-          type: string
       required:
         - type
         - name
@@ -6295,17 +6319,11 @@ components:
                                         - MeshOpenTelemetryBackend
                                     labels:
                                       description: |-
-                                        Labels to match the referenced resource. Use for cross-zone references
-                                        where KDS adds a hash suffix to metadata.name. Mutually exclusive with
-                                        Name. When multiple resources match, the oldest by creation time wins.
+                                        Labels to match the referenced resource. When multiple resources match,
+                                        the oldest by creation time wins.
                                       type: object
                                       additionalProperties:
                                         type: string
-                                    name:
-                                      description: |-
-                                        Name of the referenced resource (metadata.name). Use for same-cluster
-                                        references. Mutually exclusive with Labels.
-                                      type: string
                                   required:
                                     - kind
                                 body:
@@ -6551,17 +6569,11 @@ components:
                                         - MeshOpenTelemetryBackend
                                     labels:
                                       description: |-
-                                        Labels to match the referenced resource. Use for cross-zone references
-                                        where KDS adds a hash suffix to metadata.name. Mutually exclusive with
-                                        Name. When multiple resources match, the oldest by creation time wins.
+                                        Labels to match the referenced resource. When multiple resources match,
+                                        the oldest by creation time wins.
                                       type: object
                                       additionalProperties:
                                         type: string
-                                    name:
-                                      description: |-
-                                        Name of the referenced resource (metadata.name). Use for same-cluster
-                                        references. Mutually exclusive with Labels.
-                                      type: string
                                   required:
                                     - kind
                                 body:
@@ -6849,17 +6861,11 @@ components:
                                         - MeshOpenTelemetryBackend
                                     labels:
                                       description: |-
-                                        Labels to match the referenced resource. Use for cross-zone references
-                                        where KDS adds a hash suffix to metadata.name. Mutually exclusive with
-                                        Name. When multiple resources match, the oldest by creation time wins.
+                                        Labels to match the referenced resource. When multiple resources match,
+                                        the oldest by creation time wins.
                                       type: object
                                       additionalProperties:
                                         type: string
-                                    name:
-                                      description: |-
-                                        Name of the referenced resource (metadata.name). Use for same-cluster
-                                        references. Mutually exclusive with Labels.
-                                      type: string
                                   required:
                                     - kind
                                 body:
@@ -8680,12 +8686,26 @@ components:
                         type: object
                         properties: {}
                 type: object
+        creationTime:
+          description: Time at which the resource was created
+          type: string
+          format: date-time
+          readOnly: true
+        kri:
+          description: Kuma Resource Identifier (KRI) of the given resource
+          type: string
+          readOnly: true
         labels:
           type: object
           additionalProperties:
             type: string
         mesh:
           type: string
+        modificationTime:
+          description: Time at which the resource was updated
+          type: string
+          format: date-time
+          readOnly: true
         name:
           type: string
         selectors:
@@ -10460,17 +10480,11 @@ components:
                                   - MeshOpenTelemetryBackend
                               labels:
                                 description: |-
-                                  Labels to match the referenced resource. Use for cross-zone references
-                                  where KDS adds a hash suffix to metadata.name. Mutually exclusive with
-                                  Name. When multiple resources match, the oldest by creation time wins.
+                                  Labels to match the referenced resource. When multiple resources match,
+                                  the oldest by creation time wins.
                                 type: object
                                 additionalProperties:
                                   type: string
-                              name:
-                                description: |-
-                                  Name of the referenced resource (metadata.name). Use for same-cluster
-                                  references. Mutually exclusive with Labels.
-                                type: string
                             required:
                               - kind
                           endpoint:
@@ -13597,17 +13611,11 @@ components:
                                   - MeshOpenTelemetryBackend
                               labels:
                                 description: |-
-                                  Labels to match the referenced resource. Use for cross-zone references
-                                  where KDS adds a hash suffix to metadata.name. Mutually exclusive with
-                                  Name. When multiple resources match, the oldest by creation time wins.
+                                  Labels to match the referenced resource. When multiple resources match,
+                                  the oldest by creation time wins.
                                 type: object
                                 additionalProperties:
                                   type: string
-                              name:
-                                description: |-
-                                  Name of the referenced resource (metadata.name). Use for same-cluster
-                                  references. Mutually exclusive with Labels.
-                                type: string
                             required:
                               - kind
                           endpoint:
@@ -14182,10 +14190,24 @@ components:
     ZoneEgressItem:
       type: object
       properties:
+        creationTime:
+          description: Time at which the resource was created
+          type: string
+          format: date-time
+          readOnly: true
+        kri:
+          description: Kuma Resource Identifier (KRI) of the given resource
+          type: string
+          readOnly: true
         labels:
           type: object
           additionalProperties:
             type: string
+        modificationTime:
+          description: Time at which the resource was updated
+          type: string
+          format: date-time
+          readOnly: true
         name:
           type: string
         networking:
@@ -14240,10 +14262,24 @@ components:
                 additionalProperties:
                   type: string
             type: object
+        creationTime:
+          description: Time at which the resource was created
+          type: string
+          format: date-time
+          readOnly: true
+        kri:
+          description: Kuma Resource Identifier (KRI) of the given resource
+          type: string
+          readOnly: true
         labels:
           type: object
           additionalProperties:
             type: string
+        modificationTime:
+          description: Time at which the resource was updated
+          type: string
+          format: date-time
+          readOnly: true
         name:
           type: string
         networking:
@@ -14986,6 +15022,11 @@ components:
     SecretItem:
       type: object
       properties:
+        creationTime:
+          description: Time at which the resource was created
+          type: string
+          format: date-time
+          readOnly: true
         data:
           description: Value of the secret
           type: string
@@ -14996,6 +15037,11 @@ components:
             type: string
         mesh:
           type: string
+        modificationTime:
+          description: Time at which the resource was updated
+          type: string
+          format: date-time
+          readOnly: true
         name:
           type: string
         type:
