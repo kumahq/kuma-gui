@@ -121,6 +121,7 @@ export const sources = (api: KumaApi) => {
           case 'stats':
             prev.push(async () => {
               const res = await http.GET('/meshes/{mesh}/dataplanes/{name}/stats', {
+                parseAs: 'text',
                 params: {
                   path: {
                     mesh,
@@ -137,6 +138,7 @@ export const sources = (api: KumaApi) => {
           case 'clusters':
             prev.push(async () => {
               const res = await http.GET('/meshes/{mesh}/dataplanes/{name}/clusters', {
+                parseAs: 'text',
                 params: {
                   path: {
                     mesh,

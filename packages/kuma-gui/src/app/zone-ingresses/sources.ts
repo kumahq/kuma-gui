@@ -45,7 +45,7 @@ export const sources = (api: KumaApi) => {
 
     '/zone-ingresses/:name': async (params) => {
       const { name } = params
-      const res = await http.GET('/zone-ingresses/{name}', {
+      const res = await http.GET('/zoneingresses/{name}', {
         params: {
           path: {
             name,
@@ -60,24 +60,28 @@ export const sources = (api: KumaApi) => {
       const { name } = params
       const dataPath = includes(['xds', 'clusters', 'stats'] as const, params.dataPath) ? params.dataPath : 'xds'
       const res = await http.GET(`/zoneingresses/{name}/${dataPath}`, {
+        ...(dataPath !== 'xds' ? {
+          parseAs: 'text',
+        } : {}),
         params: {
           path: {
             name,
           },
         },
       })
-      // TODO
+      // TODO this can be object | string, we might want to split these for TS sake
       return res.data
     },
 
     '/zone-ingresses/:name/as/kubernetes': async (params) => {
       const { name } = params
 
-      const res = await http.GET('/zone-ingresses/{name}', {
+      const res = await http.GET('/zoneingresses/{name}', {
         params: {
           path: {
             name,
           },
+          // @ts-expect-error OpenAPI says this is undefined
           query: {
             format: 'kubernetes',
           },
@@ -133,6 +137,7 @@ export const sources = (api: KumaApi) => {
           case 'stats':
             prev.push(async () => {
               const res = await http.GET('/zoneingresses/{name}/stats', {
+                parseAs: 'text',
                 params: {
                   path: {
                     name,

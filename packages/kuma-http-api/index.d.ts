@@ -1113,33 +1113,13 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: {
-            parameters: {
-                query?: {
-                    format?: components["parameters"]["format"];
-                };
-                header?: never;
-                path: {
-                    name: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description 200 */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": Record<string, never>;
-                    };
-                };
-            };
-        };
-        put?: never;
+        /** Returns ZoneIngress entity */
+        get: operations["getZoneIngress"];
+        /** Creates or Updates ZoneIngress entity */
+        put: operations["putZoneIngress"];
         post?: never;
-        delete?: never;
+        /** Deletes ZoneIngress entity */
+        delete: operations["deleteZoneIngress"];
         options?: never;
         head?: never;
         patch?: never;
@@ -2113,7 +2093,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": Record<string, never>;
+                        "application/json": components["schemas"]["ZoneIngressItem"];
                     };
                 };
             };
@@ -2189,7 +2169,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": string;
+                        "text/plain": string;
                     };
                 };
             };
@@ -2226,7 +2206,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": string;
+                        "text/plain": string;
                     };
                 };
             };
@@ -2239,12 +2219,204 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/zone-egresses/_overview": paths["/zone-ingresses/_overview"];
-    "/zone-egresses/{name}/_overview": paths["/zone-ingresses/{name}/_overview"];
-    "/zone-egresses/{name}": paths["/zone-ingresses/{name}"];
-    "/zoneegresses/{name}/xds": paths["/zoneingresses/{name}/xds"];
-    "/zoneegresses/{name}/stats": paths["/zoneingresses/{name}/stats"];
-    "/zoneegresses/{name}/clusters": paths["/zoneingresses/{name}/clusters"];
+    "/zoneegresses/_overview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: {
+                    name?: components["parameters"]["name"];
+                    size?: components["parameters"]["size"];
+                    offset?: components["parameters"]["offset"];
+                    /**
+                     * @description filter by labels when multiple filters are present, they are ANDed
+                     * @example {
+                     *       "label.k8s.kuma.io/namespace": "my-ns"
+                     *     }
+                     */
+                    "undefined"?: components["parameters"]["filter"];
+                };
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description 200 */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": Record<string, never>;
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/zoneegresses/{name}/_overview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: {
+                    format?: components["parameters"]["format"];
+                };
+                header?: never;
+                path: {
+                    name: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description 200 */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": Record<string, never>;
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/zoneegresses/{name}/xds": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: {
+                    include_eds?: string;
+                };
+                header?: never;
+                path: {
+                    name: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description 200 */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": Record<string, never>;
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/zoneegresses/{name}/stats": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    name: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description 200 */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": string;
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/zoneegresses/{name}/clusters": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    name: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description 200 */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": string;
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -12591,6 +12763,39 @@ export interface components {
             };
         };
         /** @description Successful response */
+        ZoneIngressDeleteSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": Record<string, never>;
+            };
+        };
+        /** @description Successful response */
+        ZoneIngressItem: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["ZoneIngressItem"];
+            };
+        };
+        /** @description Successful response */
+        ZoneIngressCreateOrUpdateSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    /**
+                     * @description warnings is a list of warning messages to return to the requesting Kuma API clients.
+                     *     Warning messages describe a problem the client making the API request should correct or be aware of.
+                     */
+                    readonly warnings?: string[];
+                };
+            };
+        };
+        /** @description Successful response */
         HostnameGeneratorItem: {
             headers: {
                 [name: string]: unknown;
@@ -13020,39 +13225,6 @@ export interface components {
                     /** @description URL to the next page */
                     next?: string;
                 };
-            };
-        };
-        /** @description Successful response */
-        ZoneIngressCreateOrUpdateSuccessResponse: {
-            headers: {
-                [name: string]: unknown;
-            };
-            content: {
-                "application/json": {
-                    /**
-                     * @description warnings is a list of warning messages to return to the requesting Kuma API clients.
-                     *     Warning messages describe a problem the client making the API request should correct or be aware of.
-                     */
-                    readonly warnings?: string[];
-                };
-            };
-        };
-        /** @description Successful response */
-        ZoneIngressDeleteSuccessResponse: {
-            headers: {
-                [name: string]: unknown;
-            };
-            content: {
-                "application/json": Record<string, never>;
-            };
-        };
-        /** @description Successful response */
-        ZoneIngressItem: {
-            headers: {
-                [name: string]: unknown;
-            };
-            content: {
-                "application/json": components["schemas"]["ZoneIngressItem"];
             };
         };
     };
@@ -15404,6 +15576,59 @@ export interface operations {
         requestBody?: never;
         responses: {
             200: components["responses"]["ZoneIngressList"];
+        };
+    };
+    getZoneIngress: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the ZoneIngress */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["ZoneIngressItem"];
+            404: components["responses"]["NotFound"];
+        };
+    };
+    putZoneIngress: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the ZoneIngress */
+                name: string;
+            };
+            cookie?: never;
+        };
+        /** @description Put request */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ZoneIngressItem"];
+            };
+        };
+        responses: {
+            200: components["responses"]["ZoneIngressCreateOrUpdateSuccessResponse"];
+            201: components["responses"]["ZoneIngressCreateOrUpdateSuccessResponse"];
+        };
+    };
+    deleteZoneIngress: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the ZoneIngress */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["ZoneIngressDeleteSuccessResponse"];
+            404: components["responses"]["NotFound"];
         };
     };
     getHostnameGenerator: {

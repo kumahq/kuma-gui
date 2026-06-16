@@ -3092,20 +3092,64 @@ paths:
       tags:
         - ZoneIngress
   /zoneingresses/{name}:
-    get:
+    delete:
+      operationId: deleteZoneIngress
+      summary: Deletes ZoneIngress entity
       parameters:
         - name: name
           in: path
+          description: name of the ZoneIngress
           required: true
-          type: string
-        - $ref: '#/components/parameters/format'
+          schema:
+            type: string
       responses:
         '200':
-          description: '200'
-          content:
-            application/json:
-              schema:
-                type: object
+          $ref: '#/components/responses/ZoneIngressDeleteSuccessResponse'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      tags:
+        - ZoneIngress
+    get:
+      operationId: getZoneIngress
+      summary: Returns ZoneIngress entity
+      parameters:
+        - name: name
+          in: path
+          description: name of the ZoneIngress
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/ZoneIngressItem'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      tags:
+        - ZoneIngress
+    put:
+      operationId: putZoneIngress
+      summary: Creates or Updates ZoneIngress entity
+      parameters:
+        - name: name
+          in: path
+          description: name of the ZoneIngress
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Put request
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ZoneIngressItem'
+      responses:
+        '200':
+          $ref: '#/components/responses/ZoneIngressCreateOrUpdateSuccessResponse'
+        '201':
+          $ref: '#/components/responses/ZoneIngressCreateOrUpdateSuccessResponse'
+      tags:
+        - ZoneIngress
   /hostnamegenerators/{name}:
     get:
       operationId: getHostnameGenerator
@@ -4437,7 +4481,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                $ref: '#/components/schemas/ZoneIngressItem'
   /zoneingresses/{name}/xds:
     get:
       parameters:
@@ -4467,7 +4511,7 @@ paths:
         '200':
           description: '200'
           content:
-            application/json:
+            text/plain:
               schema:
                 type: string
   /zoneingresses/{name}/clusters:
@@ -4481,21 +4525,84 @@ paths:
         '200':
           description: '200'
           content:
-            application/json:
+            text/plain:
               schema:
                 type: string
-  /zone-egresses/_overview:
-    $ref: '#/paths/~1zone-ingresses~1_overview'
-  /zone-egresses/{name}/_overview:
-    $ref: '#/paths/~1zone-ingresses~1%7Bname%7D~1_overview'
-  /zone-egresses/{name}:
-    $ref: '#/paths/~1zone-ingresses~1%7Bname%7D'
+  /zoneegresses/_overview:
+    get:
+      parameters:
+        - $ref: '#/components/parameters/name'
+        - $ref: '#/components/parameters/size'
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/filter'
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                type: object
+  /zoneegresses/{name}/_overview:
+    get:
+      parameters:
+        - name: name
+          in: path
+          required: true
+          type: string
+        - $ref: '#/components/parameters/format'
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                type: object
   /zoneegresses/{name}/xds:
-    $ref: '#/paths/~1zoneingresses~1%7Bname%7D~1xds'
+    get:
+      parameters:
+        - name: name
+          in: path
+          required: true
+          type: string
+        - name: include_eds
+          in: query
+          required: false
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                type: object
   /zoneegresses/{name}/stats:
-    $ref: '#/paths/~1zoneingresses~1%7Bname%7D~1stats'
+    get:
+      parameters:
+        - name: name
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            text/plain:
+              schema:
+                type: string
   /zoneegresses/{name}/clusters:
-    $ref: '#/paths/~1zoneingresses~1%7Bname%7D~1clusters'
+    get:
+      parameters:
+        - name: name
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            text/plain:
+              schema:
+                type: string
 components:
   parameters:
     name:
@@ -18338,6 +18445,33 @@ components:
               total:
                 description: The total number of entities
                 type: number
+    ZoneIngressDeleteSuccessResponse:
+      description: Successful response
+      content:
+        application/json:
+          schema:
+            type: object
+    ZoneIngressItem:
+      description: Successful response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ZoneIngressItem'
+    ZoneIngressCreateOrUpdateSuccessResponse:
+      description: Successful response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              warnings:
+                description: |
+                  warnings is a list of warning messages to return to the requesting Kuma API clients.
+                  Warning messages describe a problem the client making the API request should correct or be aware of.
+                type: array
+                items:
+                  type: string
+                readOnly: true
     HostnameGeneratorItem:
       description: Successful response
       content:
@@ -18734,33 +18868,6 @@ components:
               next:
                 description: URL to the next page
                 type: string
-    ZoneIngressCreateOrUpdateSuccessResponse:
-      description: Successful response
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              warnings:
-                description: |
-                  warnings is a list of warning messages to return to the requesting Kuma API clients.
-                  Warning messages describe a problem the client making the API request should correct or be aware of.
-                type: array
-                items:
-                  type: string
-                readOnly: true
-    ZoneIngressDeleteSuccessResponse:
-      description: Successful response
-      content:
-        application/json:
-          schema:
-            type: object
-    ZoneIngressItem:
-      description: Successful response
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ZoneIngressItem'
   securitySchemes:
     BasicAuth:
       type: http

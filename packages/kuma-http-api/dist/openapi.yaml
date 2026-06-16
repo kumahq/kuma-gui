@@ -201,18 +201,16 @@ paths:
     $ref: paths/zoneingresses_{name}_stats.yaml
   /zoneingresses/{name}/clusters:
     $ref: paths/zoneingresses_{name}_clusters.yaml
-  /zone-egresses/_overview:
-    $ref: paths/zone-ingresses__overview.yaml
-  /zone-egresses/{name}/_overview:
-    $ref: paths/zone-ingresses_{name}_overview.yaml
-  /zone-egresses/{name}:
-    $ref: paths/zone-ingresses_{name}.yaml
+  /zoneegresses/_overview:
+    $ref: paths/zoneegresses__overview.yaml
+  /zoneegresses/{name}/_overview:
+    $ref: paths/zoneegresses_{name}_overview.yaml
   /zoneegresses/{name}/xds:
-    $ref: paths/zoneingresses_{name}_xds.yaml
+    $ref: paths/zoneegresses_{name}_xds.yaml
   /zoneegresses/{name}/stats:
-    $ref: paths/zoneingresses_{name}_stats.yaml
+    $ref: paths/zoneegresses_{name}_stats.yaml
   /zoneegresses/{name}/clusters:
-    $ref: paths/zoneingresses_{name}_clusters.yaml
+    $ref: paths/zoneegresses_{name}_clusters.yaml
 components:
   schemas:
     Index:

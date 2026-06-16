@@ -29,7 +29,7 @@ export const sources = (api: KumaApi) => {
       const offset = size * (page - 1)
       const search = ZoneEgressOverview.search(params.search)
 
-      const res = await http.GET('/zone-egresses/_overview', {
+      const res = await http.GET('/zoneegresses/_overview', {
         params: {
           query: {
             offset,
@@ -45,7 +45,7 @@ export const sources = (api: KumaApi) => {
 
     '/zone-egresses/:name': async (params) => {
       const { name } = params
-      const res = await http.GET('/zone-egresses/{name}', {
+      const res = await http.GET('/zoneegresses/{name}', {
         params: {
           path: {
             name,
@@ -59,11 +59,12 @@ export const sources = (api: KumaApi) => {
     '/zone-egresses/:name/as/kubernetes': async (params) => {
       const { name } = params
 
-      const res = await http.GET('/zone-egresses/{name}', {
+      const res = await http.GET('/zoneegresses/{name}', {
         params: {
           path: {
             name,
           },
+          // @ts-expect-error OpenAPI says this is undefined
           query: {
             format: 'kubernetes',
           },
@@ -83,7 +84,7 @@ export const sources = (api: KumaApi) => {
         switch (key) {
           case 'proxy':
             prev.push(async () => {
-              const res = await http.GET('/zone-egresses/{name}', {
+              const res = await http.GET('/zoneegresses/{name}', {
                 params: {
                   path: {
                     name,
@@ -99,6 +100,7 @@ export const sources = (api: KumaApi) => {
           case 'xds':
             prev.push(async () => {
               const res = await http.GET('/zoneegresses/{name}/xds', {
+                parseAs: 'text',
                 params: {
                   path: {
                     name,
@@ -117,6 +119,7 @@ export const sources = (api: KumaApi) => {
           case 'stats':
             prev.push(async () => {
               const res = await http.GET('/zoneegresses/{name}/stats', {
+                parseAs: 'text',
                 params: {
                   path: {
                     name,
@@ -132,6 +135,7 @@ export const sources = (api: KumaApi) => {
           case 'clusters':
             prev.push(async () => {
               const res = await http.GET('/zoneegresses/{name}/clusters', {
+                parseAs: 'text',
                 params: {
                   path: {
                     name,
@@ -165,13 +169,16 @@ export const sources = (api: KumaApi) => {
       const dataPath = includes(['xds', 'clusters', 'stats'] as const, params.dataPath) ? params.dataPath : 'xds'
 
       const res = await http.GET(`/zoneegresses/{name}/${dataPath}`, {
+        ...(dataPath !== 'xds' ? {
+          parseAs: 'text',
+        } : {}),
         params: {
           path: {
             name,
           },
         },
       })
-      // TODO
+      // TODO this can be object | string, we might want to split these for TS sake
       return res.data
     },
 
@@ -179,7 +186,7 @@ export const sources = (api: KumaApi) => {
       const { size } = params
       const offset = params.size * (params.page - 1)
 
-      const res = await http.GET('/zone-egresses/_overview', {
+      const res = await http.GET('/zoneegresses/_overview', {
         params: {
           query: {
             offset,
@@ -192,7 +199,7 @@ export const sources = (api: KumaApi) => {
 
     '/zone-egress-overviews/:name': async (params) => {
       const { name } = params
-      const res = await http.GET('/zone-egresses/{name}/_overview', {
+      const res = await http.GET('/zoneegresses/{name}/_overview', {
         params: {
           path: {
             name,

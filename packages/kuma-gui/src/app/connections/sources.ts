@@ -58,6 +58,7 @@ export const sources = (api: KumaApi) => {
         switch (proxyType) {
           case 'dataplane': {
             const res = await http.GET('/meshes/{mesh}/dataplanes/{name}/stats', {
+              parseAs: 'text',
               params: {
                 path: {
                   mesh,
@@ -65,27 +66,29 @@ export const sources = (api: KumaApi) => {
                 },
               },
             })
-            return res.data!
+            return res.data ?? ''
           }
           case 'zone-ingress': {
             const res = await http.GET('/zoneingresses/{name}/stats', {
+              parseAs: 'text',
               params: {
                 path: {
                   name,
                 },
               },
             })
-            return res.data!
+            return res.data ?? ''
           }
           case 'zone-egress': {
             const res = await http.GET('/zoneegresses/{name}/stats', {
+              parseAs: 'text',
               params: {
                 path: {
                   name,
                 },
               },
             })
-            return res.data!
+            return res.data ?? ''
           }
           default:
             throw new Error('incorrect value for proxyType')
@@ -146,6 +149,7 @@ export const sources = (api: KumaApi) => {
         switch (proxyType) {
           case 'dataplane': {
             const res = await http.GET('/meshes/{mesh}/dataplanes/{name}/clusters', {
+              parseAs: 'text',
               params: {
                 path: {
                   mesh,
@@ -153,27 +157,29 @@ export const sources = (api: KumaApi) => {
                 },
               },
             })
-            return res.data!
+            return res.data ?? ''
           }
           case 'zone-ingress': {
             const res = await http.GET('/zoneingresses/{name}/clusters', {
+              parseAs: 'text',
               params: {
                 path: {
                   name,
                 },
               },
             })
-            return res.data!
+            return res.data ?? ''
           }
           case 'zone-egress': {
             const res = await http.GET('/zoneegresses/{name}/clusters', {
+              parseAs: 'text',
               params: {
                 path: {
                   name,
                 },
               },
             })
-            return res.data!
+            return res.data ?? ''
           }
           default:
             throw new Error('incorrect value for proxyType')
