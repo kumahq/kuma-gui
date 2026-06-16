@@ -1517,7 +1517,13 @@ export interface paths {
                     name?: components["parameters"]["name"];
                     size?: components["parameters"]["size"];
                     offset?: components["parameters"]["offset"];
-                    filter?: components["parameters"]["filter"];
+                    /**
+                     * @description filter by labels when multiple filters are present, they are ANDed
+                     * @example {
+                     *       "label.k8s.kuma.io/namespace": "my-ns"
+                     *     }
+                     */
+                    "undefined"?: components["parameters"]["filter"];
                 };
                 header?: never;
                 path?: never;
@@ -1596,7 +1602,13 @@ export interface paths {
                     type?: string;
                     size?: components["parameters"]["size"];
                     offset?: components["parameters"]["offset"];
-                    filter?: components["parameters"]["filter"];
+                    /**
+                     * @description filter by labels when multiple filters are present, they are ANDed
+                     * @example {
+                     *       "label.k8s.kuma.io/namespace": "my-ns"
+                     *     }
+                     */
+                    "undefined"?: components["parameters"]["filter"];
                 };
                 header?: never;
                 path: {
@@ -1675,10 +1687,15 @@ export interface paths {
         get: {
             parameters: {
                 query?: {
-                    tag?: string;
                     size?: components["parameters"]["size"];
                     offset?: components["parameters"]["offset"];
-                    filter?: components["parameters"]["filter"];
+                    /**
+                     * @description filter by labels when multiple filters are present, they are ANDed
+                     * @example {
+                     *       "label.k8s.kuma.io/namespace": "my-ns"
+                     *     }
+                     */
+                    "undefined"?: components["parameters"]["filter"];
                 };
                 header?: never;
                 path: {
@@ -1913,7 +1930,13 @@ export interface paths {
                     name?: components["parameters"]["name"];
                     size?: components["parameters"]["size"];
                     offset?: components["parameters"]["offset"];
-                    filter?: components["parameters"]["filter"];
+                    /**
+                     * @description filter by labels when multiple filters are present, they are ANDed
+                     * @example {
+                     *       "label.k8s.kuma.io/namespace": "my-ns"
+                     *     }
+                     */
+                    "undefined"?: components["parameters"]["filter"];
                 };
                 header?: never;
                 path?: never;
@@ -1992,7 +2015,13 @@ export interface paths {
                     name?: components["parameters"]["name"];
                     size?: components["parameters"]["size"];
                     offset?: components["parameters"]["offset"];
-                    filter?: components["parameters"]["filter"];
+                    /**
+                     * @description filter by labels when multiple filters are present, they are ANDed
+                     * @example {
+                     *       "label.k8s.kuma.io/namespace": "my-ns"
+                     *     }
+                     */
+                    "undefined"?: components["parameters"]["filter"];
                 };
                 header?: never;
                 path?: never;
@@ -13029,8 +13058,15 @@ export interface components {
     };
     parameters: {
         name: string;
+        /**
+         * @description filter by labels when multiple filters are present, they are ANDed
+         * @example {
+         *       "label.k8s.kuma.io/namespace": "my-ns"
+         *     }
+         */
         filter: {
-            [key: string]: string;
+            key?: string;
+            value?: string;
         };
         format: string;
         offset: number;

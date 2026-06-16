@@ -4264,8 +4264,6 @@ paths:
           in: path
           required: true
           type: string
-        - name: tag
-          in: query
         - $ref: '#/components/parameters/size'
         - $ref: '#/components/parameters/offset'
         - $ref: '#/components/parameters/filter'
@@ -4508,12 +4506,17 @@ components:
         type: string
     filter:
       in: query
-      name: filter
+      description: filter by labels when multiple filters are present, they are ANDed
       required: false
       schema:
         type: object
-        additionalProperties:
-          type: string
+        properties:
+          key:
+            type: string
+          value:
+            type: string
+      example:
+        label.k8s.kuma.io/namespace: my-ns
     format:
       in: query
       name: format

@@ -28,6 +28,7 @@ export const sources = (api: KumaApi) => {
           path: {
             mesh,
           },
+          // @ts-ignore this needs to accept &tag=...&tag...
           query: {
             size,
             offset,

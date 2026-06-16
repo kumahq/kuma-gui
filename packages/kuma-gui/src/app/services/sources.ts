@@ -13,7 +13,6 @@ import { defineSources } from '@/app/application'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import type { PaginatedApiListResponse as CollectionResponse, ServiceInsightsParameters } from '@/types/api.d'
 import type {
-  ExternalService as PartialExternalService,
   ServiceInsight as PartialServiceInsight,
 } from '@/types/index.d'
 import type { paths } from '@kumahq/kuma-http-api'
@@ -241,49 +240,6 @@ export const sources = (api: KumaApi) => {
       })
 
       return ServiceInsight.fromObject(res.data! as unknown as PartialServiceInsight)
-    },
-
-    // TODO: Remove this when removing external services from the Services tab.
-    '/meshes/:mesh/external-services/for/:service': async (params) => {
-      const { mesh, service } = params
-
-      const res = await http.GET('/meshes/{mesh}/external-services', {
-        params: {
-          path: {
-            mesh,
-          },
-          // @TODO
-          query: {
-            tag: [`kuma.io/service:${service}`],
-          },
-        },
-      })
-
-      // const { items } = await api.getAllExternalServicesFromMesh({ mesh }, {
-      //   tag: [`kuma.io/service:${service}`],
-      // })
-      const { items } = res.data! as unknown as CollectionResponse<PartialExternalService>
-
-      return items.length > 0 ? ExternalService.fromObject(items[0]) : null
-    },
-
-    // TODO: Remove this when removing external services from the Services tab.
-    '/meshes/:mesh/external-service/:name/as/kubernetes': async (params) => {
-      const { mesh, name } = params
-
-      const res = await http.GET('/meshes/{mesh}/external-services/{name}', {
-        params: {
-          path: {
-            mesh,
-            name,
-          },
-          query: {
-            format: 'kubernetes',
-          },
-        },
-      })
-      // TODO
-      return res.data
     },
 
     '/meshes/:mesh/:serviceType/:serviceName/_hostnames': async (params) => {
