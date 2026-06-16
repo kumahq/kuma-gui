@@ -128,6 +128,7 @@ export async function setupSteps({
               await route.fulfill({
                 status: parseInt(response.headers.get('Status-Code') ?? '200'),
                 contentType: type,
+                headers: Object.fromEntries(response.headers.entries()),
                 body,
               })
 
@@ -217,6 +218,7 @@ export async function setupSteps({
             merged = merge({ body: await response.json(), headers: Object.fromEntries(response.headers.entries()) }, _yaml) as any
             await route.fulfill({
               contentType: type,
+              headers: merged.headers,
               status: parseInt(merged.headers?.['Status-Code'] ?? response.headers.get('Status-Code') ?? '200'),
               body: JSON.stringify(merged.body),
             })
@@ -224,6 +226,7 @@ export async function setupSteps({
             merged = _yaml
             await route.fulfill({
               contentType: type,
+              headers: merged.headers,
               status: parseInt(merged.headers?.['Status-Code'] ?? response.headers.get('Status-Code') ?? '200'),
               body: merged.body as string,
             })

@@ -45,7 +45,7 @@ export const sources = (api: KumaApi) => {
 
     '/zone-ingresses/:name': async (params) => {
       const { name } = params
-      const res = await http.GET('/zoneingresses/{name}', {
+      const res = await http.GET('/zone-ingresses/{name}', {
         params: {
           path: {
             name,
@@ -76,12 +76,11 @@ export const sources = (api: KumaApi) => {
     '/zone-ingresses/:name/as/kubernetes': async (params) => {
       const { name } = params
 
-      const res = await http.GET('/zoneingresses/{name}', {
+      const res = await http.GET('/zone-ingresses/{name}', {
         params: {
           path: {
             name,
           },
-          // @ts-expect-error OpenAPI says this is undefined
           query: {
             format: 'kubernetes',
           },
