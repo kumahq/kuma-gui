@@ -70,14 +70,13 @@ export const sources = (api: KumaApi) => {
           },
         },
       })
-      //TODO
+      // TODO: This is actually kubernetes format, right now its fine as we only display it
       return res.data
     },
 
     '/zone-egresses/:name/as/tarball/:spec': async (params) => {
       const { name } = params
       const spec = JSON.parse(params.spec)
-      // @TODO Should we add kubernetes yaml in here also?
       const requests = Object.entries(spec).filter(([_, value]) => {
         return value
       }).reduce((prev, [key]) => {
