@@ -53,7 +53,7 @@
                   bool: (zone.zoneInsight.connectedSubscription?.status.total.responsesRejected ?? 0) > 0,
                   key: 'global-nack-response',
                 },
-              ]"
+              ] satisfies { bool: boolean, key: string, params?: Record<string, string> }[]"
               :key="key"
             >
               <XNotification
