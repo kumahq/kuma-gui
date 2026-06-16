@@ -1,5 +1,9 @@
 get:
   parameters:
+    - name: mesh
+      type: string
+      in: path
+      required: true
     - name: name
       type: string
       in: path
@@ -12,4 +16,3 @@ get:
         application/json:
           schema:
             type: object
-

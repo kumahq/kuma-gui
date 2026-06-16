@@ -3092,64 +3092,20 @@ paths:
       tags:
         - ZoneIngress
   /zoneingresses/{name}:
-    delete:
-      operationId: deleteZoneIngress
-      summary: Deletes ZoneIngress entity
-      parameters:
-        - name: name
-          in: path
-          description: name of the ZoneIngress
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          $ref: '#/components/responses/ZoneIngressDeleteSuccessResponse'
-        '404':
-          $ref: '#/components/responses/NotFound'
-      tags:
-        - ZoneIngress
     get:
-      operationId: getZoneIngress
-      summary: Returns ZoneIngress entity
       parameters:
         - name: name
           in: path
-          description: name of the ZoneIngress
           required: true
-          schema:
-            type: string
+          type: string
+        - $ref: '#/components/parameters/format'
       responses:
         '200':
-          $ref: '#/components/responses/ZoneIngressItem'
-        '404':
-          $ref: '#/components/responses/NotFound'
-      tags:
-        - ZoneIngress
-    put:
-      operationId: putZoneIngress
-      summary: Creates or Updates ZoneIngress entity
-      parameters:
-        - name: name
-          in: path
-          description: name of the ZoneIngress
-          required: true
-          schema:
-            type: string
-      requestBody:
-        description: Put request
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ZoneIngressItem'
-      responses:
-        '200':
-          $ref: '#/components/responses/ZoneIngressCreateOrUpdateSuccessResponse'
-        '201':
-          $ref: '#/components/responses/ZoneIngressCreateOrUpdateSuccessResponse'
-      tags:
-        - ZoneIngress
+          description: '200'
+          content:
+            application/json:
+              schema:
+                type: object
   /hostnamegenerators/{name}:
     get:
       operationId: getHostnameGenerator
@@ -4262,6 +4218,286 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MeshInsight'
+  /meshes/{mesh}/service-insights:
+    get:
+      parameters:
+        - name: mesh
+          in: path
+          required: true
+          type: string
+        - name: type
+          in: query
+          type: string
+        - $ref: '#/components/parameters/size'
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/filter'
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                type: object
+  /meshes/{mesh}/service-insights/{name}:
+    get:
+      parameters:
+        - name: mesh
+          in: path
+          required: true
+          type: string
+        - name: name
+          in: path
+          required: true
+          type: string
+        - $ref: '#/components/parameters/format'
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                type: object
+  /meshes/{mesh}/external-services:
+    get:
+      parameters:
+        - name: mesh
+          in: path
+          required: true
+          type: string
+        - name: tag
+          in: query
+        - $ref: '#/components/parameters/size'
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/filter'
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                type: object
+  /meshes/{mesh}/external-services/{name}:
+    get:
+      parameters:
+        - name: name
+          in: path
+          required: true
+          type: string
+        - $ref: '#/components/parameters/format'
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                type: object
+  /meshes/{mesh}/dataplanes/{name}/xds:
+    get:
+      parameters:
+        - name: mesh
+          in: path
+          required: true
+          type: string
+        - name: name
+          in: path
+          required: true
+          type: string
+        - name: include_eds
+          in: query
+          required: false
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                type: object
+  /meshes/{mesh}/dataplanes/{name}/stats:
+    get:
+      parameters:
+        - name: mesh
+          in: path
+          required: true
+          type: string
+        - name: name
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                type: string
+  /meshes/{mesh}/dataplanes/{name}/clusters:
+    get:
+      parameters:
+        - name: mesh
+          in: path
+          required: true
+          type: string
+        - name: name
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                type: string
+  /meshes/{mesh}/dataplanes/{name}/policies:
+    get:
+      parameters:
+        - name: mesh
+          in: path
+          required: true
+          type: string
+        - name: name
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                type: object
+  /zones/_overview:
+    get:
+      parameters:
+        - $ref: '#/components/parameters/name'
+        - $ref: '#/components/parameters/size'
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/filter'
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                type: object
+  /zones/{name}/_overview:
+    get:
+      parameters:
+        - name: name
+          in: path
+          required: true
+          type: string
+        - $ref: '#/components/parameters/format'
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                type: object
+  /zone-ingresses/_overview:
+    get:
+      parameters:
+        - $ref: '#/components/parameters/name'
+        - $ref: '#/components/parameters/size'
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/filter'
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                type: object
+  /zone-ingresses/{name}/_overview:
+    get:
+      parameters:
+        - name: name
+          in: path
+          required: true
+          type: string
+        - $ref: '#/components/parameters/format'
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                type: object
+  /zone-ingresses/{name}:
+    get:
+      parameters:
+        - name: name
+          in: path
+          required: true
+          type: string
+        - $ref: '#/components/parameters/format'
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                type: object
+  /zoneingresses/{name}/xds:
+    get:
+      parameters:
+        - name: name
+          in: path
+          required: true
+          type: string
+        - name: include_eds
+          in: query
+          required: false
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                type: object
+  /zoneingresses/{name}/stats:
+    get:
+      parameters:
+        - name: name
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                type: string
+  /zoneingresses/{name}/clusters:
+    get:
+      parameters:
+        - name: name
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                type: string
+  /zone-egresses/_overview:
+    $ref: '#/paths/~1zone-ingresses~1_overview'
+  /zone-egresses/{name}/_overview:
+    $ref: '#/paths/~1zone-ingresses~1%7Bname%7D~1_overview'
+  /zone-egresses/{name}:
+    $ref: '#/paths/~1zone-ingresses~1%7Bname%7D'
+  /zoneegresses/{name}/xds:
+    $ref: '#/paths/~1zoneingresses~1%7Bname%7D~1xds'
+  /zoneegresses/{name}/stats:
+    $ref: '#/paths/~1zoneingresses~1%7Bname%7D~1stats'
+  /zoneegresses/{name}/clusters:
+    $ref: '#/paths/~1zoneingresses~1%7Bname%7D~1clusters'
 components:
   parameters:
     name:
@@ -4276,11 +4512,8 @@ components:
       required: false
       schema:
         type: object
-        properties:
-          key:
-            type: string
-          value:
-            type: string
+        additionalProperties:
+          type: string
     format:
       in: query
       name: format
@@ -16911,6 +17144,26 @@ components:
       oneOf:
         - $ref: '#/components/schemas/TargetRefPolicy'
         - $ref: '#/components/schemas/LegacyPolicy'
+    Zone:
+      type: object
+      properties:
+        name:
+          type: string
+        creationTime:
+          type: string
+        modificationTime:
+          type: string
+        type:
+          type: string
+          enum:
+            - Zone
+        enabled:
+          type: boolean
+      required:
+        - type
+        - name
+        - creationTime
+        - modificationTime
     PolicyCollection:
       type: object
       properties:
@@ -18082,33 +18335,6 @@ components:
               total:
                 description: The total number of entities
                 type: number
-    ZoneIngressDeleteSuccessResponse:
-      description: Successful response
-      content:
-        application/json:
-          schema:
-            type: object
-    ZoneIngressItem:
-      description: Successful response
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ZoneIngressItem'
-    ZoneIngressCreateOrUpdateSuccessResponse:
-      description: Successful response
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              warnings:
-                description: |
-                  warnings is a list of warning messages to return to the requesting Kuma API clients.
-                  Warning messages describe a problem the client making the API request should correct or be aware of.
-                type: array
-                items:
-                  type: string
-                readOnly: true
     HostnameGeneratorItem:
       description: Successful response
       content:
@@ -18505,6 +18731,33 @@ components:
               next:
                 description: URL to the next page
                 type: string
+    ZoneIngressCreateOrUpdateSuccessResponse:
+      description: Successful response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              warnings:
+                description: |
+                  warnings is a list of warning messages to return to the requesting Kuma API clients.
+                  Warning messages describe a problem the client making the API request should correct or be aware of.
+                type: array
+                items:
+                  type: string
+                readOnly: true
+    ZoneIngressDeleteSuccessResponse:
+      description: Successful response
+      content:
+        application/json:
+          schema:
+            type: object
+    ZoneIngressItem:
+      description: Successful response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ZoneIngressItem'
   securitySchemes:
     BasicAuth:
       type: http

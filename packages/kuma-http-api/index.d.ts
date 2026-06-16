@@ -1113,13 +1113,33 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Returns ZoneIngress entity */
-        get: operations["getZoneIngress"];
-        /** Creates or Updates ZoneIngress entity */
-        put: operations["putZoneIngress"];
+        get: {
+            parameters: {
+                query?: {
+                    format?: components["parameters"]["format"];
+                };
+                header?: never;
+                path: {
+                    name: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description 200 */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": Record<string, never>;
+                    };
+                };
+            };
+        };
+        put?: never;
         post?: never;
-        /** Deletes ZoneIngress entity */
-        delete: operations["deleteZoneIngress"];
+        delete?: never;
         options?: never;
         head?: never;
         patch?: never;
@@ -1563,6 +1583,639 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/meshes/{mesh}/service-insights": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: {
+                    type?: string;
+                    size?: components["parameters"]["size"];
+                    offset?: components["parameters"]["offset"];
+                    filter?: components["parameters"]["filter"];
+                };
+                header?: never;
+                path: {
+                    mesh: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description 200 */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": Record<string, never>;
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/meshes/{mesh}/service-insights/{name}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: {
+                    format?: components["parameters"]["format"];
+                };
+                header?: never;
+                path: {
+                    mesh: string;
+                    name: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description 200 */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": Record<string, never>;
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/meshes/{mesh}/external-services": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: {
+                    tag?: string;
+                    size?: components["parameters"]["size"];
+                    offset?: components["parameters"]["offset"];
+                    filter?: components["parameters"]["filter"];
+                };
+                header?: never;
+                path: {
+                    mesh: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description 200 */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": Record<string, never>;
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/meshes/{mesh}/external-services/{name}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: {
+                    format?: components["parameters"]["format"];
+                };
+                header?: never;
+                path: {
+                    name: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description 200 */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": Record<string, never>;
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/meshes/{mesh}/dataplanes/{name}/xds": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: {
+                    include_eds?: string;
+                };
+                header?: never;
+                path: {
+                    mesh: string;
+                    name: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description 200 */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": Record<string, never>;
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/meshes/{mesh}/dataplanes/{name}/stats": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    mesh: string;
+                    name: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description 200 */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": string;
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/meshes/{mesh}/dataplanes/{name}/clusters": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    mesh: string;
+                    name: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description 200 */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": string;
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/meshes/{mesh}/dataplanes/{name}/policies": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    mesh: string;
+                    name: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description 200 */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": Record<string, never>;
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/zones/_overview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: {
+                    name?: components["parameters"]["name"];
+                    size?: components["parameters"]["size"];
+                    offset?: components["parameters"]["offset"];
+                    filter?: components["parameters"]["filter"];
+                };
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description 200 */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": Record<string, never>;
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/zones/{name}/_overview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: {
+                    format?: components["parameters"]["format"];
+                };
+                header?: never;
+                path: {
+                    name: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description 200 */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": Record<string, never>;
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/zone-ingresses/_overview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: {
+                    name?: components["parameters"]["name"];
+                    size?: components["parameters"]["size"];
+                    offset?: components["parameters"]["offset"];
+                    filter?: components["parameters"]["filter"];
+                };
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description 200 */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": Record<string, never>;
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/zone-ingresses/{name}/_overview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: {
+                    format?: components["parameters"]["format"];
+                };
+                header?: never;
+                path: {
+                    name: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description 200 */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": Record<string, never>;
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/zone-ingresses/{name}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: {
+                    format?: components["parameters"]["format"];
+                };
+                header?: never;
+                path: {
+                    name: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description 200 */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": Record<string, never>;
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/zoneingresses/{name}/xds": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: {
+                    include_eds?: string;
+                };
+                header?: never;
+                path: {
+                    name: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description 200 */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": Record<string, never>;
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/zoneingresses/{name}/stats": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    name: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description 200 */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": string;
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/zoneingresses/{name}/clusters": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    name: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description 200 */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": string;
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/zone-egresses/_overview": paths["/zone-ingresses/_overview"];
+    "/zone-egresses/{name}/_overview": paths["/zone-ingresses/{name}/_overview"];
+    "/zone-egresses/{name}": paths["/zone-ingresses/{name}"];
+    "/zoneegresses/{name}/xds": paths["/zoneingresses/{name}/xds"];
+    "/zoneegresses/{name}/stats": paths["/zoneingresses/{name}/stats"];
+    "/zoneegresses/{name}/clusters": paths["/zoneingresses/{name}/clusters"];
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -10703,6 +11356,14 @@ export interface components {
             };
         };
         Policy: components["schemas"]["TargetRefPolicy"] | components["schemas"]["LegacyPolicy"];
+        Zone: {
+            name: string;
+            creationTime: string;
+            modificationTime: string;
+            /** @enum {string} */
+            type: "Zone";
+            enabled?: boolean;
+        };
         PolicyCollection: {
             total: number;
             items: components["schemas"]["Policy"][];
@@ -11901,39 +12562,6 @@ export interface components {
             };
         };
         /** @description Successful response */
-        ZoneIngressDeleteSuccessResponse: {
-            headers: {
-                [name: string]: unknown;
-            };
-            content: {
-                "application/json": Record<string, never>;
-            };
-        };
-        /** @description Successful response */
-        ZoneIngressItem: {
-            headers: {
-                [name: string]: unknown;
-            };
-            content: {
-                "application/json": components["schemas"]["ZoneIngressItem"];
-            };
-        };
-        /** @description Successful response */
-        ZoneIngressCreateOrUpdateSuccessResponse: {
-            headers: {
-                [name: string]: unknown;
-            };
-            content: {
-                "application/json": {
-                    /**
-                     * @description warnings is a list of warning messages to return to the requesting Kuma API clients.
-                     *     Warning messages describe a problem the client making the API request should correct or be aware of.
-                     */
-                    readonly warnings?: string[];
-                };
-            };
-        };
-        /** @description Successful response */
         HostnameGeneratorItem: {
             headers: {
                 [name: string]: unknown;
@@ -12365,12 +12993,44 @@ export interface components {
                 };
             };
         };
+        /** @description Successful response */
+        ZoneIngressCreateOrUpdateSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    /**
+                     * @description warnings is a list of warning messages to return to the requesting Kuma API clients.
+                     *     Warning messages describe a problem the client making the API request should correct or be aware of.
+                     */
+                    readonly warnings?: string[];
+                };
+            };
+        };
+        /** @description Successful response */
+        ZoneIngressDeleteSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": Record<string, never>;
+            };
+        };
+        /** @description Successful response */
+        ZoneIngressItem: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["ZoneIngressItem"];
+            };
+        };
     };
     parameters: {
         name: string;
         filter: {
-            key?: string;
-            value?: string;
+            [key: string]: string;
         };
         format: string;
         offset: number;
@@ -14708,59 +15368,6 @@ export interface operations {
         requestBody?: never;
         responses: {
             200: components["responses"]["ZoneIngressList"];
-        };
-    };
-    getZoneIngress: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description name of the ZoneIngress */
-                name: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: components["responses"]["ZoneIngressItem"];
-            404: components["responses"]["NotFound"];
-        };
-    };
-    putZoneIngress: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description name of the ZoneIngress */
-                name: string;
-            };
-            cookie?: never;
-        };
-        /** @description Put request */
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["ZoneIngressItem"];
-            };
-        };
-        responses: {
-            200: components["responses"]["ZoneIngressCreateOrUpdateSuccessResponse"];
-            201: components["responses"]["ZoneIngressCreateOrUpdateSuccessResponse"];
-        };
-    };
-    deleteZoneIngress: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description name of the ZoneIngress */
-                name: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: components["responses"]["ZoneIngressDeleteSuccessResponse"];
-            404: components["responses"]["NotFound"];
         };
     };
     getHostnameGenerator: {

@@ -1,17 +1,15 @@
 import createClient from 'openapi-fetch'
 
 import { ExternalService } from './data'
-import type { DataSourceResponse } from '@/app/application'
 import { defineSources } from '@/app/application'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
-import type { PaginatedApiListResponse as CollectionResponse, ExternalServicesParameters } from '@/types/api.d'
+import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
+import type {
+  ExternalService as PartialExternalService,
+} from '@/types/index.d'
 import type { paths } from '@kumahq/kuma-http-api'
 
 export type { ExternalService } from './data'
-
-export type ExternalServiceSource = DataSourceResponse<ExternalService>
-export type ExternalServiceCollection = CollectionResponse<ExternalService>
-export type ExternalServiceCollectionSource = DataSourceResponse<ExternalServiceCollection>
 
 export const sources = (api: KumaApi) => {
   const http = createClient<paths>({
@@ -34,10 +32,10 @@ export const sources = (api: KumaApi) => {
             size,
             offset,
             ...search,
-          }
+          },
         },
       })
-      return ExternalService.fromCollection(res.data!)
+      return ExternalService.fromCollection(res.data! as unknown as CollectionResponse<PartialExternalService>)
     },
 
     '/meshes/:mesh/external-services/:name': async (params) => {
@@ -51,7 +49,7 @@ export const sources = (api: KumaApi) => {
         },
       })
 
-      return ExternalService.fromObject(res.data!)
+      return ExternalService.fromObject(res.data! as unknown as PartialExternalService)
     },
 
     '/meshes/:mesh/external-services/:name/as/kubernetes': async (params) => {

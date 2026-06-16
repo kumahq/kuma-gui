@@ -8,29 +8,18 @@ import {
   SidecarDataplane,
   DataplaneNetworkingLayout,
 } from './data'
-import type { DataSourceResponse } from '@/app/application'
 import { YAML , defineSources } from '@/app/application'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import { Resource } from '@/app/resources/data/Resource'
 import type { PaginatedApiListResponse as CollectionResponse, ApiKindListResponse as KindCollectionResponse } from '@/types/api.d'
-import type { PolicyTypeEntry } from '@/types/index.d'
+import type {
+  SidecarDataplane as PartialSidecarDataplane,
+  MeshGatewayDataplane as PartialMeshGatewayDataplane,
+  DataPlaneOverview as PartialDataplaneOverview,
+} from '@/types/index.d'
 import type { paths } from '@kumahq/kuma-http-api'
 
 export type { Dataplane, DataplaneOverview } from './data'
-
-export type DataplaneSource = DataSourceResponse<Dataplane>
-
-export type DataplaneOverviewSource = DataSourceResponse<DataplaneOverview>
-export type DataplaneOverviewCollection = CollectionResponse<DataplaneOverview>
-export type DataplaneOverviewCollectionSource = DataSourceResponse<DataplaneOverviewCollection>
-
-export type EnvoyDataSource = DataSourceResponse<object | string>
-export type ClustersDataSource = DataSourceResponse<string>
-
-export type SidecarDataplaneCollection = KindCollectionResponse<SidecarDataplane> & { policyTypeEntries: PolicyTypeEntry[] }
-export type SidecarDataplaneCollectionSource = DataSourceResponse<SidecarDataplaneCollection>
-
-export type MeshGatewayDataplaneSource = DataSourceResponse<MeshGatewayDataplane>
 
 const includes = <T extends readonly string[]>(arr: T, item: string): item is T[number] => {
   return arr.includes(item as T[number])
@@ -120,7 +109,7 @@ export const sources = (api: KumaApi) => {
                   },
                   query: {
                     include_eds: spec.eds,
-                  }
+                  },
                 },
               })
               return {
@@ -141,7 +130,7 @@ export const sources = (api: KumaApi) => {
               })
               return {
                 name: 'stats.txt',
-                content: res.data as string,
+                content: res.data ?? '',
               }
             })
             break
@@ -157,7 +146,7 @@ export const sources = (api: KumaApi) => {
               })
               return {
                 name: 'clusters.txt',
-                content: res.data as string,
+                content: res.data ?? '',
               }
             })
             break
@@ -188,7 +177,7 @@ export const sources = (api: KumaApi) => {
           },
         },
       })
-      return SidecarDataplane.fromCollection(res.data!)
+      return SidecarDataplane.fromCollection(res.data! as unknown as KindCollectionResponse<PartialSidecarDataplane>)
     },
 
     '/meshes/:mesh/dataplanes/:name/gateway-dataplane-policies': async (params) => {
@@ -201,7 +190,7 @@ export const sources = (api: KumaApi) => {
           },
         },
       })
-      return MeshGatewayDataplane.fromObject(res.data!)
+      return MeshGatewayDataplane.fromObject(res.data! as unknown as PartialMeshGatewayDataplane)
     },
     // end TODO
 
@@ -215,7 +204,7 @@ export const sources = (api: KumaApi) => {
           },
         },
       })
-      return DataplaneOverview.fromObject(res.data!)
+      return DataplaneOverview.fromObject(res.data! as unknown as PartialDataplaneOverview)
     },
 
     '/meshes/:mesh/dataplanes/of/:type': async (params) => {
@@ -236,6 +225,7 @@ export const sources = (api: KumaApi) => {
           path: {
             mesh,
           },
+          // @ts-ignore OpenAPI is wrong
           query: {
             ...search,
             ...zoneIngress,
@@ -246,7 +236,7 @@ export const sources = (api: KumaApi) => {
           },
         },
       })
-      return DataplaneOverview.fromCollection(res.data!)
+      return DataplaneOverview.fromCollection(res.data! as unknown as CollectionResponse<PartialDataplaneOverview>)
     },
 
     '/meshes/:mesh/dataplanes/for/mesh-service/:tags': async (params) => {
@@ -265,6 +255,7 @@ export const sources = (api: KumaApi) => {
           path: {
             mesh,
           },
+          // @ts-ignore OpenAPI is wrong
           query: {
             ...search,
             // @TODO check these tags
@@ -274,7 +265,7 @@ export const sources = (api: KumaApi) => {
           },
         },
       })
-      return DataplaneOverview.fromCollection(res.data!)
+      return DataplaneOverview.fromCollection(res.data! as unknown as CollectionResponse<PartialDataplaneOverview>)
     },
 
     '/meshes/:mesh/dataplanes/for/service-insight/:service': async (params) => {
@@ -291,6 +282,7 @@ export const sources = (api: KumaApi) => {
           path: {
             mesh,
           },
+          // @ts-ignore OpenAPI is wrong
           query: {
             ...search,
             // @TODO check these tags
@@ -300,7 +292,7 @@ export const sources = (api: KumaApi) => {
           },
         },
       })
-      return DataplaneOverview.fromCollection(res.data!)
+      return DataplaneOverview.fromCollection(res.data! as unknown as CollectionResponse<PartialDataplaneOverview>)
     },
 
     '/meshes/:mesh/dataplanes/:name/layout': async (params) => {

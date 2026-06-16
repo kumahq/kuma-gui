@@ -2,18 +2,15 @@ import { TarWriter } from '@gera2ld/tarjs'
 import createClient from 'openapi-fetch'
 
 import { ZoneEgressOverview, ZoneEgress } from './data'
-import type { DataSourceResponse } from '@/app/application'
-import { YAML , defineSources } from '@/app/application'
+import { YAML, defineSources } from '@/app/application'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
+import type {
+  ZoneEgressOverview as PartialZoneEgressOverview,
+  ZoneEgress as PartialZoneEgress,
+} from '@/types/index.d'
 import type { paths } from '@kumahq/kuma-http-api'
 
-export type ZoneEgressSource = DataSourceResponse<ZoneEgress>
-export type ZoneEgressOverviewCollection = CollectionResponse<ZoneEgressOverview>
-export type ZoneEgressOverviewSource = DataSourceResponse<ZoneEgressOverview>
-export type ZoneEgressOverviewCollectionSource = DataSourceResponse<ZoneEgressOverviewCollection>
-
-export type EnvoyDataSource = DataSourceResponse<object | string>
 
 const includes = <T extends readonly string[]>(arr: T, item: string): item is T[number] => {
   return arr.includes(item as T[number])
@@ -43,7 +40,7 @@ export const sources = (api: KumaApi) => {
         },
       })
 
-      return ZoneEgressOverview.fromCollection(res.data!)
+      return ZoneEgressOverview.fromCollection(res.data! as unknown as CollectionResponse<PartialZoneEgressOverview>)
     },
 
     '/zone-egresses/:name': async (params) => {
@@ -56,7 +53,7 @@ export const sources = (api: KumaApi) => {
         },
       })
 
-      return ZoneEgress.fromObject(res.data!)
+      return ZoneEgress.fromObject(res.data! as unknown as PartialZoneEgress)
     },
 
     '/zone-egresses/:name/as/kubernetes': async (params) => {
@@ -128,8 +125,7 @@ export const sources = (api: KumaApi) => {
               })
               return {
                 name: 'stats.txt',
-                // TODO
-                content: res.data as string,
+                content: res.data ?? '',
               }
             })
             break
@@ -144,8 +140,7 @@ export const sources = (api: KumaApi) => {
               })
               return {
                 name: 'clusters.txt',
-                // TODO
-                content: res.data as string,
+                content: res.data ?? '',
               }
             })
             break
@@ -192,7 +187,7 @@ export const sources = (api: KumaApi) => {
           },
         },
       })
-      return ZoneEgressOverview.fromCollection(res.data!)
+      return ZoneEgressOverview.fromCollection(res.data! as unknown as CollectionResponse<PartialZoneEgressOverview>)
     },
 
     '/zone-egress-overviews/:name': async (params) => {
@@ -205,7 +200,7 @@ export const sources = (api: KumaApi) => {
         },
       })
 
-      return ZoneEgressOverview.fromObject(res.data!)
+      return ZoneEgressOverview.fromObject(res.data! as unknown as PartialZoneEgressOverview)
     },
   })
 }

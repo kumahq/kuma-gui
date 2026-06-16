@@ -1,10 +1,13 @@
 get:
   parameters:
+    - name: mesh
+      type: string
+      in: path
+      required: true
     - name: name
       type: string
       in: path
       required: true
-    - $ref: ../parameters.yaml#/format
   responses:
     200:
       description: '200'

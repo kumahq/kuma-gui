@@ -28,7 +28,7 @@ export const sources = (api: KumaApi) => {
       const res = await http.GET('/meshes/{mesh}/meshgateways', {
         params: {
           path: {
-            mesh
+            mesh,
           },
           query: {
             offset,

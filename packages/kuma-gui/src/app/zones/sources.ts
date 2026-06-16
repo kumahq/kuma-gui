@@ -8,7 +8,12 @@ import { sources as zoneEgresses } from '@/app/zone-egresses/sources'
 import { sources as zoneIngresses } from '@/app/zone-ingresses/sources'
 import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
 export type { ZoneOverview } from './data'
+import type {
+  ZoneOverview as PartialZoneOverview,
+} from '@/types/index.d'
 import type { paths } from '@kumahq/kuma-http-api'
+
+
 
 export type ZoneOverviewCollection = CollectionResponse<ZoneOverview>
 export type ZoneOverviewSource = DataSourceResponse<ZoneOverview>
@@ -41,7 +46,7 @@ export const sources = (api: KumaApi) => {
       })
 
 
-      return ZoneOverview.fromCollection(res.data!)
+      return ZoneOverview.fromCollection(res.data as unknown as CollectionResponse<PartialZoneOverview>)
     },
     '/zone-cps/:name': async (params) => {
       const { name } = params
@@ -52,7 +57,7 @@ export const sources = (api: KumaApi) => {
           },
         },
       })
-      return ZoneOverview.fromObject(res.data!)
+      return ZoneOverview.fromObject(res.data as unknown as PartialZoneOverview)
     },
   })
 }

@@ -28,9 +28,6 @@ filter:
   required: false
   schema:
     type: object
-    properties:
-      key:
-        type: string
-      value:
-        type: string
+    additionalProperties:
+      type: string
 

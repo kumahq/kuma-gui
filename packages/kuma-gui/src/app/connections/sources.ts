@@ -317,7 +317,7 @@ export const sources = (api: KumaApi) => {
                   name,
                 },
                 query: {
-                  include_eds: false,
+                  include_eds: 'false',
                 },
               },
             })
@@ -330,7 +330,7 @@ export const sources = (api: KumaApi) => {
                   name,
                 },
                 query: {
-                  include_eds: false,
+                  include_eds: 'false',
                 },
               },
             })
@@ -343,7 +343,7 @@ export const sources = (api: KumaApi) => {
                   name,
                 },
                 query: {
-                  include_eds: false,
+                  include_eds: 'false',
                 },
               },
             })

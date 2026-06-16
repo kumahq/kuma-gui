@@ -68,11 +68,12 @@ export const sources = (env: Env, api: KumaApi) => {
       const version = await (async () => {
         try {
           const url = new URL(env('KUMA_VERSION_URL'))
+          // @ts-ignore we allow any pathname here
           const res = await http.GET(url.pathname, {
             baseUrl: url.origin,
             parseAs: 'text',
           })
-          return res.data
+          return res.data ?? ''
         } catch (e) {
           console.error(e)
           return ''

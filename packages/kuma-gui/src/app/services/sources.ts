@@ -12,6 +12,10 @@ import type { DataSourceResponse } from '@/app/application'
 import { defineSources } from '@/app/application'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import type { PaginatedApiListResponse as CollectionResponse, ServiceInsightsParameters } from '@/types/api.d'
+import type {
+  ExternalService as PartialExternalService,
+  ServiceInsight as PartialServiceInsight,
+} from '@/types/index.d'
 import type { paths } from '@kumahq/kuma-http-api'
 
 export type { ServiceInsight } from './data'
@@ -219,10 +223,10 @@ export const sources = (api: KumaApi) => {
           },
           query: {
             ...filterParams,
-          }
+          },
         },
       })
-      return ServiceInsight.fromCollection(res.data!)
+      return ServiceInsight.fromCollection(res.data! as unknown as CollectionResponse<PartialServiceInsight>)
     },
 
     '/meshes/:mesh/service-insights/:name': async (params) => {
@@ -236,29 +240,29 @@ export const sources = (api: KumaApi) => {
         },
       })
 
-      return ServiceInsight.fromObject(res.data!)
+      return ServiceInsight.fromObject(res.data! as unknown as PartialServiceInsight)
     },
 
     // TODO: Remove this when removing external services from the Services tab.
     '/meshes/:mesh/external-services/for/:service': async (params) => {
       const { mesh, service } = params
 
-      const res = await http.GET('/meshes/${mesh}/external-services', {
+      const res = await http.GET('/meshes/{mesh}/external-services', {
         params: {
           path: {
             mesh,
           },
           // @TODO
           query: {
-            tag: [`kuma.io/service:${service}`]
-          }
+            tag: [`kuma.io/service:${service}`],
+          },
         },
       })
 
       // const { items } = await api.getAllExternalServicesFromMesh({ mesh }, {
       //   tag: [`kuma.io/service:${service}`],
       // })
-      const { items } = res.data!
+      const { items } = res.data! as unknown as CollectionResponse<PartialExternalService>
 
       return items.length > 0 ? ExternalService.fromObject(items[0]) : null
     },
@@ -271,11 +275,11 @@ export const sources = (api: KumaApi) => {
         params: {
           path: {
             mesh,
-            name
+            name,
           },
           query: {
-            format: 'kubernetes'
-          }
+            format: 'kubernetes',
+          },
         },
       })
       // TODO

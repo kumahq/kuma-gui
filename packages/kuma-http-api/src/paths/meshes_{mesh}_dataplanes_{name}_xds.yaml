@@ -1,10 +1,17 @@
 get:
   parameters:
+    - name: mesh
+      type: string
+      in: path
+      required: true
     - name: name
       type: string
       in: path
       required: true
-    - $ref: ../parameters.yaml#/format
+    - name: include_eds
+      type: string
+      in: query
+      required: false
   responses:
     200:
       description: '200'

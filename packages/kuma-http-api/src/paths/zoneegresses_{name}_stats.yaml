@@ -4,12 +4,11 @@ get:
       type: string
       in: path
       required: true
-    - $ref: ../parameters.yaml#/format
   responses:
     200:
       description: '200'
       content:
         application/json:
           schema:
-            type: object
+            type: string
 
