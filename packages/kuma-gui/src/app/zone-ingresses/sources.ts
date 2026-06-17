@@ -86,7 +86,7 @@ export const sources = (api: KumaApi) => {
           },
         },
       })
-      //TODO
+      // this is kubernetes format and therefore unknown
       return res.data
 
     },

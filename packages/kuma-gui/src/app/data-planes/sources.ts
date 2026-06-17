@@ -51,7 +51,7 @@ export const sources = (api: KumaApi) => {
             mesh,
             name,
           },
-          // @ts-ignore
+          // @ts-expect-error this is missing from the specs
           query: {
             format: 'kubernetes',
           },
