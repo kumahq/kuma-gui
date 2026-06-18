@@ -43,6 +43,7 @@
 </template>
 
 <script lang="ts" setup generic="Row extends {}">
+// @TODO: Why are we using kongponents?
 import { KTableView } from '@kong/kongponents'
 import { ref, onMounted } from 'vue'
 

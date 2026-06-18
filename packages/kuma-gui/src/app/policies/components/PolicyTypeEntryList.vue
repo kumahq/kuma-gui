@@ -116,6 +116,7 @@
 
 <script lang="ts" setup>
 
+// @TODO: Why are we using kongponents?
 import { KTableView } from '@kong/kongponents'
 
 import type { PolicyResourceType } from '../data'

@@ -143,6 +143,7 @@
 </template>
 
 <script setup lang="ts">
+import { KPop } from '@kong/kongponents'
 import { useResizeObserver } from '@vueuse/core'
 import { ref, watch } from 'vue'
 

@@ -88,8 +88,10 @@
   </template>
 </template>
 <script lang="ts" generic="T" setup>
+import { KPagination } from '@kong/kongponents'
 import { useThrottleFn } from '@vueuse/core'
 import { computed, useSlots } from 'vue'
+// @TODO: Why are we using kongponents?
 
 import { useDataEmptyState } from '../../'
 

@@ -21,6 +21,7 @@
 </template>
 
 <script lang="ts" setup>
+import { KSlideout } from '@kong/kongponents'
 import { onClickOutside } from '@vueuse/core'
 import { provide, useId, onMounted, nextTick } from 'vue'
 

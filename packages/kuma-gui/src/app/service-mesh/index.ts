@@ -1,4 +1,3 @@
-import Kongponents from '@kong/kongponents'
 import { token } from '@kumahq/container'
 import X from '@kumahq/x'
 
@@ -106,7 +105,6 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
     [token('service-mesh.plugins'), {
       service: (i18n, can) => {
         return [
-          [Kongponents],
           [X, {
             i18n,
             protocolHandler: protocolHandler(can),
