@@ -105,6 +105,21 @@
     },
     {
       "description": [
+        " [EXPERIMENTAL]: widening peers"
+      ],
+      "matchCategories": [
+        "js"
+      ],
+      "matchPackageNames": [
+        "*"
+      ],
+      "matchDepTypes": [
+        "!peerDependencies"
+      ],
+      "rangeStrategy": "bump"
+    },
+    {
+      "description": [
         " Group vue and @vue/shared"
       ],
       "groupName": "vue",

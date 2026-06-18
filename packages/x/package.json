@@ -26,6 +26,7 @@
     "@kong/design-tokens": "^1.23.0"
   },
   "peerDependencies": {
-    "vue": "*"
+    "vue": "*",
+    "@kong/kongponents": "^9.59.0"
   }
 }
