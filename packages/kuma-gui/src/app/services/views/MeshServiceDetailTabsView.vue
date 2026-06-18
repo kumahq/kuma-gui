@@ -48,17 +48,10 @@
               size="small"
             >
               <h1>
-                <XCopyButton :text="service.name">
-                  <RouteTitle
-                    :title="t('services.routes.item.title', { name: service.name })"
-                  />
-                </XCopyButton>
+                <RouteTitle
+                  :title="t('services.routes.item.title', { name: service.name })"
+                />
               </h1>
-              <XBadge
-                :appearance="t(`common.status.appearance.${service.spec.state}`, undefined, { defaultMessage: 'neutral' })"
-              >
-                {{ t(`http.api.value.${service.spec.state}`) }}
-              </XBadge>
             </XLayout>
           </DataLoader>
         </template>

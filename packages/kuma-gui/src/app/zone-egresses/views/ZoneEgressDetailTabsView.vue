@@ -52,23 +52,11 @@
             variant="header"
             v-slot="{ data: [zoneEgress] }"
           >
-            <XLayout
-              variant="y-stack"
-              size="small"
-            >
-              <h1>
-                <XCopyButton :text="zoneEgress.name">
-                  <RouteTitle
-                    :title="t('zone-egresses.routes.item.title', { name: zoneEgress.name })"
-                  />
-                </XCopyButton>
-              </h1>
-              <XBadge
-                :appearance="t(`common.status.appearance.${zoneEgress.state}`, undefined, { defaultMessage: 'neutral' })"
-              >
-                {{ t(`http.api.value.${zoneEgress.state}`) }}
-              </XBadge>
-            </XLayout>
+            <h1>
+              <RouteTitle
+                :title="t('zone-egresses.routes.item.title', { name: zoneEgress.name })"
+              />
+            </h1>
           </DataLoader>
         </template>
 

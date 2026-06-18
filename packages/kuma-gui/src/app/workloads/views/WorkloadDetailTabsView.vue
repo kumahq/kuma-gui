@@ -48,8 +48,8 @@
               size="small"
             >
               <h1>
-                <XCopyButton
-                  :text="workload.name"
+                <RouteTitle
+                  :title="workload.name"
                 />
               </h1>
               <XBadge
