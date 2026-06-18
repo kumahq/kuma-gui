@@ -7,7 +7,6 @@ export default ({ fake, env, pager }: Dependencies): ResponseHandler => (req) =>
   )
   return {
     headers: {
-      ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
     },
     body: {
       total,

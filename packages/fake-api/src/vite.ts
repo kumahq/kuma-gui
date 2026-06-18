@@ -47,7 +47,6 @@ export default <TDependencies extends object = {}>(opts: PluginOptions<TDependen
           res.write(resp)
           res.end()
         } else {
-          // res.removeHeader('Content-Length')
           res.end(resp)
         }
       } catch (e) {
