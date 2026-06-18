@@ -598,7 +598,7 @@
                                     <XIcon
                                       v-if="item.state !== 'Ready'"
                                       name="danger"
-                                      :size="KUI_ICON_SIZE_40"
+                                      :size="`var(--x-icon-size-40)`"
                                       placement="right"
                                     >
                                       {{ t('data-planes.routes.item.unhealthy_inbound', { port: item.port }) }}
@@ -634,7 +634,7 @@
                                       >
                                         <XIcon
                                           name="warning"
-                                          :size="KUI_ICON_SIZE_40"
+                                          :size="`var(--x-icon-size-40)`"
                                           placement="right"
                                         />
                                       </XAction>
@@ -798,7 +798,7 @@
                                         >
                                           <XIcon
                                             name="warning"
-                                            :size="KUI_ICON_SIZE_40"
+                                            :size="`var(--x-icon-size-40)`"
                                             placement="right"
                                           />
                                         </XAction>
@@ -872,8 +872,6 @@
 </template>
 
 <script lang="ts" setup>
-import { KUI_ICON_SIZE_40 } from '@kong/design-tokens'
-
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import ConnectionCard from '@/app/connections/components/connection-traffic/ConnectionCard.vue'
 import ConnectionGroup from '@/app/connections/components/connection-traffic/ConnectionGroup.vue'
