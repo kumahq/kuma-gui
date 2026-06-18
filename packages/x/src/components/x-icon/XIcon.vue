@@ -30,7 +30,6 @@
   </component>
 </template>
 <script lang="ts" setup>
-import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import {
   ForwardIcon,
   GatewayIcon,
@@ -114,7 +113,7 @@ const props = withDefaults(defineProps<{
 }>(), {
   placement: 'auto',
   color: undefined,
-  size: KUI_ICON_SIZE_30,
+  size: 'var(--x-icon-size-30)',
 })
 </script>
 <style lang="scss" scoped>

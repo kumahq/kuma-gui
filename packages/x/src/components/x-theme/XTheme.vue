@@ -207,6 +207,7 @@ import '@kong-ui-public/app-layout/dist/style.css'
   --x-border-width-10: var(--kui-border-width-10, #{$kui-border-width-10});
   --x-border-width-20: var(--kui-border-width-20, #{$kui-border-width-20});
 
+
   /* color-background */
   --x-color-background: var(--kui-color-background, #{$kui-color-background});
   --x-color-background-transparent: var(--kui-color-background-transparent, #{$kui-color-background-transparent});
@@ -238,6 +239,7 @@ import '@kong-ui-public/app-layout/dist/style.css'
   --x-color-text-disabled: var(--kui-color-text-disabled, #{$kui-color-text-disabled});
   --x-color-text-inverse: var(--kui-color-text-inverse, #{$kui-color-text-inverse});
   --x-color-text-neutral: var(--kui-color-text-neutral, #{$kui-color-text-neutral});
+  --x-color-text-neutral-weak: var(--kui-color-text-neutral-weak, #{$kui-color-text-neutral-weak});
   --x-color-text-neutral-strong: var(--kui-color-text-neutral-strong, #{$kui-color-text-neutral-strong});
   --x-color-text-neutral-stronger: var(--kui-color-text-neutral-stronger, #{$kui-color-text-neutral-stronger});
   --x-color-text-primary: var(--kui-color-text-primary, #{$kui-color-text-primary});
@@ -268,6 +270,7 @@ import '@kong-ui-public/app-layout/dist/style.css'
   /* icon-size */
   --x-icon-size-30: var(--kui-icon-size-30, #{$kui-icon-size-30});
   --x-icon-size-40: var(--kui-icon-size-40, #{$kui-icon-size-40});
+  --x-icon-size-50: var(--kui-icon-size-50, #{$kui-icon-size-50});
 
   /* line-height */
   --x-line-height-20: var(--kui-line-height-20, #{$kui-line-height-20});
