@@ -50,7 +50,7 @@
   </XLayout>
 </template>
 <script lang="ts" setup>
-import { KEmptyState } from '@kong/kongponents'
+import { KEmptyState, KSkeletonBox, KSkeleton } from '@kong/kongponents'
 const props = withDefaults(defineProps<{
   variant?: 'list' | 'line' | 'spinner' | 'legacy' | 'header' | 'count'
 }>(), {

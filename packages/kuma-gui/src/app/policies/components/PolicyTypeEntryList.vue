@@ -148,6 +148,7 @@
 
 <script lang="ts" setup>
 
+// @TODO: Why are we using kongponents?
 import { KTableView } from '@kong/kongponents'
 
 import { YAML, useI18n, useRegExp } from '@/app/application'
