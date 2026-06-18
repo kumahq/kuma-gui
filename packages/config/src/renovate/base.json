@@ -114,9 +114,9 @@
         "*"
       ],
       "matchDepTypes": [
-        "!peerDependencies"
+        "peerDependencies"
       ],
-      "rangeStrategy": "bump"
+      "rangeStrategy": "widen"
     },
     {
       "description": [
