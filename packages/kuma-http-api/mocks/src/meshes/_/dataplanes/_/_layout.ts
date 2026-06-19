@@ -44,7 +44,9 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
   const zone = fake.word.noun()
 
   return {
-    headers: {},
+    headers: {
+      ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
+    },
     body: {
       kri: fake.kuma.kri({
         resourceName: 'Dataplane',

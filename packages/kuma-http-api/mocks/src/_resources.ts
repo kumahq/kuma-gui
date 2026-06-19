@@ -8,7 +8,9 @@ export default ({ env }: Dependencies): ResponseHandler => (_req) => {
   const resourceCount = parseInt(env('KUMA_RESOURCE_COUNT', `${resources.length}`))
 
   return {
-    headers: {},
+    headers: {
+      'Transfer-Encoding': 'chunked',
+    },
     body: {
       resources: resources.slice(0, resourceCount),
     } satisfies Resources,

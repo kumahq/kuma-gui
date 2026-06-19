@@ -24,7 +24,9 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
   const name = kri ? `${displayName}${nspace ? `.${nspace}` : ''}` : String(req.params.name)
 
   return {
-    headers: {},
+    headers: {
+      ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
+    },
     body: {
       type: 'MeshAccessLog',
       mesh,
@@ -59,7 +61,7 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
                     path: fake.helpers.arrayElement([fake.system.directoryPath(), `${fake.system.directoryPath()}/${fake.system.fileName()}.log`]),
                   },
                 },
-                { 
+                {
                   type: 'OpenTelemetry' as const,
                   openTelemetry: {
                     endpoint: `otel-collector:${fake.internet.port()}`,

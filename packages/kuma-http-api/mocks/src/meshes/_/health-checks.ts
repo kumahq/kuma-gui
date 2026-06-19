@@ -6,7 +6,9 @@ export default ({ fake }: Dependencies): ResponseHandler => (req) => {
   const queryName = req.url.searchParams.get('name')
 
   return {
-    headers: {},
+    headers: {
+      ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
+    },
     body: {
       total,
       items: Array.from({ length: total }).map((_, i) => {

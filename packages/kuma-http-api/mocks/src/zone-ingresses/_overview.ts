@@ -12,7 +12,9 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
 
   const zoneName = env('KUMA_ZONE_NAME', req.url.searchParams.get('filter[labels.kuma.io/zone]') ?? 'zone-0')
   return {
-    headers: {},
+    headers: {
+      ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
+    },
     body: {
       total,
       items: Array.from({ length: pageTotal }).map((_, i) => {

@@ -2,13 +2,14 @@ import { createFetch } from '@kumahq/fake-api'
 import { expect } from '@playwright/test'
 import { createBdd, test as base } from 'playwright-bdd'
 
-import { getClient, YAML, merge, Cookie, routeToRegexp } from '../..'
+import { getClient, YAML, merge, routeToRegexp } from '../..'
 import type { DataTable } from '@cucumber/cucumber'
 
 type Options = {
-  negativeTimeout?: number
   dependencies: any
   fs: any
+  negativeTimeout?: number
+  passthrough?: boolean
   client?: ReturnType<typeof getClient>
 }
 
@@ -31,29 +32,23 @@ export const test = base.extend<{
   },
 })
 
-export async function setupSteps({ dependencies, fs, negativeTimeout = 4000, client = getClient() }: Options) {
-  const _fetch = createFetch({
+export async function setupSteps({
+  dependencies,
+  fs,
+  negativeTimeout = 4000,
+  passthrough = true,
+  client = getClient(),
+}: Options) {
+  const fetch = createFetch({
     dependencies,
     fs,
   })
   const config = {
     negativeTimeout,
-    fetch: async (...rest: Parameters<typeof _fetch>) => {
-      const options = rest[1] ?? {}
-      const cookie = options?.headers?.cookie ?? ''
-      const cookies = Cookie.parse(Array.isArray(cookie) ? cookie.join('') : cookie)
-
-      const res = _fetch(...rest)
-
-      if (cookies.KUMA_LATENCY) {
-        await new Promise((resolve) => setTimeout(resolve, parseInt(cookies.KUMA_LATENCY)))
-      }
-      return res
-    },
+    fetch,
+    passthrough,
   }
   const { Given, When, Then, Before, After } = createBdd(test)
-
-  const fetch = config.fetch
 
   const timeout = (negative: boolean) => negative ? { timeout: config.negativeTimeout } : {}
 
@@ -89,6 +84,13 @@ export async function setupSteps({ dependencies, fs, negativeTimeout = 4000, cli
         value: 'false',
         url: `${baseURL}`,
       },
+      ...(config.passthrough ? [
+        {
+          name: 'KUMA_API_URL',
+          value: 'http://localhost:5681',
+          url: `${baseURL}`,
+        },
+      ] : []),
     ])
     const p = Object.keys(fs).map(route => {
       return context.route(
@@ -98,13 +100,11 @@ export async function setupSteps({ dependencies, fs, negativeTimeout = 4000, cli
             const url = request.url()
             const cookies = await context.cookies()
             const envs = Object.entries(env).map(([name, value]) => ( {name, value} ))
-            const response = await fetch(url, {
-              method: request.method(),
-              headers: {
-                cookie: [...cookies, ...envs].map((c) => `${c.name}=${c.value}`).join('; '),
-                ...request.headers(),
-              },
-            })
+            const headers = {
+              cookie: [...cookies, ...envs].map((c) => `${c.name}=${c.value}`).join('; '),
+              ...request.headers(),
+            }
+
             client.request({
               url: new URL(url),
               request: {
@@ -112,13 +112,26 @@ export async function setupSteps({ dependencies, fs, negativeTimeout = 4000, cli
                 body: request.postDataJSON() ?? {},
               },
             })
-            const type = response.headers.get('Content-Type') ?? 'application/json'
-            const body = type.endsWith('/json') ? JSON.stringify((await response.json()), null, 4) : (await response.text())
-            await route.fulfill({
-              status: parseInt(response.headers.get('Status-Code') ?? '200'),
-              contentType: type,
-              body,
-            })
+
+            if (env.KUMA_LATENCY) {
+              await new Promise((resolve) => setTimeout(resolve, parseInt(env.KUMA_LATENCY)))
+            }
+            if(config.passthrough) {
+              await route.fallback({ headers })
+            } else {
+              const response = await fetch(url, {
+                method: request.method(),
+                headers,
+              })
+              const type = response.headers.get('Content-Type') ?? 'application/json'
+              const body = type.endsWith('/json') ? JSON.stringify((await response.json()), null, 4) : (await response.text())
+              await route.fulfill({
+                status: parseInt(response.headers.get('Status-Code') ?? '200'),
+                contentType: type,
+                body,
+              })
+
+            }
           } catch (e) {
             console.error(e)
             await route.continue()
@@ -187,6 +200,9 @@ export async function setupSteps({ dependencies, fs, negativeTimeout = 4000, cli
               body: request.postDataJSON() ?? {},
             },
           })
+          if (env.KUMA_LATENCY) {
+            await new Promise((resolve) => setTimeout(resolve, parseInt(env.KUMA_LATENCY)))
+          }
           const type = response.headers.get('Content-Type') ?? 'application/json'
 
           const _yaml = (YAML.parse(yaml) ?? {}) as {
@@ -238,6 +254,9 @@ export async function setupSteps({ dependencies, fs, negativeTimeout = 4000, cli
   // TODO(jc): we can probably combine these 2 steps
   When(/^I click the "(.*)" element(?: and select "(.*)")?$/, async ({ page }, selector: string, _value?: string) => {
     const $elem = page.locator($(selector))
+    await $elem.waitFor({
+      state: 'attached',
+    })
     switch ('click') {
       case 'click':
         await $elem.dispatchEvent('click')
@@ -247,6 +266,9 @@ export async function setupSteps({ dependencies, fs, negativeTimeout = 4000, cli
 
   When(/^I (.*) on the "(.*)" element$/, async ({ page }, event: string, selector: string) => {
     const $elem = page.locator($(selector))
+    await $elem.waitFor({
+      state: 'attached',
+    })
     switch (event) {
       case 'hover':
         await $elem.hover({ force: true })
@@ -260,6 +282,9 @@ export async function setupSteps({ dependencies, fs, negativeTimeout = 4000, cli
 
   When('I {string} {string} into the {string} element', async ({ page }, event: string, text: string, selector: string) => {
     const $elem = page.locator($(selector))
+    await $elem.waitFor({
+      state: 'attached',
+    })
     switch (event) {
       case 'input':
       case 'type':

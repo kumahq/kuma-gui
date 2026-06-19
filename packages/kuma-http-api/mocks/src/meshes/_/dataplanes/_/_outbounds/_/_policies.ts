@@ -7,7 +7,9 @@ type OutboundPolicyConf = components['schemas']['PolicyConf']
 export default ({ env: _env, fake }: Dependencies): ResponseHandler => (req) => {
   const mesh = req.params.mesh as string
   return {
-    headers: {},
+    headers: {
+      ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
+    },
     body: {
       policies: Array.from({ length: fake.number.int({ min: 1, max: 10 })}).map((_, i) => {
         const kind = fake.kuma.policyName()

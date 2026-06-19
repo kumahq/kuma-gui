@@ -6,7 +6,9 @@ export default ({ fake }: Dependencies): ResponseHandler => (req) => {
   const name = req.params.name as string
 
   return {
-    headers: {},
+    headers: {
+      ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
+    },
     body: {
       ...(req.url.searchParams.get('format') === 'kubernetes' && {
         apiVersion: 'kuma.io/v1alpha1',

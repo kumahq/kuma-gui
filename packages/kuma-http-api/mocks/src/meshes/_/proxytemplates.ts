@@ -4,7 +4,9 @@ export default ({ fake }: Dependencies): ResponseHandler => (req) => {
   const total = fake.number.int(200)
 
   return {
-    headers: {},
+    headers: {
+      ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
+    },
     body: {
       total,
       items: Array.from({ length: total }).map((_, i) => {
