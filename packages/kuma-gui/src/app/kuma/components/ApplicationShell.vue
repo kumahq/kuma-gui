@@ -16,13 +16,14 @@
             <slot name="home" />
           </XAction>
 
-          <GithubButton
+          <a
+            ref="gh"
+            aria-label="Star kumahq/kuma on GitHub"
             class="gh-star"
             href="https://github.com/kumahq/kuma"
-            aria-label="Star kumahq/kuma on GitHub"
           >
             Star
-          </GithubButton>
+          </a>
 
           <div class="upgrade-check-wrapper">
             <DataSource
@@ -152,7 +153,9 @@
   </div>
 </template>
 <script lang="ts" setup>
-import GithubButton from 'vue-github-button'
+import { render } from 'github-buttons'
+import { useTemplateRef, onMounted } from 'vue'
+
 
 import { useEnv, useI18n } from '@/app/application'
 
@@ -160,6 +163,15 @@ const slots = defineSlots()
 
 const env = useEnv()
 const { t } = useI18n()
+
+const gh = useTemplateRef<HTMLAnchorElement>('gh')
+
+onMounted(() => {
+  const $gh = gh.value
+  if($gh) {
+    render($gh, (el) => $gh.parentNode?.replaceChild(el, $gh))
+  }
+})
 
 </script>
 <style lang="scss" scoped>
