@@ -29,7 +29,9 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
   const proxies = fake.number.int({ min: 1, max: 120 })
 
   return {
-    headers: {},
+    headers: {
+      ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
+    },
     body: {
       ...(query.get('format') === 'kubernetes' && {
         apiVersion: 'kuma.io/v1alpha1',

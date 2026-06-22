@@ -123,6 +123,10 @@ import _50 from './src/zones/_'
 import _12 from './src/zones/_/_overview'
 import _11 from './src/zones/_overview'
 
+export const remote = {
+  // stats
+  '/latest_version': _124,
+}
 export const fs = {
   // static/testing
   '/meshes/:mesh/meshgateways/test-meshgateway': _134,
@@ -144,8 +148,6 @@ export const fs = {
   '/meshes/:mesh/dataplanes/grpc-service-75b4ccdfd5-z2jmp.kuma-demo/_rules': _630,
   '/meshes/:mesh/dataplanes/test-dataplane/_rules': _129,
   ///
-  // stats
-  'https://kuma.io/latest_version': _124,
   '/config': _1,
   '/policies': _2,
   '/global-insight': _5,

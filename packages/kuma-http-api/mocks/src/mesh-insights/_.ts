@@ -58,7 +58,9 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
   const totalVersions = fake.kuma.partition(1, dpTotal, 5, dpTotal)
 
   return {
-    headers: {},
+    headers: {
+      ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
+    },
     body: {
       type: 'MeshInsight',
       name: String(params.mesh),

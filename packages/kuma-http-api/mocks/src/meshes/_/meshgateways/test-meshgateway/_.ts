@@ -1,12 +1,14 @@
 import type { Dependencies, ResponseHandler } from '#mocks'
 import type { MeshGateway } from '@/types/index.d'
 
-export default (_deps: Dependencies): ResponseHandler => (req) => {
+export default ({ fake }: Dependencies): ResponseHandler => (req) => {
   const mesh = req.params.mesh as string
   const name = req.params.name as string
 
   return {
-    headers: {},
+    headers: {
+      ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
+    },
     body: {
       type: 'MeshGateway',
       mesh,

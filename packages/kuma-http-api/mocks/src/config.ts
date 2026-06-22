@@ -5,7 +5,9 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (_req) => {
   const zoneName = mode === 'zone' ? fake.word.noun() : undefined
 
   return {
-    headers: {},
+    headers: {
+      ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
+    },
     body: {
       access: {
         static: {

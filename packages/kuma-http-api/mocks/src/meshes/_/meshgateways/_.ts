@@ -27,7 +27,9 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
   const listenerCount = parseInt(env('KUMA_LISTENER_COUNT', `${fake.number.int({ min: 1, max: 3 })}`))
 
   return {
-    headers: {},
+    headers: {
+      ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
+    },
     body: {
       // Just a quick, obvious way to verify the “Copy as Kubernetes” copy button functionality.
       ...(req.url.searchParams.get('format') === 'kubernetes' && {

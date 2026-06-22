@@ -54,7 +54,6 @@ Feature: mesh / services / index
     Then the "$item" element exists 1 times
 
   Scenario: Searching by name
-    When I visit the "/meshes/default/services/internal" URL
     Then the "$input-search" element exists
     When I "type" "foo kuma.io/service-name:bar" into the "$input-search" element
     And I "type" "{enter}" into the "$input-search" element

@@ -13,7 +13,9 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
   const serviceTypes = serviceType ? serviceType.split(',') as Array<'internal' | 'external' | 'gateway_delegated' | 'gateway_builtin'> : undefined
 
   return {
-    headers: {},
+    headers: {
+      ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
+    },
     body: {
       total,
       next,

@@ -24,7 +24,9 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
   const isMtlsEnabled = isMtlsEnabledOverride !== '' ? isMtlsEnabledOverride === 'true' : fake.datatype.boolean()
 
   return {
-    headers: {},
+    headers: {
+      ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
+    },
     body: {
       ...(req.url.searchParams.get('format') === 'kubernetes' && {
         apiVersion: 'kuma.io/v1alpha1',
