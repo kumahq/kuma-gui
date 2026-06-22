@@ -6,6 +6,18 @@ type PluginOptions<TDependencies extends object = {}> = {
   fs: FS<TDependencies>
   dependencies: Dependencies<TDependencies>
 }
+const Cookie = {
+  parse: (str: string, { prefix = '' } = { prefix: '' }) => {
+    return Object.fromEntries(str.split(';')
+      .map((item) => item.trim())
+      .filter((item) => item !== '')
+      .map((item) => {
+        const [key, ...value] = item.split('=')
+        return [key, value.join('=')] as [string, string]
+      })
+      .filter(([key, value]) => key.startsWith(prefix)))
+  },
+}
 
 export default <TDependencies extends object = {}>(opts: PluginOptions<TDependencies>): Plugin => {
 
@@ -43,6 +55,12 @@ export default <TDependencies extends object = {}>(opts: PluginOptions<TDependen
         res.setHeader('Content-Type', type)
         res.setHeader('Status-Code', response.headers.get('Status-Code') ?? '200')
         const resp = type.endsWith('/json') ? JSON.stringify((await response.json()), null, 4) : (await response.text())
+
+        const cookies = Cookie.parse(req.headers?.cookie ?? '', { prefix: 'KUMA_' })
+        if (cookies.KUMA_LATENCY) {
+          await new Promise((resolve) => setTimeout(resolve, parseInt(cookies.KUMA_LATENCY)))
+        }
+
         if(response.headers.get('Transfer-Encoding') === 'chunked') {
           res.write(resp)
           res.end()

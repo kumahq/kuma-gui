@@ -1,4 +1,4 @@
-import { replicateKumaServer } from '@kumahq/config/vite'
+import { replicateKumaServer, playwrightBdd } from '@kumahq/config/vite'
 import fakeApi from '@kumahq/fake-api/vite'
 import { fs, dependencies } from '@kumahq/kuma-http-api/mocks'
 import { defineConfig } from 'vite'
@@ -15,6 +15,7 @@ export const config: UserConfigFn = () => {
         template: './dist/gui/index.html',
       }),
       fakeApi({ dependencies, fs }),
+      playwrightBdd(),
     ],
   }
 }

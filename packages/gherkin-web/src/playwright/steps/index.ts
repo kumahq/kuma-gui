@@ -84,13 +84,6 @@ export async function setupSteps({
         value: 'false',
         url: `${baseURL}`,
       },
-      ...(config.passthrough ? [
-        {
-          name: 'KUMA_API_URL',
-          value: 'http://localhost:5681',
-          url: `${baseURL}`,
-        },
-      ] : []),
     ])
     const p = Object.keys(fs).map(route => {
       return context.route(
@@ -113,9 +106,6 @@ export async function setupSteps({
               },
             })
 
-            if (env.KUMA_LATENCY) {
-              await new Promise((resolve) => setTimeout(resolve, parseInt(env.KUMA_LATENCY)))
-            }
             if(config.passthrough) {
               await route.fallback({ headers })
             } else {
@@ -125,6 +115,9 @@ export async function setupSteps({
               })
               const type = response.headers.get('Content-Type') ?? 'application/json'
               const body = type.endsWith('/json') ? JSON.stringify((await response.json()), null, 4) : (await response.text())
+              if (env.KUMA_LATENCY) {
+                await new Promise((resolve) => setTimeout(resolve, parseInt(env.KUMA_LATENCY)))
+              }
               await route.fulfill({
                 status: parseInt(response.headers.get('Status-Code') ?? '200'),
                 contentType: type,
