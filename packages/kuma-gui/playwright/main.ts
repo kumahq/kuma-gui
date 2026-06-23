@@ -24,7 +24,7 @@ export { test } from '@kumahq/gherkin-web/playwright'
         service: () => {
           // these are only fed to the mocks
           return {
-            KUMA_API_URL: () => 'http://localhost:5681',
+            KUMA_API_URL: () => new URL(process.env.KUMA_BASE_URL || 'http://localhost:8080/gui').origin,
           }
         },
         labels: [
