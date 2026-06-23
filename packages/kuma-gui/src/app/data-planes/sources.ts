@@ -260,7 +260,6 @@ export const sources = (api: KumaApi) => {
           // @ts-expect-error OpenAPI says query is undefined
           query: {
             ...search,
-            // @TODO check these tags
             tag,
             offset,
             size,
@@ -287,7 +286,6 @@ export const sources = (api: KumaApi) => {
           // @ts-expect-error OpenAPI says query is undefined
           query: {
             ...search,
-            // @TODO check these tags
             tag,
             offset,
             size,
