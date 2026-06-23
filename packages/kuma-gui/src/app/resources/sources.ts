@@ -10,7 +10,7 @@ type DynamicPathMesh = 'meshaccesslogs'
 
 export const sources = (api: KumaApi) => {
   const http = createClient<paths>({
-    baseUrl: '',
+    baseUrl: api.client.baseUrl,
     fetch: api.client.fetch,
   })
   return defineSources({
@@ -48,7 +48,7 @@ export const sources = (api: KumaApi) => {
       const { mesh, path, size } = params
       const offset = params.size * (params.page - 1)
       const search = Resource.search(params.search)
-      
+
       const response = await http.GET(`/meshes/{mesh}/${path as DynamicPathMesh}`, {
         params: {
           path: {

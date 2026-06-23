@@ -7,7 +7,7 @@ import type { paths } from '@kumahq/kuma-http-api'
 
 export const sources = (api: KumaApi) => {
   const http = createClient<paths>({
-    baseUrl: '',
+    baseUrl: api.client.baseUrl,
     fetch: api.client.fetch,
   })
 

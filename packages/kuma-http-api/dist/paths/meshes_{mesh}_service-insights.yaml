@@ -1,0 +1,20 @@
+get:
+  parameters:
+    - name: mesh
+      type: string
+      in: path
+      required: true
+    - in: query
+      name: type
+      type: string
+    - $ref: '../parameters.yaml#/size'
+    - $ref: '../parameters.yaml#/offset'
+    - $ref: '../parameters.yaml#/filter'
+  responses:
+    200:
+      description: '200'
+      content:
+        application/json:
+          schema:
+            type: object
+

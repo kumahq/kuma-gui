@@ -3,6 +3,7 @@ export default ({ fake }: Dependencies): ResponseHandler => (_req) => {
   return {
     headers: {
       ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
+      'Content-Type': 'text/plain',
     },
     body: `${stats()}`,
   }

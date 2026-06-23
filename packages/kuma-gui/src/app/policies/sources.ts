@@ -5,23 +5,20 @@ import { Kri } from '../kuma'
 import type { KumaPolicy, KumaPolicyCollection, DynamicPath } from './data'
 import { DataplanePolicies } from './data/DataplanePolicies'
 import { DataplaneInboundPolicies, DataplaneOutboundPolicies } from './data/DataplaneTrafficPolicies'
-import { defineSources, YAML } from '@/app/application'
 import type { DataSourceResponse } from '@/app/application'
+import { defineSources, YAML } from '@/app/application'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
+import type {
+  PolicyDataplane as PartialPolicyDataplane,
+} from '@/types/index.d'
 import type { paths } from '@kumahq/kuma-http-api'
 
-export type PolicyCollection = CollectionResponse<Policy>
 export type PolicySource = DataSourceResponse<Policy>
-export type PolicyCollectionSource = DataSourceResponse<PolicyCollection>
-
-export type PolicyDataplaneCollection = CollectionResponse<PolicyDataplane>
-export type PolicyDataplaneSource = DataSourceResponse<PolicyDataplane>
-export type PolicyDataplaneCollectionSource = DataSourceResponse<PolicyDataplaneCollection>
 
 export const sources = (api: KumaApi) => {
   const http = createClient<paths>({
-    baseUrl: '',
+    baseUrl: api.client.baseUrl,
     fetch: api.client.fetch,
   })
 
@@ -97,7 +94,20 @@ export const sources = (api: KumaApi) => {
     '/meshes/:mesh/policy-path/:path/policy/:name/dataplanes': async (params) => {
       const { mesh, path, name, size } = params
       const offset = params.size * (params.page - 1)
-      return PolicyDataplane.fromCollection(await api.getPolicyConnections({ mesh, path, name }, { offset, size }))
+      const res = await http.GET('/meshes/{mesh}/{policyType}/{policyName}/_resources/dataplanes', {
+        params: {
+          path: {
+            mesh,
+            policyType: path,
+            policyName: name,
+          },
+          query: {
+            size,
+            offset,
+          },
+        },
+      })
+      return PolicyDataplane.fromCollection(res.data! as unknown as CollectionResponse<PartialPolicyDataplane>)
     },
 
 

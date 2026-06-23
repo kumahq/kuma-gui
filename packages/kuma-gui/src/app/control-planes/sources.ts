@@ -26,7 +26,7 @@ export const compare = (a: string, b: string) => {
 }
 export const sources = (env: Env, api: KumaApi) => {
   const http = createClient<paths>({
-    baseUrl: '',
+    baseUrl: api.client.baseUrl,
     fetch: api.client.fetch,
   })
 
@@ -67,7 +67,13 @@ export const sources = (env: Env, api: KumaApi) => {
       }
       const version = await (async () => {
         try {
-          return (await api.client.fetch(env('KUMA_VERSION_URL'))).json()
+          const url = new URL(env('KUMA_VERSION_URL'))
+          // @ts-expect-error we allow any pathname here
+          const res = await http.GET(url.pathname, {
+            baseUrl: url.origin,
+            parseAs: 'text',
+          })
+          return res.data ?? ''
         } catch (e) {
           console.error(e)
           return ''

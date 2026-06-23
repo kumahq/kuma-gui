@@ -1,7 +1,9 @@
 import type { Dependencies, ResponseHandler } from '#mocks'
 export default (_deps: Dependencies): ResponseHandler => (_req) => {
   return {
-    headers: {},
+    headers: {
+      'Content-Type': 'text/plain',
+    },
     body: stats(),
   }
 }

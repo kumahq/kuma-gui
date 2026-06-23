@@ -16,7 +16,7 @@ export type MeshGatewayCollectionSource = DataSourceResponse<MeshGatewayCollecti
 
 export const sources = (api: KumaApi) => {
   const http = createClient<paths>({
-    baseUrl: '',
+    baseUrl: api.client.baseUrl,
     fetch: api.client.fetch,
   })
   return defineSources({
@@ -25,19 +25,51 @@ export const sources = (api: KumaApi) => {
       const offset = params.size * (params.page - 1)
       const search = MeshGateway.search(params.search)
 
-      return MeshGateway.fromCollection(await api.getAllMeshGatewaysFromMesh({ mesh }, { size, offset, ...search }))
+      const res = await http.GET('/meshes/{mesh}/meshgateways', {
+        params: {
+          path: {
+            mesh,
+          },
+          query: {
+            offset,
+            size,
+            ...search,
+          },
+        },
+      })
+      return MeshGateway.fromCollection(res.data!)
     },
 
     '/meshes/:mesh/mesh-gateways/:name': async (params) => {
       const { mesh, name } = params
 
-      return MeshGateway.fromObject(await api.getMeshGateway({ mesh, name }))
+      const res = await http.GET('/meshes/{mesh}/meshgateways/{name}', {
+        params: {
+          path: {
+            mesh,
+            name,
+          },
+        },
+      })
+      return MeshGateway.fromObject(res.data!)
     },
 
     '/meshes/:mesh/mesh-gateways/:name/as/kubernetes': async (params) => {
       const { mesh, name } = params
-
-      return api.getMeshGateway({ mesh, name }, { format: 'kubernetes' })
+      const res = await http.GET('/meshes/{mesh}/meshgateways/{name}', {
+        params: {
+          path: {
+            mesh,
+            name,
+          },
+          // @ts-expect-error OpenAPI says this is undefined
+          query: {
+            format: 'kubernetes',
+          },
+        },
+      })
+      // TODO
+      return res.data
     },
 
     '/meshes/:mesh/mesh-gateways/:name/rules': async (params) => {

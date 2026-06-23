@@ -50,7 +50,6 @@ export const mswHandlers = <TDependencies extends object = {}>(fs: FS, dependenc
         }
         return prev
       }, {} as Record<string, string>)
-
       const response = await fetch(`${req.url ?? ''}`, {
         method: req.method,
         headers,
@@ -63,9 +62,12 @@ export const mswHandlers = <TDependencies extends object = {}>(fs: FS, dependenc
       if (typeof response === 'undefined') {
         return passthrough()
       }
-      return HttpResponse.json((await response.json()), {
+      const responseHeaders = {
         status: parseInt(response.headers?.get('Status-Code') ?? '200'),
-      })
+      }
+      return response.headers?.get('Content-Type') === 'text/plain' ?
+        HttpResponse.text(await response.text(), responseHeaders) :
+        HttpResponse.json(await response.json(), responseHeaders)
     })
   })
 }

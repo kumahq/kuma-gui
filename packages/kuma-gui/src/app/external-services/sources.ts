@@ -1,42 +1,71 @@
+import createClient from 'openapi-fetch'
+
 import { ExternalService } from './data'
-import type { DataSourceResponse } from '@/app/application'
 import { defineSources } from '@/app/application'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
-import type { PaginatedApiListResponse as CollectionResponse, ExternalServicesParameters } from '@/types/api.d'
+import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
+import type {
+  ExternalService as PartialExternalService,
+} from '@/types/index.d'
+import type { paths } from '@kumahq/kuma-http-api'
 
 export type { ExternalService } from './data'
 
-export type ExternalServiceSource = DataSourceResponse<ExternalService>
-export type ExternalServiceCollection = CollectionResponse<ExternalService>
-export type ExternalServiceCollectionSource = DataSourceResponse<ExternalServiceCollection>
-
 export const sources = (api: KumaApi) => {
+  const http = createClient<paths>({
+    baseUrl: api.client.baseUrl,
+    fetch: api.client.fetch,
+  })
   return defineSources({
     '/meshes/:mesh/external-services': async (params) => {
-      const { mesh, size, page, search } = params
+      const { mesh, size, page } = params
       const offset = size * (page - 1)
 
-      const filterParams: ExternalServicesParameters = {
-        size,
-        offset,
-        ...ExternalService.search(search),
-      }
+      const search = ExternalService.search(params.search)
 
-      return ExternalService.fromCollection(await api.getAllExternalServicesFromMesh({ mesh }, filterParams))
+      const res = await http.GET('/meshes/{mesh}/external-services', {
+        params: {
+          path: {
+            mesh,
+          },
+          query: {
+            size,
+            offset,
+            ...search,
+          },
+        },
+      })
+      return ExternalService.fromCollection(res.data! as unknown as CollectionResponse<PartialExternalService>)
     },
 
     '/meshes/:mesh/external-services/:name': async (params) => {
       const { mesh, name } = params
+      const res = await http.GET('/meshes/{mesh}/external-services/{name}', {
+        params: {
+          path: {
+            mesh,
+            name,
+          },
+        },
+      })
 
-      return ExternalService.fromObject(await api.getExternalService({ mesh, name }))
+      return ExternalService.fromObject(res.data! as unknown as PartialExternalService)
     },
 
     '/meshes/:mesh/external-services/:name/as/kubernetes': async (params) => {
       const { mesh, name } = params
-
-      return api.getExternalService({ mesh, name }, {
-        format: 'kubernetes',
+      const res = await http.GET('/meshes/{mesh}/external-services/{name}', {
+        params: {
+          path: {
+            mesh,
+            name,
+          },
+          query: {
+            format: 'kubernetes',
+          },
+        },
       })
+      return res.data!
     },
   })
 }
