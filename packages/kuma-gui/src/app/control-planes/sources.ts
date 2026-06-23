@@ -26,7 +26,7 @@ export const compare = (a: string, b: string) => {
 }
 export const sources = (env: Env, api: KumaApi) => {
   const http = createClient<paths>({
-    baseUrl: api.client.baseUrl,
+    baseUrl: '',
     fetch: api.client.fetch,
   })
 

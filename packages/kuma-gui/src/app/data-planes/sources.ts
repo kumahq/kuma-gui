@@ -26,7 +26,7 @@ const includes = <T extends readonly string[]>(arr: T, item: string): item is T[
 }
 export const sources = (api: KumaApi) => {
   const http = createClient<paths>({
-    baseUrl: api.client.baseUrl,
+    baseUrl: '',
     fetch: api.client.fetch,
   })
   return defineSources({

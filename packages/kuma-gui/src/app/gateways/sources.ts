@@ -16,7 +16,7 @@ export type MeshGatewayCollectionSource = DataSourceResponse<MeshGatewayCollecti
 
 export const sources = (api: KumaApi) => {
   const http = createClient<paths>({
-    baseUrl: api.client.baseUrl,
+    baseUrl: '',
     fetch: api.client.fetch,
   })
   return defineSources({

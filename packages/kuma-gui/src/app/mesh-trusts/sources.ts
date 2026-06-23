@@ -9,7 +9,7 @@ type KumaMeshTrust = components['schemas']['MeshTrustItem']
 
 export const sources = (api: KumaApi) => {
   const http = createClient<paths>({
-    baseUrl: api.client.baseUrl,
+    baseUrl: '',
     fetch: api.client.fetch,
   })
   return defineSources({

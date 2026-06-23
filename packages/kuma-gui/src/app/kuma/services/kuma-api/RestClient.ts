@@ -22,9 +22,12 @@ export class RestClient {
     return this.env('KUMA_API_URL')
   }
 
-  async raw(...rest: FetchParams) {
+  async raw(input: FetchParams[0], init?: FetchParams[1]) {
+    const isRequest = input instanceof Request
+    const path = isRequest ? input.url : String(input)
+    const url = `${path.startsWith('http') ? '' : this.baseUrl}${path}`
     try {
-      const response = await fetch(...rest)
+      const response = await fetch(isRequest ? new Request(url, input) : url, init)
       if (response.ok) {
         return response
       } else {
@@ -36,8 +39,7 @@ export class RestClient {
       }
     } catch (error) {
       if (error instanceof Error) {
-        const completeUrl = typeof rest[0] === 'string' || rest[0] instanceof URL ? String(rest[0]) : rest[0].url
-        error.message = `${error.message} (${completeUrl})`
+        error.message = `${error.message} (${url})`
       }
       throw error
     }
