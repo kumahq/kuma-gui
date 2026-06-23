@@ -1,4 +1,4 @@
-import { createFetch } from '@kumahq/fake-api'
+import { createFetch, Cookie } from '@kumahq/fake-api'
 import { expect } from '@playwright/test'
 import { createBdd, test as base } from 'playwright-bdd'
 
@@ -89,46 +89,41 @@ export async function setupSteps({
       return context.route(
         (u) => routeToRegexp(route).test(u.toString()),
         async (route, request) => {
-          try {
-            const url = request.url()
-            const cookies = await context.cookies()
-            const envs = Object.entries(env).map(([name, value]) => ( {name, value} ))
-            const headers = {
-              cookie: [...cookies, ...envs].map((c) => `${c.name}=${c.value}`).join('; '),
-              ...request.headers(),
-            }
+          const cookies = await context.cookies()
+          const envs = Object.entries(env).map(([name, value]) => ( {name, value} ))
+          const headers = {
+            cookie: Cookie.stringify([...cookies, ...envs]),
+            ...request.headers(),
+          }
 
-            client.request({
-              url: new URL(url),
-              request: {
-                method: request.method(),
-                body: request.postDataJSON() ?? {},
-              },
+          const url = new URL(request.url())
+          client.request({
+            url,
+            request: {
+              method: request.method(),
+              body: request.postDataJSON() ?? {},
+            },
+          })
+          // @TODO: We should probably turn this check into a callback
+          if(config.passthrough && url.origin === new URL(baseURL).origin) {
+            await route.fallback({ headers })
+          } else {
+            const response = await fetch(url.toString(), {
+              method: request.method(),
+              headers,
+            })
+            const type = response.headers.get('Content-Type') ?? 'application/json'
+            const body = type.endsWith('/json') ? JSON.stringify((await response.json()), null, 4) : (await response.text())
+            if (env.KUMA_LATENCY) {
+              await new Promise((resolve) => setTimeout(resolve, parseInt(env.KUMA_LATENCY)))
+            }
+            await route.fulfill({
+              status: parseInt(response.headers.get('Status-Code') ?? '200'),
+              contentType: type,
+              headers: Object.fromEntries(response.headers.entries()),
+              body,
             })
 
-            if(config.passthrough) {
-              await route.fallback({ headers })
-            } else {
-              const response = await fetch(url, {
-                method: request.method(),
-                headers,
-              })
-              const type = response.headers.get('Content-Type') ?? 'application/json'
-              const body = type.endsWith('/json') ? JSON.stringify((await response.json()), null, 4) : (await response.text())
-              if (env.KUMA_LATENCY) {
-                await new Promise((resolve) => setTimeout(resolve, parseInt(env.KUMA_LATENCY)))
-              }
-              await route.fulfill({
-                status: parseInt(response.headers.get('Status-Code') ?? '200'),
-                contentType: type,
-                headers: Object.fromEntries(response.headers.entries()),
-                body,
-              })
-
-            }
-          } catch (e) {
-            console.error(e)
-            await route.continue()
           }
         })
 
@@ -176,60 +171,54 @@ export async function setupSteps({
     await context.route(
       (u) => routeToRegexp(route).test(u.pathname),
       async (route, request) => {
-        try {
-          const url = request.url()
-          const cookies = await context.cookies()
-          const envs = Object.entries(env).map(([name, value]) => ( {name, value} ))
-          const response = await fetch(url, {
-            method: request.method(),
-            headers: {
-              cookie: [...cookies, ...envs].map((c) => `${c.name}=${c.value}`).join('; '),
-              ...request.headers(),
-            },
-          })
-          client.request({
-            url: new URL(url),
-            request: {
-              method: request.method(),
-              body: request.postDataJSON() ?? {},
-            },
-          })
-          if (env.KUMA_LATENCY) {
-            await new Promise((resolve) => setTimeout(resolve, parseInt(env.KUMA_LATENCY)))
-          }
-          const type = response.headers.get('Content-Type') ?? 'application/json'
+        const cookies = await context.cookies()
+        const envs = Object.entries(env).map(([name, value]) => ( {name, value} ))
 
-          const _yaml = (YAML.parse(yaml) ?? {}) as {
-            headers?: Record<string, string>
-            body?: Record<string, unknown> | string
-          }
-          let merged
-          // we are using content-type to understand the shape of body
-          // /json means Record<string, unknown>
-          // otherwise we assume body is a string so we use `as` below
-          if (type.endsWith('/json')) {
-            merged = merge({ body: await response.json(), headers: Object.fromEntries(response.headers.entries()) }, _yaml) as any
-            await route.fulfill({
-              contentType: type,
-              headers: merged.headers,
-              status: parseInt(merged.headers?.['Status-Code'] ?? response.headers.get('Status-Code') ?? '200'),
-              body: JSON.stringify(merged.body),
-            })
-          } else {
-            merged = _yaml
-            await route.fulfill({
-              contentType: type,
-              headers: merged.headers,
-              status: parseInt(merged.headers?.['Status-Code'] ?? response.headers.get('Status-Code') ?? '200'),
-              body: merged.body as string,
-            })
-          }
-          //
-          return
-        } catch (e) {
-          console.error(e)
+        const url = new URL(request.url())
+        const response = await fetch(url.toString(), {
+          method: request.method(),
+          headers: {
+            cookie: Cookie.stringify([...cookies, ...envs]),
+            ...request.headers(),
+          },
+        })
+        client.request({
+          url,
+          request: {
+            method: request.method(),
+            body: request.postDataJSON() ?? {},
+          },
+        })
+        if (env.KUMA_LATENCY) {
+          await new Promise((resolve) => setTimeout(resolve, parseInt(env.KUMA_LATENCY)))
         }
-        await route.continue()
+        const type = response.headers.get('Content-Type') ?? 'application/json'
+
+        const _yaml = (YAML.parse(yaml) ?? {}) as {
+          headers?: Record<string, string>
+          body?: Record<string, unknown> | string
+        }
+        let merged
+        // we are using content-type to understand the shape of body
+        // /json means Record<string, unknown>
+        // otherwise we assume body is a string so we use `as` below
+        if (type.endsWith('/json')) {
+          merged = merge({ body: await response.json(), headers: Object.fromEntries(response.headers.entries()) }, _yaml) as any
+          await route.fulfill({
+            contentType: type,
+            headers: merged.headers,
+            status: parseInt(merged.headers?.['Status-Code'] ?? response.headers.get('Status-Code') ?? '200'),
+            body: JSON.stringify(merged.body),
+          })
+        } else {
+          merged = _yaml
+          await route.fulfill({
+            contentType: type,
+            headers: merged.headers,
+            status: parseInt(merged.headers?.['Status-Code'] ?? response.headers.get('Status-Code') ?? '200'),
+            body: merged.body as string,
+          })
+        }
       })
   })
 

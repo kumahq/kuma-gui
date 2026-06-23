@@ -73,6 +73,15 @@ export const Cookie = {
       })
       .filter(([key, _value]) => key.startsWith(prefix)))
   },
+  // @TODO: please expand to ` | Record<string, string> | Record<string, unknown>` when needed
+  stringify: (cookies: { name: string, value: string }[]) => {
+    switch(true) {
+      case Array.isArray(cookies):
+        return cookies.map((c) => `${c.name}=${c.value}`).join('; ')
+      default:
+        return ''
+    }
+  },
 }
 export const routeToRegexp = (route: string) => {
   const url = new URL(route, !route.includes('://') ? 'http://localhost' : undefined)
