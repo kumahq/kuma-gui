@@ -14,13 +14,14 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
     // TODO: Uncomment once the legacy routes are removed
     // [token('data-planes.routes'), {
     //   service: () => {
+    //     const _routes = routes()
     //     return [
     //       (item: RouteRecordRaw) => {
     //         if (item.name === 'mesh-detail-tabs-view') {
-    //           item.children = (item.children ?? []).concat(routes().items())
+    //           item.children = (item.children ?? []).concat(_routes.items())
     //         }
     //         if(item.name === 'mesh') {
-    //           item.children = (item.children ?? []).concat(routes().item())
+    //           item.children = (item.children ?? []).concat(_routes.item())
     //         }
     //       },
     //     ]

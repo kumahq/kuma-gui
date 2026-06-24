@@ -23,13 +23,14 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
     }],
     [token('services.routes'), {
       service: (can: Can) => {
+        const _routes = routes(can)
         return [
           (item: RouteRecordRaw) => {
             if (item.name === 'mesh-detail-tabs-view') {
-              item.children = (item.children ?? []).concat(routes(can).items())
+              item.children = (item.children ?? []).concat(_routes.items())
             }
             if(item.name === 'mesh') {
-              item.children = (item.children ?? []).concat(routes(can).item())
+              item.children = (item.children ?? []).concat(_routes.item())
             }
           },
         ]
