@@ -1,4 +1,5 @@
 import { routes as connections, networking } from '@/app/connections/routes'
+import { routes as meshIdentity } from '@/app/mesh-identities/routes'
 import { routes as meshTrust } from '@/app/mesh-trusts/routes'
 import { routes as subscriptions } from '@/app/subscriptions/routes'
 import type { RouteRecordRaw } from 'vue-router'
@@ -87,6 +88,7 @@ export const legacyDataplaneRoutes = (): RouteRecordRaw[] => {
               name: 'data-plane-policy-config-summary-view',
               component: () => import('@/app/data-planes/views/DataplanePolicyConfigSummaryView.vue'),
             },
+            ...meshIdentity().summary('data-plane'),
             ...meshTrust().summary('data-plane'),
           ],
         },
