@@ -7,7 +7,7 @@ Feature: mesh / policies / item
       | config-k8s         | [data-testid='codeblock-yaml-k8s']       |
       | select-environment | [data-testid='select-input']             |
       | about-section      | [data-testid='policy-about-section']     |
-    And the URL "/meshes/default/circuit-breakers/item-1" responds with
+    And the URL "/meshes/default/meshaccesslogs/item-1" responds with
       """
       body:
         labels:
@@ -15,7 +15,7 @@ Feature: mesh / policies / item
           kuma.io/origin: zone
           kuma.io/zone: zone-1
       """
-    And the URL "/_kri/kri_mcb_default_zone-1_kuma-demo_item-1_" responds with
+    And the URL "/_kri/kri_mal_default_zone-1_kuma-demo_item-1_" responds with
       """
       body:
         labels:
@@ -25,7 +25,7 @@ Feature: mesh / policies / item
       """
 
   Scenario Outline: The about section has the expected content
-    When I visit the "/meshes/default/policies/circuit-breakers/<Name>/overview/overview" URL
+    When I visit the "/meshes/default/policies/meshaccesslogs/<Name>/overview/overview" URL
     Then the "$about-section" element exists
     And the "$about-section" element contains "kuma-demo"
     And the "$about-section" element contains "kuma.io/origin:zone"
@@ -33,10 +33,10 @@ Feature: mesh / policies / item
     Examples:
       | Name                                     |
       | item-1                                   |
-      | kri_mcb_default_zone-1_kuma-demo_item-1_ |
+      | kri_mal_default_zone-1_kuma-demo_item-1_ |
 
   Scenario Outline: Shows config with format based on environment
-    When I visit the "/meshes/default/policies/circuit-breakers/<Name>/overview/config" URL
+    When I visit the "/meshes/default/policies/meshaccesslogs/<Name>/overview/config" URL
     Then the "$config-universal" element exists
     And the URL contains "?environment=universal"
     When I click the "$select-environment" element
@@ -47,4 +47,4 @@ Feature: mesh / policies / item
     Examples:
       | Name                                     |
       | item-1                                   |
-      | kri_mcb_default_zone-1_kuma-demo_item-1_ |
+      | kri_mal_default_zone-1_kuma-demo_item-1_ |
