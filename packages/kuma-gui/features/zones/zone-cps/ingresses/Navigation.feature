@@ -3,7 +3,7 @@ Feature: zones / ingresses / navigation
   Background:
     Given the CSS selectors
       | Alias         | Selector                                                                    |
-      | row           | [data-testid$='-collection'] tbody tr:first-child                                 |
+      | row           | [data-testid$='-collection'] tbody tr:first-child                           |
       | action-group  | $row [data-testid='x-action-group-control']                                 |
       | view          | $row [data-testid='x-action-group'] li:first-child [data-testid='x-action'] |
       | action        | $row [data-action]                                                          |
