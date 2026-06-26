@@ -1,6 +1,5 @@
 import createClient from 'openapi-fetch'
 
-import { Kri } from '../kuma'
 import { HostnameGenerator } from './data/HostnameGenerator'
 import type { KumaHostnameGenerator } from './data/HostnameGenerator'
 import { defineSources } from '@/app/application'
@@ -33,60 +32,34 @@ export const sources = (api: KumaApi) => {
       return HostnameGenerator.fromCollection(res.data!)
     },
 
-    '/hostname-generators/:name': async (params) => {
-      const { name } = params
+    '/hostname-generators/:kri': async (params) => {
+      const { kri } = params
 
-      let response
-      if(Kri.isKriString(name)) {
-        response = await http.GET('/_kri/{kri}', {
-          params: {
-            path: {
-              kri: name,
-            },
+      const  response = await http.GET('/_kri/{kri}', {
+        params: {
+          path: {
+            kri,
           },
-        })
-      } else {
-        response = await http.GET('/hostnamegenerators/{name}', {
-          params: {
-            path: {
-              name,
-            },
-          },
-        })
-      }
+        },
+      })
 
       return HostnameGenerator.fromObject(response.data as KumaHostnameGenerator)
     },
 
-    '/hostname-generators/:name/as/kubernetes': async (params) => {
-      const { name } = params
+    '/hostname-generators/:kri/as/kubernetes': async (params) => {
+      const { kri } = params
 
-      let response
-      if(Kri.isKriString(name)) {
-        response = await http.GET('/_kri/{kri}', {
-          params: {
-            path: {
-              kri: name,
-            },
-            // @ts-ignore
-            query: {
-              format: 'kubernetes',
-            },
+      const response = await http.GET('/_kri/{kri}', {
+        params: {
+          path: {
+            kri,
           },
-        })
-      } else {
-        response = await http.GET('/hostnamegenerators/{name}', {
-          params: {
-            path: {
-              name,
-            },
-            // @ts-ignore
-            query: {
-              format: 'kubernetes',
-            },
+          // @ts-expect-error - query type missing in OAS
+          query: {
+            format: 'kubernetes',
           },
-        })
-      }
+        },
+      })
 
       return response.data!
     },

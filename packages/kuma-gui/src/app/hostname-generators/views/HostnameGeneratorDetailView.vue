@@ -2,7 +2,7 @@
   <RouteView
     name="hostname-generator-detail-view"
     :params="{
-      name: '',
+      kri: '',
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
@@ -16,8 +16,8 @@
     />
 
     <DataSource
-      :src="uri(sources, '/hostname-generators/:name', {
-        name: route.params.name,
+      :src="uri(sources, '/hostname-generators/:kri', {
+        kri: route.params.kri,
       })"
       v-slot="{ data: sourceData, error }"
     >
@@ -214,8 +214,8 @@
 
               <template v-else>
                 <DataLoader
-                  :src="uri(sources, '/hostname-generators/:name/as/kubernetes', {
-                    name: route.params.name,
+                  :src="uri(sources, '/hostname-generators/:kri/as/kubernetes', {
+                    kri: route.params.kri,
                   })"
                   v-slot="{ data: [k8sConfig] }"
                 >

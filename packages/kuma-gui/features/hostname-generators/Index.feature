@@ -16,25 +16,25 @@ Feature: hostname-generators / index
       body:
         items:
           - name: local-mesh-external-service
-            kri: kri_____local-mesh-external-service_
+            kri: kri_hg____local-mesh-external-service_
             labels:
               kuma.io/display-name: local-mesh-external-service
           - name: synced-kube-mesh-service
-            kri: kri_____synced-kube-mesh-service_
+            kri: kri_hg____synced-kube-mesh-service_
             labels:
               kuma.io/display-name: synced-kube-mesh-service
       """
     When I visit the "/hostname-generators" URL
     When I click the "<Selector> [data-testid='x-action-group-control']" element
     And I click the "<Selector> [data-testid='x-action-group'] li:nth-child(1) [data-testid='x-action']" element
-    Then the URL contains "/hostname-generators/<HostnameGenerator>/overview"
+    Then the URL contains "/hostname-generators/<Kri>/overview"
     And the "$breadcrumbs" element contains "HostnameGenerators"
     And I click the "$breadcrumbs > .breadcrumbs-item-container:nth-child(1) > a" element
 
     Examples:
-      | HostnameGenerator           | Selector           |
-      | local-mesh-external-service | $item:nth-child(1) |
-      | synced-kube-mesh-service    | $item:nth-child(2) |
+      | Kri                                    | HostnameGenerator           | Selector           |
+      | kri_hg____local-mesh-external-service_ | local-mesh-external-service | $item:nth-child(1) |
+      | kri_hg____synced-kube-mesh-service_    | synced-kube-mesh-service    | $item:nth-child(2) |
 
   Scenario: Clicking a hostname generator
     Given the URL "/hostnamegenerators" responds with
@@ -42,19 +42,19 @@ Feature: hostname-generators / index
       body:
         items:
           - name: local-mesh-external-service
-            kri: kri_____local-mesh-external-service_
+            kri: kri_hg____local-mesh-external-service_
             labels:
               kuma.io/display-name: local-mesh-external-service
       """
     When I visit the "/hostname-generators" URL
     When I click the "<Selector> td:nth-child(1)" element
-    Then the URL contains "/hostname-generators/<HostnameGenerator>"
+    Then the URL contains "/hostname-generators/<Kri>"
     And the "$summary-slideout-container" element exists
     And the "$summary-title" element contains "<HostnameGenerator>"
 
     Examples:
-      | HostnameGenerator           | Selector           |
-      | local-mesh-external-service | $item:nth-child(1) |
+      | Kri                                    | HostnameGenerator           | Selector           |
+      | kri_hg____local-mesh-external-service_ | local-mesh-external-service | $item:nth-child(1) |
 
   Scenario Outline: sending filters to the API
     When I visit the "/hostname-generators" URL

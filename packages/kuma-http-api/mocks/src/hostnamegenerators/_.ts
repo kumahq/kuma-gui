@@ -4,7 +4,6 @@ import type { components } from '@kumahq/kuma-http-api'
 type HostnameGenerator = components['responses']['HostnameGeneratorItem']['content']['application/json']
 
 export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
-  const origin = fake.kuma.origin()
   const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
   const kri = req.params.kri ? `kri_mal_${req.params.kri}` : undefined
   const [

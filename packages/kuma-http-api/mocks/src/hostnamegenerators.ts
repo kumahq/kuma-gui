@@ -26,24 +26,18 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
         const meshServiceTypeSelector = fake.kuma.meshServiceTypeSelector()
         const namespace = namespaceQuery ?? fake.word.noun()
         const displayName = `${nameQuery?.padEnd(nameQuery.length + 1, '-') ?? ''}${fake.science.chemicalElement().name.toLowerCase()}-${offset + i}-service`
-        const creationTime = fake.date.past()
         const zone = zoneQuery ?? fake.word.noun()
-        const origin = zoneQuery ? 'zone' : fake.kuma.origin()
 
         return {
           type: 'HostnameGenerator',
-          name: `${displayName}${k8s ? `.${namespace}` : ''}`,
-          kri: fake.kuma.kri({ resourceName: 'HostnameGenerator', mesh: '', zone: origin === 'zone' ? zone : '', namespace: k8s ? namespace : '', name: displayName, sectionName: '' }),
+          name: displayName,
+          kri: fake.kuma.kri({ resourceName: 'HostnameGenerator', mesh: '', zone, namespace, name: displayName, sectionName: '' }),
+          ...fake.kuma.timespan(),
           labels: {
-            ...(k8s && {
-              'k8s.kuma.io/namespace': namespace,
-            }),
-            'kuma.io/display-name': displayName,
-            'kuma.io/env': fake.kuma.env(),
-            'kuma.io/mesh': 'default',
-            'kuma.io/origin': origin,
-            ...(origin === 'zone' && {
-              'kuma.io/zone': zone,
+            ...fake.kuma.labels({
+              name: displayName,
+              ...(zone ? { zone } : {}),
+              ...(k8s ? { namespace } : {}),
             }),
           },
           spec: {
@@ -62,8 +56,6 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
               withZone: fake.datatype.boolean(),
             }),
           },
-          creationTime: creationTime.toISOString(),
-          modificationTime: fake.date.between({ from: creationTime, to: Date.now() }).toISOString(),
         } satisfies HostnameGenerator
       }),
       next,
