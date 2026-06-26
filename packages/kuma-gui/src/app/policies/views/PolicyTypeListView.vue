@@ -118,7 +118,7 @@ import { sources } from '@/app/policies/sources'
 <style lang="scss" scoped>
 .policy-type-list {
   position: sticky;
-  top: calc(var(--AppHeaderHeight) + var(--x-space-70));
+  top: calc(var(--kuma-app-top) + var(--x-space-70));
   align-self: flex-start;
   max-width: 500px;
 
