@@ -1,5 +1,3 @@
-@use "fonts";
-@use "base";
-
 /* this can't be componentized because it affects global styles for at least popup */
-@use "@kumahq/x/src/index";
+@import "@kong/kongponents/dist/style.css";
+

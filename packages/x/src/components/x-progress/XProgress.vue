@@ -49,7 +49,7 @@
 </template>
 <script lang="ts" setup>
 import { KUI_COLOR_TEXT_NEUTRAL_WEAK } from '@kong/design-tokens'
-import { KEmptyState } from '@kong/kongponents'
+import { KEmptyState, KSkeletonBox, KSkeleton } from '@kong/kongponents'
 const props = withDefaults(defineProps<{
   variant?: 'list' | 'line' | 'spinner' | 'legacy' | 'header'
 }>(), {
