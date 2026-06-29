@@ -16,13 +16,14 @@
             <slot name="home" />
           </XAction>
 
-          <GithubButton
+          <a
+            ref="gh"
+            aria-label="Star kumahq/kuma on GitHub"
             class="gh-star"
             href="https://github.com/kumahq/kuma"
-            aria-label="Star kumahq/kuma on GitHub"
           >
             Star
-          </GithubButton>
+          </a>
 
           <div class="upgrade-check-wrapper">
             <DataSource
@@ -137,11 +138,15 @@
           </ul>
         </nav>
       </div>
-      <main
-        class="app-main-content"
-      >
+      <main>
+        <div class="drawer">
+          <XTeleportSlot
+            name="drawer-layer"
+          />
+        </div>
         <XLayout
           variant="y-stack"
+          class="app-main-content"
         >
           <div>
             <slot name="default" />
@@ -152,7 +157,9 @@
   </div>
 </template>
 <script lang="ts" setup>
-import GithubButton from 'vue-github-button'
+import { render } from 'github-buttons'
+import { useTemplateRef, onMounted } from 'vue'
+
 
 import { useEnv, useI18n } from '@/app/application'
 
@@ -161,25 +168,42 @@ const slots = defineSlots()
 const env = useEnv()
 const { t } = useI18n()
 
+const gh = useTemplateRef<HTMLAnchorElement>('gh')
+
+onMounted(() => {
+  const $gh = gh.value
+  if($gh) {
+    render($gh, (el) => $gh.parentNode?.replaceChild(el, $gh))
+  }
+})
+
 </script>
 <style lang="scss" scoped>
 .application-shell {
-  --AppHeaderHeight: 60px;
+  --kuma-app-top: 60px;
+  --x-drawer-offset-top: var(--kuma-app-top);
+
   --AppSidebarWidth: 240px;
   --AppContentPadding: var(--x-space-80);
-  --x-drawer-offset-top: var(--AppHeaderHeight);
 
 }
 .app-content-container {
   display: grid;
-  padding-top: var(--AppHeaderHeight, initial);
+  padding-top: var(--kuma-app-top, initial);
   // Note: `minmax(0, 1fr)` is used because `1fr` implies `minmax(auto, 1fr)` which will allow grid items to grow beyond their container's size.
   grid-template-columns: var(--AppSidebarWidth) minmax(0, 1fr);
 }
+.drawer {
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+}
 
+main {
+  min-height: calc(100vh - var(--kuma-app-top));
+}
 .app-main-content {
   padding: var(--AppContentPadding);
-  min-height: calc(100vh - var(--AppHeaderHeight));
 }
 
 header {
@@ -188,7 +212,7 @@ header {
   top: 0;
   left: 0;
   width: 100%;
-  height: var(--AppHeaderHeight);
+  height: var(--kuma-app-top);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -214,7 +238,7 @@ nav {
   padding: 0;
   width: var(--AppSidebarWidth);
   z-index: 10;
-  top: var(--AppHeaderHeight);
+  top: var(--kuma-app-top);
   bottom: 0;
   left: 0;
   overflow-y: auto;

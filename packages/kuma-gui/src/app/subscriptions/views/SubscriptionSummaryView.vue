@@ -128,7 +128,7 @@
                                   {{ t('subscriptions.routes.item.headers.type') }}
                                 </th>
                                 <th>
-                                  {{ t('subscriptions.routes.item.headers.stat') }}
+                                  {{ t('subscriptions.routes.item.headers.nacked') }}
                                 </th>
                               </tr>
                             </thead>
@@ -140,7 +140,7 @@
                                 <th
                                   scope="row"
                                 >
-                                  {{ t(`http.api.property.${key}`) }}
+                                  {{ key }}
                                 </th>
                                 <td>
                                   {{ value.responsesRejected }}
@@ -170,7 +170,7 @@
                                 <th
                                   scope="row"
                                 >
-                                  {{ t(`http.api.property.${key}`) }}
+                                  {{ key }}
                                 </th>
                                 <td>
                                   {{ value.responsesSent }}/{{ value.responsesAcknowledged }}
