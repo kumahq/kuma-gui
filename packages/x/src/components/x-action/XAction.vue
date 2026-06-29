@@ -99,7 +99,7 @@
       >
         <XIcon
           name="docs"
-          :size="KUI_ICON_SIZE_40"
+          :size="`var(--x-icon-size-40)`"
         />
         <slot
           name="default"
@@ -161,7 +161,7 @@
       >
         <XIcon
           name="docs"
-          :size="KUI_ICON_SIZE_40"
+          :size="`var(--x-icon-size-40)`"
         />
       </template>
       <span><slot name="default" /></span>
@@ -246,7 +246,6 @@ const pool = new SharedPool<Router, (e: Event) => void>((state, router, item) =>
 })
 </script>
 <script lang="ts" setup>
-import { KUI_ICON_SIZE_40 } from '@kong/design-tokens'
 import { KDropdownItem, KButton } from '@kong/kongponents'
 import { computed, watch, inject, provide, useAttrs, onMounted, onBeforeUnmount } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'

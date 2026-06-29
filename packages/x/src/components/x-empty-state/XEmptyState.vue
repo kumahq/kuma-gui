@@ -43,8 +43,8 @@
             >
               <component
                 :is="iconMapping[type]"
-                :color="KUI_COLOR_TEXT_DECORATIVE_AQUA"
-                :size="KUI_ICON_SIZE_50"
+                :color="`var(--x-color-decorative-aqua)`"
+                :size="`var(--x-icon-size-50)`"
               />
             </div>
             <AnalyticsIcon v-else />
@@ -95,7 +95,7 @@
                 <XIcon
                   v-if="t(`${prefix}x-empty-state.action.type`, undefined, { defaultMessage: '' }) === 'docs'"
                   name="docs"
-                  :size="KUI_ICON_SIZE_40"
+                  :size="`var(--x-icon-size-40)`"
                 />
                 {{ t(`${prefix}x-empty-state.action.label`, undefined, { defaultMessage: '' }) }}
               </XAction>
@@ -108,7 +108,6 @@
 </template>
 
 <script lang="ts" setup>
-import { KUI_COLOR_TEXT_DECORATIVE_AQUA, KUI_ICON_SIZE_40, KUI_ICON_SIZE_50 } from '@kong/design-tokens'
 import { LocationIcon, AnalyticsIcon, MeshIcon } from '@kong/icons'
 import { KEmptyState } from '@kong/kongponents'
 
