@@ -5,7 +5,7 @@ type HostnameGenerator = components['responses']['HostnameGeneratorItem']['conte
 
 export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
   const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
-  const kri = req.params.kri ? `kri_mal_${req.params.kri}` : undefined
+  const kri = req.params.kri ? `kri_hg_${req.params.kri}` : undefined
   const [
     _prefix,
     _shortName,
