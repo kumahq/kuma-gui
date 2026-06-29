@@ -3,7 +3,6 @@
     name="mesh-service-detail-view"
     :params="{
       mesh: '',
-      service: '',
       page: 1,
       size: Number,
       s: '',

@@ -3,7 +3,7 @@
     name="mesh-service-config-view"
     :params="{
       mesh: '',
-      service: '',
+      kri: '',
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
@@ -63,9 +63,8 @@
 
           <template v-else>
             <DataLoader
-              :src="uri(sources, '/meshes/:mesh/mesh-service/:name/as/kubernetes', {
-                mesh: route.params.mesh,
-                name: route.params.service,
+              :src="uri(sources, '/mesh-service/:kri/as/kubernetes', {
+                kri: route.params.kri,
               })"
               v-slot="{ data: [k8sConfig] }"
             >

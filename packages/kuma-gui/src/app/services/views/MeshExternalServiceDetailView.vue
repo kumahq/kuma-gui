@@ -3,7 +3,7 @@
     name="mesh-external-service-detail-view"
     :params="{
       mesh: '',
-      service: '',
+      kri: '',
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
@@ -238,9 +238,8 @@
 
             <template v-else>
               <DataLoader
-                :src="uri(servicesSources, '/meshes/:mesh/mesh-external-service/:name/as/kubernetes', {
-                  mesh: route.params.mesh,
-                  name: route.params.service,
+                :src="uri(servicesSources, '/mesh-external-service/:kri/as/kubernetes', {
+                  kri: route.params.kri,
                 })"
                 v-slot="{ data: [k8sConfig] }"
               >

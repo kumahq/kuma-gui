@@ -8,8 +8,7 @@ import {
   ServiceInsight,
   Hostname,
 } from './data'
-import type { KumaMeshMultiZoneService, KumaMeshService, KumaMeshExternalService } from './data'
-import { Kri } from '../kuma'
+import type { KumaMeshService, KumaMeshMultiZoneService, KumaMeshExternalService } from './data'
 import type { DataSourceResponse } from '@/app/application'
 import { defineSources } from '@/app/application'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
@@ -49,7 +48,6 @@ export const sources = (api: KumaApi) => {
           path: {
             mesh,
           },
-          // @ts-ignore
           query: {
             offset,
             size,
@@ -61,66 +59,36 @@ export const sources = (api: KumaApi) => {
       return MeshService.fromCollection(res.data!)
     },
 
-    '/meshes/:mesh/mesh-service/:name': async (params) => {
-      const { mesh, name } = params
+    '/mesh-service/:kri': async (params) => {
+      const { kri } = params
 
-      let res
-
-      if(Kri.isKriString(name)) {
-        res = await http.GET('/_kri/{kri}', {
-          params: {
-            path: {
-              kri: name,
-            },
+      const response = await http.GET('/_kri/{kri}', {
+        params: {
+          path: {
+            kri,
           },
-        })
-      } else {
-        res = await http.GET('/meshes/{mesh}/meshservices/{name}', {
-          params: {
-            path: {
-              mesh,
-              name,
-            },
-          },
-        })
-      }
+        },
+      })
 
-      return MeshService.fromObject(res.data as KumaMeshService)
+      return MeshService.fromObject(response.data! as KumaMeshService)
     },
 
-    '/meshes/:mesh/mesh-service/:name/as/kubernetes': async (params) => {
-      const { mesh, name } = params
+    '/mesh-service/:kri/as/kubernetes': async (params) => {
+      const { kri } = params
 
-      let res
-
-      if(Kri.isKriString(name)) {
-        res = await http.GET('/_kri/{kri}', {
-          params: {
-            path: {
-              kri: name,
-            },
-            // @ts-ignore
-            query: {
-              format: 'kubernetes',
-            },
+      const response = await http.GET('/_kri/{kri}', {
+        params: {
+          path: {
+            kri,
           },
-        })
-      } else {
-        res = await http.GET('/meshes/{mesh}/meshservices/{name}', {
-          params: {
-            path: {
-              mesh,
-              name,
-            },
-            // @ts-ignore
-            query: {
-              format: 'kubernetes',
-            },
+          // @ts-expect-error - type not in OAS
+          query: {
+            format: 'kubernetes',
           },
-        })
-      }
+        },
+      })
 
-      return res.data!
+      return response.data!
     },
 
     '/meshes/:mesh/mesh-multi-zone-services': async (params) => {
@@ -134,7 +102,6 @@ export const sources = (api: KumaApi) => {
           path: {
             mesh,
           },
-          // @ts-ignore
           query: {
             offset,
             size,
@@ -146,66 +113,36 @@ export const sources = (api: KumaApi) => {
       return MeshMultiZoneService.fromCollection(res.data!)
     },
 
-    '/meshes/:mesh/mesh-multi-zone-service/:name': async (params) => {
-      const { mesh, name } = params
+    '/mesh-multi-zone-service/:kri': async (params) => {
+      const { kri } = params
 
-      let res
-
-      if(Kri.isKriString(name)) {
-        res = await http.GET('/_kri/{kri}', {
-          params: {
-            path: {
-              kri: name,
-            },
+      const response = await http.GET('/_kri/{kri}', {
+        params: {
+          path: {
+            kri,
           },
-        })
-      } else {
-        res = await http.GET('/meshes/{mesh}/meshmultizoneservices/{name}', {
-          params: {
-            path: {
-              mesh,
-              name,
-            },
-          },
-        })
-      }
+        },
+      })
 
-      return MeshMultiZoneService.fromObject(res.data! as KumaMeshMultiZoneService)
+      return MeshMultiZoneService.fromObject(response.data! as KumaMeshMultiZoneService)
     },
 
-    '/meshes/:mesh/mesh-multi-zone-service/:name/as/kubernetes': async (params) => {
-      const { mesh, name } = params
+    '/mesh-multi-zone-service/:kri/as/kubernetes': async (params) => {
+      const { kri } = params
 
-      let res
-
-      if(Kri.isKriString(name)) {
-        res = await http.GET('/_kri/{kri}', {
-          params: {
-            path: {
-              kri: name,
-            },
-            // @ts-ignore
-            query: {
-              format: 'kubernetes',
-            },
+      const response = await http.GET('/_kri/{kri}', {
+        params: {
+          path: {
+            kri,
           },
-        })
-      } else {
-        res = await http.GET('/meshes/{mesh}/meshmultizoneservices/{name}', {
-          params: {
-            path: {
-              mesh,
-              name,
-            },
-            // @ts-ignore
-            query: {
-              format: 'kubernetes',
-            },
+          // @ts-expect-error - type not in OAS
+          query: {
+            format: 'kubernetes',
           },
-        })
-      }
+        },
+      })
 
-      return res.data!
+      return response.data!
     },
 
     '/meshes/:mesh/mesh-external-services': async (params) => {
@@ -219,7 +156,6 @@ export const sources = (api: KumaApi) => {
           path: {
             mesh,
           },
-          // @ts-ignore
           query: {
             offset,
             size,
@@ -230,66 +166,36 @@ export const sources = (api: KumaApi) => {
       return MeshExternalService.fromCollection(res.data!)
     },
 
-    '/meshes/:mesh/mesh-external-service/:name': async (params) => {
-      const { mesh, name } = params
+    '/mesh-external-service/:kri': async (params) => {
+      const { kri } = params
 
-      let res
-
-      if(Kri.isKriString(name)) {
-        res = await http.GET('/_kri/{kri}', {
-          params: {
-            path: {
-              kri: name,
-            },
+      const response = await http.GET('/_kri/{kri}', {
+        params: {
+          path: {
+            kri,
           },
-        })
-      } else {
-        res = await http.GET('/meshes/{mesh}/meshexternalservices/{name}', {
-          params: {
-            path: {
-              mesh,
-              name,
-            },
-          },
-        })
-      }
+        },
+      })
 
-      return MeshExternalService.fromObject(res.data! as KumaMeshExternalService)
+      return MeshExternalService.fromObject(response.data! as KumaMeshExternalService)
     },
 
-    '/meshes/:mesh/mesh-external-service/:name/as/kubernetes': async (params) => {
-      const { mesh, name } = params
+    '/mesh-external-service/:kri/as/kubernetes': async (params) => {
+      const { kri } = params
 
-      let res 
-
-      if(Kri.isKriString(name)) {
-        res = await http.GET('/_kri/{kri}', {
-          params: {
-            path: {
-              kri: name,
-            },
-            // @ts-ignore
-            query: {
-              format: 'kubernetes',
-            },
+      const response = await http.GET('/_kri/{kri}', {
+        params: {
+          path: {
+            kri,
           },
-        })
-      } else {
-        res = await http.GET('/meshes/{mesh}/meshexternalservices/{name}', {
-          params: {
-            path: {
-              mesh,
-              name,
-            },
-            // @ts-ignore
-            query: {
-              format: 'kubernetes',
-            },
+          // @ts-expect-error - type not in OAS
+          query: {
+            format: 'kubernetes',
           },
-        })
-      }
+        },
+      })
       
-      return res.data!
+      return response.data!
     },
 
     '/meshes/:mesh/service-insights/of/:serviceType': async (params) => {

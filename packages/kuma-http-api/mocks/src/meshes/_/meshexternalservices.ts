@@ -26,10 +26,20 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
       next,
       items: Array.from({ length: pageTotal }).map((_, i) => {
         const id = offset + i
-        const name = `${fake.word.noun()}`
-        const displayName = `${_name || name}-${id}`
-        const nspace = namespaceQuery ?? fake.k8s.namespace()
-        const zone = zoneQuery ?? fake.word.noun()
+        const [
+          _prefix,
+          shortName,
+          mesh,
+          zone,
+          nspace,
+          displayName,
+        ] = [
+          'kri', // prefix
+          'extsvc', // shortName
+          String(req.params.mesh), // mesh
+          fake.helpers.arrayElement(['', fake.word.noun()]), // zone
+          ...([k8s ? fake.word.noun() : '', `${fake.word.noun()}-${id}`]), // nspace, displayName
+        ]
 
         return {
           type: 'MeshExternalService',
@@ -37,6 +47,7 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
           name: `${displayName}${k8s ? `.${nspace}` : ''}`,
           creationTime: '2021-02-19T08:06:15.14624+01:00',
           modificationTime: '2021-02-19T08:07:37.539229+01:00',
+          kri: fake.kuma.kri({ shortName, mesh, zone, namespace: nspace, name: displayName, sectionName: '' }),
           ...(k8s
             ? {
               labels: {

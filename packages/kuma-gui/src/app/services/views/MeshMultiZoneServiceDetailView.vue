@@ -3,7 +3,7 @@
     name="mesh-multi-zone-service-detail-view"
     :params="{
       mesh: '',
-      service: '',
+      kri: '',
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
@@ -226,9 +226,8 @@
 
             <template v-else>
               <DataLoader
-                :src="uri(servicesSources, '/meshes/:mesh/mesh-multi-zone-service/:name/as/kubernetes', {
-                  mesh: route.params.mesh,
-                  name: route.params.service,
+                :src="uri(servicesSources, '/mesh-multi-zone-service/:kri/as/kubernetes', {
+                  kri: route.params.kri,
                 })"
                 v-slot="{ data: [k8sConfig] }"
               >
