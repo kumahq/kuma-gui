@@ -73,7 +73,7 @@
                 key: 'networking-transparent-proxying',
                 variant: 'info' as const,
               },
-            ]"
+            ] satisfies { bool: boolean, key: string, params?: Record<string, string>, variant?: string }[]"
             :key="key"
           >
             <XNotification

@@ -78,7 +78,7 @@
                     >
                       <XSelect
                         :label="t('policies.routes.item.format')"
-                        :selected="options.includes(route.params.format) ? route.params.format : options[0]"
+                        :selected="options.includes(route.params.format as typeof options[number]) ? route.params.format : options[0]"
                         @change="(value) => {
                           route.update({ format: value })
                         }"
