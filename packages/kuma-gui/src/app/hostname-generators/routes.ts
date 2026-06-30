@@ -20,14 +20,14 @@ export const routes = (
           component: () => import('@/app/hostname-generators/views/HostnameGeneratorListView.vue'),
           children: [
             {
-              path: ':name',
+              path: ':kri',
               name: 'hostname-generator-summary-view',
               component: () => import('@/app/hostname-generators/views/HostnameGeneratorSummaryView.vue'),
             },
           ],
         },
         {
-          path: ':name/overview',
+          path: ':kri/overview',
           name: 'hostname-generator-detail-view',
           component: () => import('@/app/hostname-generators/views/HostnameGeneratorDetailView.vue'),
         },

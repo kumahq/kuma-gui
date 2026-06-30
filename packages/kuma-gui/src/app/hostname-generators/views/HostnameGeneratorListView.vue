@@ -2,7 +2,7 @@
   <RouteView
     name="hostname-generator-list-view"
     :params="{
-      name: '',
+      kri: '',
       page: 1,
       size: 15,
       s: '',
@@ -63,7 +63,7 @@
                   { ...me.get('headers.actions'), label: t('hostname-generators.common.actions'), key: 'actions', hideLabel: true },
                 ]"
                 :items="data.items"
-                :is-selected-row="(item) => item.name === route.params.name"
+                :is-selected-row="(item) => item.name === route.params.kri"
                 @resize="me.set"
               >
                 <template #name="{ row: item }">
@@ -75,7 +75,7 @@
                       :to="{
                         name: 'hostname-generator-summary-view',
                         params: {
-                          name: item.id,
+                          kri: item.kri,
                         },
                         query: {
                           page: route.params.page,
@@ -95,7 +95,7 @@
                       :to="{
                         name: 'hostname-generator-detail-view',
                         params: {
-                          name: item.id,
+                          kri: item.kri,
                         },
                       }"
                     >
@@ -105,14 +105,14 @@
                 </template>
               </AppCollection>
               <RouterView
-                v-if="data.items && route.params.name"
+                v-if="data.items && route.params.kri"
                 v-slot="child"
               >
                 <XDrawer
                   @close="route.replace({
                     name: 'hostname-generator-list-view',
                     params: {
-                      name: '',
+                      kri: '',
                     },
                     query: {
                       page: route.params.page,
