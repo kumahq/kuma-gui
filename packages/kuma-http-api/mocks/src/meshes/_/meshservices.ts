@@ -5,10 +5,9 @@ type Entity = components['schemas']['MeshServiceItem']
 export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) => {
   const query = req.url.searchParams
 
-  const mesh = req.params.mesh as string
-  const _name = query.get('name') ?? ''
-  const queryNamespace = query.get('filter[labels.k8s.kuma.io/namespace]')
-  const queryZone = query.get('filter[labels.kuma.io/zone]')
+  const nameQuery = query.get('name') ?? ''
+  const namespaceQuery = query.get('filter[labels.k8s.kuma.io/namespace]')
+  const zoneQuery = query.get('filter[labels.kuma.io/zone]')
 
   const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
   const { offset, total, next, pageTotal } = pager(
@@ -37,8 +36,8 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
           'kri', // prefix
           'msvc', // shortName
           String(req.params.mesh), // mesh
-          fake.helpers.arrayElement(['', fake.word.noun()]), // zone
-          ...([k8s ? fake.word.noun() : '', `${fake.word.noun()}-${id}`]), // nspace, displayName
+          zoneQuery ?? fake.helpers.arrayElement(['', fake.word.noun()]), // zone
+          ...([k8s ? namespaceQuery ?? fake.word.noun() : '', `${nameQuery || fake.word.noun()}-${id}`]), // nspace, displayName
         ]
         const proxies = fake.number.int({ min: 1, max: 120 })
 

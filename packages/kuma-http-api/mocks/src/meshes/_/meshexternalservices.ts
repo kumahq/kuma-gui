@@ -5,8 +5,7 @@ type Entity = components['schemas']['MeshExternalServiceItem']
 export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) => {
   const query = req.url.searchParams
 
-  const mesh = req.params.mesh as string
-  const _name = query.get('name') ?? ''
+  const nameQuery = query.get('name') ?? ''
   const namespaceQuery = query.get('filter[labels.k8s.kuma.io/namespace]')
   const zoneQuery = query.get('filter[labels.kuma.io/zone]')
 
@@ -37,8 +36,8 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
           'kri', // prefix
           'extsvc', // shortName
           String(req.params.mesh), // mesh
-          fake.helpers.arrayElement(['', fake.word.noun()]), // zone
-          ...([k8s ? fake.word.noun() : '', `${fake.word.noun()}-${id}`]), // nspace, displayName
+          zoneQuery ?? fake.helpers.arrayElement(['', fake.word.noun()]), // zone
+          ...([k8s ? namespaceQuery ?? fake.word.noun() : '', `${nameQuery || fake.word.noun()}-${id}`]), // nspace, displayName
         ]
 
         return {
@@ -47,16 +46,13 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
           name: `${displayName}${k8s ? `.${nspace}` : ''}`,
           ...fake.kuma.timespan(),
           kri: fake.kuma.kri({ shortName, mesh, zone, namespace: nspace, name: displayName, sectionName: '' }),
-          ...(k8s
-            ? {
-              labels: {
-                'kuma.io/display-name': displayName,
-                'k8s.kuma.io/namespace': nspace,
-                'kuma.io/origin': 'zone',
-                'kuma.io/zone': zone,
-              },
-            }
-            : {}),
+          labels: {
+            ...fake.kuma.labels({
+              name: displayName,
+              ...(zone ? { zone } : {}),
+              ...(k8s ? { namespace: nspace } : {}),
+            }),
+          },
           spec: {
             match: {
               type: 'HostnameGenerator',

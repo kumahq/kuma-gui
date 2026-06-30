@@ -5,8 +5,8 @@ type Entity = components['schemas']['MeshMultiZoneServiceItem']
 export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) => {
   const query = req.url.searchParams
 
-  const mesh = req.params.mesh as string
-  const _name = query.get('name') ?? ''
+  const nameQuery = query.get('name') ?? ''
+  const namespaceQuery = query.get('filter[labels.k8s.kuma.io/namespace]')
 
   const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
   const { offset, total, next, pageTotal } = pager(
@@ -37,7 +37,7 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
           'mzsvc', // shortName
           String(req.params.mesh), // mesh
           '', // zone
-          ...([k8s ? fake.word.noun() : '', `${fake.word.noun()}-${id}`]), // nspace, displayName
+          ...([k8s ? namespaceQuery ?? fake.word.noun() : '', `${nameQuery || fake.word.noun()}-${id}`]), // nspace, displayName
         ]
 
         return {
