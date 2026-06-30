@@ -28,7 +28,7 @@
     "esbuild": "^0.28.1",
     "js-yaml": "^4.1.1",
     "path-to-regexp": "^8.4.2",
-    "playwright-bdd": "^8.5.1"
+    "playwright-bdd": "^9.2.0"
   },
   "devDependencies": {
     "@kumahq/config": "*"
