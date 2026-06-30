@@ -82,6 +82,7 @@
         name="default"
       />
     </KButton>
+
     <a
       v-else
       data-testid="x-action"
@@ -180,7 +181,7 @@
 // eslint-disable-next-line import/order
 import SharedPool from '../../utilities/SharedPool'
 // eslint-disable-next-line import/order
-import type { Router , RouteLocationNamedRaw } from 'vue-router'
+import type { Router, RouteLocationAsRelative } from 'vue-router'
 
 const findAnchor = (target: HTMLElement) => {
   // we look for anchors, or any other element that has [data-actionable]
@@ -256,7 +257,7 @@ import type { ButtonAppearance } from '@kong/kongponents'
 
 type BooleanLocationQueryValue = string | number | undefined | boolean
 type BooleanLocationQueryRaw = Record<string | number, BooleanLocationQueryValue | BooleanLocationQueryValue[]>
-type RouteLocationRawWithBooleanQuery = Omit<RouteLocationNamedRaw, 'query'> & {
+type RouteLocationRawWithBooleanQuery = Omit<RouteLocationAsRelative, 'query'> & {
   query?: BooleanLocationQueryRaw
 }
 
