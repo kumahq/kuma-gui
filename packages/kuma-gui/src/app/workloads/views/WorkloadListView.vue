@@ -49,17 +49,17 @@
               :data="[data]"
               :errors="[error]"
               variant="list"
+              v-slot="{ data: [workloads] }"
             >
               <DataCollection
-                v-if="typeof data !== 'undefined'"
-                :items="data.items"
-                :total="data.total"
+                :items="workloads.items"
+                :total="workloads.total"
                 :page="route.params.page"
                 :page-size="route.params.size"
                 @change="route.update"
               >
                 <AppCollection
-                  :items="data.items"
+                  :items="workloads.items"
                   type="workload" 
                   :headers="[
                     { ...me.get('headers.name'), label: t('workloads.routes.items.headers.name'), key: 'name' },
@@ -77,7 +77,7 @@
                       :to="{
                         name: 'workload-summary-view',
                         params: {
-                          wl: item.kri,
+                          kri: item.kri,
                         },
                         query: {
                           page: route.params.page,
@@ -115,12 +115,7 @@
                   <template #actions="{ row: item }">
                     <XActionGroup>
                       <XAction
-                        :to="{
-                          name: 'workload-detail-view',
-                          params: {
-                            wl: item.kri,
-                          },
-                        }"
+                        :href="`kri://${item.kri}`"
                       >
                         {{ t('common.collection.actions.view') }}
                       </XAction>
