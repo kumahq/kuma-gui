@@ -46,19 +46,15 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
           type: 'MeshService',
           mesh,
           name: `${displayName}${k8s ? `.${nspace}` : ''}`,
-          creationTime: '2021-02-19T08:06:15.14624+01:00',
-          modificationTime: '2021-02-19T08:07:37.539229+01:00',
+          ...fake.kuma.timespan(),
           kri: fake.kuma.kri({ shortName, mesh, zone, namespace: nspace, name: displayName, sectionName: '' }),
-          ...(k8s
-            ? {
-              labels: {
-                'kuma.io/display-name': displayName,
-                'k8s.kuma.io/namespace': nspace,
-                'kuma.io/origin': 'zone',
-                'kuma.io/zone': zone,
-              },
-            }
-            : {}),
+          labels: {
+            ...fake.kuma.labels({
+              name: displayName,
+              ...(zone ? { zone } : {}),
+              ...(k8s ? { namespace: nspace } : {}),
+            }),
+          },
           spec: {
             ports: Array.from({ length: 5 }).map(_ => (
               {
