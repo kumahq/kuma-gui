@@ -31,7 +31,7 @@ export default ({ fake, env, pager }: Dependencies): ResponseHandler => (req) =>
           displayName,
         ] = [
           'kri', // prefix
-          'mtrust', // shortName
+          'mid', // shortName
           String(req.params.mesh), // mesh
           fake.helpers.arrayElement(['', fake.word.noun()]), // zone
           ...([k8s ? fake.word.noun() : '', `${fake.word.noun()}-${id}`]), // nspace, displayName
