@@ -32,23 +32,23 @@ export const sources = (api: KumaApi) => {
       return Workload.fromCollection(res.data!)
     },
 
-    '/workloads/:wl': async (params) => {
-      const { wl } = params
+    '/workloads/:kri': async (params) => {
+      const { kri } = params
 
       const res = await http.GET('/_kri/{kri}', {
-        params: { path: { kri: wl } },
+        params: { path: { kri } },
       })
 
       return Workload.fromObject(res.data as KumaWorkloadItem)
     },
 
-    '/workloads/:wl/as/kubernetes': async (params) => {
-      const { wl } = params
+    '/workloads/:kri/as/kubernetes': async (params) => {
+      const { kri } = params
 
       const res = await http.GET('/_kri/{kri}', {
         params: {
           path: {
-            kri: wl,
+            kri,
           },
           // @ts-expect-error -- query type is not defined in openapi spec --
           query: {
@@ -57,7 +57,7 @@ export const sources = (api: KumaApi) => {
         },
       })
 
-      return res.data
+      return res.data!
     },
   })
 }
