@@ -1,3 +1,4 @@
+import { Kri } from '@/app/kuma'
 import type {
   MeshGatewayDataplane as PartialMeshGatewayDataplane,
   MeshGatewayListenerEntry,
@@ -13,7 +14,7 @@ export type MeshGatewayDataplane = PartialMeshGatewayDataplane & {
 export const MeshGatewayDataplane = {
   fromObject(partialMeshGatewayDataplane: PartialMeshGatewayDataplane): MeshGatewayDataplane {
     const listenerEntries = getListenerEntries(partialMeshGatewayDataplane)
-    const routePolicies = Object.values(partialMeshGatewayDataplane.policies ?? {}).map(({ mesh, name, type }) => ({ mesh, name, type }))
+    const routePolicies = Object.values(partialMeshGatewayDataplane.policies ?? {}).map(({ mesh, name, type }) => ({ mesh, name, type, kri: Kri.toString({ shortName: `~${type.toLowerCase()}`, mesh, name }) }))
 
     return {
       ...partialMeshGatewayDataplane,
