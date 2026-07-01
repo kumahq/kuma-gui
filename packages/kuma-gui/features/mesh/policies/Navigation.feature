@@ -13,7 +13,7 @@ Feature: mesh / policies / navigation
       KUMA_MESHFAULTINJECTION_COUNT: 1
       """
 
-  Rule: In a namepaced environment
+  Rule: In a namespaced environment
 
     Background:
       Given the environment
@@ -25,6 +25,7 @@ Feature: mesh / policies / navigation
         body:
           items:
           - name: monitor-proxy-0-5064a9c9a-icpsl.kuma-system
+            kri: kri_mfi_default__kuma-system_monitor-proxy-0-5064a9c9a-icpsl_
             labels:
               kuma.io/display-name: monitor-proxy-0-5064a9c9a-icpsl
               k8s.kuma.io/namespace: kuma-system
@@ -34,7 +35,7 @@ Feature: mesh / policies / navigation
       When I visit the "<URL>" URL
       When I click the "$action-group" element
       And I click the "$view" element
-      Then the URL contains "monitor-proxy-0-5064a9c9a-icpsl.kuma-system/overview"
+      Then the URL contains "kri_mfi_default__kuma-system_monitor-proxy-0-5064a9c9a-icpsl_/overview"
       And the "[data-testid='policy-detail-view']" element exists
 
       Examples:
@@ -44,10 +45,10 @@ Feature: mesh / policies / navigation
     Scenario Outline: clicking the row, opening and summary, and clicking the title
       When I visit the "<URL>" URL
       And I click the "$action" element
-      Then the URL contains "monitor-proxy-0-5064a9c9a-icpsl.kuma-system"
-      And the URL doesn't contain "monitor-proxy-0-5064a9c9a-icpsl.kuma-system/overview"
+      Then the URL contains "kri_mfi_default__kuma-system_monitor-proxy-0-5064a9c9a-icpsl_"
+      And the URL doesn't contain "kri_mfi_default__kuma-system_monitor-proxy-0-5064a9c9a-icpsl_/overview"
       Then I click the "$summary-title" element
-      Then the URL contains "monitor-proxy-0-5064a9c9a-icpsl.kuma-system/overview"
+      Then the URL contains "kri_mfi_default__kuma-system_monitor-proxy-0-5064a9c9a-icpsl_/overview"
       And the "[data-testid='policy-detail-view']" element exists
 
       Examples:
@@ -66,13 +67,14 @@ Feature: mesh / policies / navigation
         body:
           items:
           - name: monitor-proxy-0
+            kri: kri_mfi_default__kuma-system_monitor-proxy-0_
         """
 
     Scenario Outline: clicking the detail link
       When I visit the "<URL>" URL
       When I click the "$action-group" element
       And I click the "$view" element
-      Then the URL contains "monitor-proxy-0/overview"
+      Then the URL contains "kri_mfi_default__kuma-system_monitor-proxy-0_/overview"
       And the "[data-testid='policy-detail-view']" element exists
 
       Examples:
@@ -82,10 +84,10 @@ Feature: mesh / policies / navigation
     Scenario Outline: clicking the row, opening and summary, and clicking the title
       When I visit the "<URL>" URL
       And I click the "$action" element
-      Then the URL contains "monitor-proxy-0"
-      And the URL doesn't contain "monitor-proxy-0/overview"
+      Then the URL contains "kri_mfi_default__kuma-system_monitor-proxy-0_"
+      And the URL doesn't contain "kri_mfi_default__kuma-system_monitor-proxy-0_/overview"
       Then I click the "$summary-title" element
-      Then the URL contains "monitor-proxy-0/overview"
+      Then the URL contains "kri_mfi_default__kuma-system_monitor-proxy-0_/overview"
       And the "[data-testid='policy-detail-view']" element exists
 
       Examples:

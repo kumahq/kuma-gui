@@ -4,7 +4,7 @@
     :params="{
       mesh: '',
       policyPath: '',
-      policy: '',
+      kri: '',
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
@@ -13,35 +13,44 @@
     v-slot="{ route, t, uri }"
   >
     <DataSource
-      :src="`/meshes/${route.params.mesh}/policy-path/${route.params.policyPath}/policy/${route.params.policy}`"
-      v-slot="{ data, error }: PolicySource"
+      :src="uri(sources, '/policy-path/:path/policy/:kri', {
+        path: route.params.policyPath,
+        kri: route.params.kri,
+      })"
+      v-slot="{ data, error }"
     >
       <AppView>
         <template #title>
-          <h2>
-            <XAction
-              :to="{
-                name: 'policy-detail-view',
-                params: {
-                  mesh: route.params.mesh,
-                  policyPath: route.params.policyPath,
-                  policy: route.params.policy,
-                },
-              }"
-            >
-              <RouteTitle
-                :title="t('policies.routes.item.title', { name: route.params.policy })"
-              />
-            </XAction>
-          </h2>
+          <DataLoader
+            :data="[data]"
+            variant="header"
+            v-slot="{ data: [policy] }"
+          >
+            <h2>
+              <XAction
+                :to="{
+                  name: 'policy-detail-view',
+                  params: {
+                    mesh: route.params.mesh,
+                    policyPath: route.params.policyPath,
+                    kri: policy.kri,
+                  },
+                }"
+              >
+                <RouteTitle
+                  :title="t('policies.routes.item.title', { name: policy.name })"
+                />
+              </XAction>
+            </h2>
+          </DataLoader>
         </template>
         <DataLoader
           :data="[data]"
           :errors="[error]"
+          v-slot="{ data: [policy] }"
         >
           <PolicySummary
-            v-if="data"
-            :policy="data"
+            :policy="policy"
             :format="route.params.format"
             :legacy="!props.policyTypes.find(({ name }) => name === data?.type )?.policy.isTargetRef"
           >
@@ -83,7 +92,7 @@
               <XCodeBlock
                 data-testid="codeblock-yaml-universal"
                 language="yaml"
-                :code="data.yaml"
+                :code="policy.yaml"
                 is-searchable
                 :query="route.params.codeSearch"
                 :is-filter-mode="route.params.codeFilter"
@@ -96,10 +105,9 @@
 
             <template v-else-if="route.params.format === 'k8s'">
               <DataLoader
-                :src="uri(sources, '/meshes/:mesh/policy-path/:path/policy/:name/as/kubernetes', {
-                  mesh: route.params.mesh,
+                :src="uri(sources, '/policy-path/:path/policy/:kri/as/kubernetes', {
                   path: route.params.policyPath,
-                  name: route.params.policy,
+                  kri: route.params.kri,
                 })"
                 v-slot="{ data: [yaml] }"
               >
@@ -127,7 +135,7 @@
 <script lang="ts" setup>
 import PolicySummary from '@/app/policies/components/PolicySummary.vue'
 import type { PolicyResourceType } from '@/app/policies/data'
-import { type PolicySource , sources } from '@/app/policies/sources'
+import { sources } from '@/app/policies/sources'
 const props = defineProps<{
   policyTypes: PolicyResourceType[]
 }>()

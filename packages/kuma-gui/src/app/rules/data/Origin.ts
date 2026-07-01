@@ -1,3 +1,4 @@
+import { Kri } from '@/app/kuma'
 import type { components } from '@kumahq/kuma-http-api'
 
 type ResourceRuleOrigin = components['schemas']['ResourceRuleOrigin']
@@ -20,6 +21,7 @@ export const Origin = {
       mesh,
       name,
       labels,
+      kri: 'kri' in origin ? String(origin.kri) : Kri.toString({ shortName: `~${type.toLowerCase()}`, mesh, name }),
     }
   },
 }

@@ -3,7 +3,7 @@
     name="policy-detail-config-view"
     :params="{
       mesh: '',
-      policy: '',
+      kri: '',
       policyPath: '',
       codeSearch: '',
       codeFilter: false,
@@ -64,10 +64,9 @@
 
           <template v-else>
             <DataLoader
-              :src="uri(sources, '/meshes/:mesh/policy-path/:path/policy/:name/as/kubernetes', {
-                mesh: route.params.mesh,
+              :src="uri(sources, '/policy-path/:path/policy/:kri/as/kubernetes', {
                 path: route.params.policyPath,
-                name: route.params.policy,
+                kri: route.params.kri,
               })"
               v-slot="{ data: [yaml] }"
             >
