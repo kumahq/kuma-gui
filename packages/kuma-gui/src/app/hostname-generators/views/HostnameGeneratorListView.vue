@@ -92,12 +92,7 @@
                 <template #actions="{ row: item }">
                   <XActionGroup>
                     <XAction
-                      :to="{
-                        name: 'hostname-generator-detail-view',
-                        params: {
-                          kri: item.kri,
-                        },
-                      }"
+                      :href="`kri://${item.kri}`"
                     >
                       {{ t('common.collection.actions.view') }}
                     </XAction>

@@ -21,13 +21,7 @@
           <template #title>
             <h2>
               <XAction
-                :to="{
-                  name: 'hostname-generator-detail-view',
-                  params: {
-                    name: route.params.kri,
-                  },
-
-                }"
+                :href="`kri://${item.kri}`"
               >
                 <RouteTitle
                   :title="t('hostname-generators.routes.item.title', { name: item.name })"
