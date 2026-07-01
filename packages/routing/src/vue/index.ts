@@ -1,10 +1,12 @@
+import { inject } from 'vue'
+
 import type { Dependencies } from '../'
 // import { DataSourcePool, create, destroy } from '../'
 // import {
 //   RouteTitle,
 //   RouteView,
 // } from './components'
-import type { Plugin } from 'vue'
+import type { App, Plugin, InjectionKey } from 'vue'
 
 export * from './components'
 
@@ -24,6 +26,7 @@ export * from './components'
 declare const typeSymbol: unique symbol
 type Uri<T = unknown> = { [typeSymbol]: T }
 type TypeOf<T> = T extends Uri<infer UriType> ? UriType : never
+type InjectionHooks<T extends Uri[]> = { [K in keyof T]: T[K] extends Uri ? () => TypeOf<T[K]> : never }
 //
 
 /* nano-container */
@@ -38,8 +41,37 @@ const nano = (map = new Map<Uri, unknown>()) => {
   }
   return { singleton, uri }
 }
+type Container = ReturnType<typeof nano>
 /* */
-const { singleton, uri } = nano()
+
+const createInjections = <T extends Uri[]>(...tokens: T): InjectionHooks<T> => {
+  return tokens.map((token) => {
+    return () => {
+      type Service = TypeOf<typeof token>
+      type Getter = () => Service
+      const service = inject(token as unknown as InjectionKey<Getter>) as () => TypeOf<typeof token>
+      if(typeof service === 'undefined') {
+        throw new Error('Unable to find injection ${token}')
+      }
+      return service()
+    }
+  }) as InjectionHooks<T>
+}
+const createBuilder = (container: Container) => {
+  const { singleton, uri } = container
+  const build = (app: App) => {
+    const builder = {
+      service: <T>(uri: Uri<T>, getter: () => T) => {
+        app.provide(uri as unknown as InjectionKey<typeof getter>, singleton(uri, getter))
+        return builder
+      },
+    }
+    return builder
+  }
+  return { build, uri }
+}
+
+const { uri } = nano()
 
 const deps: Dependencies = {
   can: () => false,
@@ -53,15 +85,19 @@ const tokens = {
   i18n: uri<Dependencies['i18n']>('routing.i18n'),
   regexp: uri<Dependencies['regexp']>('routing.regexp'),
 }
-export const [ useCan, useI18n, useRegExp, useEnv] = [
-  singleton(tokens.can, () => deps.can),
-  singleton(tokens.i18n, () => deps.i18n),
-  singleton(tokens.regexp, () => deps.regexp),
-  singleton(tokens.env, () => deps.env),
-]
 const plugin: Plugin = {
   install: (app, options: Partial<typeof deps> = {}) => {
-    Object.assign(deps, options)
+    const services = {
+      ...deps,
+      ...options,
+    }
+    const { build } = createBuilder(nano())
+    build(app)
+      .service(tokens.can, () => services.can)
+      .service(tokens.regexp, () => services.regexp)
+      .service(tokens.env, () => services.env)
+      .service(tokens.i18n, () => services.i18n)
+
     // components.forEach(([name, item]) => {
     //   app.component(name, item as Component)
     // })
@@ -70,4 +106,10 @@ const plugin: Plugin = {
     // })
   },
 }
+export const [ useI18n, useCan, useRegExp, useEnv ] = createInjections(
+  tokens.i18n,
+  tokens.can,
+  tokens.regexp,
+  tokens.env,
+)
 export default plugin
