@@ -2,10 +2,14 @@ import { flushPromises, mount } from '@vue/test-utils'
 import { describe, expect, test } from 'vitest'
 
 import DataSource from './DataSource.vue'
+import Data from '../../index'
 
 describe('DataSource', () => {
   test("passing an empty uri doesn't fire change", async () => {
     const wrapper = mount(DataSource, {
+      global: {
+        plugins: [Data],
+      },
       props: {
         src: '',
       },
@@ -18,6 +22,9 @@ describe('DataSource', () => {
   test('cached responses and errors work', async () => {
     // change
     const wrapper = mount(DataSource, {
+      global: {
+        plugins: [Data],
+      },
       props: {
         src: 'data:application/json,"one"',
       },
