@@ -64,6 +64,7 @@ import _29 from './src/meshes/_/health-checks'
 import _30 from './src/meshes/_/health-checks/_'
 import _245 from './src/meshes/_/meshaccesslogs'
 import _246 from './src/meshes/_/meshaccesslogs/_'
+import _247 from './src/meshes/_/meshaccesslogs/_/_resources/dataplanes'
 import _138 from './src/meshes/_/meshexternalservices'
 import _139 from './src/meshes/_/meshexternalservices/_'
 import _172 from './src/meshes/_/meshexternalservices/_/_hostnames'
@@ -206,6 +207,7 @@ export const fs = {
   // policies
   '/meshes/:mesh/meshaccesslogs': _245,
   '/meshes/:mesh/meshaccesslogs/:name': _246,
+  '/meshes/:mesh/meshaccesslogs/:name/_resources/dataplanes': _247,
   '/meshes/:mesh/meshfaultinjections': _52,
   '/meshes/:mesh/meshfaultinjections/:name': _53,
   '/meshes/:mesh/meshfaultinjections/:name/_resources/dataplanes': _54,

@@ -96,10 +96,10 @@
 
             <template v-else-if="route.params.format === 'k8s'">
               <DataLoader
-                :src="uri(sources, '/meshes/:mesh/policy-path/:path/policy/:name/as/kubernetes', {
+                :src="uri(sources, '/meshes/:mesh/policy-path/:path/policy/:kri/as/kubernetes', {
                   mesh: route.params.mesh,
                   path: route.params.policyPath,
-                  name: route.params.policy,
+                  kri: route.params.policy,
                 })"
                 v-slot="{ data: [yaml] }"
               >

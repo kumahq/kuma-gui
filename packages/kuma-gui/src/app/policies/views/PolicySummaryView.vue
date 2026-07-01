@@ -4,7 +4,7 @@
     :params="{
       mesh: '',
       policyPath: '',
-      policy: '',
+      kri: '',
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
@@ -14,7 +14,7 @@
   >
     <DataCollection
       :items="props.items"
-      :predicate="item => item.id === route.params.policy"
+      :predicate="item => item.kri === route.params.kri"
       :find="true"
     >
       <template #empty>
@@ -34,7 +34,7 @@
       >
         <template
           v-for="item in [policies[0]]"
-          :key="item.id"
+          :key="item.kri"
         >
           <AppView>
             <template #title>
@@ -47,7 +47,7 @@
                     params: {
                       mesh: route.params.mesh,
                       policyPath: route.params.policyPath,
-                      policy: route.params.policy,
+                      kri: route.params.kri,
                     },
                   }"
                 >
@@ -114,10 +114,9 @@
 
               <template v-else-if="route.params.format === 'k8s'">
                 <DataLoader
-                  :src="uri(sources, '/meshes/:mesh/policy-path/:path/policy/:name/as/kubernetes', {
-                    mesh: route.params.mesh,
+                  :src="uri(sources, '/policy-path/:path/policy/:kri/as/kubernetes', {
                     path: route.params.policyPath,
-                    name: route.params.policy,
+                    kri: route.params.kri,
                   })"
                   v-slot="{ data: [yaml] }"
                 >
