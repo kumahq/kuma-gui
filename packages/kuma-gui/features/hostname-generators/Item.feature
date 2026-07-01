@@ -9,10 +9,11 @@ Feature: hostname-generators / item
       | config-k8s         | [data-testid='codeblock-yaml-k8s']               |
       | select-environment | [data-testid='select-input']                     |
       | about-section      | [data-testid='hostname-generator-about-section'] |
-    And the URL "/hostnamegenerators/local-mesh-external-service" responds with
+    And the URL "/_kri/kri_hg__zone-1_kuma-system_local-mesh-external-service_" responds with
       """
       body:
         name: local-mesh-external-service
+        kri: kri_hg__zone-1_kuma-system_local-mesh-external-service_
         labels:
           kuma.io/zone: zone-1
           k8s.kuma.io/namespace: kuma-system
@@ -26,7 +27,7 @@ Feature: hostname-generators / item
       """
 
   Scenario: The about section has the expected content
-    When I visit the "/hostname-generators/local-mesh-external-service/overview" URL
+    When I visit the "/hostname-generators/kri_hg__zone-1_kuma-system_local-mesh-external-service_/overview" URL
     Then the "$about-section" element exists
     And the "$about-section" element contains "kuma-system"
     And the "$about-section" element contains "zone-1"
@@ -34,12 +35,13 @@ Feature: hostname-generators / item
     And the "$about-section" element contains "kuma.io/env:kubernetes"
 
   Scenario: Visiting the detail view of HostnameGenerator
-    When I visit the "/hostname-generators/local-mesh-external-service/overview" URL
+    When I visit the "/hostname-generators/kri_hg__zone-1_kuma-system_local-mesh-external-service_/overview" URL
     Then the "$detail-view" element exists
     And the "$title-bar" element contains "local-mesh-external-service"
+      |  |
 
-  Scenario: Shows config with format based on environment
-    When I visit the "/hostname-generators/local-mesh-external-service/overview" URL
+  Scenario Outline: Shows config with format based on environment
+    When I visit the "/hostname-generators/kri_hg__zone-1_kuma-system_local-mesh-external-service_/overview" URL
     Then the "$config-universal" element exists
     And the URL contains "?environment=universal"
     When I click the "$select-environment" element

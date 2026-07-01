@@ -2,7 +2,7 @@
   <RouteView
     name="hostname-generator-summary-view"
     :params="{
-      name: '',
+      kri: '',
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
@@ -12,7 +12,7 @@
   >
     <DataCollection
       :items="props.items"
-      :predicate="item => item.id === route.params.name"
+      :predicate="item => item.kri === route.params.kri"
     >
       <template
         #item="{ item }"
@@ -21,13 +21,7 @@
           <template #title>
             <h2>
               <XAction
-                :to="{
-                  name: 'hostname-generator-detail-view',
-                  params: {
-                    name: route.params.name,
-                  },
-
-                }"
+                :href="`kri://${item.kri}`"
               >
                 <RouteTitle
                   :title="t('hostname-generators.routes.item.title', { name: item.name })"
@@ -160,8 +154,8 @@
 
             <template v-else>
               <DataLoader
-                :src="uri(sources, '/hostname-generators/:name/as/kubernetes', {
-                  name: route.params.name,
+                :src="uri(sources, '/hostname-generators/:kri/as/kubernetes', {
+                  kri: route.params.kri,
                 })"
                 v-slot="{ data: [k8sConfig] }"
               >

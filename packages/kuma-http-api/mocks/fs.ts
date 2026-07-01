@@ -2,6 +2,7 @@ import _124 from './kuma.io/latest_version'
 import _999 from './src/_kri/_'
 import _997 from './src/_kri/kri_dp__.ts'
 import _996 from './src/_kri/kri_extsvc__.ts'
+import _985 from './src/_kri/kri_hg__.ts'
 import _986 from './src/_kri/kri_mal__.ts'
 import _995 from './src/_kri/kri_mfi__.ts'
 import _994 from './src/_kri/kri_mgw__.ts'
@@ -281,6 +282,8 @@ export const fs = {
   '/_kri/kri_wl_:kri': _987,
   // MeshAccessLog
   '/_kri/kri_mal_:kri': _986,
+  // HostnameGenerator
+  '/_kri/kri_hg_:kri': _985,
   // generic kri -> catches anything that is not matched above
   '/_kri/:kri': _999,
 }
