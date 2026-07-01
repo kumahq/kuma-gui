@@ -6,7 +6,7 @@
       size: Number,
       mesh: '',
       policyPath: '',
-      policy: '',
+      kri: '',
       s: '',
     }"
     v-slot="{ route, t, can, uri, me }"
@@ -137,7 +137,7 @@
                         { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
                       ]"
                       :items="data.items"
-                      :is-selected-row="(row) => row.id === route.params.policy"
+                      :is-selected-row="(row) => row.kri === route.params.kri"
                       @resize="me.set"
                     >
                       <template
@@ -167,7 +167,7 @@
                             params: {
                               mesh: row.mesh,
                               policyPath: type.path,
-                              policy: row.id,
+                              kri: row.kri || row.id,
                             },
                             query: {
                               page: route.params.page,
@@ -220,7 +220,7 @@
                               params: {
                                 mesh: item.mesh,
                                 policyPath: type.path,
-                                policy: item.id,
+                                kri: item.kri || item.id,
                               },
                             }"
                           >
@@ -232,7 +232,7 @@
                   </template>
                 </DataCollection>
                 <RouterView
-                  v-if="route.params.policy"
+                  v-if="route.params.kri"
                   v-slot="{ Component }"
                 >
                   <XDrawer
