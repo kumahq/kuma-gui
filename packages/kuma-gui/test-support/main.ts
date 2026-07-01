@@ -2,7 +2,7 @@
 // When running via vitest this file is added first using
 // vitest's `setupFiles` property, please see `/vite.config.production.ts`
 
-import { get, container, build } from '@kumahq/container'
+import { createBuilder } from '@kumahq/container'
 import { beforeEach, afterEach } from 'vitest'
 
 import { services as testing } from './index'
@@ -16,7 +16,8 @@ import { services as vue, TOKENS as VUE } from '@/app/vue'
     ...APPLICATION,
     ...TOKENS,
   }
-  build(
+  const { build, container } = createBuilder()
+  const get = build(
     vue($),
 
     application({

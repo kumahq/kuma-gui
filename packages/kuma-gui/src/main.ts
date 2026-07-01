@@ -1,7 +1,7 @@
 // Importing styles here enforces a consistent stylesheet order between the Vite development server and the production build. See https://github.com/vitejs/vite/issues/4890.
 import './assets/styles/main.scss'
 
-import { build } from '@kumahq/container'
+import { createBuilder } from '@kumahq/container'
 import { createApp } from 'vue'
 
 import { services as application, TOKENS as APPLICATION } from '@/app/application'
@@ -28,6 +28,7 @@ async function mountVueApplication() {
     ...TOKENS,
   }
 
+  const { build, injectionKey } = createBuilder()
   const get = build(
     vue($),
 
@@ -90,8 +91,9 @@ async function mountVueApplication() {
     const msw = await import('@/app/msw')
     await get(msw.TOKENS.msw)
   }
-  const app = createApp((await import('./app/App.vue')).default);
-  (await get($.app)(app)).mount('#app')
+  const app = createApp((await import('./app/App.vue')).default)
+  app.provide(injectionKey, get)
+  ;(await get($.app)(app)).mount('#app')
 }
 
 mountVueApplication()

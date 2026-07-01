@@ -8,11 +8,11 @@ import { services as hostnameGenerators } from '@/app/hostname-generators'
 import { Kri } from '@/app/kuma'
 import { services as me } from '@/app/me'
 import { services as meshes } from '@/app/meshes'
-import { useRouter } from '@/app/vue'
 import { services as zones } from '@/app/zones'
 import type { ServiceDefinition, Token } from '@kumahq/container'
+import type { Router } from 'vue-router'
 
-const protocolHandler = (can: Can) => {
+const protocolHandler = (can: Can, router: Router) => {
   return (href: string) => {
     const kriProto = 'kri://'
     switch (true) {
@@ -91,7 +91,6 @@ const protocolHandler = (can: Can) => {
           }
         })()
         if (to) {
-          const router = useRouter()
           try {
             return router.resolve(to).href
           } catch(e) {
@@ -112,18 +111,19 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   return [
     ...me(app),
     [token('service-mesh.plugins'), {
-      service: (i18n, can) => {
+      service: (i18n, can, router) => {
         return [
           [Kongponents],
           [X, {
             i18n,
-            protocolHandler: protocolHandler(can),
+            protocolHandler: protocolHandler(can, router),
           }],
         ]
       },
       arguments: [
         app.i18n,
         app.can,
+        app.router,
       ],
       labels: [
         app.plugins,
