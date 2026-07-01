@@ -17,13 +17,8 @@ import { services as vue, TOKENS as VUE } from '@/app/vue'
     ...TOKENS,
   }
   build(
+    application($),
     vue($),
-
-    application({
-      ...$,
-      routes: $.routesLabel,
-    }),
-
     testing($),
   )
   // initializes vue-test-utils with any global components and/or plugins etc
