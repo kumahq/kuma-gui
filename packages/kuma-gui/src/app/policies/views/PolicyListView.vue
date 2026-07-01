@@ -167,7 +167,7 @@
                             params: {
                               mesh: row.mesh,
                               policyPath: type.path,
-                              kri: row.kri || row.id,
+                              kri: row.kri,
                             },
                             query: {
                               page: route.params.page,
@@ -215,7 +215,7 @@
                               params: {
                                 mesh: item.mesh,
                                 policyPath: type.path,
-                                kri: item.kri || item.id,
+                                kri: item.kri,
                               },
                             }"
                           >
