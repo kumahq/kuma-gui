@@ -6,20 +6,23 @@ import { createApp } from 'vue'
 
 import { services as application, TOKENS as APPLICATION } from '@/app/application'
 import { services as configuration } from '@/app/configuration'
+import { services as controlPlanes } from '@/app/control-planes'
 import { services as dataplanes } from '@/app/data-planes'
 import { services as externalServices } from '@/app/external-services'
 import { services as gateways } from '@/app/gateways'
+import { services as hostnameGenerators } from '@/app/hostname-generators'
 import { TOKENS } from '@/app/kuma'
 import { services as legacyDataplanes } from '@/app/legacy-data-planes'
 import { services as meshIdentities } from '@/app/mesh-identities'
 import { services as meshTrusts } from '@/app/mesh-trusts'
+import { services as meshes } from '@/app/meshes'
 import { services as policies } from '@/app/policies'
 import { services as resources } from '@/app/resources'
 import { services as rules } from '@/app/rules'
-import { services as serviceMesh } from '@/app/service-mesh'
 import { services as services } from '@/app/services'
 import { services as vue, TOKENS as VUE } from '@/app/vue'
 import { services as workloads } from '@/app/workloads'
+import { services as zones } from '@/app/zones'
 
 async function mountVueApplication() {
   const $ = {
@@ -30,20 +33,13 @@ async function mountVueApplication() {
 
   const get = build(
     vue($),
-
-    application({
-      ...$,
-      routes: $.routesLabel,
-    }),
-
-    serviceMesh({
-      ...$,
-      routes: $.routesLabel,
-    }),
-    configuration({
-      ...$,
-      routes: $.routesLabel,
-    }),
+    application($),
+    //
+    configuration($),
+    controlPlanes($),
+    zones($),
+    meshes($),
+    hostnameGenerators($),
     services($),
     externalServices($),
     gateways($),
@@ -55,13 +51,13 @@ async function mountVueApplication() {
     rules($),
     meshIdentities($),
     meshTrusts($),
+    //
 
     // any DEV-time only service container configuration
     import.meta.env.MODE !== 'production'
       ? await (async () => {
-        const [application, serviceMeshDebug, kuma, msw, fakeFs, meshes] = await Promise.all([
+        const [application, kuma, msw, fakeFs, meshes] = await Promise.all([
           import('@/app/application/debug'),
-          import('@/app/service-mesh/debug'),
           import('@/app/kuma/debug'),
           import('@/app/msw'),
           import('@/app/fake-fs'),
@@ -75,7 +71,6 @@ async function mountVueApplication() {
         }
         return [
           ...application.services(TOKENS),
-          ...serviceMeshDebug.services(TOKENS),
           ...kuma.services(TOKENS),
           ...kuma.locales(TOKENS),
           ...msw.services(TOKENS),
