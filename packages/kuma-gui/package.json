@@ -22,7 +22,7 @@
     "@vueuse/core": "^14.3.0",
     "deepmerge": "^4.3.1",
     "github-buttons": "^2.32.0",
-    "js-yaml": "^4.1.1",
+    "js-yaml": "^4.2.0",
     "openapi-fetch": "^0.15.0",
     "pretty-bytes": "^7.1.0",
     "shiki": "^4.2.0",
