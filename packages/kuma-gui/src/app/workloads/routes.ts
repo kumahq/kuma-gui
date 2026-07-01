@@ -6,7 +6,7 @@ export const routes = () => {
     return [
       {
         name: 'workload-detail-tabs-view',
-        path: 'workloads/:wl',
+        path: 'workloads/:kri',
         component: () => import('@/app/workloads/views/WorkloadDetailTabsView.vue'),
         children: [
           {
@@ -34,7 +34,7 @@ export const routes = () => {
           component: () => import('@/app/workloads/views/WorkloadListView.vue'),
           children: [
             {
-              path: ':wl',
+              path: ':kri',
               name: 'workload-summary-view',
               component: () => import('@/app/workloads/views/WorkloadSummaryView.vue'),
             },

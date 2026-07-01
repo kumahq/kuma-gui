@@ -45,6 +45,7 @@ const protocolHandler = (can: Can) => {
               return {
                 name: 'workload-detail-view',
                 params: {
+                  // @TODO: passthrough kri
                   wl: Kri.toString({ shortName, mesh, zone, namespace, name }),
                 },
               }
