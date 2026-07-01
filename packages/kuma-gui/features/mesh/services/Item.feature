@@ -149,7 +149,7 @@ Feature: mesh / services / item
       Then the "$hostnames:nth-child(1)" element exists
 
       Examples:
-        | API                                                             | URL                                                                       | SVC    |
-        | /meshes/default/meshservices/my-meshservice/_hostnames          | /meshes/default/services/mesh-services/my-meshservice/overview            | svc    |
-        | /meshes/default/meshexternalservices/my-meshservice/_hostnames  | /meshes/default/services/mesh-external-services/my-meshservice/overview   | extsvc |
-        | /meshes/default/meshmultizoneservices/my-meshservice/_hostnames | /meshes/default/services/mesh-multi-zone-services/my-meshservice/overview | mzsvc  |
+        | API                                                             | URL                                                                                           | SVC    |
+        | /meshes/default/meshservices/my-meshservice/_hostnames          | /meshes/default/services/mesh-services/kri_msvc_default___my-meshservice_/overview            | svc    |
+        | /meshes/default/meshexternalservices/my-meshservice/_hostnames  | /meshes/default/services/mesh-external-services/kri_extsvc_default___my-meshservice_/overview | extsvc |
+        | /meshes/default/meshmultizoneservices/my-meshservice/_hostnames | /meshes/default/services/mesh-multi-zone-services/kri_mzsvc_default___my-meshservice_/overview      | mzsvc  |

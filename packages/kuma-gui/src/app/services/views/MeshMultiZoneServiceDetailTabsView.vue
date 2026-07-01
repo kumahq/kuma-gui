@@ -3,14 +3,13 @@
     name="mesh-multi-zone-service-detail-tabs-view"
     :params="{
       mesh: '',
-      service: '',
+      kri: '',
     }"
     v-slot="{ route, t, uri }"
   >
     <DataSource
-      :src="uri(sources, '/meshes/:mesh/mesh-multi-zone-service/:name', {
-        mesh: route.params.mesh,
-        name: route.params.service,
+      :src="uri(sources, '/mesh-multi-zone-service/:kri', {
+        kri: route.params.kri,
       })"
       v-slot="{ data, result }"
     >

@@ -12,14 +12,14 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
     _prefix,
     _shortName,
     mesh,
-    zone,
+    _zone,
     nspace,
     displayName,
   ] = kri ? kri.split('_') : [
     'kri', // prefix
     'mzsvc', // shortName
     String(req.params.mesh), // mesh
-    fake.helpers.arrayElement(['', fake.word.noun()]), // zone
+    '', // zone
     // with k8s the request.name MUST be use the correct `name.ns` format
     ...(k8s ? String(req.params.name).split('.').toReversed() : ['', String(req.params.name)]), // nspace, displayName
   ]
@@ -39,15 +39,14 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
       type: 'MeshMultiZoneService',
       mesh,
       name,
-      creationTime: '2021-02-19T08:06:15.14624+01:00',
-      modificationTime: '2021-02-19T08:07:37.539229+01:00',
+      ...fake.kuma.timespan(),
       labels: {
         ...fake.kuma.labels({
           name: displayName,
-          ...(zone ? { zone } : {}),
           ...(k8s ? { namespace: nspace } : {}),
         }),
       },
+      kri: fake.kuma.kri({ resourceName: 'MeshService', mesh, zone: '', namespace: nspace, name: displayName || name, sectionName: '' }),
       spec: {
         selector: {
           meshService: {

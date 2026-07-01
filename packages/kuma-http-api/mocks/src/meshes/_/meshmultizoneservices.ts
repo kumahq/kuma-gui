@@ -5,8 +5,8 @@ type Entity = components['schemas']['MeshMultiZoneServiceItem']
 export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) => {
   const query = req.url.searchParams
 
-  const mesh = req.params.mesh as string
-  const _name = query.get('name') ?? ''
+  const nameQuery = query.get('name') ?? ''
+  const namespaceQuery = query.get('filter[labels.k8s.kuma.io/namespace]')
 
   const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
   const { offset, total, next, pageTotal } = pager(
@@ -25,26 +25,33 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
       next,
       items: Array.from({ length: pageTotal }).map((_, i) => {
         const id = offset + i
-        const name = `${fake.word.noun()}`
-        const displayName = `${_name || name}-${id}`
-        const nspace = fake.k8s.namespace()
+        const [
+          _prefix,
+          shortName,
+          mesh,
+          _zone,
+          nspace,
+          displayName,
+        ] = [
+          'kri', // prefix
+          'mzsvc', // shortName
+          String(req.params.mesh), // mesh
+          '', // zone
+          ...([k8s ? namespaceQuery ?? fake.word.noun() : '', `${nameQuery || fake.word.noun()}-${id}`]), // nspace, displayName
+        ]
 
         return {
           type: 'MeshMultiZoneService',
           mesh,
           name: `${displayName}${k8s ? `.${nspace}` : ''}`,
-          creationTime: '2021-02-19T08:06:15.14624+01:00',
-          modificationTime: '2021-02-19T08:07:37.539229+01:00',
-          ...(k8s
-            ? {
-              labels: {
-                'kuma.io/display-name': displayName,
-                'k8s.kuma.io/namespace': nspace,
-                'kuma.io/origin': 'zone',
-                'kuma.io/zone': fake.word.noun(),
-              },
-            }
-            : {}),
+          ...fake.kuma.timespan(),
+          kri: fake.kuma.kri({ shortName, mesh, zone: '', namespace: nspace, name: displayName, sectionName: '' }),
+          labels: {
+            ...fake.kuma.labels({
+              name: displayName,
+              ...(k8s ? { namespace: nspace } : {}),
+            }),
+          },
           spec: {
             ports: Array.from({ length: 5 }).map(_ => (
               {

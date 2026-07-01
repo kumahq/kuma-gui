@@ -1,15 +1,15 @@
 import { Kri } from '@/app/kuma/kri'
 import { Resource } from '@/app/resources/data/Resource'
 import type { components } from '@kumahq/kuma-http-api'
-type Generated = components['schemas']['MeshMultiZoneServiceItem']
-type GeneratedCollection = components['responses']['MeshMultiZoneServiceList']['content']['application/json']
+export type KumaMeshMultiZoneService = components['schemas']['MeshMultiZoneServiceItem']
+export type KumaMeshMultiZoneServiceCollection = components['responses']['MeshMultiZoneServiceList']['content']['application/json']
 
-const Entity = {
+export const MeshMultiZoneService = {
   search(query: string) {
     return Resource.search(query)
   },
 
-  fromObject(item: Generated) {
+  fromObject(item: KumaMeshMultiZoneService) {
     const labels = item.labels ?? {}
     const id = item.name
     const mesh = item.mesh
@@ -47,8 +47,8 @@ const Entity = {
     }
   },
 
-  fromCollection(collection: GeneratedCollection) {
-    const items = Array.isArray(collection.items) ? collection.items.map(Entity.fromObject) : []
+  fromCollection(collection: KumaMeshMultiZoneServiceCollection) {
+    const items = Array.isArray(collection.items) ? collection.items.map(MeshMultiZoneService.fromObject) : []
     return {
       ...collection,
       items,
@@ -56,5 +56,5 @@ const Entity = {
     }
   },
 }
-export const MeshMultiZoneService = Entity
-export type MeshMultiZoneService = ReturnType<typeof Entity['fromObject']>
+
+export type MeshMultiZoneService = ReturnType<typeof MeshMultiZoneService['fromObject']>

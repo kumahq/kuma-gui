@@ -3,7 +3,7 @@
     name="mesh-external-service-summary-view"
     :params="{
       mesh: '',
-      service: '',
+      kri: '',
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
@@ -13,7 +13,7 @@
   >
     <DataCollection
       :items="props.items"
-      :predicate="item => item.id === route.params.service"
+      :predicate="item => item.kri === route.params.kri"
     >
       <template
         #item="{ item }"
@@ -26,7 +26,7 @@
                   name: 'mesh-external-service-detail-view',
                   params: {
                     mesh: route.params.mesh,
-                    service: route.params.service,
+                    kri: route.params.kri,
                   },
 
                 }"
@@ -177,9 +177,8 @@
 
             <template v-else>
               <DataLoader
-                :src="uri(sources, '/meshes/:mesh/mesh-external-service/:name/as/kubernetes', {
-                  mesh: route.params.mesh,
-                  name: route.params.service,
+                :src="uri(sources, '/mesh-external-service/:kri/as/kubernetes', {
+                  kri: route.params.kri,
                 })"
                 v-slot="{ data: [k8sConfig] }"
               >
