@@ -1,15 +1,15 @@
 import { Kri } from '@/app/kuma/kri'
 import { Resource } from '@/app/resources/data/Resource'
 import type { components } from '@kumahq/kuma-http-api'
-type GeneratedMeshExternalService = components['schemas']['MeshExternalServiceItem']
-type GeneratedMeshExternalServiceList = components['responses']['MeshExternalServiceList']['content']['application/json']
+export type KumaMeshExternalService = components['schemas']['MeshExternalServiceItem']
+export type KumaMeshExternalServiceCollection = components['responses']['MeshExternalServiceList']['content']['application/json']
 
 export const MeshExternalService = {
   search(query: string) {
     return Resource.search(query)
   },
 
-  fromObject(item: GeneratedMeshExternalService) {
+  fromObject(item: KumaMeshExternalService) {
     const labels = item.labels ?? {}
     const id = item.name
     const mesh = item.mesh
@@ -47,7 +47,7 @@ export const MeshExternalService = {
     }
   },
 
-  fromCollection(collection: GeneratedMeshExternalServiceList) {
+  fromCollection(collection: KumaMeshExternalServiceCollection) {
     const items = Array.isArray(collection.items) ? collection.items.map(MeshExternalService.fromObject) : []
     return {
       ...collection,
