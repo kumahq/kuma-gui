@@ -48,7 +48,7 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
   if(meshServiceMode !== 'Exclusive') {
     return {
       headers: {
-        'Status-Code': '400'
+        'Status-Code': 400
       },
       body: {
         'type': '/std-errors',

@@ -20,10 +20,10 @@
       v-slot="{ data: traffic, error, refresh }"
     >
       <DataSource
-        :src="props.mesh.meshServices.mode === 'Exclusive' ? uri(sources, '/meshes/:mesh/dataplanes/:name/layout', {
+        :src="uri(sources, '/meshes/:mesh/dataplanes/:name/layout', {
           mesh: route.params.mesh,
           name: route.params.proxy,
-        }) : ''"
+        })"
         v-slot="{ data: sourceDataplaneLayout }: DataSourceResponse<DataplaneNetworkingLayout>"
       >
         <AppView
