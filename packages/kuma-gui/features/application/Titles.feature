@@ -43,7 +43,7 @@ Feature: application / titles
       | /meshes/default/workloads                                                                                             | Workloads                 |
       | /meshes/default/workloads/kri_wl_default_z1_ns1_workload-1_/overview                                                  | workload-1                |
       | /hostname-generators                                                                                                  | HostnameGenerators        |
-      | /hostname-generators/hg-name/overview                                                                                 | hg-name                   |
+      | /hostname-generators/kri_hg____hg-name_/overview                                                                      | hg-name                   |
 
   Scenario Outline: Visiting the "<Title>" page in "zone" Mode
     Given the environment

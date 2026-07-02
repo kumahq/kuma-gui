@@ -12,7 +12,7 @@
   "dependencies": {
     "@gera2ld/tarjs": "^0.3.1",
     "@kong-ui-public/i18n": "^2.4.6",
-    "@kong/icons": "^1.58.0",
+    "@kong/icons": "^1.60.0",
     "@kong/kongponents": "^9.59.0",
     "@kumahq/container": "*",
     "@kumahq/data": "*",
@@ -32,7 +32,7 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^10.4.0",
-    "@kong/design-tokens": "^1.23.0",
+    "@kong/design-tokens": "^2.0.0",
     "@kumahq/config": "*",
     "@kumahq/fake-api": "*",
     "@kumahq/gherkin-web": "*",
