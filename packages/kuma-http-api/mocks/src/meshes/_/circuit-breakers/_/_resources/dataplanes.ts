@@ -3,7 +3,7 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
   const { mesh } = req.params
   const { name } = req.params
   const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
-  console.log(req)
+  
   const { offset, total, next, pageTotal } = pager(
     env('KUMA_DATAPLANE_COUNT', `${fake.number.int({ min: 1, max: 1000 })}`),
     req,
