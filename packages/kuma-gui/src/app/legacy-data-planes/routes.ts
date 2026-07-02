@@ -98,7 +98,7 @@ export const legacyDataplaneRoutes = (): RouteRecordRaw[] => {
           component: () => import('@/app/legacy-data-planes/views/DataPlanePoliciesView.vue'),
           children: [
             {
-              path: ':policyPath/:policy',
+              path: ':policyPath/:kri',
               name: 'data-plane-policy-summary-view',
               component: () => import('@/app/data-planes/views/DataPlanePolicySummaryView.vue'),
             },

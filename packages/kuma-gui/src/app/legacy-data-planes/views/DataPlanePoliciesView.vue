@@ -147,7 +147,7 @@
                   <DataCollection
                     :items="gatewayDataplane.routePolicies"
                     :empty="false"
-                  >
+                  > 
                     <h3>
                       {{ t('data-planes.routes.item.legacy_policies') }}
                     </h3>

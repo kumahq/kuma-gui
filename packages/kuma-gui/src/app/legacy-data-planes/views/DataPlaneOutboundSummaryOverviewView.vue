@@ -110,7 +110,7 @@
                                               params: {
                                                 policyPath: types[key]![0].path,
                                                 mesh: origin.resourceMeta!.mesh,
-                                                policy: origin.resourceMeta!.kri,
+                                                kri: origin.resourceMeta!.kri,
                                               },
                                             }"
                                           >
@@ -215,7 +215,7 @@
                                                 params: {
                                                   mesh: origin.mesh,
                                                   policyPath: types[origin.type]![0].path,
-                                                  policy: origin.kri,
+                                                  kri: origin.kri,
                                                 },
                                               }"
                                             >

@@ -34,13 +34,17 @@ function getListenerEntries(meshGatewayDataplane: PartialMeshGatewayDataplane): 
         const routeEntries: MeshGatewayRouteEntry[] = []
 
         for (const destination of route.destinations) {
-          const origins = Object.values(destination.policies ?? {}).map(({ mesh, name, type }) => ({ mesh, name, type }))
+          const origins = Object.values(destination.policies ?? {}).map(({ mesh, name, type }) => ({ mesh, name, type, kri: Kri.toString({ shortName: `~${type.toLowerCase()}`, mesh, name }) }))
 
+          const type = 'MeshGatewayRoute'
+          const mesh = meshGatewayDataplane.gateway.mesh
+          const name = route.route
           routeEntries.push({
             route: {
-              mesh: meshGatewayDataplane.gateway.mesh,
-              name: route.route,
-              type: 'MeshGatewayRoute',
+              mesh,
+              name,
+              type,
+              kri: Kri.toString({ shortName: `~${type.toLocaleLowerCase()}`, mesh, name }),
             },
             service: destination.tags['kuma.io/service'],
             origins,

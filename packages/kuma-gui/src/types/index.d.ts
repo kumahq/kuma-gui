@@ -391,7 +391,7 @@ export interface Meta<Type extends string = string> {
   type: Type
   mesh: string
   name: string
-  kri: string
+  kri?: string
 }
 
 export type Conf = Record<string, unknown>
