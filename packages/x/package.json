@@ -12,9 +12,9 @@
     "help": "make help"
   },
   "dependencies": {
-    "@kong-ui-public/app-layout": "4.11.29",
+    "@kong-ui-public/app-layout": "4.11.32",
     "@kong/kongponents": "^9.59.0",
-    "@kong/icons": "^1.58.0",
+    "@kong/icons": "^1.60.0",
     "shiki": "^4.2.0",
     "@vueuse/core": "^14.3.0",
     "@vue/shared": "^3.5.35",
@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "@kumahq/config": "*",
-    "@kong/design-tokens": "^1.23.0"
+    "@kong/design-tokens": "^2.0.0"
   },
   "peerDependencies": {
     "vue": "*"
