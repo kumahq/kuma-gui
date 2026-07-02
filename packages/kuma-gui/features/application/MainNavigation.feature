@@ -93,11 +93,12 @@ Feature: application / MainNavigation
       body:
         items:
         - name: monitor-proxy-0.kuma-demo
+          kri: kri_msvc_default__kuma-demo_monitor-proxy-0_
           labels:
             kuma.io/display-name: monitor-proxy-0
             k8s.kuma.io/namespace: kuma-demo
       """
-    When I visit the "/meshes/default/services/mesh-services/monitor-proxy-0.kuma-demo" URL
+    When I visit the "/meshes/default/services/mesh-services/kri_msvc_default__kuma-demo_monitor-proxy-0_" URL
     Then the URL contains "format=yaml"
     And the "[data-testid='k-code-block']" element exists
 

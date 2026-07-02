@@ -5,8 +5,7 @@ type Entity = components['schemas']['MeshExternalServiceItem']
 export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) => {
   const query = req.url.searchParams
 
-  const mesh = req.params.mesh as string
-  const _name = query.get('name') ?? ''
+  const nameQuery = query.get('name') ?? ''
   const namespaceQuery = query.get('filter[labels.k8s.kuma.io/namespace]')
   const zoneQuery = query.get('filter[labels.kuma.io/zone]')
 
@@ -26,27 +25,34 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
       next,
       items: Array.from({ length: pageTotal }).map((_, i) => {
         const id = offset + i
-        const name = `${fake.word.noun()}`
-        const displayName = `${_name || name}-${id}`
-        const nspace = namespaceQuery ?? fake.k8s.namespace()
-        const zone = zoneQuery ?? fake.word.noun()
+        const [
+          _prefix,
+          shortName,
+          mesh,
+          zone,
+          nspace,
+          displayName,
+        ] = [
+          'kri', // prefix
+          'extsvc', // shortName
+          String(req.params.mesh), // mesh
+          zoneQuery ?? fake.helpers.arrayElement(['', fake.word.noun()]), // zone
+          ...([k8s ? namespaceQuery ?? fake.word.noun() : '', `${nameQuery || fake.word.noun()}-${id}`]), // nspace, displayName
+        ]
 
         return {
           type: 'MeshExternalService',
           mesh,
           name: `${displayName}${k8s ? `.${nspace}` : ''}`,
-          creationTime: '2021-02-19T08:06:15.14624+01:00',
-          modificationTime: '2021-02-19T08:07:37.539229+01:00',
-          ...(k8s
-            ? {
-              labels: {
-                'kuma.io/display-name': displayName,
-                'k8s.kuma.io/namespace': nspace,
-                'kuma.io/origin': 'zone',
-                'kuma.io/zone': zone,
-              },
-            }
-            : {}),
+          ...fake.kuma.timespan(),
+          kri: fake.kuma.kri({ shortName, mesh, zone, namespace: nspace, name: displayName, sectionName: '' }),
+          labels: {
+            ...fake.kuma.labels({
+              name: displayName,
+              ...(zone ? { zone } : {}),
+              ...(k8s ? { namespace: nspace } : {}),
+            }),
+          },
           spec: {
             match: {
               type: 'HostnameGenerator',

@@ -38,8 +38,7 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
       type: 'MeshExternalService',
       mesh,
       name,
-      creationTime: '2021-02-19T08:06:15.14624+01:00',
-      modificationTime: '2021-02-19T08:07:37.539229+01:00',
+      ...fake.kuma.timespan(),
       labels: {
         ...fake.kuma.labels({
           name: displayName,

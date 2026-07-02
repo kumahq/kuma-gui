@@ -35,7 +35,7 @@ export const routes = (can: Can) => {
             ],
           },
           {
-            path: 'mesh-services/:service',
+            path: 'mesh-services/:kri',
             name: 'mesh-service-detail-tabs-view',
             component: () => import('@/app/services/views/MeshServiceDetailTabsView.vue'),
             children: [
@@ -55,7 +55,7 @@ export const routes = (can: Can) => {
           ...(can('use zones')
             ? [
               {
-                path: 'mesh-multi-zone-services/:service',
+                path: 'mesh-multi-zone-services/:kri',
                 name: 'mesh-multi-zone-service-detail-tabs-view',
                 component: () => import('@/app/services/views/MeshMultiZoneServiceDetailTabsView.vue'),
                 children: [
@@ -70,7 +70,7 @@ export const routes = (can: Can) => {
             ]
             : []),
           {
-            path: 'mesh-external-services/:service',
+            path: 'mesh-external-services/:kri',
             name: 'mesh-external-service-detail-tabs-view',
             component: () => import('@/app/services/views/MeshExternalServiceDetailTabsView.vue'),
             children: [
@@ -110,7 +110,7 @@ export const routes = (can: Can) => {
               component: () => import('@/app/services/views/MeshServiceListView.vue'),
               children: [
                 {
-                  path: ':service',
+                  path: ':kri',
                   name: 'mesh-service-summary-view',
                   component: () => import('@/app/services/views/MeshServiceSummaryView.vue'),
                 },
@@ -124,7 +124,7 @@ export const routes = (can: Can) => {
                   component: () => import('@/app/services/views/MeshMultiZoneServiceListView.vue'),
                   children: [
                     {
-                      path: ':service',
+                      path: ':kri',
                       name: 'mesh-multi-zone-service-summary-view',
                       component: () => import('@/app/services/views/MeshMultiZoneServiceSummaryView.vue'),
                     },
@@ -138,7 +138,7 @@ export const routes = (can: Can) => {
               component: () => import('@/app/services/views/MeshExternalServiceListView.vue'),
               children: [
                 {
-                  path: ':service',
+                  path: ':kri',
                   name: 'mesh-external-service-summary-view',
                   component: () => import('@/app/services/views/MeshExternalServiceSummaryView.vue'),
                 },
