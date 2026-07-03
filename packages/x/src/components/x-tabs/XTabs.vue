@@ -159,6 +159,7 @@ const slots = defineSlots()
 
   &.small {
     ul {
+      align-items: center;
       gap: var(--x-space-70);
       margin-bottom: var(--x-space-50);
     }
