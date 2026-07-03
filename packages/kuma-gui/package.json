@@ -32,7 +32,7 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^10.5.0",
-    "@kong/design-tokens": "^2.0.0",
+    "@kong/design-tokens": "^2.0.1",
     "@kumahq/config": "*",
     "@kumahq/fake-api": "*",
     "@kumahq/gherkin-web": "*",
