@@ -15,6 +15,7 @@ $(NPM_WORKSPACE_ROOT)/node_modules: $(if $(CI),,$(NPM_WORKSPACE_ROOT)/package-lo
 					--ignore-scripts \
 					--allow-git none \
 					--min-release-age 12 \
+					--min-release-age-exclude=@kong{,-ui,-ui-public}/* \
 		&& touch $(NPM_WORKSPACE_ROOT)/node_modules
 #
 .PHONY: .sync
@@ -25,7 +26,8 @@ $(NPM_WORKSPACE_ROOT)/node_modules: $(if $(CI),,$(NPM_WORKSPACE_ROOT)/package-lo
 					--prefer-dedupe \
 					--ignore-scripts \
 					--allow-git none \
-					--min-release-age 12
+					--min-release-age 12 \
+					--min-release-age-exclude=@kong{,-ui,-ui-public}/*
 
 .PHONY: .clean
 .clean:
