@@ -37,7 +37,7 @@ Feature: application / titles
       | /meshes/default/data-planes                                                                                           | Data plane proxies        |
       | /meshes/default/data-planes/kri_dp_default___data-plane-name_/overview                                                | data-plane-name           |
       | /meshes/default/policies/circuit-breakers                                                                             | Policies                  |
-      | /meshes/default/policies/circuit-breakers/kri_~circuit-breakers_default___program-0_/overview                         | program-0                 |
+      | /meshes/default/policies/circuit-breakers/kri_~circuitbreaker_default___program-0_/overview                           | program-0                 |
       | /meshes/default/resources/meshfaultinjections                                                                         | Resources                 |
       | /meshes/default/resources/meshfaultinjections/kri_mfi_default_adviser_kuma-system_pension-0-959cb35ab-xtzqf_/overview | pension-0-959cb35ab-xtzqf |
       | /meshes/default/workloads                                                                                             | Workloads                 |
