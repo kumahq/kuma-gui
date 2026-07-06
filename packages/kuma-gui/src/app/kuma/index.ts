@@ -1,13 +1,19 @@
+import Kongponents from '@kong/kongponents'
 import { token, createInjections } from '@kumahq/container'
+import X from '@kumahq/x'
 
 import { vars } from './env'
 import locales from './locales/en-us/index.yaml'
 import { ValidationError } from '@/app/application'
+import type { Can } from '@/app/application'
+import { Kri } from '@/app/kuma'
 import KumaPort from '@/app/kuma/components/kuma-port/KumaPort.vue'
 import KumaTargetRef from '@/app/kuma/components/kuma-target-ref/KumaTargetRef.vue'
 import { ApiError } from '@/app/kuma/services/kuma-api/ApiError'
 import KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import { RestClient } from '@/app/kuma/services/kuma-api/RestClient'
+import { services as me } from '@/app/me'
+import { useRouter } from '@/app/vue'
 import type { ServiceDefinition } from '@kumahq/container'
 
 export * from './utils'
@@ -51,8 +57,123 @@ function normalizeBaseUrl(url: string): string {
   return stripTrailingSlashes(url)
 }
 
+const protocolHandler = (can: Can) => {
+  return (href: string) => {
+    const kriProto = 'kri://'
+    switch (true) {
+      case href.startsWith(kriProto): {
+        const kri = href.substring(kriProto.length)
+        const { mesh, name: encodedName, zone, namespace, shortName } = Kri.fromString(kri)
+        // old style names can have _ in them that are replaced with `~`
+        const name = encodedName.replaceAll('~', '_')
+        const id = `${name}${namespace !== '' ? `.${namespace}`: '' }`
+        const to = (() => {
+          switch (true) {
+            case shortName === 'm':
+              return {
+                name: 'mesh-detail-view',
+                params: {
+                  mesh: name,
+                },
+              }
+            case shortName === 'z':
+              if(can('use zones')) {
+                return {
+                  name: 'zone-cp-detail-view',
+                  params: {
+                    zone: name,
+                  },
+                }
+              }
+              break
+            case shortName === 'wl':
+              return {
+                name: 'workload-detail-view',
+                params: {
+                  wl: Kri.toString({ shortName, mesh, zone, namespace, name }),
+                },
+              }
+            case shortName === '~hostport':
+              return {
+                name: 'data-plane-list-view',
+                query: {
+                  s: `tag:service:${name}`,
+                },
+              }
+            case shortName === 'msvc':
+              return {
+                name: 'mesh-service-detail-view',
+                params: {
+                  mesh,
+                  service: id,
+                },
+              }
+            case shortName === 'mzsvc':
+              return {
+                name: 'mesh-multi-zone-service-detail-view',
+                params: {
+                  mesh: mesh,
+                  service: id,
+                },
+              }
+            case shortName === 'extsvc':
+              return {
+                name: 'mesh-external-service-detail-view',
+                params: {
+                  mesh: mesh,
+                  service: id,
+                },
+              }
+            case shortName === 'hg':
+              return {
+                name: 'hostname-generator-detail-view',
+                params: {
+                  kri,
+                },
+              }
+            default:
+              return
+          }
+        })()
+        if (to) {
+          const router = useRouter()
+          try {
+            return router.resolve(to).href
+          } catch(e) {
+            // log the error, don't throw it
+            // anything errors we just don't show the link
+            console.error(e)
+            return ''
+          }
+        }
+        return ''
+      }
+    }
+    return href
+  }
+
+}
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   return [
+    ...me(app),
+    [token('kuma.plugins'), {
+      service: (i18n, can) => {
+        return [
+          [Kongponents],
+          [X, {
+            i18n,
+            protocolHandler: protocolHandler(can),
+          }],
+        ]
+      },
+      arguments: [
+        app.i18n,
+        app.can,
+      ],
+      labels: [
+        app.plugins,
+      ],
+    }],
     [app.storagePrefix, {
       service: () => 'kumahq.kuma-gui',
     }],

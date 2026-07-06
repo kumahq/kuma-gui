@@ -1,6 +1,8 @@
 import { token } from '@kumahq/container'
 import { addOrigin } from '@kumahq/fake-api'
 import { fs, remote } from '@kumahq/kuma-http-api/mocks'
+// TODO: this is pulled in via playwright which doesn't support vue loading
+// import { XCopyButtonDebug } from '@kumahq/x'
 
 import type { Env } from '@/app/application'
 import type { ServiceDefinition, Token } from '@kumahq/container'
@@ -12,7 +14,7 @@ const $ = {
 }
 
 export const locales = (app: Record<string, Token>): ServiceDefinition[] => [
-  [token('kuma.locales.debug'), {
+  [token('kuma.debug.locales'), {
     service: () => {
       return {
         common: {
@@ -31,7 +33,23 @@ export const locales = (app: Record<string, Token>): ServiceDefinition[] => [
   }],
 ]
 export const services = (app: Record<string, Token>): ServiceDefinition[] => [
-  [token('kuma.env.vars'), {
+  // TODO: this is pulled in via playwright which doens't support vue loading
+  // [token('kuma.debug.components'), {
+  //   service: () => {
+  //     return [
+  //       (name: string, item: unknown) => {
+  //         if (name === 'XCopyButton') {
+  //           return [name, XCopyButtonDebug]
+  //         }
+  //         return [name, item]
+  //       },
+  //     ]
+  //   },
+  //   labels: [
+  //     app.componentWalkers,
+  //   ],
+  // }],
+  [token('kuma.debug.env.vars'), {
     service: () => {
       return {
         KUMA_MOCK_API_ENABLED: () => 'true',
