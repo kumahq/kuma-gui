@@ -11,8 +11,9 @@ import { services as dataplanes } from '@/app/data-planes'
 import { services as externalServices } from '@/app/external-services'
 import { services as gateways } from '@/app/gateways'
 import { services as hostnameGenerators } from '@/app/hostname-generators'
-import { TOKENS } from '@/app/kuma'
+import { services as kuma, TOKENS as KUMA } from '@/app/kuma'
 import { services as legacyDataplanes } from '@/app/legacy-data-planes'
+import { services as me } from '@/app/me'
 import { services as meshIdentities } from '@/app/mesh-identities'
 import { services as meshTrusts } from '@/app/mesh-trusts'
 import { services as meshes } from '@/app/meshes'
@@ -28,13 +29,16 @@ async function mountVueApplication() {
   const $ = {
     ...VUE,
     ...APPLICATION,
-    ...TOKENS,
+    ...KUMA,
   }
 
   const get = build(
     vue($),
     application($),
+    me($),
     //
+    kuma($),
+
     configuration($),
     controlPlanes($),
     zones($),
