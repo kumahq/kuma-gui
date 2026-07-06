@@ -64,10 +64,10 @@
   </RouteView>
 </template>
 <script lang="ts" setup>
-import type { ZoneIngressOverview } from '@/app/zone-ingresses/data';
 import { sources } from '../sources'
 import type { DataplaneNetworking, DataplaneOverview } from '@/app/data-planes/data/'
-import type { ZoneEgressOverview } from '@/app/zone-egresses/data';
+import type { ZoneEgressOverview } from '@/app/zone-egresses/data'
+import type { ZoneIngressOverview } from '@/app/zone-ingresses/data'
 const props = defineProps<{
   networking: DataplaneNetworking
   routeName: string

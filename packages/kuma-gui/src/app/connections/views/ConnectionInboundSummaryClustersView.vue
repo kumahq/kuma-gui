@@ -70,8 +70,8 @@
 import { sources } from '../sources'
 import { DataplaneNetworkingLayout } from '@/app/data-planes/data'
 import type { DataplaneInbound, DataplaneOverview } from '@/app/data-planes/data'
-import type { ZoneEgressOverview } from '@/app/zone-egresses/data';
-import type { ZoneIngressOverview } from '@/app/zone-ingresses/data';
+import type { ZoneEgressOverview } from '@/app/zone-egresses/data'
+import type { ZoneIngressOverview } from '@/app/zone-ingresses/data'
 const props = defineProps<{
   routeName: string
   data: DataplaneInbound | DataplaneNetworkingLayout['inbounds'][number]

@@ -9,7 +9,6 @@ import {
   DataplaneNetworkingLayout,
   type KumaDataplane,
 } from './data'
-import { Kri } from '../kuma'
 import { YAML , defineSources } from '@/app/application'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import { Resource } from '@/app/resources/data/Resource'

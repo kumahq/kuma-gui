@@ -80,8 +80,8 @@
 
 <script lang="ts" setup>
 
-import { Kri } from '@/app/kuma';
 import { useZoneActionGroup } from '../'
 import { sources } from '../sources'
+import { Kri } from '@/app/kuma'
 const ZoneActionGroup = useZoneActionGroup()
 </script>

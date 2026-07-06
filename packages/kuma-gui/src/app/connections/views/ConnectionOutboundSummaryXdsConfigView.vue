@@ -73,11 +73,11 @@
   </RouteView>
 </template>
 <script lang="ts" setup>
-import type { DataplaneOverview } from '@/app/data-planes/data';
 import { sources } from '../sources'
 import { YAML } from '@/app/application'
-import type { ZoneIngressOverview } from '@/app/zone-ingresses/data';
-import type { ZoneEgressOverview } from '@/app/zone-egresses/data';
+import type { DataplaneOverview } from '@/app/data-planes/data'
+import type { ZoneEgressOverview } from '@/app/zone-egresses/data'
+import type { ZoneIngressOverview } from '@/app/zone-ingresses/data'
 const props = defineProps<{
   routeName: string
   overview: DataplaneOverview | ZoneIngressOverview | ZoneEgressOverview | Error | undefined 

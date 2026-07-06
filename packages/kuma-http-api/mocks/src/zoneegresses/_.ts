@@ -9,7 +9,6 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
   // this template can be called via the /_kri/kri_<shortName>_:kri endpoint or
   // the legacy endpoint
   const kri = req.params.kri ? `kri_ze_${req.params.kri}` : undefined
-  console.log('kri', kri)
   const [
     _prefix,
     _shortName,
@@ -27,7 +26,6 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
     ...(k8s ? String(req.params.name).split('.').toReversed() : ['', String(req.params.name)]), // nspace, displayName
   ]
   const name = kri ? `${displayName}${nspace ? `.${nspace}` : ''}` : String(req.params.name)
-  console.log({ name })
 
   return {
     headers: {

@@ -62,7 +62,7 @@ Feature: zones / warnings
     Then the "$warning-zone-memory" element exists
 
     Examples:
-      | URL                       |
+      | URL                                 |
       | /zones/kri_z____zone-cp-1_/overview |
       | /zones/kri_z____zone-cp-1_/config   |
 
@@ -83,7 +83,7 @@ Feature: zones / warnings
     Then the "$detail" element exists but the "$warning-zone-memory" element doesn't exist
 
     Examples:
-      | URL                       |
+      | URL                                 |
       | /zones/kri_z____zone-cp-1_/overview |
       | /zones/kri_z____zone-cp-1_/config   |
 
@@ -107,6 +107,6 @@ Feature: zones / warnings
     Then the "$notification-nack" element exists
 
     Examples:
-      | URL                       |
+      | URL                                 |
       | /zones/kri_z____zone-cp-1_/overview |
       | /zones/kri_z____zone-cp-1_/config   |

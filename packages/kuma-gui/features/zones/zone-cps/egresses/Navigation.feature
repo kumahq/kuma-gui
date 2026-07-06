@@ -98,5 +98,5 @@ Feature: zones / egresses / navigation
       And the "[data-testid='zone-egress-detail-view']" element exists
 
       Examples:
-        | URL                    |
+        | URL                              |
         | /zones/kri_z____feed-0_/egresses |

@@ -14,7 +14,6 @@ export type ZoneEgressInsight = PartialZoneEgressInsight & DiscoverySubscription
 
 export const ZoneEgress = {
   fromObject: (item: PartialZoneEgress) => {
-    console.log('data', item.name)
     return {
       ...item,
       config: item,
@@ -75,7 +74,6 @@ export const ZoneEgressOverview = {
     const zone = labels['kuma.io/origin'] === 'zone' && labels['kuma.io/zone'] ? labels['kuma.io/zone'] : ''
     const namespace = labels['k8s.kuma.io/namespace'] ?? ''
     const name = labels['kuma.io/display-name'] ?? item.name
-    console.log("🚀 ~ name:", name)
     const kri = item.kri ?? Kri.toString({ shortName: 'ze', mesh, zone, namespace, name })
 
     return {
@@ -104,6 +102,8 @@ export const ZoneEgressOverview = {
           type: 'ZoneEgress',
           name: item.name,
           mesh: item.mesh,
+          creationTime: item.creationTime,
+          modificationTime: item.modificationTime,
           ...item.zoneEgress,
         }).config,
         // the things we copy over

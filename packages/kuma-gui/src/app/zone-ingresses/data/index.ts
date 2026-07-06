@@ -15,7 +15,6 @@ export type ZoneIngressInsight = PartialZoneIngressInsight & DiscoverySubscripti
 
 export const ZoneIngress = {
   fromObject: (item: PartialZoneIngress) => {
-    console.log('🚀 ~ item:', item)
     return {
       ...item,
       kri: item.kri ?? Kri.toString({}),

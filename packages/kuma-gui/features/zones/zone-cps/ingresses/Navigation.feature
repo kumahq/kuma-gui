@@ -42,7 +42,7 @@ Feature: zones / ingresses / navigation
       And the "[data-testid='zone-ingress-detail-view']" element exists
 
       Examples:
-        | URL                     |
+        | URL                               |
         | /zones/kri_z____feed-0_/ingresses |
 
     Scenario Outline: clicking the row, opening and summary, and clicking the title
@@ -55,7 +55,7 @@ Feature: zones / ingresses / navigation
       And the "[data-testid='zone-ingress-detail-view']" element exists
 
       Examples:
-        | URL                     |
+        | URL                               |
         | /zones/kri_z____feed-0_/ingresses |
 
   Rule: In a non-namespaced environment
@@ -81,7 +81,7 @@ Feature: zones / ingresses / navigation
       And the "[data-testid='zone-ingress-detail-view']" element exists
 
       Examples:
-        | URL                     |
+        | URL                               |
         | /zones/kri_z____feed-0_/ingresses |
 
     Scenario Outline: clicking the row, opening and summary, and clicking the title
@@ -94,5 +94,5 @@ Feature: zones / ingresses / navigation
       And the "[data-testid='zone-ingress-detail-view']" element exists
 
       Examples:
-        | URL                     |
+        | URL                               |
         | /zones/kri_z____feed-0_/ingresses |

@@ -69,7 +69,7 @@ Feature: Dataplane details for built-in gateway
     And the "$details" element contains
       | Value                 |
       | Online                |
-      | 193.107.134.106       |
+      |       193.107.134.106 |
       | kuma.io/protocol:http |
       | kuma.io/zone:zone-1   |
     And the "$detail-view" element exists but the "$warnings" element doesn't exist
