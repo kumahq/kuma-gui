@@ -109,6 +109,7 @@ jobs:
       - uses: ./.github/actions/bootstrap/
       - env:
           KUMA_BASE_URL: 'http://localhost:5681/gui'
+          KUMA_API_URL: 'http://localhost:5681'
           KUMA_E2E_SHARD_CURRENT: ${{ matrix.container }}
           KUMA_E2E_SHARD_TOTAL: 4
         run: |
