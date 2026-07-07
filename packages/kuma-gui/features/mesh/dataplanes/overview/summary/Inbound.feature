@@ -19,23 +19,23 @@ Feature: mesh / dataplanes / overview / summary / Inbound
     And the URL "/_kri/kri_dp_default_zone-1_kuma-demo_service-less_" responds with
       """
       body:
-        name: service-less
+        name: service-less.kuma-demo
         kri: kri_dp_default_zone-1_kuma-demo_service-less_
         labels:
           kuma.io/display-name: service-less
       """
 
   Scenario: Inbound summary overview shows expected content
-    Given the URL "/meshes/default/dataplanes/service-less/_layout" responds with
+    Given the URL "/meshes/default/dataplanes/service-less.kuma-demo/_layout" responds with
       """
       body:
         inbounds:
-          - kri: kri_dp_default_numeric_kuma-system_service-less_http
+          - kri: kri_dp_default_numeric_kuma-demo_service-less_http
             port: 12345
             protocol: http
             proxyResourceName: self_inbound_http
       """
-    And the URL "/meshes/default/dataplanes/service-less/_inbounds/kri_dp_default_numeric_kuma-system_service-less_http/_policies" responds with
+    And the URL "/meshes/default/dataplanes/service-less.kuma-demo/_inbounds/kri_dp_default_numeric_kuma-demo_service-less_http/_policies" responds with
       """
       body:
         policies:
@@ -49,7 +49,7 @@ Feature: mesh / dataplanes / overview / summary / Inbound
             origins:
               - kri: kri_mfi_default_pigsty_jury_innovation_appliance
       """
-    And the URL "/meshes/default/dataplanes/service-less/_overview" responds with
+    And the URL "/meshes/default/dataplanes/service-less.kuma-demo/_overview" responds with
       """
       body:
         dataplane:
@@ -70,16 +70,16 @@ Feature: mesh / dataplanes / overview / summary / Inbound
     And the "$inbound-policies-rule table:first-of-type [data-testid='k-code-block']" element exists
 
   Scenario: Clicking on origin leads to policy detail view
-    And the URL "/meshes/default/dataplanes/service-less/_layout" responds with
+    And the URL "/meshes/default/dataplanes/service-less.kuma-demo/_layout" responds with
       """
       body:
         inbounds:
-          - kri: kri_dp_default_numeric_kuma-system_service-less_http
+          - kri: kri_dp_default_numeric_kuma-demo_service-less_http
             port: 12345
             protocol: http
             proxyResourceName: self_inbound_http
       """
-    And the URL "/meshes/default/dataplanes/service-less/_inbounds/kri_dp_default_numeric_kuma-system_service-less_http/_policies" responds with
+    And the URL "/meshes/default/dataplanes/service-less.kuma-demo/_inbounds/kri_dp_default_numeric_kuma-demo_service-less_http/_policies" responds with
       """
       body:
         policies:
@@ -89,7 +89,7 @@ Feature: mesh / dataplanes / overview / summary / Inbound
             origins:
               - kri: kri_mfi_default_pigsty_jury_the-policy-name_appliance
       """
-    And the URL "/meshes/default/dataplanes/service-less/_overview" responds with
+    And the URL "/meshes/default/dataplanes/service-less.kuma-demo/_overview" responds with
       """
       body:
         dataplane:

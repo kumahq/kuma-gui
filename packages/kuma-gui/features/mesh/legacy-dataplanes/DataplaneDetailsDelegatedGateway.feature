@@ -13,7 +13,7 @@ Feature: Dataplane details for delegated gateway
     And the URL "/_kri/kri_dp_default_zone-1_kuma-demo_dataplane-gateway_delegated-1_" responds with
       """
       body:
-        name: dataplane-gateway_delegated-1
+        name: dataplane-gateway_delegated-1.kuma-demo
         kri: kri_dp_default_zone-1_kuma-demo_dataplane-gateway_delegated-1_
         labels:
           kuma.io/display-name: dataplane-gateway_delegated-1
@@ -26,7 +26,7 @@ Feature: Dataplane details for delegated gateway
       KUMA_DATAPLANEINBOUND_COUNT: 0
       KUMA_MODE: global
       """
-    And the URL "/meshes/default/dataplanes/dataplane-gateway_delegated-1/_overview" responds with
+    And the URL "/meshes/default/dataplanes/dataplane-gateway_delegated-1.kuma-demo/_overview" responds with
       """
       body:
         mesh: default
@@ -71,7 +71,7 @@ Feature: Dataplane details for delegated gateway
     And the "$detail-view" element exists but the "$warnings" element doesn't exist
 
   Scenario: Overview tab shows warning when no mTLS is set
-    And the URL "/meshes/default/dataplanes/dataplane-gateway_delegated-1/_overview" responds with
+    And the URL "/meshes/default/dataplanes/dataplane-gateway_delegated-1.kuma-demo/_overview" responds with
       """
       body:
         dataplaneInsight:

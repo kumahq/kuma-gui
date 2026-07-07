@@ -28,7 +28,7 @@ Feature: Dataplane policies
     And the URL "/_kri/kri_dp_default_zone-1_kuma-demo_dataplane-1_" responds with
       """
       body:
-        name: dataplane-1
+        name: dataplane-1.kuma-demo
         kri: kri_dp_default_zone-1_kuma-demo_dataplane-1_
         labels:
           kuma.io/display-name: dataplane-1
@@ -44,7 +44,7 @@ Feature: Dataplane policies
         KUMA_DATAPLANE_TO_RULE_COUNT: 2
         KUMA_DATAPLANE_FROM_RULE_COUNT: 0
         """
-      And the URL "/meshes/default/dataplanes/dataplane-1/_rules" responds with
+      And the URL "/meshes/default/dataplanes/dataplane-1.kuma-demo/_rules" responds with
         """
         body:
           rules:
@@ -115,7 +115,7 @@ Feature: Dataplane policies
         KUMA_DATAPLANE_FROM_RULE_COUNT: 1
         KUMA_DATAPLANE_INBOUND_RULE_COUNT: 0
         """
-      And the URL "/meshes/default/dataplanes/dataplane-1/_rules" responds with
+      And the URL "/meshes/default/dataplanes/dataplane-1.kuma-demo/_rules" responds with
         """
         body:
           rules:
@@ -241,7 +241,7 @@ Feature: Dataplane policies
         KUMA_DATAPLANE_TO_RULE_COUNT: 1
         KUMA_DATAPLANE_FROM_RULE_COUNT: 0
         """
-      And the URL "/meshes/default/dataplanes/dataplane-1/_rules" responds with
+      And the URL "/meshes/default/dataplanes/dataplane-1.kuma-demo/_rules" responds with
         """
         body:
           rules:
@@ -290,7 +290,7 @@ Feature: Dataplane policies
         KUMA_DATAPLANE_TO_RULE_COUNT: 1
         KUMA_DATAPLANE_FROM_RULE_COUNT: 0
         """
-      And the URL "/meshes/default/dataplanes/dataplane-1/_rules" responds with
+      And the URL "/meshes/default/dataplanes/dataplane-1.kuma-demo/_rules" responds with
         """
         body:
           rules:
@@ -324,7 +324,7 @@ Feature: Dataplane policies
         KUMA_DATAPLANE_INBOUND_RULE_COUNT: 1
         KUMA_DATAPLANE_FROM_RULE_COUNT: 1
         """
-      And the URL "/meshes/default/dataplanes/dataplane-1/_rules" responds with
+      And the URL "/meshes/default/dataplanes/dataplane-1.kuma-demo/_rules" responds with
         """
         body:
           rules:
@@ -397,7 +397,7 @@ Feature: Dataplane policies
         """
         KUMA_MODE: global
         """
-      And the URL "/meshes/default/dataplanes/dataplane-1/_overview" responds with
+      And the URL "/meshes/default/dataplanes/dataplane-1.kuma-demo/_overview" responds with
         """
         body:
           dataplane:
@@ -429,7 +429,7 @@ Feature: Dataplane policies
       And the URL "/_kri/kri_dp_default_zone-1_kuma-demo_dataplane-gateway_builtin-1_" responds with
         """
         body:
-          name: dataplane-gateway_builtin-1
+          name: dataplane-gateway_builtin-1.kuma-demo
           kri: kri_dp_default_zone-1_kuma-demo_dataplane-gateway_builtin-1_
           labels:
             kuma.io/display-name: dataplane-gateway_builtin-1

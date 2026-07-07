@@ -18,9 +18,10 @@ Feature: zones / ingresses / item
       KUMA_MODE: global
       KUMA_SUBSCRIPTION_COUNT: 2
       """
-    And the URL "/zone-ingresses/item-1/_overview" responds with
+    And the URL "/zone-ingresses/item-1.kuma-system/_overview" responds with
       """
       body:
+        name: item-1.kuma-system
         kri: kri_zi__zone-cp-1_kuma-system_item-1_
         labels:
           kuma.io/display-name: item-1
@@ -29,7 +30,7 @@ Feature: zones / ingresses / item
     And the URL "/_kri/kri_zi__zone-1_kuma-system_item-1_" responds with
       """
       body:
-        name: item-1
+        name: item-1.kuma-system
         kri: kri_zi__zone-cp-1_kuma-system_item-1_
         labels:
           kuma.io/display-name: item-1
@@ -50,7 +51,7 @@ Feature: zones / ingresses / item
     Then I click the "$navigation li:nth-child(1) a" element
 
   Scenario: Detail view has expected content
-    And the URL "/zone-ingresses/item-1/_overview" responds with
+    And the URL "/zone-ingresses/item-1.kuma-system/_overview" responds with
       """
       body:
         kri: kri_zi__zone-cp-1_kuma-system_item-1_

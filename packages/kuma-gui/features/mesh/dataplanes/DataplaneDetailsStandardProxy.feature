@@ -17,7 +17,7 @@ Feature: Dataplane details for standard Data Plane Proxy
     And the URL "/_kri/kri_dp_default_zone-1_kuma-demo_dpp-1-name-of-dataplane_" responds with
       """
       body:
-        name: dpp-1-name-of-dataplane
+        name: dpp-1-name-of-dataplane.kuma-demo
         kri: kri_dp_default_zone-1_kuma-demo_dpp-1-name-of-dataplane_
         labels:
           kuma.io/display-name: dpp-1-name-of-dataplane
@@ -30,7 +30,7 @@ Feature: Dataplane details for standard Data Plane Proxy
       KUMA_DATAPLANEINBOUND_COUNT: 1
       KUMA_MODE: global
       """
-    And the URL "/meshes/default/dataplanes/dpp-1-name-of-dataplane/_overview" responds with
+    And the URL "/meshes/default/dataplanes/dpp-1-name-of-dataplane.kuma-demo/_overview" responds with
       """
       body:
         dataplane:
@@ -54,7 +54,7 @@ Feature: Dataplane details for standard Data Plane Proxy
     And the "$details" element contains "Online"
 
   Scenario: Clusters tab has expected content
-    Given the URL "/meshes/default/dataplanes/dpp-1-name-of-dataplane/clusters" responds with
+    Given the URL "/meshes/default/dataplanes/dpp-1-name-of-dataplane.kuma-demo/clusters" responds with
       """
       body:
         access_log_sink::observability_name::access_log_sink

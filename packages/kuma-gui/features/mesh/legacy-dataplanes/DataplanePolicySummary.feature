@@ -16,7 +16,7 @@ Feature: Dataplane policy summary
     And the URL "/_kri/kri_dp_default_zone-1_kuma-demo_dataplane-1_" responds with
       """
       body:
-        name: dataplane-1
+        name: dataplane-1.kuma-demo
         kri: kri_dp_default_zone-1_kuma-demo_dataplane-1_
         labels:
           kuma.io/display-name: dataplane-1

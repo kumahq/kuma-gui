@@ -14,7 +14,7 @@ Feature: mesh / dataplanes / overview / summary / Listener
     And the URL "/_kri/kri_dp_default_zone-1_kuma-demo_service-less_" responds with
       """
       body:
-        name: service-less
+        name: service-less.kuma-demo
         kri: kri_dp_default_zone-1_kuma-demo_service-less_
         labels:
           kuma.io/display-name: service-less
@@ -22,16 +22,16 @@ Feature: mesh / dataplanes / overview / summary / Listener
   # Note: A listener is currently treated exactly like an inbound
 
   Scenario: Listener summary overview shows expected content
-    Given the URL "/meshes/default/dataplanes/service-less/_layout" responds with
+    Given the URL "/meshes/default/dataplanes/service-less.kuma-demo/_layout" responds with
       """
       body:
         listeners:
-          - kri: kri_dp_default_numeric_kuma-system_service-less_12345
+          - kri: kri_dp_default_numeric_kuma-demo_service-less_12345
             port: 12345
             proxyResourceName: self_zoneingress_dp_12345
             type: ZoneIngress
       """
-    And the URL "/meshes/default/dataplanes/service-less/_overview" responds with
+    And the URL "/meshes/default/dataplanes/service-less.kuma-demo/_overview" responds with
       """
       body:
         dataplane:

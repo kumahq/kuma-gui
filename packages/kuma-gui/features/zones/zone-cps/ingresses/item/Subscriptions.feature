@@ -16,14 +16,14 @@ Feature: dataplanes / subscriptions
     And the URL "/_kri/kri_zi__east_kuma-system_east-ingress_" responds with
       """
       body:
-        name: east-ingress
+        name: east-ingress.kuma-system
         kri: kri_zi__east_kuma-system_east-ingress_
         labels:
           kuma.io/display-name: east-ingress
       """
 
   Scenario: When there are subscription the about section has expected content
-    Given the URL "/zone-ingresses/east-ingress/_overview" responds with
+    Given the URL "/zone-ingresses/east-ingress.kuma-system/_overview" responds with
       """
       body:
         kri: kri_zi__zone-1_kuma-system_east-ingress_
@@ -37,7 +37,7 @@ Feature: dataplanes / subscriptions
     And the "$about-zone-ingress-subscriptions" element contains "foo"
 
   Scenario Outline: Go to subscription detail and back
-    Given the URL "/zone-ingresses/east-ingress/_overview" responds with
+    Given the URL "/zone-ingresses/east-ingress.kuma-system/_overview" responds with
       """
       body:
         zoneIngressInsight:

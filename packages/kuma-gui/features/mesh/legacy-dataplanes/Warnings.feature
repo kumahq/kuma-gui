@@ -17,14 +17,14 @@ Feature: mesh / dataplanes / warnings
     And the URL "/_kri/kri_dp_default_zone-1_kuma-demo_dpp-1_" responds with
       """
       body:
-        name: dpp-1
+        name: dpp-1.kuma-demo
         kri: kri_dp_default_zone-1_kuma-demo_dpp-1_
         labels:
           kuma.io/display-name: dpp-1
       """
 
   Scenario: With a certificate expires soon (at least 6 hours before) a cert warning is shown
-    Given the URL "/meshes/default/dataplanes/dpp-1/_overview" responds with
+    Given the URL "/meshes/default/dataplanes/dpp-1.kuma-demo/_overview" responds with
       """
       body:
         dataplaneInsight:
@@ -37,7 +37,7 @@ Feature: mesh / dataplanes / warnings
     Then the "$expires-soon-cert-warning" element exists
 
   Scenario: With an expired certificate a cert warning is shown
-    Given the URL "/meshes/default/dataplanes/dpp-1/_overview" responds with
+    Given the URL "/meshes/default/dataplanes/dpp-1.kuma-demo/_overview" responds with
       """
       body:
         dataplaneInsight:
@@ -49,7 +49,7 @@ Feature: mesh / dataplanes / warnings
     Then the "$expired-cert-warning" element exists
 
   Scenario: With an expired CA a CA warning isn't shown
-    Given the URL "/meshes/default/dataplanes/dpp-1/_overview" responds with
+    Given the URL "/meshes/default/dataplanes/dpp-1.kuma-demo/_overview" responds with
       """
       body:
         dataplaneInsight:
@@ -61,7 +61,7 @@ Feature: mesh / dataplanes / warnings
     Then the "$detail-view" element exists but the "$expired-cert-warning" element doesn't exist
 
   Scenario: With no mTLS a certificate warning isn't shown
-    Given the URL "/meshes/default/dataplanes/dpp-1/_overview" responds with
+    Given the URL "/meshes/default/dataplanes/dpp-1.kuma-demo/_overview" responds with
       """
       body:
         dataplaneInsight:
@@ -76,7 +76,7 @@ Feature: mesh / dataplanes / warnings
       KUMA_SUBSCRIPTION_COUNT: 1
       KUMA_MODE: global
       """
-    And the URL "/meshes/default/dataplanes/dpp-1/_overview" responds with
+    And the URL "/meshes/default/dataplanes/dpp-1.kuma-demo/_overview" responds with
       """
       body:
         dataplaneInsight:
@@ -98,7 +98,7 @@ Feature: mesh / dataplanes / warnings
       """
       KUMA_SUBSCRIPTION_COUNT: 1
       """
-    And the URL "/meshes/default/dataplanes/dpp-1/_overview" responds with
+    And the URL "/meshes/default/dataplanes/dpp-1.kuma-demo/_overview" responds with
       """
       body:
         dataplaneInsight:
@@ -117,7 +117,7 @@ Feature: mesh / dataplanes / warnings
       """
       KUMA_SUBSCRIPTION_COUNT: 1
       """
-    And the URL "/meshes/default/dataplanes/dpp-1/_overview" responds with
+    And the URL "/meshes/default/dataplanes/dpp-1.kuma-demo/_overview" responds with
       """
       body:
         dataplaneInsight:
@@ -132,7 +132,7 @@ Feature: mesh / dataplanes / warnings
     Then the "$unsupported-envoy-warning" element exists
 
   Scenario: Incomplete networking configuration
-    And the URL "/meshes/default/dataplanes/dpp-1/_overview" responds with
+    And the URL "/meshes/default/dataplanes/dpp-1.kuma-demo/_overview" responds with
       """
       body:
         dataplane:

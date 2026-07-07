@@ -17,7 +17,7 @@ Feature: Dataplane details for built-in gateway
     And the URL "/_kri/kri_dp_default_zone-1_kuma-demo_dataplane-gateway_builtin-1_" responds with
       """
       body:
-        name: dataplane-gateway_builtin-1
+        name: dataplane-gateway_builtin-1.kuma-demo
         kri: kri_dp_default_zone-1_kuma-demo_dataplane-gateway_builtin-1_
         labels:
           kuma.io/display-name: dataplane-gateway_builtin-1
@@ -25,7 +25,7 @@ Feature: Dataplane details for built-in gateway
     And the URL "/_kri/kri_dp_default_zone-1_kuma-demo_dataplane-gateway-builtin-1_" responds with
       """
       body:
-        name: dataplane-gateway-builtin-1
+        name: dataplane-gateway-builtin-1.kuma-demo
         kri: kri_dp_default_zone-1_kuma-demo_dataplane-gateway-builtin-1_
         labels:
           kuma.io/display-name: dataplane-gateway-builtin-1
@@ -37,7 +37,7 @@ Feature: Dataplane details for built-in gateway
       KUMA_SUBSCRIPTION_COUNT: 2
       KUMA_MODE: global
       """
-    And the URL "/meshes/default/dataplanes/dataplane-gateway_builtin-1/_overview" responds with
+    And the URL "/meshes/default/dataplanes/dataplane-gateway_builtin-1.kuma-demo/_overview" responds with
       """
       body:
         mesh: default
@@ -86,7 +86,7 @@ Feature: Dataplane details for built-in gateway
       """
       KUMA_MODE: zone
       """
-    And the URL "/meshes/default/dataplanes/dataplane-gateway-builtin-1/policies" responds with
+    And the URL "/meshes/default/dataplanes/dataplane-gateway-builtin-1.kuma-demo/policies" responds with
       """
       body:
         listeners:
@@ -112,7 +112,7 @@ Feature: Dataplane details for built-in gateway
     And the "$policies-view" element contains "demo-app_kuma-demo_svc_5000"
 
   Scenario: Overview tab shows warning when no mTLS is set
-    And the URL "/meshes/default/dataplanes/dataplane-gateway_builtin-1/_overview" responds with
+    And the URL "/meshes/default/dataplanes/dataplane-gateway_builtin-1.kuma-demo/_overview" responds with
       """
       body:
         dataplaneInsight:

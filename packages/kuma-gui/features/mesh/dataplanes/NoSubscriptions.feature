@@ -15,12 +15,12 @@ Feature: dataplanes / no-subscriptions
     And the URL "/_kri/kri_dp_default_zone-1_kuma-demo_backend_" responds with
       """
       body:
-        name: backend
+        name: backend.kuma-demo
         kri: kri_dp_default_zone-1_kuma-demo_backend_
         labels:
           kuma.io/display-name: backend
       """
-    And the URL "/meshes/default/dataplanes/backend/_overview" responds with
+    And the URL "/meshes/default/dataplanes/backend.kuma-demo/_overview" responds with
       """
       body:
         dataplane:

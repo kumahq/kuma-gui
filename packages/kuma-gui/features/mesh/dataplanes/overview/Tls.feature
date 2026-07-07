@@ -17,12 +17,12 @@ Feature: mesh / dataplanes / overview / TLS
     And the URL "/_kri/kri_dp_default_zone-1_kuma-demo_backend_" responds with
       """
       body:
-        name: backend
+        name: backend.kuma-demo
         kri: kri_dp_default_zone-1_kuma-demo_backend_
         labels:
           kuma.io/display-name: backend
       """
-    And the URL "/meshes/default/dataplanes/backend/_overview" responds with
+    And the URL "/meshes/default/dataplanes/backend.kuma-demo/_overview" responds with
       """
       body:
         dataplaneInsight:
@@ -33,19 +33,19 @@ Feature: mesh / dataplanes / overview / TLS
       """
 
   Scenario: The TLS section shows expected content
-    Given the URL "/meshes/default/dataplanes/backend/_overview" responds with
+    Given the URL "/meshes/default/dataplanes/backend.kuma-demo/_overview" responds with
       """
       body:
         dataplaneInsight:
           mTLS:
             issuedBackend: kri_mid_default_east_kuma-demo_identity-1_
       """
-    And the URL "/meshes/default/dataplanes/backend/stats" responds with
+    And the URL "/meshes/default/dataplanes/backend.kuma-demo/stats" responds with
       """
       body: |
         cluster.kri_msvc_default_east_kuma-demo_my-service_5050.ssl.certificate.spiffe://default.local-zone.mesh.local/ns/kuma-demo/sa/default.expiration_unix_time_seconds: 1765823243
       """
-    And the URL "/meshes/default/dataplanes/backend/_layout" responds with
+    And the URL "/meshes/default/dataplanes/backend.kuma-demo/_layout" responds with
       """
       body:
         spiffeId: spiffe://default.local-zone.mesh.local/ns/kuma-demo/sa/default

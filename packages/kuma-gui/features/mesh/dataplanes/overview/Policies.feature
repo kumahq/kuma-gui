@@ -12,14 +12,14 @@ Feature: mesh / dataplanes / connections / Traffic
     And the URL "/_kri/kri_dp_default_zone-1_kuma-demo_backend_" responds with
       """
       body:
-        name: backend
+        name: backend.kuma-demo
         kri: kri_dp_default_zone-1_kuma-demo_backend_
         labels:
           kuma.io/display-name: backend
       """
 
   Scenario: The dataplane about section contains expected content
-    Given the URL "/meshes/default/dataplanes/backend/_policies" responds with
+    Given the URL "/meshes/default/dataplanes/backend.kuma-demo/_policies" responds with
       """
       body:
         policies:

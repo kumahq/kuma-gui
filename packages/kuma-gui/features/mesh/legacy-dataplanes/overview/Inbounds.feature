@@ -14,7 +14,7 @@ Feature: mesh / dataplanes / connections / Inbounds
     And the URL "/_kri/kri_dp_default_zone-1_kuma-demo_service-less_" responds with
       """
       body:
-        name: service-less
+        name: service-less.kuma-demo
         kri: kri_dp_default_zone-1_kuma-demo_service-less_
         labels:
           kuma.io/display-name: service-less
@@ -22,7 +22,7 @@ Feature: mesh / dataplanes / connections / Inbounds
     And the URL "/_kri/kri_dp_default_zone-1_kuma-demo_delegated_" responds with
       """
       body:
-        name: delegated
+        name: delegated.kuma-demo
         kri: kri_dp_default_zone-1_kuma-demo_delegated_
         labels:
           kuma.io/display-name: delegated
@@ -34,7 +34,7 @@ Feature: mesh / dataplanes / connections / Inbounds
       KUMA_DATAPLANEINBOUND_COUNT: 1
       KUMA_DATAPLANE_TYPE: standard
       """
-    And the URL "/meshes/default/dataplanes/service-less/_overview" responds with
+    And the URL "/meshes/default/dataplanes/service-less.kuma-demo/_overview" responds with
       """
       body:
         dataplane:
