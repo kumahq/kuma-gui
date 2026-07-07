@@ -3,7 +3,7 @@ import type { Dependencies, ResponseHandler } from '#mocks'
 export default ({ fake }: Dependencies): ResponseHandler => (req) => {
   // this template can be called via the /_kri/kri_<shortName>_:kri endpoint or
   // the legacy endpoint
-  const kri = req.params.kri ? `kri_ze_${req.params.kri}` : undefined
+  const kri = req.params.kri ? `kri_z_${req.params.kri}` : undefined
   const [
     _prefix,
     _shortName,
