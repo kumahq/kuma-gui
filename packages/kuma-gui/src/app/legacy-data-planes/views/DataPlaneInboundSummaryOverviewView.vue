@@ -236,7 +236,6 @@ import { sources } from '@/app/rules/sources'
 
 const props = defineProps<{
   data: DataplaneInbound
-  foo: string
   overview: DataplaneOverview
   routeName: string
 }>()

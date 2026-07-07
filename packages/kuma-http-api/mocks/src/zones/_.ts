@@ -15,9 +15,7 @@ export default ({ fake }: Dependencies): ResponseHandler => (req) => {
     'kri', // prefix
     'z', // shortName
     '', // mesh
-    // we can't know the zone for a non-KRI version of this request
     '', // zone.
-    // with k8s the request.name MUST be use the correct `name.ns` format
     String(req.params.name), // displayName
   ]
   const name = kri ? displayName : String(req.params.name)

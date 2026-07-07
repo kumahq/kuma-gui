@@ -3,7 +3,7 @@ import createClient from 'openapi-fetch'
 
 import { ZoneEgressOverview, ZoneEgress } from './data'
 import { Kri } from '../kuma'
-import { YAML , defineSources } from '@/app/application'
+import { YAML, defineSources } from '@/app/application'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
 import type {

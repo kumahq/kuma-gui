@@ -31,31 +31,6 @@ export const sources = (api: KumaApi) => {
     fetch: api.client.fetch,
   })
   return defineSources({
-    // '/meshes/:mesh/dataplanes/:kri': async (params) => {
-    //   const { mesh, kri } = params
-    //   let res
-
-    //   if(Kri.isKriString(kri)) {
-    //     res = await http.GET('/_kri/{kri}', {
-    //       params: {
-    //         path: {
-    //           kri,
-    //         },
-    //       },
-    //     })
-    //   } else {
-    //     res = await http.GET('/meshes/{mesh}/dataplanes/{name}', {
-    //       params: {
-    //         path: {
-    //           mesh,
-    //           name: kri,
-    //         }
-    //       }
-    //     })
-    //   }
-
-    //   return Dataplane.fromObject(res.data! as KumaDataplane)
-    // },
     '/dataplanes/:kri': async (params) => {
       const { kri } = params
       const res = await http.GET('/_kri/{kri}', {
