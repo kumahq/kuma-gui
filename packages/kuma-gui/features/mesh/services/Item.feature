@@ -39,6 +39,7 @@ Feature: mesh / services / item
           body:
             items:
               - name: fake-dataplane
+                kri: kri_dp_default___fake-dataplane_
                 labels:
                   kuma.io/display-name: fake-dataplane
                 dataplane:
@@ -131,7 +132,7 @@ Feature: mesh / services / item
       Then the "$action" element contains "fake-dataplane"
       When I click the "$action-group" element
       And I click the "$view" element
-      Then the URL contains "/meshes/default/data-planes/fake-dataplane/overview"
+      Then the URL contains "/meshes/default/data-planes/kri_dp_default___fake-dataplane_/overview"
 
   Rule: With a mesh service of type mesh-service, mesh-multi-zone-service or mesh-external-service
 

@@ -21,6 +21,7 @@ Feature: Dataplane summary
       body:
         items:
           - name: test-data-plane-1
+            kri: kri_dp_default_zone-1__test-data-plane-1_
             labels:
               kuma.io/display-name: test-data-plane-1
               kuma.io/origin: zone

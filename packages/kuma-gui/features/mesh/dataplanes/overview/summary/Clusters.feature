@@ -22,6 +22,7 @@ Feature: mesh / dataplanes / connections / clusters
     And the URL "/meshes/mesh-name/dataplanes/service-64cbb7b8b5-6g94n.namespace/_overview" responds with
       """
       body:
+        kri: kri_dp_mesh-name_zone-1_namespace_service-64cbb7b8b5-6g94n_
         dataplane:
           networking:
             inbound:

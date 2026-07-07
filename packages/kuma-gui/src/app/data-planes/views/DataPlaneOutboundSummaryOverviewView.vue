@@ -86,7 +86,7 @@
             <DataSource
               :src="uri(policySources, '/meshes/:mesh/dataplanes/:name/policies/for/outbound/:kri', {
                 mesh: route.params.mesh,
-                name: props.dataPlaneOverview.id,
+                name: props.overview.id,
                 kri: props.data.kri,
               })"
               v-slot="{ data: sourcePolicies, error: policiesError }"
@@ -207,7 +207,7 @@ import { sources as policySources } from '@/app/policies/sources'
 
 const props = defineProps<{
   data: DataplaneNetworkingLayout['outbounds'][number]
-  dataPlaneOverview: DataplaneOverview
+  overview: DataplaneOverview
   routeName: string
 }>()
 </script>

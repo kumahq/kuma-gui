@@ -22,7 +22,7 @@ Feature: Dataplane details for standard Data Plane Proxy
           kuma.io/display-name: dpp-1-name-of-dataplane
       """
 
-  Scenario Outline: Overview tab has expected content
+  Scenario: Overview tab has expected content
     Given the environment
       """
       KUMA_SUBSCRIPTION_COUNT: 2
@@ -32,6 +32,7 @@ Feature: Dataplane details for standard Data Plane Proxy
     And the URL "/meshes/default/dataplanes/dpp-1-name-of-dataplane/_overview" responds with
       """
       body:
+        kri: kri_dp_default_zone-1_kuma-demo_dpp-1-name-of-dataplane_
         dataplane:
           networking:
             advertisedAddress: !!js/undefined
@@ -47,17 +48,12 @@ Feature: Dataplane details for standard Data Plane Proxy
             - connectTime: 2021-02-17T07:33:37.412683Z
               disconnectTime: !!js/undefined
       """
-    When I visit the "/meshes/default/data-planes/<Name>/overview" URL
+    When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_dpp-1-name-of-dataplane_/overview" URL
     Then the page title contains "dpp-1-name-of-dataplane"
     And the "$detail-view" element contains "dpp-1-name-of-dataplane"
     And the "$details" element contains "Online"
 
-    Examples:
-      | Name                                                     |
-      | dpp-1-name-of-dataplane                                  |
-      | kri_dp_default_zone-1_kuma-demo_dpp-1-name-of-dataplane_ |
-
-  Scenario Outline: Clusters tab has expected content
+  Scenario: Clusters tab has expected content
     Given the URL "/meshes/default/dataplanes/dpp-1-name-of-dataplane/clusters" responds with
       """
       body:
@@ -66,24 +62,14 @@ Feature: Dataplane details for standard Data Plane Proxy
         access_log_sink::default_priority::max_pending_requests::1024
         access_log_sink::default_priority::max_requests::1024
       """
-    When I visit the "/meshes/default/data-planes/<Name>/clusters" URL
+    When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_dpp-1-name-of-dataplane_/clusters" URL
     Then the "$clusters-view" element contains "access_log_sink::observability_name::access_log_sink"
 
-    Examples:
-      | Name                                                     |
-      | dpp-1-name-of-dataplane                                  |
-      | kri_dp_default_zone-1_kuma-demo_dpp-1-name-of-dataplane_ |
-
-  Scenario Outline: Shows config with format based on environment
-    When I visit the "/meshes/default/data-planes/<Name>/config" URL
+  Scenario: Shows config with format based on environment
+    When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_dpp-1-name-of-dataplane_/config" URL
     Then the "$config-universal" element exists
     And the URL contains "?environment=universal"
     When I click the "$select-environment" element
     When I click the "[data-testid='select-item-k8s'] button" element
     Then the "$config-k8s" element exists
     And the URL contains "?environment=k8s"
-
-    Examples:
-      | Name                                                     |
-      | dpp-1-name-of-dataplane                                  |
-      | kri_dp_default_zone-1_kuma-demo_dpp-1-name-of-dataplane_ |
