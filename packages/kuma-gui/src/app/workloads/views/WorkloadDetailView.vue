@@ -3,7 +3,7 @@
     name="workload-detail-view"
     :params="{
       mesh: '',
-      kri: '',
+      wl: '',
       page: 1,
       size: Number,
       proxy: '',
@@ -13,7 +13,7 @@
   >
     <RouteTitle
       :render="false"
-      :title="t('workloads.routes.item.title', { name: Kri.fromString(route.params.kri).name })"
+      :title="t('workloads.routes.item.title', { name: Kri.fromString(route.params.wl).name })"
     />
     <AppView>
       <XCard
@@ -116,7 +116,7 @@
             </form>
           </search>
           <template
-            v-for="kri in [Kri.fromString(route.params.kri)]"
+            v-for="kri in [Kri.fromString(route.params.wl)]"
             :key="typeof kri"
           >
             <DataLoader

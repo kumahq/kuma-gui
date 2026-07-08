@@ -77,7 +77,7 @@
                       :to="{
                         name: 'workload-summary-view',
                         params: {
-                          kri: item.kri,
+                          wl: item.kri,
                         },
                         query: {
                           page: route.params.page,
