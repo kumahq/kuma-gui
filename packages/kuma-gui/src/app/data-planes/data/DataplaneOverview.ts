@@ -39,7 +39,6 @@ export const DataplaneOverview = {
     const namespace = labels['k8s.kuma.io/namespace'] ?? ''
     const name = labels['kuma.io/display-name'] ?? item.name
 
-    // temporarily make a KRI until we have those from the backend
     const kri = item.kri ?? Kri.toString({ shortName: 'dp', mesh, zone, namespace, name })
 
 
