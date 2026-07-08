@@ -14,6 +14,7 @@ import KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import { RestClient } from '@/app/kuma/services/kuma-api/RestClient'
 import { useRouter } from '@/app/vue'
 import type { ServiceDefinition } from '@kumahq/container'
+import type { DataSourcePool , EventSource } from '@kumahq/data'
 
 export * from './utils'
 export { Kri } from './kri'
@@ -30,6 +31,7 @@ export const TOKENS = {
   httpClient: token<RestClient>('httpClient'),
   api: token<KumaApi>('KumaApi'),
   htmlVars: token('kuma.html.vars'),
+  fetch: token<<T>(src: string) => Promise<T>>('app.fetch'),
 }
 function getConfig() {
   const pathConfigNode = document.querySelector('#kuma-config')
@@ -201,6 +203,49 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
         app.env,
       ],
     }],
+    [app.fetch, {
+      service: (data: DataSourcePool) => {
+        const waitForEvent = async <T extends Event>(target: EventTarget, event: string, signal?: AbortController['signal']): Promise<T> => {
+          const res = new Promise<T>((resolve) => {
+            target.addEventListener(
+              event,
+              (e) => resolve(e as T),
+              {
+                once: true,
+                signal,
+              },
+            )
+          })
+          return res
+        }
+        
+        const waitFor = async <T extends EventSource>(source: T) => {
+          const controller = new AbortController()
+          const event = await Promise.race([
+            waitForEvent<MessageEvent>(source, 'message', controller.signal),
+            waitForEvent<ErrorEvent>(source, 'error', controller.signal),
+          ])
+          controller.abort()
+          if (event instanceof ErrorEvent) {
+            throw event.error
+          } else {
+            return event.data
+          }
+        }
+
+        const fetch = async <T>(src: string): Promise<T> => {
+          const sym = Symbol('')
+          try {
+            return waitFor(data.source(`${src}${src.includes('?') ? '&' : '?'}cacheControl=no-cache`, sym))
+          } finally {
+            data.close(src, sym)
+          }
+        }
+
+        return fetch
+      },
+      arguments: [app.dataSourcePool],
+    }],
 
     [token('kuma.locales'), {
       service: () => locales,
@@ -246,6 +291,8 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
 }
 export const [
   useKumaApi,
+  useFetch,
 ] = createInjections(
   TOKENS.api,
+  TOKENS.fetch,
 )

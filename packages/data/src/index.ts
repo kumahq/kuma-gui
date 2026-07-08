@@ -3,6 +3,7 @@ import { compile } from 'path-to-regexp'
 import CallableEventSource from './CallableEventSource'
 import type { Creator, Destroyer } from './DataSourcePool'
 export { default as DataSourcePool } from './DataSourcePool'
+export type { EventSource } from './DataSourcePool'
 
 // reusable Type Utility for easy to use Types within Vue templates
 export type DataSourceResponse<T> = {
