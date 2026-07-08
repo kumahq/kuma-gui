@@ -342,8 +342,8 @@ export interface Entity {
   type: string
   name: string
   kri?: string
-  creationTime: string
-  modificationTime: string
+  creationTime?: string
+  modificationTime?: string
 }
 
 export interface MeshEntity extends Entity {

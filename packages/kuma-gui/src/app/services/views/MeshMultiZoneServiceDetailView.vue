@@ -155,7 +155,7 @@
                         appearance="decorative"
                       >
                         <XAction
-                          :href="t('common.label.href.kuma~io/zone', { name: zone.name })"
+                          :href="`kri://${Kri.toString({ shortName: 'z', name: zone.name })}`"
                         >
                           {{ zone.name }}
                         </XAction>
@@ -249,6 +249,7 @@
 import type { MeshMultiZoneService } from '../data'
 import { YAML } from '@/app/application'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
+import { Kri } from '@/app/kuma'
 import { sources as servicesSources } from '@/app/services/sources'
 
 const props = defineProps<{

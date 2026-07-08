@@ -160,7 +160,7 @@
                   <template #zone="{ row }">
                     <XAction
                       v-if="row.zone"
-                      :href="t('common.label.href.kuma~io/zone', { name: row.zone })"
+                      :href="`kri://${Kri.toString({ shortName: 'z', name: row.zone })}`"
                     >
                       {{ row.zone }}
                     </XAction>
@@ -274,6 +274,7 @@
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import { sources } from '@/app/data-planes/sources'
+import { Kri } from '@/app/kuma'
 import { sources as serviceSources } from '@/app/services/sources'
 </script>
 

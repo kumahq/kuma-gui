@@ -62,7 +62,7 @@
                 </dt>
                 <dd>
                   <XAction
-                    :href="t('common.label.href.kuma~io/zone', { name: service.zone })"
+                    :href="`kri://${Kri.toString({ shortName: 'z', name: service.zone })}`"
                   >
                     <XBadge appearance="decorative">
                       {{ service.zone }}
@@ -196,7 +196,7 @@
                         appearance="decorative"
                       >
                         <XAction
-                          :href="t('common.label.href.kuma~io/zone', { name: zone.name })"
+                          :href="`kri://${Kri.toString({ shortName: 'z', name: zone.name })}`"
                         >
                           {{ zone.name }}
                         </XAction>
@@ -375,7 +375,7 @@
                     <template #zone="{ row }">
                       <XAction
                         v-if="row.zone"
-                        :href="t('common.label.href.kuma~io/zone', { name: row.zone })"
+                        :href="`kri://${Kri.toString({ shortName: 'z', name: row.zone })}`"
                       >
                         {{ row.zone }}
                       </XAction>
@@ -493,6 +493,7 @@ import AppCollection from '@/app/application/components/app-collection/AppCollec
 import ResourceStatus from '@/app/common/ResourceStatus.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import { sources } from '@/app/data-planes/sources'
+import { Kri } from '@/app/kuma'
 import { sources as servicesSources } from '@/app/services/sources'
 
 const props = defineProps<{

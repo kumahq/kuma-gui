@@ -84,7 +84,7 @@
                       </dt>
                       <dd>
                         <XAction
-                          :href="t('common.label.href.kuma~io/zone', { name: data.zone })"
+                          :href="`kri://${Kri.toString({ shortName: 'z', name: data.zone })}`"
                         >
                           <XBadge>
                             {{ data.zone }}
@@ -239,4 +239,5 @@
 <script lang="ts" setup>
 import { sources } from '../sources'
 import { YAML } from '@/app/application'
+import { Kri } from '@/app/kuma'
 </script>

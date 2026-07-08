@@ -185,7 +185,7 @@
               <template #zone="{ row }">
                 <XAction
                   v-if="row.zone"
-                  :href="t('common.label.href.kuma~io/zone', { name: row.zone })"
+                  :href="`kri://${Kri.toString({ shortName: 'z', name: row.zone })}`"
                 >
                   {{ row.zone }}
                 </XAction>
@@ -330,6 +330,7 @@ import { KUI_ICON_SIZE_40 } from '@kong/design-tokens'
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
+import { Kri } from '@/app/kuma'
 import type { Mesh } from '@/app/meshes/data'
 const props = defineProps<{
   mesh: Mesh

@@ -86,7 +86,7 @@
                   </th>
                   <td>
                     <XAction
-                      :href="t('common.label.href.kuma~io/zone', { name: item.zone })"
+                      :href="`kri://${Kri.toString({ shortName: 'z', name: item.zone })}`"
                     >
                       {{ item.zone }}
                     </XAction>
@@ -179,6 +179,7 @@
 import { sources } from '../sources'
 import { YAML } from '@/app/application'
 import type { HostnameGenerator } from '@/app/hostname-generators/data'
+import { Kri } from '@/app/kuma'
 const props = defineProps<{
   items: HostnameGenerator[]
 }>()

@@ -84,7 +84,7 @@
                 <template #zone="{ row }">
                   <template v-if="row.labels && row.labels['kuma.io/origin'] === 'zone' && row.labels['kuma.io/zone']">
                     <XAction
-                      :href="t('common.label.href.kuma~io/zone', { name: row.labels['kuma.io/zone'] })"
+                      :href="`kri://${Kri.toString({ shortName: 'z', name: row.labels['kuma.io/zone'] })}`"
                     >
                       {{ row.labels['kuma.io/zone'] }}
                     </XAction>
@@ -146,4 +146,5 @@
 <script lang="ts" setup>
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
+import { Kri } from '@/app/kuma'
 </script>

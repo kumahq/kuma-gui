@@ -160,7 +160,7 @@
                     <template #zone="{ row }">
                       <XAction
                         v-if="row.zone.length > 0"
-                        :href="t('common.label.href.kuma~io/zone', { name: row.zone })"
+                        :href="`kri://${Kri.toString({ shortName: 'z', name: row.zone })}`"
                       >
                         {{ row.zone }}
                       </XAction>
@@ -221,6 +221,7 @@ import type { ResourceTypeDescriptorCollection } from '../data'
 import { sources } from '../sources'
 import { useDataEmptyState } from '@/app/application'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
+import { Kri } from '@/app/kuma'
 const DataEmptyState = useDataEmptyState()
 const props = defineProps<{
   resourceTypes?: ResourceTypeDescriptorCollection

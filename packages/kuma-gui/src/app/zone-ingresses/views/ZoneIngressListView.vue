@@ -36,8 +36,8 @@
           </search>
 
           <DataLoader
-            :src="uri(sources, `/zone-cps/:zone/ingresses`, {
-              zone: route.params.zone,
+            :src="uri(sources, `/zone-cps/:kri/ingresses`, {
+              kri: route.params.zone,
             }, {
               page: route.params.page,
               size: route.params.size,

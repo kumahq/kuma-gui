@@ -58,7 +58,7 @@
               </dt>
               <dd>
                 <XAction
-                  :href="t('common.label.href.kuma~io/zone', { name: policy.zone })"
+                  :href="`kri://${Kri.toString({ shortName: 'z', name: policy.zone })}`"
                 >
                   <XBadge appearance="decorative">
                     {{ policy.zone }}
@@ -170,7 +170,7 @@
                 <template #zone="{ row }">
                   <XAction
                     v-if="row.zone"
-                    :href="t('common.label.href.kuma~io/zone', { name: row.zone })"
+                    :href="`kri://${Kri.toString({ shortName: 'z', name: row.zone })}`"
                   >
                     {{ row.zone }}
                   </XAction>
@@ -230,6 +230,7 @@
 import type { Policy } from '../data'
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
+import { Kri } from '@/app/kuma'
 
 const props = defineProps<{
   data: Policy | Error | undefined

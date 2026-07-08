@@ -22,9 +22,9 @@ export const sources = (api: KumaApi) => {
     fetch: api.client.fetch,
   })
   return defineSources({
-    '/zone-cps/:zone/ingresses': async (params) => {
-      const { zone, size, page } = params
-      const { name } = Kri.fromString(zone)
+    '/zone-cps/:kri/ingresses': async (params) => {
+      const { kri, size, page } = params
+      const { name } = Kri.fromString(kri)
       const filter = {
         [`labels.${'kuma.io/zone'}`]: name,
       }

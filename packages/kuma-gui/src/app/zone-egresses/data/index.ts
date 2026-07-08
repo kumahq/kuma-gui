@@ -102,8 +102,6 @@ export const ZoneEgressOverview = {
           type: 'ZoneEgress',
           name: item.name,
           mesh: item.mesh,
-          creationTime: item.creationTime,
-          modificationTime: item.modificationTime,
           ...item.zoneEgress,
         }).config,
         // the things we copy over

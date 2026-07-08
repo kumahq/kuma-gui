@@ -113,7 +113,7 @@
                   </th>
                   <td>
                     <XAction
-                      :href="t('common.label.href.kuma~io/zone', { name: item.zone })"
+                      :href="`kri://${Kri.toString({ shortName: 'z', name: item.zone })}`"
                     >
                       {{ item.zone }}
                     </XAction>
@@ -234,6 +234,7 @@
 <script lang="ts" setup>
 import { sources } from '../sources'
 import { YAML } from '@/app/application'
+import { Kri } from '@/app/kuma'
 import type { MeshService } from '@/app/services/data'
 const props = defineProps<{
   items: MeshService[]

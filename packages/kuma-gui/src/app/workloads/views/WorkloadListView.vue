@@ -95,7 +95,7 @@
                   <template #zone="{ row: item }">
                     <XAction
                       v-if="item.zone"
-                      :href="t('common.label.href.kuma~io/zone', { name: item.zone })"
+                      :href="`kri://${Kri.toString({ shortName: 'z', name: item.zone })}`"
                     >
                       {{ item.zone }}
                     </XAction>
@@ -158,5 +158,6 @@
 
 <script setup lang="ts">
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
+import { Kri } from '@/app/kuma'
 import { sources } from '@/app/workloads/sources'
 </script>

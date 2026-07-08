@@ -6,16 +6,16 @@ import type {
 
 export const PolicyDataplane = {
   fromObject(item: PartialPolicyDataplane) {
-    const labels = typeof item.labels !== 'undefined' ? item.labels : {}
+    const labels = item.labels ?? {}
+    const id = item.name
     const mesh = item.mesh
-    const zone = labels['kuma.io/zone'] ?? ''
-    const displayName = labels['kuma.io/display-name']
-    const name = displayName ?? item.name
+    const zone = labels['kuma.io/origin'] === 'zone' && labels['kuma.io/zone'] ? labels['kuma.io/zone'] : ''
     const namespace = labels['k8s.kuma.io/namespace'] ?? ''
+    const name = labels['kuma.io/display-name'] ?? item.name
 
     return {
       ...item,
-      id: item.name,
+      id,
       kri: Kri.toString({ shortName: 'dp', mesh, zone, namespace, name }),
       mesh,
       labels,

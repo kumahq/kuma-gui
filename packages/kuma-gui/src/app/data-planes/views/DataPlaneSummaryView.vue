@@ -133,7 +133,7 @@
                     </th>
                     <td>
                       <XAction
-                        :href="t('common.label.href.kuma~io/zone', { name: item.zone })"
+                        :href="`kri://${Kri.toString({ shortName: 'z', name: item.zone })}`"
                       >
                         {{ item.zone }}
                       </XAction>
@@ -460,6 +460,7 @@
 import { DataplaneOverview } from '../data'
 import { sources } from '../sources'
 import { YAML } from '@/app/application'
+import { Kri } from '@/app/kuma'
 
 const props = defineProps<{
   items: DataplaneOverview[]

@@ -47,7 +47,7 @@
                 <dd>
                   <XAction
                     v-if="props.data.zone"
-                    :href="t('common.label.href.kuma~io/zone', { name: props.data.zone })"
+                    :href="`kri://${Kri.toString({ shortName: 'z', name: props.data.zone })}`"
                   >
                     <XBadge>{{ props.data.zone }}</XBadge>
                   </XAction>
@@ -174,7 +174,7 @@
                   <template #zone="{ row }">
                     <XAction
                       v-if="row.zone"
-                      :href="t('common.label.href.kuma~io/zone', { name: row.zone })"
+                      :href="`kri://${Kri.toString({ shortName: 'z', name: row.zone })}`"
                     >
                       {{ row.zone }}
                     </XAction>
