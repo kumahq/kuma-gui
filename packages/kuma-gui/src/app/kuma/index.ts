@@ -92,8 +92,7 @@ const protocolHandler = (can: Can, router: Router) => {
               return {
                 name: 'workload-detail-view',
                 params: {
-                  // @TODO: passthrough kri
-                  wl: Kri.toString({ shortName, mesh, zone, namespace, name }),
+                  wl: kri,
                 },
               }
             case shortName === '~hostport':

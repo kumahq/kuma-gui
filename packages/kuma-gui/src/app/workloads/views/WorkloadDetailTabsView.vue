@@ -3,13 +3,13 @@
     name="workload-detail-tabs-view"
     :params="{
       mesh: '',
-      kri: '',
+      wl: '',
     }"
     v-slot="{ route, t, uri }"
   >
     <DataSource
       :src="uri(sources, '/workloads/:kri', {
-        kri: route.params.kri,
+        kri: route.params.wl,
       })"
       v-slot="{ data, result }"
     >
