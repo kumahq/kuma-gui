@@ -3,7 +3,7 @@
     name="workload-config-view"
     :params="{
       mesh: '',
-      kri: '',
+      wl: '',
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
@@ -66,7 +66,7 @@
           <template v-else>
             <DataLoader
               :src="uri(sources, '/workloads/:kri/as/kubernetes', {
-                kri: route.params.kri,
+                kri: route.params.wl,
               })"
               v-slot="{ data: [k8sConfig] }"
             >

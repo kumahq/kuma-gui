@@ -3,14 +3,14 @@
     name="workload-summary-view"
     :params="{
       mesh: '',
-      kri: '',
+      wl: '',
       environment: String,
     }"
     v-slot="{ route, t, uri }"
   >
     <DataCollection
       :items="props.items"
-      :predicate="item => item.kri === route.params.kri"
+      :predicate="item => item.kri === route.params.wl"
     >
       <template #empty>
         <XEmptyState>
@@ -35,7 +35,7 @@
                 v-icon-start="'workload'"
               >
                 <XAction
-                  :href="`kri://${route.params.kri}`"
+                  :href="`kri://${route.params.wl}`"
                 >
                   <RouteTitle
                     :title="t('workloads.routes.item.title', { name: data.name })"
@@ -78,7 +78,7 @@
             <template v-else>
               <DataLoader
                 :src="uri(sources, '/workloads/:kri/as/kubernetes', {
-                  kri: route.params.kri,
+                  kri: route.params.wl,
                 })"
                 v-slot="{ data: [k8sYaml] }"
               >
