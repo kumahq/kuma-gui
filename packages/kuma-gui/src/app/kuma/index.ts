@@ -1,5 +1,6 @@
 import Kongponents from '@kong/kongponents'
 import { token, createInjections } from '@kumahq/container'
+import { waitFor } from '@kumahq/data'
 import X from '@kumahq/x'
 
 import { vars } from './env'
@@ -14,7 +15,7 @@ import KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import { RestClient } from '@/app/kuma/services/kuma-api/RestClient'
 import { useRouter } from '@/app/vue'
 import type { ServiceDefinition } from '@kumahq/container'
-import type { DataSourcePool , EventSource } from '@kumahq/data'
+import type { DataSourcePool } from '@kumahq/data'
 
 export * from './utils'
 export { Kri } from './kri'
@@ -205,34 +206,6 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
     }],
     [app.fetch, {
       service: (data: DataSourcePool) => {
-        const waitForEvent = async <T extends Event>(target: EventTarget, event: string, signal?: AbortController['signal']): Promise<T> => {
-          const res = new Promise<T>((resolve) => {
-            target.addEventListener(
-              event,
-              (e) => resolve(e as T),
-              {
-                once: true,
-                signal,
-              },
-            )
-          })
-          return res
-        }
-        
-        const waitFor = async <T extends EventSource>(source: T) => {
-          const controller = new AbortController()
-          const event = await Promise.race([
-            waitForEvent<MessageEvent>(source, 'message', controller.signal),
-            waitForEvent<ErrorEvent>(source, 'error', controller.signal),
-          ])
-          controller.abort()
-          if (event instanceof ErrorEvent) {
-            throw event.error
-          } else {
-            return event.data
-          }
-        }
-
         const fetch = async <T>(src: string): Promise<T> => {
           const sym = Symbol('')
           try {
