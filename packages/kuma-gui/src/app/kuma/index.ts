@@ -112,10 +112,7 @@ const protocolHandler = (can: Can, router: Router) => {
               return {
                 name: 'workload-detail-view',
                 params: {
-<<<<<<< HEAD
                   mesh,
-=======
->>>>>>> d1e6c99ea (keep using wl instead of kri in route params)
                   wl: kri,
                 },
               }
