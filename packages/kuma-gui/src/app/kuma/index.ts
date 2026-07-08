@@ -164,6 +164,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
           [X, {
             i18n,
             protocolHandler: protocolHandler(can),
+            routerElement: () => document.querySelector('.kuma-application'),
           }],
         ]
       },
