@@ -8,8 +8,8 @@
 
 .PHONY: build/preview
 build/preview: VITE ?= $(shell $(MAKE) resolve/bin BIN=vite)
-build/preview:
-	@$(VITE) \
+build/preview: ## Dev: Create preview build with mocks on by default
+	@KUMA_MOCK_API_ENABLED=true $(VITE) \
 			--configLoader runner \
 			-c ./vite.config.production.ts \
 			--mode preview \

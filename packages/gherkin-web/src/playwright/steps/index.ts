@@ -78,13 +78,6 @@ export async function setupSteps({
     selectors = {}
     localStorage = new Set()
     await context.unrouteAll()
-    await context.addCookies([
-      {
-        name: 'KUMA_MOCK_API_ENABLED',
-        value: 'false',
-        url: `${baseURL}`,
-      },
-    ])
     const p = Object.keys(fs).map(route => {
       return context.route(
         (u) => routeToRegexp(route).test(u.toString()),

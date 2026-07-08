@@ -52,7 +52,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => [
   [token('kuma.debug.env.vars'), {
     service: () => {
       return {
-        KUMA_MOCK_API_ENABLED: () => 'true',
+        KUMA_MOCK_API_ENABLED: () => import.meta.env.KUMA_MOCK_API_ENABLED ?? '',
       }
     },
     labels: [
