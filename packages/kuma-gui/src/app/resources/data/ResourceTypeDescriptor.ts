@@ -1,6 +1,6 @@
 import type { paths } from '@kumahq/kuma-http-api'
 
-export type KumaResourceTypeDescriptorCollection = paths['/_resources']['get']['responses']['200']['content']['application/json']
+type KumaResourceTypeDescriptorCollection = paths['/_resources']['get']['responses']['200']['content']['application/json']
 type KumaResourceTypeDescriptor = KumaResourceTypeDescriptorCollection['resources'][number]
 
 const resourceCategories = new Map<string, string[]>([

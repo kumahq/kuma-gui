@@ -1,11 +1,11 @@
 import createClient from 'openapi-fetch'
 
 import { MeshGateway } from './data'
-import { useFetch } from '../kuma'
+import { useDataSource } from '../kuma'
 import type { DataSourceResponse } from '@/app/application'
 import { defineSources } from '@/app/application'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
-import type { KumaResourceTypeDescriptorCollection } from '@/app/resources/data'
+import type { ResourceTypeDescriptorCollection } from '@/app/resources/data'
 import { Rule } from '@/app/rules/data'
 import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
 import type { paths } from '@kumahq/kuma-http-api'
@@ -75,8 +75,8 @@ export const sources = (api: KumaApi) => {
     },
 
     '/meshes/:mesh/mesh-gateways/:name/rules': async (params) => {
-      const fetch = useFetch()
-      const resources = await fetch<KumaResourceTypeDescriptorCollection>('/resource-type-descriptors')
+      const fetch = useDataSource()
+      const resources = await fetch<ResourceTypeDescriptorCollection>('/resource-type-descriptors')
       const res = await http.GET('/meshes/{mesh}/{resourceType}/{resourceName}/_rules', {
         params: {
           path: {

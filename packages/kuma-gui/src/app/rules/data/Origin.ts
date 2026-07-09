@@ -1,5 +1,5 @@
 import { Kri } from '@/app/kuma'
-import type { KumaResourceTypeDescriptorCollection } from '@/app/resources/data'
+import type { ResourceTypeDescriptorCollection } from '@/app/resources/data'
 import type { components } from '@kumahq/kuma-http-api'
 
 type ResourceRuleOrigin = components['schemas']['ResourceRuleOrigin']
@@ -7,7 +7,7 @@ type ResourceMeta = components['schemas']['Meta']
 type PartialOrigin = ResourceRuleOrigin | ResourceMeta
 
 export const Origin = {
-  fromObject(origin: PartialOrigin, resources: KumaResourceTypeDescriptorCollection) {
+  fromObject(origin: PartialOrigin, resources: ResourceTypeDescriptorCollection) {
     const hasResourceMeta = (o: PartialOrigin): o is ResourceRuleOrigin => 'resourceMeta' in o
     const {
       type = '',

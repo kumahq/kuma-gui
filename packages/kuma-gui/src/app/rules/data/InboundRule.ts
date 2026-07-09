@@ -1,5 +1,5 @@
 import { Origin } from './Origin'
-import type { KumaResourceTypeDescriptorCollection } from '@/app/resources/data'
+import type { ResourceTypeDescriptorCollection } from '@/app/resources/data'
 import type { components } from '@kumahq/kuma-http-api'
 
 
@@ -7,7 +7,7 @@ type PartialInboundRule = components['schemas']['InboundRule'] & { type: string,
 type Matcher = components['schemas']['RuleMatcher']
 
 export const InboundRule = {
-  fromObject(item: PartialInboundRule, resources: KumaResourceTypeDescriptorCollection) {
+  fromObject(item: PartialInboundRule, resources: ResourceTypeDescriptorCollection) {
     const { conf, origin, ...rest } = item
 
     return {

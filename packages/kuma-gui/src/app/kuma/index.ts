@@ -32,7 +32,7 @@ export const TOKENS = {
   httpClient: token<RestClient>('httpClient'),
   api: token<KumaApi>('KumaApi'),
   htmlVars: token('kuma.html.vars'),
-  fetch: token<<T>(src: string) => Promise<T>>('app.fetch'),
+  dataSource: token<<T>(src: string) => Promise<T>>('app.dataSource'),
 }
 function getConfig() {
   const pathConfigNode = document.querySelector('#kuma-config')
@@ -204,7 +204,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
         app.env,
       ],
     }],
-    [app.fetch, {
+    [app.dataSource, {
       service: (data: DataSourcePool) => {
         const fetch = async <T>(src: string): Promise<T> => {
           const sym = Symbol('')
@@ -264,8 +264,8 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
 }
 export const [
   useKumaApi,
-  useFetch,
+  useDataSource,
 ] = createInjections(
   TOKENS.api,
-  TOKENS.fetch,
+  TOKENS.dataSource,
 )

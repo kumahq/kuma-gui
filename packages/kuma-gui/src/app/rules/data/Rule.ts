@@ -1,14 +1,14 @@
 import { InboundRule } from './InboundRule'
 import { Origin } from './Origin'
 import { ResourceRule } from './ResourceRule'
-import type { KumaResourceTypeDescriptorCollection } from '@/app/resources/data'
+import type { ResourceTypeDescriptorCollection } from '@/app/resources/data'
 import type { components } from '@kumahq/kuma-http-api'
 
 type Entity = components['schemas']['Rule']
 type InspectRules = components['schemas']['InspectRules']
 
 export const Rule = {
-  fromObject(item: Entity, resources: KumaResourceTypeDescriptorCollection) {
+  fromObject(item: Entity, resources: ResourceTypeDescriptorCollection) {
     const { conf = {}, origin, ...rest } = item
     const rules = (Array.isArray(conf.rules) ? conf.rules : []).map((rule) => {
       const { backendRefs = [], filters = [] } = rule.default
@@ -37,7 +37,7 @@ export const Rule = {
       matchers: Array.isArray(item.matchers) ? item.matchers : [],
     }
   },
-  fromCollection(item: InspectRules, resources: KumaResourceTypeDescriptorCollection) {
+  fromCollection(item: InspectRules, resources: ResourceTypeDescriptorCollection) {
     const rules = Array.isArray(item.rules)
       ? item.rules.reduce((prev, item) => {
         // to rules we can just reshape.
