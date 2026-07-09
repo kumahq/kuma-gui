@@ -1,10 +1,10 @@
 import createClient from 'openapi-fetch'
 
 import { Resource, ResourceTypeDescriptor, type ResourceTypeDescriptorCollection } from './data'
+import { Kri, useDataSource } from '../kuma'
 import { defineSources } from '@/app/application'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import type { paths } from '@kumahq/kuma-http-api'
-import { Kri, useDataSource } from '../kuma'
 
 type DynamicPathGlobal = 'hostnamegenerators'
 type DynamicPathMesh = 'meshaccesslogs'
