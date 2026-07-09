@@ -13,7 +13,6 @@ import { routes } from './routes'
 import I18n from './services/i18n/I18n'
 import storage from './services/storage'
 import { difference } from '@/app/application/polyfills/Set.prototype.difference'
-import { services as kuma } from '@/app/kuma'
 import type { ServiceDefinition } from '@kumahq/container'
 import type { Component } from 'vue'
 import type { RouteRecordRaw } from 'vue-router'
@@ -282,7 +281,6 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
         app.sources,
       ],
     }],
-    ...kuma(app),
   ]
 }
 export const TOKENS = $

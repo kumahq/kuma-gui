@@ -12,7 +12,6 @@ import KumaTargetRef from '@/app/kuma/components/kuma-target-ref/KumaTargetRef.v
 import { ApiError } from '@/app/kuma/services/kuma-api/ApiError'
 import KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import { RestClient } from '@/app/kuma/services/kuma-api/RestClient'
-import { services as me } from '@/app/me'
 import { useRouter } from '@/app/vue'
 import type { ServiceDefinition } from '@kumahq/container'
 
@@ -155,7 +154,6 @@ const protocolHandler = (can: Can) => {
 }
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   return [
-    ...me(app),
     [token('kuma.plugins'), {
       service: (i18n, can) => {
         return [

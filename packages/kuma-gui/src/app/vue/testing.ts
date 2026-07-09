@@ -1,4 +1,3 @@
-import { defaultKumaHtmlVars as htmlVars } from '@kumahq/config/vite'
 import { config } from '@vue/test-utils'
 
 import type { PluginDefinition, ComponentDefinition } from '@/app/vue'
@@ -27,8 +26,5 @@ export const services: ServiceConfigurator = (app) => [
       app.components,
       app.plugins,
     ],
-  }],
-  [app.htmlVars, {
-    service: () => htmlVars,
   }],
 ]
