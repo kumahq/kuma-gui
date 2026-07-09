@@ -4,6 +4,7 @@ Feature: mesh / resources / item
     Given the CSS selectors
       | Alias              | Selector                                 |
       | config-universal   | [data-testid='codeblock-yaml-universal'] |
+      | title-bar          | .app-view-title-bar                      |
       | config-k8s         | [data-testid='codeblock-yaml-k8s']       |
       | select-environment | [data-testid='select-input']             |
       | about-section      | [data-testid='about-resource']           |
@@ -21,17 +22,17 @@ Feature: mesh / resources / item
           kuma.io/origin: zone
           foo: bar
       """
-    When I visit the "/meshes/default/resources/meshaccesslogs/<Kri>/overview" URL
+    When I visit the "/meshes/default/resources/<Path>/<Kri>/overview" URL
     Then the "$about-section" element exists
     And the "$about-section" element <Contains> "kuma-system"
-    And the "$about-section" element contains "zone-1"
+    And the "$title-bar" element contains "<Name>"
     And the "$about-section" element contains "kuma.io/origin:zone"
     And the "$about-section" element contains "foo:bar"
 
     Examples:
-      | Env        | Contains        | Namespace      | Path             | Name     |
-      | universal  | doesn't contain | !!js/undefined | circuit-breakers | policy-1 |
-      | kubernetes | contains        | kuma-system    | circuit-breakers | policy-1 |
+      | Env        | Contains        | Namespace      | Path             | Name     | Kri                                     |
+      | universal  | doesn't contain | !!js/undefined | circuit-breakers | policy-1 | kri_~circuitbreaker_default___policy-1_ |
+      | kubernetes | contains        | kuma-system    | circuit-breakers | policy-1 | kri_~circuitbreaker_default___policy-1_ |
 
   Rule: Offering different view formats
 
