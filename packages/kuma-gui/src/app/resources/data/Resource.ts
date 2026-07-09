@@ -119,7 +119,7 @@ export const Resource = {
       ...partialResource,
       config: partialResource,
       id: partialResource.name,
-      kri: Kri.isKriString(kri) ? kri : Kri.toString({ shortName: `~${partialResource.type?.toLowerCase()}`, mesh, zone, namespace, name }),
+      kri: Kri.isKriString(kri) ? kri : Kri.toString({ shortName: `~${partialResource.type?.toLowerCase()}`, mesh, zone, namespace, name: partialResource.name.split('.')[0] }),
       mesh,
       namespace,
       name,

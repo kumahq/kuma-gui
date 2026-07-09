@@ -1,5 +1,6 @@
 import Kongponents from '@kong/kongponents'
 import { token, createInjections } from '@kumahq/container'
+import { waitFor } from '@kumahq/data'
 import X from '@kumahq/x'
 
 import { vars } from './env'
@@ -14,6 +15,7 @@ import KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import { RestClient } from '@/app/kuma/services/kuma-api/RestClient'
 import { useRouter } from '@/app/vue'
 import type { ServiceDefinition } from '@kumahq/container'
+import type { DataSourcePool } from '@kumahq/data'
 
 export * from './utils'
 export { Kri } from './kri'
@@ -30,6 +32,7 @@ export const TOKENS = {
   httpClient: token<RestClient>('httpClient'),
   api: token<KumaApi>('KumaApi'),
   htmlVars: token('kuma.html.vars'),
+  dataSource: token<<T>(src: string) => Promise<T>>('app.dataSource'),
 }
 function getConfig() {
   const pathConfigNode = document.querySelector('#kuma-config')
@@ -202,6 +205,22 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       ],
     }],
 
+    [app.dataSource, {
+      service: (data: DataSourcePool) => {
+        const fetch = async <T>(src: string): Promise<T> => {
+          const sym = Symbol('')
+          try {
+            return waitFor(data.source(`${src}${src.includes('?') ? '&' : '?'}cacheControl=no-cache`, sym))
+          } finally {
+            data.close(src, sym)
+          }
+        }
+
+        return fetch
+      },
+      arguments: [app.dataSourcePool],
+    }],
+
     [token('kuma.locales'), {
       service: () => locales,
       labels: [
@@ -246,6 +265,8 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
 }
 export const [
   useKumaApi,
+  useDataSource,
 ] = createInjections(
   TOKENS.api,
+  TOKENS.dataSource,
 )
