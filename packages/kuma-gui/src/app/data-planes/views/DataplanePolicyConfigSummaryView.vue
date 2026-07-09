@@ -11,18 +11,19 @@
   >
     <DataSource
       :src="uri(policySources, '/policy-types', {})"
-      v-slot="{ data: policyTypesData }"
+      v-slot="{ data: sourcePolicyTypesData }"
     >
       <DataLoader
-        :data="[props.policies, policyTypesData]"
+        :data="[props.policies, sourcePolicyTypesData]"
+        v-slot="{ data: [policies, policyTypesData]}"
       >
         <DataCollection
-          :items="props.policies!"
-          :predicate="item => item.kind.toLocaleLowerCase() === route.params.policy"
+          :items="Object.entries(Object.groupBy(policies, ({ kind }) => kind ))"
+          :predicate="([item]) => item.toLocaleLowerCase() === route.params.policy"
           v-slot="{ items }"
         >
           <template
-            v-for="{ kind, conf, origins } of items"
+            v-for="[kind, configs] of items"
             :key="kind"
           >
             <AppView>
@@ -39,66 +40,71 @@
                 </XLayout>
               </template>
               <template
-                v-for="policyTypes in [Object.groupBy((policyTypesData?.policyTypes ?? []), ({ name }) => name)]"
-                :key="`${typeof policyTypes}`"
+                v-for="(config, index) in configs"
+                :key="index"
               >
-                <XTable
-                  v-if="origins.length > 0"
-                  variant="kv"
+                <template
+                  v-for="policyTypes in [Object.groupBy(policyTypesData.policyTypes, ({ name }) => name)]"
+                  :key="`${typeof policyTypes}`"
                 >
-                  <tr>
-                    <th scope="row">
-                      Origin policies
-                    </th>
-                    <td>
-                      <ul>
-                        <li
-                          v-for="origin in origins"
-                          :key="origin.kri"
-                        >
-                          <template
-                            v-for="kri in [Kri.fromString(origin.kri)]"
-                            :key="typeof kri"
+                  <XTable
+                    v-if="config.origins.length > 0"
+                    variant="kv"
+                  >
+                    <tr>
+                      <th scope="row">
+                        Origin policies
+                      </th>
+                      <td>
+                        <ul>
+                          <li
+                            v-for="origin in config.origins"
+                            :key="origin.kri"
                           >
-                            <XAction
-                              v-if="policyTypes[kind]"
-                              :to="{
-                                name: 'policy-detail-view',
-                                params: {
-                                  mesh: kri.mesh,
-                                  policyPath: policyTypes[kind]![0].path,
-                                  policy: kri.name,
-                                },
-                              }"
-                            >
-                              {{ origin.kri }}
-                            </XAction>
                             <template
-                              v-else
+                              v-for="kri in [Kri.fromString(origin.kri)]"
+                              :key="typeof kri"
                             >
-                              {{ origin.kri }}
+                              <XAction
+                                v-if="policyTypes[kind]"
+                                :to="{
+                                  name: 'policy-detail-view',
+                                  params: {
+                                    mesh: kri.mesh,
+                                    policyPath: policyTypes[kind]![0].path,
+                                    policy: kri.name,
+                                  },
+                                }"
+                              >
+                                {{ origin.kri }}
+                              </XAction>
+                              <template
+                                v-else
+                              >
+                                {{ origin.kri }}
+                              </template>
                             </template>
-                          </template>
-                        </li>
-                      </ul>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td colspan="2">
-                      <XLayout
-                        variant="y-stack"
-                        size="small"
-                      >
-                        <span>Config</span>
-                        <XCodeBlock
-                          :code="YAML.stringify(conf)"
-                          language="yaml"
-                          :show-copy-button="false"
-                        />
-                      </XLayout>
-                    </td>
-                  </tr>
-                </XTable>
+                          </li>
+                        </ul>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td colspan="2">
+                        <XLayout
+                          variant="y-stack"
+                          size="small"
+                        >
+                          <span>Config</span>
+                          <XCodeBlock
+                            :code="YAML.stringify(config.conf)"
+                            language="yaml"
+                            :show-copy-button="false"
+                          />
+                        </XLayout>
+                      </td>
+                    </tr>
+                  </XTable>
+                </template>
               </template>
             </AppView>
           </template>
