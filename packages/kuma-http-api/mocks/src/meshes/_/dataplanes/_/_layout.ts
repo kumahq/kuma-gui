@@ -43,8 +43,26 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
   }))
   const zone = fake.word.noun()
 
+  const meshServiceMode = env('KUMA_MESHSERVICE_MODE', 'Everywhere')
+
+  if(meshServiceMode !== 'Exclusive') {
+    return {
+      headers: {
+        'Status-Code': '400',
+      },
+      body: {
+        'type': '/std-errors',
+        'status': 400,
+        'title': 'Bad Request',
+        'detail': 'bad request: can\'t use _layout endpoint without meshService enabled',
+        'details': 'bad request: can\'t use _layout endpoint without meshService enabled',
+      },
+    }
+  }
+
   return {
     headers: {
+      'Status-Code': '200',
       ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
     },
     body: {
