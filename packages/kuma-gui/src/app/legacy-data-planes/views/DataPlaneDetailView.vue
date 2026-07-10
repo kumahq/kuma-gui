@@ -20,11 +20,11 @@
       v-slot="{ data: traffic, error, refresh }"
     >
       <DataSource
-        :src="uri(sources, '/meshes/:mesh/dataplanes/:name/layout', {
+        :src="props.mesh.meshServices.mode === 'Exclusive' ? uri(sources, '/meshes/:mesh/dataplanes/:name/layout', {
           mesh: route.params.mesh,
           name: route.params.proxy,
-        })"
-        v-slot="{ data: sourceDataplaneLayout }"
+        }) : ''"
+        v-slot="{ data: sourceDataplaneLayout }: DataSourceResponse<DataplaneNetworkingLayout>"
       >
         <AppView
           :notifications="true"
@@ -412,6 +412,7 @@
                             </XLayout>
                           </dd>
                         </div>
+
                         <div
                           v-if="typeof sourceDataplaneLayout !== 'undefined' && sourceDataplaneLayout?.spiffeId?.length > 0"
                         >
@@ -882,11 +883,12 @@ import ConnectionCard from '@/app/connections/components/connection-traffic/Conn
 import ConnectionGroup from '@/app/connections/components/connection-traffic/ConnectionGroup.vue'
 import ConnectionTraffic from '@/app/connections/components/connection-traffic/ConnectionTraffic.vue'
 import { sources as connectionSources } from '@/app/connections/sources'
-import type { DataplaneOverview, DataplaneInbound } from '@/app/data-planes/data'
+import type { DataplaneOverview, DataplaneInbound, DataplaneNetworkingLayout } from '@/app/data-planes/data'
 import { sources } from '@/app/data-planes/sources'
 import { Kri } from '@/app/kuma'
 import type { Mesh } from '@/app/meshes/data'
 import { useRoute } from '@/app/vue'
+import type { DataSourceResponse } from '@kumahq/data'
 
 const _route = useRoute()
 
