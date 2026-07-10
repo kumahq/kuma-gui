@@ -1,7 +1,7 @@
 import { compile } from 'path-to-regexp'
 
 import CallableEventSource from './CallableEventSource'
-import type { Creator, Destroyer, EventSource } from './DataSourcePool'
+import type { Creator, Destroyer } from './DataSourcePool'
 export { default as DataSourcePool } from './DataSourcePool'
 
 // reusable Type Utility for easy to use Types within Vue templates
@@ -170,31 +170,3 @@ export const destroy: Destroyer = (_src, source) => {
 }
 
 export class ValidationError extends Error {}
-
-const waitForEvent = async <T extends Event>(target: EventTarget, event: string, signal?: AbortController['signal']): Promise<T> => {
-  const res = new Promise<T>((resolve) => {
-    target.addEventListener(
-      event,
-      (e) => resolve(e as T),
-      {
-        once: true,
-        signal,
-      },
-    )
-  })
-  return res
-}
-           
-export const waitFor = async <T extends EventSource>(source: T) => {
-  const controller = new AbortController()
-  const event = await Promise.race([
-    waitForEvent<MessageEvent>(source, 'message', controller.signal),
-    waitForEvent<ErrorEvent>(source, 'error', controller.signal),
-  ])
-  controller.abort()
-  if (event instanceof ErrorEvent) {
-    throw event.error
-  } else {
-    return event.data
-  }
-}

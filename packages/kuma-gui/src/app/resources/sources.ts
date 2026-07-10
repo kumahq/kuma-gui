@@ -1,7 +1,6 @@
 import createClient from 'openapi-fetch'
 
-import { Resource, ResourceTypeDescriptor, type ResourceTypeDescriptorCollection } from './data'
-import { Kri, useDataSource } from '../kuma'
+import { Resource, ResourceTypeDescriptor } from './data'
 import { defineSources } from '@/app/application'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import type { paths } from '@kumahq/kuma-http-api'
@@ -67,23 +66,10 @@ export const sources = (api: KumaApi) => {
     },
 
     '/resource/:kri': async (params) => {
-      const { kri } = params
-      const { shortName, mesh, name } = Kri.fromString(kri)
-
-      if(shortName.startsWith('~')) {
-        const fetch = useDataSource()
-        const resources = await fetch<ResourceTypeDescriptorCollection>('/resource-type-descriptors')
-        const path = resources.resources.find((resource) => shortName.includes(resource.name.toLowerCase()))?.path
-        if(mesh.length > 0) {
-          return await fetch<ReturnType<typeof Resource.fromObject>>(`/resource/${path}/${name}/for/${mesh}`)
-        }
-        return await fetch<ReturnType<typeof Resource.fromObject>>(`/resource/${path}/${name}`)
-      }
-
       const response = await http.GET('/_kri/{kri}', {
         params: {
           path: {
-            kri,
+            kri: params.kri,
           },
         },
       })
@@ -92,19 +78,6 @@ export const sources = (api: KumaApi) => {
     },
 
     '/resource/:kri/as/kubernetes': async (params) => {
-      const { kri } = params
-      const { shortName, mesh, name } = Kri.fromString(kri)
-
-      if(shortName.startsWith('~')) {
-        const fetch = useDataSource()
-        const resources = await fetch<ResourceTypeDescriptorCollection>('/resource-type-descriptors')
-        const path = resources.resources.find((resource) => shortName.includes(resource.name.toLowerCase()))?.path
-        if(mesh.length > 0) {
-          return await fetch<unknown>(`/resource/${path}/${name}/for/${mesh}/as/kubernetes`)
-        }
-        return await fetch<unknown>(`/resource/${path}/${name}/as/kubernetes`)
-      }
-
       const response = await http.GET('/_kri/{kri}', {
         params: {
           path: {
@@ -117,68 +90,6 @@ export const sources = (api: KumaApi) => {
         },
       })
 
-      return response.data!
-    },
-
-    '/resource/:path/:name': async (params) => {
-      const { path, name } = params
-
-      const response = await http.GET(`/${path as DynamicPathGlobal}/{name}`, {
-        params: {
-          path: {
-            name,
-          },
-        },
-      })
-      return Resource.fromObject(response.data!)
-    },
-
-    '/resource/:path/:name/for/:mesh': async (params) => {
-      const { mesh, path, name } = params
-      
-      const response = await http.GET(`/meshes/{mesh}/${path as DynamicPathMesh}/{name}`, {
-        params: {
-          path: {
-            mesh,
-            name,
-          },
-        },
-      })
-      return Resource.fromObject(response.data!)
-    },
-
-    '/resource/:path/:name/as/kubernetes': async (params) => {
-      const { path, name } = params
-
-      const response = await http.GET(`/${path as DynamicPathGlobal}/{name}`, {
-        params: {
-          path: {
-            name,
-          },
-          // @ts-expect-error - query parameter not listed in OAS
-          query: {
-            format: 'kubernetes',
-          },
-        },
-      })
-      return response.data!
-    },
-
-    '/resource/:path/:name/for/:mesh/as/kubernetes': async (params) => {
-      const { mesh, path, name } = params
-      
-      const response = await http.GET(`/meshes/{mesh}/${path as DynamicPathMesh}/{name}`, {
-        params: {
-          path: {
-            mesh,
-            name,
-          },
-          // @ts-expect-error - query parameter not listed in OAS
-          query: {
-            format: 'kubernetes',
-          },
-        },
-      })
       return response.data!
     },
   })

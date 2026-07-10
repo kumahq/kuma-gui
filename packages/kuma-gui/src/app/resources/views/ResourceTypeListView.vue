@@ -75,10 +75,8 @@
                   >
                     <XLayout
                       v-for="filtered in [resources.resources.filter((item) =>
-                        (route.params.category === 'all' || item.categories.includes(route.params.category)) &&
-                        (!item.policy || item.policy?.isTargetRef || hasLegacyPolicies) &&
-                        (item.name !== 'ExternalService' || meshInsight.services.external > 0)),
-                      ]"
+                        (route.params.category === 'all' || item.categories.includes(route.params.category)) && item.shortName.length > 0,
+                      )]"
                       :key="typeof filtered"
                       variant="y-stack"
                     >
