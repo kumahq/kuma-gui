@@ -15,10 +15,10 @@
     >
       <DataLoader
         :data="[props.policies, sourcePolicyTypesData]"
-        v-slot="{ data: [policies, policyTypesData]}"
+        v-slot="{ data: [policiesData, policyTypesData]}"
       >
         <DataCollection
-          :items="Object.entries(Object.groupBy(policies, ({ kind }) => kind ))"
+          :items="Object.entries(Object.groupBy(policiesData, ({ kind }) => kind ))"
           :predicate="([item]) => item.toLocaleLowerCase() === route.params.policy"
           v-slot="{ items }"
         >
