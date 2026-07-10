@@ -38,6 +38,11 @@ Install the project’s dependencies.
 make install
 ```
 
+> [!NOTE]
+> `make install` will also run every time you run `make run`, so you generally
+> don't need to use `make install`.
+
+
 ## Starting the development server
 
 Start a development server (runs on [localhost:8080](http://localhost:8080/) by
@@ -47,8 +52,8 @@ default):
 make run
 ```
 
-The default development mode uses [msw](https://mswjs.io/) with custom mock
-data so you don’t have to run anything else to start exploring.
+The default development mode uses a local vite based server with custom mock
+data so you don't have to run anything else to start exploring.
 
 Alternatively, make the development mode use a real Kuma installation running
 at <http://localhost:5681>.
@@ -59,17 +64,28 @@ at <http://localhost:5681>.
 > [github.com/kumahq/kuma](https://github.com/kumahq/kuma/) to find out how to do
 > that.
 >
+> In order to allow you locally running GUI (on port 8080) to use the real Kuma
+> HTTP API (on port 5681) you should use `KUMA_API_SERVER_CORS_ALLOWED_DOMAINS`
+> when starting the Kuma Control Plane.
+>
 > You can confirm Kuma is running by accessing its API:
 >
 > ```sh
 > curl http://localhost:5681/
 > ```
 
-Once installed you can make the development server/GUI use Kuma by adding a
-`KUMA_MOCK_API_ENABLED=false` cookie to your browser. You can do this my using
-the browser's Application/Cookies settings in Web Inspector, or by clicking
-<http://localhost:8080/gui/#KUMA_MOCK_API_ENABLED=false> (and set it back again
-by clicking <http://localhost:8080/gui/#KUMA_MOCK_API_ENABLED=true>)
+Once Kuma is running you can make the development server/GUI use Kuma by adding
+a `KUMA_API_URL=http://localhost:5681` cookie to your browser. You can do this
+by using the browser's Application/Cookies settings in Web Inspector. We also
+provide bookmarklets to let you toggle this easily.
+
+If the development GUI cannot contact Kuma's HTTP API, please check Kuma's
+`KUMA_API_SERVER_CORS_ALLOWED_DOMAINS` setting.
+
+> [!NOTE]
+> We generate a full static preview for every PR. These are fully static and
+> therefore cannot use a local (or remote) vite server to serve the HTTP API
+> mocks. Instead, only on PR previews, we use MSW to serve the very same mocks.
 
 ### Disabling anonymous reports in Kuma
 
@@ -87,8 +103,8 @@ echo "export KUMA_REPORTS_ENABLED=false" >> ~/.profile
 make build
 ```
 
-> [!TIP]
-> NOTE In production environments, the GUI application is typically served at
+> [!NOTE]
+> In production environments, the GUI application is typically served at
 > [localhost:5681/gui/](http://localhost:5681/gui/).
 
 ## Run unit tests
@@ -108,28 +124,26 @@ make run
 Run the browser test UI in another terminal window:
 
 ```sh
-KUMA_BASE_URL=http://localhost:8080/gui KUMA_TEST_BROWSER=chrome make
-test/e2e
+KUMA_TEST_BROWSER=chrome make test/e2e
 ```
 
-The above environment variables:
-
-1. Point the e2e tests to use the locally running GUI on localhost:8080
-2. Tell the e2e tests to open and run in Chrome
+The above environment variable tells the e2e tests to open and run in Chrome.
 
 > [!TIP]
-> NOTE If you are running tests often you should consider adding these
+> If you are running tests often you should consider adding these
 > environment variables to your shell profile:
 >
 > ```sh
-> export KUMA_BASE_URL=http://localhost:8080/gui export
-> KUMA_TEST_BROWSER=chrome make test/e2e
+> export KUMA_TEST_BROWSER=chrome
 > ```
 >
 > You can then just run:
 >
 > ```sh
-> make run make test/e2e
+> # in one terminal
+> make run
+> # in another terminal
+> make test/e2e
 > ```
 >
 
