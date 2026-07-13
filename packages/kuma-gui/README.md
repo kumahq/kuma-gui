@@ -64,7 +64,7 @@ at <http://localhost:5681>.
 > [github.com/kumahq/kuma](https://github.com/kumahq/kuma/) to find out how to do
 > that.
 >
-> In order to allow you locally running GUI (on port 8080) to use the real Kuma
+> In order to allow your locally running GUI (on port 8080) to use the real Kuma
 > HTTP API (on port 5681) you should use `KUMA_API_SERVER_CORS_ALLOWED_DOMAINS`
 > when starting the Kuma Control Plane.
 >
