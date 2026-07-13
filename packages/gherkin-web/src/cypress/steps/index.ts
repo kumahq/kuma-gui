@@ -120,9 +120,6 @@ export async function setupSteps<TMock extends BaseMock>({ mock, client = getCli
   // act
 
   When('I visit the {string} URL', function (path: string) {
-    // turn off MSW in dev environments so we can use cy.intercept
-    cy.setCookie('KUMA_MOCK_API_ENABLED', 'false')
-    //
     cy.getAllCookies().then((cookies) => {
       cy.visit(`${path}`)
       const sel = client.waitForVisit(`${path}`, cookies, cy)
