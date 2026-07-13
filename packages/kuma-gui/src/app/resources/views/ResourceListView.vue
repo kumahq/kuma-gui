@@ -13,7 +13,7 @@
   >
     <DataCollection
       :predicate="(resourceType) => typeof resourceType !== 'undefined' && resourceType.path === route.params.resourcePath"
-      :items="props.resourceTypes?.resources ?? []"
+      :items="(props.resourceTypes?.resources ?? []).filter((item) => item.shortName.length > 0)"
     >
       <template #empty>
         <XCard>
