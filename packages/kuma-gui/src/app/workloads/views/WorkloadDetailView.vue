@@ -19,80 +19,79 @@
       <XCard
         data-testid="about-workload"
       >
-        <XTimespan
-          :start="typeof props.data !== 'undefined' && !(props.data instanceof Error) ? props.data.creationTime : undefined"
-          :end="typeof props.data !== 'undefined' && !(props.data instanceof Error) ? props.data.modificationTime : undefined"
-        />
         <template #title>
           {{ t('workloads.routes.item.about.title') }}
         </template>
         <DataLoader
           :data="[props.data]"
+          v-slot="{ data: [workload] }"
         >
-          <template v-if="typeof props.data !== 'undefined' && !(props.data instanceof Error)">
-            <XDl>
-              <div>
-                <dt>{{ t('http.api.property.status') }}</dt>
-                <dd>
-                  <XBadge
-                    :appearance="t(`common.status.appearance.${props.data.status.state}`, undefined, { defaultMessage: 'neutral' })"
-                  >
-                    {{ t(`http.api.value.${props.data.status.state}`) }}
-                  </XBadge>
-                </dd>
-              </div>
+          <XTimespan
+            :start="workload.creationTime"
+            :end="workload.modificationTime"
+          />
+          <XDl>
+            <div>
+              <dt>{{ t('http.api.property.status') }}</dt>
+              <dd>
+                <XBadge
+                  :appearance="t(`common.status.appearance.${workload.status.state}`, undefined, { defaultMessage: 'neutral' })"
+                >
+                  {{ t(`http.api.value.${workload.status.state}`) }}
+                </XBadge>
+              </dd>
+            </div>
 
-              <div v-if="can('use zones') && props.data.zone.length">
-                <dt>{{ t('http.api.property.zone') }}</dt>
-                <dd>
+            <div v-if="can('use zones') && workload.zone.length">
+              <dt>{{ t('http.api.property.zone') }}</dt>
+              <dd>
+                <XAction
+                  v-if="workload.zone"
+                  :to="{
+                    name: 'zone-cp-detail-view',
+                    params: {
+                      zone: workload.zone,
+                    },
+                  }"
+                >
+                  <XBadge>{{ workload.zone }}</XBadge>
+                </XAction>
+              </dd>
+            </div>
+
+            <div v-if="workload.namespace.length">
+              <dt>{{ t('http.api.property.namespace') }}</dt>
+              <dd>
+                <XBadge>{{ workload.namespace }}</XBadge>
+              </dd>
+            </div>
+
+            <div v-if="Object.keys(workload.labels).length > 0">
+              <dt>{{ t('workloads.routes.item.about.labels') }}</dt>
+              <dd>
+                <XLayout
+                  variant="separated"
+                >
                   <XAction
-                    v-if="props.data.zone"
-                    :to="{
-                      name: 'zone-cp-detail-view',
-                      params: {
-                        zone: props.data.zone,
-                      },
-                    }"
+                    v-for="(value, key) in workload.labels"
+                    :key="key"
+                    :href="t(`common.label.href.${key.replaceAll('.', '~')}`, {
+                      mesh: workload.mesh,
+                      zone: workload.zone,
+                      namespace: workload.namespace,
+                      name: value,
+                    }, { defaultMessage: '' })"
                   >
-                    <XBadge>{{ props.data.zone }}</XBadge>
-                  </XAction>
-                </dd>
-              </div>
-
-              <div v-if="props.data.namespace.length">
-                <dt>{{ t('http.api.property.namespace') }}</dt>
-                <dd>
-                  <XBadge>{{ props.data.namespace }}</XBadge>
-                </dd>
-              </div>
-
-              <div v-if="Object.keys(props.data.labels).length > 0">
-                <dt>{{ t('workloads.routes.item.about.labels') }}</dt>
-                <dd>
-                  <XLayout
-                    variant="separated"
-                  >
-                    <XAction
-                      v-for="(value, key) in props.data.labels"
-                      :key="key"
-                      :href="t(`common.label.href.${key.replaceAll('.', '~')}`, {
-                        mesh: props.data.mesh,
-                        zone: props.data.zone,
-                        namespace: props.data.namespace,
-                        name: value,
-                      }, { defaultMessage: '' })"
+                    <XBadge
+                      :variant="r('kuma.label').test(key) ? 'reserved-kv' : 'kv'"
                     >
-                      <XBadge
-                        :variant="r('kuma.label').test(key) ? 'reserved-kv' : 'kv'"
-                      >
-                        {{ key }}:<strong>{{ value }}</strong>
-                      </XBadge>
-                    </XAction>
-                  </XLayout>
-                </dd>
-              </div>
-            </XDl>
-          </template>
+                      {{ key }}:<strong>{{ value }}</strong>
+                    </XBadge>
+                  </XAction>
+                </XLayout>
+              </dd>
+            </div>
+          </XDl>
         </DataLoader>
       </XCard>
 
