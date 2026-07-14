@@ -42,9 +42,6 @@
       width="10"
       height="2"
     />
-    <KSkeletonBox
-      width="5"
-    />
   </XLayout>
 </template>
 <script lang="ts" setup>
