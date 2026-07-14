@@ -2,7 +2,7 @@
   <slot name="default" />
 </template>
 <script lang="ts">
- 
+
 import SharedPool from '../../utilities/SharedPool'
 import type { Router } from 'vue-router'
 
@@ -20,6 +20,12 @@ const findAnchor = (target: HTMLElement) => {
   }
   // anything else we do nothing special
   return null
+}
+
+const push = (href: string, router: Router) => {
+  const base = router.options.history.base
+  const h = href.startsWith(base) ? href.substring(base.length) : href
+  router.push(h.length > 0 ? h : '/')
 }
 const createListener = (router: Router) => {
   return (e: PointerEvent) => {
@@ -53,8 +59,7 @@ const createListener = (router: Router) => {
 
       if(href.length > 0) {
         e.preventDefault()
-        const base = router.options.history.base
-        router.push(href.startsWith(base) ? href.substring(base.length) : href)
+        return push(href, router)
       }
     }
   }
@@ -64,6 +69,7 @@ type Key = {
   router: Router
   element: HTMLElement
 }
+const keys = new WeakMap<HTMLElement, Key>()
 const pool = new SharedPool<Key, (e: PointerEvent) => void>((state, key, item) => {
   switch (state) {
     case 'creating': {
@@ -76,12 +82,12 @@ const pool = new SharedPool<Key, (e: PointerEvent) => void>((state, key, item) =
     case 'releasing':
       return item
     case 'destroying':
+      keys.delete(key.element)
       key.element.removeEventListener('click', item)
       return item
   }
 })
 
-const keys = new WeakMap<HTMLElement, Key>()
 </script>
 <script lang="ts" setup>
 // eslint-disable-next-line import/order
@@ -96,18 +102,26 @@ const router = useRouter()
 // keep a track of unique element => router/element pairs
 const key = () => {
   const element = useRouterElement()
-  const key = keys.get(element) ?? {
-    router,
-    element,
+  if(element !== null) {
+    const key = keys.get(element) ?? {
+      router,
+      element,
+    }
+    keys.set(element, key)
+    return key
   }
-  keys.set(element, key)
-  return key
 }
 const sym = Symbol('x-router')
 onMounted(() => {
-  pool.acquire(key(), sym)
+  const k = key()
+  if(k) {
+    pool.acquire(k, sym)
+  }
 })
 onBeforeUnmount(() => {
-  pool.release(key(), sym)
+  const k = key()
+  if(k) {
+    pool.release(k, sym)
+  }
 })
 </script>
