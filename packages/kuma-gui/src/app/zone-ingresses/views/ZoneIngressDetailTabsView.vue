@@ -59,11 +59,6 @@
                   :title="t('zone-ingresses.routes.item.title', { name: zoneIngress.name })"
                 />
               </h1>
-              <XBadge
-                :appearance="t(`common.status.appearance.${zoneIngress.state}`, undefined, { defaultMessage: 'neutral' })"
-              >
-                {{ t(`http.api.value.${zoneIngress.state}`) }}
-              </XBadge>
             </XLayout>
           </DataLoader>
         </template>
