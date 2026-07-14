@@ -10,7 +10,7 @@ export default ({ fake, env, pager }: Dependencies): ResponseHandler => (req) =>
   const { offset, total, next, pageTotal } = pager(
     env('KUMA_MESHIDENTITY_COUNT', `${fake.number.int({ min: 1, max: 3 })}`),
     req,
-    `/meshes/${req.params.mesh}/meshidens`,
+    `/meshes/${req.params.mesh}/meshidentities`,
   )
 
   return {
