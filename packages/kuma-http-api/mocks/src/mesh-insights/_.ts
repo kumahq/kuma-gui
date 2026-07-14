@@ -4,10 +4,13 @@ type MeshInsightResponse = paths['/mesh-insights/{name}']['get']['responses']['2
 
 export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
   const params = req.params
+  const mesh = String(params.mesh)
 
   const resourceCount = parseInt(env('KUMA_ACTIVE_RESOURCE_COUNT', `${Number.MAX_SAFE_INTEGER}`))
   const serviceTotal = parseInt(env('KUMA_SERVICE_COUNT', `${fake.number.int({ min: 1, max: 30 })}`))
   const max = env('KUMA_DATAPLANE_COUNT', '30') === '0' ? 0 : 30
+  const isMtlsEnabled = env('KUMA_MTLS_ENABLED', `${fake.datatype.boolean()}`) === 'true'
+  const meshIdentityCount = parseInt(env('KUMA_MESHIDENTITY_COUNT', `${fake.number.int({ min: 1, max: 3 })}`))
 
   // split the count into types
   const { standardTotal, gatewayBuiltinTotal, gatewayDelegatedTotal } = fake.kuma.partitionInto({
@@ -63,7 +66,7 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
     },
     body: {
       type: 'MeshInsight',
-      name: String(params.mesh),
+      name: mesh,
       creationTime: '2021-01-29T07:10:02.339031+01:00',
       modificationTime: '2021-01-29T07:29:02.314448+01:00',
       lastSync: '2021-01-29T06:29:02.314447Z',
@@ -105,26 +108,39 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
           }, {}),
         },
       },
-      mTLS: {
-        issuedBackends: {
-          ...['ca-2', 'ca-1'].reduce((prev: Record<string, { total: number, online?: number }>, item) => {
-            prev[item] = {
-              total: fake.number.int(10),
-            }
-            prev[item].online = fake.number.int(prev[item].total)
-            return prev
-          }, {}),
-        },
-        supportedBackends: {
-          ...['ca-2', 'ca-1'].reduce((prev: Record<string, { total: number, online?: number }>, item) => {
-            prev[item] = {
-              total: fake.number.int(10),
-            }
-            prev[item].online = fake.number.int(prev[item].total)
-            return prev
-          }, {}),
-        },
-      },
+      mTLS: (() => {
+        if(!isMtlsEnabled) return {}
+
+        // Each mesh-identity has a corresponding mesh-trust sharing the same
+        // kri sections (mesh, zone, namespace, name) — only the shortName differs.
+        const mtlsMidBackends = Array.from({ length: meshIdentityCount }, (_, j) => ({
+          mesh,
+          zone: fake.helpers.arrayElement(['', fake.word.noun()]),
+          namespace: fake.helpers.arrayElement(['', fake.word.noun()]),
+          displayName: fake.word.noun(),
+        }))
+        const mtlsBackends = fake.helpers.arrayElements(['ca-1', 'ca-2', 'ca-3'])
+        const dpStats = () => {
+          const { total, online } = fake.kuma.partitionInto({ total: dpTotal, online: Number, offline: Number }, dpTotal)
+          return {
+            total,
+            online,
+          }
+        }
+
+        return {
+          issuedBackends: Object.fromEntries(
+            mtlsMidBackends.length > 0 ?
+              mtlsMidBackends.map((sections) => [fake.kuma.kri({ resourceName: 'MeshIdentity', ...sections, sectionName: '' }), dpStats()]) :
+              mtlsBackends.map((backend) => [backend, dpStats()]),
+          ),
+          supportedBackends: Object.fromEntries(
+            mtlsMidBackends.length > 0 ?
+              mtlsMidBackends.map((sections) => [fake.kuma.kri({ resourceName: 'MeshTrust', ...sections, sectionName: '' }), dpStats()]) :
+              mtlsBackends.map((backend) => [backend, dpStats()]),
+          ),
+        }
+      })(),
       services: {
         total: serviceTotal,
         ...fake.kuma.partitionInto({
