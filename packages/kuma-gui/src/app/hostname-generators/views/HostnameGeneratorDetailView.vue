@@ -84,12 +84,7 @@
                       </dt>
                       <dd>
                         <XAction
-                          :to="{
-                            name: 'zone-cp-detail-view',
-                            params: {
-                              zone: data.zone,
-                            },
-                          }"
+                          :href="`kri://${Kri.toString({ shortName: 'z', name: data.zone })}`"
                         >
                           <XBadge>
                             {{ data.zone }}
@@ -244,4 +239,5 @@
 <script lang="ts" setup>
 import { sources } from '../sources'
 import { YAML } from '@/app/application'
+import { Kri } from '@/app/kuma'
 </script>

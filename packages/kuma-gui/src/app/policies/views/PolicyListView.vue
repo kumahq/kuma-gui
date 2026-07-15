@@ -192,12 +192,7 @@
                       <template #zone="{ row }">
                         <template v-if="row.zone">
                           <XAction
-                            :to="{
-                              name: 'zone-cp-detail-view',
-                              params: {
-                                zone: row.zone,
-                              },
-                            }"
+                            :href="`kri://${Kri.toString({ shortName: 'z', name: row.zone })}`"
                           >
                             {{ row.zone }}
                           </XAction>
@@ -272,6 +267,7 @@ import type { PolicyResourceType } from '../data'
 import { sources } from '../sources'
 import { useDataEmptyState } from '@/app/application'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
+import { Kri } from '@/app/kuma'
 const props = defineProps<{
   policyTypes?: PolicyResourceType[]
 }>()

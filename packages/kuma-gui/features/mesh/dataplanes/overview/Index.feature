@@ -10,10 +10,18 @@ Feature: mesh / dataplanes / item / overview
       KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: true
       KUMA_MESHSERVICE_MODE: Exclusive
       """
-    And the URL "/meshes/default/dataplanes/dataplane-1/_overview" responds with
+    And the URL "/_kri/kri_dp_default_zone-1_kuma-demo_dataplane-1_" responds with
       """
       body:
-        name: dataplane-1
+        name: dataplane-1.kuma-demo
+        kri: kri_dp_default_zone-1_kuma-demo_dataplane-1_
+        labels:
+          kuma.io/display-name: dataplane-1
+      """
+    And the URL "/meshes/default/dataplanes/dataplane-1.kuma-demo/_overview" responds with
+      """
+      body:
+        name: dataplane-1.kuma-demo
         kri: kri_dp_default_zone-1_kuma-demo_dataplane-1_
         mesh: default
         labels:
@@ -31,7 +39,7 @@ Feature: mesh / dataplanes / item / overview
       """
 
   Scenario: The about section has the expected content
-    When I visit the "/meshes/default/data-planes/dataplane-1/overview" URL
+    When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_dataplane-1_/overview" URL
     Then the "$about-section" element exists
     And the "$about-section" element contains "zone-1"
     And the "$about-section" element contains "kuma.io/origin:zone"

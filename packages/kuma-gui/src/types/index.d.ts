@@ -341,6 +341,7 @@ export interface LabelValue {
 export interface Entity {
   type: string
   name: string
+  kri?: string
   creationTime?: string
   modificationTime?: string
 }

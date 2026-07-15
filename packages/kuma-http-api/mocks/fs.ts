@@ -12,6 +12,7 @@ import _998 from './src/_kri/kri_msvc__.ts'
 import _990 from './src/_kri/kri_mtrust__.ts'
 import _991 from './src/_kri/kri_mzsvc__.ts'
 import _987 from './src/_kri/kri_wl__.ts'
+import _984 from './src/_kri/kri_z__.ts'
 import _989 from './src/_kri/kri_ze__.ts'
 import _988 from './src/_kri/kri_zi__.ts'
 import _3 from './src/_resources'
@@ -284,6 +285,8 @@ export const fs = {
   '/_kri/kri_mal_:kri': _986,
   // HostnameGenerator
   '/_kri/kri_hg_:kri': _985,
+  // Zone
+  '/_kri/kri_z_:kri': _984,
   // generic kri -> catches anything that is not matched above
   '/_kri/:kri': _999,
 }

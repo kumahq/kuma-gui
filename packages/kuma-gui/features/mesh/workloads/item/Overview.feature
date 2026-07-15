@@ -36,6 +36,7 @@ Feature: mesh / workloads / item / overview
       body:
         items:
           - name: workload-1-dataplane
+            kri: kri_dp_default___workload-1-dataplane_
             labels:
               kuma.io/display-name: workload-1-dataplane
             mesh: default
@@ -72,10 +73,12 @@ Feature: mesh / workloads / item / overview
       body:
         items:
           - name: workload-1-dataplane-1
+            kri: kri_dp_default___workload-1-dataplane-1_
             labels:
               kuma.io/display-name: workload-1-dataplane-1
             mesh: default
           - name: workload-1-dataplane-2
+            kri: kri_dp_default___workload-1-dataplane-2_
             labels:
               kuma.io/display-name: workload-1-dataplane-2
             mesh: default
@@ -90,7 +93,7 @@ Feature: mesh / workloads / item / overview
     When I visit the "/meshes/default/workloads/kri_wl_default_z1_ns1_workload-1_/overview" URL
     Then the "$dataplane-table" element exists
     And I click the "$dataplane-item td:nth-child(1) [data-testid='x-action']" element
-    Then the URL contains "/meshes/default/workloads/kri_wl_default_z1_ns1_workload-1_/overview/workload-1-dataplane"
+    Then the URL contains "/meshes/default/workloads/kri_wl_default_z1_ns1_workload-1_/overview/kri_dp_default___workload-1-dataplane_"
     And the "[data-testid='workload-data-plane-summary-view']" element exists
 
   Scenario: Clicking on a dataplane action link navigates to the respective dataplane overview
@@ -99,5 +102,5 @@ Feature: mesh / workloads / item / overview
     And the "$dataplane-action-group" element exists
     Then I click the "$dataplane-action-group" element
     Then I click the "$dataplane-link" element
-    Then the URL contains "/meshes/default/data-planes/workload-1-dataplane"
+    Then the URL contains "/meshes/default/data-planes/kri_dp_default___workload-1-dataplane_"
     And the "[data-testid='data-plane-detail-view']" element exists

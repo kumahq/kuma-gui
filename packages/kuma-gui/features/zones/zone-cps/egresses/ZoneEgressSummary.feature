@@ -13,6 +13,9 @@ Feature: Zone Egress summary
       body:
         items:
           - name: zone-egress-1
+            kri: kri_ze__zone-1__zone-egress-1_
+            labels:
+              kuma.io/display-name: zone-egress-1
             zoneEgress:
               zone: zone-1
       """
@@ -22,7 +25,7 @@ Feature: Zone Egress summary
       """
       KUMA_ZONEEGRESS_COUNT: 1
       """
-    When I visit the "/zones/zone-1/egresses" URL
+    When I visit the "/zones/kri_z____zone-1_/egresses" URL
     And I click the "$item:nth-child(1) td:nth-child(2)" element
     Then the "$summary" element exists
     And the "$summary" element contains "zone-egress-1"
@@ -39,7 +42,7 @@ Feature: Zone Egress summary
       """
       KUMA_ZONEEGRESS_COUNT: 51
       """
-    When I visit the "/zones/zone-1/egresses/zone-egress-1?page=2&size=50" URL
+    When I visit the "/zones/kri_z____zone-1_/egresses/kri_ze__zone-1__zone-egress-1_?page=2&size=50" URL
     Then the "$summary" element exists
 
   Scenario: Switching to universal format and back
@@ -47,7 +50,7 @@ Feature: Zone Egress summary
       """
       KUMA_ZONEEGRESS_COUNT: 1
       """
-    When I visit the "/zones/zone-1/egresses/zone-egress-1" URL
+    When I visit the "/zones/kri_z____zone-1_/egresses/kri_ze__zone-1__zone-egress-1_" URL
     Then the "$select-preference" element exists
     And the "$structured-view" element exists
     When I click the "$select-preference" element

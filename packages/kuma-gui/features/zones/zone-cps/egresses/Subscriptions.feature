@@ -13,6 +13,14 @@ Feature: dataplanes / subscriptions
       """
       KUMA_SUBSCRIPTION_COUNT: 1
       """
+    And the URL "/_kri/kri_ze__east__east-egress_" responds with
+      """
+      body:
+        name: east-egress
+        kri: kri_ze__east__east-egress_
+        labels:
+          kuma.io/display-name: east-egress
+      """
 
   Scenario: When there are subscription the about section has expected content
     Given the URL "/zoneegresses/east-egress/_overview" responds with
@@ -23,7 +31,7 @@ Feature: dataplanes / subscriptions
             - controlPlaneInstanceId: foo
               disconnectTime: !!js/undefined
       """
-    When I visit the "/zones/east/egresses/east-egress/overview" URL
+    When I visit the "/zones/kri_z____east_/egresses/kri_ze__east__east-egress_/overview" URL
     Then the "$about-section" element contains "XDS connections"
     And the "$about-zone-egress-subscriptions" element contains "foo"
 
@@ -36,13 +44,13 @@ Feature: dataplanes / subscriptions
             - controlPlaneInstanceId: foo
               id: bar
       """
-    When I visit the "/zones/east/egresses/east-egress/overview" URL
+    When I visit the "/zones/kri_z____east_/egresses/kri_ze__east__east-egress_/overview" URL
     Then the "$about-zone-egress-subscriptions" element exists
     Then I click the "$about-zone-egress-subscriptions a" element
-    Then the URL contains "/zones/east/egresses/east-egress/subscriptions"
+    Then the URL contains "/subscriptions"
     And the "$zone-egress-subscriptions" element exists
     Then I click the "$zone-egress-subscriptions table tbody tr a" element
-    Then the URL contains "/zones/east/egresses/east-egress/subscriptions/subscription/bar"
+    Then the URL contains "/subscriptions/subscription/bar"
     And the "$zone-egress-subscription-summary" element exists
     Then I navigate "back"
-    Then the URL contains "/zones/east/egresses/east-egress/subscriptions"
+    Then the URL contains "/subscriptions"

@@ -2,6 +2,7 @@ import { TarWriter } from '@gera2ld/tarjs'
 import createClient from 'openapi-fetch'
 
 import { ZoneIngressOverview, ZoneIngress } from './data'
+import { Kri } from '../kuma'
 import { YAML, defineSources } from '@/app/application'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
@@ -21,8 +22,9 @@ export const sources = (api: KumaApi) => {
     fetch: api.client.fetch,
   })
   return defineSources({
-    '/zone-cps/:name/ingresses': async (params) => {
-      const { name, size, page } = params
+    '/zone-cps/:kri/ingresses': async (params) => {
+      const { kri, size, page } = params
+      const { name } = Kri.fromString(kri)
       const filter = {
         [`labels.${'kuma.io/zone'}`]: name,
       }
@@ -43,17 +45,35 @@ export const sources = (api: KumaApi) => {
       return ZoneIngressOverview.fromCollection(res.data! as unknown as CollectionResponse<PartialZoneIngressOverview>)
     },
 
-    '/zone-ingresses/:name': async (params) => {
-      const { name } = params
-      const res = await http.GET('/zone-ingresses/{name}', {
+    '/zone-ingresses/:kri': async (params) => {
+      const { kri } = params
+      const res = await http.GET('/_kri/{kri}', {
         params: {
           path: {
-            name,
+            kri,
           },
         },
       })
 
       return ZoneIngress.fromObject(res.data! as unknown as PartialZoneIngress)
+    },
+
+    '/zone-ingresses/:kri/as/kubernetes': async (params) => {
+      const { kri } = params
+
+      const res = await http.GET('/_kri/{kri}', {
+        params: {
+          path: {
+            kri,
+          },
+          // @ts-expect-error - query type not in OAS
+          query: {
+            format: 'kubernetes',
+          },
+        },
+      })
+      // this is kubernetes format and therefore unknown
+      return res.data
     },
 
     '/zone-ingresses/:name/data-path/:dataPath': async (params) => {
@@ -71,24 +91,6 @@ export const sources = (api: KumaApi) => {
       })
       // TODO this can be object | string, we might want to split these for TS sake
       return res.data
-    },
-
-    '/zone-ingresses/:name/as/kubernetes': async (params) => {
-      const { name } = params
-
-      const res = await http.GET('/zone-ingresses/{name}', {
-        params: {
-          path: {
-            name,
-          },
-          query: {
-            format: 'kubernetes',
-          },
-        },
-      })
-      // this is kubernetes format and therefore unknown
-      return res.data
-
     },
 
     '/zone-ingresses/:name/as/tarball/:spec': async (params) => {

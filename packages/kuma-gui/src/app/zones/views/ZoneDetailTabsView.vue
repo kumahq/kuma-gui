@@ -7,8 +7,8 @@
     v-slot="{ route, t, uri }"
   >
     <DataSource
-      :src="uri(sources, `/zone-cps/:name`, {
-        name: route.params.zone,
+      :src="uri(sources, `/zone-cps/:kri`, {
+        kri: route.params.zone,
       })"
       v-slot="{ data, error, result }"
     >
@@ -25,7 +25,7 @@
         <template #title>
           <h1>
             <RouteTitle
-              :title="route.params.zone"
+              :title="Kri.fromString(route.params.zone).name"
             />
           </h1>
         </template>
@@ -82,5 +82,6 @@
 
 import { useZoneActionGroup } from '../'
 import { sources } from '../sources'
+import { Kri } from '@/app/kuma'
 const ZoneActionGroup = useZoneActionGroup()
 </script>

@@ -10,9 +10,25 @@ Feature: mesh / dataplanes / connections / Traffic
       KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: true
       KUMA_MESHSERVICE_MODE: Exclusive
       """
+    And the URL "/_kri/kri_dp_default_zone-1_kuma-demo_backend_" responds with
+      """
+      body:
+        name: backend.kuma-demo
+        kri: kri_dp_default_zone-1_kuma-demo_backend_
+        labels:
+          kuma.io/display-name: backend
+      """
+    And the URL "/meshes/default/dataplanes/backend.kuma-demo/_overview" responds with
+      """
+      body:
+        name: backend.kuma-demo
+        kri: kri_dp_default_zone-1_kuma-demo_backend_
+        labels:
+          kuma.io/display-name: backend
+      """
 
   Scenario: The dataplane about section contains expected content
-    Given the URL "/meshes/default/dataplanes/backend/_policies" responds with
+    Given the URL "/meshes/default/dataplanes/backend.kuma-demo/_policies" responds with
       """
       body:
         policies:
@@ -20,12 +36,12 @@ Feature: mesh / dataplanes / connections / Traffic
             origins:
               - kri: kri_policy_mesh_zone_namespace_name_section
       """
-    When I visit the "/meshes/default/data-planes/backend/overview/policy/meshtrafficpermission" URL
+    When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_backend_/overview/policy/meshtrafficpermission" URL
     Then the "$summary-container [data-testid='slideout-title']" element contains "MeshTrafficPermission"
     And the "$summary-container" element contains "kri_policy_mesh_zone_namespace_name_section"
 
   Scenario: Clicking on a policy opens the summary view
-    Given the URL "/meshes/default/dataplanes/backend/_policies" responds with
+    Given the URL "/meshes/default/dataplanes/backend.kuma-demo/_policies" responds with
       """
       body:
         policies:
@@ -33,7 +49,7 @@ Feature: mesh / dataplanes / connections / Traffic
             origins:
               - kri: kri_policy_mesh_zone_namespace_name_section
       """
-    When I visit the "/meshes/default/data-planes/backend/overview" URL
+    When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_backend_/overview" URL
     Then I click on the "$about-dp-policies a:first-child" element
-    Then the URL contains "/meshes/default/data-planes/backend/overview/policy/meshtrafficpermission"
+    Then the URL contains "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_backend_/overview/policy/meshtrafficpermission"
     And the "$summary-container" element exists

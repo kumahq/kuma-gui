@@ -110,12 +110,7 @@
                     <template v-if="item.labels && item.labels['kuma.io/origin'] === 'zone' && item.labels['kuma.io/zone']">
                       <XAction
                         v-if="item.labels['kuma.io/zone']"
-                        :to="{
-                          name: 'zone-cp-detail-view',
-                          params: {
-                            zone: item.labels['kuma.io/zone'],
-                          },
-                        }"
+                        :href="`kri://${Kri.toString({ shortName: 'z', name: item.labels['kuma.io/zone'] })}`"
                       >
                         {{ item.labels['kuma.io/zone'] }}
                       </XAction>
@@ -188,6 +183,7 @@
 <script lang="ts" setup>
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
+import { Kri } from '@/app/kuma'
 import type { Mesh } from '@/app/meshes/data'
 import { sources as meshSources } from '@/app/meshes/sources'
 

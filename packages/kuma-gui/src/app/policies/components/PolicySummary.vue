@@ -49,12 +49,7 @@
           </th>
           <td>
             <XAction
-              :to="{
-                name: 'zone-cp-detail-view',
-                params: {
-                  zone: props.policy.zone,
-                },
-              }"
+              :href="`kri://${Kri.toString({ shortName: 'z', name: props.policy.zone })}`"
             >
               {{ props.policy.zone }}
             </XAction>
@@ -122,6 +117,7 @@
 
 import type { Policy } from '../data'
 import { useI18n, useCan, useRegExp, YAML } from '@/app/application'
+import { Kri } from '@/app/kuma'
 
 const { t } = useI18n()
 const { r } = useRegExp()

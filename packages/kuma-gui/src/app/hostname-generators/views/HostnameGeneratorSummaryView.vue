@@ -86,12 +86,7 @@
                   </th>
                   <td>
                     <XAction
-                      :to="{
-                        name: 'zone-cp-detail-view',
-                        params: {
-                          zone: item.zone,
-                        },
-                      }"
+                      :href="`kri://${Kri.toString({ shortName: 'z', name: item.zone })}`"
                     >
                       {{ item.zone }}
                     </XAction>
@@ -184,6 +179,7 @@
 import { sources } from '../sources'
 import { YAML } from '@/app/application'
 import type { HostnameGenerator } from '@/app/hostname-generators/data'
+import { Kri } from '@/app/kuma'
 const props = defineProps<{
   items: HostnameGenerator[]
 }>()

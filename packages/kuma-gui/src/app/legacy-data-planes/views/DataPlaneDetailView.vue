@@ -13,7 +13,7 @@
     <DataSource
       :src="uri(connectionSources, '/connections/stats/for/:proxyType/:name/:mesh/:socketAddress', {
         proxyType: ({ ingresses: 'zone-ingress', egresses: 'zone-egress' })[route.params.proxyType] ?? 'dataplane',
-        name: route.params.proxy,
+        name: props.data.id,
         mesh: route.params.mesh || '*',
         socketAddress: props.data.dataplane.networking.inboundAddress,
       })"
@@ -22,7 +22,7 @@
       <DataSource
         :src="props.mesh.meshServices.mode === 'Exclusive' ? uri(sources, '/meshes/:mesh/dataplanes/:name/layout', {
           mesh: route.params.mesh,
-          name: route.params.proxy,
+          name: props.data.id,
         }) : ''"
         v-slot="{ data: sourceDataplaneLayout }: DataSourceResponse<DataplaneNetworkingLayout>"
       >
@@ -159,12 +159,7 @@
                     <dd>
                       <XBadge appearance="decorative">
                         <XAction
-                          :to="{
-                            name: 'zone-cp-detail-view',
-                            params: {
-                              zone: props.data.zone,
-                            },
-                          }"
+                          :href="`kri://${Kri.toString({ shortName: 'z', name: props.data.zone })}`"
                         >
                           {{ props.data.zone }}
                         </XAction>
@@ -865,6 +860,7 @@
                   :is="child.Component"
                   :data="route.params.subscription.length > 0 ? props.data.dataplaneInsight.subscriptions : (child.route.name as string).includes('-inbound-') ? props.data.dataplane.networking.inbounds : traffic?.outbounds || {}"
                   :networking="props.data.dataplane.networking"
+                  :overview="props.data"
                 />
               </XDrawer>
             </RouterView>

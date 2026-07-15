@@ -96,6 +96,7 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
         creationTime: fake.kuma.date({ refDate: modificationTime }),
         modificationTime,
       }))(fake.kuma.date()),
+      kri: fake.kuma.kri({ resourceName: 'Dataplane', mesh, zone, namespace: k8s ? nspace : '', name: displayName, sectionName: '' }),
       dataplane: {
         networking: {
           address,

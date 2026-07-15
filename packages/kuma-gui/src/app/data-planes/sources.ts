@@ -7,6 +7,7 @@ import {
   MeshGatewayDataplane,
   SidecarDataplane,
   DataplaneNetworkingLayout,
+  type KumaDataplane,
 } from './data'
 import { YAML , defineSources } from '@/app/application'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
@@ -30,28 +31,26 @@ export const sources = (api: KumaApi) => {
     fetch: api.client.fetch,
   })
   return defineSources({
-    '/meshes/:mesh/dataplanes/:name': async (params) => {
-      const { mesh, name } = params
-      const res = await http.GET('/meshes/{mesh}/dataplanes/{name}', {
+    '/dataplanes/:kri': async (params) => {
+      const { kri } = params
+      const res = await http.GET('/_kri/{kri}', {
         params: {
           path: {
-            mesh,
-            name,
+            kri,
           },
         },
       })
-      return Dataplane.fromObject(res.data!)
+      return Dataplane.fromObject(res.data! as KumaDataplane)
     },
 
-    '/meshes/:mesh/dataplanes/:name/as/kubernetes': async (params) => {
-      const { mesh, name } = params
-      const res = await http.GET('/meshes/{mesh}/dataplanes/{name}', {
+    '/dataplanes/:kri/as/kubernetes': async (params) => {
+      const { kri } = params
+      const res = await http.GET('/_kri/{kri}', {
         params: {
           path: {
-            mesh,
-            name,
+            kri,
           },
-          // @ts-expect-error this is missing from the specs
+          // @ts-expect-error - query type not in OAS
           query: {
             format: 'kubernetes',
           },

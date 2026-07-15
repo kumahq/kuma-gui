@@ -289,7 +289,7 @@ describe('ZoneIngressOverview', () => {
         type: 'ZoneIngress',
         name: 'zone-ingress-name.zone-ingress-namespace',
         mesh: 'mesh-0',
-        kri: 'kri_zi_mesh-0___zone-ingress-name_',
+        kri: 'kri_zi_mesh-0__zone-ingress-namespace_zone-ingress-name_',
         labels: {
           'kuma.io/display-name': 'zone-ingress-name',
         },
@@ -315,7 +315,7 @@ describe('ZoneIngressOverview', () => {
       const actual = await fixture.setup((item) => {
         item.name = expected.name
         item.mesh = expected.mesh
-        // item.kri = expected.kri
+        item.kri = expected.kri
         item.labels = expected.labels
         item.creationTime = expected.creationTime
         item.modificationTime = expected.modificationTime

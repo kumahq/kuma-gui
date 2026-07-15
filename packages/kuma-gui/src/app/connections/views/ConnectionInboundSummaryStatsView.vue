@@ -18,55 +18,60 @@
     />
     <AppView>
       <DataLoader
-        :src="uri(sources, '/connections/stats/for/:proxyType/:name/:mesh/:socketAddress', {
-          proxyType: ({ ingresses: 'zone-ingress', egresses: 'zone-egress'})[route.params.proxyType] ?? 'dataplane',
-          name: route.params.proxy,
-          mesh: route.params.mesh || '*',
-          socketAddress: props.networking.inboundAddress,
-        })"
-        v-slot="{ data: [stats], refresh }"
+        :data="[props.overview]"
+        v-slot="{ data: [overviewData] }"
       >
-        <DataCollection
-          :items="stats.raw.split('\n')"
-          :predicate="item => {
-            return [
-              `listener.${data.listenerAddress?.length > 0 ? data.listenerAddress : route.params.connection}`,
-              `cluster.${data.name}.`,
-              `cluster.${data.clusterName}.`,
-              `http.${data.name}.`,
-              `http.${data.clusterName}.`,
-              `tcp.${data.name}.`,
-              `cluster.${data.proxyResourceName}.`,
-              `listener.${data.proxyResourceName}`,
-              `cluster.${data.proxyResourceName}.`,
-              `http.${data.proxyResourceName}.`,
-              `http.${data.proxyResourceName}.`,
-              `tcp.${data.proxyResourceName}.`,
-            ].some(prefix => item.startsWith(prefix)) && (!item.includes('.rds.') || item.includes(`_${data.port}`) || item.includes(`${data.servicePort}`))}"
-          v-slot="{ items: lines }"
+        <DataLoader
+          :src="uri(sources, '/connections/stats/for/:proxyType/:name/:mesh/:socketAddress', {
+            proxyType: ({ ingresses: 'zone-ingress', egresses: 'zone-egress'})[route.params.proxyType] ?? 'dataplane',
+            name: overviewData.id,
+            mesh: route.params.mesh || '*',
+            socketAddress: props.networking.inboundAddress,
+          })"
+          v-slot="{ data: [stats], refresh }"
         >
-          <XCodeBlock
-            language="json"
-            :code="lines.map(item => item.replace(`${data.listenerAddress?.length > 0 ? data.listenerAddress : data.proxyResourceName.length ? data.proxyResourceName : route.params.connection}.`, '').replace( data.name.length ? `${data.name}.` : '', '').replace(data.clusterName.length ? `${data.clusterName}.` : '', '')).join('\n')"
-            is-searchable
-            :query="route.params.codeSearch"
-            :is-filter-mode="route.params.codeFilter"
-            :is-reg-exp-mode="route.params.codeRegExp"
-            @query-change="route.update({ codeSearch: $event })"
-            @filter-mode-change="route.update({ codeFilter: $event })"
-            @reg-exp-mode-change="route.update({ codeRegExp: $event })"
+          <DataCollection
+            :items="stats.raw.split('\n')"
+            :predicate="item => {
+              return [
+                `listener.${data.listenerAddress?.length > 0 ? data.listenerAddress : route.params.connection}`,
+                `cluster.${data.name}.`,
+                `cluster.${data.clusterName}.`,
+                `http.${data.name}.`,
+                `http.${data.clusterName}.`,
+                `tcp.${data.name}.`,
+                `cluster.${data.proxyResourceName}.`,
+                `listener.${data.proxyResourceName}`,
+                `cluster.${data.proxyResourceName}.`,
+                `http.${data.proxyResourceName}.`,
+                `http.${data.proxyResourceName}.`,
+                `tcp.${data.proxyResourceName}.`,
+              ].some(prefix => item.startsWith(prefix)) && (!item.includes('.rds.') || item.includes(`_${data.port}`) || item.includes(`${data.servicePort}`))}"
+            v-slot="{ items: lines }"
           >
-            <template #primary-actions>
-              <XAction
-                action="refresh"
-                appearance="primary"
-                @click="refresh"
-              >
-                Refresh
-              </XAction>
-            </template>
-          </XCodeBlock>
-        </DataCollection>
+            <XCodeBlock
+              language="json"
+              :code="lines.map(item => item.replace(`${data.listenerAddress?.length > 0 ? data.listenerAddress : data.proxyResourceName.length ? data.proxyResourceName : route.params.connection}.`, '').replace( data.name.length ? `${data.name}.` : '', '').replace(data.clusterName.length ? `${data.clusterName}.` : '', '')).join('\n')"
+              is-searchable
+              :query="route.params.codeSearch"
+              :is-filter-mode="route.params.codeFilter"
+              :is-reg-exp-mode="route.params.codeRegExp"
+              @query-change="route.update({ codeSearch: $event })"
+              @filter-mode-change="route.update({ codeFilter: $event })"
+              @reg-exp-mode-change="route.update({ codeRegExp: $event })"
+            >
+              <template #primary-actions>
+                <XAction
+                  action="refresh"
+                  appearance="primary"
+                  @click="refresh"
+                >
+                  Refresh
+                </XAction>
+              </template>
+            </XCodeBlock>
+          </DataCollection>
+        </DataLoader>
       </DataLoader>
     </AppView>
   </RouteView>
@@ -75,15 +80,16 @@
 import { computed } from 'vue'
 
 import { sources } from '../sources'
-import type { DataplaneNetworkingLayout, DataplaneInbound, DataplaneNetworking } from '@/app/data-planes/data'
-import type { ZoneEgress } from '@/app/zone-egresses/data/'
-import type { ZoneIngress } from '@/app/zone-ingresses/data/'
+import type { DataplaneNetworkingLayout, DataplaneInbound, DataplaneNetworking, DataplaneOverview } from '@/app/data-planes/data'
+import type { ZoneEgress, ZoneEgressOverview } from '@/app/zone-egresses/data/'
+import type { ZoneIngress, ZoneIngressOverview } from '@/app/zone-ingresses/data/'
 
 
 const props = defineProps<{
   data: DataplaneInbound | DataplaneNetworkingLayout['inbounds'][number]
   networking: DataplaneNetworking | ZoneIngress['networking'] | ZoneEgress['networking']
   routeName: string
+  overview: DataplaneOverview | ZoneIngressOverview | ZoneEgressOverview | Error | undefined
 }>()
 
 const data = computed(() => ({
