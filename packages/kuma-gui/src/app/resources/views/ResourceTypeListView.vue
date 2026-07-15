@@ -127,11 +127,8 @@
                                         <span>
                                           {{ item.name }}
                                         </span>
-                                        <span v-if="item.group === 'global'">
-                                          {{ globalInsight.resources[item.name]?.total ?? 0 }}
-                                        </span>
-                                        <span v-else>
-                                          {{ meshInsight.resources[item.name]?.total ?? 0 }}
+                                        <span>
+                                          {{ get(item.group === 'global' ? globalInsight : meshInsight, item.insightPath)?.total ?? 0 }}
                                         </span>
                                       </XLayout>
                                     </XAction>
@@ -163,6 +160,7 @@
 </template>
 
 <script setup lang="ts">
+import { get } from '@/app/application'
 import { sources as controlPlanesSources } from '@/app/control-planes/sources'
 import { sources as meshesSources } from '@/app/meshes/sources'
 import { sources } from '@/app/resources/sources'
