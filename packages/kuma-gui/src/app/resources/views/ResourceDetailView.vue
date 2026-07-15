@@ -34,7 +34,8 @@
               name: 'resource-list-view',
               params: {
                 mesh: route.params.mesh,
-                resourcePath: route.params.resourcePath,
+                // the parsed KRI should be fine, but lets use the one from the data and fallback until its loaded
+                shortName: sourceData?.shortName ?? KRI.parse(route.params.kri).shortName,
               },
             },
             text: 'Resources',
@@ -76,7 +77,7 @@
                 <dd>
                   <XAction
                     v-if="data.zone"
-                    :href="`kri://${Kri.toString({ shortName: 'z', name: data.zone })}`"
+                    :href="`kri://${KRI.stringify({ shortName: 'z', name: data.zone })}`"
                   >
                     <XBadge>{{ data.zone }}</XBadge>
                   </XAction>
@@ -199,5 +200,5 @@
 <script setup lang="ts">
 import { sources } from '../sources'
 import { YAML } from '@/app/application'
-import { Kri } from '@/app/kuma'
+import { KRI } from '@/app/kuma'
 </script>

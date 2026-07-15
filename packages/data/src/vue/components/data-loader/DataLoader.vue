@@ -34,7 +34,7 @@
         />
       </slot>
     </template>
-    
+
     <template
       v-else-if="state === 'default'"
     >
@@ -64,7 +64,7 @@ const props = withDefaults(defineProps<{
   src?: T
   data?: K // (K | undefined)[]
   errors?: (Error | undefined)[]
-  variant?: 'default' | 'list' | 'spinner' | 'header'
+  variant?: 'default' | 'list' | 'count' | 'spinner' | 'header'
 }>(), {
   src: undefined,
   data: undefined,

@@ -3,7 +3,7 @@
     name="resource-type-list-view"
     :params="{
       mesh: '',
-      resourcePath: '',
+      shortName: '',
       category: String,
     }"
     v-slot="{ uri, route, t }"
@@ -65,88 +65,125 @@
                   </XLayout>
                 </template>
                 <DataLoader
-                  :data="[sourceResources, sourceGlobalInsight, sourceMeshInsight]"
-                  :errors="[resourcesError, globalInsightError, meshInsightError]"
-                  v-slot="{ data: [resources, globalInsight, meshInsight] }"
+                  :data="[sourceResources]"
+                  :errors="[resourcesError]"
+                  v-slot="{ data: [resources] }"
                 >
-                  <XLayout
-                    v-for="filtered in [resources.resources.filter((item) =>
-                      (route.params.category === 'all' || item.categories.includes(route.params.category)) && item.shortName.length > 0,
-                    )]"
-                    :key="typeof filtered"
-                    variant="y-stack"
+                  <template
+                    v-for="legacy in [typeof sourceMeshInsight?.resources === 'undefined' ? [] : resources.resources.filter(item => {
+                      // legacy policies are those that aren't targetRef _and are also in use_ i.e. have a count
+                      // explictly check for false not falsey
+                      return item.policy?.isTargetRef === false && (sourceMeshInsight.resources[item.name]?.total ?? 0) > 0
+                    })]"
+                    :key="typeof legacy"
                   >
-                    <template
-                      v-for="([key, group], i) in Object.entries(Object.groupBy(filtered, (resource) => resource.group)).toSorted((a, b) => a[0] > b[0] ? -1 : 1)"
-                      :key="key"
+                    <DataCollection
+                      :items="resources.resources"
+                      :predicate="item =>
+                        // if we have _any legacy and in-use_ policies then show anything/everything
+                        // otherwise
+                        // if its not a policy, or its a targetRef policy, i.e. we ignore legacies
+                        (legacy.length > 0 || (typeof item.policy === 'undefined' || item.policy?.isTargetRef))
+                        && (route.params.category === 'all' || item.categories.includes(route.params.category))"
+                      v-slot="{ items: filtered }"
                     >
-                      <ul v-if="group?.length">
-                        <li>
-                          <XLayout
-                            variant="y-stack"
-                          >
-                            <header>
-                              <h3>{{ t(`resources.routes.items.types.${key}.title`) }}</h3>
-                            </header>
-                            <DataCollection
-                              :items="group"
-                            >
-                              <template #default="{ items }">
-                                <ul>
-                                  <li
-                                    v-for="(item, j) in items"
-                                    :key="item.name"
-                                    :class="{
-                                      'active': item.path === route.params.resourcePath,
-                                    }"
-                                  >
-                                    <XAction
-                                      :to="{
-                                        name: 'resource-list-view',
-                                        params: {
-                                          mesh: route.params.mesh,
-                                          resourcePath: item.path,
-                                        },
-                                        query: {
-                                          category: route.params.category,
-                                        },
-                                      }"
-                                      :data-testid="`resource-type-link-${item.name}`"
-                                      @vue:mounted="(vNode) => {
-                                        if((route.params.resourcePath.length === 0 || !resources.resources.find((resource) => resource.path === route.params.resourcePath)) && i === 0 && j === 0 && vNode.props?.to) {
-                                          $nextTick(() => {
-                                            route.replace(vNode.props!.to)
-                                          })
-                                        }
+                      <XLayout
+                        variant="y-stack"
+                      >
+                        <template
+                          v-for="([key, group], i) in Object.entries(Object.groupBy(filtered, (resource) => resource.group)).toSorted((a, b) => a[0] > b[0] ? -1 : 1)"
+                          :key="key"
+                        >
+                          <ul v-if="group?.length">
+                            <li>
+                              <XLayout
+                                variant="y-stack"
+                              >
+                                <header>
+                                  <h3>{{ t(`resources.routes.items.types.${key}.title`) }}</h3>
+                                </header>
+                                <DataCollection
+                                  :items="group"
+                                  v-slot="{ items }"
+                                >
+                                  <ul>
+                                    <li
+                                      v-for="(item, j) in items"
+                                      :key="item.name"
+                                      :class="{
+                                        'active': item.shortName === route.params.shortName,
                                       }"
                                     >
-                                      <XLayout
-                                        variant="x-stack"
-                                        justify="between"
+                                      <XAction
+                                        :to="{
+                                          name: 'resource-list-view',
+                                          params: {
+                                            mesh: route.params.mesh,
+                                            shortName: item.shortName,
+                                          },
+                                          query: {
+                                            category: route.params.category,
+                                          },
+                                        }"
+                                        :data-testid="`resource-type-link-${item.name}`"
+                                        @vue:mounted="(vNode) => {
+                                          if((route.params.shortName.length === 0 || !resources.resources.find((resource) => resource.shortName === route.params.shortName)) && i === 0 && j === 0 && vNode.props?.to) {
+                                            $nextTick(() => {
+                                              route.replace(vNode.props!.to)
+                                            })
+                                          }
+                                        }"
                                       >
-                                        <span>
-                                          {{ item.name }}
-                                        </span>
-                                        <span v-if="item.group === 'global'">
-                                          {{ globalInsight.resources[item.name]?.total ?? 0 }}
-                                        </span>
-                                        <span v-else>
-                                          {{ meshInsight.resources[item.name]?.total ?? 0 }}
-                                        </span>
-                                      </XLayout>
-                                    </XAction>
-                                  </li>
-                                </ul>
-                              </template>
-                            </DataCollection>
-                          </XLayout>
-                        </li>
-                      </ul>
-                    </template>
-                  </XLayout>
+                                        <XLayout
+                                          variant="x-stack"
+                                          justify="between"
+                                        >
+                                          <span>
+                                            {{ item.name }}
+                                          </span>
+                                          <span v-if="item.group === 'global'">
+                                            <DataLoader
+                                              variant="count"
+                                              :data="[sourceGlobalInsight]"
+                                              :errors="[globalInsightError]"
+                                            >
+                                              <template #default="{ data: [globalInsight] }">
+                                                {{ globalInsight.resources[item.name]?.total ?? 0 }}
+                                              </template>
+                                              <template #error>
+                                                &nbsp;
+                                              </template>
+                                            </DataLoader>
+                                          </span>
+                                          <span v-else>
+                                            <DataLoader
+                                              variant="count"
+                                              :data="[sourceMeshInsight]"
+                                              :errors="[meshInsightError]"
+                                            >
+                                              <template #default="{ data: [meshInsight] }">
+                                                {{ meshInsight.resources[item.name]?.total ?? 0 }}
+                                              </template>
+                                              <template #error>
+                                                &nbsp;
+                                              </template>
+                                            </DataLoader>
+                                          </span>
+                                        </XLayout>
+                                      </XAction>
+                                    </li>
+                                  </ul>
+                                </DataCollection>
+                              </XLayout>
+                            </li>
+                          </ul>
+                        </template>
+                      </XLayout>
+                    </DataCollection>
+                  </template>
                 </DataLoader>
               </XCard>
-              <div v-if="route.params.resourcePath.length > 0">
+              <div v-if="route.params.shortName.length > 0">
                 <RouterView v-slot="{ Component }">
                   <component
                     :is="Component"

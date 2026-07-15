@@ -27,7 +27,7 @@ Feature: mesh / resources / summary
       """
 
   Scenario: Clicking a row opens the summary
-    When I visit the "/meshes/default/resources/meshaccesslogs" URL
+    When I visit the "/meshes/default/resources/mal" URL
     And I click the "$action" element
     Then the "$summary" element exists
     And the "$summary" element contains "resource-1"
@@ -40,18 +40,18 @@ Feature: mesh / resources / summary
     Then the "$item" element exists but the "$summary" element doesn't exist
 
   Scenario: Opening a summary URL directly shows the summary
-    When I visit the "/meshes/default/resources/meshaccesslogs/kri_mal_default_zone-1_kuma-system_resource-1_" URL
+    When I visit the "/meshes/default/resources/mal/kri_mal_default_zone-1_kuma-system_resource-1_" URL
     Then the "$summary" element exists
     And the "$summary" element contains "resource-1"
 
   Rule: Offering different view formats
 
     Scenario: The universal format is shown by default
-      When I visit the "/meshes/default/resources/meshaccesslogs/kri_mal_default_zone-1_kuma-system_resource-1_" URL
+      When I visit the "/meshes/default/resources/mal/kri_mal_default_zone-1_kuma-system_resource-1_" URL
       Then the "$summary [data-testid='codeblock-yaml-universal']" element exists
 
     Scenario: Switching to k8s format shows the k8s codeblock
-      When I visit the "/meshes/default/resources/meshaccesslogs/kri_mal_default_zone-1_kuma-system_resource-1_" URL
+      When I visit the "/meshes/default/resources/mal/kri_mal_default_zone-1_kuma-system_resource-1_" URL
       And I click the "$select-preference" element
       And I click the "[data-testid='select-item-k8s'] button" element
       Then the URL contains "environment=k8s"

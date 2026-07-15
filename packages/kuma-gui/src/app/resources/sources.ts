@@ -1,7 +1,10 @@
 import createClient from 'openapi-fetch'
 
+
+import type { DynamicPath } from './data'
 import { Resource, ResourceTypeDescriptor } from './data'
 import { defineSources } from '@/app/application'
+import { KRI } from '@/app/kuma'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import type { paths } from '@kumahq/kuma-http-api'
 
@@ -41,11 +44,18 @@ export const sources = (api: KumaApi) => {
         },
       })
 
-      return Resource.fromCollection(response.data!)
+      return Resource.fromCollection(response.data!, params.path)
     },
 
     '/resources/:path/for/:mesh': async (params) => {
-      const { mesh, path, size } = params
+      const { mesh, size } = params
+
+      // support for custom shortNames with is the "path" prefixed with `~`
+      // save the shortName before we alter the path
+      const shortName = params.path
+      const path = params.path.startsWith('~') ? params.path.substring(1) : params.path
+      //
+
       const offset = params.size * (params.page - 1)
       const search = Resource.search(params.search)
 
@@ -62,19 +72,32 @@ export const sources = (api: KumaApi) => {
         },
       })
 
-      return Resource.fromCollection(response.data!)
+      return Resource.fromCollection(response.data!, shortName)
     },
 
     '/resource/:kri': async (params) => {
-      const response = await http.GET('/_kri/{kri}', {
-        params: {
-          path: {
-            kri: params.kri,
+      const { shortName, mesh, name } = KRI.parse(params.kri)
+      if(!shortName.startsWith('~')) {
+        const response = await http.GET('/_kri/{kri}', {
+          params: {
+            path: {
+              kri: params.kri,
+            },
           },
-        },
-      })
+        })
+        return Resource.fromObject(response.data!)
+      } else {
+        const response = await http.GET(`/meshes/{mesh}/${shortName.substring(1) as DynamicPath}/{name}`, {
+          params: {
+            path: {
+              mesh,
+              name,
+            },
+          },
+        })
+        return Resource.fromObject(response.data!, shortName)
 
-      return Resource.fromObject(response.data!)
+      }
     },
 
     '/resource/:kri/as/kubernetes': async (params) => {

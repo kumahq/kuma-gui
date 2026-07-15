@@ -18,7 +18,7 @@ import type { ServiceDefinition } from '@kumahq/container'
 import type { DataSourcePool } from '@kumahq/data'
 
 export * from './utils'
-export { Kri } from './kri'
+export * from './kri'
 
 type Token = ReturnType<typeof token>
 
