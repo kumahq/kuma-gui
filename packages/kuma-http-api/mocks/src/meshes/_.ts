@@ -31,10 +31,9 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
       ...(req.url.searchParams.get('format') === 'kubernetes' && {
         apiVersion: 'kuma.io/v1alpha1',
       }),
-      name,
       type: 'Mesh',
-      creationTime: '2020-06-19T12:18:02.097986-04:00',
-      modificationTime: '2020-07-19T12:18:02.097986-04:00',
+      name,
+      ...fake.kuma.timespan(),
       kri: fake.kuma.kri({ shortName, mesh, zone, namespace: nspace, displayName }),
       // meshes only seem to have displayName
       labels: fake.kuma.labels({

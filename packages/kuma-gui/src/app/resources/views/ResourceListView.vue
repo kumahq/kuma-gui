@@ -15,13 +15,6 @@
       :predicate="(resourceType) => typeof resourceType !== 'undefined' && resourceType.shortName === route.params.shortName"
       :items="(props.resourceTypes?.resources ?? []).filter((item) => item.shortName.length > 0)"
     >
-      <template #empty>
-        <XCard>
-          <XEmptyState>
-            {{ t('resources.routes.items.empty') }}
-          </XEmptyState>
-        </XCard>
-      </template>
       <template #item="{ item: type }">
         <AppView>
           <XCard>

@@ -12,14 +12,9 @@
     v-slot="{ route, t, can, uri, me }"
   >
     <DataCollection
-      :predicate="(policyType) => typeof policyType !== 'undefined' && policyType.path === route.params.policyPath"
+      :predicate="(policyType) => policyType.path === route.params.policyPath"
       :items="props.policyTypes ?? []"
     >
-      <template #empty>
-        <XEmptyState>
-          {{ t('policies.routes.items.empty') }}
-        </XEmptyState>
-      </template>
       <template #item="{ item: type }">
         <AppView>
           <XCard>

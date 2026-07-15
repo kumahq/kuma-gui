@@ -75,7 +75,7 @@
                 <dd>
                   <XAction
                     v-if="data.zone"
-                    :href="`kri://${Kri.toString({ shortName: 'z', name: data.zone })}`"
+                    :href="`kri://${KRI.stringify({ shortName: 'z', name: data.zone })}`"
                   >
                     <XBadge>{{ data.zone }}</XBadge>
                   </XAction>
@@ -198,5 +198,5 @@
 <script setup lang="ts">
 import { sources } from '../sources'
 import { YAML } from '@/app/application'
-import { Kri } from '@/app/kuma'
+import { Kri, KRI } from '@/app/kuma'
 </script>
