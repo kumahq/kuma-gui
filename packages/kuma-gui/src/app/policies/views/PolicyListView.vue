@@ -137,7 +137,7 @@
                         { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
                       ]"
                       :items="data.items"
-                      :is-selected-row="(row) => row.id === route.params.policy"
+                      :is-selected-row="(row) => row.kri === route.params.policy"
                       @resize="me.set"
                     >
                       <template
@@ -167,7 +167,7 @@
                             params: {
                               mesh: row.mesh,
                               policyPath: type.path,
-                              policy: row.id,
+                              policy: row.kri,
                             },
                             query: {
                               page: route.params.page,
@@ -215,7 +215,7 @@
                               params: {
                                 mesh: item.mesh,
                                 policyPath: type.path,
-                                policy: item.id,
+                                policy: item.kri,
                               },
                             }"
                           >

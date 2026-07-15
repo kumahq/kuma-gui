@@ -1,3 +1,4 @@
+import { Kri } from '@/app/kuma'
 import type { ApiKindListResponse } from '@/types/api.d'
 import type {
   LabelValue,
@@ -64,6 +65,7 @@ function getPolicyTypeEntryConnections(policy: MatchedPolicyType, sidecarDatapla
     name: policy.name,
     mesh: policy.mesh,
     type: policy.type,
+    kri: Kri.toString({ shortName: `~${policy.type.toLowerCase()}`, mesh: policy.mesh, name: policy.name }),
   }]
 
   const policyTypeEntryConnections: PolicyTypeEntryConnection[] = []
