@@ -4,7 +4,7 @@
     :params="{
       mesh: '',
       policyPath: '',
-      kri: '',
+      policy: '',
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
@@ -15,7 +15,7 @@
     <DataSource
       :src="uri(sources, '/policy-path/:path/policy/:kri', {
         path: route.params.policyPath,
-        kri: route.params.kri,
+        kri: route.params.policy,
       })"
       v-slot="{ data, error }"
     >
@@ -33,7 +33,7 @@
                   params: {
                     mesh: route.params.mesh,
                     policyPath: route.params.policyPath,
-                    kri: policy.kri,
+                    policy: policy.kri,
                   },
                 }"
               >
@@ -107,7 +107,7 @@
               <DataLoader
                 :src="uri(sources, '/policy-path/:path/policy/:kri/as/kubernetes', {
                   path: route.params.policyPath,
-                  kri: route.params.kri,
+                  kri: route.params.policy,
                 })"
                 v-slot="{ data: [yaml] }"
               >

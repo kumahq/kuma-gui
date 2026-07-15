@@ -18,7 +18,7 @@
               params: {
                 mesh: policy.mesh,
                 policyPath: props.types[policy.type]?.path ?? '',
-                kri: policy.kri,
+                policy: policy.kri,
               },
             }"
           >
@@ -64,7 +64,7 @@
                               params: {
                                 mesh: routeEntry.route.mesh,
                                 policyPath: props.types[routeEntry.route.type]?.path ?? '',
-                                kri: routeEntry.route.kri,
+                                policy: routeEntry.route.kri,
                               },
                             }"
                           >
@@ -108,7 +108,7 @@
                             params: {
                               mesh: policy.mesh,
                               policyPath: props.types[policy.type]?.path ?? '',
-                              kri: policy.kri,
+                              policy: policy.kri,
                             },
                           }"
                         >

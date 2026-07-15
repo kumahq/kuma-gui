@@ -3,7 +3,7 @@
     name="policy-detail-tabs-view"
     :params="{
       mesh: '',
-      kri: '',
+      policy: '',
       policyPath: '',
     }"
     v-slot="{ route, t, uri }"
@@ -11,7 +11,7 @@
     <DataSource
       :src="uri(sources, '/policy-path/:path/policy/:kri', {
         path: route.params.policyPath,
-        kri: route.params.kri,
+        kri: route.params.policy,
       })"
       v-slot="{ data, result }"
     >

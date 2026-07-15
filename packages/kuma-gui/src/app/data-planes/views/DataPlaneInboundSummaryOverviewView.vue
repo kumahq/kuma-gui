@@ -180,7 +180,7 @@
                                           params: {
                                             mesh: kri.mesh,
                                             policyPath: policyTypes[kind]![0].path,
-                                            kri: item.kri,
+                                            policy: item.kri,
                                           },
                                         }"
                                       >

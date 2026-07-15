@@ -1,4 +1,4 @@
-Feature: mesh / dataplanes / connections / Traffic
+Feature: mesh / dataplanes / overview / summary / Policy
 
   Background:
     Given the CSS selectors

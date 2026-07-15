@@ -4,7 +4,7 @@
     :params="{
       mesh: '',
       policyPath: '',
-      kri: '',
+      policy: '',
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
@@ -14,7 +14,7 @@
   >
     <DataCollection
       :items="props.items"
-      :predicate="item => item.kri === route.params.kri"
+      :predicate="item => item.kri === route.params.policy"
       :find="true"
     >
       <template #empty>
@@ -47,7 +47,7 @@
                     params: {
                       mesh: route.params.mesh,
                       policyPath: route.params.policyPath,
-                      kri: route.params.kri,
+                      policy: route.params.policy,
                     },
                   }"
                 >
@@ -116,7 +116,7 @@
                 <DataLoader
                   :src="uri(sources, '/policy-path/:path/policy/:kri/as/kubernetes', {
                     path: route.params.policyPath,
-                    kri: route.params.kri,
+                    kri: route.params.policy,
                   })"
                   v-slot="{ data: [yaml] }"
                 >

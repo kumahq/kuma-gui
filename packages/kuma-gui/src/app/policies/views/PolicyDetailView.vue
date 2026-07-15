@@ -6,7 +6,7 @@
       size: Number,
       s: '',
       mesh: '',
-      kri: '',
+      policy: '',
       policyPath: '',
       proxy: '',
     }"

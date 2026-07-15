@@ -170,7 +170,7 @@
                                   params: {
                                     mesh: origin.mesh,
                                     policyPath: policyTypesByNameData[origin.type]!.path,
-                                    kri: origin.kri,
+                                    policy: origin.kri,
                                   },
                                 }"
                               >

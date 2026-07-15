@@ -4,7 +4,7 @@
     :params="{
       mesh: '',
       policyPath: '',
-      kri: '',
+      policy: '',
     }"
     v-slot="{ uri, route, t }"
   >

@@ -80,7 +80,7 @@
                       params: {
                         mesh: origin.mesh,
                         policyPath: props.types[origin.type]?.path ?? '',
-                        kri: origin.kri,
+                        policy: origin.kri,
                       },
                     }"
                   >
