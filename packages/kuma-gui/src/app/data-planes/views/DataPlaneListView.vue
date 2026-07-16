@@ -44,7 +44,7 @@
               <template #selected="{ item }: { item: 'all' | 'standard' | 'builtin' | 'delegated' | 'zone-ingress' | 'zone-egress' }">
                 <XIcon
                   v-if="item !== 'all'"
-                  :size="KUI_ICON_SIZE_40"
+                  :size="`var(--x-icon-size-40)`"
                   :name="item"
                 />
                 {{ t(`data-planes.type.${item}`) }}
@@ -325,8 +325,6 @@
 </template>
 
 <script lang="ts" setup>
-import { KUI_ICON_SIZE_40 } from '@kong/design-tokens'
-
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
