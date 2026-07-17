@@ -4,6 +4,7 @@ import {
   injected,
 } from 'brandi'
 import deepmerge from 'deepmerge'
+import { inject } from 'vue'
 
 import type {
   Token,
@@ -11,7 +12,10 @@ import type {
   TokenValue,
   RequiredToken,
   OptionalToken,
+  Container,
 } from 'brandi'
+import type { InjectionKey } from 'vue'
+
 
 export {
   token,
@@ -49,14 +53,51 @@ export type ServiceConfigurator<T = Record<string, Token>> = ($: T) => ServiceDe
 export type Alias<T extends (...args: never[]) => unknown> = (...rest: Parameters<T>) => ReturnType<T>
 export type Decorator<T extends TokenValue> = TokenType<T>
 export type ReturnDecorated<T extends TokenValue> = () => TokenType<T>
-export let container = createContainer()
-let labelMap = new WeakMap()
 
 //
 export const merge = (...definitions: Array<ServiceDefinition[]>): ServiceDefinition[] => {
   return [...new Map([...definitions.flat()]).entries()]
 }
-const decorate = (entries: ServiceDefinition[]) => {
+export type Getter = <T extends TokenValue>(t: T) => TokenType<T>
+
+export const injectionKey = Symbol() as InjectionKey<Getter>
+
+export const createBuilder = () => {
+  const container = createContainer()
+  const labelMap = new WeakMap()
+  return {
+    build: (...entries: Array<ServiceDefinition[]>) => {
+      const get = <T extends TokenValue>(token: T) => {
+        try {
+          return container.get(token)
+        } catch (e) {
+          console.error(`error resolving ${token.__d}`)
+          throw e
+        }
+      }
+      const merged = decorate(merge(...entries), get)
+      merged.forEach(([t, config]) => service(t, config, container, labelMap))
+      return get
+    },
+    destroy: () => { },
+    injectionKey,
+    container,
+  }
+
+}
+
+export const createInjections = <T extends TokenValue[]>(...tokens: T): InjectionHooks<T> => {
+  return tokens.map((token) => () => {
+    const get = inject(injectionKey)
+    if(typeof get !== 'undefined') {
+      return get(token)
+    }
+    throw new Error(`Unable to find container for ${token.__d}`)
+  }) as InjectionHooks<T>
+}
+
+
+const decorate = (entries: ServiceDefinition[], get: Getter) => {
   const map = new Map(entries)
   entries.forEach(([_token, definition]) => {
     if (typeof definition.decorates !== 'undefined') {
@@ -94,29 +135,8 @@ const decorate = (entries: ServiceDefinition[]) => {
   })
   return [...map.entries()]
 }
-export const get = <T extends TokenValue>(token: T): TokenType<T> => {
-  try {
-    return container.get(token)
-  } catch (e) {
-    console.error(`error resolving ${token.__d}`)
-    throw e
-  }
-}
-export const build = (...entries: Array<ServiceDefinition[]>): typeof get => {
-  container = createContainer()
-  labelMap = new WeakMap()
-  const merged = decorate(merge(...entries))
-  merged.forEach(item => service(...item))
-  return get
-}
 
-export const createInjections = <T extends TokenValue[]>(
-  ...tokens: T
-): InjectionHooks<T> =>
-  tokens.map((token) => () => get(token)) as InjectionHooks<T>
-//
-
-export const service = (t: Token, config: DependencyDefinition): void => {
+const service = (t: Token, config: DependencyDefinition, container: Container, labelMap: WeakMap<Token, Token[]>): void => {
   const bound = container.bind(t)
   switch (true) {
     case 'constant' in config:
@@ -134,27 +154,33 @@ export const service = (t: Token, config: DependencyDefinition): void => {
     config.labels.forEach((label: Token) => {
       if (!labelMap.has(label)) {
         labelMap.set(label, [])
-        service(label, {
-          service: () => {
-            return labelMap.get(label).reduce((prev: unknown[], TOKEN: Token) => {
-              try {
-                const service = get(TOKEN)
-                if (Array.isArray(service)) {
-                  return prev.concat(service)
-                } else if (service instanceof Object) {
-                  return deepmerge(prev, service)
-                } else {
-                  return prev
+        service(
+          label,
+          {
+            service: () => {
+              // @ts-ignore
+              return labelMap.get(label)!.reduce((prev: Token[], TOKEN) => {
+                try {
+                  const service = container.get(TOKEN)
+                  if (Array.isArray(service)) {
+                    return prev.concat(service)
+                  } else if (service instanceof Object) {
+                    return deepmerge(prev, service)
+                  } else {
+                    return prev
+                  }
+                } catch (e) {
+                  console.error(e)
+                  throw e
                 }
-              } catch (e) {
-                console.error(e)
-                throw e
-              }
-            }, [])
+              }, [] as Token[])
+            },
           },
-        })
+          container,
+          labelMap,
+        )
       }
-      const tokens = labelMap.get(label)
+      const tokens = labelMap.get(label)!
       tokens.push(t)
     })
   }
@@ -166,10 +192,4 @@ export const service = (t: Token, config: DependencyDefinition): void => {
     })
     injected(...([config.service, ...config.arguments] as Parameters<typeof injected>))
   }
-}
-export const constant = <T>(func: T, config: { description: string }): Token<T> => {
-  const t = token<T>(config.description)
-  const bound = container.bind(t)
-  bound.toConstant(func as Parameters<typeof bound.toConstant>[0])
-  return t as Token<T>
 }

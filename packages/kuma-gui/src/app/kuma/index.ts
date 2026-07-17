@@ -13,9 +13,9 @@ import KumaTargetRef from '@/app/kuma/components/kuma-target-ref/KumaTargetRef.v
 import { ApiError } from '@/app/kuma/services/kuma-api/ApiError'
 import KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import { RestClient } from '@/app/kuma/services/kuma-api/RestClient'
-import { useRouter } from '@/app/vue'
 import type { ServiceDefinition } from '@kumahq/container'
 import type { DataSourcePool } from '@kumahq/data'
+import type { Router } from 'vue-router'
 
 export * from './utils'
 export { Kri } from './kri'
@@ -59,7 +59,7 @@ function normalizeBaseUrl(url: string): string {
   return stripTrailingSlashes(url)
 }
 
-const protocolHandler = (can: Can) => {
+const protocolHandler = (can: Can, router: Router) => {
   return (href: string) => {
     const kriProto = 'kri://'
     switch (true) {
@@ -138,7 +138,6 @@ const protocolHandler = (can: Can) => {
           }
         })()
         if (to) {
-          const router = useRouter()
           try {
             return router.resolve(to).href
           } catch(e) {
@@ -158,12 +157,12 @@ const protocolHandler = (can: Can) => {
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   return [
     [token('kuma.plugins'), {
-      service: (i18n, can) => {
+      service: (i18n, can, router) => {
         return [
           [Kongponents],
           [X, {
             i18n,
-            protocolHandler: protocolHandler(can),
+            protocolHandler: protocolHandler(can, router),
             routerElement: () => document.querySelector('.kuma-application'),
           }],
         ]
@@ -171,6 +170,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       arguments: [
         app.i18n,
         app.can,
+        app.router,
       ],
       labels: [
         app.plugins,

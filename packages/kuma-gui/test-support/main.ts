@@ -3,7 +3,7 @@
 // vitest's `setupFiles` property, please see `/vite.config.production.ts`
 
 import { defaultKumaHtmlVars as htmlVars } from '@kumahq/config/vite'
-import { get, container, build } from '@kumahq/container'
+import { createBuilder } from '@kumahq/container'
 import { beforeEach, afterEach } from 'vitest'
 
 import { services as application, TOKENS as APPLICATION } from '@/app/application'
@@ -16,7 +16,8 @@ import { services as testing } from '@/app/vue/testing'
     ...APPLICATION,
     ...KUMA,
   }
-  build(
+  const { build, container } = createBuilder()
+  const get = build(
     application($),
     vue($),
     testing($),
