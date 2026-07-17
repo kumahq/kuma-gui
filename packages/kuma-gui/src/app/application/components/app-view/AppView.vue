@@ -138,23 +138,25 @@
 
 <script lang="ts" setup>
 import { ROUTE_VIEW_PARENT } from '@kumahq/routing/vue'
-import { nextTick , provide, inject, watch, ref, onBeforeUnmount , useId } from 'vue'
+import { useProtocolHandler } from '@kumahq/x'
+import { nextTick, provide, inject, watch, ref, onBeforeUnmount , useId } from 'vue'
 
 
 import type { RouteViewService } from '@kumahq/routing/vue'
-type AppView = {
-  addBreadcrumbs: (items: BreadcrumbItem[], sym: symbol) => void
-  removeBreadcrumbs: (sym: symbol) => void
-}
 import type { XBreadcrumbs } from '@kumahq/x'
 import type { ComponentInstance } from 'vue'
 
-type BreadcrumbItem = ComponentInstance<typeof XBreadcrumbs>['$props']['items'][number]
-type Breadcrumbs = Map<symbol, BreadcrumbItem[]>
 
+type BreadcrumbItem = ComponentInstance<typeof XBreadcrumbs>['$props']['items'][number]
+type XBreadcrumbItem = BreadcrumbItem & { href?: string }
+type Breadcrumbs = Map<symbol, BreadcrumbItem[]>
+type AppView = {
+  addBreadcrumbs: (items: XBreadcrumbItem[], sym: symbol) => void
+  removeBreadcrumbs: (sym: symbol) => void
+}
 
 const props = withDefaults(defineProps<{
-  breadcrumbs?: BreadcrumbItem[] | null
+  breadcrumbs?: XBreadcrumbItem[] | null
   docs?: string
   notifications?: boolean
 }>(), {
@@ -164,6 +166,7 @@ const props = withDefaults(defineProps<{
 })
 const slots = defineSlots()
 
+const protocolHandler = useProtocolHandler()
 const id = useId()
 const routeView = inject<RouteViewService>(ROUTE_VIEW_PARENT)!
 
@@ -183,7 +186,7 @@ const refreshBreadcrumbs = (map: Breadcrumbs) => {
 }
 
 const appView: AppView = {
-  addBreadcrumbs: (items: BreadcrumbItem[] | undefined, sym: symbol) => {
+  addBreadcrumbs: (items: XBreadcrumbItem[] | undefined, sym: symbol) => {
     if (typeof items !== 'undefined') {
       if (map.has(sym)) {
         const current = map.get(sym)
@@ -195,7 +198,17 @@ const appView: AppView = {
           return
         }
       }
-      map.set(sym, items)
+      const breadcrumbs = items.map(item => {
+        if(item.href && item.href.includes('://')) {
+          const { href: _href, ...rest } = item
+          return {
+            ...rest,
+            to: protocolHandler(item.href),
+          }
+        }
+        return item
+      })
+      map.set(sym, breadcrumbs)
       refreshBreadcrumbs(map)
     }
   },
@@ -212,7 +225,7 @@ if (!hasParent) {
 }
 const parent: AppView = hasParent || appView
 
-watch(() => props.breadcrumbs, (items: BreadcrumbItem[] | null) => {
+watch(() => props.breadcrumbs, (items: XBreadcrumbItem[] | null) => {
   if (items !== null) {
     parent.addBreadcrumbs(items, symbol)
   }
