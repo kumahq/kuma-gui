@@ -15,7 +15,7 @@ import KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import { RestClient } from '@/app/kuma/services/kuma-api/RestClient'
 import type { ServiceDefinition } from '@kumahq/container'
 import type { DataSourcePool } from '@kumahq/data'
-import type { Router } from 'vue-router'
+import type { Router, RouteLocationAsRelative } from 'vue-router'
 
 export * from './utils'
 export { Kri } from './kri'
@@ -27,12 +27,6 @@ declare module 'vue' {
     KumaPort: typeof KumaPort
     KumaTargetRef: typeof KumaTargetRef
   }
-}
-export const TOKENS = {
-  httpClient: token<RestClient>('httpClient'),
-  api: token<KumaApi>('KumaApi'),
-  htmlVars: token('kuma.html.vars'),
-  dataSource: token<<T>(src: string) => Promise<T>>('app.dataSource'),
 }
 function getConfig() {
   const pathConfigNode = document.querySelector('#kuma-config')
@@ -152,18 +146,48 @@ const protocolHandler = (can: Can, router: Router) => {
     }
     return href
   }
+}
 
+const href = (router: Router) => (to: RouteLocationAsRelative) => {
+  try {
+    return router.resolve({
+      params: router.currentRoute.value.params,
+      ...to,
+    }).href
+  } catch(e) {
+    if (e instanceof Error) {
+      e.message = `${e.toString()}: ${JSON.stringify(to)}`
+    }
+    console.error(e)
+  }
+  return ''
+}
+const push = (router: Router) => (href: string) => {
+  const base = router.options.history.base
+  const h = href.startsWith(base) ? href.substring(base.length) : href
+  return router.push(h.length > 0 ? h : '/')
+}
+export const TOKENS = {
+  httpClient: token<RestClient>('httpClient'),
+  api: token<KumaApi>('KumaApi'),
+  htmlVars: token('kuma.html.vars'),
+  dataSource: token<<T>(src: string) => Promise<T>>('app.dataSource'),
+  href: token<ReturnType<typeof href>>('kuma.router.href'),
+  routerPush: token<ReturnType<typeof push>>('kuma.router.push'),
+  routerElement: token<() => HTMLElement | null>('kuma.router.element'),
 }
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   return [
     [token('kuma.plugins'), {
-      service: (i18n, can, router) => {
+      service: (i18n, can, router, href, push, routerElement) => {
         return [
           [Kongponents],
           [X, {
             i18n,
             protocolHandler: protocolHandler(can, router),
-            routerElement: () => document.querySelector('.kuma-application'),
+            href,
+            push,
+            routerElement,
           }],
         ]
       },
@@ -171,6 +195,9 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
         app.i18n,
         app.can,
         app.router,
+        app.href,
+        app.routerPush,
+        app.routerElement,
       ],
       labels: [
         app.plugins,
@@ -178,6 +205,21 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
     }],
     [app.storagePrefix, {
       service: () => 'kumahq.kuma-gui',
+    }],
+    [app.routerElement, {
+      service: () => () => document.querySelector('.kuma-application'),
+    }],
+    [app.href, {
+      service: href,
+      arguments: [
+        app.router,
+      ],
+    }],
+    [app.routerPush, {
+      service: push,
+      arguments: [
+        app.router,
+      ],
     }],
     [app.htmlVars, {
       service: getConfig,
@@ -264,9 +306,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   ]
 }
 export const [
-  useKumaApi,
   useDataSource,
 ] = createInjections(
-  TOKENS.api,
   TOKENS.dataSource,
 )
