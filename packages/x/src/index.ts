@@ -245,11 +245,17 @@ const deps = {
   routerElement: () => document.body,
   protocolHandler: (href: string) => href,
   syntaxHighlighter,
+  href: (_to: unknown) => {
+    return ''
+  },
+  push: (_href: string) => {},
 }
 const tokens = {
   i18n: uri<typeof deps.i18n>('x.i18n'),
-  protocolHandler: uri<typeof deps.protocolHandler>('x.action.protocolhandler'),
   syntaxHighlighter: uri<typeof deps.syntaxHighlighter>('x.code-block.syntaxhighlighter'),
+  protocolHandler: uri<typeof deps.protocolHandler>('x.action.protocolhandler'),
+  href: uri<typeof deps.href>('x.action.href'),
+  push: uri<typeof deps.href>('x.router.push'),
   routerElement: uri<HTMLElement>('x.router.routerElement'),
 }
 const plugin: Plugin = {
@@ -263,6 +269,8 @@ const plugin: Plugin = {
     build(app)
       .service(tokens.syntaxHighlighter, () => services.syntaxHighlighter)
       .service(tokens.protocolHandler, () => services.protocolHandler)
+      .service(tokens.href, () => services.href)
+      .service(tokens.push, () => services.push)
       .service(tokens.i18n, () => services.i18n)
       .service(tokens.routerElement, services.routerElement)
 
@@ -278,11 +286,15 @@ export const [
   useI18n,
   useSyntaxHighlighter,
   useProtocolHandler,
+  useHref,
+  usePush,
   useRouterElement,
 ] = createInjections(
   tokens.i18n,
   tokens.syntaxHighlighter,
   tokens.protocolHandler,
+  tokens.href,
+  tokens.push,
   tokens.routerElement,
 )
 export default plugin
