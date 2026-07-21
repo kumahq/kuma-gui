@@ -30,6 +30,12 @@ export function escapeRoute(route: string): string {
   return route.replaceAll('+', '\\+')
 }
 
+export const addOrigin = <T>(fs: Record<string, T>, origin: string) => {
+  return Object.fromEntries(Object.entries(fs).map(([route, response]) => {
+    return [route.includes('://') ? route : `${origin}${route}`, response]
+  }))
+}
+
 
 export class Router<T> {
   routes: Map<URLPattern, T> = new Map()
@@ -66,6 +72,15 @@ export const Cookie = {
         return [key, value.join('=')] as [string, string]
       })
       .filter(([key, _value]) => key.startsWith(prefix)))
+  },
+  // @TODO: please expand to ` | Record<string, string> | Record<string, unknown>` when needed
+  stringify: (cookies: { name: string, value: string }[]) => {
+    switch(true) {
+      case Array.isArray(cookies):
+        return cookies.map((c) => `${c.name}=${c.value}`).join('; ')
+      default:
+        return ''
+    }
   },
 }
 export const routeToRegexp = (route: string) => {

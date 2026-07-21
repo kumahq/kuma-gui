@@ -3,7 +3,7 @@ import { base, en } from '@faker-js/faker'
 import type { Env as Keys } from './Env'
 import FakeKuma from './FakeKuma'
 export { default as FakeKuma } from './FakeKuma'
-export { fs } from './fs'
+export * from './fs'
 
 export interface RestRequest {
   method: string
@@ -27,7 +27,7 @@ export const pager = (total: string | number, req: RestRequest, self: string) =>
 
   const remaining = ttal - offset
   const pageTotal = Math.min(size, remaining)
-  const next = remaining <= size ? undefined : `${baseUrl}${self}?size=${size}offset=${offset + size}`
+  const next = remaining <= size ? undefined : `${baseUrl}${self}?size=${size}&offset=${offset + size}`
   return {
     next,
     pageTotal,

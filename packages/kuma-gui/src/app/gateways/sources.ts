@@ -1,9 +1,11 @@
 import createClient from 'openapi-fetch'
 
 import { MeshGateway } from './data'
+import { useDataSource } from '../kuma'
 import type { DataSourceResponse } from '@/app/application'
 import { defineSources } from '@/app/application'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
+import type { ResourceTypeDescriptorCollection } from '@/app/resources/data'
 import { Rule } from '@/app/rules/data'
 import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
 import type { paths } from '@kumahq/kuma-http-api'
@@ -16,7 +18,7 @@ export type MeshGatewayCollectionSource = DataSourceResponse<MeshGatewayCollecti
 
 export const sources = (api: KumaApi) => {
   const http = createClient<paths>({
-    baseUrl: '',
+    baseUrl: api.client.baseUrl,
     fetch: api.client.fetch,
   })
   return defineSources({
@@ -25,22 +27,56 @@ export const sources = (api: KumaApi) => {
       const offset = params.size * (params.page - 1)
       const search = MeshGateway.search(params.search)
 
-      return MeshGateway.fromCollection(await api.getAllMeshGatewaysFromMesh({ mesh }, { size, offset, ...search }))
+      const res = await http.GET('/meshes/{mesh}/meshgateways', {
+        params: {
+          path: {
+            mesh,
+          },
+          query: {
+            offset,
+            size,
+            ...search,
+          },
+        },
+      })
+      return MeshGateway.fromCollection(res.data!)
     },
 
     '/meshes/:mesh/mesh-gateways/:name': async (params) => {
       const { mesh, name } = params
 
-      return MeshGateway.fromObject(await api.getMeshGateway({ mesh, name }))
+      const res = await http.GET('/meshes/{mesh}/meshgateways/{name}', {
+        params: {
+          path: {
+            mesh,
+            name,
+          },
+        },
+      })
+      return MeshGateway.fromObject(res.data!)
     },
 
     '/meshes/:mesh/mesh-gateways/:name/as/kubernetes': async (params) => {
       const { mesh, name } = params
-
-      return api.getMeshGateway({ mesh, name }, { format: 'kubernetes' })
+      const res = await http.GET('/meshes/{mesh}/meshgateways/{name}', {
+        params: {
+          path: {
+            mesh,
+            name,
+          },
+          // @ts-expect-error OpenAPI says this is undefined
+          query: {
+            format: 'kubernetes',
+          },
+        },
+      })
+      // TODO
+      return res.data
     },
 
     '/meshes/:mesh/mesh-gateways/:name/rules': async (params) => {
+      const fetch = useDataSource()
+      const resources = await fetch<ResourceTypeDescriptorCollection>('/resource-type-descriptors')
       const res = await http.GET('/meshes/{mesh}/{resourceType}/{resourceName}/_rules', {
         params: {
           path: {
@@ -50,7 +86,7 @@ export const sources = (api: KumaApi) => {
           },
         },
       })
-      return Rule.fromCollection(res.data!)
+      return Rule.fromCollection(res.data!, resources)
     },
   })
 }

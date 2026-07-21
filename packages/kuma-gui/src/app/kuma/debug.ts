@@ -1,16 +1,20 @@
 import { token } from '@kumahq/container'
-import { fs } from '@kumahq/kuma-http-api/mocks'
+import { addOrigin } from '@kumahq/fake-api'
+import { fs, remote } from '@kumahq/kuma-http-api/mocks'
+// TODO: this is pulled in via playwright which doesn't support vue loading
+// import { XCopyButtonDebug } from '@kumahq/x'
 
 import type { Env } from '@/app/application'
 import type { ServiceDefinition, Token } from '@kumahq/container'
 
 
 const $ = {
+  remoteFS: token<typeof remote>('fake.fs.remote'),
   kumaFS: token<typeof fs>('fake.fs.kuma'),
 }
 
 export const locales = (app: Record<string, Token>): ServiceDefinition[] => [
-  [token('kuma.locales.debug'), {
+  [token('kuma.debug.locales'), {
     service: () => {
       return {
         common: {
@@ -28,26 +32,41 @@ export const locales = (app: Record<string, Token>): ServiceDefinition[] => [
     ],
   }],
 ]
-
 export const services = (app: Record<string, Token>): ServiceDefinition[] => [
-  [token('kuma.env.vars'), {
+  // TODO: this is pulled in via playwright which doens't support vue loading
+  // [token('kuma.debug.components'), {
+  //   service: () => {
+  //     return [
+  //       (name: string, item: unknown) => {
+  //         if (name === 'XCopyButton') {
+  //           return [name, XCopyButtonDebug]
+  //         }
+  //         return [name, item]
+  //       },
+  //     ]
+  //   },
+  //   labels: [
+  //     app.componentWalkers,
+  //   ],
+  // }],
+  [token('kuma.debug.env.vars'), {
     service: () => {
       return {
-        KUMA_MOCK_API_ENABLED: () => 'true',
+        KUMA_MOCK_API_ENABLED: () => import.meta.env.KUMA_MOCK_API_ENABLED ?? '',
       }
     },
     labels: [
       app.vars,
     ],
   }],
+  [$.remoteFS, {
+    service: () => addOrigin(remote, 'https://kuma.io'),
+    labels: [
+      app.fakeFS,
+    ],
+  }],
   [$.kumaFS, {
-    service: (env: Env) => {
-      // return fs
-      const baseURL = env('KUMA_API_URL')
-      return Object.fromEntries(Object.entries(fs).map(([route, response]) => {
-        return [route.includes('://') ? route : `${baseURL}${route}`, response]
-      }))
-    },
+    service: (env: Env) => addOrigin(fs, env('KUMA_API_URL')),
     arguments: [
       app.env,
     ],

@@ -5,23 +5,20 @@ import { Kri } from '../kuma'
 import type { KumaPolicy, KumaPolicyCollection, DynamicPath } from './data'
 import { DataplanePolicies } from './data/DataplanePolicies'
 import { DataplaneInboundPolicies, DataplaneOutboundPolicies } from './data/DataplaneTrafficPolicies'
-import { defineSources, YAML } from '@/app/application'
 import type { DataSourceResponse } from '@/app/application'
+import { defineSources, YAML } from '@/app/application'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
+import type {
+  PolicyDataplane as PartialPolicyDataplane,
+} from '@/types/index.d'
 import type { paths } from '@kumahq/kuma-http-api'
 
-export type PolicyCollection = CollectionResponse<Policy>
 export type PolicySource = DataSourceResponse<Policy>
-export type PolicyCollectionSource = DataSourceResponse<PolicyCollection>
-
-export type PolicyDataplaneCollection = CollectionResponse<PolicyDataplane>
-export type PolicyDataplaneSource = DataSourceResponse<PolicyDataplane>
-export type PolicyDataplaneCollectionSource = DataSourceResponse<PolicyDataplaneCollection>
 
 export const sources = (api: KumaApi) => {
   const http = createClient<paths>({
-    baseUrl: '',
+    baseUrl: api.client.baseUrl,
     fetch: api.client.fetch,
   })
 
@@ -53,19 +50,14 @@ export const sources = (api: KumaApi) => {
       return Policy.fromCollection(res.data as KumaPolicyCollection)
     },
 
-    '/meshes/:mesh/policy-path/:path/policy/:name': async (params) => {
-      const { mesh, path, name } = params
-      if (Kri.isKriString(name)) {
-        const res = await http.GET('/_kri/{kri}', {
-          params: {
-            path: {
-              kri: name,
-            },
-          },
-        })
-        return Policy.fromObject(res.data as KumaPolicy)
-      } else {
-        const res = await http.GET(`/meshes/{mesh}/${path as DynamicPath}/{name}`, {
+    '/policy-path/:path/policy/:kri': async (params) => {
+      const { path, kri } = params
+      const { shortName, mesh, name } = Kri.fromString(kri)
+
+      let response
+
+      if(shortName.startsWith('~')) {
+        response = await http.GET(`/meshes/{mesh}/${path as DynamicPath}/{name}`, {
           params: {
             path: {
               mesh,
@@ -73,31 +65,70 @@ export const sources = (api: KumaApi) => {
             },
           },
         })
-        return Policy.fromObject(res.data as KumaPolicy)
+      } else {
+        response = await http.GET('/_kri/{kri}', {
+          params: {
+            path: {
+              kri,
+            },
+          },
+        })
       }
+      return Policy.fromObject(response.data as KumaPolicy)
     },
 
-    '/meshes/:mesh/policy-path/:path/policy/:name/as/kubernetes': async (params) => {
-      const { mesh, path, name } = params
-      const res = await http.GET(`/meshes/{mesh}/${path as DynamicPath}/{name}`, {
-        params: {
-          path: {
-            mesh,
-            name,
+    '/policy-path/:path/policy/:kri/as/kubernetes': async (params) => {
+      const { path, kri } = params
+      const { shortName, mesh, name } = Kri.fromString(kri)
+
+      let response
+
+      if(shortName.startsWith('~')) {
+        response = await http.GET(`/meshes/{mesh}/${path as DynamicPath}/{name}`, {
+          params: {
+            path: {
+              mesh,
+              name,
+            },
+            // @ts-expect-error - query parameter not listed in OAS
+            query: {
+              format: 'kubernetes',
+            },
           },
-          // @ts-expect-error - query parameter not listed in OAS
-          query: {
-            format: 'kubernetes',
+        })
+      } else {
+        response = await http.GET('/_kri/{kri}', {
+          params: {
+            path: {
+              kri,
+            },
+            // @ts-expect-error - query parameter not listed in OAS
+            query: {
+              format: 'kubernetes',
+            },
           },
-        },
-      })
-      return YAML.stringify(res.data)
+        })
+      }
+      return YAML.stringify(response.data)
     },
 
     '/meshes/:mesh/policy-path/:path/policy/:name/dataplanes': async (params) => {
       const { mesh, path, name, size } = params
       const offset = params.size * (params.page - 1)
-      return PolicyDataplane.fromCollection(await api.getPolicyConnections({ mesh, path, name }, { offset, size }))
+      const res = await http.GET('/meshes/{mesh}/{policyType}/{policyName}/_resources/dataplanes', {
+        params: {
+          path: {
+            mesh,
+            policyType: path,
+            policyName: name,
+          },
+          query: {
+            size,
+            offset,
+          },
+        },
+      })
+      return PolicyDataplane.fromCollection(res.data! as unknown as CollectionResponse<PartialPolicyDataplane>)
     },
 
 

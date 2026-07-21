@@ -341,6 +341,7 @@ export interface LabelValue {
 export interface Entity {
   type: string
   name: string
+  kri?: string
   creationTime?: string
   modificationTime?: string
 }
@@ -390,6 +391,7 @@ export interface Meta<Type extends string = string> {
   type: Type
   mesh: string
   name: string
+  kri?: string
 }
 
 export type Conf = Record<string, unknown>

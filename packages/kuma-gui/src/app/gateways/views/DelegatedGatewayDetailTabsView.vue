@@ -45,15 +45,10 @@
               size="small"
             >
               <h1>
-                <XCopyButton :text="route.params.service">
-                  <RouteTitle :title="t('delegated-gateways.routes.item.title', { name: route.params.service })" />
-                </XCopyButton>
+                <RouteTitle
+                  :title="t('delegated-gateways.routes.item.title', { name: data.name })"
+                />
               </h1>
-              <XBadge
-                :appearance="t(`common.status.appearance.${data.status}`, undefined, { defaultMessage: 'neutral' })"
-              >
-                {{ t(`http.api.value.${data.status}`) }}
-              </XBadge>
             </XLayout>
           </DataLoader>
         </template>

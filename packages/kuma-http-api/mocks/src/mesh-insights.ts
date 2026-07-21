@@ -6,11 +6,15 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
     req,
     '/mesh-insights',
   )
+  const isMtlsEnabled = env('KUMA_MTLS_ENABLED', `${fake.datatype.boolean()}`) === 'true'
+  const meshIdentityCount = parseInt(env('KUMA_MESHIDENTITY_COUNT', `${fake.number.int({ min: 1, max: 3 })}`))
 
   const nameQuery = query.get('name')
 
   return {
-    headers: {},
+    headers: {
+      ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
+    },
     body: {
       total,
       items: Array.from({ length: pageTotal }).map((_, i) => {
@@ -106,28 +110,39 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
               },
             },
           },
-          mTLS: {
-            issuedBackends: {
-              'ca-2': {
-                total: 2,
-                online: 2,
-              },
-              'ca-1': {
-                total: 0,
-                online: 0,
-              },
-            },
-            supportedBackends: {
-              'ca-2': {
-                total: 6,
-                online: 6,
-              },
-              'ca-1': {
-                total: 6,
-                online: 6,
-              },
-            },
-          },
+          mTLS: (() => {
+            if(!isMtlsEnabled) return {}
+
+            // Each mesh-identity has a corresponding mesh-trust sharing the same
+            // kri sections (mesh, zone, namespace, name) — only the shortName differs.
+            const mtlsMidBackends = Array.from({ length: meshIdentityCount }, (_, j) => ({
+              mesh: name,
+              zone: fake.helpers.arrayElement(['', fake.word.noun()]),
+              namespace: fake.helpers.arrayElement(['', fake.word.noun()]),
+              displayName: fake.word.noun(),
+            }))
+            const mtlsBackends = fake.helpers.arrayElements(['ca-1', 'ca-2', 'ca-3'])
+            const dpStats = () => {
+              const { total, online } = fake.kuma.partitionInto({ total: dataplanesTotal, online: Number, offline: Number }, dataplanesTotal)
+              return {
+                total,
+                online,
+              }
+            }
+
+            return {
+              issuedBackends: Object.fromEntries(
+                mtlsMidBackends.length > 0 ?
+                  mtlsMidBackends.map((sections) => [fake.kuma.kri({ resourceName: 'MeshIdentity', ...sections, sectionName: '' }), dpStats()]) :
+                  mtlsBackends.map((backend) => [backend, dpStats()]),
+              ),
+              supportedBackends: Object.fromEntries(
+                mtlsMidBackends.length > 0 ?
+                  mtlsMidBackends.map((sections) => [fake.kuma.kri({ resourceName: 'MeshTrust', ...sections, sectionName: '' }), dpStats()]) :
+                  mtlsBackends.map((backend) => [backend, dpStats()]),
+              ),
+            }
+          })(),
           services: {
             total: serviceTotal,
             ...fake.kuma.partitionInto({

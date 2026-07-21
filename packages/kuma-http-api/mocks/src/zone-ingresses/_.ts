@@ -1,4 +1,7 @@
 import type { Dependencies, ResponseHandler } from '#mocks'
+import type { paths } from '../../..'
+
+type ZoneIngressResponse = paths['/zone-ingresses/{name}']['get']['responses']['200']['content']['application/json']
 
 export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
   const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
@@ -25,15 +28,17 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
   const name = kri ? `${displayName}${nspace ? `.${nspace}` : ''}` : String(req.params.name)
 
   return {
-    headers: {},
+    headers: {
+      ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
+    },
     body: {
       ...(req.url.searchParams.get('format') === 'kubernetes' && {
         apiVersion: 'kuma.io/v1alpha1',
       }),
       type: 'ZoneIngress',
       name,
-      creationTime: '2021-07-13T08:40:59Z',
-      modificationTime: '2021-07-13T08:40:59Z',
+      ...fake.kuma.timespan(),
+      kri: fake.kuma.kri({ resourceName: 'ZoneIngress', mesh: '', zone: zone, namespace: nspace, name: displayName, sectionName: '' }),
       zone,
       networking: {
         address: fake.internet.ip(),
@@ -65,6 +70,6 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
           mesh: 'default',
         },
       ],
-    },
+    } satisfies ZoneIngressResponse,
   }
 }

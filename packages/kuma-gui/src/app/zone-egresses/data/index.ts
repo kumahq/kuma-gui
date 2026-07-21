@@ -17,6 +17,8 @@ export const ZoneEgress = {
     return {
       ...item,
       config: item,
+      kri: item.kri ?? '',
+      id: item.name,
       socketAddress: item.networking?.address && item.networking?.port ? `${item.networking.address}:${item.networking.port}` : '',
       networking: {
         ...item.networking,
@@ -72,10 +74,7 @@ export const ZoneEgressOverview = {
     const zone = labels['kuma.io/origin'] === 'zone' && labels['kuma.io/zone'] ? labels['kuma.io/zone'] : ''
     const namespace = labels['k8s.kuma.io/namespace'] ?? ''
     const name = labels['kuma.io/display-name'] ?? item.name
-
-
-    // temporarily make a KRI until we have those from the backend
-    const kri = Kri.toString({ shortName: 'ze', mesh, zone, namespace, name })
+    const kri = item.kri ?? Kri.toString({ shortName: 'ze', mesh, zone, namespace, name })
 
     return {
       ...item,

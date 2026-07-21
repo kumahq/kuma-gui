@@ -7,11 +7,13 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
     req,
     `/meshes/${params.mesh}/circuit-breakers`,
   )
-  
+
   const queryName = req.url.searchParams.get('name')
 
   return {
-    headers: {},
+    headers: {
+      ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
+    },
     body: {
       total,
       items: Array.from({ length: pageTotal }).map((_, i) => {

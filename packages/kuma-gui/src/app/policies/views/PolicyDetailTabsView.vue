@@ -9,10 +9,9 @@
     v-slot="{ route, t, uri }"
   >
     <DataSource
-      :src="uri(sources, '/meshes/:mesh/policy-path/:path/policy/:name', {
-        mesh: route.params.mesh,
+      :src="uri(sources, '/policy-path/:path/policy/:kri', {
         path: route.params.policyPath,
-        name: route.params.policy,
+        kri: route.params.policy,
       })"
       v-slot="{ data, result }"
     >
@@ -46,13 +45,9 @@
             v-slot="{ data: [policy] }"
           >
             <h1>
-              <XCopyButton
-                :text="policy.name"
-              >
-                <RouteTitle
-                  :title="t('policies.routes.item.title', { name: policy.name })"
-                />
-              </XCopyButton>
+              <RouteTitle
+                :title="t('policies.routes.item.title', { name: policy.name })"
+              />
             </h1>
           </DataLoader>
         </template>

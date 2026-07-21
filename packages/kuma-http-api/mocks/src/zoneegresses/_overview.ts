@@ -12,7 +12,9 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
   const nameQuery = query.get('name')
 
   return {
-    headers: {},
+    headers: {
+      ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
+    },
     body: {
       total,
       items: Array.from({ length: pageTotal }).map((_, i) => {
@@ -20,23 +22,22 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
 
         const displayName = `${nameQuery?.padEnd(nameQuery.length + 1, '-') ?? ''}${fake.word.noun()}-${id}${fake.kuma.dataplaneSuffix(k8s)}`
         const nspace = fake.k8s.namespace()
-
+        const name = `${displayName}${k8s ? `.${nspace}` : ''}`
 
         const subscriptionCount = parseInt(env('KUMA_SUBSCRIPTION_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
 
         return {
           type: 'ZoneEgressOverview',
-          name: `${displayName}${k8s ? `.${nspace}` : ''}`,
-          creationTime: '2021-07-13T08:40:59Z',
-          modificationTime: '2021-07-13T08:40:59Z',
-          ...(k8s
-            ? {
-              labels: {
-                'kuma.io/display-name': displayName,
-                'k8s.kuma.io/namespace': nspace,
-              },
-            }
-            : {}),
+          name,
+          ...fake.kuma.timespan(),
+          kri: fake.kuma.kri({ resourceName: 'ZoneEgress', mesh: '', zone: zoneName, namespace: k8s ? nspace : '', name: displayName, sectionName: '' }),
+          labels: {
+            ...fake.kuma.labels({
+              name: displayName,
+              zone: zoneName,
+              ...(k8s ? { namespace: nspace } : {}),
+            }),
+          },
           zoneEgress: {
             zone: zoneName,
             networking: {

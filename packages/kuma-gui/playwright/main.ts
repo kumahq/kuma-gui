@@ -1,4 +1,4 @@
-import { build, token } from '@kumahq/container'
+import { createBuilder, token } from '@kumahq/container'
 import { setupSteps } from '@kumahq/gherkin-web/playwright'
 import env from '@kumahq/settings/env'
 
@@ -15,6 +15,7 @@ export { test } from '@kumahq/gherkin-web/playwright'
     env: token<typeof env>('playwright.env'),
     vars: token('playwright.env.vars'),
   }
+  const { build } = createBuilder()
   const get = build(
     // mocks
     fakeFs($),
@@ -24,7 +25,7 @@ export { test } from '@kumahq/gherkin-web/playwright'
         service: () => {
           // these are only fed to the mocks
           return {
-            KUMA_API_URL: () => 'http://localhost:5681',
+            KUMA_API_URL: () => new URL(process.env.KUMA_BASE_URL || 'http://localhost:8080/gui').origin,
           }
         },
         labels: [

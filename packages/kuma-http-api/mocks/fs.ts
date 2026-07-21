@@ -2,6 +2,7 @@ import _124 from './kuma.io/latest_version'
 import _999 from './src/_kri/_'
 import _997 from './src/_kri/kri_dp__.ts'
 import _996 from './src/_kri/kri_extsvc__.ts'
+import _985 from './src/_kri/kri_hg__.ts'
 import _986 from './src/_kri/kri_mal__.ts'
 import _995 from './src/_kri/kri_mfi__.ts'
 import _994 from './src/_kri/kri_mgw__.ts'
@@ -11,6 +12,7 @@ import _998 from './src/_kri/kri_msvc__.ts'
 import _990 from './src/_kri/kri_mtrust__.ts'
 import _991 from './src/_kri/kri_mzsvc__.ts'
 import _987 from './src/_kri/kri_wl__.ts'
+import _984 from './src/_kri/kri_z__.ts'
 import _989 from './src/_kri/kri_ze__.ts'
 import _988 from './src/_kri/kri_zi__.ts'
 import _3 from './src/_resources'
@@ -62,6 +64,7 @@ import _29 from './src/meshes/_/health-checks'
 import _30 from './src/meshes/_/health-checks/_'
 import _245 from './src/meshes/_/meshaccesslogs'
 import _246 from './src/meshes/_/meshaccesslogs/_'
+import _247 from './src/meshes/_/meshaccesslogs/_/_resources/dataplanes'
 import _138 from './src/meshes/_/meshexternalservices'
 import _139 from './src/meshes/_/meshexternalservices/_'
 import _172 from './src/meshes/_/meshexternalservices/_/_hostnames'
@@ -123,6 +126,10 @@ import _50 from './src/zones/_'
 import _12 from './src/zones/_/_overview'
 import _11 from './src/zones/_overview'
 
+export const remote = {
+  // stats
+  '/latest_version': _124,
+}
 export const fs = {
   // static/testing
   '/meshes/:mesh/meshgateways/test-meshgateway': _134,
@@ -144,8 +151,6 @@ export const fs = {
   '/meshes/:mesh/dataplanes/grpc-service-75b4ccdfd5-z2jmp.kuma-demo/_rules': _630,
   '/meshes/:mesh/dataplanes/test-dataplane/_rules': _129,
   ///
-  // stats
-  'https://kuma.io/latest_version': _124,
   '/config': _1,
   '/policies': _2,
   '/global-insight': _5,
@@ -202,6 +207,7 @@ export const fs = {
   // policies
   '/meshes/:mesh/meshaccesslogs': _245,
   '/meshes/:mesh/meshaccesslogs/:name': _246,
+  '/meshes/:mesh/meshaccesslogs/:name/_resources/dataplanes': _247,
   '/meshes/:mesh/meshfaultinjections': _52,
   '/meshes/:mesh/meshfaultinjections/:name': _53,
   '/meshes/:mesh/meshfaultinjections/:name/_resources/dataplanes': _54,
@@ -279,6 +285,10 @@ export const fs = {
   '/_kri/kri_wl_:kri': _987,
   // MeshAccessLog
   '/_kri/kri_mal_:kri': _986,
+  // HostnameGenerator
+  '/_kri/kri_hg_:kri': _985,
+  // Zone
+  '/_kri/kri_z_:kri': _984,
   // generic kri -> catches anything that is not matched above
   '/_kri/:kri': _999,
 }

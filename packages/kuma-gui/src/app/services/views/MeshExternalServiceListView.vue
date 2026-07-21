@@ -5,7 +5,7 @@
       page: 1,
       size: Number,
       mesh: '',
-      service: '',
+      kri: '',
       s: '',
     }"
     v-slot="{ route, t, can, uri, me }"
@@ -75,7 +75,7 @@
                     { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
                   ]"
                   :items="data.items"
-                  :is-selected-row="(item) => item.name === route.params.service"
+                  :is-selected-row="(item) => item.kri === route.params.kri"
                   @resize="me.set"
                 >
                   <template #name="{ row: item }">
@@ -88,7 +88,7 @@
                           name: 'mesh-external-service-summary-view',
                           params: {
                             mesh: item.mesh,
-                            service: item.id,
+                            kri: item.kri,
                           },
                           query: {
                             page: route.params.page,
@@ -110,12 +110,7 @@
                     <template v-if="item.labels && item.labels['kuma.io/origin'] === 'zone' && item.labels['kuma.io/zone']">
                       <XAction
                         v-if="item.labels['kuma.io/zone']"
-                        :to="{
-                          name: 'zone-cp-detail-view',
-                          params: {
-                            zone: item.labels['kuma.io/zone'],
-                          },
-                        }"
+                        :href="`kri://${Kri.toString({ shortName: 'z', name: item.labels['kuma.io/zone'] })}`"
                       >
                         {{ item.labels['kuma.io/zone'] }}
                       </XAction>
@@ -144,7 +139,7 @@
                           name: 'mesh-external-service-detail-view',
                           params: {
                             mesh: item.mesh,
-                            service: item.id,
+                            kri: item.kri,
                           },
                         }"
                       >
@@ -154,7 +149,7 @@
                   </template>
                 </AppCollection>
                 <RouterView
-                  v-if="data.items && route.params.service"
+                  v-if="data.items && route.params.kri"
                   v-slot="child"
                 >
                   <XDrawer
@@ -188,6 +183,7 @@
 <script lang="ts" setup>
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
+import { Kri } from '@/app/kuma'
 import type { Mesh } from '@/app/meshes/data'
 import { sources as meshSources } from '@/app/meshes/sources'
 

@@ -29,7 +29,9 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
   const proxies = fake.number.int({ min: 1, max: 120 })
 
   return {
-    headers: {},
+    headers: {
+      ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
+    },
     body: {
       ...(query.get('format') === 'kubernetes' && {
         apiVersion: 'kuma.io/v1alpha1',
@@ -37,8 +39,8 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
       type: 'MeshService',
       mesh,
       name,
-      creationTime: '2021-02-19T08:06:15.14624+01:00',
-      modificationTime: '2021-02-19T08:07:37.539229+01:00',
+      kri: fake.kuma.kri({ resourceName: 'MeshService', mesh, zone, namespace: nspace, name: displayName || name, sectionName: '' }),
+      ...fake.kuma.timespan(),
       labels: {
         ...fake.kuma.labels({
           name: displayName,

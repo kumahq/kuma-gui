@@ -680,6 +680,7 @@ tcp.${service}.${direction}_cx_rx_bytes_total: ${fake.number.int(minMax)}`
 
   return {
     headers: {
+      ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
       // 'Status-Code': '500',
       'Content-Type': 'text/plain',
     },

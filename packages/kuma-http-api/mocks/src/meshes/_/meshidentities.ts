@@ -10,11 +10,13 @@ export default ({ fake, env, pager }: Dependencies): ResponseHandler => (req) =>
   const { offset, total, next, pageTotal } = pager(
     env('KUMA_MESHIDENTITY_COUNT', `${fake.number.int({ min: 1, max: 3 })}`),
     req,
-    `/meshes/${req.params.mesh}/meshidens`,
+    `/meshes/${req.params.mesh}/meshidentities`,
   )
 
   return {
-    headers: {},
+    headers: {
+      ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
+    },
     body: {
       total,
       next,
@@ -29,7 +31,7 @@ export default ({ fake, env, pager }: Dependencies): ResponseHandler => (req) =>
           displayName,
         ] = [
           'kri', // prefix
-          'mtrust', // shortName
+          'mid', // shortName
           String(req.params.mesh), // mesh
           fake.helpers.arrayElement(['', fake.word.noun()]), // zone
           ...([k8s ? fake.word.noun() : '', `${fake.word.noun()}-${id}`]), // nspace, displayName

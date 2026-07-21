@@ -8,7 +8,9 @@ export default ({ fake, env, pager }: Dependencies): ResponseHandler => (req) =>
   )
 
   return {
-    headers: {},
+    headers: {
+      ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
+    },
     body: {
       total,
       items: Array.from({ length: pageTotal }).map((_, i) => {
@@ -17,6 +19,7 @@ export default ({ fake, env, pager }: Dependencies): ResponseHandler => (req) =>
         return {
           type: 'Zone',
           name,
+          kri: fake.kuma.kri({ resourceName: 'Zone', zone: '', mesh: '', namespace: '', name, sectionName: '' }),
           creationTime: '2020-07-22T19:37:28.442793+03:00',
           modificationTime: '2020-07-22T19:37:28.442793+03:00',
           enabled: true,

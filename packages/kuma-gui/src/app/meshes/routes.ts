@@ -7,14 +7,7 @@ export type SplitRouteRecordRaw = {
   item: () => RouteRecordRaw[]
 }
 
-export const routes = (
-  services: SplitRouteRecordRaw,
-  gateways: SplitRouteRecordRaw,
-  dataplanes: SplitRouteRecordRaw,
-  policies: SplitRouteRecordRaw,
-  workloads: SplitRouteRecordRaw,
-  resources: SplitRouteRecordRaw,
-): RouteRecordRaw[] => {
+export const routes = (): RouteRecordRaw[] => {
   return [
     {
       path: 'meshes',
@@ -47,20 +40,8 @@ export const routes = (
                     ...meshTrust().summary('mesh'),
                   ],
                 },
-                ...services.items(),
-                ...workloads.items(),
-                ...gateways.items(),
-                ...dataplanes.items(),
-                ...policies.items(),
-                ...resources.items(),
               ],
             },
-            ...services.item(),
-            ...gateways.item(),
-            ...dataplanes.item(),
-            ...policies.item(),
-            ...workloads.item(),
-            ...resources.item(),
           ],
         },
       ],

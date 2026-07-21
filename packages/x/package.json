@@ -12,18 +12,18 @@
     "help": "make help"
   },
   "dependencies": {
-    "@kong-ui-public/app-layout": "4.11.5",
-    "@kong/kongponents": "^9.56.2",
-    "@kong/icons": "^1.56.0",
-    "shiki": "^4.1.0",
+    "@kong-ui-public/app-layout": "4.13.1",
+    "@kong/kongponents": "^9.61.1",
+    "@kong/icons": "^1.61.2",
+    "shiki": "^4.3.0",
     "@vueuse/core": "^14.3.0",
-    "@vue/shared": "^3.5.34",
+    "@vue/shared": "^3.5.35",
     "vue-global-events": "^3.0.1",
-    "vue-router": "^4.6.4"
+    "vue-router": "^5.1.0"
   },
   "devDependencies": {
     "@kumahq/config": "*",
-    "@kong/design-tokens": "^1.23.0"
+    "@kong/design-tokens": "^3.0.1"
   },
   "peerDependencies": {
     "vue": "*"

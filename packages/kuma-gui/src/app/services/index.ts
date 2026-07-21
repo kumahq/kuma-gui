@@ -6,6 +6,7 @@ import { routes } from './routes'
 import { sources } from './sources'
 import type { Can } from '@/app/application'
 import type { ServiceDefinition } from '@kumahq/container'
+import type { RouteRecordRaw } from 'vue-router'
 
 type Token = ReturnType<typeof token>
 
@@ -22,13 +23,23 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
     }],
     [token('services.routes'), {
       service: (can: Can) => {
-        return [routes(can)]
+        const _routes = routes(can)
+        return [
+          (item: RouteRecordRaw) => {
+            if (item.name === 'mesh-detail-tabs-view') {
+              item.children = (item.children ?? []).concat(_routes.items())
+            }
+            if(item.name === 'mesh') {
+              item.children = (item.children ?? []).concat(_routes.item())
+            }
+          },
+        ]
       },
       arguments: [
         app.can,
       ],
       labels: [
-        app.routes,
+        app.routeWalkers,
       ],
     }],
     [token('services.features'), {

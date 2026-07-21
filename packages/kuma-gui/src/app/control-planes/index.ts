@@ -11,13 +11,12 @@ import type { ServiceDefinition } from '@kumahq/container'
 type Token = ReturnType<typeof token>
 
 const $ = {
-  sources: token<ReturnType<typeof sources>>('control-planes.sources'),
   ControlPlaneStatus: token<typeof ControlPlaneStatus>('control-planes.components.ControlPlaneStatus'),
   ControlPlaneActionGroup: token<typeof ControlPlaneActionGroup>('control-planes.components.ControlPlaneActionGroup'),
 }
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   return [
-    [$.sources, {
+    [token('control-planes.sources'), {
       service: sources,
       arguments: [
         app.env,

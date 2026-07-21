@@ -14,7 +14,9 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
   const ruleMatchCount = parseInt(env('KUMA_RULE_MATCH_COUNT', `${fake.number.int({ min: 1, max: 3 })}`))
 
   return {
-    headers: {},
+    headers: {
+      ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
+    },
     body: {
       resource: {
         type: 'MeshGateway',

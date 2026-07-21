@@ -13,7 +13,7 @@
   >
     <DataCollection
       :predicate="(resourceType) => typeof resourceType !== 'undefined' && resourceType.path === route.params.resourcePath"
-      :items="props.resourceTypes?.resources ?? []"
+      :items="(props.resourceTypes?.resources ?? []).filter((item) => item.shortName.length > 0)"
     >
       <template #empty>
         <XCard>
@@ -160,12 +160,7 @@
                     <template #zone="{ row }">
                       <XAction
                         v-if="row.zone.length > 0"
-                        :to="{
-                          name: 'zone-cp-detail-view',
-                          params: {
-                            zone: row.zone,
-                          },
-                        }"
+                        :href="`kri://${Kri.toString({ shortName: 'z', name: row.zone })}`"
                       >
                         {{ row.zone }}
                       </XAction>
@@ -226,6 +221,7 @@ import type { ResourceTypeDescriptorCollection } from '../data'
 import { sources } from '../sources'
 import { useDataEmptyState } from '@/app/application'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
+import { Kri } from '@/app/kuma'
 const DataEmptyState = useDataEmptyState()
 const props = defineProps<{
   resourceTypes?: ResourceTypeDescriptorCollection

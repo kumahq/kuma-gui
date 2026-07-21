@@ -18,20 +18,31 @@ Feature: zones / ingresses / item
       KUMA_MODE: global
       KUMA_SUBSCRIPTION_COUNT: 2
       """
-    And the URL "/zone-ingresses/item-1/_overview" responds with
+    And the URL "/zone-ingresses/item-1.kuma-system/_overview" responds with
       """
       body:
+        name: item-1.kuma-system
+        kri: kri_zi__zone-cp-1_kuma-system_item-1_
         labels:
-          kuma.io/display-name: default
+          kuma.io/display-name: item-1
+          kuma.io/zone: zone-cp-1
+      """
+    And the URL "/_kri/kri_zi__zone-1_kuma-system_item-1_" responds with
+      """
+      body:
+        name: item-1.kuma-system
+        kri: kri_zi__zone-cp-1_kuma-system_item-1_
+        labels:
+          kuma.io/display-name: item-1
       """
 
   Scenario: The about section has the expected content
-    When I visit the "/zones/zone-cp-1/ingresses/item-1/overview" URL
+    When I visit the "/zones/kri_z____zone-cp-1_/ingresses/kri_zi__zone-cp-1_kuma-system_item-1_/overview" URL
     Then the "$about-section" element exists
-    And the "$about-section" element contains "kuma.io/display-name:default"
+    And the "$about-section" element contains "kuma.io/display-name:item-1"
 
   Scenario: Clicking through the secondary navigation
-    When I visit the "/zones/zone-cp-1/ingresses/item-1/overview" URL
+    When I visit the "/zones/kri_z____zone-cp-1_/ingresses/kri_zi__zone-cp-1_kuma-system_item-1_/overview" URL
     Then I click the "$navigation li:nth-child(2) a" element
     Then I click the "$navigation li:nth-child(3) a" element
     Then I click the "$navigation li:nth-child(4) a" element
@@ -40,9 +51,10 @@ Feature: zones / ingresses / item
     Then I click the "$navigation li:nth-child(1) a" element
 
   Scenario: Detail view has expected content
-    And the URL "/zone-ingresses/item-1/_overview" responds with
+    And the URL "/zone-ingresses/item-1.kuma-system/_overview" responds with
       """
       body:
+        kri: kri_zi__zone-cp-1_kuma-system_item-1_
         zoneIngress:
           zone: zone-cp-1
           networking:
@@ -50,14 +62,14 @@ Feature: zones / ingresses / item
             advertisedAddress: !!js/undefined
             port: 20555
       """
-    When I visit the "/zones/zone-cp-1/ingresses/item-1/overview" URL
+    When I visit the "/zones/kri_z____zone-cp-1_/ingresses/kri_zi__zone-1_kuma-system_item-1_/overview" URL
     Then the "$header" element contains "item-1"
     Then the "$overview-view" element contains "166.197.238.26:20555"
     When I click the "$config-tab" element
     Then the "$config-view" element contains "type: ZoneIngress"
 
   Scenario: Shows config with format based on environment
-    When I visit the "/zones/zone-cp-1/ingresses/item-1/config" URL
+    When I visit the "/zones/kri_z____zone-cp-1_/ingresses/kri_zi__zone-1_kuma-system_item-1_/config" URL
     Then the "$config-universal" element exists
     And the URL contains "?environment=universal"
     When I click the "$select-environment" element

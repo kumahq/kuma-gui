@@ -14,7 +14,15 @@ Feature: dataplanes / no-subscriptions
       KUMA_SUBSCRIPTION_COUNT: 0
       KUMA_DATAPLANEINBOUND_COUNT: 1
       """
-    And the URL "/meshes/default/dataplanes/backend/_overview" responds with
+    And the URL "/_kri/kri_dp_default_zone-1_kuma-demo_backend_" responds with
+      """
+      body:
+        name: backend.kuma-demo
+        kri: kri_dp_default_zone-1_kuma-demo_backend_
+        labels:
+          kuma.io/display-name: backend
+      """
+    And the URL "/meshes/default/dataplanes/backend.kuma-demo/_overview" responds with
       """
       body:
         dataplane:
@@ -22,6 +30,6 @@ Feature: dataplanes / no-subscriptions
             inbound:
               - state: Ready
       """
-    When I visit the "/meshes/default/data-planes/backend/overview" URL
+    When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_backend_/overview" URL
     And the "$detail-view" element contains "backend"
     And the "$overview-content" element contains "Not connected to CP"

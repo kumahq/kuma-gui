@@ -9,7 +9,9 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
   const nameQuery = query.get('name')
 
   return {
-    headers: {},
+    headers: {
+      ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
+    },
     body: {
       total,
       items: Array.from({ length: pageTotal }).map((_, i) => {
@@ -22,8 +24,8 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
         return {
           type: 'ZoneOverview',
           name,
-          creationTime: '2021-02-19T08:06:15.380674+01:00',
-          modificationTime: '2021-02-19T08:06:15.380674+01:00',
+          ...fake.kuma.timespan(),
+          kri: fake.kuma.kri({ resourceName: 'Zone', zone: '', mesh: '', namespace: '', name, sectionName: '' }),
           zone: {
             enabled: fake.datatype.boolean(),
           },

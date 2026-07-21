@@ -1,13 +1,14 @@
 import { InboundRule } from './InboundRule'
 import { Origin } from './Origin'
 import { ResourceRule } from './ResourceRule'
+import type { ResourceTypeDescriptorCollection } from '@/app/resources/data'
 import type { components } from '@kumahq/kuma-http-api'
 
 type Entity = components['schemas']['Rule']
 type InspectRules = components['schemas']['InspectRules']
 
 export const Rule = {
-  fromObject(item: Entity) {
+  fromObject(item: Entity, resources: ResourceTypeDescriptorCollection) {
     const { conf = {}, origin, ...rest } = item
     const rules = (Array.isArray(conf.rules) ? conf.rules : []).map((rule) => {
       const { backendRefs = [], filters = [] } = rule.default
@@ -32,18 +33,18 @@ export const Rule = {
         hostnames: Array.isArray(conf.hostnames) && conf.hostnames.length > 0 ? conf.hostnames : ['*'],
         rules,
       },
-      origins: Array.isArray(origin) ? origin.map((o) => Origin.fromObject(o)) : [],
+      origins: Array.isArray(origin) ? origin.map((o) => Origin.fromObject(o, resources)) : [],
       matchers: Array.isArray(item.matchers) ? item.matchers : [],
     }
   },
-  fromCollection(item: InspectRules) {
+  fromCollection(item: InspectRules, resources: ResourceTypeDescriptorCollection) {
     const rules = Array.isArray(item.rules)
       ? item.rules.reduce((prev, item) => {
         // to rules we can just reshape.
         const to = Array.isArray(item.toRules)
           ? item.toRules.map(rule => {
             return {
-              ...Rule.fromObject(rule),
+              ...Rule.fromObject(rule, resources),
               ruleType: 'to',
               type: item.type,
             }
@@ -57,7 +58,7 @@ export const Rule = {
             return prev.concat(rules.map(r => {
               return {
                 ...rest,
-                ...Rule.fromObject(r),
+                ...Rule.fromObject(r, resources),
                 ruleType: 'from',
                 type: item.type,
               }
@@ -69,7 +70,7 @@ export const Rule = {
         // with a single entry so it looks like to and from rules
         const proxy = typeof item.proxyRule !== 'undefined'
           ? [{
-            ...Rule.fromObject(item.proxyRule as Entity),
+            ...Rule.fromObject(item.proxyRule as Entity, resources),
             ruleType: 'proxy',
             type: item.type,
           }]
@@ -90,7 +91,7 @@ export const Rule = {
                   ...rule,
                   ...inboundRule,
                   type: item.type,
-                }),
+                }, resources),
               }
             })
           }).flat()

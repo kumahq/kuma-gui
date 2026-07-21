@@ -1,33 +1,37 @@
 import type { Dependencies, ResponseHandler } from '#mocks'
 export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
-  const { name } = req.params
   const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
-
-  const parts = String(name).split('.')
-  const displayName = parts.slice(0, -1).join('.')
-  const nspace = parts.at(-1) ?? ''
-
-  const zoneName = fake.word.noun()
+  const [
+    zone,
+    nspace,
+    displayName,
+  ] = [
+    fake.helpers.arrayElement(['', fake.word.noun()]), // zone
+    // with k8s the request.name MUST be use the correct `name.ns` format
+    ...(k8s ? String(req.params.name).split('.').toReversed() : ['', String(req.params.name)]), // nspace, displayName
+  ]
+  const name = String(req.params.name)
 
   const subscriptionCount = parseInt(env('KUMA_SUBSCRIPTION_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
 
   return {
-    headers: {},
+    headers: {
+      ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
+    },
     body: {
       type: 'ZoneEgressOverview',
       name,
-      creationTime: '2021-07-13T08:40:59Z',
-      modificationTime: '2021-07-13T08:40:59Z',
-      ...(k8s
-        ? {
-          labels: {
-            'kuma.io/display-name': displayName,
-            'k8s.kuma.io/namespace': nspace,
-          },
-        }
-        : {}),
+      ...fake.kuma.timespan(),
+      kri: fake.kuma.kri({ resourceName: 'ZoneEgress', mesh: '', zone, namespace: nspace, name: displayName, sectionName: '' }),
+      labels: {
+        ...fake.kuma.labels({
+          name: displayName,
+          zone,
+          ...(k8s ? { namespace: nspace } : {}),
+        }),
+      },
       zoneEgress: {
-        zone: zoneName,
+        zone,
         networking: {
           address: fake.internet.ip(),
           port: fake.internet.port(),

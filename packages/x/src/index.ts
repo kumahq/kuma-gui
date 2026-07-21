@@ -5,6 +5,7 @@ import {
 } from '@kong/kongponents'
 import { createHighlighterCore } from 'shiki/core'
 import { createJavaScriptRegexEngine } from 'shiki/engine/javascript'
+import { inject } from 'vue'
 
 import {
   XAction,
@@ -37,6 +38,7 @@ import {
   XPrompt,
   XProvider,
   XRadio,
+  XRouter,
   XSearch,
   XSelect,
   XTable,
@@ -50,7 +52,7 @@ import {
   XErrorState,
 } from './components'
 import { vStyle, vIcon }  from './directives/'
-import type { Plugin } from 'vue'
+import type { App, Plugin, InjectionKey } from 'vue'
 
 export * from './components'
 
@@ -84,6 +86,7 @@ const components = [
   ['XPrompt', XPrompt],
   ['XProvider', XProvider],
   ['XProgress', XProgress],
+  ['XRouter', XRouter],
   ['XSelect', XSelect],
   ['XTabs', XTabs],
   ['XTable', XTable],
@@ -139,6 +142,7 @@ declare module 'vue' {
     XPrompt: typeof XPrompt
     XProvider: typeof XProvider
     XProgress: typeof XProgress
+    XRouter: typeof XRouter
     XSelect: typeof XSelect
     XTabs: typeof XTabs
     XTable: typeof XTable
@@ -161,6 +165,7 @@ declare module 'vue' {
 declare const typeSymbol: unique symbol
 type Uri<T = unknown> = { [typeSymbol]: T }
 type TypeOf<T> = T extends Uri<infer UriType> ? UriType : never
+type InjectionHooks<T extends Uri[]> = { [K in keyof T]: T[K] extends Uri ? () => TypeOf<T[K]> : never }
 //
 
 /* nano-container */
@@ -175,12 +180,44 @@ const nano = (map = new Map<Uri, unknown>()) => {
   }
   return { singleton, uri }
 }
+type Container = ReturnType<typeof nano>
 /* */
+
+const createInjections = <T extends Uri[]>(...tokens: T): InjectionHooks<T> => {
+  return tokens.map((token) => {
+    return () => {
+      type Service = TypeOf<typeof token>
+      type Getter = () => Service
+      const service = inject(token as unknown as InjectionKey<Getter>) as () => TypeOf<typeof token>
+      if(typeof service === 'undefined') {
+        throw new Error('Unable to find injection ${token}')
+      }
+      return service()
+    }
+  }) as InjectionHooks<T>
+}
+const createBuilder = (container: Container) => {
+  const { singleton, uri } = container
+  const build = (app: App) => {
+    const builder = {
+      service: <T>(uri: Uri<T>, getter: () => T) => {
+        app.provide(uri as unknown as InjectionKey<typeof getter>, singleton(uri, getter))
+        return builder
+      },
+    }
+    return builder
+  }
+  return { build, uri }
+}
+
+const { uri } = nano()
+
 const deps = {
   i18n: {
     t: (str: string, _values?: Record<string, string>, _options?: Record<string, unknown>) => str,
     locale: 'en-us',
   },
+  routerElement: () => document.body,
   protocolHandler: (href: string) => href,
   syntaxHighlighter: async () => {
     return createHighlighterCore({
@@ -199,23 +236,29 @@ const deps = {
     })
   },
 }
-const { singleton, uri } = nano()
 const tokens = {
   i18n: uri<typeof deps.i18n>('x.i18n'),
   protocolHandler: uri<typeof deps.protocolHandler>('x.action.protocolhandler'),
   syntaxHighlighter: uri<typeof deps.syntaxHighlighter>('x.code-block.syntaxhighlighter'),
+  routerElement: uri<HTMLElement>('x.router.routerElement'),
 }
-
-export const useI18n = singleton(tokens.i18n, () => deps.i18n)
-export const useProtocolHandler = singleton(tokens.protocolHandler, () => deps.protocolHandler)
-export const useSyntaxHighlighter = singleton(tokens.syntaxHighlighter, () => {
-  const syntax = deps.syntaxHighlighter()
-  return async () => syntax
-})
-
 const plugin: Plugin = {
   install: (app, options: Partial<typeof deps> = {}) => {
-    Object.assign(deps, options)
+    const services = {
+      ...deps,
+      ...options,
+    }
+
+    const { build } = createBuilder(nano())
+    build(app)
+      .service(tokens.syntaxHighlighter, () => {
+        const syntax = deps.syntaxHighlighter()
+        return async () => syntax
+      })
+      .service(tokens.protocolHandler, () => services.protocolHandler)
+      .service(tokens.i18n, () => services.i18n)
+      .service(tokens.routerElement, services.routerElement)
+
     components.forEach(([name, item]) => {
       app.component(name, item)
     })
@@ -224,4 +267,15 @@ const plugin: Plugin = {
     })
   },
 }
+export const [
+  useI18n,
+  useSyntaxHighlighter,
+  useProtocolHandler,
+  useRouterElement,
+] = createInjections(
+  tokens.i18n,
+  tokens.syntaxHighlighter,
+  tokens.protocolHandler,
+  tokens.routerElement,
+)
 export default plugin

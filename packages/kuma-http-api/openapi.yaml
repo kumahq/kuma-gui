@@ -4262,6 +4262,347 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MeshInsight'
+  /meshes/{mesh}/service-insights:
+    get:
+      parameters:
+        - name: mesh
+          in: path
+          required: true
+          type: string
+        - name: type
+          in: query
+          type: string
+        - $ref: '#/components/parameters/size'
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/filter'
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                type: object
+  /meshes/{mesh}/service-insights/{name}:
+    get:
+      parameters:
+        - name: mesh
+          in: path
+          required: true
+          type: string
+        - name: name
+          in: path
+          required: true
+          type: string
+        - $ref: '#/components/parameters/format'
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                type: object
+  /meshes/{mesh}/external-services:
+    get:
+      parameters:
+        - name: mesh
+          in: path
+          required: true
+          type: string
+        - $ref: '#/components/parameters/size'
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/filter'
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                type: object
+  /meshes/{mesh}/external-services/{name}:
+    get:
+      parameters:
+        - name: name
+          in: path
+          required: true
+          type: string
+        - $ref: '#/components/parameters/format'
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                type: object
+  /meshes/{mesh}/dataplanes/{name}/xds:
+    get:
+      parameters:
+        - name: mesh
+          in: path
+          required: true
+          type: string
+        - name: name
+          in: path
+          required: true
+          type: string
+        - name: include_eds
+          in: query
+          required: false
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                type: object
+  /meshes/{mesh}/dataplanes/{name}/stats:
+    get:
+      parameters:
+        - name: mesh
+          in: path
+          required: true
+          type: string
+        - name: name
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                type: string
+  /meshes/{mesh}/dataplanes/{name}/clusters:
+    get:
+      parameters:
+        - name: mesh
+          in: path
+          required: true
+          type: string
+        - name: name
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                type: string
+  /meshes/{mesh}/dataplanes/{name}/policies:
+    get:
+      parameters:
+        - name: mesh
+          in: path
+          required: true
+          type: string
+        - name: name
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                type: object
+  /zones/_overview:
+    get:
+      parameters:
+        - $ref: '#/components/parameters/name'
+        - $ref: '#/components/parameters/size'
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/filter'
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                type: object
+  /zones/{name}/_overview:
+    get:
+      parameters:
+        - name: name
+          in: path
+          required: true
+          type: string
+        - $ref: '#/components/parameters/format'
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                type: object
+  /zone-ingresses/_overview:
+    get:
+      parameters:
+        - $ref: '#/components/parameters/name'
+        - $ref: '#/components/parameters/size'
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/filter'
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                type: object
+  /zone-ingresses/{name}/_overview:
+    get:
+      parameters:
+        - name: name
+          in: path
+          required: true
+          type: string
+        - $ref: '#/components/parameters/format'
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                type: object
+  /zone-ingresses/{name}:
+    get:
+      parameters:
+        - name: name
+          in: path
+          required: true
+          type: string
+        - $ref: '#/components/parameters/format'
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ZoneIngressItem'
+  /zoneingresses/{name}/xds:
+    get:
+      parameters:
+        - name: name
+          in: path
+          required: true
+          type: string
+        - name: include_eds
+          in: query
+          required: false
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                type: object
+  /zoneingresses/{name}/stats:
+    get:
+      parameters:
+        - name: name
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            text/plain:
+              schema:
+                type: string
+  /zoneingresses/{name}/clusters:
+    get:
+      parameters:
+        - name: name
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            text/plain:
+              schema:
+                type: string
+  /zoneegresses/_overview:
+    get:
+      parameters:
+        - $ref: '#/components/parameters/name'
+        - $ref: '#/components/parameters/size'
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/filter'
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                type: object
+  /zoneegresses/{name}/_overview:
+    get:
+      parameters:
+        - name: name
+          in: path
+          required: true
+          type: string
+        - $ref: '#/components/parameters/format'
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                type: object
+  /zoneegresses/{name}/xds:
+    get:
+      parameters:
+        - name: name
+          in: path
+          required: true
+          type: string
+        - name: include_eds
+          in: query
+          required: false
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                type: object
+  /zoneegresses/{name}/stats:
+    get:
+      parameters:
+        - name: name
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            text/plain:
+              schema:
+                type: string
+  /zoneegresses/{name}/clusters:
+    get:
+      parameters:
+        - name: name
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            text/plain:
+              schema:
+                type: string
 components:
   parameters:
     name:
@@ -4272,7 +4613,7 @@ components:
         type: string
     filter:
       in: query
-      name: filter
+      description: filter by labels when multiple filters are present, they are ANDed
       required: false
       schema:
         type: object
@@ -4281,6 +4622,8 @@ components:
             type: string
           value:
             type: string
+      example:
+        label.k8s.kuma.io/namespace: my-ns
     format:
       in: query
       name: format
@@ -16911,6 +17254,26 @@ components:
       oneOf:
         - $ref: '#/components/schemas/TargetRefPolicy'
         - $ref: '#/components/schemas/LegacyPolicy'
+    Zone:
+      type: object
+      properties:
+        name:
+          type: string
+        creationTime:
+          type: string
+        modificationTime:
+          type: string
+        type:
+          type: string
+          enum:
+            - Zone
+        enabled:
+          type: boolean
+      required:
+        - type
+        - name
+        - creationTime
+        - modificationTime
     PolicyCollection:
       type: object
       properties:

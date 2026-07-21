@@ -48,15 +48,10 @@
               size="small"
             >
               <h1>
-                <XCopyButton
-                  :text="workload.name"
+                <RouteTitle
+                  :title="workload.name"
                 />
               </h1>
-              <XBadge
-                :appearance="t(`common.status.appearance.${workload.status.state}`, undefined, { defaultMessage: 'neutral' })"
-              >
-                {{ t(`http.api.value.${workload.status.state}`) }}
-              </XBadge>
             </XLayout>
           </DataLoader>
         </template>

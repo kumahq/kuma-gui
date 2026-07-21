@@ -25,8 +25,8 @@ jobs:
     timeout-minutes: 30
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
-      - uses: zgosalvez/github-actions-ensure-sha-pinned-actions@ca46236c6ce584ae24bc6283ba8dcf4b3ec8a066 # v5.0.4
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: zgosalvez/github-actions-ensure-sha-pinned-actions@3db98c0363e2fa5df3e1c4c471777a7c10b24cc9 # v5.0.5
 
   install-dependencies:
     timeout-minutes: 30
@@ -40,7 +40,7 @@ jobs:
       preview: ${{ steps.meta.outputs.preview }}
       e2e: ${{ steps.meta.outputs.e2e }}
     steps:
-      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - uses: ./.github/actions/bootstrap/
         with:
           install-cmd: |
@@ -71,7 +71,7 @@ jobs:
     name: |
       Linting ${{ matrix.package.name }}
     steps:
-      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - uses: ./.github/actions/bootstrap/
       - run: |
           make -C ${{ matrix.package.path }} lint
@@ -87,7 +87,7 @@ jobs:
     name: |
       Unit tests: ${{ matrix.package.name }}
     steps:
-      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - uses: ./.github/actions/bootstrap/
       - run: |
           make -C ${{ matrix.package.path }} test/unit
@@ -105,10 +105,11 @@ jobs:
     name: |
       Browser tests: ${{ matrix.package.name }}
     steps:
-      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - uses: ./.github/actions/bootstrap/
       - env:
           KUMA_BASE_URL: 'http://localhost:5681/gui'
+          KUMA_API_URL: 'http://localhost:5681'
           KUMA_E2E_SHARD_CURRENT: ${{ matrix.container }}
           KUMA_E2E_SHARD_TOTAL: 4
         run: |

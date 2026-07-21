@@ -169,6 +169,48 @@ paths:
     $ref: paths/mesh-insights.yaml
   /mesh-insights/{name}:
     $ref: paths/mesh-insights_{name}.yaml
+  /meshes/{mesh}/service-insights:
+    $ref: paths/meshes_{mesh}_service-insights.yaml
+  /meshes/{mesh}/service-insights/{name}:
+    $ref: paths/meshes_{mesh}_service-insights_{name}.yaml
+  /meshes/{mesh}/external-services:
+    $ref: paths/meshes_{mesh}_external-services.yaml
+  /meshes/{mesh}/external-services/{name}:
+    $ref: paths/meshes_{mesh}_external-services_{name}.yaml
+  /meshes/{mesh}/dataplanes/{name}/xds:
+    $ref: paths/meshes_{mesh}_dataplanes_{name}_xds.yaml
+  /meshes/{mesh}/dataplanes/{name}/stats:
+    $ref: paths/meshes_{mesh}_dataplanes_{name}_stats.yaml
+  /meshes/{mesh}/dataplanes/{name}/clusters:
+    $ref: paths/meshes_{mesh}_dataplanes_{name}_clusters.yaml
+  /meshes/{mesh}/dataplanes/{name}/policies:
+    $ref: paths/meshes_{mesh}_dataplanes_{name}_policies.yaml
+  /zones/_overview:
+    $ref: paths/zones__overview.yaml
+  /zones/{name}/_overview:
+    $ref: paths/zones_{name}_overview.yaml
+  /zone-ingresses/_overview:
+    $ref: paths/zone-ingresses__overview.yaml
+  /zone-ingresses/{name}/_overview:
+    $ref: paths/zone-ingresses_{name}_overview.yaml
+  /zone-ingresses/{name}:
+    $ref: paths/zone-ingresses_{name}.yaml
+  /zoneingresses/{name}/xds:
+    $ref: paths/zoneingresses_{name}_xds.yaml
+  /zoneingresses/{name}/stats:
+    $ref: paths/zoneingresses_{name}_stats.yaml
+  /zoneingresses/{name}/clusters:
+    $ref: paths/zoneingresses_{name}_clusters.yaml
+  /zoneegresses/_overview:
+    $ref: paths/zoneegresses__overview.yaml
+  /zoneegresses/{name}/_overview:
+    $ref: paths/zoneegresses_{name}_overview.yaml
+  /zoneegresses/{name}/xds:
+    $ref: paths/zoneegresses_{name}_xds.yaml
+  /zoneegresses/{name}/stats:
+    $ref: paths/zoneegresses_{name}_stats.yaml
+  /zoneegresses/{name}/clusters:
+    $ref: paths/zoneegresses_{name}_clusters.yaml
 components:
   schemas:
     Index:
@@ -357,6 +399,8 @@ components:
       $ref: components/schemas/WorkloadItem.yaml
     Policy:
       $ref: components/schemas/Policy.yaml
+    Zone:
+      $ref: components/schemas/Zone.yaml
     PolicyCollection:
       $ref: components/schemas/PolicyCollection.yaml
     LegacyPolicy:

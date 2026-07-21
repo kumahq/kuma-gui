@@ -48,13 +48,9 @@
             v-slot="{ data: [data] }"
           >
             <h1>
-              <XCopyButton
-                :text="data.name"
-              >
-                <RouteTitle
-                  :title="t('resources.routes.item.title', { name: data.name })"
-                />
-              </XCopyButton>
+              <RouteTitle
+                :title="t('resources.routes.item.title', { name: data.name })"
+              />
             </h1>
           </DataLoader>
         </template>
@@ -80,12 +76,7 @@
                 <dd>
                   <XAction
                     v-if="data.zone"
-                    :to="{
-                      name: 'zone-cp-detail-view',
-                      params: {
-                        zone: data.zone,
-                      },
-                    }"
+                    :href="`kri://${Kri.toString({ shortName: 'z', name: data.zone })}`"
                   >
                     <XBadge>{{ data.zone }}</XBadge>
                   </XAction>
@@ -208,4 +199,5 @@
 <script setup lang="ts">
 import { sources } from '../sources'
 import { YAML } from '@/app/application'
+import { Kri } from '@/app/kuma'
 </script>

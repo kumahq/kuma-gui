@@ -32,7 +32,9 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
   const nspace = parts.at(-1) ?? ''
 
   return {
-    headers: {},
+    headers: {
+      ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
+    },
     body: {
       httpMatches: [],
       resource: {

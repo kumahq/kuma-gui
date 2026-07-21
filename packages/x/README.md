@@ -48,6 +48,7 @@ For example:
 - **[XPrompt](./src/components/x-prompt)** - Confirmation dialog with action and cancel events. ([KPrompt](https://kongponents.konghq.com/components/prompt.html))
 - **[XProvider](./src/components/x-provider)** - Service provider using Vue's inject/provide pattern.
 - **[XRadio](./src/components/x-radio)** - Radio button with card variant support. ([KRadio](https://kongponents.konghq.com/components/radio.html))
+- **[XRouter](./src/components/x-router)** - Router component to install a global (or scoped) click listener/router pusher.
 - **[XSearch](./src/components/x-search)** - Search input with filter dropdown validation.
 - **[XSelect](./src/components/x-select)** - Select dropdown with slot-based option rendering. ([KSelect](https://kongponents.konghq.com/components/select.html))
 - **[XTable](./src/components/x-table)** - Semantic table wrapper with key-value variant support.

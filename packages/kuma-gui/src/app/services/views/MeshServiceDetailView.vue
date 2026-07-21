@@ -3,7 +3,6 @@
     name="mesh-service-detail-view"
     :params="{
       mesh: '',
-      service: '',
       page: 1,
       size: Number,
       s: '',
@@ -12,7 +11,7 @@
       codeFilter: false,
       codeRegExp: false,
     }"
-    v-slot="{ can, route, t, uri, me }"
+    v-slot="{ can, route, t, uri, me, r }"
   >
     <AppView>
       <XLayout variant="y-stack">
@@ -63,12 +62,7 @@
                 </dt>
                 <dd>
                   <XAction
-                    :to="{
-                      name: 'zone-cp-detail-view',
-                      params: {
-                        zone: service.zone,
-                      },
-                    }"
+                    :href="`kri://${Kri.toString({ shortName: 'z', name: service.zone })}`"
                   >
                     <XBadge appearance="decorative">
                       {{ service.zone }}
@@ -125,33 +119,31 @@
                   </template>
                 </dd>
               </div>
-              <template
-                v-for="labels in [Object.entries(service.labels)]"
-                :key="typeof labels"
-              >
-                <div v-if="labels.length > 0">
-                  <dt>{{ t('services.routes.item.labels') }}</dt>
-                  <dd>
-                    <XLayout
-                      variant="separated"
-                      truncate
+              <div v-if="Object.keys(service.labels).length > 0">
+                <dt>Labels</dt>
+                <dd>
+                  <XLayout
+                    variant="separated"
+                  >
+                    <XAction
+                      v-for="(value, key) in service.labels"
+                      :key="key"
+                      :href="t(`common.label.href.${key.replaceAll('.', '~')}`, {
+                        mesh: service.mesh,
+                        zone: service.zone,
+                        namespace: service.namespace,
+                        name: value,
+                      }, { defaultMessage: '' })"
                     >
-                      <template
-                        v-for="kumaRe in [/^(.+\.)?kuma\.io\//]"
-                        :key="typeof kumaRe"
+                      <XBadge
+                        :variant="r('kuma.label').test(key) ? 'reserved-kv' : 'kv'"
                       >
-                        <XBadge
-                          v-for="[key, value] in labels"
-                          :key="key"
-                          :appearance="kumaRe.test(key) ? 'info' : 'decorative'"
-                        >
-                          {{ key }}:{{ value }}
-                        </XBadge>
-                      </template>
-                    </XLayout>
-                  </dd>
-                </div>
-              </template>
+                        {{ key }}:<strong>{{ value }}</strong>
+                      </XBadge>
+                    </XAction>
+                  </XLayout>
+                </dd>
+              </div>
             </XDl>
           </DataLoader>
         </XCard>
@@ -162,57 +154,58 @@
           </template>
 
           <DataLoader
-            :src="uri(servicesSources, '/meshes/:mesh/:serviceType/:serviceName/_hostnames', {
-              mesh: route.params.mesh,
-              serviceType: 'meshservices',
-              serviceName: route.params.service,
-            })"
+            :data="[props.data]"
             variant="list"
-            v-slot="{ data: [hostnames] }"
+            v-slot="{ data: [service] }"
           >
-            <DataCollection
-              type="hostnames"
-              :items="hostnames.items"
+            <DataLoader
+              :src="uri(servicesSources, '/meshes/:mesh/:serviceType/:serviceName/_hostnames', {
+                mesh: route.params.mesh,
+                serviceType: 'meshservices',
+                serviceName: service.id,
+              })"
+              variant="list"
+              v-slot="{ data: [hostnames] }"
             >
-              <AppCollection
-                type="hostnames-collection"
-                data-testid="hostnames-collection"
+              <DataCollection
+                type="hostnames"
                 :items="hostnames.items"
-                :headers="[
-                  { ...me.get('headers.hostname'), label: t('services.detail.hostnames.hostname'), key: 'hostname' },
-                  { ...me.get('headers.zones'), label: t('services.detail.hostnames.zone'), key: 'zones' },
-                ]"
-                @resize="me.set"
               >
-                <template #hostname="{ row: item }">
-                  <b>
-                    <XCopyButton
-                      :text="item.hostname"
-                    />
-                  </b>
-                </template>
-                <template #zones="{ row: item }">
-                  <XLayout variant="separated">
-                    <XBadge
-                      v-for="(zone, index) of item.zones"
-                      :key="index"
-                      appearance="decorative"
-                    >
-                      <XAction
-                        :to="{
-                          name: 'zone-cp-detail-view',
-                          params: {
-                            zone: zone.name,
-                          },
-                        }"
+                <AppCollection
+                  type="hostnames-collection"
+                  data-testid="hostnames-collection"
+                  :items="hostnames.items"
+                  :headers="[
+                    { ...me.get('headers.hostname'), label: t('services.detail.hostnames.hostname'), key: 'hostname' },
+                    { ...me.get('headers.zones'), label: t('services.detail.hostnames.zone'), key: 'zones' },
+                  ]"
+                  @resize="me.set"
+                >
+                  <template #hostname="{ row: item }">
+                    <b>
+                      <XCopyButton
+                        :text="item.hostname"
+                      />
+                    </b>
+                  </template>
+                  <template #zones="{ row: item }">
+                    <XLayout variant="separated">
+                      <XBadge
+                        v-for="(zone, index) of item.zones"
+                        :key="index"
+                        appearance="decorative"
                       >
-                        {{ zone.name }}
-                      </XAction>
-                    </XBadge>
-                  </XLayout>
-                </template>
-              </AppCollection>
-            </DataCollection>
+                        <XAction
+                          :href="`kri://${Kri.toString({ shortName: 'z', name: zone.name })}`"
+                        >
+                          {{ zone.name }}
+                        </XAction>
+                      </XBadge>
+                    </XLayout>
+                  </template>
+                </AppCollection>
+              </DataCollection>
+            </DataLoader>
           </DataLoader>
         </XCard>
 
@@ -351,7 +344,7 @@
                       { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
                     ]"
                     :items="dataplanes.items"
-                    :is-selected-row="(row) => row.name === route.params.proxy"
+                    :is-selected-row="(row) => row.kri === route.params.proxy"
                     @resize="me.set"
                   >
                     <template #name="{ row: item }">
@@ -361,7 +354,7 @@
                           name: 'mesh-service-data-plane-summary-view',
                           params: {
                             mesh: item.mesh,
-                            proxy: item.id,
+                            proxy: item.kri,
                           },
                           query: {
                             page: route.params.page,
@@ -382,12 +375,7 @@
                     <template #zone="{ row }">
                       <XAction
                         v-if="row.zone"
-                        :to="{
-                          name: 'zone-cp-detail-view',
-                          params: {
-                            zone: row.zone,
-                          },
-                        }"
+                        :href="`kri://${Kri.toString({ shortName: 'z', name: row.zone })}`"
                       >
                         {{ row.zone }}
                       </XAction>
@@ -456,7 +444,7 @@
                           :to="{
                             name: 'data-plane-detail-view',
                             params: {
-                              proxy: item.id,
+                              proxy: item.kri,
                             },
                           }"
                         >
@@ -505,8 +493,8 @@ import AppCollection from '@/app/application/components/app-collection/AppCollec
 import ResourceStatus from '@/app/common/ResourceStatus.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import { sources } from '@/app/data-planes/sources'
+import { Kri } from '@/app/kuma'
 import { sources as servicesSources } from '@/app/services/sources'
-
 
 const props = defineProps<{
   data: MeshService | Error | undefined

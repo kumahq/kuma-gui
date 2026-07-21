@@ -70,7 +70,10 @@ ${service}::10.244.0.2:8080::success_rate::-1
 ${service}::10.244.0.2:8080::local_origin_success_rate::-1`
   }).join('\n')
   return {
-    headers: {},
+    headers: {
+      ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
+      'Content-Type': 'text/plain',
+    },
     body: `${inbounds}
 ${outbounds}
 access_log_sink::observability_name::access_log_sink

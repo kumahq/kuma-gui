@@ -17,29 +17,29 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
   const zoneQuery = query.get('filter[labels.kuma.io/zone]')
 
   return {
-    headers: {},
+    headers: {
+      ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
+    },
     body: {
       total,
       items: Array.from({ length: pageTotal }).map((_, i) => {
         const meshServiceTypeSelector = fake.kuma.meshServiceTypeSelector()
         const namespace = namespaceQuery ?? fake.word.noun()
         const displayName = `${nameQuery?.padEnd(nameQuery.length + 1, '-') ?? ''}${fake.science.chemicalElement().name.toLowerCase()}-${offset + i}-service`
-        const creationTime = fake.date.past()
         const zone = zoneQuery ?? fake.word.noun()
 
         return {
           type: 'HostnameGenerator',
-          name: `${displayName}${k8s ? `.${namespace}` : ''}`,
-          labels: k8s
-            ? {
-              'kuma.io/display-name': displayName,
-              'k8s.kuma.io/namespace': namespace,
-              'kuma.io/env': fake.kuma.env(),
-              'kuma.io/mesh': 'default',
-              'kuma.io/origin': zoneQuery ? 'zone' : fake.kuma.origin(),
-              'kuma.io/zone': zone,
-            }
-            : {},
+          name: displayName,
+          kri: fake.kuma.kri({ resourceName: 'HostnameGenerator', mesh: '', zone, namespace, name: displayName, sectionName: '' }),
+          ...fake.kuma.timespan(),
+          labels: {
+            ...fake.kuma.labels({
+              name: displayName,
+              ...(zone ? { zone } : {}),
+              ...(k8s ? { namespace } : {}),
+            }),
+          },
           spec: {
             selector: {
               [meshServiceTypeSelector]: {
@@ -56,8 +56,6 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
               withZone: fake.datatype.boolean(),
             }),
           },
-          creationTime: creationTime.toISOString(),
-          modificationTime: fake.date.between({ from: creationTime, to: Date.now() }).toISOString(),
         } satisfies HostnameGenerator
       }),
       next,

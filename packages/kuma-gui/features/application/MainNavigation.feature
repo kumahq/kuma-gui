@@ -93,11 +93,12 @@ Feature: application / MainNavigation
       body:
         items:
         - name: monitor-proxy-0.kuma-demo
+          kri: kri_msvc_default__kuma-demo_monitor-proxy-0_
           labels:
             kuma.io/display-name: monitor-proxy-0
             k8s.kuma.io/namespace: kuma-demo
       """
-    When I visit the "/meshes/default/services/mesh-services/monitor-proxy-0.kuma-demo" URL
+    When I visit the "/meshes/default/services/mesh-services/kri_msvc_default__kuma-demo_monitor-proxy-0_" URL
     Then the URL contains "format=yaml"
     And the "[data-testid='k-code-block']" element exists
 
@@ -123,7 +124,7 @@ Feature: application / MainNavigation
     And the "[data-testid='zone-control-planes-status']" element exists
 
   Scenario: Secondary navigation
-    When I visit the "/meshes/default/data-planes/dp-name/stats" URL
+    When I visit the "/meshes/default/data-planes/kri_dp_default__kuma-demo_dp-name_/stats" URL
     And the "[data-testid='data-plane-stats-view-tab'].active" element exists
 
   Scenario: Tertiary navigation
@@ -131,13 +132,14 @@ Feature: application / MainNavigation
       """
       KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: false
       """
-    When I visit the "/meshes/default/data-planes/dp-name/overview/inbound/localhost_51112/stats" URL
     And the URL "/meshes/default/dataplanes/dp-name/_overview" responds with
       """
       body:
+        kri: kri_dp_default___dp-name_
         dataplane:
           networking:
             inbound:
               - port: 51112
       """
+    When I visit the "/meshes/default/data-planes/kri_dp_default___dp-name_/overview/inbound/localhost_51112/stats" URL
     And the "[data-testid='data-plane-connection-inbound-summary-stats-view-tab'].active" element exists

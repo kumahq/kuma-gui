@@ -129,7 +129,7 @@
                     { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
                   ]"
                   :items="dataplanesData.items"
-                  :is-selected-row="(row) => row.name === route.params.proxy"
+                  :is-selected-row="(row) => row.kri === route.params.proxy"
                   @resize="me.set"
                 >
                   <template #name="{ row: item }">
@@ -140,7 +140,7 @@
                         name: 'delegated-gateway-data-plane-summary-view',
                         params: {
                           mesh: item.mesh,
-                          proxy: item.id,
+                          proxy: item.kri,
                         },
                         query: {
                           page: route.params.page,
@@ -160,12 +160,7 @@
                   <template #zone="{ row }">
                     <XAction
                       v-if="row.zone"
-                      :to="{
-                        name: 'zone-cp-detail-view',
-                        params: {
-                          zone: row.zone,
-                        },
-                      }"
+                      :href="`kri://${Kri.toString({ shortName: 'z', name: row.zone })}`"
                     >
                       {{ row.zone }}
                     </XAction>
@@ -234,7 +229,7 @@
                         :to="{
                           name: 'data-plane-detail-view',
                           params: {
-                            proxy: item.id,
+                            proxy: item.kri,
                           },
                         }"
                       >
@@ -279,6 +274,7 @@
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import { sources } from '@/app/data-planes/sources'
+import { Kri } from '@/app/kuma'
 import { sources as serviceSources } from '@/app/services/sources'
 </script>
 

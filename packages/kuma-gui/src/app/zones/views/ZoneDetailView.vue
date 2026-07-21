@@ -106,7 +106,7 @@
                     {{ t('zone-cps.routes.item.version') }}
                   </dt>
                   <dd>
-                    <XLayout variant="separated">
+                    <XLayout variant="x-stack">
                       <XBadge
                         :appearance="version?.outdated === true ? 'warning' : 'decorative'"
                       >
@@ -131,7 +131,9 @@
                     {{ t('http.api.property.type') }}
                   </dt>
                   <dd>
-                    <XBadge appearance="decorative">
+                    <XBadge
+                      appearance="decorative"
+                    >
                       {{ t(`common.product.environment.${zone.zoneInsight.environment || 'unknown'}`) }}
                     </XBadge>
                   </dd>

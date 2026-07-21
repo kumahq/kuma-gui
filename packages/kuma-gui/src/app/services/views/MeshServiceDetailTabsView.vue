@@ -3,14 +3,13 @@
     name="mesh-service-detail-tabs-view"
     :params="{
       mesh: '',
-      service: '',
+      kri: '',
     }"
     v-slot="{ route, t, uri }"
   >
     <DataSource
-      :src="uri(sources, '/meshes/:mesh/mesh-service/:name', {
-        mesh: route.params.mesh,
-        name: route.params.service,
+      :src="uri(sources, '/mesh-service/:kri', {
+        kri: route.params.kri,
       })"
       v-slot="{ data, result }"
     >
@@ -48,17 +47,10 @@
               size="small"
             >
               <h1>
-                <XCopyButton :text="service.name">
-                  <RouteTitle
-                    :title="t('services.routes.item.title', { name: service.name })"
-                  />
-                </XCopyButton>
+                <RouteTitle
+                  :title="t('services.routes.item.title', { name: service.name })"
+                />
               </h1>
-              <XBadge
-                :appearance="t(`common.status.appearance.${service.spec.state}`, undefined, { defaultMessage: 'neutral' })"
-              >
-                {{ t(`http.api.value.${service.spec.state}`) }}
-              </XBadge>
             </XLayout>
           </DataLoader>
         </template>

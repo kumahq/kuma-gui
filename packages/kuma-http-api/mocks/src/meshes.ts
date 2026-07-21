@@ -6,7 +6,8 @@ export default ({ fake, env, pager }: Dependencies): ResponseHandler => (req) =>
     '/meshes',
   )
   return {
-    headers: {},
+    headers: {
+    },
     body: {
       total,
       items: Array.from({ length: pageTotal }).map((_, i) => {

@@ -32,9 +32,7 @@
     >
       <template #title>
         <h1>
-          <XCopyButton :text="route.params.service">
-            <RouteTitle :title="t('external-services.routes.item.title', { name: route.params.service })" />
-          </XCopyButton>
+          <RouteTitle :title="t('external-services.routes.item.title', { name: route.params.service })" />
         </h1>
       </template>
 

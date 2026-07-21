@@ -74,7 +74,9 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
   const service = fake.word.noun()
 
   return {
-    headers: {},
+    headers: {
+      ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
+    },
     body: {
       type: 'DataplaneOverview',
       mesh,
@@ -94,6 +96,7 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
         creationTime: fake.kuma.date({ refDate: modificationTime }),
         modificationTime,
       }))(fake.kuma.date()),
+      kri: fake.kuma.kri({ resourceName: 'Dataplane', mesh, zone, namespace: k8s ? nspace : '', name: displayName, sectionName: '' }),
       dataplane: {
         networking: {
           address,

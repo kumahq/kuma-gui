@@ -3,6 +3,7 @@
     name="zone-ingress-summary-view"
     :params="{
       proxy: '',
+      zone: '',
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
@@ -12,7 +13,7 @@
   >
     <DataCollection
       :items="props.items"
-      :predicate="item => item.id === route.params.proxy"
+      :predicate="item => item.kri === route.params.proxy"
       :find="true"
     >
       <template #empty>
@@ -47,9 +48,9 @@
                     :to="{
                       name: 'zone-ingress-detail-view',
                       params: {
-                        zone: item.zoneIngress.zone,
+                        zone: route.params.zone,
                         proxyType: 'ingresses',
-                        proxy: item.id,
+                        proxy: item.kri,
                       },
                     }"
                   >
@@ -198,8 +199,8 @@
 
               <template v-else>
                 <DataLoader
-                  :src="uri(sources, '/zone-ingresses/:name/as/kubernetes', {
-                    name: route.params.proxy,
+                  :src="uri(sources, '/zone-ingresses/:kri/as/kubernetes', {
+                    kri: route.params.proxy,
                   })"
                   v-slot="{ data: [k8sConfig] }"
                 >
