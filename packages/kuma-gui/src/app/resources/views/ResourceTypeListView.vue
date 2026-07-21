@@ -3,7 +3,7 @@
     name="resource-type-list-view"
     :params="{
       mesh: '',
-      resourcePath: '',
+      shortName: '',
       category: String,
     }"
     v-slot="{ uri, route, t }"
@@ -97,7 +97,7 @@
                                     v-for="(item, j) in items"
                                     :key="item.name"
                                     :class="{
-                                      'active': item.path === route.params.resourcePath,
+                                      'active': item.shortName === route.params.shortName,
                                     }"
                                   >
                                     <XAction
@@ -105,7 +105,7 @@
                                         name: 'resource-list-view',
                                         params: {
                                           mesh: route.params.mesh,
-                                          resourcePath: item.path,
+                                          shortName: item.shortName,
                                         },
                                         query: {
                                           category: route.params.category,
@@ -113,7 +113,7 @@
                                       }"
                                       :data-testid="`resource-type-link-${item.name}`"
                                       @vue:mounted="(vNode) => {
-                                        if((route.params.resourcePath.length === 0 || !resources.resources.find((resource) => resource.path === route.params.resourcePath)) && i === 0 && j === 0 && vNode.props?.to) {
+                                        if((route.params.shortName.length === 0 || !resources.resources.find((resource) => resource.shortName === route.params.shortName)) && i === 0 && j === 0 && vNode.props?.to) {
                                           $nextTick(() => {
                                             route.replace(vNode.props!.to)
                                           })
@@ -146,7 +146,7 @@
                   </XLayout>
                 </DataLoader>
               </XCard>
-              <div v-if="route.params.resourcePath.length > 0">
+              <div v-if="route.params.shortName.length > 0">
                 <RouterView v-slot="{ Component }">
                   <component
                     :is="Component"

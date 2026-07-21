@@ -5,14 +5,14 @@
       page: 1,
       size: Number,
       mesh: '',
-      resourcePath: '',
+      shortName: '',
       kri: '',
       s: '',
     }"
     v-slot="{ route, t, can, uri, me }"
   >
     <DataCollection
-      :predicate="(resourceType) => typeof resourceType !== 'undefined' && resourceType.path === route.params.resourcePath"
+      :predicate="(resourceType) => typeof resourceType !== 'undefined' && resourceType.shortName === route.params.shortName"
       :items="(props.resourceTypes?.resources ?? []).filter((item) => item.shortName.length > 0)"
     >
       <template #empty>
@@ -74,13 +74,13 @@
             </search>
             <DataLoader
               :src="type.group === 'global' ? uri(sources, '/resources/:path', {
-                path: route.params.resourcePath,
+                path: type.path,
               }, {
                 page: route.params.page,
                 size: route.params.size,
                 search: route.params.s,
               }) : uri(sources, '/resources/:path/for/:mesh', {
-                path: route.params.resourcePath,
+                path: type.path,
                 mesh: route.params.mesh,
               }, {
                 page: route.params.page,
@@ -192,7 +192,7 @@
                     name: 'resource-list-view',
                     params: {
                       mesh: route.params.mesh,
-                      policyPath: route.params.resourcePath,
+                      shortName: route.params.shortName,
                     },
                     query: {
                       page: route.params.page,
