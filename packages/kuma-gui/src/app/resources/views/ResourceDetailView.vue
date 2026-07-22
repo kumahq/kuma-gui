@@ -4,7 +4,6 @@
     :params="{
       mesh: '',
       kri: '',
-      resourcePath: '',
       environment: String,
       codeSearch: '',
       codeFilter: false,
@@ -34,7 +33,7 @@
               name: 'resource-list-view',
               params: {
                 mesh: route.params.mesh,
-                resourcePath: route.params.resourcePath,
+                shortName: Kri.fromString(route.params.kri).shortName,
               },
             },
             text: 'Resources',
