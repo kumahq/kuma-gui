@@ -1,4 +1,4 @@
-import { Kri } from '@/app/kuma'
+import { KRI } from '@/app/kuma'
 import type { paths } from '@kumahq/kuma-http-api'
 
 /**
@@ -106,36 +106,27 @@ export const Resource = {
     } as typeof rest & { tag?: string[] }
   },
 
-  fromObject(partialResource: KumaResource) {
-    const labels = 'labels' in partialResource ? partialResource.labels ?? {} : {}
-    const mesh = 'mesh' in partialResource ? partialResource.mesh : labels['kuma.io/mesh'] ?? ''
-    const namespace = labels['k8s.kuma.io/namespace'] ?? ''
-    const name =  labels['kuma.io/display-name'] ?? partialResource.name ?? ''
-    const zone =  labels['kuma.io/origin'] === 'zone' ? labels['kuma.io/zone'] ?? '' : ''
-
-    const kri = 'kri' in partialResource ? partialResource.kri ?? '' : ''
+  // Resources are the only data normalizers where you can pass a shortName
+  // this is only used to support old style legacy policies/resources
+  fromObject(item: KumaResource, shortName = '') {
+    const labels = item.labels ?? {}
 
     return {
-      ...partialResource,
-      config: partialResource,
-      id: partialResource.name,
-      kri: Kri.isKriString(kri) ? kri : Kri.toString({ shortName: `~${partialResource.type?.toLowerCase()}`, mesh, zone, namespace, name }),
-      mesh,
-      namespace,
-      name,
-      zone,
-      creationTime: 'creationTime' in partialResource ? partialResource.creationTime ?? '' : '',
-      modificationTime: 'modificationTime' in partialResource ? partialResource.modificationTime ?? '' : '',
-      labels: partialResource.labels ?? {},
+      ...item,
+      ...KRI.split(item.kri ?? KRI.stringify({ shortName, ...item, labels })),
+      labels,
+      creationTime: 'creationTime' in item ? item.creationTime ?? '' : '',
+      modificationTime: 'modificationTime' in item ? item.modificationTime ?? '' : '',
+      config: item,
     }
   },
 
-  fromCollection(partialResources: KumaResourceCollection = {}) {
-    const collection = Object.values(partialResources).find((value) => Array.isArray(value)) ?? []
+  fromCollection(items: KumaResourceCollection = {}, shortName = '') {
+    const collection = Object.values(items).find((value) => Array.isArray(value)) ?? []
     return {
-      ...partialResources,
-      items: collection.map(Resource.fromObject),
-      total: partialResources.total as number | undefined ?? collection.length ?? 0,
+      ...items,
+      items: collection.map(item => Resource.fromObject(item, shortName)),
+      total: items.total as number | undefined ?? collection.length ?? 0,
     }
   },
 }

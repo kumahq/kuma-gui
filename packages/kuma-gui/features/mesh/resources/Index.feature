@@ -37,7 +37,7 @@ Feature: mesh / resources / index
       """
 
   Scenario: Listing has expected content
-    When I visit the "/meshes/default/resources/meshaccesslogs" URL
+    When I visit the "/meshes/default/resources/mal" URL
     Then the "$button-docs" element exists
     Then the "$items-header" element exists 4 times
     And the "$item" element exists 2 times
@@ -53,18 +53,18 @@ Feature: mesh / resources / index
       | zone-2      |
 
   Scenario: Clicking the item name opens the summary
-    When I visit the "/meshes/default/resources/meshaccesslogs" URL
+    When I visit the "/meshes/default/resources/mal" URL
     And I click the "$action" element
-    Then the URL contains "meshaccesslogs/kri_mal_default_zone-1_kuma-system_resource-1_"
+    Then the URL contains "mal/kri_mal_default_zone-1_kuma-system_resource-1_"
 
   Scenario: Clicking the view action navigates to the detail page
-    When I visit the "/meshes/default/resources/meshaccesslogs" URL
+    When I visit the "/meshes/default/resources/mal" URL
     And I click the "$action-group" element
     And I click the "$view" element
-    Then the URL contains "meshaccesslogs/kri_mal_default_zone-1_kuma-system_resource-1_/overview"
+    Then the URL contains "kri_mal_default_zone-1_kuma-system_resource-1_/overview"
 
   Scenario: Sending filters
-    When I visit the "/meshes/default/resources/meshaccesslogs" URL
+    When I visit the "/meshes/default/resources/mal" URL
     Then the "$input-search" element exists
     When I "type" "my-resource namespace:kuma-demo" into the "$input-search" element
     And I "type" "{enter}" into the "$input-search" element

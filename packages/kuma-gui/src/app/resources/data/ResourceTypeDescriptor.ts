@@ -23,7 +23,7 @@ const resourceCategories = new Map<string, string[]>([
   ['meshloadbalancingstrategy', ['traffic']],
   ['meshpassthrough', ['traffic']],
   ['meshgatewayroute', ['traffic']],
-  
+
   // security
   ['trafficpermission', ['security']],
   ['meshtrafficpermission', ['security']],
@@ -46,11 +46,12 @@ const resourceCategories = new Map<string, string[]>([
 ])
 
 export const ResourceTypeDescriptor = {
-  fromObject(partialResource: KumaResourceTypeDescriptor) {
+  fromObject(item: KumaResourceTypeDescriptor) {
     return {
-      ...partialResource,
-      categories: resourceCategories.get(partialResource.name.toLowerCase()) ?? [],
-      group: ('policy' in partialResource ? 'policy' : (partialResource.scope ?? 'others')).toLowerCase(),
+      ...item,
+      shortName: item.shortName || `~${item.path}`,
+      categories: resourceCategories.get(item.name.toLowerCase()) ?? [],
+      group: ('policy' in item ? 'policy' : (item.scope ?? 'others')).toLowerCase(),
     }
   },
 

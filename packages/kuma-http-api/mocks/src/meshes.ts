@@ -1,23 +1,34 @@
 import type { Dependencies, ResponseHandler } from '#mocks'
 export default ({ fake, env, pager }: Dependencies): ResponseHandler => (req) => {
-  const { total, next, pageTotal } = pager(
+  const { offset, total, next, pageTotal } = pager(
     env('KUMA_MESH_COUNT', `${fake.number.int({ min: 1, max: 200 })}`),
     req,
     '/meshes',
   )
+  const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
   return {
     headers: {
     },
     body: {
       total,
       items: Array.from({ length: pageTotal }).map((_, i) => {
-        const name = i === 0 ? 'default' : `${fake.word.noun()}-${i}`
+        const id = offset + i
+        const displayName = i === 0 ? 'default' : `${fake.word.noun()}-${id}`
+        const namespace = fake.word.noun()
+        const name = k8s ? `${displayName}${namespace ? `.${namespace}` : ''}` : displayName
 
         return {
-          name,
           type: 'Mesh',
-          creationTime: '2020-06-19T12:18:02.097986-04:00',
-          modificationTime: '2020-06-19T12:18:02.097986-04:00',
+          name,
+          kri: fake.kuma.kri({ resourceName: 'Mesh', mesh: '', zone: '', namespace, name: displayName, sectionName: '' }),
+          ...fake.kuma.timespan(),
+          labels: {
+            ...fake.kuma.labels({
+              name: displayName,
+              // ...(zone ? { zone } : {}),
+              // ...(k8s ? { namespace } : {}),
+            }),
+          },
           ...(fake.datatype.boolean() && {
             mtls: {
               enabledBackend: 'ca-1',

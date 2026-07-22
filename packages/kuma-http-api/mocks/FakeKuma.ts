@@ -527,9 +527,17 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
 
   shortName(resourceName?: string) {
     const resourceNames = new Map([
-      ['Dataplane', 'dp'],
+      ['Zone', 'z'],
+      ['ZoneEgress', 'ze'],
+      ['ZoneIngress', 'zi'],
+      //
       ['HostnameGenerator', 'hg'],
+      //
       ['Mesh', 'm'],
+      //
+      //
+      ['Dataplane', 'dp'],
+      //
       ['MeshAccessLog', 'mal'],
       ['MeshCircuitBreaker', 'mcb'],
       ['MeshExternalService', 'extsvc'],
@@ -553,8 +561,6 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
       ['MeshTrafficPermission', 'mtp'],
       ['MeshTrust', 'mtrust'],
       ['Workload', 'wl'],
-      ['ZoneEgress', 'ze'],
-      ['ZoneIngress', 'zi'],
     ])
     return resourceNames.get(resourceName ?? this.faker.helpers.arrayElement([...resourceNames.keys()])) ?? ''
   }

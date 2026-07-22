@@ -31,6 +31,11 @@
     data-testid="line-skeleton"
     width="10"
   />
+  <KSkeletonBox
+    v-else-if="props.variant === 'count'"
+    data-testid="line-skeleton"
+    width="1"
+  />
   <XLayout
     v-else-if="props.variant === 'header'"
     variant="y-stack"
@@ -47,7 +52,7 @@
 <script lang="ts" setup>
 import { KEmptyState } from '@kong/kongponents'
 const props = withDefaults(defineProps<{
-  variant?: 'list' | 'line' | 'spinner' | 'legacy' | 'header'
+  variant?: 'list' | 'line' | 'count' | 'spinner' | 'legacy' | 'header'
 }>(), {
   variant: 'legacy',
 })
