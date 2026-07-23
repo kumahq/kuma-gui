@@ -23,7 +23,7 @@
   "dependencies": {
     "@cucumber/cucumber": "^13.0.0",
     "@kumahq/fake-api": "*",
-    "@playwright/test": "^1.60.0",
+    "@playwright/test": "^1.61.1",
     "deepmerge": "^4.3.1",
     "esbuild": "^0.28.1",
     "js-yaml": "^4.1.1",
