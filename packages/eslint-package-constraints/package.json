@@ -8,7 +8,7 @@
   "main": "src/index.ts",
   "dependencies": {
     "escape-string-regexp": "^4.0.0",
-    "eslint-plugin-json-schema-validator": "^6.2.0"
+    "eslint-plugin-json-schema-validator": "^6.3.0"
   },
   "devDependencies": {
     "@kumahq/config": "*"
