@@ -150,16 +150,15 @@
 <script lang="ts" setup>
 import { KDropdownItem, KButton } from '@kong/kongponents'
 import { computed, inject, provide, useAttrs } from 'vue'
-import { useRouter } from 'vue-router'
 
 
-import { useProtocolHandler } from '../../'
+import { useProtocolHandler, useHref } from '../../'
 import type { ButtonAppearance } from '@kong/kongponents'
 import type { RouteLocationAsRelative } from 'vue-router'
 
 type BooleanLocationQueryValue = string | number | undefined | boolean
 type BooleanLocationQueryRaw = Record<string | number, BooleanLocationQueryValue | BooleanLocationQueryValue[]>
-type RouteLocationRawWithBooleanQuery = Omit<RouteLocationAsRelative, 'query'> & {
+type RouteLocationAsRelativeWithBooleanQuery = Omit<RouteLocationAsRelative, 'query'> & {
   query?: BooleanLocationQueryRaw
 }
 
@@ -174,7 +173,7 @@ const props = withDefaults(defineProps<{
   appearance?: 'primary' | 'secondary' | 'tertiary' | 'danger' | 'anchor'
   size?: 'small' | 'medium' | 'large'
   href?: string
-  to?: RouteLocationRawWithBooleanQuery
+  to?: RouteLocationAsRelativeWithBooleanQuery
   for?: string
 }>(), {
   href: '',
@@ -186,14 +185,14 @@ const props = withDefaults(defineProps<{
 })
 
 const attrs = useAttrs()
+const protocolHandler = useProtocolHandler()
+const hrf = useHref()
 
 const group = inject<{
   expanded: boolean
 } | undefined>('x-action-group', undefined)
 
-const router = useRouter()
 
-const protocolHandler = useProtocolHandler()
 
 const query = computed(() => {
   return Object.entries(props.to.query ?? {}).reduce<Record<string, string | number | null | undefined>>((prev, [key, value]) => {
@@ -210,28 +209,16 @@ const query = computed(() => {
     return prev
   }, {})
 })
-const resolve = (to: RouteLocationRawWithBooleanQuery) => {
-  try {
-    return router.resolve({
-      params: router.currentRoute.value.params,
-      ...to,
-      query: query.value,
-    }).href
-  } catch(e) {
-    if (e instanceof Error) {
-      e.message = `${e.toString()}: ${JSON.stringify(props.to)}`
-    }
-    console.error(e)
-  }
-  return ''
-}
 
 const href = computed(() => {
   switch(true) {
     case props.href.includes('://'):
       return protocolHandler(props.href)
     case Object.keys(props.to).length > 0:
-      return resolve(props.to)
+      return hrf({
+        ...props.to,
+        query: query.value,
+      })
     default:
       return props.href
   }

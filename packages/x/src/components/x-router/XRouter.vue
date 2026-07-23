@@ -3,8 +3,14 @@
 </template>
 <script lang="ts">
 
+import { usePush , useRouterElement } from '../../'
 import SharedPool from '../../utilities/SharedPool'
-import type { Router } from 'vue-router'
+
+type Push = ReturnType<typeof usePush>
+type Key = {
+  push: Push
+  element: HTMLElement
+}
 
 const findAnchor = (target: HTMLElement) => {
   // we look for anchors, or any other element that has [data-actionable]
@@ -22,12 +28,7 @@ const findAnchor = (target: HTMLElement) => {
   return null
 }
 
-const push = (href: string, router: Router) => {
-  const base = router.options.history.base
-  const h = href.startsWith(base) ? href.substring(base.length) : href
-  router.push(h.length > 0 ? h : '/')
-}
-const createListener = (router: Router) => {
+const createListener = (push: Push) => {
   return (e: PointerEvent) => {
     // event guards: special click whilst key pressed plus defaultPrevented
     if(
@@ -59,21 +60,17 @@ const createListener = (router: Router) => {
 
       if(href.length > 0) {
         e.preventDefault()
-        return push(href, router)
+        return push(href)
       }
     }
   }
 }
 
-type Key = {
-  router: Router
-  element: HTMLElement
-}
 const keys = new WeakMap<HTMLElement, Key>()
 const pool = new SharedPool<Key, (e: PointerEvent) => void>((state, key, item) => {
   switch (state) {
     case 'creating': {
-      const listener = createListener(key.router)
+      const listener = createListener(key.push)
       key.element.addEventListener('click', listener)
       return listener
     }
@@ -92,19 +89,16 @@ const pool = new SharedPool<Key, (e: PointerEvent) => void>((state, key, item) =
 <script lang="ts" setup>
 // eslint-disable-next-line import/order
 import { onMounted, onBeforeUnmount } from 'vue'
-// eslint-disable-next-line import/order
-import { useRouterElement } from '../../index'
-// eslint-disable-next-line import/order
-import { useRouter } from 'vue-router'
+ 
 
-const router = useRouter()
+const push = usePush()
 
 // keep a track of unique element => router/element pairs
 const key = () => {
   const element = useRouterElement()
   if(element !== null) {
     const key = keys.get(element) ?? {
-      router,
+      push,
       element,
     }
     keys.set(element, key)
