@@ -26,7 +26,7 @@
     "@playwright/test": "^1.60.0",
     "deepmerge": "^4.3.1",
     "esbuild": "^0.28.1",
-    "js-yaml": "^4.1.1",
+    "js-yaml": "^4.3.0",
     "path-to-regexp": "^8.4.2",
     "playwright-bdd": "^8.5.1"
   },
