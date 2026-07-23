@@ -21,7 +21,7 @@ Feature: mesh / resources / item
           kuma.io/origin: zone
           foo: bar
       """
-    When I visit the "/meshes/default/resources/meshaccesslogs/<Kri>/overview" URL
+    When I visit the "/meshes/default/resources/<Kri>/overview" URL
     Then the "$about-section" element exists
     And the "$about-section" element <Contains> "kuma-system"
     And the "$about-section" element contains "zone-1"
@@ -36,19 +36,19 @@ Feature: mesh / resources / item
   Rule: Offering different view formats
 
     Scenario: Universal config is shown by default
-      When I visit the "/meshes/default/resources/meshaccesslogs/kri_mal_default_zone-1_kuma-system_resource-1_/overview" URL
+      When I visit the "/meshes/default/resources/kri_mal_default_zone-1_kuma-system_resource-1_/overview" URL
       Then the "$config-universal" element exists
 
     Scenario: Visiting with environment=universal shows the universal codeblock
-      When I visit the "/meshes/default/resources/meshaccesslogs/kri_mal_default_zone-1_kuma-system_resource-1_/overview?environment=universal" URL
+      When I visit the "/meshes/default/resources/kri_mal_default_zone-1_kuma-system_resource-1_/overview?environment=universal" URL
       Then the "$config-universal" element exists
 
     Scenario: Visiting with environment=k8s shows the k8s codeblock
-      When I visit the "/meshes/default/resources/meshaccesslogs/kri_mal_default_zone-1_kuma-system_resource-1_/overview?environment=k8s" URL
+      When I visit the "/meshes/default/resources/kri_mal_default_zone-1_kuma-system_resource-1_/overview?environment=k8s" URL
       Then the "$config-k8s" element exists
 
     Scenario: Switching to k8s environment shows the k8s codeblock
-      When I visit the "/meshes/default/resources/meshaccesslogs/kri_mal_default_zone-1_kuma-system_resource-1_/overview" URL
+      When I visit the "/meshes/default/resources/kri_mal_default_zone-1_kuma-system_resource-1_/overview" URL
       Then the "$config-universal" element exists
       Then I click the "$select-environment" element
       Then I click the "[data-testid='select-item-k8s'] button" element

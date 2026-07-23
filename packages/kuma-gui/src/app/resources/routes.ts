@@ -15,7 +15,7 @@ export const routes = () => {
     return [
       {
         name: 'resource-detail-view',
-        path: 'resources/:resourcePath/:kri/overview',
+        path: 'resources/:kri/overview',
         component: () => import('@/app/resources/views/ResourceDetailView.vue'),
       },
     ]
@@ -31,7 +31,7 @@ export const routes = () => {
           children: [
             {
               name: 'resource-list-view',
-              path: ':resourcePath',
+              path: ':shortName',
               component: () => import('@/app/resources/views/ResourceListView.vue'),
               children: [
                 ...summary(),
