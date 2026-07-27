@@ -28,6 +28,7 @@ import _16 from './src/meshes/_'
 import _17 from './src/meshes/_/circuit-breakers'
 import _18 from './src/meshes/_/circuit-breakers/_'
 import _125 from './src/meshes/_/circuit-breakers/_/_resources/dataplanes'
+import _234 from './src/meshes/_/dataplanes'
 import _19 from './src/meshes/_/dataplanes/_'
 import _231 from './src/meshes/_/dataplanes/_/_inbounds/_/_policies'
 import _123 from './src/meshes/_/dataplanes/_/_layout'
@@ -178,6 +179,7 @@ export const fs = {
   '/mesh-insights/:mesh': _14,
   '/meshes': _15,
   '/meshes/:name': _16,
+  '/meshes/:mesh/dataplanes': _234,
   '/meshes/:mesh/dataplanes/_overview': _21,
   '/meshes/:mesh/dataplanes/:name': _19,
   '/meshes/:mesh/dataplanes/:name/_overview': _22,

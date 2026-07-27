@@ -1,0 +1,127 @@
+import type { Dependencies, ResponseHandler } from '#mocks'
+import type { paths } from '@kumahq/kuma-http-api'
+
+type DataplanesResponse = paths['/meshes/{mesh}/dataplanes']['get']['responses']['200']['content']['application/json']
+
+export default ({ fake, env, pager }: Dependencies): ResponseHandler => (req) => {
+  const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
+  const query = req.url.searchParams
+
+  const { offset, total, next, pageTotal } = pager(
+    env('KUMA_DATAPLANE_COUNT', `${fake.number.int({ min: 1, max: 100 })}`),
+    req,
+    `/meshes/${req.params.mesh}/dataplanes`,
+  )
+
+  const nameQuery = query.get('name') ?? ''
+  const namespaceQuery = query.get('filter[labels.k8s.kuma.io/namespace]')
+  const zoneQuery = query.get('filter[labels.kuma.io/zone]')
+
+  return {
+    headers: {
+      ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
+    },
+    body: {
+      total,
+      next,
+      items: Array.from({ length: pageTotal }, (_, i) => {
+        const multizone = fake.datatype.boolean()
+
+        const inbounds = parseInt(env('KUMA_DATAPLANEINBOUND_COUNT', `${fake.number.int({ min: 1, max: 5 })}`))
+
+        const type = fake.helpers.arrayElement(['proxy', 'gateway_builtin', 'gateway_delegated'])
+
+        const id = offset + i
+        const [
+          _prefix,
+          shortName,
+          mesh,
+          zone,
+          nspace,
+          displayName,
+        ] = [
+          'kri', // prefix
+          'dp', // shortName
+          String(req.params.mesh), // mesh
+          zoneQuery ?? fake.helpers.arrayElement(['', fake.word.noun()]), // zone
+          ...([k8s ? namespaceQuery ?? fake.word.noun() : '', `${nameQuery || fake.word.noun()}-${id}`]), // nspace, displayName
+        ]
+
+        return {
+          type: 'Dataplane',
+          mesh,
+          name: `${displayName}${k8s ? `.${nspace}` : ''}`,
+          labels: {
+            ...fake.kuma.labels({
+              name: displayName,
+              ...(zoneQuery || multizone ? { zone } : {}),
+              ...(k8s ? { namespace: nspace } : {}),
+            }),
+          },
+          ...fake.kuma.timespan(),
+          kri: fake.kuma.kri({ shortName, mesh, zone: zoneQuery || multizone ? zone : '', namespace: k8s ? nspace : '', displayName, sectionName: '' }),
+          networking: (() => {
+            const address = fake.internet.ipv4()
+            const advertisedAddress = fake.datatype.boolean({ probability: 0.25 }) ? fake.internet.ipv4() : undefined
+            const dataplaneType = type === 'gateway_builtin' ? 'BUILTIN' : type === 'gateway_delegated' ? 'DELEGATED' : undefined
+
+            return {
+              address,
+              ...(advertisedAddress && { advertisedAddress }),
+              ...(type !== 'proxy'
+                ? {
+                  gateway: {
+                    tags: fake.kuma.tags({
+                      service: fake.kuma.serviceName(type),
+                      zone: multizone && fake.datatype.boolean() ? fake.word.noun() : undefined,
+                    }),
+                    ...(dataplaneType && { type: dataplaneType }),
+                  },
+                }
+                : {}),
+              ...(type === 'proxy'
+                ? {
+                  inbound: Array.from({ length: inbounds }).map(() => {
+                    const address = fake.datatype.boolean({ probability: 0.25 }) ? fake.internet.ipv4() : undefined
+                    const port = fake.internet.port()
+                    const hasServiceAddress = fake.datatype.boolean({ probability: 0.25 })
+                    const serviceAddress = hasServiceAddress ? fake.internet.ipv4() : undefined
+                    const servicePort = hasServiceAddress ? fake.internet.port() : undefined
+                    const protocol = fake.kuma.protocol()
+                    const tags = fake.kuma.tags({
+                      protocol,
+                      service: fake.kuma.serviceName(),
+                      zone: multizone && fake.datatype.boolean() ? fake.word.noun() : undefined,
+                    })
+
+                    return {
+                      port,
+                      protocol,
+                      tags,
+                      ...(fake.datatype.boolean()
+                        ? {
+                          health: {
+                            ready: fake.datatype.boolean(),
+                          },
+                        }
+                        : {}),
+                      ...(address && { address }),
+                      ...(serviceAddress && { serviceAddress }),
+                      ...(servicePort && { servicePort }),
+                    }
+                  }),
+                }
+                : {}),
+              outbound: [
+                {
+                  port: fake.internet.port(),
+                  tags: fake.kuma.tags({ service: fake.kuma.serviceName() }),
+                },
+              ],
+            }
+          })(),
+        }
+      }),
+    } satisfies DataplanesResponse,
+  }
+}
