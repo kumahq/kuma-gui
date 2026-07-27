@@ -9,7 +9,7 @@ export const Workload = {
   search(query: string) {
     return Resource.search(query)
   },
-  
+
   fromObject: (workload: KumaWorkloadItem) => {
     const name = workload.labels?.['kuma.io/display-name'] ?? workload.name
     const namespace = workload.labels?.['k8s.kuma.io/namespace'] ?? ''
