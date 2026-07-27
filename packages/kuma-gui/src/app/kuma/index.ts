@@ -70,31 +70,29 @@ const protocolHandler = (can: Can, router: Router) => {
         const name = encodedName.replaceAll('~', '_')
         const to = (() => {
           switch (true) {
-            // TODO: Need to find a good workaround for legacy policies and not using policyPath
-            // case shortName === 'mal':
-            // case shortName === 'mcb':
-            // case shortName === 'mfi':
-            // case shortName === 'mhttpr':
-            // case shortName === 'mhc':
-            // case shortName === 'mlbs':
-            // case shortName === 'mm':
-            // case shortName === 'mp':
-            // case shortName === 'mpp':
-            // case shortName === 'mrl':
-            // case shortName === 'mr':
-            // case shortName === 'mtcpr':
-            // case shortName === 'mtls':
-            // case shortName === 'mt':
-            // case shortName === 'mtr':
-            // case shortName === 'mtp':
-            //   return {
-            //     name: 'policy-detail-view',
-            //     params: {
-            //       mesh,
-            //       policyPath: shortName,
-            //       policy: kri,
-            //     },
-            //   }
+            case shortName === 'mal':
+            case shortName === 'mcb':
+            case shortName === 'mfi':
+            case shortName === 'mhttpr':
+            case shortName === 'mhc':
+            case shortName === 'mlbs':
+            case shortName === 'mm':
+            case shortName === 'mp':
+            case shortName === 'mpp':
+            case shortName === 'mrl':
+            case shortName === 'mr':
+            case shortName === 'mtcpr':
+            case shortName === 'mtls':
+            case shortName === 'mt':
+            case shortName === 'mtr':
+            case shortName === 'mtp':
+              return {
+                name: 'policy-detail-view',
+                params: {
+                  mesh,
+                  policy: kri,
+                },
+              }
             case shortName === 'm':
               return {
                 name: 'mesh-detail-view',
