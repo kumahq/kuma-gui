@@ -99,12 +99,7 @@
                       <template #zone="{ row: item }">
                         <XAction
                           v-if="item.zone.length > 0"
-                          :to="{
-                            name: 'zone-cp-detail-view',
-                            params: {
-                              zone: item.zone,
-                            },
-                          }"
+                          :href="`kri://${Kri.toString({ shortName: 'z', name: item.zone })}`"
                         >
                           {{ item.zone }}
                         </XAction>
@@ -313,6 +308,7 @@ import { sources } from '../sources'
 import { YAML } from '@/app/application'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import ResourceStatus from '@/app/common/ResourceStatus.vue'
+import { Kri } from '@/app/kuma'
 import { sources as meshIdentitiesSources } from '@/app/mesh-identities/sources'
 import { sources as meshTrustsSources } from '@/app/mesh-trusts/sources'
 import { sources as policySources } from '@/app/policies/sources'

@@ -13,20 +13,28 @@ Feature: mesh / dataplanes / DataplaneDetailsTraffic
       """
       KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: false
       """
+    And the URL "/_kri/kri_dp_default_zone-1_kuma-demo_dpp-1-name-of-dataplane_" responds with
+      """
+      body:
+        name: dpp-1-name-of-dataplane.kuma-demo
+        kri: kri_dp_default_zone-1_kuma-demo_dpp-1-name-of-dataplane_
+        labels:
+          kuma.io/display-name: dpp-1-name-of-dataplane
+      """
 
   Scenario: Standard sidecar proxy shows the traffic component
     Given the environment
       """
       KUMA_DATAPLANEINBOUND_COUNT: 1
       """
-    And the URL "/meshes/default/dataplanes/dpp-1-name-of-dataplane/_overview" responds with
+    And the URL "/meshes/default/dataplanes/dpp-1-name-of-dataplane.kuma-demo/_overview" responds with
       """
       body:
         dataplane:
           networking:
             gateway: !!js/undefined
       """
-    When I visit the "/meshes/default/data-planes/dpp-1-name-of-dataplane/overview" URL
+    When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_dpp-1-name-of-dataplane_/overview" URL
     And the "$detail-view" element contains "dpp-1-name-of-dataplane"
     And the "$traffic" element exists
 
@@ -36,20 +44,20 @@ Feature: mesh / dataplanes / DataplaneDetailsTraffic
       KUMA_DATAPLANEINBOUND_COUNT: 1
       KUMA_SERVICE_COUNT: 1
       """
-    And the URL "/meshes/default/dataplanes/dpp-1-name-of-dataplane/_overview" responds with
+    And the URL "/meshes/default/dataplanes/dpp-1-name-of-dataplane.kuma-demo/_overview" responds with
       """
       body:
         dataplane:
           networking:
             gateway: !!js/undefined
       """
-    And the URL "/meshes/default/dataplanes/dpp-1-name-of-dataplane/stats" responds with
+    And the URL "/meshes/default/dataplanes/dpp-1-name-of-dataplane.kuma-demo/stats" responds with
       """
       body: |
         cluster.pocket-watch_colon_grandson_octave_mzsvc_162.upstream_rq_2xx: 0
         cluster.pocket-watch_colon_grandson_octave_mzsvc_162.upstream_rq_4xx: 0
       """
-    When I visit the "/meshes/default/data-planes/dpp-1-name-of-dataplane/overview" URL
+    When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_dpp-1-name-of-dataplane_/overview" URL
     Then the "$detail-view" element contains "dpp-1-name-of-dataplane"
     And the "$traffic" element exists but the "$outbounds" element doesn't exist
     When I click the "$inactiveToggle" element
@@ -61,7 +69,7 @@ Feature: mesh / dataplanes / DataplaneDetailsTraffic
       KUMA_DATAPLANEINBOUND_COUNT: 1
       KUMA_SUBSCRIPTION_COUNT: 1
       """
-    And the URL "/meshes/default/dataplanes/dpp-1-name-of-dataplane/_overview" responds with
+    And the URL "/meshes/default/dataplanes/dpp-1-name-of-dataplane.kuma-demo/_overview" responds with
       """
       body:
         dataplane:
@@ -77,13 +85,13 @@ Feature: mesh / dataplanes / DataplaneDetailsTraffic
                 envoy:
                   kumaDpCompatible: true
       """
-    And the URL "/meshes/default/dataplanes/dpp-1-name-of-dataplane/stats" responds with
+    And the URL "/meshes/default/dataplanes/dpp-1-name-of-dataplane.kuma-demo/stats" responds with
       """
       headers:
         Status-Code: '504'
       body: upstream request timeout
       """
-    When I visit the "/meshes/default/data-planes/dpp-1-name-of-dataplane/overview" URL
+    When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_dpp-1-name-of-dataplane_/overview" URL
     And the "$traffic" element exists
     And the "$loading-warning" element exists
     And the "$about-section" element contains "58.25.181.133"

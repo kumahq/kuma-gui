@@ -1,7 +1,7 @@
 import type { Dependencies, ResponseHandler } from '#mocks'
 
 export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) => {
-  const { mesh } = req.params
+  const mesh = String(req.params.mesh)
   const query = req.url.searchParams
 
   const _gateway = query.get('gateway') ?? ''
@@ -98,6 +98,7 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
             creationTime: fake.kuma.date({ refDate: modificationTime }),
             modificationTime,
           }))(fake.kuma.date()),
+          kri: fake.kuma.kri({ resourceName: 'Dataplane', mesh, zone, namespace: k8s ? nspace : '', name: displayName, sectionName: '' }),
           dataplane: {
             networking: {
               address,

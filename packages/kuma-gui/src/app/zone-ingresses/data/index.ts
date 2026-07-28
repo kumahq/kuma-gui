@@ -15,11 +15,18 @@ export type ZoneIngressInsight = PartialZoneIngressInsight & DiscoverySubscripti
 
 export const ZoneIngress = {
   fromObject: (item: PartialZoneIngress) => {
+    const labels = item.labels ?? {}
+    const mesh = item.mesh
+    const zone = labels['kuma.io/origin'] === 'zone' && labels['kuma.io/zone'] ? labels['kuma.io/zone'] : ''
+    const namespace = labels['k8s.kuma.io/namespace'] ?? ''
+    const name = labels['kuma.io/display-name'] ?? item.name
+
     return {
       ...item,
-      listenerAddress: item.networking?.address && item.networking?.port ? `${item.networking.address}_${item.networking.port}` : '',
-
+      id: item.name,
+      kri: item.kri ?? Kri.toString({ shortName: 'zi', mesh, zone, namespace, name }),
       config: item,
+      listenerAddress: item.networking?.address && item.networking?.port ? `${item.networking.address}_${item.networking.port}` : '',
       availableServices: Array.isArray(item.availableServices) ? item.availableServices : [],
       socketAddress: item.networking?.address && item.networking?.port ? `${item.networking.address}:${item.networking.port}` : '',
       advertisedSocketAddress: item.networking?.advertisedAddress && item.networking?.advertisedPort ? `${item.networking.advertisedAddress}:${item.networking.advertisedPort}` : '',
@@ -79,9 +86,7 @@ export const ZoneIngressOverview = {
     const zone = labels['kuma.io/origin'] === 'zone' && labels['kuma.io/zone'] ? labels['kuma.io/zone'] : ''
     const namespace = labels['k8s.kuma.io/namespace'] ?? ''
     const name = labels['kuma.io/display-name'] ?? item.name
-
-    // temporarily make a KRI until we have those from the backend
-    const kri = Kri.toString({ shortName: 'zi', mesh, zone, namespace, name })
+    const kri = item.kri ?? Kri.toString({ shortName: 'zi', mesh, zone, namespace, name })
 
     return {
       ...item,
@@ -109,8 +114,6 @@ export const ZoneIngressOverview = {
           type: 'ZoneIngress',
           name: item.name,
           mesh: item.mesh,
-          creationTime: item.creationTime,
-          modificationTime: item.modificationTime,
           ...item.zoneIngress,
         }).config,
 

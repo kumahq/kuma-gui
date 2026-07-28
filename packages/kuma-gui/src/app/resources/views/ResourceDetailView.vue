@@ -4,7 +4,6 @@
     :params="{
       mesh: '',
       kri: '',
-      resourcePath: '',
       environment: String,
       codeSearch: '',
       codeFilter: false,
@@ -34,7 +33,7 @@
               name: 'resource-list-view',
               params: {
                 mesh: route.params.mesh,
-                resourcePath: route.params.resourcePath,
+                shortName: Kri.fromString(route.params.kri).shortName,
               },
             },
             text: 'Resources',
@@ -76,12 +75,7 @@
                 <dd>
                   <XAction
                     v-if="data.zone"
-                    :to="{
-                      name: 'zone-cp-detail-view',
-                      params: {
-                        zone: data.zone,
-                      },
-                    }"
+                    :href="`kri://${Kri.toString({ shortName: 'z', name: data.zone })}`"
                   >
                     <XBadge>{{ data.zone }}</XBadge>
                   </XAction>
@@ -204,4 +198,5 @@
 <script setup lang="ts">
 import { sources } from '../sources'
 import { YAML } from '@/app/application'
+import { Kri } from '@/app/kuma'
 </script>

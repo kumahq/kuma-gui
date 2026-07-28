@@ -38,6 +38,7 @@ import {
   XPrompt,
   XProvider,
   XRadio,
+  XRouter,
   XSearch,
   XSelect,
   XTable,
@@ -85,6 +86,7 @@ const components = [
   ['XPrompt', XPrompt],
   ['XProvider', XProvider],
   ['XProgress', XProgress],
+  ['XRouter', XRouter],
   ['XSelect', XSelect],
   ['XTabs', XTabs],
   ['XTable', XTable],
@@ -140,6 +142,7 @@ declare module 'vue' {
     XPrompt: typeof XPrompt
     XProvider: typeof XProvider
     XProgress: typeof XProgress
+    XRouter: typeof XRouter
     XSelect: typeof XSelect
     XTabs: typeof XTabs
     XTable: typeof XTable
@@ -214,6 +217,7 @@ const deps = {
     t: (str: string, _values?: Record<string, string>, _options?: Record<string, unknown>) => str,
     locale: 'en-us',
   },
+  routerElement: () => document.body,
   protocolHandler: (href: string) => href,
   syntaxHighlighter: async () => {
     return createHighlighterCore({
@@ -236,6 +240,7 @@ const tokens = {
   i18n: uri<typeof deps.i18n>('x.i18n'),
   protocolHandler: uri<typeof deps.protocolHandler>('x.action.protocolhandler'),
   syntaxHighlighter: uri<typeof deps.syntaxHighlighter>('x.code-block.syntaxhighlighter'),
+  routerElement: uri<HTMLElement>('x.router.routerElement'),
 }
 const plugin: Plugin = {
   install: (app, options: Partial<typeof deps> = {}) => {
@@ -252,6 +257,7 @@ const plugin: Plugin = {
       })
       .service(tokens.protocolHandler, () => services.protocolHandler)
       .service(tokens.i18n, () => services.i18n)
+      .service(tokens.routerElement, services.routerElement)
 
     components.forEach(([name, item]) => {
       app.component(name, item)
@@ -261,9 +267,15 @@ const plugin: Plugin = {
     })
   },
 }
-export const [ useI18n, useSyntaxHighlighter, useProtocolHandler ] = createInjections(
+export const [
+  useI18n,
+  useSyntaxHighlighter,
+  useProtocolHandler,
+  useRouterElement,
+] = createInjections(
   tokens.i18n,
   tokens.syntaxHighlighter,
   tokens.protocolHandler,
+  tokens.routerElement,
 )
 export default plugin

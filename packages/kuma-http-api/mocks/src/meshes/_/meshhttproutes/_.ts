@@ -9,7 +9,7 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
   const kri = req.params.kri ? `kri_mhttpr_${req.params.kri}` : undefined
   const [
     _prefix,
-    _shortName,
+    shortName,
     mesh,
     zone,
     nspace,
@@ -38,8 +38,8 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
       type: 'MeshHTTPRoute',
       mesh,
       name,
-      creationTime: '2024-03-01T09:20:28Z',
-      modificationTime: '2024-03-01T09:20:28Z',
+      ...fake.kuma.timespan(),
+      kri: fake.kuma.kri({ shortName, mesh, zone, namespace: nspace, name: displayName, sectionName: '' }),
       labels: {
         ...fake.kuma.labels({
           name: displayName,

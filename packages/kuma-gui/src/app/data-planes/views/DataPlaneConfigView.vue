@@ -46,9 +46,8 @@
           </XLayout>
           <template v-if="route.params.environment === 'universal'">
             <DataLoader
-              :src="uri(sources, `/meshes/:mesh/dataplanes/:name`, {
-                mesh: route.params.mesh,
-                name: route.params.proxy,
+              :src="uri(sources, `/dataplanes/:kri`, {
+                kri: route.params.proxy,
               })"
               v-slot="{ data: [data] }"
             >
@@ -68,9 +67,8 @@
           </template>
           <template v-else>
             <DataLoader
-              :src="uri(sources, `/meshes/:mesh/dataplanes/:name/as/kubernetes`, {
-                mesh: route.params.mesh,
-                name: route.params.proxy,
+              :src="uri(sources, `/dataplanes/:kri/as/kubernetes`, {
+                kri: route.params.proxy,
               })"
               v-slot="{ data: [k8sConfig] }"
             >

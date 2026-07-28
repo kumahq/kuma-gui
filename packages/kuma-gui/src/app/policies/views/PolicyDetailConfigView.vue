@@ -64,10 +64,9 @@
 
           <template v-else>
             <DataLoader
-              :src="uri(sources, '/meshes/:mesh/policy-path/:path/policy/:name/as/kubernetes', {
-                mesh: route.params.mesh,
+              :src="uri(sources, '/policy-path/:path/policy/:kri/as/kubernetes', {
                 path: route.params.policyPath,
-                name: route.params.policy,
+                kri: route.params.policy,
               })"
               v-slot="{ data: [yaml] }"
             >

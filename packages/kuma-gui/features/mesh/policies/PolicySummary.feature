@@ -14,6 +14,7 @@ Feature: Policy summary
       body:
         items:
           - name: mfi-1
+            kri: kri_mfi_default___mfi-1_
       """
 
   Scenario: Clicking a row opens the summary
@@ -38,7 +39,7 @@ Feature: Policy summary
       """
       KUMA_MESHFAULTINJECTION_COUNT: 51
       """
-    When I visit the "/meshes/default/policies/meshfaultinjections/mfi-1?page=2&size=50" URL
+    When I visit the "/meshes/default/policies/meshfaultinjections/kri_mfi_default___mfi-1_?page=2&size=50" URL
     Then the "$summary" element exists
 
   Rule: Offering different view formats
@@ -50,7 +51,7 @@ Feature: Policy summary
         """
 
     Scenario: Switching to k8s format and back
-      When I visit the "/meshes/default/policies/meshfaultinjections/mfi-1" URL
+      When I visit the "/meshes/default/policies/meshfaultinjections/kri_mfi_default___mfi-1_" URL
       Then the "$select-preference" element exists
       And the "$structured-view" element exists
       When I click the "$select-preference" element
@@ -63,9 +64,9 @@ Feature: Policy summary
       And the "$structured-view" element exists
 
     Scenario: The view for k8s format exists
-      When I visit the "/meshes/default/policies/meshfaultinjections/mfi-1?format=k8s" URL
+      When I visit the "/meshes/default/policies/meshfaultinjections/kri_mfi_default___mfi-1_?format=k8s" URL
       Then the "[data-testid='codeblock-yaml-k8s']" element exists
 
     Scenario: The view for universal format exists
-      When I visit the "/meshes/default/policies/meshfaultinjections/mfi-1?format=universal" URL
+      When I visit the "/meshes/default/policies/meshfaultinjections/kri_mfi_default___mfi-1_?format=universal" URL
       Then the "[data-testid='codeblock-yaml-universal']" element exists

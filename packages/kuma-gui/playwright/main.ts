@@ -1,4 +1,4 @@
-import { build, token } from '@kumahq/container'
+import { createBuilder, token } from '@kumahq/container'
 import { setupSteps } from '@kumahq/gherkin-web/playwright'
 import env from '@kumahq/settings/env'
 
@@ -15,6 +15,7 @@ export { test } from '@kumahq/gherkin-web/playwright'
     env: token<typeof env>('playwright.env'),
     vars: token('playwright.env.vars'),
   }
+  const { build } = createBuilder()
   const get = build(
     // mocks
     fakeFs($),

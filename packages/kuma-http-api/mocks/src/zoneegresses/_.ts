@@ -1,4 +1,7 @@
 import type { Dependencies, ResponseHandler } from '#mocks'
+import type { paths } from '../../..'
+
+type ZoneEgressResponse = paths['/zoneegresses/{name}']['get']['responses']['200']['content']['application/json']
 
 export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
   const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
@@ -16,7 +19,7 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
   ] = kri ? kri.split('_') : [
     'kri', // prefix
     'ze', // shortName
-    String(req.params.mesh), // mesh
+    '', // mesh
     // we can't know the zone for a non-KRI version of this request
     fake.word.noun(), // zone.
     // with k8s the request.name MUST be use the correct `name.ns` format
@@ -34,8 +37,8 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
       }),
       type: 'ZoneEgress',
       name,
-      creationTime: '2021-07-13T08:40:59Z',
-      modificationTime: '2021-07-13T08:40:59Z',
+      ...fake.kuma.timespan(),
+      kri: fake.kuma.kri({ resourceName: 'ZoneEgress', mesh: '', zone, namespace: nspace, name: displayName, sectionName: '' }),
       zone,
       networking: {
         address: fake.internet.ip(),
@@ -44,6 +47,6 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
           port: fake.internet.port(),
         },
       },
-    },
+    } satisfies ZoneEgressResponse,
   }
 }

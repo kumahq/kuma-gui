@@ -12,7 +12,6 @@
     <XBadge v-else>
       <slot />
     </XBadge>
-
     <TagList
       v-if="props.targetRef.kind === 'MeshServiceSubset' && props.targetRef.tags"
       :tags="props.targetRef.tags"
@@ -26,16 +25,13 @@
       <img
         src="@/assets/images/icon-weight.svg?url"
         alt="Weight"
-        :width="KUI_ICON_SIZE_30"
       >
-
       {{ props.targetRef.weight }}
     </span>
   </span>
 </template>
 
 <script lang="ts" setup>
-import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { computed } from 'vue'
 
 import TagList from '@/app/common/TagList.vue'

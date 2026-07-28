@@ -52,8 +52,10 @@ export default <TDependencies extends object = {}>(opts: PluginOptions<TDependen
           headers,
         })
         const type = response.headers.get('Content-Type') ?? 'application/json'
+        const statusCode = response.headers.get('Status-Code') ?? '200'
         res.setHeader('Content-Type', type)
-        res.setHeader('Status-Code', response.headers.get('Status-Code') ?? '200')
+        res.setHeader('Status-Code', statusCode)
+        res.statusCode = parseInt(statusCode)
         const resp = type.endsWith('/json') ? JSON.stringify((await response.json()), null, 4) : (await response.text())
 
         const cookies = Cookie.parse(req.headers?.cookie ?? '', { prefix: 'KUMA_' })

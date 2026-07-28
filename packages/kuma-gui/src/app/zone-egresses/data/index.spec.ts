@@ -217,7 +217,7 @@ describe('ZoneEgressOverview', () => {
         type: 'ZoneEgress',
         name: 'zone-egress-name.zone-egress-namespace',
         mesh: 'mesh-0',
-        kri: 'kri_ze_mesh-0___zone-egress-name_',
+        kri: 'kri_ze_mesh-0__zone-egress-namespace_zone-egress-name_',
         labels: {
           'kuma.io/display-name': 'zone-egress-name',
         },
@@ -232,7 +232,7 @@ describe('ZoneEgressOverview', () => {
       const actual = await fixture.setup((item) => {
         item.name = expected.name
         item.mesh = expected.mesh
-        // item.kri = expected.kri
+        item.kri = expected.kri
         item.labels = expected.labels
         item.creationTime = expected.creationTime
         item.modificationTime = expected.modificationTime

@@ -1,6 +1,6 @@
 {
   "name": "@kumahq/kuma-gui",
-  "version": "2.14.0",
+  "version": "3.0.0",
   "private": true,
   "description": "Kuma Manager",
   "author": "Kong",
@@ -11,9 +11,9 @@
   },
   "dependencies": {
     "@gera2ld/tarjs": "^0.3.1",
-    "@kong-ui-public/i18n": "^2.4.6",
-    "@kong/icons": "^1.60.0",
-    "@kong/kongponents": "^9.60.7",
+    "@kong-ui-public/i18n": "^2.5.0",
+    "@kong/icons": "^1.62.0",
+    "@kong/kongponents": "^9.62.0",
     "@kumahq/container": "*",
     "@kumahq/data": "*",
     "@kumahq/routing": "*",
@@ -25,14 +25,13 @@
     "js-yaml": "^4.1.1",
     "openapi-fetch": "^0.17.0",
     "pretty-bytes": "^7.1.0",
-    "shiki": "^4.3.0",
+    "shiki": "^4.3.1",
     "urlpattern-polyfill": "^10.1.0",
     "vue": "^3.5.35",
     "vue-router": "^5.1.0"
   },
   "devDependencies": {
     "@faker-js/faker": "^10.5.0",
-    "@kong/design-tokens": "^2.0.1",
     "@kumahq/config": "*",
     "@kumahq/fake-api": "*",
     "@kumahq/gherkin-web": "*",
@@ -40,15 +39,15 @@
     "@playwright/test": "^1.60.0",
     "@types/js-yaml": "^4.0.9",
     "@types/semver": "^7.7.1",
-    "@vitejs/plugin-vue": "^6.0.7",
+    "@vitejs/plugin-vue": "^6.0.8",
     "@vue/test-utils": "^2.4.11",
     "jsdom": "^29.1.1",
-    "msw": "^2.14.6",
+    "msw": "^2.15.0",
     "playwright-bdd": "^8.5.1",
     "sass": "^1.101.0",
     "vite": "^7.3.6",
     "vite-svg-loader": "^5.1.1",
-    "vitest": "^4.1.9"
+    "vitest": "^4.1.10"
   },
   "browserslist": [
     "> 1%",

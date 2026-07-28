@@ -2,43 +2,45 @@
   <template
     v-if="props.path.length > 0"
   >
-    <!-- only text from `safeT` is passed to v-html -->
-    <!-- text from `safeT` is pre-escaped using Vue's escapeHtml -->
-    <!-- and is therefore safe enough to pass to v-html  -->
+    <XRouter>
+      <!-- only text from `safeT` is passed to v-html -->
+      <!-- text from `safeT` is pre-escaped using Vue's escapeHtml -->
+      <!-- and is therefore safe enough to pass to v-html  -->
 
-    <!-- eslint-disable vue/no-v-html -->
-    <div
-      class="x-i18n"
-      data-testid="x-i18n"
-      v-bind="attrs"
-      v-html="safeT(
-        props.path,
-        props.params,
-        typeof props.defaultPath === 'string' ? { defaultMessage: safeT(props.defaultPath)}: undefined,
-      )"
-    />
-    <!-- eslint-enable -->
-    <template
-      v-for="(_slot, slotName) in slots"
-      :key="slotName"
-    >
-      <slot
-        v-if="slotName === 'default'"
-        :name="slotName"
-        :t="t"
-        :format-list="formatList"
+      <!-- eslint-disable vue/no-v-html -->
+      <div
+        class="x-i18n"
+        data-testid="x-i18n"
+        v-bind="attrs"
+        v-html="safeT(
+          props.path,
+          props.params,
+          typeof props.defaultPath === 'string' ? { defaultMessage: safeT(props.defaultPath)}: undefined,
+        )"
       />
-      <XTeleportTemplate
-        v-else
-        :to="{ name: `${id}-${slotName}`}"
+      <!-- eslint-enable -->
+      <template
+        v-for="(_slot, slotName) in slots"
+        :key="slotName"
       >
         <slot
+          v-if="slotName === 'default'"
+          :name="slotName"
           :t="t"
           :format-list="formatList"
-          :name="slotName"
         />
-      </XTeleportTemplate>
-    </template>
+        <XTeleportTemplate
+          v-else
+          :to="{ name: `${id}-${slotName}`}"
+        >
+          <slot
+            :t="t"
+            :format-list="formatList"
+            :name="slotName"
+          />
+        </XTeleportTemplate>
+      </template>
+    </XRouter>
   </template>
   <template
     v-else
@@ -51,7 +53,7 @@
   </template>
 </template>
 <script lang="ts" setup>
-// eslint-disable-next-line vue/prefer-import-from-vue
+ 
 import { escapeHtml } from '@vue/shared'
 import { useAttrs, useId } from 'vue'
 

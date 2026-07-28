@@ -1,4 +1,5 @@
 import { YAML } from '@/app/application'
+import { Kri } from '@/app/kuma'
 import { Resource } from '@/app/resources/data/Resource'
 import type { components } from '@kumahq/kuma-http-api'
 
@@ -26,7 +27,7 @@ export const Policy = {
 
     return {
       ...item,
-      kri: 'kri' in item ? item.kri ?? '' : '',
+      kri: 'kri' in item && typeof item.kri === 'string' ? item.kri : Kri.toString({ shortName: `~${item.type.toLowerCase()}`, mesh, zone, namespace, name: id }),
       name,
       mesh,
       labels,

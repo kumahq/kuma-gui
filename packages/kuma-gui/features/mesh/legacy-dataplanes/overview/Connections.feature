@@ -13,7 +13,15 @@ Feature: mesh / dataplanes / connections / Connections
   # actual data rather than random mocks.
 
   Scenario: Builtin gateway with inbound and outbound stats
-    When I visit the "/meshes/default/data-planes/default-gateway-instance-1-86cbb55644-6rxhg.kuma-demo/overview" URL
+    Given the URL "/_kri/kri_dp_default_zone-1_kuma-demo_default-gateway-instance-1-86cbb55644-6rxhg_" responds with
+      """
+      body:
+        name: default-gateway-instance-1-86cbb55644-6rxhg.kuma-demo
+        kri: kri_dp_default_zone-1_kuma-demo_default-gateway-instance-1-86cbb55644-6rxhg_
+        labels:
+          kuma.io/display-name: default-gateway-instance-1-86cbb55644-6rxhg
+      """
+    When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_default-gateway-instance-1-86cbb55644-6rxhg_/overview" URL
     And the "$detail-view" element contains "default-gateway-instance-1-86cbb55644-6rxhg"
     And the "$inbound" element exists 4 times
     And the "$outbound" element exists 3 times
@@ -38,7 +46,15 @@ Feature: mesh / dataplanes / connections / Connections
     And the "$outbound:nth-child(3) [data-testid='bytes-sent'] dd" element contains "167"
 
   Scenario: Delegated gateway with inbound and outbound stats
-    When I visit the "/meshes/default/data-planes/kong-gateway-5bcc776cb4-578gc.kong/overview" URL
+    Given the URL "/_kri/kri_dp_default_zone-1_kong_kong-gateway-5bcc776cb4-578gc_" responds with
+      """
+      body:
+        name: kong-gateway-5bcc776cb4-578gc.kong
+        kri: kri_dp_default_zone-1_kong_kong-gateway-5bcc776cb4-578gc_
+        labels:
+          kuma.io/display-name: kong-gateway-5bcc776cb4-578gc
+      """
+    When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kong_kong-gateway-5bcc776cb4-578gc_/overview" URL
     And the "$detail-view" element contains "kong-gateway-5bcc776cb4-578gc"
     And the "$inbound" element exists 0 times
     And the "$outbound" element exists 1 times
@@ -47,7 +63,15 @@ Feature: mesh / dataplanes / connections / Connections
     And the "$outbound:nth-child(1) [data-testid='rq-5xx'] dd" element contains "0"
 
   Scenario: HTTP sidecar with inbound and outbound stats
-    When I visit the "/meshes/default/data-planes/demo-app-fcc8bc4cb-5xjwd.kuma-demo/overview" URL
+    Given the URL "/_kri/kri_dp_default_zone-1_kuma-demo_demo-app-fcc8bc4cb-5xjwd_" responds with
+      """
+      body:
+        name: demo-app-fcc8bc4cb-5xjwd.kuma-demo
+        kri: kri_dp_default_zone-1_kuma-demo_demo-app-fcc8bc4cb-5xjwd_
+        labels:
+          kuma.io/display-name: demo-app-fcc8bc4cb-5xjwd
+      """
+    When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_demo-app-fcc8bc4cb-5xjwd_/overview" URL
     And the "$detail-view" element contains "demo-app-fcc8bc4cb-5xjwd"
     And the "$inbound" element exists 1 time
     And the "$outbound" element exists 1 time
@@ -60,7 +84,15 @@ Feature: mesh / dataplanes / connections / Connections
     And the "$outbound:nth-child(1) [data-testid='bytes-sent'] dd" element contains "24.8"
 
   Scenario: gRPC sidecar with inbound and outbound stats
-    When I visit the "/meshes/default/data-planes/grpc-service-75b4ccdfd5-z2jmp.kuma-demo/overview" URL
+    Given the URL "/_kri/kri_dp_default_zone-1_kuma-demo_grpc-service-75b4ccdfd5-z2jmp_" responds with
+      """
+      body:
+        name: grpc-service-75b4ccdfd5-z2jmp.kuma-demo
+        kri: kri_dp_default_zone-1_kuma-demo_grpc-service-75b4ccdfd5-z2jmp_
+        labels:
+          kuma.io/display-name: grpc-service-75b4ccdfd5-z2jmp
+      """
+    When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_grpc-service-75b4ccdfd5-z2jmp_/overview" URL
     And the "$detail-view" element contains "grpc-service-75b4ccdfd5-z2jmp"
     And the "$inbound" element exists 1 time
     And the "$outbound" element exists 0 times
@@ -68,7 +100,15 @@ Feature: mesh / dataplanes / connections / Connections
     And the "$inbound:nth-child(1) [data-testid='grpc-failure'] dd" element contains "0"
 
   Scenario: TCP sidecar with inbound and outbound stats
-    When I visit the "/meshes/default/data-planes/redis-54754f5b57-xl2tw.kuma-demo/overview" URL
+    Given the URL "/_kri/kri_dp_default_zone-1_kuma-demo_redis-54754f5b57-xl2tw_" responds with
+      """
+      body:
+        name: redis-54754f5b57-xl2tw.kuma-demo
+        kri: kri_dp_default_zone-1_kuma-demo_redis-54754f5b57-xl2tw_
+        labels:
+          kuma.io/display-name: redis-54754f5b57-xl2tw
+      """
+    When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_redis-54754f5b57-xl2tw_/overview" URL
     And the "$detail-view" element contains "redis-54754f5b57-xl2tw"
     And the "$inbound" element exists 1 time
     And the "$outbound" element exists 0 times

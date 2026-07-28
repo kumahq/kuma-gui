@@ -10,7 +10,7 @@
         <template #icon>
           <XIcon
             :name="props.appearance"
-            :color="props.appearance === 'danger' ? KUI_COLOR_TEXT_DANGER : undefined"
+            :color="props.appearance === 'danger' ? `var(--x-color-text-danger)` : undefined"
           />
         </template>
 
@@ -89,7 +89,6 @@
 </template>
 
 <script lang="ts" setup generic="T extends Error & Partial<{ type: string, status: number, title: string, detail: string, instance: string, invalid_parameters: { field: string, reason: string, source: 'body' | 'header', rule?: string }[] }>">
-import { KUI_COLOR_TEXT_DANGER } from '@kong/design-tokens'
 import { inject } from 'vue'
 
 const props = withDefaults(defineProps<{

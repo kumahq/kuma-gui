@@ -13,6 +13,7 @@ Feature: Zone Ingress summary
       body:
         items:
           - name: zone-ingress-1
+            kri: kri_zi__zone-1__zone-ingress-1_
             zoneIngress:
               zone: zone-1
       """
@@ -22,7 +23,7 @@ Feature: Zone Ingress summary
       """
       KUMA_ZONEINGRESS_COUNT: 1
       """
-    When I visit the "/zones/zone-1/ingresses" URL
+    When I visit the "/zones/kri_zi__zone-1__zone-ingress-1_/ingresses" URL
     And I click the "$item:nth-child(1) td:nth-child(2)" element
     Then the "$summary" element exists
     And the "$summary" element contains "zone-ingress-1"
@@ -34,12 +35,12 @@ Feature: Zone Ingress summary
     When I navigate "forward"
     Then the "$item" element exists but the "$summary" element doesn't exist
 
-  Scenario: Summary URL goes to page with open summary
+  Scenario Outline: Summary URL goes to page with open summary
     Given the environment
       """
       KUMA_ZONEINGRESS_COUNT: 51
       """
-    When I visit the "/zones/zone-1/ingresses/zone-ingress-1?page=2&size=50" URL
+    When I visit the "/zones/kri_z____zone-1_/ingresses/kri_zi__zone-1__zone-ingress-1_?page=2&size=50" URL
     Then the "$summary" element exists
 
   Scenario: Switching to universal format and back
@@ -47,7 +48,7 @@ Feature: Zone Ingress summary
       """
       KUMA_ZONEINGRESS_COUNT: 1
       """
-    When I visit the "/zones/zone-1/ingresses/zone-ingress-1" URL
+    When I visit the "/zones/kri_z____zone-1_/ingresses/kri_zi__zone-1__zone-ingress-1_" URL
     Then the "$select-preference" element exists
     And the "$structured-view" element exists
     When I click the "$select-preference" element

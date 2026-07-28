@@ -23,7 +23,7 @@ Feature: dataplanes / subscriptions
             - zoneInstanceId: foo
               disconnectTime: !!js/undefined
       """
-    When I visit the "/zones/east/overview" URL
+    When I visit the "/zones/kri_z____east_/overview" URL
     Then the "$about-section" element contains "KDS connections"
     And the "$about-zone-cp-subscriptions" element contains "foo"
 
@@ -36,13 +36,13 @@ Feature: dataplanes / subscriptions
             - zoneInstanceId: foo
               id: bar
       """
-    When I visit the "/zones/east/overview" URL
+    When I visit the "/zones/kri_z____east_/overview" URL
     Then the "$about-zone-cp-subscriptions" element exists
     Then I click the "$about-zone-cp-subscriptions a" element
-    Then the URL contains "/zones/east/subscriptions"
+    Then the URL contains "/zones/kri_z____east_/subscriptions"
     And the "$zone-cp-subscriptions" element exists
     Then I click the "$zone-cp-subscriptions table tbody tr a" element
-    Then the URL contains "/zones/east/subscriptions/subscription/bar"
+    Then the URL contains "/zones/kri_z____east_/subscriptions/subscription/bar"
     And the "$zone-cp-subscription-summary" element exists
     Then I navigate "back"
-    Then the URL contains "/zones/east/subscriptions"
+    Then the URL contains "/zones/kri_z____east_/subscriptions"

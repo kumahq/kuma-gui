@@ -11,7 +11,7 @@ Feature: zones / egresses / index
       KUMA_MODE: global
       KUMA_ZONEEGRESS_COUNT: 2
       """
-    When I visit the "/zones/zone-cp-1/egresses" URL
+    When I visit the "/zones/kri_z____zone-cp-1_/egresses" URL
     Then the page title contains "Egresses"
     Then the URL "/zoneegresses/_overview" was requested with
       """

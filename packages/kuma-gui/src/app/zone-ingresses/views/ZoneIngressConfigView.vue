@@ -46,8 +46,8 @@
 
           <template v-if="route.params.environment === 'universal'">
             <DataLoader
-              :src="uri(sources, `/zone-ingresses/:name`, {
-                name: route.params.proxy,
+              :src="uri(sources, `/zone-ingresses/:kri`, {
+                kri: route.params.proxy,
               })"
               v-slot="{ data: [data] }"
             >
@@ -68,8 +68,8 @@
 
           <template v-else>
             <DataLoader
-              :src="uri(sources, `/zone-ingresses/:name/as/kubernetes`, {
-                name: route.params.proxy,
+              :src="uri(sources, `/zone-ingresses/:kri/as/kubernetes`, {
+                kri: route.params.proxy,
               })"
               v-slot="{ data: [k8sConfig] }"
             >

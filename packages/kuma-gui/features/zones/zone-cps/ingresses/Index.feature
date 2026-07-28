@@ -17,6 +17,9 @@ Feature: zones / ingresses / index
       body:
         items:
           - name: zone-ingress-1
+            kri: kri_zi__zone-cp-1__zone-ingress-1_
+            labels:
+              kuma.io/display-name: zone-ingress-1
             zoneIngress:
               zone: zone-cp-1
             zoneIngressInsight:
@@ -27,6 +30,9 @@ Feature: zones / ingresses / index
                   disconnectTime: !!js/undefined
       
           - name: zone-ingress-2
+            kri: kri_zi__zone-cp-1__zone-ingress-2_
+            labels:
+              kuma.io/display-name: zone-ingress-2
             zoneIngress:
               zone: zone-cp-1
             zoneIngressInsight:
@@ -36,7 +42,7 @@ Feature: zones / ingresses / index
                 - connectTime: 2020-07-28T16:18:09.743141Z
                   disconnectTime: 2020-07-28T16:18:09.743141Z
       """
-    When I visit the "/zones/zone-cp-1/ingresses" URL
+    When I visit the "/zones/kri_z____zone-cp-1_/ingresses" URL
     Then the page title contains "Ingresses"
     And the "$item" element exists 2 times
     Then the "$item:nth-child(1) .status-column" element contains "Online"

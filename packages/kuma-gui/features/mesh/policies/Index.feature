@@ -118,7 +118,7 @@ Feature: mesh / policies / index
     Then the "$item:nth-child(1) td:nth-child(2)" element contains "fake-cb-1"
     When I click the "$action-group" element
     And I click the "$view" element
-    Then the URL contains "circuit-breakers/fake-cb-1/overview"
+    Then the URL contains "circuit-breakers/kri_~circuitbreaker_default___fake-cb-1_/overview"
     And the "$detail-view" element contains "fake-cb-1"
     When I click the "$breadcrumbs > .breadcrumbs-item-container:nth-child(3) > a" element
     Then the "$item" element exists 2 times

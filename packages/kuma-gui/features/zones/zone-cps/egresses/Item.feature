@@ -17,20 +17,28 @@ Feature: zones / egresses / item
       KUMA_MODE: global
       KUMA_SUBSCRIPTION_COUNT: 2
       """
-    And the URL "/zoneegresses/item-1/_overview" responds with
+    And the URL "/zoneegresses/item-1.kuma-system/_overview" responds with
       """
       body:
         labels:
-          kuma.io/display-name: default
+          kuma.io/display-name: item-1
+      """
+    And the URL "/_kri/kri_ze__zone-cp-1_kuma-system_item-1_" responds with
+      """
+      body:
+        name: item-1.kuma-system
+        kri: kri_ze__zone-cp-1_kuma-system_item-1_
+        labels:
+          kuma.io/display-name: item-1
       """
 
   Scenario: The about section has the expected content
-    When I visit the "/zones/zone-cp-1/egresses/item-1/overview" URL
+    When I visit the "/zones/kri_z____zone-cp-1_/egresses/kri_ze__zone-cp-1_kuma-system_item-1_/overview" URL
     Then the "$about-section" element exists
-    And the "$about-section" element contains "kuma.io/display-name:default"
+    And the "$about-section" element contains "kuma.io/display-name:item-1"
 
   Scenario: Detail view has expected content
-    And the URL "/zoneegresses/item-1/_overview" responds with
+    And the URL "/zoneegresses/item-1.kuma-system/_overview" responds with
       """
       body:
         zoneEgress:
@@ -45,7 +53,7 @@ Feature: zones / egresses / item
             - connectTime: 2020-07-28T16:18:09.743141Z
               disconnectTime: !!js/undefined
       """
-    When I visit the "/zones/zone-cp-1/egresses/item-1/overview" URL
+    When I visit the "/zones/kri_z____zone-cp-1_/egresses/kri_ze__zone-cp-1_kuma-system_item-1_/overview" URL
     Then the page title contains "item-1"
     Then the "$header" element contains "item-1"
     Then the "$overview-view" element contains "166.197.238.26:20555"
@@ -53,7 +61,7 @@ Feature: zones / egresses / item
     Then the "$config-view" element contains "type: ZoneEgress"
 
   Scenario: Shows config with format based on environment
-    When I visit the "/zones/zone-cp-1/egresses/item-1/config" URL
+    When I visit the "/zones/kri_z____zone-cp-1_/egresses/kri_ze__zone-cp-1_kuma-system_item-1_/config" URL
     Then the "$config-universal" element exists
     And the URL contains "?environment=universal"
     When I click the "$select-environment" element

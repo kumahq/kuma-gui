@@ -50,19 +50,14 @@ export const sources = (api: KumaApi) => {
       return Policy.fromCollection(res.data as KumaPolicyCollection)
     },
 
-    '/meshes/:mesh/policy-path/:path/policy/:name': async (params) => {
-      const { mesh, path, name } = params
-      if (Kri.isKriString(name)) {
-        const res = await http.GET('/_kri/{kri}', {
-          params: {
-            path: {
-              kri: name,
-            },
-          },
-        })
-        return Policy.fromObject(res.data as KumaPolicy)
-      } else {
-        const res = await http.GET(`/meshes/{mesh}/${path as DynamicPath}/{name}`, {
+    '/policy-path/:path/policy/:kri': async (params) => {
+      const { path, kri } = params
+      const { shortName, mesh, name } = Kri.fromString(kri)
+
+      let response
+
+      if(shortName.startsWith('~')) {
+        response = await http.GET(`/meshes/{mesh}/${path as DynamicPath}/{name}`, {
           params: {
             path: {
               mesh,
@@ -70,25 +65,51 @@ export const sources = (api: KumaApi) => {
             },
           },
         })
-        return Policy.fromObject(res.data as KumaPolicy)
+      } else {
+        response = await http.GET('/_kri/{kri}', {
+          params: {
+            path: {
+              kri,
+            },
+          },
+        })
       }
+      return Policy.fromObject(response.data as KumaPolicy)
     },
 
-    '/meshes/:mesh/policy-path/:path/policy/:name/as/kubernetes': async (params) => {
-      const { mesh, path, name } = params
-      const res = await http.GET(`/meshes/{mesh}/${path as DynamicPath}/{name}`, {
-        params: {
-          path: {
-            mesh,
-            name,
+    '/policy-path/:path/policy/:kri/as/kubernetes': async (params) => {
+      const { path, kri } = params
+      const { shortName, mesh, name } = Kri.fromString(kri)
+
+      let response
+
+      if(shortName.startsWith('~')) {
+        response = await http.GET(`/meshes/{mesh}/${path as DynamicPath}/{name}`, {
+          params: {
+            path: {
+              mesh,
+              name,
+            },
+            // @ts-expect-error - query parameter not listed in OAS
+            query: {
+              format: 'kubernetes',
+            },
           },
-          // @ts-expect-error - query parameter not listed in OAS
-          query: {
-            format: 'kubernetes',
+        })
+      } else {
+        response = await http.GET('/_kri/{kri}', {
+          params: {
+            path: {
+              kri,
+            },
+            // @ts-expect-error - query parameter not listed in OAS
+            query: {
+              format: 'kubernetes',
+            },
           },
-        },
-      })
-      return YAML.stringify(res.data)
+        })
+      }
+      return YAML.stringify(response.data)
     },
 
     '/meshes/:mesh/policy-path/:path/policy/:name/dataplanes': async (params) => {

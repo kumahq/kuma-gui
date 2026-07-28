@@ -58,12 +58,7 @@
               </dt>
               <dd>
                 <XAction
-                  :to="{
-                    name: 'zone-cp-detail-view',
-                    params: {
-                      zone: policy.zone,
-                    },
-                  }"
+                  :href="`kri://${Kri.toString({ shortName: 'z', name: policy.zone })}`"
                 >
                   <XBadge appearance="decorative">
                     {{ policy.zone }}
@@ -160,7 +155,7 @@
                     :to="{
                       name: 'data-plane-detail-view',
                       params: {
-                        proxy: item.id,
+                        proxy: item.kri,
                       },
                     }"
                   >
@@ -175,12 +170,7 @@
                 <template #zone="{ row }">
                   <XAction
                     v-if="row.zone"
-                    :to="{
-                      name: 'zone-cp-detail-view',
-                      params: {
-                        zone: row.zone,
-                      },
-                    }"
+                    :href="`kri://${Kri.toString({ shortName: 'z', name: row.zone })}`"
                   >
                     {{ row.zone }}
                   </XAction>
@@ -196,7 +186,7 @@
                       :to="{
                         name: 'data-plane-detail-view',
                         params: {
-                          proxy: item.id,
+                          proxy: item.kri,
                         },
                       }"
                     >
@@ -240,6 +230,7 @@
 import type { Policy } from '../data'
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
+import { Kri } from '@/app/kuma'
 
 const props = defineProps<{
   data: Policy | Error | undefined

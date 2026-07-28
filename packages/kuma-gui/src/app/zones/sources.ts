@@ -1,6 +1,7 @@
 import createClient from 'openapi-fetch'
 
 import { ZoneOverview } from './data'
+import { Kri } from '../kuma'
 import type { DataSourceResponse } from '@/app/application'
 import { defineSources } from '@/app/application'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
@@ -48,8 +49,9 @@ export const sources = (api: KumaApi) => {
 
       return ZoneOverview.fromCollection(res.data as unknown as CollectionResponse<PartialZoneOverview>)
     },
-    '/zone-cps/:name': async (params) => {
-      const { name } = params
+    '/zone-cps/:kri': async (params) => {
+      const { kri } = params
+      const { name } = Kri.fromString(kri)
       const res = await http.GET('/zones/{name}/_overview', {
         params: {
           path: {

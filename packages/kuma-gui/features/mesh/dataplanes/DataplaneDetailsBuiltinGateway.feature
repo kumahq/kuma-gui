@@ -14,6 +14,14 @@ Feature: Dataplane details for built-in gateway
       KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: true
       KUMA_MESHSERVICE_MODE: Exclusive
       """
+    And the URL "/_kri/kri_dp_default_zone-1_kuma-demo_dataplane-gateway-builtin-1_" responds with
+      """
+      body:
+        name: dataplane-gateway-builtin-1.kuma-demo
+        kri: kri_dp_default_zone-1_kuma-demo_dataplane-gateway-builtin-1_
+        labels:
+          kuma.io/display-name: dataplane-gateway-builtin-1
+      """
 
   Scenario: Overview tab has expected content
     Given the environment
@@ -22,7 +30,7 @@ Feature: Dataplane details for built-in gateway
       KUMA_DATAPLANEINBOUND_COUNT: 0
       KUMA_MODE: global
       """
-    And the URL "/meshes/default/dataplanes/dataplane-gateway_builtin-1/_overview" responds with
+    And the URL "/meshes/default/dataplanes/dataplane-gateway-builtin-1.kuma-demo/_overview" responds with
       """
       body:
         mesh: default
@@ -55,9 +63,9 @@ Feature: Dataplane details for built-in gateway
                   kumaDpCompatible: true
       """
     And the date is "2023-10-14T00:00:00Z"
-    When I visit the "/meshes/default/data-planes/dataplane-gateway_builtin-1/overview" URL
-    Then the page title contains "dataplane-gateway_builtin-1"
-    And the "$detail-view" element contains "dataplane-gateway_builtin-1"
+    When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_dataplane-gateway-builtin-1_/overview" URL
+    Then the page title contains "dataplane-gateway-builtin-1"
+    And the "$detail-view" element contains "dataplane-gateway-builtin-1"
     And the "$details" element contains
       | Value                 |
       | Online                |
@@ -67,11 +75,11 @@ Feature: Dataplane details for built-in gateway
     And the "$detail-view" element exists but the "$warnings" element doesn't exist
 
   Scenario: Overview tab shows warning when no mTLS is set
-    And the URL "/meshes/default/dataplanes/dataplane-gateway_builtin-1/_overview" responds with
+    And the URL "/meshes/default/dataplanes/dataplane-gateway-builtin-1.kuma-demo/_overview" responds with
       """
       body:
         dataplaneInsight:
           mTLS: !!js/undefined
       """
-    When I visit the "/meshes/default/data-planes/dataplane-gateway_builtin-1/overview" URL
+    When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_dataplane-gateway-builtin-1_/overview" URL
     Then the "$warnings" element exists

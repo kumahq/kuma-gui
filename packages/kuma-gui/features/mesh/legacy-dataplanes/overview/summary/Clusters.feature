@@ -5,6 +5,14 @@ Feature: mesh / dataplanes / connections / clusters
       """
       KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: false
       """
+    And the URL "/_kri/kri_dp_mesh-name_zone-1_namespace_service-64cbb7b8b5-6g94n_" responds with
+      """
+      body:
+        name: service-64cbb7b8b5-6g94n.namespace
+        kri: kri_dp_mesh-name_zone-1_namespace_service-64cbb7b8b5-6g94n_
+        labels:
+          kuma.io/display-name: service-64cbb7b8b5-6g94n
+      """
 
   Scenario: The inbound clusters tab correctly filters by 'localhost_<port>'
     Given the CSS selectors
@@ -13,6 +21,7 @@ Feature: mesh / dataplanes / connections / clusters
     And the URL "/meshes/mesh-name/dataplanes/service-64cbb7b8b5-6g94n.namespace/_overview" responds with
       """
       body:
+        kri: kri_dp_mesh-name_zone-1_namespace_service-64cbb7b8b5-6g94n_
         dataplane:
           networking:
             inbound:
@@ -28,7 +37,7 @@ Feature: mesh / dataplanes / connections / clusters
         localhost:1111::default_priority::max_connections::1025
         inbound:passthrough:ipv4::added_via_api::true
       """
-    When I visit the "/meshes/mesh-name/data-planes/service-64cbb7b8b5-6g94n.namespace/overview/inbound/localhost_9090/clusters" URL
+    When I visit the "/meshes/mesh-name/data-planes/kri_dp_mesh-name_zone-1_namespace_service-64cbb7b8b5-6g94n_/overview/inbound/localhost_9090/clusters" URL
     And the "$code" element contains "observability_name::localhost_9090"
     And the "$code" element contains "default_priority::max_connections::1024"
     And the "$code" element doesn't contain "priority::connections::1024"
@@ -57,7 +66,7 @@ Feature: mesh / dataplanes / connections / clusters
         localhost:1111::default_priority::max_connections::1025
         inbound:passthrough:ipv4::added_via_api::true
       """
-    When I visit the "/meshes/mesh-name/data-planes/service-64cbb7b8b5-6g94n.namespace/overview/inbound/localhost_9090/clusters" URL
+    When I visit the "/meshes/mesh-name/data-planes/kri_dp_mesh-name_zone-1_namespace_service-64cbb7b8b5-6g94n_/overview/inbound/localhost_9090/clusters" URL
     And the "$code" element contains "observability_name::localhost_9091"
     And the "$code" element contains "default_priority::max_connections::1024"
     And the "$code" element doesn't contain "priority::connections::1024"
@@ -82,7 +91,7 @@ Feature: mesh / dataplanes / connections / clusters
         localhost:1111::default_priority::max_connections::1025
         inbound:passthrough:ipv4::added_via_api::true
       """
-    When I visit the "/meshes/mesh-name/data-planes/service-64cbb7b8b5-6g94n.namespace/overview/outbound/mesh-name_service_namespace_default_msvc_9090/clusters" URL
+    When I visit the "/meshes/mesh-name/data-planes/kri_dp_mesh-name_zone-1_namespace_service-64cbb7b8b5-6g94n_/overview/outbound/mesh-name_service_namespace_default_msvc_9090/clusters" URL
     And the "$code" element contains "observability_name::mesh-name_service_namespace_default_msvc_9090"
     And the "$code" element contains "default_priority::max_connections::1024"
     And the "$code" element doesn't contain "priority::connections::1024"

@@ -388,7 +388,7 @@ describe('DataplaneOverview', () => {
         const actual = await fixture.setup((item) => {
           item.name = expected.name
           item.mesh = expected.mesh
-          // item.kri = expected.kri
+          item.kri = expected.kri
           item.creationTime = expected.creationTime
           item.modificationTime = expected.modificationTime
           item.dataplane.networking = expected.networking

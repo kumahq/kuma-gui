@@ -62,7 +62,7 @@
               :is="child.Component"
               :data="items[0]"
               :networking="props.networking"
-              :data-plane-overview="props.dataPlaneOverview"
+              :overview="props.overview"
             />
           </RouterView>
         </AppView>
@@ -79,6 +79,6 @@ const props = defineProps<{
   data?: T[]
   networking: DataplaneNetworking
   routeName: string
-  dataPlaneOverview: DataplaneOverview
+  overview: DataplaneOverview
 }>()
 </script>

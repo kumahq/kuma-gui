@@ -11,9 +11,18 @@ Feature: mesh / dataplanes / connections / clusters
     Given the CSS selectors
       | Alias | Selector                                                                                         |
       | code  | [data-testid='data-plane-connection-inbound-summary-clusters-view'] [data-testid='k-code-block'] |
+    And the URL "/_kri/kri_dp_mesh-name_zone-1_namespace_service-64cbb7b8b5-6g94n_" responds with
+      """
+      body:
+        name: service-64cbb7b8b5-6g94n.namespace
+        kri: kri_dp_mesh-name_zone-1_namespace_service-64cbb7b8b5-6g94n_
+        labels:
+          kuma.io/display-name: service-64cbb7b8b5-6g94n
+      """
     And the URL "/meshes/mesh-name/dataplanes/service-64cbb7b8b5-6g94n.namespace/_overview" responds with
       """
       body:
+        kri: kri_dp_mesh-name_zone-1_namespace_service-64cbb7b8b5-6g94n_
         dataplane:
           networking:
             inbound:
@@ -38,8 +47,8 @@ Feature: mesh / dataplanes / connections / clusters
         system_envoy_admin::default_priority::max_connections::1025
         kri_msvc_default_default_kuma-demo_demo-app-v2_5050:ipv4::added_via_api::true
       """
-    When I visit the "/meshes/mesh-name/data-planes/service-64cbb7b8b5-6g94n.namespace/overview/inbound/self_inbound_dp_http/clusters" URL
-    And the "$code" element contains "observability_name::self_inbound_dp_9090"
+    When I visit the "/meshes/mesh-name/data-planes/kri_dp_mesh-name_zone-1_namespace_service-64cbb7b8b5-6g94n_/overview/inbound/self_inbound_dp_http/clusters" URL
+    Then the "$code" element contains "observability_name::self_inbound_dp_9090"
     And the "$code" element contains "default_priority::max_connections::1024"
     And the "$code" element doesn't contain "priority::connections::1024"
     And the "$code" element doesn't contain "default_priority::max_connections::1025"
@@ -49,6 +58,14 @@ Feature: mesh / dataplanes / connections / clusters
     Given the CSS selectors
       | Alias | Selector                                                                                          |
       | code  | [data-testid='data-plane-connection-outbound-summary-clusters-view'] [data-testid='k-code-block'] |
+    And the URL "/_kri/kri_dp_mesh-name_zone-1_kuma-demo_service-64cbb7b8b5-6g94n_" responds with
+      """
+      body:
+        name: service-64cbb7b8b5-6g94n.kuma-demo
+        kri: kri_dp_mesh-name_zone-1_kuma-demo_service-64cbb7b8b5-6g94n_
+        labels:
+          kuma.io/display-name: service-64cbb7b8b5-6g94n
+      """
     And the URL "/meshes/mesh-name/dataplanes/service-64cbb7b8b5-6g94n.kuma-demo/stats" responds with
       """
       body: |
@@ -72,7 +89,7 @@ Feature: mesh / dataplanes / connections / clusters
         localhost:1111::default_priority::max_connections::1025
         inbound:passthrough:ipv4::added_via_api::true
       """
-    When I visit the "/meshes/mesh-name/data-planes/service-64cbb7b8b5-6g94n.kuma-demo/overview/outbound/kri_msvc_default_default_kuma-demo_demo-app_5050/clusters" URL
+    When I visit the "/meshes/mesh-name/data-planes/kri_dp_mesh-name_zone-1_kuma-demo_service-64cbb7b8b5-6g94n_/overview/outbound/kri_msvc_default_default_kuma-demo_demo-app_5050/clusters" URL
     And the "$code" element contains "observability_name::kri_msvc_default_default_kuma-demo_demo-app_5050"
     And the "$code" element contains "default_priority::max_connections::1024"
     And the "$code" element doesn't contain "priority::connections::1024"
