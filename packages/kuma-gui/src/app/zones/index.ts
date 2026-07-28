@@ -6,9 +6,8 @@ import { features } from './features'
 import locales from './locales/en-us/index.yaml'
 import { routes } from './routes'
 import { sources } from './sources'
+import type { Can } from '@/app/application'
 import { services as subscriptions } from '@/app/subscriptions'
-import egressLocales from '@/app/zone-egresses/locales/en-us/index.yaml'
-import ingressLocales from '@/app/zone-ingresses/locales/en-us/index.yaml'
 import type { ServiceDefinition } from '@kumahq/container'
 import type { RouteRecordRaw } from 'vue-router'
 
@@ -28,11 +27,11 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       service: () => ZoneActionGroup,
     }],
     [token('zones.routes'), {
-      service: (can) => {
+      service: (can: Can) => {
         return [
           (item: RouteRecordRaw) => {
-            if (item.name === 'control-plane-root-view') {
-              item.children = (item.children ?? []).concat(routes(can))
+            if (can('use zones') && item.name === 'control-plane-root-view') {
+              item.children = (item.children ?? []).concat(routes())
             }
           },
         ]
@@ -64,18 +63,6 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
     }],
     [token('zones.locales'), {
       service: () => locales,
-      labels: [
-        app.enUs,
-      ],
-    }],
-    [token('zone-egresses.locales'), {
-      service: () => egressLocales,
-      labels: [
-        app.enUs,
-      ],
-    }],
-    [token('zones-ingresses.locales'), {
-      service: () => ingressLocales,
       labels: [
         app.enUs,
       ],
