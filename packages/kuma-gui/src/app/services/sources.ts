@@ -4,27 +4,13 @@ import {
   MeshService,
   MeshMultiZoneService,
   MeshExternalService,
-  ExternalService,
-  ServiceInsight,
   Hostname,
 } from './data'
 import type { KumaMeshService, KumaMeshMultiZoneService, KumaMeshExternalService } from './data'
-import type { DataSourceResponse } from '@/app/application'
 import { defineSources } from '@/app/application'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
-import type { PaginatedApiListResponse as CollectionResponse, ServiceInsightsParameters } from '@/types/api.d'
-import type {
-  ServiceInsight as PartialServiceInsight,
-} from '@/types/index.d'
 import type { paths } from '@kumahq/kuma-http-api'
 
-export type { ServiceInsight } from './data'
-
-export type ServiceInsightSource = DataSourceResponse<ServiceInsight>
-export type ServiceInsightCollection = CollectionResponse<ServiceInsight>
-export type ServiceInsightCollectionSource = DataSourceResponse<ServiceInsightCollection>
-
-export type ExternalServiceSource = DataSourceResponse<ExternalService | null>
 
 const includes = <T extends readonly string[]>(arr: T, item: string): item is T[number] => {
   return arr.includes(item as T[number])
@@ -196,48 +182,6 @@ export const sources = (api: KumaApi) => {
       })
       
       return response.data!
-    },
-
-    '/meshes/:mesh/service-insights/of/:serviceType': async (params) => {
-      const { mesh, size, serviceType } = params
-      const offset = params.size * (params.page - 1)
-
-      const search = ServiceInsight.search(params.search)
-      const filterParams: ServiceInsightsParameters = {
-        size,
-        offset,
-        ...search,
-      }
-
-      if (serviceType !== 'all') {
-        filterParams.type = serviceType
-      }
-
-      const res = await http.GET('/meshes/{mesh}/service-insights', {
-        params: {
-          path: {
-            mesh,
-          },
-          query: {
-            ...filterParams,
-          },
-        },
-      })
-      return ServiceInsight.fromCollection(res.data! as unknown as CollectionResponse<PartialServiceInsight>)
-    },
-
-    '/meshes/:mesh/service-insights/:name': async (params) => {
-      const { mesh, name } = params
-      const res = await http.GET('/meshes/{mesh}/service-insights/{name}', {
-        params: {
-          path: {
-            mesh,
-            name,
-          },
-        },
-      })
-
-      return ServiceInsight.fromObject(res.data! as unknown as PartialServiceInsight)
     },
 
     '/meshes/:mesh/:serviceType/:serviceName/_hostnames': async (params) => {

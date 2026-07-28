@@ -11,10 +11,10 @@
   >
     <RouteTitle
       :render="false"
-      :title="t(`external-services.routes.items.title`)"
+      :title="t(`legacy-services.routes.items.title`)"
     />
     <AppView
-      :docs="t('external-services.href.docs')"
+      :docs="t('legacy-services.external-service.href.docs')"
     >
       <XCard>
         <XLayout variant="y-stack">

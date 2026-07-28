@@ -12,7 +12,6 @@ services:
       title: "{name}"
       breadcrumbs: Services
       navigation:
-        service-detail-view: 'Overview'
         mesh-service-detail-view: 'Overview'
         mesh-service-config-view: 'YAML'
         mesh-multi-zone-service-detail-view: 'Overview'
@@ -52,8 +51,6 @@ services:
             An <a href="{KUMA_DOCS_URL}/policies/external-services/?{KUMA_UTM_QUERY_PARAMS}" target="_blank">ExternalService</a> is a policy that allows an application or microservice to interact with other services that are not part of the mesh.
   detail:
     config: YAML
-    data_plane_proxies: Data plane proxies
-    no_matching_external_service: 'No matching ExternalService was found for service {name}'
     empty: None
     dpp-status:
       title: Status of data plane proxies
@@ -67,11 +64,6 @@ services:
       title: Identities
       identity: Identity
       type: Type
-  href:
-    docs: '{KUMA_DOCS_URL}/introduction/architecture/?{KUMA_UTM_QUERY_PARAMS}#services-and-pods'
-  internal-service:
-    about:
-      title: About this internal service
   mesh-service:
     about:
       title: About this MeshService

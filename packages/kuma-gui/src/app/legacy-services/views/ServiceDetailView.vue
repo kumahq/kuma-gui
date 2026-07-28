@@ -17,7 +17,7 @@
     <AppView>
       <XCard>
         <template #title>
-          {{ t('services.internal-service.about.title') }}
+          {{ t('legacy-services.internal-service.detail.about.title') }}
         </template>
         <DataLoader
           :src="uri(sources, `/meshes/:mesh/service-insights/:name`, {
@@ -78,7 +78,7 @@
 
       <XCard>
         <template #title>
-          <h3>{{ t('services.detail.data_plane_proxies') }}</h3>
+          <h3>{{ t('legacy-services.internal-service.detail.data_plane_proxies') }}</h3>
         </template>
         <XLayout
           variant="y-stack"

@@ -76,5 +76,5 @@
 </template>
 
 <script setup lang="ts">
-import type { ServiceInsightSource } from '@/app/services/sources'
+import type { ServiceInsightSource } from '@/app/legacy-services/sources'
 </script>

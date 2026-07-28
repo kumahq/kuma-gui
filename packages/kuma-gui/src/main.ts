@@ -8,11 +8,11 @@ import { services as application, TOKENS as APPLICATION } from '@/app/applicatio
 import { services as configuration } from '@/app/configuration'
 import { services as controlPlanes } from '@/app/control-planes'
 import { services as dataplanes } from '@/app/data-planes'
-import { services as externalServices } from '@/app/external-services'
 import { services as gateways } from '@/app/gateways'
 import { services as hostnameGenerators } from '@/app/hostname-generators'
 import { services as kuma, TOKENS as KUMA } from '@/app/kuma'
 import { services as legacyDataplanes } from '@/app/legacy-data-planes'
+import { services as legacyServices } from '@/app/legacy-services/index.ts'
 import { services as me } from '@/app/me'
 import { services as meshIdentities } from '@/app/mesh-identities'
 import { services as meshTrusts } from '@/app/mesh-trusts'
@@ -46,7 +46,7 @@ async function mountVueApplication() {
     meshes($),
     hostnameGenerators($),
     services($),
-    externalServices($),
+    legacyServices($),
     gateways($),
     dataplanes($),
     legacyDataplanes($),

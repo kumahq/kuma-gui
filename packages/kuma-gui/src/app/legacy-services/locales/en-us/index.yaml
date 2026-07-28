@@ -1,0 +1,30 @@
+legacy-services:
+  routes:
+    item:
+      title: "{name}"
+      breadcrumbs: ExternalServices
+      navigation:
+        external-service-detail-view: 'Overview'
+        service-detail-view: 'Overview'
+      overview: 'Overview'
+      config: 'YAML'
+      format: Format
+      formats:
+        universal: Universal
+        k8s: Kubernetes
+    items:
+      title: ExternalServices
+  external-service:
+    detail:
+      about:
+        title: About this ExternalService
+      config: YAML
+    href:
+      docs: '{KUMA_DOCS_URL}/policies/external-services?{KUMA_UTM_QUERY_PARAMS}'
+  internal-service:
+    detail:
+      about:
+        title: About this internal service
+      data_plane_proxies: Data plane proxies
+    href:
+      docs: '{KUMA_DOCS_URL}/introduction/architecture/?{KUMA_UTM_QUERY_PARAMS}#services-and-pods'
