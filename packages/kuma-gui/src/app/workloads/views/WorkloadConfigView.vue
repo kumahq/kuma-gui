@@ -47,27 +47,26 @@
           <template v-if="route.params.environment === 'universal'">
             <DataLoader
               :data="[props.data]"
+              v-slot="{ data: [workload] }"
             >
-              <template v-if="typeof props.data !== 'undefined' && !(props.data instanceof Error)">
-                <XCodeBlock
-                  data-testid="codeblock-yaml-universal"
-                  language="yaml"
-                  :code="YAML.stringify(props.data.$raw)"
-                  is-searchable
-                  :query="route.params.codeSearch"
-                  :is-filter-mode="route.params.codeFilter"
-                  :is-reg-exp-mode="route.params.codeRegExp"
-                  @query-change="route.update({ codeSearch: $event })"
-                  @filter-mode-change="route.update({ codeFilter: $event })"
-                  @reg-exp-mode-change="route.update({ codeRegExp: $event })"
-                />
-              </template>
+              <XCodeBlock
+                data-testid="codeblock-yaml-universal"
+                language="yaml"
+                :code="YAML.stringify(workload.$raw)"
+                is-searchable
+                :query="route.params.codeSearch"
+                :is-filter-mode="route.params.codeFilter"
+                :is-reg-exp-mode="route.params.codeRegExp"
+                @query-change="route.update({ codeSearch: $event })"
+                @filter-mode-change="route.update({ codeFilter: $event })"
+                @reg-exp-mode-change="route.update({ codeRegExp: $event })"
+              />
             </DataLoader>
           </template>
           <template v-else>
             <DataLoader
-              :src="uri(sources, '/workloads/:wl/as/kubernetes', {
-                wl: route.params.wl,
+              :src="uri(sources, '/workloads/:kri/as/kubernetes', {
+                kri: route.params.wl,
               })"
               v-slot="{ data: [k8sConfig] }"
             >

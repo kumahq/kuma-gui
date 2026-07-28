@@ -65,7 +65,7 @@ const protocolHandler = (can: Can, router: Router) => {
     switch (true) {
       case href.startsWith(kriProto): {
         const kri = href.substring(kriProto.length)
-        const { mesh, name: encodedName, zone, namespace, shortName } = Kri.fromString(kri)
+        const { mesh, name: encodedName, namespace, shortName } = Kri.fromString(kri)
         // old style names can have _ in them that are replaced with `~`
         const name = encodedName.replaceAll('~', '_')
         const id = `${name}${namespace !== '' ? `.${namespace}`: '' }`
@@ -92,7 +92,7 @@ const protocolHandler = (can: Can, router: Router) => {
               return {
                 name: 'workload-detail-view',
                 params: {
-                  wl: Kri.toString({ shortName, mesh, zone, namespace, name }),
+                  wl: kri,
                 },
               }
             case shortName === '~hostport':
