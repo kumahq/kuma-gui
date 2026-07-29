@@ -75,4 +75,4 @@ Feature: mesh / dataplanes / overview / summary / Outbound
       """
     When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_service-less_/overview/outbound/kri_dp_default_numeric_kuma-demo_service-less_httpport/overview" URL
     Then I click on the "$outbound-policies-rule ul:first-of-type li:first-of-type a:first-of-type" element
-    Then the URL contains "/gui/meshes/default/policies/meshfaultinjections/kri_mfi_default_pigsty_jury_the-policy-name_appliance/overview/overview"
+    Then the URL contains "/gui/meshes/default/policies/kri_mfi_default_pigsty_jury_the-policy-name_appliance/overview"

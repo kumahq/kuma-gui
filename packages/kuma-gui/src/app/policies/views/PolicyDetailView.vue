@@ -7,7 +7,6 @@
       s: '',
       mesh: '',
       policy: '',
-      policyPath: '',
       proxy: '',
     }"
     v-slot="{ route, t, uri, can, me, r }"
@@ -121,7 +120,7 @@
           <DataLoader
             :src="uri(sources, '/meshes/:mesh/policy-path/:path/policy/:name/dataplanes', {
               mesh: route.params.mesh,
-              path: route.params.policyPath,
+              path: policyType?.path ?? '',
               name: policy.id,
             },{
               page: route.params.page,
@@ -227,12 +226,13 @@
 </template>
 
 <script lang="ts" setup>
-import type { Policy } from '../data'
+import type { Policy, PolicyResourceType } from '../data'
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import { Kri } from '@/app/kuma'
 
 const props = defineProps<{
   data: Policy | Error | undefined
+  policyType: PolicyResourceType | undefined
 }>()
 </script>

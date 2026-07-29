@@ -2,7 +2,6 @@ import type { Dependencies, ResponseHandler } from '#mocks'
 import type { MeshGateway } from '@/types/index.d'
 
 export default ({ env, fake, pager }: Dependencies): ResponseHandler => (req) => {
-  const mesh = req.params.mesh as string
   const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
 
   const { offset, total, next, pageTotal } = pager(
@@ -12,9 +11,9 @@ export default ({ env, fake, pager }: Dependencies): ResponseHandler => (req) =>
   )
   const listenerCount = parseInt(env('KUMA_LISTENER_COUNT', `${fake.number.int({ min: 1, max: 3 })}`))
 
-  const queryName = req.url.searchParams.get('name')
-  const queryNamespace = req.url.searchParams.get('filter[labels.k8s.kuma.io/namespace]')
-  const queryZone = req.url.searchParams.get('filter[labels.kuma.io/zone]')
+  const nameQuery = req.url.searchParams.get('name')
+  const namespaceQuery = req.url.searchParams.get('filter[labels.k8s.kuma.io/namespace]')
+  const zoneQuery = req.url.searchParams.get('filter[labels.kuma.io/zone]')
 
   return {
     headers: {
@@ -25,27 +24,35 @@ export default ({ env, fake, pager }: Dependencies): ResponseHandler => (req) =>
       next,
       items: Array.from({ length: pageTotal }).map((_, i) => {
         const id = offset + i
-        const name = `${fake.word.noun()}-${id}`
 
-        const displayName = `${queryName?.padEnd(queryName.length + 1, '-') ?? ''}${name}${fake.kuma.dataplaneSuffix(k8s)}`
-        const nspace = queryNamespace ?? fake.k8s.namespace()
-        const zone = queryZone ?? fake.word.noun()
+        const [
+          _prefix,
+          shortName,
+          mesh,
+          zone,
+          nspace,
+          displayName,
+        ] = [
+          'kri', // prefix
+          'mgw', // shortName
+          String(req.params.mesh), // mesh
+          zoneQuery ?? fake.helpers.arrayElement(['', fake.word.noun()]), // zone
+          ...([k8s ? namespaceQuery ?? fake.word.noun() : '', `${nameQuery || fake.word.noun()}-${id}`]), // nspace, displayName
+        ]
+        const name = `${displayName}${k8s ? `.${nspace}` : ''}`
 
         return {
           type: 'MeshGateway',
           mesh,
-          name: `${displayName}${k8s ? `.${nspace}` : ''}`,
-          creationTime: '2022-01-25T13:55:51.798701+01:00',
-          modificationTime: '2022-01-25T13:55:51.798701+01:00',
+          name,
+          ...fake.kuma.timespan(),
+          kri: fake.kuma.kri({ shortName, mesh, zone, namespace: k8s ? nspace : '', displayName, sectionName: '' }),
           labels: {
-            'kuma.io/display-name': displayName,
-            'kuma.io/origin': fake.kuma.origin(),
-            'kuma.io/zone': zone,
-            ...(k8s
-              ? {
-                'k8s.kuma.io/namespace': nspace,
-              }
-              : {}),
+            ...fake.kuma.labels({
+              name: displayName,
+              ...(zone && { zone }),
+              ...(k8s && { namespace: nspace }),
+            }),
           },
           selectors: [
             {
