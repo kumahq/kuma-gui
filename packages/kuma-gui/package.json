@@ -28,7 +28,7 @@
     "shiki": "^4.3.1",
     "urlpattern-polyfill": "^10.1.0",
     "vue": "^3.5.35",
-    "vue-router": "^5.1.0"
+    "vue-router": "^5.2.0"
   },
   "devDependencies": {
     "@faker-js/faker": "^10.5.0",
