@@ -1,7 +1,7 @@
 import Kongponents from '@kong/kongponents'
 import { token, createInjections } from '@kumahq/container'
 import { waitFor } from '@kumahq/data'
-import X from '@kumahq/x'
+import X, { syntaxHighlighter } from '@kumahq/x'
 
 import { vars } from './env'
 import locales from './locales/en-us/index.yaml'
@@ -33,6 +33,7 @@ export const TOKENS = {
   api: token<KumaApi>('KumaApi'),
   htmlVars: token('kuma.html.vars'),
   dataSource: token<<T>(src: string) => Promise<T>>('app.dataSource'),
+  syntaxHighlighter: token('kuma.syntaxHighlighter'),
 }
 function getConfig() {
   const pathConfigNode = document.querySelector('#kuma-config')
@@ -194,13 +195,14 @@ const protocolHandler = (can: Can, router: Router) => {
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   return [
     [token('kuma.plugins'), {
-      service: (i18n, can, router) => {
+      service: (i18n, can, router, syntaxHighlighter) => {
         return [
           [Kongponents],
           [X, {
             i18n,
             protocolHandler: protocolHandler(can, router),
             routerElement: () => document.querySelector('.kuma-application'),
+            syntaxHighlighter,
           }],
         ]
       },
@@ -208,6 +210,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
         app.i18n,
         app.can,
         app.router,
+        app.syntaxHighlighter,
       ],
       labels: [
         app.plugins,
@@ -275,6 +278,10 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
           console.error(error)
         }
       },
+    }],
+
+    [app.syntaxHighlighter, {
+      service: () => syntaxHighlighter,
     }],
 
     [token('kuma.components.not-found'), {
