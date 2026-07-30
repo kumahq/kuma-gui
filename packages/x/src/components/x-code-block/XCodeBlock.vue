@@ -21,7 +21,6 @@
       :show-copy-button="showCopyButton"
       :query="props.query"
       :uri="props.uri"
-      theme="dark"
       @code-block-render="handleCodeBlockRenderEvent"
       @query-change="emit('query-change', $event)"
       @filter-mode-change="emit('filter-mode-change', $event)"
@@ -77,7 +76,7 @@ const emit = defineEmits<{
   (event: 'input', content: string): void
 }>()
 
-const syntax = useSyntaxHighlighter()
+const syntaxHighlighter = useSyntaxHighlighter()
 
 const processing = ref(false)
 
@@ -85,12 +84,9 @@ async function handleCodeBlockRenderEvent({ codeElement, code }: { codeElement: 
   processing.value = true
   // we can ignore eslint no-unsanitized/property as all code content is stringified and shiki adds safe HTML for highlighting.
   // eslint-disable-next-line no-unsanitized/property
-  codeElement.innerHTML = (await syntax()).codeToHtml(code, {
+  codeElement.innerHTML = (await syntaxHighlighter.highlight()).codeToHtml(code, {
     lang: props.language,
-    themes: {
-      light: 'catppuccin-mocha', // both dark for now at least
-      dark: 'catppuccin-mocha',
-    },
+    ...syntaxHighlighter.options,
   })
   processing.value = false
 }
@@ -116,7 +112,6 @@ html.dark,
   position: sticky;
   z-index: 4;
   top: var(--app-view-content-top, var(--AppHeaderHeight, 0));
-  background-color: var(--x-color-background-inverse);
 }
 
 :deep(.highlighted-code-block) {
