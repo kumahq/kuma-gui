@@ -4,7 +4,6 @@ import createClient from 'openapi-fetch'
 import {
   Dataplane,
   DataplaneOverview,
-  MeshGatewayDataplane,
   SidecarDataplane,
   DataplaneNetworkingLayout,
   type KumaDataplane,
@@ -15,7 +14,6 @@ import { Resource } from '@/app/resources/data/Resource'
 import type { PaginatedApiListResponse as CollectionResponse, ApiKindListResponse as KindCollectionResponse } from '@/types/api.d'
 import type {
   SidecarDataplane as PartialSidecarDataplane,
-  MeshGatewayDataplane as PartialMeshGatewayDataplane,
   DataPlaneOverview as PartialDataplaneOverview,
 } from '@/types/index.d'
 import type { paths } from '@kumahq/kuma-http-api'
@@ -181,18 +179,18 @@ export const sources = (api: KumaApi) => {
       return SidecarDataplane.fromCollection(res.data! as unknown as KindCollectionResponse<PartialSidecarDataplane>)
     },
 
-    '/meshes/:mesh/dataplanes/:name/gateway-dataplane-policies': async (params) => {
-      const { mesh, name } = params
-      const res = await http.GET('/meshes/{mesh}/dataplanes/{name}/policies', {
-        params: {
-          path: {
-            mesh,
-            name,
-          },
-        },
-      })
-      return MeshGatewayDataplane.fromObject(res.data! as unknown as PartialMeshGatewayDataplane)
-    },
+    // '/meshes/:mesh/dataplanes/:name/gateway-dataplane-policies': async (params) => {
+    //   const { mesh, name } = params
+    //   const res = await http.GET('/meshes/{mesh}/dataplanes/{name}/policies', {
+    //     params: {
+    //       path: {
+    //         mesh,
+    //         name,
+    //       },
+    //     },
+    //   })
+    //   return MeshGatewayDataplane.fromObject(res.data! as unknown as PartialMeshGatewayDataplane)
+    // },
     // end TODO
 
     '/meshes/:mesh/dataplane-overviews/:name': async (params) => {

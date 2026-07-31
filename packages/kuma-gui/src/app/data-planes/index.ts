@@ -1,5 +1,6 @@
-import { token } from '@kumahq/container'
+import { createInjections, token } from '@kumahq/container'
 
+import DataplaneServiceLink from './components/DataplaneServiceLink.vue'
 import { features } from './features'
 import locales from './locales/en-us/index.yaml'
 import { sources } from './sources'
@@ -8,6 +9,11 @@ import type { ServiceDefinition } from '@kumahq/container'
 
 type Token = ReturnType<typeof token>
 type DataplaneSources = ReturnType<typeof sources>
+
+const $ = {
+  SidecarDataplaneDataDecorator: token('data-planes.sidecar.data.decorator'),
+  DataplaneServiceLink: token<typeof DataplaneServiceLink>('data-planes.components.DataplaneServiceLink'),
+}
 
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   return [
@@ -54,6 +60,16 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
         app.enUs,
       ],
     }],
+    [$.DataplaneServiceLink, {
+      service: () => DataplaneServiceLink,
+    }],
     ...connections(app),
   ]
 }
+
+export const TOKENS = $
+export const [
+  useDataplaneServiceLink,
+] = createInjections(
+  $.DataplaneServiceLink,
+)

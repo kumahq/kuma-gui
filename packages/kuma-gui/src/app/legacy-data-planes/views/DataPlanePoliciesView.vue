@@ -5,7 +5,7 @@
       mesh: '',
       proxy: '',
     }"
-    v-slot="{ uri, can, route, t }"
+    v-slot="{ uri, route, t }"
   >
     <RouteTitle
       :render="false"
@@ -16,7 +16,7 @@
       <!-- we ask for the policyTypes here and always share the errors/data with all the DataLoaders below -->
       <DataSource
         :src="uri(policySources, '/policy-types', {})"
-        v-slot="{ data: policyTypesData, error: policyTypesError }"
+        v-slot="{ data: policyTypesData, error: policyTypesError, result: policyTypesDataResult }"
       >
         <template
           v-for="policyTypes in [(policyTypesData?.policyTypes ?? []).reduce<Partial<Record<string, PolicyResourceType>>>((obj, policyType) => Object.assign(obj, { [policyType.name]: policyType }), {})]"
@@ -129,75 +129,12 @@
               </DataCollection>
             </DataCollection>
           </DataLoader>
-
-          <!-- if we are in non-federated zone mode try and load/show legacy policies -->
-          <template v-if="!can('use zones')">
-            <div>
-              <!-- builtin gateways have different data/visuals than other types of dataplanes -->
-              <template v-if="props.data.dataplaneType === 'builtin'">
-                <DataLoader
-                  :src="uri(dataplaneSources, '/meshes/:mesh/dataplanes/:name/gateway-dataplane-policies', {
-                    mesh: route.params.mesh,
-                    name: props.data.id,
-                  })"
-                  :data="[policyTypesData]"
-                  :errors="[policyTypesError]"
-                  v-slot="{ data: [gatewayDataplane] }"
-                >
-                  <DataCollection
-                    :items="gatewayDataplane.routePolicies"
-                    :empty="false"
-                  > 
-                    <h3>
-                      {{ t('data-planes.routes.item.legacy_policies') }}
-                    </h3>
-                    <XCard
-                      class="mt-4"
-                    >
-                      <BuiltinGatewayPolicies
-                        :types="policyTypes"
-                        :gateway-dataplane="gatewayDataplane"
-                        data-testid="builtin-gateway-dataplane-policies"
-                      />
-                    </XCard>
-                  </DataCollection>
-                </DataLoader>
-              </template>
-
-              <!-- anything but builtin gateways -->
-              <template v-else>
-                <DataLoader
-                  :src="uri(dataplaneSources, '/meshes/:mesh/dataplanes/:name/sidecar-dataplane-policies', {
-                    mesh: route.params.mesh,
-                    name: props.data.id,
-                  })"
-                  :data="[policyTypesData]"
-                  :errors="[policyTypesError]"
-                  v-slot="{ data: [sidecarDataplaneData] }"
-                >
-                  <DataCollection
-                    :empty="false"
-                    :items="sidecarDataplaneData.policyTypeEntries"
-                    :predicate="(item) => policyTypes[item.type]?.policy.isTargetRef === false"
-                    v-slot="{ items }"
-                  >
-                    <h3>
-                      {{ t('data-planes.routes.item.legacy_policies') }}
-                    </h3>
-                    <XCard
-                      class="mt-4"
-                    >
-                      <PolicyTypeEntryList
-                        :items="items"
-                        :types="policyTypes"
-                        data-testid="sidecar-dataplane-policies"
-                      />
-                    </XCard>
-                  </DataCollection>
-                </DataLoader>
-              </template>
-            </div>
-          </template>
+          
+          <DataPlanePolicies
+            :data="props.data"
+            :policy-types="policyTypes"
+            :policy-types-data-result="policyTypesDataResult"
+          />
         </template>
         <RouterView
           v-slot="{ Component }"
@@ -223,10 +160,8 @@
   </RouteView>
 </template>
 <script lang="ts" setup>
-import BuiltinGatewayPolicies from '../components/BuiltinGatewayPolicies.vue'
+import { useDataPlanePolicies } from '../index.ts'
 import type { DataplaneOverview } from '@/app/data-planes/data'
-import { sources as dataplaneSources } from '@/app/data-planes/sources'
-import PolicyTypeEntryList from '@/app/policies/components/PolicyTypeEntryList.vue'
 import type { PolicyResourceType } from '@/app/policies/data'
 import { sources as policySources } from '@/app/policies/sources'
 import RuleList from '@/app/rules/components/RuleList.vue'
@@ -235,4 +170,6 @@ import { sources } from '@/app/rules/sources'
 const props = defineProps<{
   data: DataplaneOverview
 }>()
+
+const DataPlanePolicies = useDataPlanePolicies()
 </script>
