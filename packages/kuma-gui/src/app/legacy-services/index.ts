@@ -34,7 +34,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
             if (item.name === 'service-list-tabs-view') {
               item.children = [..._routes.items(), ...item.children ?? []]
             }
-            if(item.name === 'mesh') {
+            if(item.name === 'service-detail-index-view') {
               item.children = (item.children ?? []).concat(_routes.item())
             }
           },

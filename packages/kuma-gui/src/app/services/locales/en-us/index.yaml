@@ -51,6 +51,7 @@ services:
             An <a href="{KUMA_DOCS_URL}/policies/external-services/?{KUMA_UTM_QUERY_PARAMS}" target="_blank">ExternalService</a> is a policy that allows an application or microservice to interact with other services that are not part of the mesh.
   detail:
     config: YAML
+    data_plane_proxies: Data plane proxies
     empty: None
     dpp-status:
       title: Status of data plane proxies
