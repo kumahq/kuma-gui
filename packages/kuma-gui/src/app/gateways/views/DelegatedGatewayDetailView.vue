@@ -275,7 +275,7 @@ import AppCollection from '@/app/application/components/app-collection/AppCollec
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import { sources } from '@/app/data-planes/sources'
 import { Kri } from '@/app/kuma'
-import { sources as serviceSources } from '@/app/services/sources'
+import { sources as serviceSources } from '@/app/legacy-services/sources'
 </script>
 
 <style lang="scss" scoped>

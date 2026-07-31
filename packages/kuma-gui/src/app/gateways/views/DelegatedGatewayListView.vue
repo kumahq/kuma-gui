@@ -132,5 +132,5 @@
 <script lang="ts" setup>
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
-import { sources } from '@/app/services/sources'
+import { sources } from '@/app/legacy-services/sources'
 </script>
