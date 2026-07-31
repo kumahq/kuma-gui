@@ -4,7 +4,6 @@
     :params="{
       mesh: '',
       policy: '',
-      policyPath: '',
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
@@ -65,7 +64,7 @@
           <template v-else>
             <DataLoader
               :src="uri(sources, '/policy-path/:path/policy/:kri/as/kubernetes', {
-                path: route.params.policyPath,
+                path: policyType?.path ?? '',
                 kri: route.params.policy,
               })"
               v-slot="{ data: [yaml] }"
@@ -91,9 +90,10 @@
 </template>
 
 <script lang="ts" setup>
-import type { Policy } from '../data'
+import type { Policy, PolicyResourceType } from '../data'
 import { sources } from '../sources'
 const props = defineProps<{
   data: Policy | Error | undefined
+  policyType: PolicyResourceType | undefined
 }>()
 </script>

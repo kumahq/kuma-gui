@@ -52,6 +52,7 @@ import {
   XErrorState,
 } from './components'
 import { vStyle, vIcon }  from './directives/'
+import type { CodeToHastOptions } from 'shiki/core'
 import type { App, Plugin, InjectionKey } from 'vue'
 
 export * from './components'
@@ -212,6 +213,30 @@ const createBuilder = (container: Container) => {
 
 const { uri } = nano()
 
+export const syntaxHighlighter = {
+  options: {
+    themes: {
+      dark: 'catppuccin-mocha',
+      light: 'catppuccin-mocha',
+    },
+    structure: 'inline',
+  } satisfies Partial<CodeToHastOptions>,
+  highlight: async () => createHighlighterCore({
+    langs: [
+      import('shiki/langs/json.mjs'),
+      import('shiki/langs/yaml.mjs'),
+      import('shiki/langs/bash.mjs'),
+    ],
+    themes: [
+      {
+        name: 'catppuccin-mocha',
+        default: (await import('shiki/themes/catppuccin-mocha.mjs')).default,
+      },
+    ],
+    engine: createJavaScriptRegexEngine(),
+  }),
+}
+
 const deps = {
   i18n: {
     t: (str: string, _values?: Record<string, string>, _options?: Record<string, unknown>) => str,
@@ -219,22 +244,7 @@ const deps = {
   },
   routerElement: () => document.body,
   protocolHandler: (href: string) => href,
-  syntaxHighlighter: async () => {
-    return createHighlighterCore({
-      langs: [
-        import('shiki/langs/json.mjs'),
-        import('shiki/langs/yaml.mjs'),
-        import('shiki/langs/bash.mjs'),
-      ],
-      themes: [
-        {
-          name: 'catppuccin-mocha',
-          default: (await import('shiki/themes/catppuccin-mocha.mjs')).default,
-        },
-      ],
-      engine: createJavaScriptRegexEngine(),
-    })
-  },
+  syntaxHighlighter,
 }
 const tokens = {
   i18n: uri<typeof deps.i18n>('x.i18n'),
@@ -251,10 +261,7 @@ const plugin: Plugin = {
 
     const { build } = createBuilder(nano())
     build(app)
-      .service(tokens.syntaxHighlighter, () => {
-        const syntax = deps.syntaxHighlighter()
-        return async () => syntax
-      })
+      .service(tokens.syntaxHighlighter, () => services.syntaxHighlighter)
       .service(tokens.protocolHandler, () => services.protocolHandler)
       .service(tokens.i18n, () => services.i18n)
       .service(tokens.routerElement, services.routerElement)
