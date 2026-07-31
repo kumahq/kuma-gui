@@ -23,5 +23,5 @@ export const PolicyResourceType = {
   },
 }
 export type PolicyResourceType = ReturnType<typeof PolicyResourceType.fromObject>
-export type ResourceCollection = ReturnType<typeof PolicyResourceType.fromCollection>
+export type PolicyResourceTypeCollection = ReturnType<typeof PolicyResourceType.fromCollection>
 
