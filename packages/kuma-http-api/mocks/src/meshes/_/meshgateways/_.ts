@@ -9,7 +9,7 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
   const kri = req.params.kri ? `kri_mgw_${req.params.kri}` : undefined
   const [
     _prefix,
-    _shortName,
+    shortName,
     mesh,
     zone,
     nspace,
@@ -38,8 +38,8 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
       type: 'MeshGateway',
       mesh,
       name,
-      creationTime: '2022-01-25T13:55:51.798701+01:00',
-      modificationTime: '2022-01-25T13:55:51.798701+01:00',
+      kri: fake.kuma.kri({ shortName, mesh, zone, namespace: k8s ? nspace : '', displayName, sectionName: '' }),
+      ...fake.kuma.timespan(),
       labels: {
         ...fake.kuma.labels({
           name: displayName,

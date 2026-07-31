@@ -1,7 +1,7 @@
 import Kongponents from '@kong/kongponents'
 import { token, createInjections } from '@kumahq/container'
 import { waitFor } from '@kumahq/data'
-import X from '@kumahq/x'
+import X, { syntaxHighlighter } from '@kumahq/x'
 
 import { vars } from './env'
 import locales from './locales/en-us/index.yaml'
@@ -33,6 +33,7 @@ export const TOKENS = {
   api: token<KumaApi>('KumaApi'),
   htmlVars: token('kuma.html.vars'),
   dataSource: token<<T>(src: string) => Promise<T>>('app.dataSource'),
+  syntaxHighlighter: token('kuma.syntaxHighlighter'),
 }
 function getConfig() {
   const pathConfigNode = document.querySelector('#kuma-config')
@@ -65,12 +66,34 @@ const protocolHandler = (can: Can, router: Router) => {
     switch (true) {
       case href.startsWith(kriProto): {
         const kri = href.substring(kriProto.length)
-        const { mesh, name: encodedName, zone, namespace, shortName } = Kri.fromString(kri)
+        const { mesh, name: encodedName, shortName } = Kri.fromString(kri)
         // old style names can have _ in them that are replaced with `~`
         const name = encodedName.replaceAll('~', '_')
-        const id = `${name}${namespace !== '' ? `.${namespace}`: '' }`
         const to = (() => {
           switch (true) {
+            case shortName === 'mal':
+            case shortName === 'mcb':
+            case shortName === 'mfi':
+            case shortName === 'mhttpr':
+            case shortName === 'mhc':
+            case shortName === 'mlbs':
+            case shortName === 'mm':
+            case shortName === 'mp':
+            case shortName === 'mpp':
+            case shortName === 'mrl':
+            case shortName === 'mr':
+            case shortName === 'mtcpr':
+            case shortName === 'mtls':
+            case shortName === 'mt':
+            case shortName === 'mtr':
+            case shortName === 'mtp':
+              return {
+                name: 'policy-detail-view',
+                params: {
+                  mesh,
+                  policy: kri,
+                },
+              }
             case shortName === 'm':
               return {
                 name: 'mesh-detail-view',
@@ -92,7 +115,8 @@ const protocolHandler = (can: Can, router: Router) => {
               return {
                 name: 'workload-detail-view',
                 params: {
-                  wl: Kri.toString({ shortName, mesh, zone, namespace, name }),
+                  mesh,
+                  wl: kri,
                 },
               }
             case shortName === '~hostport':
@@ -107,23 +131,23 @@ const protocolHandler = (can: Can, router: Router) => {
                 name: 'mesh-service-detail-view',
                 params: {
                   mesh,
-                  service: id,
+                  kri,
                 },
               }
             case shortName === 'mzsvc':
               return {
                 name: 'mesh-multi-zone-service-detail-view',
                 params: {
-                  mesh: mesh,
-                  service: id,
+                  mesh,
+                  kri,
                 },
               }
             case shortName === 'extsvc':
               return {
                 name: 'mesh-external-service-detail-view',
                 params: {
-                  mesh: mesh,
-                  service: id,
+                  mesh,
+                  kri,
                 },
               }
             case shortName === 'hg':
@@ -133,8 +157,22 @@ const protocolHandler = (can: Can, router: Router) => {
                   kri,
                 },
               }
+            case shortName === 'dp':
+              return {
+                name: 'data-plane-detail-view',
+                params: {
+                  mesh,
+                  proxy: kri,
+                },
+              }
             default:
-              return
+              return {
+                name: 'resource-detail-view',
+                params: {
+                  mesh,
+                  kri,
+                },
+              }
           }
         })()
         if (to) {
@@ -157,13 +195,14 @@ const protocolHandler = (can: Can, router: Router) => {
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   return [
     [token('kuma.plugins'), {
-      service: (i18n, can, router) => {
+      service: (i18n, can, router, syntaxHighlighter) => {
         return [
           [Kongponents],
           [X, {
             i18n,
             protocolHandler: protocolHandler(can, router),
             routerElement: () => document.querySelector('.kuma-application'),
+            syntaxHighlighter,
           }],
         ]
       },
@@ -171,6 +210,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
         app.i18n,
         app.can,
         app.router,
+        app.syntaxHighlighter,
       ],
       labels: [
         app.plugins,
@@ -238,6 +278,10 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
           console.error(error)
         }
       },
+    }],
+
+    [app.syntaxHighlighter, {
+      service: () => syntaxHighlighter,
     }],
 
     [token('kuma.components.not-found'), {

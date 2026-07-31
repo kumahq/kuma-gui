@@ -102,4 +102,4 @@ Feature: mesh / dataplanes / overview / summary / Inbound
       """
     When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_service-less_/overview/inbound/self_inbound_http/overview" URL
     Then I click on the "$inbound-policies-rule table tr:first-of-type td a" element
-    Then the URL contains "/gui/meshes/default/policies/meshfaultinjections/kri_mfi_default_pigsty_jury_the-policy-name_appliance/overview/overview"
+    Then the URL contains "/gui/meshes/default/policies/kri_mfi_default_pigsty_jury_the-policy-name_appliance/overview"
