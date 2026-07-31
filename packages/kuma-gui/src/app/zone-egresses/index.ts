@@ -15,7 +15,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       service: (can: Can) => {
         return [
           (item: RouteRecordRaw) => {
-            const _routes = routes()
+            const _routes = routes(can)
             if (item.name === 'zone-cp-detail-tabs-view') {
               const children = item.children ?? []
               item.children = [children[0], children[1], ..._routes.items(), ...children.splice(2)].filter((route) => !!route)
@@ -23,8 +23,9 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
             if (item.name === 'zone-cp-detail-abstract-view') {
               item.children = (item.children ?? []).concat(_routes.item())
             }
+            
             if(!can('use zones') && item.name === 'control-plane-root-view') {
-              item.children = (item.children ?? []).concat(_routes.items(), _routes.item())
+              item.children = (item.children ?? []).concat(_routes.items())
             }
           },
         ]
