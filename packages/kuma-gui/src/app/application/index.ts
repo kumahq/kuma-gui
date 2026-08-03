@@ -269,6 +269,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
         $.getDataSourceCacheKeyPrefix,
       ],
     }],
+
     [token('application.datasource.data-uri'), {
       service: () => {
         return {

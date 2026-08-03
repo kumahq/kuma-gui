@@ -146,33 +146,10 @@
                     :key="index"
                   >
                     <XCopyButton :text="service">
-                      <XAction
-                        v-if="row.dataplaneType === 'standard'"
-                        :to="{
-                          name: 'service-detail-view',
-                          params: {
-                            service,
-                          },
-                        }"
-                      >
-                        {{ service }}
-                      </XAction>
-
-                      <XAction
-                        v-else-if="row.dataplaneType === 'delegated'"
-                        :to="{
-                          name: 'delegated-gateway-detail-view',
-                          params: {
-                            service,
-                          },
-                        }"
-                      >
-                        {{ service }}
-                      </XAction>
-
-                      <template v-else>
-                        {{ service }}
-                      </template>
+                      <DataplaneServiceLink
+                        :service="service"
+                        :dataplane-type="row.dataplaneType"
+                      />
                     </XCopyButton>
                   </div>
                 </XLayout>
@@ -325,6 +302,7 @@
 </template>
 
 <script lang="ts" setup>
+import { useDataplaneServiceLink } from '../index.ts'
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
@@ -333,6 +311,8 @@ import type { Mesh } from '@/app/meshes/data'
 const props = defineProps<{
   mesh: Mesh
 }>()
+
+const DataplaneServiceLink = useDataplaneServiceLink()
 </script>
 
 <style lang="scss" scoped>

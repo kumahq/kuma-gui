@@ -149,13 +149,13 @@
 import { useI18n } from '@/app/application'
 import ResourceStatus from '@/app/common/ResourceStatus.vue'
 import type { GlobalInsight } from '@/app/control-planes/data'
-import type { ResourceCollection } from '@/app/policies/data'
+import type { PolicyResourceTypeCollection } from '@/app/policies/data'
 
 const { t } = useI18n()
 
 const props = defineProps<{
   globalInsight?: GlobalInsight | Error
-  resources?: ResourceCollection
+  resources?: PolicyResourceTypeCollection
   canUseZones: boolean
 }>()
 </script>
