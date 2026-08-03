@@ -1,6 +1,10 @@
-import { describe, expect, test } from 'vitest'
+import { fs } from '@kumahq/kuma-http-api/mocks'
+import { describe, expect, test , test as _test } from 'vitest'
 
-import { ExternalService } from './index'
+import { ExternalService } from './ExternalService'
+import { plugin, server } from '@/test-support/data'
+
+const externalMock = fs['/meshes/:mesh/external-services']
 
 type TestCase<T extends (...args: any) => any> = {
   message: string
@@ -56,5 +60,30 @@ describe('services data transformations', () => {
     ])('.fromObject: $message', ({ parameters, expected }) => {
       expect(ExternalService.fromObject(...parameters)).toStrictEqual(expected)
     })
+  })
+})
+
+describe('ExternalService', () => {
+  const test = _test.extend(plugin<typeof ExternalService>(
+    ExternalService,
+    server(externalMock, {
+      params: {
+        name: 'zone',
+      },
+    }),
+  ))
+  //
+  describe('externalService.config', () => {
+    test(
+      'config is the same as the original API object',
+      async ({ fixture }) => {
+        let expected
+        const actual = await fixture.setup((item) => {
+          expected = item
+          return item
+        })
+        expect(actual.config).toStrictEqual(expected)
+      },
+    )
   })
 })

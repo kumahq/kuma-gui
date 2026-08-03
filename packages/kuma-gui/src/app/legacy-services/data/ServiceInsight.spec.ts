@@ -1,36 +1,13 @@
+
 import { fs } from '@kumahq/kuma-http-api/mocks'
 import { describe, expect, test as _test } from 'vitest'
 
-import { ExternalService, ServiceInsight } from './'
+import { ServiceInsight } from './'
 import { plugin, server } from '@/test-support/data'
 
-const externalMock = fs['/meshes/:mesh/external-services']
 const insightMock = fs['/meshes/:mesh/service-insights']
 
-describe('ExternalService', () => {
-  const test = _test.extend(plugin<typeof ExternalService>(
-    ExternalService,
-    server(externalMock, {
-      params: {
-        name: 'zone',
-      },
-    }),
-  ))
-  //
-  describe('externalService.config', () => {
-    test(
-      'config is the same as the original API object',
-      async ({ fixture }) => {
-        let expected
-        const actual = await fixture.setup((item) => {
-          expected = item
-          return item
-        })
-        expect(actual.config).toStrictEqual(expected)
-      },
-    )
-  })
-})
+
 describe('ServiceInsight', () => {
   const test = _test.extend(plugin<typeof ServiceInsight>(
     ServiceInsight,

@@ -8,7 +8,7 @@
     v-slot="{ route, t }"
   >
     <AppView
-      :docs="t('external-services.href.docs')"
+      :docs="t('legacy-services.external-service.href.docs')"
       :breadcrumbs="[
         {
           to: {
@@ -26,13 +26,13 @@
               mesh: route.params.mesh,
             },
           },
-          text: t('external-services.routes.item.breadcrumbs'),
+          text: t('legacy-services.routes.item.breadcrumbs'),
         },
       ]"
     >
       <template #title>
         <h1>
-          <RouteTitle :title="t('external-services.routes.item.title', { name: route.params.service })" />
+          <RouteTitle :title="t('legacy-services.routes.item.title', { name: route.params.service })" />
         </h1>
       </template>
 
@@ -47,7 +47,7 @@
           <XAction
             :to="{ name }"
           >
-            {{ t(`external-services.routes.item.navigation.${name}`) }}
+            {{ t(`legacy-services.routes.item.navigation.${name}`) }}
           </XAction>
         </template>
       </XTabs>

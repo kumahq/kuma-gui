@@ -15,7 +15,7 @@
       :title="t(`services.routes.items.title`)"
     />
     <AppView
-      :docs="t('services.href.docs')"
+      :docs="t('legacy-services.internal-service.href.docs')"
     >
       <XCard>
         <XLayout variant="y-stack">

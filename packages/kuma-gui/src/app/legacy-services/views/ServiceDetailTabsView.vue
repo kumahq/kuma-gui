@@ -15,7 +15,7 @@
       v-slot="{ data }"
     >
       <AppView
-        :docs="t('services.href.docs')"
+        :docs="t('legacy-services.internal-service.href.docs')"
         :breadcrumbs="[
           {
             to: {
@@ -49,7 +49,7 @@
             >
               <h1>
                 <RouteTitle
-                  :title="t('services.routes.item.title', { name: item.name })"
+                  :title="t('legacy-services.routes.item.title', { name: item.name })"
                 />
               </h1>
             </XLayout>
@@ -67,7 +67,7 @@
             <XAction
               :to="{ name }"
             >
-              {{ t(`services.routes.item.navigation.${name}`) }}
+              {{ t(`legacy-services.routes.item.navigation.${name}`) }}
             </XAction>
           </template>
         </XTabs>

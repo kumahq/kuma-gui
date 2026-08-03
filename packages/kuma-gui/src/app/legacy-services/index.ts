@@ -1,9 +1,9 @@
 import { token } from '@kumahq/container'
 
+import { features } from './features'
 import locales from './locales/en-us/index.yaml'
 import { routes } from './routes'
 import { sources } from './sources'
-import type { Can } from '@/app/application'
 import type { ServiceDefinition } from '@kumahq/container'
 import type { RouteRecordRaw } from 'vue-router'
 
@@ -11,7 +11,7 @@ type Token = ReturnType<typeof token>
 
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   return [
-    [token('services.sources'), {
+    [token('legacy-services.sources'), {
       service: sources,
       arguments: [
         app.api,
@@ -20,33 +20,38 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
         app.sources,
       ],
     }],
-    [token('services.routes'), {
-      service: (can: Can) => {
-        const _routes = routes(can)
-        return [
-          (item: RouteRecordRaw) => {
-            if (item.name === 'mesh-detail-tabs-view') {
-              item.children = (item.children ?? []).concat(_routes.items())
-            }
-            if(item.name === 'mesh') {
-              item.children = (item.children ?? []).concat(_routes.item())
-            }
-          },
-        ]
-      },
-      arguments: [
-        app.can,
-      ],
-      labels: [
-        app.routeWalkers,
-      ],
-    }],
-    [token('services.locales'), {
+    [token('legacy-services.locales'), {
       service: () => locales,
       labels: [
         app.enUs,
       ],
     }],
-
+    [token('legacy-services.routes'), {
+      service: () => {
+        const _routes = routes()
+        return [
+          (item: RouteRecordRaw) => {
+            if (item.name === 'service-list-tabs-view') {
+              item.children = [..._routes.items(), ...item.children ?? []]
+            }
+            if(item.name === 'service-detail-index-view') {
+              item.children = (item.children ?? []).concat(_routes.item())
+            }
+          },
+        ]
+      },
+      labels: [
+        app.routeWalkers,
+      ],
+    }],
+    [token('legacy-services.features'), {
+      service: features,
+      arguments: [
+        app.env,
+      ],
+      labels: [
+        app.features,
+      ],
+    }],
   ]
 }

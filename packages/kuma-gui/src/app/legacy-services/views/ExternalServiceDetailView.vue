@@ -23,7 +23,7 @@
           data-testid="external-service-details"
         >
           <template #title>
-            {{ t('external-services.detail.about.title') }}
+            {{ t('legacy-services.external-service.detail.about.title') }}
           </template>
           <DataLoader
             :data="[data]"
@@ -81,7 +81,7 @@
 
         <XCard>
           <template #title>
-            <h3>{{ t('external-services.detail.config') }}</h3>
+            <h3>{{ t('legacy-services.external-service.detail.config') }}</h3>
           </template>
 
           <XLayout variant="y-stack">
@@ -94,7 +94,7 @@
                 :key="typeof options"
               >
                 <XSelect
-                  :label="t('external-services.routes.item.format')"
+                  :label="t('legacy-services.routes.item.format')"
                   :selected="route.params.environment"
                   @change="(value) => {
                     route.update({ environment: value })
@@ -106,7 +106,7 @@
                     :key="value"
                     #[`${value}-option`]
                   >
-                    {{ t(`external-services.routes.item.formats.${value}`) }}
+                    {{ t(`legacy-services.routes.item.formats.${value}`) }}
                   </template>
                 </XSelect>
               </div>

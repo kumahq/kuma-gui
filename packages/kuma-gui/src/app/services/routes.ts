@@ -10,31 +10,6 @@ export const routes = (can: Can) => {
         name: 'service-detail-index-view',
         children: [
           {
-            path: 'internal/:service',
-            name: 'service-detail-tabs-view',
-            component: () => import('@/app/services/views/ServiceDetailTabsView.vue'),
-            children: [
-              {
-                path: 'overview',
-                name: 'service-detail-view',
-                component: () => import('@/app/services/views/ServiceDetailView.vue'),
-                children: dataPlanes().summary('service'),
-              },
-            ],
-          },
-          {
-            path: 'external/:service',
-            name: 'external-service-detail-tabs-view',
-            component: () => import('@/app/external-services/views/ExternalServiceDetailTabsView.vue'),
-            children: [
-              {
-                path: 'overview',
-                name: 'external-service-detail-view',
-                component: () => import('@/app/external-services/views/ExternalServiceDetailView.vue'),
-              },
-            ],
-          },
-          {
             path: 'mesh-services/:kri',
             name: 'mesh-service-detail-tabs-view',
             component: () => import('@/app/services/views/MeshServiceDetailTabsView.vue'),
@@ -94,16 +69,6 @@ export const routes = (can: Can) => {
           name: 'service-list-tabs-view',
           component: () => import('@/app/services/views/ServiceListTabsView.vue'),
           children: [
-            {
-              path: 'internal',
-              name: 'service-list-view',
-              component: () => import('@/app/services/views/ServiceListView.vue'),
-            },
-            {
-              path: 'external',
-              name: 'external-service-list-view',
-              component: () => import('@/app/external-services/views/ExternalServiceListView.vue'),
-            },
             {
               path: 'mesh-services',
               name: 'mesh-service-list-view',
