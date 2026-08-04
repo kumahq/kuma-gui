@@ -1,8 +1,9 @@
+import type { Can } from '@/app/application'
 import { routes as connections, networking } from '@/app/connections/routes'
 import { routes as subscriptions } from '@/app/subscriptions/routes'
 import type { RouteRecordRaw } from 'vue-router'
 
-export const routes = (prefix = 'egresses') => {
+export const routes = (can: Can, prefix = 'egresses') => {
   const item = (): RouteRecordRaw[] => {
     return [
       {
@@ -41,22 +42,37 @@ export const routes = (prefix = 'egresses') => {
     ]
   }
 
+  const items = (): RouteRecordRaw[] => [
+    {
+      path: `${prefix}`,
+      name: 'zone-egress-list-view',
+      component: () => import('@/app/zone-egresses/views/ZoneEgressListView.vue'),
+      children: [
+        {
+          path: ':proxy',
+          name: 'zone-egress-summary-view',
+          component: () => import('@/app/zone-egresses/views/ZoneEgressSummaryView.vue'),
+        },
+      ],
+    },
+  ]
+
   return {
     items: (): RouteRecordRaw[] => {
-      return [
-        {
-          path: `${prefix}`,
-          name: 'zone-egress-list-view',
-          component: () => import('@/app/zone-egresses/views/ZoneEgressListView.vue'),
-          children: [
-            {
-              path: ':proxy',
-              name: 'zone-egress-summary-view',
-              component: () => import('@/app/zone-egresses/views/ZoneEgressSummaryView.vue'),
-            },
-          ],
-        },
-      ]
+      if(!can('use zones')) {
+        return [
+          {
+            path: 'zones',
+            name: 'zone-egress-index-view',
+            redirect: { name: 'zone-egress-list-view '},
+            children: [
+              ...items(),
+              ...item(),
+            ],
+          },
+        ]
+      }
+      return items()
     },
     item,
   }

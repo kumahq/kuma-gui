@@ -23,6 +23,8 @@ import { services as rules } from '@/app/rules'
 import { services as services } from '@/app/services'
 import { services as vue, TOKENS as VUE } from '@/app/vue'
 import { services as workloads } from '@/app/workloads'
+import { services as zoneEgresses } from '@/app/zone-egresses'
+import { services as zoneIngresses } from '@/app/zone-ingresses'
 import { services as zones } from '@/app/zones'
 
 async function mountVueApplication() {
@@ -43,6 +45,8 @@ async function mountVueApplication() {
     configuration($),
     controlPlanes($),
     zones($),
+    zoneEgresses($),
+    zoneIngresses($),
     meshes($),
     hostnameGenerators($),
     services($),
