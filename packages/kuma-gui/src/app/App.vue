@@ -67,6 +67,20 @@
                 name: 'mesh-index-view',
               }"
             />
+            <AppNavigator
+              v-icon-start="`policy`"
+              data-testid="control-plane-resources-navigator"
+              :active="
+                [
+                  'control-plane-resource-type-list-view',
+                  'control-plane-resource-detail-view',
+                  'hostname-generator-root-view',
+                ].includes(child.name)"
+              label="Resources"
+              :to="{
+                name: 'control-plane-resource-type-list-view',
+              }"
+            />
           </template>
 
           <template #bottomNavigation>

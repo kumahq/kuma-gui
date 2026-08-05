@@ -2,11 +2,12 @@ import { token, createInjections } from '@kumahq/container'
 
 import { features } from './features'
 import locales from './locales/en-us/index.yaml'
-import { routes } from './routes'
+import { controlPlaneResourcesRoutes, routes } from './routes'
 import { sources } from './sources'
 import ControlPlaneActionGroup from '@/app/control-planes/components/ControlPlaneActionGroup.vue'
 import ControlPlaneStatus from '@/app/control-planes/components/ControlPlaneStatus.vue'
 import type { ServiceDefinition } from '@kumahq/container'
+import type { RouteRecordRaw } from 'vue-router'
 
 type Token = ReturnType<typeof token>
 
@@ -46,6 +47,20 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       service: routes,
       labels: [
         app.routes,
+      ],
+    }],
+    [token('control-planes.routes.walkers'), {
+      service: () => {
+        return [
+          (item: RouteRecordRaw) => {
+            if (item.name === 'control-plane-root-view') {
+              item.children = (item.children ?? []).concat(controlPlaneResourcesRoutes())
+            }
+          },
+        ]
+      },
+      labels: [
+        app.routeWalkers,
       ],
     }],
     [token('control-planes.features'), {

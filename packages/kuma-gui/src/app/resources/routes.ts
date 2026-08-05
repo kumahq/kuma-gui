@@ -1,10 +1,10 @@
 import type { RouteRecordRaw } from 'vue-router'
 
-export const routes = () => {
+export const routes = (prefix: string) => {
   const summary = (): RouteRecordRaw[] => {
     return [
       {
-        name: 'resource-summary-view',
+        name: `${prefix}-resource-summary-view`,
         path: ':kri',
         component: () => import('@/app/resources/views/ResourceSummaryView.vue'),
       },
@@ -14,8 +14,11 @@ export const routes = () => {
   const item = (): RouteRecordRaw[] => {
     return [
       {
-        name: 'resource-detail-view',
+        name: `${prefix}-resource-detail-view`,
         path: 'resources/:kri/overview',
+        props: {
+          routePrefix: prefix,
+        },
         component: () => import('@/app/resources/views/ResourceDetailView.vue'),
       },
     ]
@@ -25,13 +28,19 @@ export const routes = () => {
     items: (): RouteRecordRaw[] => {
       return [
         {
-          name: 'resource-type-list-view',
+          name: `${prefix}-resource-type-list-view`,
           path: 'resources',
+          props: {
+            routePrefix: prefix,
+          },
           component: () => import('@/app/resources/views/ResourceTypeListView.vue'),
           children: [
             {
-              name: 'resource-list-view',
+              name: `${prefix}-resource-list-view`,
               path: ':shortName',
+              props: {
+                routePrefix: prefix,
+              },
               component: () => import('@/app/resources/views/ResourceListView.vue'),
               children: [
                 ...summary(),

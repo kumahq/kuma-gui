@@ -519,6 +519,7 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
       'MeshMultiZoneService',
       'MeshService',
       'Secret',
+      'HostnameGenerator',
     ] as const
     const items = [...resources, ...this.policyNames({ min: Number.MAX_SAFE_INTEGER })]
 
@@ -555,6 +556,7 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
       ['Workload', 'wl'],
       ['ZoneEgress', 'ze'],
       ['ZoneIngress', 'zi'],
+      ['Zone', 'z'],
     ])
     return resourceNames.get(resourceName ?? this.faker.helpers.arrayElement([...resourceNames.keys()])) ?? ''
   }

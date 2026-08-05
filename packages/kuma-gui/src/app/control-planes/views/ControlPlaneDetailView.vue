@@ -11,6 +11,7 @@
           />
         </h1>
       </template>
+
       <template #actions>
         <ControlPlaneActionGroup />
       </template>

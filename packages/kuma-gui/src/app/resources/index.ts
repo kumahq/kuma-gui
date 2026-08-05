@@ -22,7 +22,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
     }],
     [token('resources.routes'), {
       service: () => {
-        const _routes = routes()
+        const _routes = routes('mesh')
         return [
           (item: RouteRecordRaw) => {
             if (item.name === 'mesh-detail-tabs-view') {

@@ -166,13 +166,22 @@ const protocolHandler = (can: Can, router: Router) => {
                 },
               }
             default:
-              return {
-                name: 'resource-detail-view',
-                params: {
-                  mesh,
-                  kri,
-                },
-              }
+              // mesh-scoped resources live under a mesh, global-scoped
+              // resources are reachable via the top-level resources tab
+              return mesh.length > 0
+                ? {
+                  name: 'mesh-resource-detail-view',
+                  params: {
+                    mesh,
+                    kri,
+                  },
+                }
+                : {
+                  name: 'control-plane-resource-detail-view',
+                  params: {
+                    kri,
+                  },
+                }
           }
         })()
         if (to) {

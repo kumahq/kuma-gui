@@ -89,6 +89,15 @@
                   </XCopyButton>
                 </template>
 
+                <template #zone="{ row: item }">
+                  <XAction
+                    v-if="item.zone.length > 0"
+                    :href="`kri://${Kri.toString({ shortName: 'z', name: item.zone })}`"
+                  >
+                    {{ item.zone }}
+                  </XAction>
+                </template>
+
                 <template #actions="{ row: item }">
                   <XActionGroup>
                     <XAction
@@ -133,4 +142,5 @@
 <script lang="ts" setup>
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
+import { Kri } from '@/app/kuma'
 </script>
