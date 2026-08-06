@@ -101,7 +101,6 @@ export const sources = (api: KumaApi) => {
           case 'xds':
             prev.push(async () => {
               const res = await http.GET('/zoneegresses/{name}/xds', {
-                parseAs: 'text',
                 params: {
                   path: {
                     name,

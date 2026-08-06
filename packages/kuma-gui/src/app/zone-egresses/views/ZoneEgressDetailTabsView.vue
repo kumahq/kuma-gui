@@ -171,7 +171,7 @@
                                 show-icon
                               >
                                 <XI18n
-                                  t="zone-egresses.routes.item.download.error"
+                                  path="zone-egresses.routes.item.download.error"
                                 />
                               </XAlert>
                             </template>

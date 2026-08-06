@@ -102,7 +102,6 @@ export const sources = (api: KumaApi) => {
       }).reduce((prev, [key]) => {
         switch (key) {
           case 'proxy':
-
             prev.push(async () => {
               const res = await http.GET('/zone-ingresses/{name}', {
                 params: {
@@ -154,6 +153,7 @@ export const sources = (api: KumaApi) => {
           case 'clusters':
             prev.push(async () => {
               const res = await http.GET('/zoneingresses/{name}/clusters', {
+                parseAs: 'text',
                 params: {
                   path: {
                     name,

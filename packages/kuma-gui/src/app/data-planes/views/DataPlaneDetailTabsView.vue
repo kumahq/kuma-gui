@@ -160,7 +160,7 @@
                               show-icon
                             >
                               <XI18n
-                                t="data-planes.routes.item.download.error"
+                                path="data-planes.routes.item.download.error"
                               />
                             </XAlert>
                           </template>
