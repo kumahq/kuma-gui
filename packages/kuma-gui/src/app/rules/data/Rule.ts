@@ -105,7 +105,7 @@ export const Rule = {
         const rules = Array.isArray(item.toResourceRules)
           ? item.toResourceRules.map(rule => {
             return {
-              ...ResourceRule.fromObject(rule),
+              ...ResourceRule.fromObject(rule, resources),
               type: item.type,
             }
           })
