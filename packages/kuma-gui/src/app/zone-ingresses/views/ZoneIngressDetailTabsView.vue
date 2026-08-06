@@ -168,7 +168,7 @@
                                 show-icon
                               >
                                 <XI18n
-                                  t="zone-ingresses.routes.item.download.error"
+                                  path="zone-ingresses.routes.item.download.error"
                                 />
                               </XAlert>
                             </template>
