@@ -679,7 +679,7 @@ function getResources(): Resources['resources'] {
       'pluralDisplayName': 'Zones',
       'readOnly': false,
       'scope': 'Global',
-      'shortName': '',
+      'shortName': 'z',
       'singularDisplayName': 'Zone',
     },
     {

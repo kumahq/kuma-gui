@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    name="resource-detail-view"
+    :name="props.routeName"
     :params="{
       mesh: '',
       kri: '',
@@ -30,7 +30,7 @@
           ] : []),
           {
             to: {
-              name: 'resource-list-view',
+              name: `${props.routePrefix}-resource-list-view`,
               params: {
                 mesh: route.params.mesh,
                 shortName: Kri.fromString(route.params.kri).shortName,
@@ -199,4 +199,8 @@
 import { sources } from '../sources'
 import { YAML } from '@/app/application'
 import { Kri } from '@/app/kuma'
+const props = defineProps<{
+  routeName: string
+  routePrefix: string
+}>()
 </script>

@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    name="resource-type-list-view"
+    :name="props.routeName"
     :params="{
       mesh: '',
       shortName: '',
@@ -102,7 +102,7 @@
                                   >
                                     <XAction
                                       :to="{
-                                        name: 'resource-list-view',
+                                        name: `${props.routePrefix}-resource-list-view`,
                                         params: {
                                           mesh: route.params.mesh,
                                           shortName: item.shortName,
@@ -164,6 +164,10 @@ import { get } from '@/app/application'
 import { sources as controlPlanesSources } from '@/app/control-planes/sources'
 import { sources as meshesSources } from '@/app/meshes/sources'
 import { sources } from '@/app/resources/sources'
+const props = defineProps<{
+  routeName: string
+  routePrefix: string
+}>()
 </script>
 <style lang="scss" scoped>
 .resource-type-collection {

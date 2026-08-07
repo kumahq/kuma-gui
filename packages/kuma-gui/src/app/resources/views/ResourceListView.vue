@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    name="resource-list-view"
+    :name="props.routeName"
     :params="{
       page: 1,
       size: Number,
@@ -143,7 +143,7 @@
                       <XAction
                         data-action
                         :to="{
-                          name: 'resource-summary-view',
+                          name: `${props.routePrefix}-resource-summary-view`,
                           params: {
                             kri: row.kri,
                           },
@@ -184,7 +184,7 @@
               >
                 <XDrawer
                   @close="route.replace({
-                    name: 'resource-list-view',
+                    name: props.routeName,
                     params: {
                       mesh: route.params.mesh,
                       shortName: route.params.shortName,
@@ -219,6 +219,8 @@ import AppCollection from '@/app/application/components/app-collection/AppCollec
 import { Kri } from '@/app/kuma'
 const DataEmptyState = useDataEmptyState()
 const props = defineProps<{
+  routeName: string
+  routePrefix: string
   resourceTypes?: ResourceTypeDescriptorCollection
 }>()
 </script>

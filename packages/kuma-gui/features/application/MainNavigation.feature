@@ -2,13 +2,14 @@ Feature: application / MainNavigation
 
   Background:
     Given the CSS selectors
-      | Alias              | Selector                                   |
-      | main-nav           | .app-sidebar                               |
-      | control-planes-nav | [data-testid='control-planes-navigator'] a |
-      | meshes-nav         | [data-testid='meshes-navigator'] a         |
-      | zones-nav          | [data-testid='zones-navigator'] a          |
-      | zone-egresses-nav  | [data-testid='zone-egresses-navigator'] a  |
-      | configuration-nav  | [data-testid='configuration-navigator'] a  |
+      | Alias              | Selector                                            |
+      | main-nav           | .app-sidebar                                        |
+      | control-planes-nav | [data-testid='control-planes-navigator'] a          |
+      | meshes-nav         | [data-testid='meshes-navigator'] a                  |
+      | zones-nav          | [data-testid='zones-navigator'] a                   |
+      | zone-egresses-nav  | [data-testid='zone-egresses-navigator'] a           |
+      | resources-nav      | [data-testid='control-plane-resources-navigator'] a |
+      | configuration-nav  | [data-testid='configuration-navigator'] a           |
 
   Scenario Outline: The navigation shows <Element> exists for <Mode>
     Given the environment
@@ -22,6 +23,8 @@ Feature: application / MainNavigation
       | Element            | Mode   |
       | $zones-nav         | global |
       | $zone-egresses-nav | zone   |
+      | $resources-nav     | global |
+      | $resources-nav     | zone   |
 
   Scenario Outline: The navigation shows <Element> doesn't exist for <Mode>
     Given the environment
@@ -54,6 +57,7 @@ Feature: application / MainNavigation
       | Selector            | Title               |
       | $control-planes-nav | Overview            |
       | $zones-nav          | Zone control planes |
+      | $resources-nav      | Resources           |
       | $configuration-nav  | Configuration       |
 
   Scenario: Pagination deeplinking

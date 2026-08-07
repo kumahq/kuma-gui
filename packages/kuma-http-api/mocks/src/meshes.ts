@@ -18,6 +18,7 @@ export default ({ fake, env, pager }: Dependencies): ResponseHandler => (req) =>
           type: 'Mesh',
           creationTime: '2020-06-19T12:18:02.097986-04:00',
           modificationTime: '2020-06-19T12:18:02.097986-04:00',
+          kri: fake.kuma.kri({ resourceName: 'Mesh', zone: '', mesh: '', namespace: '', name, sectionName: '' }),
           ...(fake.datatype.boolean() && {
             mtls: {
               enabledBackend: 'ca-1',

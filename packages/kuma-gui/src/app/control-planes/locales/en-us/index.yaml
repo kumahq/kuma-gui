@@ -26,5 +26,3 @@ main-overview:
       title: 'Meshes'
   action_menu:
     toggle_button: 'Actions'
-    items:
-      hostname_generators: HostnameGenerators
