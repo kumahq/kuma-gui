@@ -50,12 +50,10 @@ const routeTarget = computed<Omit<RouteLocationNamedRaw, 'query'> | null>(() => 
   switch (props.targetRef.kind) {
     case 'MeshService':
     case 'MeshServiceSubset': {
-      return {
-        name: 'service-detail-view',
-        params: {
-          service: props.targetRef.name,
-        },
-      }
+      // The legacy internal service detail view has been removed, so there is
+      // no route to link a bare `kuma.io/service` name to. Render as a plain
+      // badge instead of a (broken) link.
+      return null
     }
     case 'MeshGateway': {
       return {

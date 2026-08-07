@@ -1,5 +1,6 @@
-import { token } from '@kumahq/container'
+import { token, createInjections } from '@kumahq/container'
 
+import DataPlaneServiceCell from './components/DataPlaneServiceCell.vue'
 import { features } from './features'
 import locales from './locales/en-us/index.yaml'
 import { sources } from './sources'
@@ -9,8 +10,17 @@ import type { ServiceDefinition } from '@kumahq/container'
 type Token = ReturnType<typeof token>
 type DataplaneSources = ReturnType<typeof sources>
 
+const $ = {
+  DataPlaneServiceCell: token<typeof DataPlaneServiceCell>('data-planes.components.DataPlaneServiceCell'),
+}
+
+export const TOKENS = $
+
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   return [
+    [$.DataPlaneServiceCell, {
+      service: () => DataPlaneServiceCell,
+    }],
     // TODO: Uncomment once the legacy routes are removed
     // [token('data-planes.routes'), {
     //   service: () => {
@@ -57,3 +67,9 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
     ...connections(app),
   ]
 }
+
+export const [
+  useDataPlaneServiceCell,
+] = createInjections(
+  $.DataPlaneServiceCell,
+)

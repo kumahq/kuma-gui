@@ -5,11 +5,14 @@
       mesh: '',
       service: '',
     }"
-    v-slot="{ route, t }"
+    v-slot="{ route, t, uri }"
   >
     <DataSource
-      :src="`/meshes/${route.params.mesh}/service-insights/${route.params.service}`"
-      v-slot="{ data: sourceData }: ServiceInsightSource"
+      :src="uri(sources, '/meshes/:mesh/service-insights/:name', {
+        mesh: route.params.mesh,
+        name: route.params.service,
+      })"
+      v-slot="{ data: sourceData }"
     >
       <AppView
         :docs="t('delegated-gateways.href.docs')"
@@ -76,5 +79,5 @@
 </template>
 
 <script setup lang="ts">
-import type { ServiceInsightSource } from '@/app/legacy-services/sources'
+import { sources } from '@/app/gateways/sources'
 </script>

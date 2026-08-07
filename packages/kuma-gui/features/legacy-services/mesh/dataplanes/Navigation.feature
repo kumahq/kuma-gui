@@ -1,5 +1,9 @@
 Feature: mesh / dataplanes / navigation
 
+  # Extracted from features/mesh/dataplanes/Navigation.feature: the example rows
+  # that navigated to the dataplane list via the (removed) legacy internal
+  # service detail route `/meshes/default/services/internal/<service>/overview`.
+
   Background:
     Given the CSS selectors
       | Alias         | Selector                                                                    |
@@ -10,6 +14,7 @@ Feature: mesh / dataplanes / navigation
       | action        | $row [data-action]                                                          |
     And the environment
       """
+      KUMA_LEGACY_SERVICES_ENABLED: true
       KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: true
       KUMA_MESHSERVICE_MODE: Exclusive
       KUMA_DATAPLANE_COUNT: 1
@@ -52,9 +57,8 @@ Feature: mesh / dataplanes / navigation
       And the "[data-testid='data-plane-detail-view']" element exists
 
       Examples:
-        | URL                                                                             |
-        | /meshes/default/gateways/builtin/alarm-0-6064a9c9a-icpsl.kuma-system/dataplanes |
-        | /meshes/default/data-planes                                                     |
+        | URL                                                             |
+        | /meshes/default/services/internal/microchip-0-internal/overview |
 
     Scenario Outline: clicking the row, opening and summary, and clicking the title
       When I visit the "<URL>" URL
@@ -66,11 +70,8 @@ Feature: mesh / dataplanes / navigation
       And the "[data-testid='data-plane-detail-view']" element exists
 
       Examples:
-        | URL                                                                                      |
-        | /meshes/default/gateways/builtin/alarm-0-6064a9c9a-icpsl.kuma-system/dataplanes          |
-        | /meshes/default/gateways/delegated/port-0-gateway_delegated/overview                     |
-        | /meshes/default/services/mesh-services/kri_msvc_default___alarm-0-mesh-service_/overview |
-        | /meshes/default/data-planes                                                              |
+        | URL                                                             |
+        | /meshes/default/services/internal/microchip-0-internal/overview |
 
   Rule: In a non-namespaced environment
 
@@ -107,9 +108,8 @@ Feature: mesh / dataplanes / navigation
       And the "[data-testid='data-plane-detail-view']" element exists
 
       Examples:
-        | URL                                                                             |
-        | /meshes/default/gateways/builtin/alarm-0-6064a9c9a-icpsl.kuma-system/dataplanes |
-        | /meshes/default/data-planes                                                     |
+        | URL                                                             |
+        | /meshes/default/services/internal/microchip-0-internal/overview |
 
     Scenario Outline: clicking the row, opening and summary, and clicking the title
       When I visit the "<URL>" URL
@@ -121,6 +121,5 @@ Feature: mesh / dataplanes / navigation
       And the "[data-testid='data-plane-detail-view']" element exists
 
       Examples:
-        | URL                                                                             |
-        | /meshes/default/gateways/builtin/alarm-0-6064a9c9a-icpsl.kuma-system/dataplanes |
-        | /meshes/default/data-planes                                                     |
+        | URL                                                             |
+        | /meshes/default/services/internal/microchip-0-internal/overview |
