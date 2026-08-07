@@ -35,12 +35,15 @@
 import { computed } from 'vue'
 
 import TagList from '@/app/common/TagList.vue'
+import { useDataPlaneServiceLinks } from '@/app/data-planes'
 import type { TargetRef } from '@/types/index.d'
 import type { RouteLocationNamedRaw } from 'vue-router'
 
 const props = defineProps<{
   targetRef: TargetRef
 }>()
+
+const dataPlaneServiceLinks = useDataPlaneServiceLinks()
 
 const routeTarget = computed<Omit<RouteLocationNamedRaw, 'query'> | null>(() => {
   if (!props.targetRef.name) {
@@ -50,12 +53,14 @@ const routeTarget = computed<Omit<RouteLocationNamedRaw, 'query'> | null>(() => 
   switch (props.targetRef.kind) {
     case 'MeshService':
     case 'MeshServiceSubset': {
-      return {
-        name: 'service-detail-view',
-        params: {
-          service: props.targetRef.name,
-        },
+      for(const resolve of dataPlaneServiceLinks) {
+        // at this point we can assume that `targetRef.proxyTypes` is `Sidecar` and therefore set `dataplaneType` to 'standard'
+        const to = resolve({ params: { service: props.targetRef.name! }, dataplaneType: 'standard' })
+        if(to) {
+          return to
+        }
       }
+      return null
     }
     case 'MeshGateway': {
       return {
