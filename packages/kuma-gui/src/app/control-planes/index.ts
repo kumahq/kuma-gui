@@ -40,7 +40,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
     }],
     [$.ControlPlaneActionGroup, {
       service: () => {
-        return ControlPlaneActionGroup
+        return undefined
       },
     }],
     [token('control-planes.routes'), {
