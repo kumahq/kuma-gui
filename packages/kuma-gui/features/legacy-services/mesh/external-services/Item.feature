@@ -8,7 +8,12 @@ Feature: mesh / external-services / item
       | config-universal   | [data-testid='codeblock-yaml-universal']     |
       | config-k8s         | [data-testid='codeblock-yaml-k8s']           |
       | select-environment | [data-testid='select-input']                 |
-    Given the URL "/meshes/default/external-services/service-1" responds with
+    Given the environment
+      """
+      KUMA_LEGACY_SERVICES_ENABLED: true
+      KUMA_EXTERNALSERVICE_COUNT: 1
+      """
+    And the URL "/meshes/default/external-services/service-1" responds with
       """
       body:
         networking:

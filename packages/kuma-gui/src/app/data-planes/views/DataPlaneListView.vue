@@ -136,50 +136,10 @@
               </template>
 
               <template #services="{ row }">
-                <XLayout
-                  v-if="row.services.length > 0"
-                  variant="separated"
-                  truncate
-                >
-                  <div
-                    v-for="(service, index) in row.services"
-                    :key="index"
-                  >
-                    <XCopyButton :text="service">
-                      <XAction
-                        v-if="row.dataplaneType === 'standard'"
-                        :to="{
-                          name: 'service-detail-view',
-                          params: {
-                            service,
-                          },
-                        }"
-                      >
-                        {{ service }}
-                      </XAction>
-
-                      <XAction
-                        v-else-if="row.dataplaneType === 'delegated'"
-                        :to="{
-                          name: 'delegated-gateway-detail-view',
-                          params: {
-                            service,
-                          },
-                        }"
-                      >
-                        {{ service }}
-                      </XAction>
-
-                      <template v-else>
-                        {{ service }}
-                      </template>
-                    </XCopyButton>
-                  </div>
-                </XLayout>
-
-                <template v-else>
-                  {{ t('common.collection.none') }}
-                </template>
+                <DataPlaneServiceCell
+                  :services="row.services"
+                  :dataplane-type="row.dataplaneType"
+                />
               </template>
 
               <template #zone="{ row }">
@@ -325,6 +285,7 @@
 </template>
 
 <script lang="ts" setup>
+import { useDataPlaneServiceCell } from '../'
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
@@ -333,6 +294,8 @@ import type { Mesh } from '@/app/meshes/data'
 const props = defineProps<{
   mesh: Mesh
 }>()
+
+const DataPlaneServiceCell = useDataPlaneServiceCell()
 </script>
 
 <style lang="scss" scoped>

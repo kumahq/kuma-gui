@@ -12,7 +12,6 @@ import { services as gateways } from '@/app/gateways'
 import { services as hostnameGenerators } from '@/app/hostname-generators'
 import { services as kuma, TOKENS as KUMA } from '@/app/kuma'
 import { services as legacyDataplanes } from '@/app/legacy-data-planes'
-import { services as legacyServices } from '@/app/legacy-services/index.ts'
 import { services as me } from '@/app/me'
 import { services as meshIdentities } from '@/app/mesh-identities'
 import { services as meshTrusts } from '@/app/mesh-trusts'
@@ -50,7 +49,6 @@ async function mountVueApplication() {
     meshes($),
     hostnameGenerators($),
     services($),
-    legacyServices($),
     gateways($),
     dataplanes($),
     legacyDataplanes($),
@@ -93,6 +91,17 @@ async function mountVueApplication() {
   if (import.meta.env.MODE !== 'production' && get($.env)('KUMA_MOCK_API_ENABLED') === 'true') {
     const msw = await import('@/app/msw')
     await get(msw.TOKENS.msw)
+  }
+
+  // The legacy services module is opt-in. It is conditionally lazy loaded and
+  // registered with the container when `KUMA_LEGACY_SERVICES_ENABLED` is enabled
+  // We can only make this decision once the container exists, because `env`, like every other
+  // service, lives in the container. Resolving `$.env` after the initial build.
+  // A second build registers the module into the same container
+  // before routes/sources are resolved at mount time.
+  if (get($.env)('KUMA_LEGACY_SERVICES_ENABLED') === 'true') {
+    const { services: legacyServices } = await import('@/app/legacy-services/index.ts')
+    build(legacyServices($))
   }
   const app = createApp((await import('./app/App.vue')).default)
   app.provide(injectionKey, get)

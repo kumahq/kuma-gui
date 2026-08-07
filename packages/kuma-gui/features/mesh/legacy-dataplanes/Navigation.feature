@@ -42,7 +42,6 @@ Feature: mesh / dataplanes / navigation
       Examples:
         | URL                                                                             |
         | /meshes/default/gateways/builtin/alarm-0-6064a9c9a-icpsl.kuma-system/dataplanes |
-        | /meshes/default/services/internal/microchip-0-internal/overview                 |
         | /meshes/default/data-planes                                                     |
 
     Scenario Outline: clicking the row, opening and summary, and clicking the title
@@ -58,7 +57,6 @@ Feature: mesh / dataplanes / navigation
         | URL                                                                                      |
         | /meshes/default/gateways/builtin/alarm-0-6064a9c9a-icpsl.kuma-system/dataplanes          |
         | /meshes/default/gateways/delegated/port-0-gateway_delegated/overview                     |
-        | /meshes/default/services/internal/microchip-0-internal/overview                          |
         | /meshes/default/services/mesh-services/kri_msvc_default___alarm-0-mesh-service_/overview |
         | /meshes/default/data-planes                                                              |
 
@@ -89,7 +87,6 @@ Feature: mesh / dataplanes / navigation
       Examples:
         | URL                                                                             |
         | /meshes/default/gateways/builtin/alarm-0-6064a9c9a-icpsl.kuma-system/dataplanes |
-        | /meshes/default/services/internal/microchip-0-internal/overview                 |
         | /meshes/default/data-planes                                                     |
 
     Scenario Outline: clicking the row, opening and summary, and clicking the title
@@ -104,5 +101,4 @@ Feature: mesh / dataplanes / navigation
       Examples:
         | URL                                                                             |
         | /meshes/default/gateways/builtin/alarm-0-6064a9c9a-icpsl.kuma-system/dataplanes |
-        | /meshes/default/services/internal/microchip-0-internal/overview                 |
         | /meshes/default/data-planes                                                     |

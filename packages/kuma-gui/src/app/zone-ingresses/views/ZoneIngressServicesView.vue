@@ -26,23 +26,11 @@
                 { label: 'Mesh', key: 'mesh' },
                 { label: 'Protocol', key: 'protocol' },
                 { label: 'No. instances', key: 'instances' },
-                { label: 'Actions', key: 'actions', hideLabel: true },
               ]"
               :items="zoneIngress.zoneIngress.availableServices"
             >
               <template #name="{ row: item }">
-                <XAction
-                  data-action
-                  :to="{
-                    name: 'service-detail-view',
-                    params: {
-                      mesh: item.mesh,
-                      service: item.tags['kuma.io/service'],
-                    },
-                  }"
-                >
-                  {{ item.tags['kuma.io/service'] }}
-                </XAction>
+                {{ item.tags['kuma.io/service'] }}
               </template>
 
               <template #mesh="{ row: item }">
@@ -64,22 +52,6 @@
 
               <template #instances="{ row: item }">
                 {{ item.instances }}
-              </template>
-
-              <template #actions="{ row: item }">
-                <XActionGroup>
-                  <XAction
-                    :to="{
-                      name: 'service-detail-view',
-                      params: {
-                        mesh: item.mesh,
-                        service: item.tags['kuma.io/service'],
-                      },
-                    }"
-                  >
-                    {{ t('common.collection.actions.view') }}
-                  </XAction>
-                </XActionGroup>
               </template>
             </AppCollection>
           </DataCollection>

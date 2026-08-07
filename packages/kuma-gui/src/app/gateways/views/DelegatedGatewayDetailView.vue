@@ -14,7 +14,7 @@
     <AppView>
       <XLayout variant="y-stack">
         <DataSource
-          :src="uri(serviceSources, '/meshes/:mesh/service-insights/:name', {
+          :src="uri(sources, '/meshes/:mesh/service-insights/:name', {
             mesh: route.params.mesh,
             name: route.params.service,
           })"
@@ -98,7 +98,7 @@
               </form>
             </search>
             <DataLoader
-              :src="uri(sources, '/meshes/:mesh/dataplanes/for/service-insight/:service', {
+              :src="uri(dataplaneSources, '/meshes/:mesh/dataplanes/for/service-insight/:service', {
                 mesh: route.params.mesh,
                 service: route.params.service,
               }, {
@@ -273,9 +273,9 @@
 <script lang="ts" setup>
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
-import { sources } from '@/app/data-planes/sources'
+import { sources as dataplaneSources } from '@/app/data-planes/sources'
+import { sources } from '@/app/gateways/sources'
 import { Kri } from '@/app/kuma'
-import { sources as serviceSources } from '@/app/legacy-services/sources'
 </script>
 
 <style lang="scss" scoped>
