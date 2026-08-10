@@ -41,7 +41,7 @@
     "@types/semver": "^7.7.1",
     "@vitejs/plugin-vue": "^6.0.8",
     "@vue/test-utils": "^2.4.11",
-    "jsdom": "^29.1.1",
+    "jsdom": "^30.0.1",
     "msw": "^2.15.0",
     "playwright-bdd": "^8.5.1",
     "sass": "^1.102.0",
