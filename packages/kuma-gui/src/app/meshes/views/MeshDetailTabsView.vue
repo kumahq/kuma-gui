@@ -39,7 +39,7 @@
         data-testid="mesh-tabs"
       >
         <template
-          v-for="{ name } in route.children.filter(({ name }) => name !== 'external-service-list-view')"
+          v-for="{ name } in route.children"
           :key="name"
           #[`${name}-tab`]
         >

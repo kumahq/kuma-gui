@@ -2,20 +2,22 @@ Feature: mesh / dataplanes / index
 
   Background:
     Given the CSS selectors
-      | Alias               | Selector                                         |
-      | table               | [data-testid='data-plane-collection']            |
-      | table-header        | $table th                                        |
-      | item                | $table tbody tr                                  |
-      | service-cell        | $item:nth-child(1) td:nth-child(3) .cell-wrapper |
-      | select-type         | [data-testid='select-input']                     |
-      | select-option       | .select-item                                     |
-      | select-standard     | [data-testid='select-item-standard'] button      |
-      | select-builtin      | [data-testid='select-item-builtin'] button       |
-      | select-delegated    | [data-testid='select-item-delegated'] button     |
-      | select-zone-ingress | [data-testid='select-item-zone-ingress'] button  |
-      | select-zone-egress  | [data-testid='select-item-zone-egress'] button   |
-      | input-search        | [data-testid='filter-bar-filter-input']          |
-      | button-search       | [data-testid='filter-bar-submit-query-button']   |
+      | Alias                 | Selector                                         |
+      | table                 | [data-testid='data-plane-collection']            |
+      | table-header          | $table th                                        |
+      | item                  | $table tbody tr                                  |
+      | service-cell          | $item:nth-child(1) td:nth-child(3) .cell-wrapper |
+      | select-type           | [data-testid='select-input']                     |
+      | select-option         | .select-item                                     |
+      | select-standard       | [data-testid='select-item-standard'] button      |
+      | select-builtin        | [data-testid='select-item-builtin'] button       |
+      | select-delegated      | [data-testid='select-item-delegated'] button     |
+      | select-zone-ingress   | [data-testid='select-item-zone-ingress'] button  |
+      | select-zone-egress    | [data-testid='select-item-zone-egress'] button   |
+      | input-search          | [data-testid='filter-bar-filter-input']          |
+      | button-search         | [data-testid='filter-bar-submit-query-button']   |
+      | service-link-gateway  | $table a[href*='gateways/delegated']             |
+      | service-link-internal | $table a[href*='services/internal']              |
     And the environment
       """
       KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: true
@@ -71,6 +73,35 @@ Feature: mesh / dataplanes / index
       | zone-1               |
       | Nov 3, 2023, 9:10 AM |
       | Online               |
+
+  Scenario: Without legacy services a standard proxy service renders as plain text
+    When I visit the "/meshes/default/data-planes" URL
+    Then the "$item:nth-child(1)" element contains "service-1"
+    And the "$item:nth-child(1)" element exists but the "$service-link-internal" element doesn't exist
+
+  Scenario: A delegated gateway proxy links its service to the delegated gateway
+    Given the environment
+      """
+      KUMA_DATAPLANE_COUNT: 1
+      KUMA_DATAPLANEINBOUND_COUNT: 0
+      """
+    And the URL "/meshes/default/dataplanes/_overview" responds with
+      """
+      body:
+        items:
+          - name: fake-alarm-gateway_delegated-0
+            labels:
+              kuma.io/display-name: fake-alarm-gateway_delegated-0
+            dataplane:
+              networking:
+                gateway:
+                  type: 'DELEGATED'
+                  tags:
+                    kuma.io/service: service-1
+      """
+    When I visit the "/meshes/default/data-planes" URL
+    Then the "$item" element exists 1 time
+    And the "$service-link-gateway" element exists
 
   Scenario Outline: The proxy listing shows the correct status
     Given the environment

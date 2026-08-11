@@ -1,4 +1,4 @@
-Feature: zones / ingresses / item / services
+Feature: legacy-services / zones / ingresses / item / service
 
   Background:
     Given the CSS selectors
@@ -8,8 +8,9 @@ Feature: zones / ingresses / item / services
       | service-link-internal | $items a[href*='services/internal']           |
     And the environment
       """
+      KUMA_LEGACY_SERVICES_ENABLED: true
       KUMA_MODE: global
-      KUMA_SERVICE_COUNT: 2
+      KUMA_SERVICE_COUNT: 1
       """
     And the URL "/_kri/kri_zi__zone-1_kuma-system_item-1_" responds with
       """
@@ -20,18 +21,17 @@ Feature: zones / ingresses / item / services
           kuma.io/display-name: item-1
       """
 
-  Scenario: An ingress with 2 available services
+  Scenario: With legacy services an available service links to the internal service detail
     Given the URL "/zone-ingresses/item-1.kuma-system/_overview" responds with
       """
       body:
         zoneIngress:
           zone: zone-cp-1
           availableServices:
-            - tags:
+            - mesh: default
+              tags:
                 kuma.io/service: service-1
-            - tags:
-                kuma.io/service: service-2
       """
     When I visit the "/zones/kri_z____zone-1_/ingresses/kri_zi__zone-1_kuma-system_item-1_/services" URL
-    Then the "$item" element exists 2 times
-    And the "$item:nth-child(1)" element exists but the "$service-link-internal" element doesn't exist
+    Then the "$item" element exists 1 time
+    And the "$service-link-internal" element exists

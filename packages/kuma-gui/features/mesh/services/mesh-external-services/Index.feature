@@ -5,7 +5,7 @@ Feature: mesh / services / mesh-external-services / index
       | Alias         | Selector                                                                     |
       | items         | [data-testid='service-collection']                                           |
       | item          | $items tbody tr:first-child                                                  |
-      | button-group  | [data-testid='service-list-view-sub-tab']                                    |
+      | button-group  | [data-testid='mesh-external-service-list-view-sub-tab']                      |
       | summary-title | [data-testid='slideout-title'] a                                             |
       | action-group  | $item [data-testid='x-action-group-control']                                 |
       | view          | $item [data-testid='x-action-group'] li:first-child [data-testid='x-action'] |

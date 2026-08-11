@@ -142,30 +142,24 @@
                   truncate
                 >
                   <div
-                    v-for="(service, index) in row.services"
+                    v-for="({ service, to }, index) in row.services.map((service) => ({
+                      service,
+                      to: (() => {
+                        for (const resolve of dataPlaneServiceLinks) {
+                          const to = resolve({ params: { service }, dataplaneType: row.dataplaneType })
+                          if (to) {
+                            return to
+                          }
+                        }
+                        return undefined
+                      })(),
+                    }))"
                     :key="index"
                   >
                     <XCopyButton :text="service">
                       <XAction
-                        v-if="row.dataplaneType === 'standard'"
-                        :to="{
-                          name: 'service-detail-view',
-                          params: {
-                            service,
-                          },
-                        }"
-                      >
-                        {{ service }}
-                      </XAction>
-
-                      <XAction
-                        v-else-if="row.dataplaneType === 'delegated'"
-                        :to="{
-                          name: 'delegated-gateway-detail-view',
-                          params: {
-                            service,
-                          },
-                        }"
+                        v-if="to"
+                        :to="to"
                       >
                         {{ service }}
                       </XAction>
@@ -325,6 +319,7 @@
 </template>
 
 <script lang="ts" setup>
+import { useDataPlaneServiceLinks } from '../index.ts'
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
@@ -333,6 +328,7 @@ import type { Mesh } from '@/app/meshes/data'
 const props = defineProps<{
   mesh: Mesh
 }>()
+const dataPlaneServiceLinks = useDataPlaneServiceLinks()
 </script>
 
 <style lang="scss" scoped>

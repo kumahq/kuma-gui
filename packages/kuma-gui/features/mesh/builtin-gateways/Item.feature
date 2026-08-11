@@ -2,15 +2,16 @@ Feature: mesh / builtin-gateways / item
 
   Background:
     Given the CSS selectors
-      | Alias              | Selector                                         |
-      | tabs-view          | [data-testid='builtin-gateway-detail-tabs-view'] |
-      | listener-card      | [data-testid='listener-card']                    |
-      | route-card         | [data-testid='route-card']                       |
-      | dataplanes         | [data-testid='data-plane-collection']            |
-      | config             | [data-testid='codeblock-yaml-universal']         |
-      | config-universal   | [data-testid='codeblock-yaml-universal']         |
-      | config-k8s         | [data-testid='codeblock-yaml-k8s']               |
-      | select-environment | [data-testid='select-input']                     |
+      | Alias                 | Selector                                         |
+      | tabs-view             | [data-testid='builtin-gateway-detail-tabs-view'] |
+      | listener-card         | [data-testid='listener-card']                    |
+      | route-card            | [data-testid='route-card']                       |
+      | dataplanes            | [data-testid='data-plane-collection']            |
+      | config                | [data-testid='codeblock-yaml-universal']         |
+      | config-universal      | [data-testid='codeblock-yaml-universal']         |
+      | config-k8s            | [data-testid='codeblock-yaml-k8s']               |
+      | select-environment    | [data-testid='select-input']                     |
+      | service-link-internal | $tabs-view a[href*='services/internal']          |
     Given the environment
       """
       KUMA_LISTENER_COUNT: 2
@@ -125,6 +126,8 @@ Feature: mesh / builtin-gateways / item
     Then the "$route-card:nth-child(1)" element contains "service-1"
     Then the "$route-card:nth-child(2)" element contains "demo-app-3.kuma-system"
     Then the "$route-card:nth-child(2)" element contains "service-2"
+    # legacy-services module the MeshService backendRef is a plain badge, not a link.
+    And the "$route-card:nth-child(1)" element exists but the "$service-link-internal" element doesn't exist
     When I click the "$listener-card:nth-child(2) [data-action]" element
     Then the URL contains "/builtin/gateway-1.kuma-system/overview?listener=1"
     Then the "$route-card" element exists 1 times

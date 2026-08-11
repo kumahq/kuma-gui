@@ -26,23 +26,26 @@
                 { label: 'Mesh', key: 'mesh' },
                 { label: 'Protocol', key: 'protocol' },
                 { label: 'No. instances', key: 'instances' },
-                { label: 'Actions', key: 'actions', hideLabel: true },
               ]"
               :items="zoneIngress.zoneIngress.availableServices"
             >
               <template #name="{ row: item }">
-                <XAction
-                  data-action
-                  :to="{
-                    name: 'service-detail-view',
-                    params: {
-                      mesh: item.mesh,
-                      service: item.tags['kuma.io/service'],
-                    },
-                  }"
+                <template
+                  v-for="links in [dataPlaneServiceLinks.map((resolve) =>
+                    resolve({ params: { mesh: item.mesh!, service: item.tags['kuma.io/service'] }, dataplaneType: 'standard' }),
+                  ).filter((link) => !!link)]"
+                  :key="typeof links"
                 >
-                  {{ item.tags['kuma.io/service'] }}
-                </XAction>
+                  <XAction
+                    v-if="links.length > 0"
+                    :to="links[0]"
+                  >
+                    {{ item.tags['kuma.io/service'] }}
+                  </XAction>
+                  <template v-else>
+                    {{ item.tags['kuma.io/service'] }}
+                  </template>
+                </template>
               </template>
 
               <template #mesh="{ row: item }">
@@ -67,19 +70,20 @@
               </template>
 
               <template #actions="{ row: item }">
-                <XActionGroup>
-                  <XAction
-                    :to="{
-                      name: 'service-detail-view',
-                      params: {
-                        mesh: item.mesh,
-                        service: item.tags['kuma.io/service'],
-                      },
-                    }"
-                  >
-                    {{ t('common.collection.actions.view') }}
-                  </XAction>
-                </XActionGroup>
+                <template
+                  v-for="links in [dataPlaneServiceLinks.map((resolve) =>
+                    resolve({ params: { mesh: item.mesh!, service: item.tags['kuma.io/service'] }, dataplaneType: 'standard' }),
+                  ).filter((link) => !!link)]"
+                  :key="typeof links"
+                >
+                  <XActionGroup v-if="links.length > 0">
+                    <XAction
+                      :to="links[0]"
+                    >
+                      {{ t('common.collection.actions.view') }}
+                    </XAction>
+                  </XActionGroup>
+                </template>
               </template>
             </AppCollection>
           </DataCollection>
@@ -92,7 +96,9 @@
 <script lang="ts" setup>
 import type { ZoneIngressOverview } from '../data'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
+import { useDataPlaneServiceLinks } from '@/app/data-planes'
 const props = defineProps<{
   data: ZoneIngressOverview | Error | undefined
 }>()
+const dataPlaneServiceLinks = useDataPlaneServiceLinks()
 </script>

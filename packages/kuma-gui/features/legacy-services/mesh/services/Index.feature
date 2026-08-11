@@ -14,6 +14,7 @@ Feature: mesh / services / index
       | service-sub-tab | [data-testid='service-list-view-sub-tab']                                                |
     And the environment
       """
+      KUMA_LEGACY_SERVICES_ENABLED: true
       KUMA_SERVICE_COUNT: 1
       """
     And the URL "/meshes/default/service-insights" responds with

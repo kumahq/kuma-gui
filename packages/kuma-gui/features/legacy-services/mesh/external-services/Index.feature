@@ -13,6 +13,7 @@ Feature: mesh / external-services / index
       | external-service-sub-tab | [data-testid='external-service-list-view-sub-tab']                           |
     Given the environment
       """
+      KUMA_LEGACY_SERVICES_ENABLED: true
       KUMA_EXTERNALSERVICE_COUNT: 1
       """
     Given the URL "/meshes/default/external-services" responds with

@@ -14,6 +14,7 @@ export type KumaHtmlVars = {
   environment: string
   storeType: string
   apiReadOnly: boolean
+  legacyServicesEnabled: string
 }
 type ServerOptions = {
   template: string
@@ -58,6 +59,8 @@ export const defaultKumaHtmlVars = {
   environment: 'universal',
   storeType: 'postgres',
   apiReadOnly: false,
+  //
+  legacyServicesEnabled: 'false',
 }
 
 const interpolate = (template: string, vars: KumaHtmlVars) => {
@@ -113,6 +116,8 @@ const server = ({
             mode: cookies.KUMA_MODE,
             environment: cookies.KUMA_ENVIRONMENT,
             storeType: cookies.KUMA_STORE_TYPE,
+            //
+            legacyServicesEnabled: cookies.KUMA_LEGACY_SERVICES_ENABLED,
           }).filter(([_, value]) => typeof value !== 'undefined')),
           //
         } satisfies KumaHtmlVars,

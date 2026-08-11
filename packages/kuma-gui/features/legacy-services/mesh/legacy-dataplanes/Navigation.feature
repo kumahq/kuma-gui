@@ -10,9 +10,9 @@ Feature: mesh / dataplanes / navigation
       | action        | $row [data-action]                                                          |
     And the environment
       """
-      KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: true
-      KUMA_MESHSERVICE_MODE: Exclusive
+      KUMA_LEGACY_SERVICES_ENABLED: true
       KUMA_DATAPLANE_COUNT: 1
+      KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: false
       """
 
   Rule: In a namespaced environment
@@ -31,17 +31,6 @@ Feature: mesh / dataplanes / navigation
             labels:
               kuma.io/display-name: monitor-proxy-0-5064a9c9a-icpsl
               k8s.kuma.io/namespace: kuma-system
-              kuma.io/zone: zone-1
-        """
-      And the URL "/meshes/default/dataplanes/monitor-proxy-0-5064a9c9a-icpsl.kuma-system/_overview" responds with
-        """
-        body:
-          name: monitor-proxy-0-5064a9c9a-icpsl.kuma-system
-          kri: kri_dp_default_zone-1_kuma-system_monitor-proxy-0-5064a9c9a-icpsl_
-          labels:
-            kuma.io/display-name: monitor-proxy-0-5064a9c9a-icpsl
-            k8s.kuma.io/namespace: kuma-system
-            kuma.io/zone: zone-1
         """
 
     Scenario Outline: clicking the detail link
@@ -52,9 +41,8 @@ Feature: mesh / dataplanes / navigation
       And the "[data-testid='data-plane-detail-view']" element exists
 
       Examples:
-        | URL                                                                             |
-        | /meshes/default/gateways/builtin/alarm-0-6064a9c9a-icpsl.kuma-system/dataplanes |
-        | /meshes/default/data-planes                                                     |
+        | URL                                                             |
+        | /meshes/default/services/internal/microchip-0-internal/overview |
 
     Scenario Outline: clicking the row, opening and summary, and clicking the title
       When I visit the "<URL>" URL
@@ -66,11 +54,8 @@ Feature: mesh / dataplanes / navigation
       And the "[data-testid='data-plane-detail-view']" element exists
 
       Examples:
-        | URL                                                                                      |
-        | /meshes/default/gateways/builtin/alarm-0-6064a9c9a-icpsl.kuma-system/dataplanes          |
-        | /meshes/default/gateways/delegated/port-0-gateway_delegated/overview                     |
-        | /meshes/default/services/mesh-services/kri_msvc_default___alarm-0-mesh-service_/overview |
-        | /meshes/default/data-planes                                                              |
+        | URL                                                             |
+        | /meshes/default/services/internal/microchip-0-internal/overview |
 
   Rule: In a non-namespaced environment
 
@@ -87,16 +72,6 @@ Feature: mesh / dataplanes / navigation
             kri: kri_dp_default_zone-1__monitor-proxy-0_
             labels:
               kuma.io/display-name: monitor-proxy-0
-              kuma.io/zone: zone-1
-        """
-      And the URL "/meshes/default/dataplanes/monitor-proxy-0/_overview" responds with
-        """
-        body:
-          name: monitor-proxy-0
-          kri: kri_dp_default_zone-1__monitor-proxy-0_
-          labels:
-            kuma.io/display-name: monitor-proxy-0
-            kuma.io/zone: zone-1
         """
 
     Scenario Outline: clicking the detail link
@@ -107,9 +82,8 @@ Feature: mesh / dataplanes / navigation
       And the "[data-testid='data-plane-detail-view']" element exists
 
       Examples:
-        | URL                                                                             |
-        | /meshes/default/gateways/builtin/alarm-0-6064a9c9a-icpsl.kuma-system/dataplanes |
-        | /meshes/default/data-planes                                                     |
+        | URL                                                             |
+        | /meshes/default/services/internal/microchip-0-internal/overview |
 
     Scenario Outline: clicking the row, opening and summary, and clicking the title
       When I visit the "<URL>" URL
@@ -121,6 +95,5 @@ Feature: mesh / dataplanes / navigation
       And the "[data-testid='data-plane-detail-view']" element exists
 
       Examples:
-        | URL                                                                             |
-        | /meshes/default/gateways/builtin/alarm-0-6064a9c9a-icpsl.kuma-system/dataplanes |
-        | /meshes/default/data-planes                                                     |
+        | URL                                                             |
+        | /meshes/default/services/internal/microchip-0-internal/overview |
