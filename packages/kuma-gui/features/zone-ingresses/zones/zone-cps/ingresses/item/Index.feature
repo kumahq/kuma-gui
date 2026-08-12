@@ -1,6 +1,10 @@
 Feature: zones / ingresses / item
 
   Background:
+    Given the environment
+      """
+      KUMA_ZONE_INGRESSES_ENABLED: true
+      """
     Given the CSS selectors
       | Alias              | Selector                                       |
       | page               | [data-testid='zone-ingress-detail-tabs-view']  |

@@ -1,6 +1,10 @@
 Feature: zones / ingresses / item / services
 
   Background:
+    Given the environment
+      """
+      KUMA_ZONE_INGRESSES_ENABLED: true
+      """
     Given the CSS selectors
       | Alias                 | Selector                                      |
       | items                 | [data-testid='available-services-collection'] |

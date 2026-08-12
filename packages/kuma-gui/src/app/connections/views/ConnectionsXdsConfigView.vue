@@ -74,12 +74,10 @@
 </template>
 
 <script lang="ts" setup>
+import type { ConnectionOverview } from '../data'
 import { sources } from '../sources'
-import type { DataplaneOverview } from '@/app/data-planes/data'
-import type { ZoneEgressOverview } from '@/app/zone-egresses/data'
-import type { ZoneIngressOverview } from '@/app/zone-ingresses/data'
 const props = defineProps<{
   routeName: string
-  data: DataplaneOverview | ZoneIngressOverview | ZoneEgressOverview | Error | undefined
+  data: ConnectionOverview | Error | undefined
 }>()
 </script>

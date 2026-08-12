@@ -1,3 +1,9 @@
+zone-cps:
+  routes:
+    item:
+      navigation:
+        zone-egress-list-view: Egresses
+
 zone-egresses:
   x-empty-state:
     title: No data

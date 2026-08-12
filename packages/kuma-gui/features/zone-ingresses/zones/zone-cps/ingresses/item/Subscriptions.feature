@@ -1,6 +1,10 @@
 Feature: dataplanes / subscriptions
 
   Background:
+    Given the environment
+      """
+      KUMA_ZONE_INGRESSES_ENABLED: true
+      """
     Given the CSS selectors
       | Alias                             | Selector                                               |
       | about-section                     | [data-testid='about-section-content']                  |

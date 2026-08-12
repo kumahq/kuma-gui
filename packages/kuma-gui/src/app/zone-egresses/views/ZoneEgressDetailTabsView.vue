@@ -14,7 +14,7 @@
       v-slot="{ data: [zoneEgress] }"
     >
       <AppView
-        :docs="t('zone-ingresses.href.docs')"
+        :docs="t('zone-egresses.href.docs')"
         :breadcrumbs="[
           ...(can('use zones') ? [
             {

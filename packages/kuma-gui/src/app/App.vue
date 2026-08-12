@@ -47,16 +47,9 @@
                 name: 'zone-index-view',
               }"
             />
-            <AppNavigator
-              v-else
-              v-icon-start="`zone-egress`"
-              data-testid="zone-egresses-navigator"
-              :active="child.name === 'zone-egress-index-view'"
-              label="ZoneEgresses"
-              :to="{
-                name: 'zone-egress-list-view',
-              }"
-            />
+            <template v-else-if="ZoneAppNavigator">
+              <ZoneAppNavigator />
+            </template>
             <AppNavigator
               v-icon-start="`mesh`"
               v-style="'--icon-name-start: var(--icon-mesh)'"
@@ -119,11 +112,13 @@ import { useRouter } from 'vue-router'
 import AppNavigator from '@/app/application/components/app-navigator/AppNavigator.vue'
 import type { ControlPlaneAddressesSource } from '@/app/control-planes/sources'
 import ApplicationShell from '@/app/kuma/components/ApplicationShell.vue'
+import { useZoneHomeNavigatorFallback } from '@/app/zones'
 import type { RouteRecordRaw } from 'vue-router'
 
 type StringNamedRouteRecordRaw = RouteRecordRaw & {
   name: string
 }
+const ZoneAppNavigator = useZoneHomeNavigatorFallback()
 const router = useRouter()
 const children: StringNamedRouteRecordRaw[] = (router.getRoutes().find((route) => route.name === 'control-plane-root-view')?.children.map(item => {
   item.name = String(item.name)

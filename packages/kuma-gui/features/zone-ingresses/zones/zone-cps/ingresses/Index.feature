@@ -1,6 +1,10 @@
 Feature: zones / ingresses / index
 
   Background:
+    Given the environment
+      """
+      KUMA_ZONE_INGRESSES_ENABLED: true
+      """
     Given the CSS selectors
       | Alias | Selector                                         |
       | item  | [data-testid='zone-ingress-collection'] tbody tr |

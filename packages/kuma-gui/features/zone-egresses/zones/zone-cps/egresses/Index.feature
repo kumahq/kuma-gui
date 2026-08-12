@@ -1,6 +1,10 @@
 Feature: zones / egresses / index
 
   Background:
+    Given the environment
+      """
+      KUMA_ZONE_EGRESSES_ENABLED: true
+      """
     Given the CSS selectors
       | Alias | Selector                                        |
       | item  | [data-testid='zone-egress-collection'] tbody tr |

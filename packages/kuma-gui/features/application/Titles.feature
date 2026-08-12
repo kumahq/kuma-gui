@@ -14,10 +14,6 @@ Feature: application / titles
       | /configuration                                                                                    | Configuration             |
       | /zones                                                                                            | Zone control planes       |
       | /zones/kri_z____zone-cp-name_/overview                                                            | zone-cp-name              |
-      | /zones/kri_z____zone-cp-name_/ingresses                                                           | Ingresses                 |
-      | /zones/kri_z____zone-cp-name_/ingresses/kri_zi__zone-cp-name__zone-ingress-name_/overview         | zone-ingress-name         |
-      | /zones/kri_z____zone-cp-name_/egresses                                                            | Egresses                  |
-      | /zones/kri_z____zone-cp-name_/egresses/kri_ze__zone-cp-name__zone-egress-name_/overview           | zone-egress-name          |
       | /meshes                                                                                           | Meshes                    |
       | /meshes/default/overview                                                                          | Mesh overview             |
       | /meshes/default/gateways/builtin                                                                  | Built-in gateways         |
@@ -42,16 +38,3 @@ Feature: application / titles
       | /hostname-generators/kri_hg____hg-name_/overview                                                  | hg-name                   |
       | /resources/hg                                                                                     | Resources                 |
       | /resources/kri_hg____hg-name_/overview                                                            | hg-name                   |
-
-  Scenario Outline: Visiting the "<Title>" page in "zone" Mode
-    Given the environment
-      """
-      KUMA_MODE: zone
-      """
-    When I visit the "<URL>" URL
-    Then the page title contains "<Title>"
-
-    Examples:
-      | URL                                                      | Title            |
-      | /zones/egresses                                          | Egresses         |
-      | /zones/egresses/kri_ze__zone__zone-egress-name_/overview | zone-egress-name |
