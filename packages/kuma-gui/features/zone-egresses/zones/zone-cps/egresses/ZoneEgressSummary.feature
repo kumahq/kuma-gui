@@ -1,54 +1,60 @@
-Feature: Zone Ingress summary
+Feature: Zone Egress summary
 
   Background:
+    Given the environment
+      """
+      KUMA_ZONE_EGRESSES_ENABLED: true
+      """
     Given the CSS selectors
-      | Alias                | Selector                                         |
-      | item                 | [data-testid='zone-ingress-collection'] tbody tr |
-      | summary              | [data-testid='summary']                          |
-      | close-summary-button | $summary [data-testid='slideout-close-icon']     |
-      | select-preference    | $summary [data-testid='select-input']            |
-      | structured-view      | $summary [data-testid='structured-view']         |
-    And the URL "/zone-ingresses/_overview" responds with
+      | Alias                | Selector                                        |
+      | item                 | [data-testid='zone-egress-collection'] tbody tr |
+      | summary              | [data-testid='summary']                         |
+      | close-summary-button | $summary [data-testid='slideout-close-icon']    |
+      | select-preference    | $summary [data-testid='select-input']           |
+      | structured-view      | $summary [data-testid='structured-view']        |
+    And the URL "/zoneegresses/_overview" responds with
       """
       body:
         items:
-          - name: zone-ingress-1
-            kri: kri_zi__zone-1__zone-ingress-1_
-            zoneIngress:
+          - name: zone-egress-1
+            kri: kri_ze__zone-1__zone-egress-1_
+            labels:
+              kuma.io/display-name: zone-egress-1
+            zoneEgress:
               zone: zone-1
       """
 
   Scenario: Clicking a row opens the summary
     Given the environment
       """
-      KUMA_ZONEINGRESS_COUNT: 1
+      KUMA_ZONEEGRESS_COUNT: 1
       """
-    When I visit the "/zones/kri_zi__zone-1__zone-ingress-1_/ingresses" URL
+    When I visit the "/zones/kri_z____zone-1_/egresses" URL
     And I click the "$item:nth-child(1) td:nth-child(2)" element
     Then the "$summary" element exists
-    And the "$summary" element contains "zone-ingress-1"
+    And the "$summary" element contains "zone-egress-1"
     When I click the "$close-summary-button" element
     Then the "$item" element exists but the "$summary" element doesn't exist
     When I navigate "back"
     Then the "$summary" element exists
-    And the "$summary" element contains "zone-ingress-1"
+    And the "$summary" element contains "zone-egress-1"
     When I navigate "forward"
     Then the "$item" element exists but the "$summary" element doesn't exist
 
-  Scenario Outline: Summary URL goes to page with open summary
+  Scenario: Summary URL goes to page with open summary
     Given the environment
       """
-      KUMA_ZONEINGRESS_COUNT: 51
+      KUMA_ZONEEGRESS_COUNT: 51
       """
-    When I visit the "/zones/kri_z____zone-1_/ingresses/kri_zi__zone-1__zone-ingress-1_?page=2&size=50" URL
+    When I visit the "/zones/kri_z____zone-1_/egresses/kri_ze__zone-1__zone-egress-1_?page=2&size=50" URL
     Then the "$summary" element exists
 
   Scenario: Switching to universal format and back
     Given the environment
       """
-      KUMA_ZONEINGRESS_COUNT: 1
+      KUMA_ZONEEGRESS_COUNT: 1
       """
-    When I visit the "/zones/kri_z____zone-1_/ingresses/kri_zi__zone-1__zone-ingress-1_" URL
+    When I visit the "/zones/kri_z____zone-1_/egresses/kri_ze__zone-1__zone-egress-1_" URL
     Then the "$select-preference" element exists
     And the "$structured-view" element exists
     When I click the "$select-preference" element

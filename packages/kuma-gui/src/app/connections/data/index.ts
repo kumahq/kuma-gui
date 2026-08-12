@@ -1,6 +1,11 @@
 import { get } from '@/app/application'
 import { findDeep } from '@/app/application/utilities'
 
+// `connections` views are shared by any proxy type (dataplane, zone-ingress, zone-egress, ...)
+// so they only need the bare minimum shape they actually read off of an overview/networking object.
+export type ConnectionOverview = { id: string }
+export type ConnectionNetworking = { inboundAddress: string }
+
 const protocols = ['http', 'tcp'] as const
 const appProtocols = ['http', 'tcp', 'grpc'] as const
 

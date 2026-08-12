@@ -1,3 +1,9 @@
+zone-cps:
+  routes:
+    item:
+      navigation:
+        zone-ingress-list-view: Ingresses
+
 zone-ingresses:
   x-empty-state:
     title: No data

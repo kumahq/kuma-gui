@@ -20,11 +20,10 @@ Feature: application / MainNavigation
     Then the "<Element>" element exists
 
     Examples:
-      | Element            | Mode   |
-      | $zones-nav         | global |
-      | $zone-egresses-nav | zone   |
-      | $resources-nav     | global |
-      | $resources-nav     | zone   |
+      | Element        | Mode   |
+      | $zones-nav     | global |
+      | $resources-nav | global |
+      | $resources-nav | zone   |
 
   Scenario Outline: The navigation shows <Element> doesn't exist for <Mode>
     Given the environment
@@ -37,6 +36,7 @@ Feature: application / MainNavigation
     Examples:
       | Element            | Mode   |
       | $zone-egresses-nav | global |
+      | $zone-egresses-nav | zone   |
       | $zones-nav         | zone   |
 
   Scenario Outline: Visiting the "<Title>" page

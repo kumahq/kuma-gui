@@ -1,6 +1,10 @@
 Feature: zones / egresses / item
 
   Background:
+    Given the environment
+      """
+      KUMA_ZONE_EGRESSES_ENABLED: true
+      """
     Given the CSS selectors
       | Alias              | Selector                                      |
       | page               | [data-testid='zone-egress-detail-tabs-view']  |
