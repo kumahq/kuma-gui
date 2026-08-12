@@ -4,36 +4,13 @@
     :params="{
       mesh: '',
     }"
-    v-slot="{ route, t }"
+    v-slot="{ route }"
   >
     <AppView>
-      <XLayout
-        variant="action-group"
-      >
-        <XActionGroup
-          :expanded="true"
-        >
-          <template
-            v-for="{ name } in route.children"
-            :key="name"
-          >
-            <XAction
-              :class="{
-                'active': route.child()?.name === name,
-              }"
-              :to="{
-                name,
-                params: {
-                  mesh: route.params.mesh,
-                },
-              }"
-              :data-testid="`${name}-sub-tab`"
-            >
-              {{ t(`services.routes.items.navigation.${name}.label`) }}
-            </XAction>
-          </template>
-        </XActionGroup>
-      </XLayout>
+      <ServiceListTabsActionGroup
+        :route="route"
+        :mesh="props.mesh"
+      />
 
       <XI18n
         :path="`services.routes.items.navigation.${route.child()?.name}.description`"
@@ -52,18 +29,10 @@
   </RouteView>
 </template>
 <script lang="ts" setup>
-import { watch } from 'vue'
-import { useRouter } from 'vue-router'
-
+import { useServiceListTabsActionGroup } from '..'
 import type { Mesh } from '@/app/meshes/data'
 const props = defineProps<{
   mesh: Mesh
 }>()
-
-const router = useRouter()
-watch(() => router.currentRoute.value.name, (val) => {
-  if (val === 'service-list-tabs-view') {
-    router.replace({ name: 'mesh-service-list-view' })
-  }
-}, { immediate: true })
+const ServiceListTabsActionGroup = useServiceListTabsActionGroup()
 </script>

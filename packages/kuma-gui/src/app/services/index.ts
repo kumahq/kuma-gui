@@ -1,5 +1,6 @@
-import { token } from '@kumahq/container'
+import { createInjections, token } from '@kumahq/container'
 
+import ServiceListTabsActionGroup from './components/ServiceListTabsActionGroup.vue'
 import locales from './locales/en-us/index.yaml'
 import { routes } from './routes'
 import { sources } from './sources'
@@ -8,6 +9,10 @@ import type { ServiceDefinition } from '@kumahq/container'
 import type { RouteRecordRaw } from 'vue-router'
 
 type Token = ReturnType<typeof token>
+
+const $ = {
+  serviceListTabsActionGroup: token<typeof ServiceListTabsActionGroup>('services.service-list-tabs-action-group'),
+}
 
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   return [
@@ -48,5 +53,15 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       ],
     }],
 
+    [$.serviceListTabsActionGroup, {
+      service: () => ServiceListTabsActionGroup,
+    }],
   ]
 }
+
+export const TOKENS = $
+export const [
+  useServiceListTabsActionGroup,
+] = createInjections(
+  $.serviceListTabsActionGroup,
+)

@@ -2,6 +2,7 @@
 import './assets/styles/main.scss'
 
 import { createBuilder } from '@kumahq/container'
+import { nanoEnv } from '@kumahq/settings/env'
 import { createApp } from 'vue'
 
 import { services as application, TOKENS as APPLICATION } from '@/app/application'
@@ -11,6 +12,7 @@ import { services as dataplanes, TOKENS as DATAPLANES } from '@/app/data-planes'
 import { services as gateways } from '@/app/gateways'
 import { services as hostnameGenerators } from '@/app/hostname-generators'
 import { services as kuma, TOKENS as KUMA } from '@/app/kuma'
+import { vars } from '@/app/kuma/env'
 import { services as legacyDataplanes } from '@/app/legacy-data-planes'
 import { services as me } from '@/app/me'
 import { services as meshIdentities } from '@/app/mesh-identities'
@@ -19,7 +21,7 @@ import { services as meshes } from '@/app/meshes'
 import { services as policies } from '@/app/policies'
 import { services as resources } from '@/app/resources'
 import { services as rules } from '@/app/rules'
-import { services as services } from '@/app/services'
+import { services as services, TOKENS as SERVICES } from '@/app/services'
 import { services as vue, TOKENS as VUE } from '@/app/vue'
 import { services as workloads } from '@/app/workloads'
 import { services as zoneEgresses } from '@/app/zone-egresses'
@@ -31,7 +33,10 @@ async function mountVueApplication() {
     ...VUE,
     ...APPLICATION,
     ...KUMA,
+    ...SERVICES,
   }
+  
+  const env = nanoEnv(vars, () => JSON.parse(document.querySelector('#kuma-config')?.textContent || '{}'))
 
   const { build, injectionKey } = createBuilder()
   const get = build(
@@ -58,6 +63,12 @@ async function mountVueApplication() {
     rules($),
     meshIdentities($),
     meshTrusts($),
+
+    // any services depending on env
+    env('KUMA_LEGACY_SERVICES_ENABLED') === 'true' ? await (async () => {
+      const legacyServices = await import('@/app/legacy-services')
+      return legacyServices.services({ ...$, ...DATAPLANES })
+    })() : [],
     //
 
     // any DEV-time only service container configuration
@@ -93,16 +104,6 @@ async function mountVueApplication() {
     await get(msw.TOKENS.msw)
   }
 
-  // The legacy services module is opt-in. It is conditionally lazy loaded and
-  // registered with the container when `KUMA_LEGACY_SERVICES_ENABLED` is enabled
-  // We can only make this decision once the container exists, because `env`, like every other
-  // service, lives in the container. Resolving `$.env` after the initial build.
-  // A second build registers the module into the same container
-  // before routes/sources are resolved at mount time.
-  if (get($.env)('KUMA_LEGACY_SERVICES_ENABLED') === 'true') {
-    const { services: legacyServices } = await import('@/app/legacy-services')
-    build(legacyServices({ ...$, ...DATAPLANES }))
-  }
   const app = createApp((await import('./app/App.vue')).default)
   app.provide(injectionKey, get)
   ;(await get($.app)(app)).mount('#app')
