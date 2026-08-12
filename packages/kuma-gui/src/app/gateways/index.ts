@@ -1,6 +1,5 @@
 import { token } from '@kumahq/container'
 
-import DataplaneServiceLink from './components/DataplaneServiceLink.vue'
 import GatewayPolicies from './components/GatewayPolicies.vue'
 import locales from './locales/en-us/index.yaml'
 import { routes } from './routes'
@@ -14,7 +13,6 @@ type Token = ReturnType<typeof token>
 
 const $ = {
   GatewayPolicies: token<typeof GatewayPolicies>('gateways.components.GatewayPolicies'),
-  DataplaneServiceLink: token<typeof DataplaneServiceLink>('gateways.components.DataplaneServiceLink'),
 }
 
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
