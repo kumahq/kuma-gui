@@ -1,5 +1,6 @@
 import { token } from '@kumahq/container'
 
+import ServiceListTabsActionGroup from './components/ServiceListTabsActionGroup.vue'
 import { features } from './features'
 import locales from './locales/en-us/index.yaml'
 import { routes } from './routes'
@@ -68,6 +69,11 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       labels: [
         app.dataPlaneServiceLinks,
       ],
+    }],
+
+    [token<typeof ServiceListTabsActionGroup>('legacy-services.service-list-tabs-action-group'), {
+      service: () => ServiceListTabsActionGroup,
+      decorates: app.serviceListTabsActionGroup,
     }],
   ]
 }
