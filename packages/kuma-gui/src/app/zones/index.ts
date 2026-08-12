@@ -9,6 +9,7 @@ import { sources } from './sources'
 import type { Can } from '@/app/application'
 import { services as subscriptions } from '@/app/subscriptions'
 import type { ServiceDefinition } from '@kumahq/container'
+import type { Component } from 'vue'
 import type { RouteRecordRaw } from 'vue-router'
 
 type Token = ReturnType<typeof token>
@@ -16,6 +17,7 @@ type Token = ReturnType<typeof token>
 const $ = {
   ZoneControlPlanesList: token<typeof ZoneControlPlanesList>('zones.components.ZoneControlPlanesList'),
   ZoneActionGroup: token<typeof ZoneActionGroup>('zones.components.ZoneActionGroup'),
+  ZoneAppNavigator: token<Component | undefined>('zones.components.ZoneAppNavigator'),
 }
 
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
@@ -25,6 +27,9 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
     }],
     [$.ZoneActionGroup, {
       service: () => ZoneActionGroup,
+    }],
+    [$.ZoneAppNavigator, {
+      service: () => undefined,
     }],
     [token('zones.routes'), {
       service: (can: Can) => {
@@ -74,7 +79,9 @@ export const TOKENS = $
 export const [
   useZoneControlPlanesList,
   useZoneActionGroup,
+  useZoneHomeNavigatorFallback,
 ] = createInjections(
   $.ZoneControlPlanesList,
   $.ZoneActionGroup,
+  $.ZoneAppNavigator,
 )

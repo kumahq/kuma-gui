@@ -1,6 +1,10 @@
 Feature: zones / ingresses / navigation
 
   Background:
+    Given the environment
+      """
+      KUMA_ZONE_INGRESSES_ENABLED: true
+      """
     Given the CSS selectors
       | Alias         | Selector                                                                    |
       | row           | [data-testid$='-collection'] tbody tr:first-child                           |

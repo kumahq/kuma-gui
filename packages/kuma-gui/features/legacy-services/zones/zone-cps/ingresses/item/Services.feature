@@ -9,6 +9,7 @@ Feature: legacy-services / zones / ingresses / item / service
     And the environment
       """
       KUMA_LEGACY_SERVICES_ENABLED: true
+      KUMA_ZONE_INGRESSES_ENABLED: true
       KUMA_MODE: global
       KUMA_SERVICE_COUNT: 1
       """

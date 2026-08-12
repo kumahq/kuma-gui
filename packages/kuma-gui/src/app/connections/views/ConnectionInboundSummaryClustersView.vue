@@ -67,14 +67,13 @@
   </RouteView>
 </template>
 <script lang="ts" setup>
+import type { ConnectionOverview } from '../data'
 import { sources } from '../sources'
 import { DataplaneNetworkingLayout } from '@/app/data-planes/data'
-import type { DataplaneInbound, DataplaneOverview } from '@/app/data-planes/data'
-import type { ZoneEgressOverview } from '@/app/zone-egresses/data'
-import type { ZoneIngressOverview } from '@/app/zone-ingresses/data'
+import type { DataplaneInbound } from '@/app/data-planes/data'
 const props = defineProps<{
   routeName: string
   data: DataplaneInbound | DataplaneNetworkingLayout['inbounds'][number]
-  overview: DataplaneOverview | ZoneIngressOverview | ZoneEgressOverview | Error | undefined 
+  overview: ConnectionOverview | Error | undefined
 }>()
 </script>
