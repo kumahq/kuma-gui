@@ -38,7 +38,6 @@ Feature: hostname-generators / item
     When I visit the "/hostname-generators/kri_hg__zone-1_kuma-system_local-mesh-external-service_/overview" URL
     Then the "$detail-view" element exists
     And the "$title-bar" element contains "local-mesh-external-service"
-      |  |
 
   Scenario Outline: Shows config with format based on environment
     When I visit the "/hostname-generators/kri_hg__zone-1_kuma-system_local-mesh-external-service_/overview" URL

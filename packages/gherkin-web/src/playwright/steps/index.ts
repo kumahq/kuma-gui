@@ -308,7 +308,7 @@ export async function setupSteps({
   // whilst the response is sent after waitForRequest resolves the response itself
   // has been rendered on the server therefore any mocking done after this step
   // will apply to the following request
-  Then(/^the URL "(.*)" was?(n't | not | )requested with$/, async ({ page: _page }, url: string, not: string = '', yaml: string) => {
+  Then(/^the URL "(.*)" was?(n't | not | )requested with$/, async ({ page: _page }, url: string, not: string, yaml: string) => {
     const found = await client.waitForRequest({
       url,
       ...YAML.parse(yaml) as {
@@ -363,7 +363,7 @@ export async function setupSteps({
     }
   })
 
-  Then(/^the "(.*)" element(s)? contain[s]?$/, async ({ page }, selector: string, multiple = '', table: DataTable) => {
+  Then(/^the "(.*)" element(s)? contain[s]?$/, async ({ page }, selector: string, multiple: string | undefined, table: DataTable) => {
     const rows = table.rows()
     if (multiple === 's') {
       let i = 0
@@ -410,7 +410,7 @@ export async function setupSteps({
   Then('pause', async ({ page }) => {
     await page.pause()
   })
-  Then(/^(everything is )?ok$/, async () => {
+  Then(/^(everything is )?ok$/, async ({ page: _page }, _everythingIs: string) => {
     expect(true).toBe(true)
   })
   Then('log {string}', async ({ page: _page }, message: string) => {
