@@ -19,7 +19,7 @@
     "@kumahq/routing": "*",
     "@kumahq/settings": "*",
     "@kumahq/x": "*",
-    "@vueuse/core": "^14.3.0",
+    "@vueuse/core": "^14.4.0",
     "deepmerge": "^4.3.1",
     "github-buttons": "^2.33.0",
     "js-yaml": "^4.1.1",
