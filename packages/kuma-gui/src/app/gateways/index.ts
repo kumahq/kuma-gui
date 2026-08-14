@@ -1,5 +1,6 @@
 import { token } from '@kumahq/container'
 
+import GatewayPolicies from './components/GatewayPolicies.vue'
 import locales from './locales/en-us/index.yaml'
 import { routes } from './routes'
 import { sources } from './sources'
@@ -9,6 +10,10 @@ import type { Router, RouteRecordRaw } from 'vue-router'
 export * from './routes'
 
 type Token = ReturnType<typeof token>
+
+const $ = {
+  GatewayPolicies: token<typeof GatewayPolicies>('gateways.components.GatewayPolicies'),
+}
 
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   return [
@@ -58,6 +63,12 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       labels: [
         app.dataPlaneServiceLinks,
       ],
+    }],
+    [$.GatewayPolicies, {
+      service: () => {
+        return GatewayPolicies
+      },
+      decorates: app.DataPlanePolicies,
     }],
   ]
 }

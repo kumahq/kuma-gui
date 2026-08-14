@@ -3,13 +3,14 @@ import createClient from 'openapi-fetch'
 import { MeshGateway } from './data'
 import { useDataSource } from '../kuma'
 import { GatewayServiceInsight } from './data/GatewayServiceInsight'
+import { MeshGatewayDataplane } from './data/MeshGatewayDataplane'
 import type { DataSourceResponse } from '@/app/application'
 import { defineSources } from '@/app/application'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import type { ResourceTypeDescriptorCollection } from '@/app/resources/data'
 import { Rule } from '@/app/rules/data'
 import type { PaginatedApiListResponse as CollectionResponse, ServiceInsightsParameters  } from '@/types/api.d'
-import type { ServiceInsight as PartialServiceInsight} from '@/types/index.d'
+import type { ServiceInsight as PartialServiceInsight, MeshGatewayDataplane as PartialMeshGatewayDataplane } from '@/types/index.d'
 import type { paths } from '@kumahq/kuma-http-api'
 
 export type { MeshGateway } from './data'
@@ -118,7 +119,6 @@ export const sources = (api: KumaApi) => {
       })
       return GatewayServiceInsight.fromCollection(res.data! as unknown as CollectionResponse<PartialServiceInsight>)
     },
-
     
     '/meshes/:mesh/service-insights/:name': async (params) => {
       const { mesh, name } = params
@@ -132,6 +132,19 @@ export const sources = (api: KumaApi) => {
       })
 
       return GatewayServiceInsight.fromObject(res.data! as unknown as PartialServiceInsight)
+    },
+
+    '/meshes/:mesh/dataplanes/:name/gateway-dataplane-policies': async (params) => {
+      const { mesh, name } = params
+      const res = await http.GET('/meshes/{mesh}/dataplanes/{name}/policies', {
+        params: {
+          path: {
+            mesh,
+            name,
+          },
+        },
+      })
+      return MeshGatewayDataplane.fromObject(res.data! as unknown as PartialMeshGatewayDataplane)
     },
   })
 }
