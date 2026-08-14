@@ -63,12 +63,13 @@ const routeTarget = computed<Omit<RouteLocationNamedRaw, 'query'> | null>(() => 
       return null
     }
     case 'MeshGateway': {
-      return {
-        name: 'builtin-gateway-detail-view',
-        params: {
-          gateway: props.targetRef.name,
-        },
+      for(const resolve of dataPlaneServiceLinks) {
+        const to = resolve({ params: { service: props.targetRef.name! }, dataplaneType: 'gateway' })
+        if(to) {
+          return to
+        }
       }
+      return null
     }
     default: {
       throw new Error(`Unsupported targetRef ${props.targetRef.kind}.`)

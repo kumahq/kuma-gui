@@ -14,6 +14,7 @@ Feature: mesh / builtin-gateways / item
       | service-link-internal | $tabs-view a[href*='services/internal']          |
     Given the environment
       """
+      KUMA_GATEWAYS_ENABLED: true
       KUMA_LISTENER_COUNT: 2
       KUMA_DATAPLANE_RULE_COUNT: 1
       KUMA_DATAPLANE_PROXY_RULE_ENABLED: false

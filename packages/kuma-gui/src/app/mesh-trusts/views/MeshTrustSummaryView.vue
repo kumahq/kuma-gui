@@ -31,7 +31,7 @@
             :key="typeof options"
           >
             <XSelect
-              :label="t('gateways.routes.item.format')"
+              :label="t('mesh-trusts.routes.item.format')"
               :selected="route.params.environment"
               @change="(value) => {
                 route.update({ environment: value })
@@ -43,7 +43,7 @@
                 :key="value"
                 #[`${value}-option`]
               >
-                {{ t(`gateways.routes.item.formats.${value}`) }}
+                {{ t(`mesh-trusts.routes.item.formats.${value}`) }}
               </template>
             </XSelect>
           </div>

@@ -12,6 +12,7 @@ Feature: mesh / delegated-gateways / index
       | delegated-gateway-sub-tab | [data-testid='delegated-gateway-list-view-sub-tab']                          |
     And the environment
       """
+      KUMA_GATEWAYS_ENABLED: true
       KUMA_SERVICE_COUNT: 1
       """
     And the URL "/meshes/default/service-insights" responds with

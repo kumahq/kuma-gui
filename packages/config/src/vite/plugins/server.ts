@@ -17,6 +17,7 @@ export type KumaHtmlVars = {
   legacyServicesEnabled: string
   zoneIngressesEnabled: string
   zoneEgressesEnabled: string
+  gatewaysEnabled: string
 }
 type ServerOptions = {
   template: string
@@ -65,6 +66,7 @@ export const defaultKumaHtmlVars = {
   legacyServicesEnabled: 'false',
   zoneIngressesEnabled: 'false',
   zoneEgressesEnabled: 'false',
+  gatewaysEnabled: 'false',
 }
 
 const interpolate = (template: string, vars: KumaHtmlVars) => {
@@ -124,6 +126,7 @@ const server = ({
             legacyServicesEnabled: cookies.KUMA_LEGACY_SERVICES_ENABLED,
             zoneIngressesEnabled: cookies.KUMA_ZONE_INGRESSES_ENABLED,
             zoneEgressesEnabled: cookies.KUMA_ZONE_EGRESSES_ENABLED,
+            gatewaysEnabled: cookies.KUMA_GATEWAYS_ENABLED,
           }).filter(([_, value]) => typeof value !== 'undefined')),
           //
         } satisfies KumaHtmlVars,

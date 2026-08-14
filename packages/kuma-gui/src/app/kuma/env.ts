@@ -12,6 +12,7 @@ type HtmlVars = {
   legacyServicesEnabled?: string
   zoneIngressesEnabled?: string
   zoneEgressesEnabled?: string
+  gatewaysEnabled?: string
 }
 export const vars = (config: HtmlVars) => {
   const version = semver(config.version)
@@ -29,6 +30,7 @@ export const vars = (config: HtmlVars) => {
     KUMA_LEGACY_SERVICES_ENABLED: () => config.legacyServicesEnabled ?? 'false',
     KUMA_ZONE_INGRESSES_ENABLED: () => config.zoneIngressesEnabled ?? 'false',
     KUMA_ZONE_EGRESSES_ENABLED: () => config.zoneEgressesEnabled ?? 'false',
+    KUMA_GATEWAYS_ENABLED: () => config.gatewaysEnabled ?? 'false',
   }
 }
 declare module '@/app/application' {
