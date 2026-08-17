@@ -1,0 +1,10 @@
+type: object
+properties:
+  caCert:
+    type: object
+    properties:
+      expiration:
+        type: string
+      rsaBits:
+        type: integer
+        format: uint32

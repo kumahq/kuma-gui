@@ -1,0 +1,10 @@
+description: Policies statistics
+type: object
+properties:
+  total:
+    description: Number of policies
+    type: integer
+    example: 30
+required:
+  - total
+title: Policies Stats

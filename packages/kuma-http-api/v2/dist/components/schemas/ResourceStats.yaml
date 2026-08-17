@@ -1,0 +1,10 @@
+description: Resource statistics
+type: object
+properties:
+  total:
+    description: Number of resources
+    type: integer
+    example: 30
+required:
+  - total
+title: Resource Stats

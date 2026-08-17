@@ -11,7 +11,7 @@ import type { ResourceTypeDescriptorCollection } from '@/app/resources/data'
 import { Rule } from '@/app/rules/data'
 import type { PaginatedApiListResponse as CollectionResponse, ServiceInsightsParameters  } from '@/types/api.d'
 import type { ServiceInsight as PartialServiceInsight, MeshGatewayDataplane as PartialMeshGatewayDataplane } from '@/types/index.d'
-import type { paths } from '@kumahq/kuma-http-api'
+import type { paths } from '@kumahq/kuma-http-api/v2'
 
 export type { MeshGateway } from './data'
 

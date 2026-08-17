@@ -10,7 +10,7 @@ import type {
   ZoneIngressOverview as PartialZoneIngressOverview,
   ZoneIngress as PartialZoneIngress,
 } from '@/types/index.d'
-import type { paths } from '@kumahq/kuma-http-api'
+import type { paths } from '@kumahq/kuma-http-api/v2'
 
 const includes = <T extends readonly string[]>(arr: T, item: string): item is T[number] => {
   return arr.includes(item as T[number])

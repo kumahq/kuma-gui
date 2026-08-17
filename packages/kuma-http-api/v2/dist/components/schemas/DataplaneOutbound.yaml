@@ -1,0 +1,16 @@
+type: object
+properties:
+  kri:
+    type: string
+  port:
+    type: integer
+    x-go-type: int32
+  protocol:
+    type: string
+  proxyResourceName:
+    type: string
+required:
+  - kri
+  - port
+  - protocol
+  - proxyResourceName

@@ -1,0 +1,35 @@
+type: object
+properties:
+  field:
+    description: The name of the field that caused the error.
+    type: string
+  reason:
+    description: |
+      A short, human-readable description of the problem.
+      _Should_ be provided as "Sentence case" for direct use in a UI.
+    type: string
+  rule:
+    description: |
+      May be provided as a hint to the user to help understand the type of failure.
+      Additional guidance may be provided in additional fields, i.e. `choices`.
+    type: string
+  choices:
+    description: |
+      Optional field to provide a list of valid choices for the field that caused the error.
+    type: array
+    items:
+      type: string
+  source:
+    description: |
+      The location of the field that caused the error.
+    type: string
+    enum:
+      - body
+      - query
+      - header
+      - path
+required:
+  - field
+  - reason
+  - source
+title: Invalid Parameters

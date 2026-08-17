@@ -1,0 +1,87 @@
+overlay: 1.0.0
+info:
+  title: Overlay to customise API for Kuma
+  version: 0.1.0
+extends: ../generated/openapi.yaml
+actions:
+  # Additional paths. These will include any schemas used in the <path>.yaml file
+  - target: "$.paths"
+    update:
+      /config:
+        $ref: "paths/config.yaml"
+
+      /mesh-insights:
+        $ref: "paths/mesh-insights.yaml"
+      /mesh-insights/{name}:
+        $ref: "paths/mesh-insights_{name}.yaml"
+
+      /meshes/{mesh}/service-insights:
+        $ref: "paths/meshes_{mesh}_service-insights.yaml"
+      /meshes/{mesh}/service-insights/{name}:
+        $ref: "paths/meshes_{mesh}_service-insights_{name}.yaml"
+      /meshes/{mesh}/external-services:
+        $ref: "paths/meshes_{mesh}_external-services.yaml"
+      /meshes/{mesh}/external-services/{name}:
+        $ref: "paths/meshes_{mesh}_external-services_{name}.yaml"
+
+      /meshes/{mesh}/dataplanes/{name}/xds:
+        $ref: "paths/meshes_{mesh}_dataplanes_{name}_xds.yaml"
+      /meshes/{mesh}/dataplanes/{name}/stats:
+        $ref: "paths/meshes_{mesh}_dataplanes_{name}_stats.yaml"
+      /meshes/{mesh}/dataplanes/{name}/clusters:
+        $ref: "paths/meshes_{mesh}_dataplanes_{name}_clusters.yaml"
+      /meshes/{mesh}/dataplanes/{name}/policies:
+        $ref: "paths/meshes_{mesh}_dataplanes_{name}_policies.yaml"
+
+      /zones/_overview:
+        $ref: "paths/zones__overview.yaml"
+      /zones/{name}/_overview:
+        $ref: "paths/zones_{name}_overview.yaml"
+
+      /zone-ingresses/_overview:
+        $ref: "paths/zone-ingresses__overview.yaml"
+      /zone-ingresses/{name}/_overview:
+        $ref: "paths/zone-ingresses_{name}_overview.yaml"
+      /zone-ingresses/{name}:
+        $ref: "paths/zone-ingresses_{name}.yaml"
+      /zoneingresses/{name}/xds:
+        $ref: "paths/zoneingresses_{name}_xds.yaml"
+      /zoneingresses/{name}/stats:
+        $ref: "paths/zoneingresses_{name}_stats.yaml"
+      /zoneingresses/{name}/clusters:
+        $ref: "paths/zoneingresses_{name}_clusters.yaml"
+
+      # NOTE: unlike zone-ingresses' equivalents, neither release-2.14 nor
+      # current master document these two natively (added to kuma somewhere
+      # in between, then removed again with the rest of zoneegresses) — so
+      # they're hand-authored here the same way /zone-ingresses/_overview is.
+      /zoneegresses/_overview:
+        $ref: "paths/zoneegresses__overview.yaml"
+      /zoneegresses/{name}/_overview:
+        $ref: "paths/zoneegresses_{name}_overview.yaml"
+      /zoneegresses/{name}/xds:
+        $ref: "paths/zoneegresses_{name}_xds.yaml"
+      /zoneegresses/{name}/stats:
+        $ref: "paths/zoneegresses_{name}_stats.yaml"
+      /zoneegresses/{name}/clusters:
+        $ref: "paths/zoneegresses_{name}_clusters.yaml"
+
+  # Additional schemas
+  - target: '$.components.schemas'
+    update:
+      Policy:
+        $ref: "components/schemas/Policy.yaml"
+      # NOTE: root's src/openapi.overlay.yaml also has a `Zone` entry here
+      # pointing at a components/schemas/Zone.yaml that doesn't exist (a
+      # pre-existing dangling ref inherited from the root file, unrelated to
+      # v2 pinning — root's committed dist/openapi.yaml was hand-patched
+      # rather than regenerated when that entry was added, so it never hit
+      # this resolution error). Omitted here since a clean build needs it to
+      # resolve, and nothing consumes `components['schemas']['Zone']` today.
+      PolicyCollection:
+        $ref: "components/schemas/PolicyCollection.yaml"
+      LegacyPolicy:
+        $ref: "components/schemas/LegacyPolicy.yaml"
+      TargetRefPolicy:
+        $ref: "components/schemas/TargetRefPolicy.yaml"
+

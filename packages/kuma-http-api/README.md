@@ -25,6 +25,19 @@ be included in these schemas but you shouldn't change it.
 certain type and then have certain properties depending on the `type`. We turn
 these into proper `oneOf`s/discriminated unions.
 
+## v2 (legacy) types
+
+`./v2` is a self-contained copy of the root's build pipeline (own `Makefile`,
+`src/`, `generated/`, `dist/`, `openapi.yaml`, `index.d.ts`) and uses commits
+of the `release-2.14` commit history to generate OAS and types.
+
+Kuma's OAS is moving towards "v3" and will drop certain paths/schemas for
+modules that kuma-gui still supports (`legacy-services`, `gateways`,
+global `zone-ingresses`/`zone-egresses`). As long as we keep these legacy modules
+in here, we need to keep the specs the APIs they are using alive such that we can 
+generate the types. `./v2` keeps a copy of the API specs and types available as
+`@kumahq/kuma-http-api/v2` so those types don't disappear while `master`'s spec evolves.
+
 ## Contributing
 
 Please see `make help`, but you probably just want `make build`.

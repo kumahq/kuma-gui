@@ -1,0 +1,12 @@
+type: object
+properties:
+  online:
+    type: integer
+    example: 10
+  total:
+    type: integer
+    example: 30
+required:
+  - online
+  - total
+title: Status
