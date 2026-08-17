@@ -142,9 +142,12 @@ onMounted(rewrite)
 /* this used to use `> *` but thats too eager for x-badges so for now we are using span */
 .app-collection :deep(td [data-action]:is(a, button)) {
   &, > span {
-    color: inherit;
+    /* override default kongponent styling because we use links for navigating /*
+    /* using table rows instead of divs/onclicks */
+    color: inherit !important;
+    text-decoration: none !important;
+    /* end override */
     font-weight: var(--x-font-weight-semibold);
-    text-decoration: none;
   }
 }
 
