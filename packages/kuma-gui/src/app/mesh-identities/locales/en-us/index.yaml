@@ -1,0 +1,7 @@
+mesh-identities:
+  routes:
+    item:
+      format: Format
+      formats:
+        universal: Universal
+        k8s: Kubernetes

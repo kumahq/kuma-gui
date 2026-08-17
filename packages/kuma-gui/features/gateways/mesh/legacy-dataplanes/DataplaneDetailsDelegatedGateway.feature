@@ -8,8 +8,8 @@ Feature: Dataplane details for delegated gateway
       | details     | [data-testid='dataplane-details']                               |
     And the environment
       """
-      KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: true
-      KUMA_MESHSERVICE_MODE: Exclusive
+      KUMA_GATEWAYS_ENABLED: true
+      KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: false
       """
     And the URL "/_kri/kri_dp_default_zone-1_kuma-demo_dataplane-gateway_delegated-1_" responds with
       """

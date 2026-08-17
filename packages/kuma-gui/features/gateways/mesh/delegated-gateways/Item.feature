@@ -5,6 +5,10 @@ Feature: mesh / delegated-gateways / item
       | Alias       | Selector                                           |
       | tabs-view   | [data-testid='delegated-gateway-detail-tabs-view'] |
       | detail-view | [data-testid='delegated-gateway-detail-view']      |
+    And the environment
+      """
+      KUMA_GATEWAYS_ENABLED: true
+      """
     Given the URL "/meshes/default/service-insights/gateway-1" responds with
       """
       body:

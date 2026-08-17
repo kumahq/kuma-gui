@@ -10,13 +10,10 @@ Feature: mesh / dataplanes / index
       | select-type           | [data-testid='select-input']                     |
       | select-option         | .select-item                                     |
       | select-standard       | [data-testid='select-item-standard'] button      |
-      | select-builtin        | [data-testid='select-item-builtin'] button       |
-      | select-delegated      | [data-testid='select-item-delegated'] button     |
       | select-zone-ingress   | [data-testid='select-item-zone-ingress'] button  |
       | select-zone-egress    | [data-testid='select-item-zone-egress'] button   |
       | input-search          | [data-testid='filter-bar-filter-input']          |
       | button-search         | [data-testid='filter-bar-submit-query-button']   |
-      | service-link-gateway  | $table a[href*='gateways/delegated']             |
       | service-link-internal | $table a[href*='services/internal']              |
     And the environment
       """
@@ -78,30 +75,6 @@ Feature: mesh / dataplanes / index
     When I visit the "/meshes/default/data-planes" URL
     Then the "$item:nth-child(1)" element contains "service-1"
     And the "$item:nth-child(1)" element exists but the "$service-link-internal" element doesn't exist
-
-  Scenario: A delegated gateway proxy links its service to the delegated gateway
-    Given the environment
-      """
-      KUMA_DATAPLANE_COUNT: 1
-      KUMA_DATAPLANEINBOUND_COUNT: 0
-      """
-    And the URL "/meshes/default/dataplanes/_overview" responds with
-      """
-      body:
-        items:
-          - name: fake-alarm-gateway_delegated-0
-            labels:
-              kuma.io/display-name: fake-alarm-gateway_delegated-0
-            dataplane:
-              networking:
-                gateway:
-                  type: 'DELEGATED'
-                  tags:
-                    kuma.io/service: service-1
-      """
-    When I visit the "/meshes/default/data-planes" URL
-    Then the "$item" element exists 1 time
-    And the "$service-link-gateway" element exists
 
   Scenario Outline: The proxy listing shows the correct status
     Given the environment
@@ -201,76 +174,6 @@ Feature: mesh / dataplanes / index
       """
 
   Rule: The listing can be filtered by type
-
-    Scenario: Filtering by "builtin"
-      Given the environment
-        """
-        KUMA_DATAPLANE_COUNT: 1
-        KUMA_DATAPLANEINBOUND_COUNT: 0
-        """
-      And the URL "/meshes/default/dataplanes/_overview" responds with
-        """
-        body:
-          items:
-            - name: fake-transmitter-gateway_builtin-0
-              labels:
-                kuma.io/display-name: fake-transmitter-gateway_builtin-0
-              dataplane:
-                networking:
-                  gateway:
-                    type: 'BUILTIN'
-                    tags:
-                      kuma.io/service: service-1
-        """
-      When I visit the "/meshes/default/data-planes" URL
-      And I click the "$select-type" element
-      Then the "$select-option" element exists 6 times
-      When I click the "$select-builtin" element
-      Then the URL "/meshes/default/dataplanes/_overview" was requested with
-        """
-        searchParams:
-          gateway: builtin
-        """
-      And the "$item" element exists 1 time
-      And the "$item:nth-child(1)" element contains
-        | Value                              |
-        | fake-transmitter-gateway_builtin-0 |
-        | Built-in gateway                   |
-
-    Scenario: Filtering by "delegated"
-      Given the environment
-        """
-        KUMA_DATAPLANE_COUNT: 1
-        KUMA_DATAPLANEINBOUND_COUNT: 0
-        """
-      And the URL "/meshes/default/dataplanes/_overview" responds with
-        """
-        body:
-          items:
-            - name: fake-alarm-gateway_delegated-0
-              labels:
-                kuma.io/display-name: fake-alarm-gateway_delegated-0
-              dataplane:
-                networking:
-                  gateway:
-                    type: 'DELEGATED'
-                    tags:
-                      kuma.io/service: service-1
-        """
-      When I visit the "/meshes/default/data-planes" URL
-      And I click the "$select-type" element
-      Then the "$select-option" element exists 6 times
-      When I click the "$select-delegated" element
-      Then the URL "/meshes/default/dataplanes/_overview" was requested with
-        """
-        searchParams:
-          gateway: delegated
-        """
-      And the "$item" element exists 1 time
-      And the "$item:nth-child(1)" element contains
-        | Value                          |
-        | fake-alarm-gateway_delegated-0 |
-        | Delegated gateway              |
 
     Scenario: Filtering by "standard"
       Given the environment

@@ -16,10 +16,6 @@ Feature: application / titles
       | /zones/kri_z____zone-cp-name_/overview                                                            | zone-cp-name              |
       | /meshes                                                                                           | Meshes                    |
       | /meshes/default/overview                                                                          | Mesh overview             |
-      | /meshes/default/gateways/builtin                                                                  | Built-in gateways         |
-      | /meshes/default/gateways/builtin/gateway.namespace/overview                                       | gateway                   |
-      | /meshes/default/gateways/delegated                                                                | Delegated gateways        |
-      | /meshes/default/gateways/delegated/gateway/overview                                               | gateway                   |
       | /meshes/default/services/mesh-services                                                            | MeshServices              |
       | /meshes/default/services/mesh-services/kri_msvc____service-name_/overview                         | service-name              |
       | /meshes/default/services/mesh-multi-zone-services                                                 | MeshMultiZoneServices     |

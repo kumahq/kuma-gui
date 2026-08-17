@@ -12,6 +12,7 @@ Feature: Dataplane details for built-in gateway
       | route-item-button    | $route-item:nth-child(1) [data-testid='accordion-item-button']              |
     And the environment
       """
+      KUMA_GATEWAYS_ENABLED: true
       KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: false
       """
     And the URL "/_kri/kri_dp_default_zone-1_kuma-demo_dataplane-gateway_builtin-1_" responds with

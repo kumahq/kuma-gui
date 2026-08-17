@@ -11,6 +11,7 @@ Feature: mesh / builtin-gateways / index
       | builtin-gateway-sub-tab | [data-testid='builtin-gateway-list-view-sub-tab']                         |
     And the environment
       """
+      KUMA_GATEWAYS_ENABLED: true
       KUMA_MESHGATEWAY_COUNT: 1
       """
     And the URL "/meshes/default/meshgateways" responds with

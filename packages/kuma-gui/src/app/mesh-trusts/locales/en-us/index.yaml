@@ -1,0 +1,7 @@
+mesh-trusts:
+  routes:
+    item:
+      format: Format
+      formats:
+        universal: Universal
+        k8s: Kubernetes

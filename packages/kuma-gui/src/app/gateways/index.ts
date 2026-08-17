@@ -56,6 +56,9 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
         ({ params, dataplaneType }) => dataplaneType === 'delegated' && router.hasRoute('delegated-gateway-detail-view')
           ? { name: 'delegated-gateway-detail-view', params }
           : undefined,
+        ({ params, dataplaneType }) => dataplaneType === 'gateway' && router.hasRoute('builtin-gateway-detail-view')
+          ? { name: 'builtin-gateway-detail-view', params: { gateway: params.service } }
+          : undefined,
       ],
       arguments: [
         app.router,

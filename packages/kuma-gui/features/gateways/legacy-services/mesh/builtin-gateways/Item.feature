@@ -9,6 +9,7 @@ Feature: legacy-services / mesh / builtin-gateways / item
     And the environment
       """
       KUMA_LEGACY_SERVICES_ENABLED: true
+      KUMA_GATEWAYS_ENABLED: true
       KUMA_LISTENER_COUNT: 1
       KUMA_DATAPLANE_RULE_COUNT: 0
       KUMA_DATAPLANE_TO_RULE_COUNT: 0
