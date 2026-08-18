@@ -1,5 +1,7 @@
 export { default as XAction } from './x-action/XAction.vue'
 export { default as XActionGroup } from './x-action-group/XActionGroup.vue'
+export { default as XAccordionList } from './x-accordion/XAccordionList.vue'
+export { default as XAccordionItem } from './x-accordion/XAccordionItem.vue'
 export { default as XAlert } from './x-alert/XAlert.vue'
 export { default as XAnonymous } from './x-anonymous/XAnonymous.vue'
 export { default as XBadge } from './x-badge/XBadge.vue'

@@ -1,9 +1,9 @@
 <template>
-  <AccordionList
+  <XAccordionList
     :initially-open="[]"
     multiple-open
   >
-    <AccordionItem
+    <XAccordionItem
       v-for="(policyTypeEntry, index) in items"
       :key="index"
     >
@@ -142,8 +142,8 @@
           </KTableView>
         </div>
       </template>
-    </AccordionItem>
-  </AccordionList>
+    </XAccordionItem>
+  </XAccordionList>
 </template>
 
 <script lang="ts" setup>
@@ -152,8 +152,6 @@ import { KTableView } from '@kong/kongponents'
 
 import type { PolicyResourceType } from '../data'
 import { YAML, useI18n, useRegExp } from '@/app/application'
-import AccordionItem from '@/app/common/AccordionItem.vue'
-import AccordionList from '@/app/common/AccordionList.vue'
 import type { PolicyTypeEntry, PolicyTypeEntryConnection } from '@/types/index.d'
 
 const props = defineProps<{

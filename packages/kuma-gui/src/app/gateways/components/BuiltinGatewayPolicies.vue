@@ -46,11 +46,11 @@
                 Routes
               </h4>
 
-              <AccordionList
+              <XAccordionList
                 :initially-open="[]"
                 multiple-open
               >
-                <AccordionItem
+                <XAccordionItem
                   v-for="(routeEntry, routeIndex) in listenerEntry.routeEntries"
                   :key="routeIndex"
                 >
@@ -117,8 +117,8 @@
                       </li>
                     </ul>
                   </template>
-                </AccordionItem>
-              </AccordionList>
+                </XAccordionItem>
+              </XAccordionList>
             </template>
           </div>
         </div>
@@ -128,8 +128,6 @@
 </template>
 
 <script lang="ts" setup>
-import AccordionItem from '@/app/common/AccordionItem.vue'
-import AccordionList from '@/app/common/AccordionList.vue'
 import type { MeshGatewayDataplane } from '@/app/gateways/data'
 import type { PolicyResourceType } from '@/app/policies/data'
 
