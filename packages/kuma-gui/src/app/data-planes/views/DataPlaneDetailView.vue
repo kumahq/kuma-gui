@@ -121,7 +121,7 @@
                         <XLayout
                           variant="separated"
                         >
-                          <StatusBadge :status="props.data.status" />
+                          <KumaStatusBadge :status="props.data.status" />
                           <DataCollection
                             :items="props.data.dataplane.networking.inbounds"
                             :predicate="item => item.state !== 'Ready'"
@@ -938,7 +938,6 @@
 import { ref } from 'vue'
 
 import { sources } from '../sources'
-import StatusBadge from '@/app/common/StatusBadge.vue'
 import ConnectionCard from '@/app/connections/components/connection-traffic/ConnectionCard.vue'
 import ConnectionGroup from '@/app/connections/components/connection-traffic/ConnectionGroup.vue'
 import ConnectionTraffic from '@/app/connections/components/connection-traffic/ConnectionTraffic.vue'

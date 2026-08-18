@@ -27,7 +27,7 @@
             />
           </h1>
         </template>
-        
+
         <XI18n
           path="zone-cps.routes.items.intro"
           default-path="common.i18n.ignore-error"
@@ -111,7 +111,7 @@
                   </template>
 
                   <template #state="{ row: item }">
-                    <StatusBadge
+                    <KumaStatusBadge
                       :status="item.state"
                     />
                   </template>
@@ -208,7 +208,6 @@ import { useZoneActionGroup } from '../'
 import { sources as zoneSources } from '../sources'
 import { get } from '@/app/application'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
-import StatusBadge from '@/app/common/StatusBadge.vue'
 const ZoneActionGroup = useZoneActionGroup()
 </script>
 

@@ -104,7 +104,7 @@
                 </template>
 
                 <template #status="{ row: item }">
-                  <StatusBadge :status="item.status" />
+                  <KumaStatusBadge :status="item.status" />
                 </template>
 
                 <template #actions="{ row: item }">
@@ -157,5 +157,4 @@
 <script lang="ts" setup>
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
-import StatusBadge from '@/app/common/StatusBadge.vue'
 </script>

@@ -227,7 +227,7 @@
               </template>
 
               <template #status="{ row }">
-                <StatusBadge
+                <KumaStatusBadge
                   :status="row.status"
                 />
               </template>
@@ -322,7 +322,6 @@
 import { useDataPlaneServiceLinks } from '../index.ts'
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
-import StatusBadge from '@/app/common/StatusBadge.vue'
 import { Kri } from '@/app/kuma'
 import type { Mesh } from '@/app/meshes/data'
 const props = defineProps<{

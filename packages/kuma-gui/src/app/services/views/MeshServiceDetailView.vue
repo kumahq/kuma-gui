@@ -396,7 +396,7 @@
                     </template>
 
                     <template #status="{ row }">
-                      <StatusBadge :status="row.status" />
+                      <KumaStatusBadge :status="row.status" />
                     </template>
 
                     <template #warnings="{ row: item }">
@@ -491,7 +491,6 @@
 import type { MeshService } from '../data'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import ResourceStatus from '@/app/common/ResourceStatus.vue'
-import StatusBadge from '@/app/common/StatusBadge.vue'
 import { sources } from '@/app/data-planes/sources'
 import { Kri } from '@/app/kuma'
 import { sources as servicesSources } from '@/app/services/sources'

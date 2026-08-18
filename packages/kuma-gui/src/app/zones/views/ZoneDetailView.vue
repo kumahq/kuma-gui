@@ -93,7 +93,7 @@
                     {{ t('http.api.property.status') }}
                   </dt>
                   <dd>
-                    <StatusBadge :status="zone.state" />
+                    <KumaStatusBadge :status="zone.state" />
                   </dd>
                 </div>
                 <div
@@ -246,7 +246,6 @@
 
 <script lang="ts" setup>
 import type { ZoneOverview } from '../data'
-import StatusBadge from '@/app/common/StatusBadge.vue'
 import { sources } from '@/app/control-planes/sources'
 
 const props = defineProps<{

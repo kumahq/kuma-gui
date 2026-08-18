@@ -48,7 +48,7 @@
         </template>
 
         <template #status="{ row: item }">
-          <StatusBadge
+          <KumaStatusBadge
             :status="item.state"
           />
         </template>
@@ -61,7 +61,6 @@
 import type { ZoneOverview } from '../data'
 import { useCan, useI18n } from '@/app/application'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
-import StatusBadge from '@/app/common/StatusBadge.vue'
 
 const { t } = useI18n()
 const can = useCan()

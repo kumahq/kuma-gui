@@ -30,7 +30,7 @@
                   {{ t('http.api.property.status') }}
                 </dt>
                 <dd>
-                  <StatusBadge
+                  <KumaStatusBadge
                     :status="zoneIngress.state"
                   />
                 </dd>
@@ -384,7 +384,6 @@
 
 <script lang="ts" setup>
 import type { ZoneIngressOverview } from '../data'
-import StatusBadge from '@/app/common/StatusBadge.vue'
 import ConnectionCard from '@/app/connections/components/connection-traffic/ConnectionCard.vue'
 import ConnectionGroup from '@/app/connections/components/connection-traffic/ConnectionGroup.vue'
 import ConnectionTraffic from '@/app/connections/components/connection-traffic/ConnectionTraffic.vue'
