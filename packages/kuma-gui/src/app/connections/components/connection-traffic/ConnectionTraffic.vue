@@ -16,7 +16,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import DataCard from '@/app/common/data-card/DataCard.vue'
+import DataCard from '../data-card/DataCard.vue'
 </script>
 <style lang="scss" scoped>
 .service-traffic {
