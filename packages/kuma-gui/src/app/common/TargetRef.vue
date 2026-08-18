@@ -12,10 +12,29 @@
     <XBadge v-else>
       <slot />
     </XBadge>
-    <TagList
+
+    <XLayout
       v-if="props.targetRef.kind === 'MeshServiceSubset' && props.targetRef.tags"
-      :tags="props.targetRef.tags"
-    />
+      variant="separated"
+    >
+      <XAction
+        v-for="(value, key) in props.targetRef.tags"
+        :key="key"
+        :href="t(`common.label.href.${key.replaceAll('.', '~')}`, {
+          mesh: props.targetRef.mesh,
+          zone: '',
+          namespace: '',
+          name: value,
+        }, { defaultMessage: '' })"
+      >
+        <XBadge
+          :variant="r('kuma.label').test(key) ? 'reserved-kv' : 'kv'"
+        >
+          {{ key }}:<strong>{{ value }}</strong>
+        </XBadge>
+      </XAction>
+    </XLayout>
+
 
     <span
       v-if="props.targetRef.weight !== undefined && props.targetRef.weight !== 1"
@@ -34,7 +53,7 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 
-import TagList from '@/app/common/TagList.vue'
+import { useI18n, useRegExp } from '@/app/application'
 import { useDataPlaneServiceLinks } from '@/app/data-planes'
 import type { TargetRef } from '@/types/index.d'
 import type { RouteLocationNamedRaw } from 'vue-router'
@@ -42,6 +61,9 @@ import type { RouteLocationNamedRaw } from 'vue-router'
 const props = defineProps<{
   targetRef: TargetRef
 }>()
+
+const { t } = useI18n()
+const { r } = useRegExp()
 
 const dataPlaneServiceLinks = useDataPlaneServiceLinks()
 
