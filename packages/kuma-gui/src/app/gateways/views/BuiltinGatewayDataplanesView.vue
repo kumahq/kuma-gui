@@ -120,7 +120,7 @@
                   </template>
 
                   <template #status="{ row }">
-                    <StatusBadge :status="row.status" />
+                    <KumaStatusBadge :status="row.status" />
                   </template>
 
                   <template #warnings="{ row: item }">
@@ -213,7 +213,6 @@
 <script lang="ts" setup>
 import type { MeshGateway } from '../data'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
-import StatusBadge from '@/app/common/StatusBadge.vue'
 import { sources as dataplaneSources } from '@/app/data-planes/sources'
 import { Kri } from '@/app/kuma'
 const props = defineProps<{

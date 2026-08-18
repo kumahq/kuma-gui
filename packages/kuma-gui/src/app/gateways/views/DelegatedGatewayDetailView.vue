@@ -39,7 +39,7 @@
                     {{ t('http.api.property.status') }}
                   </dt>
                   <dd>
-                    <StatusBadge :status="data.status" />
+                    <KumaStatusBadge :status="data.status" />
                   </dd>
                 </div>
                 <div>
@@ -181,7 +181,7 @@
                   </template>
 
                   <template #status="{ row }">
-                    <StatusBadge :status="row.status" />
+                    <KumaStatusBadge :status="row.status" />
                   </template>
 
                   <template #warnings="{ row: item }">
@@ -272,7 +272,6 @@
 
 <script lang="ts" setup>
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
-import StatusBadge from '@/app/common/StatusBadge.vue'
 import { sources as dataplaneSources } from '@/app/data-planes/sources'
 import { sources } from '@/app/gateways/sources'
 import { Kri } from '@/app/kuma'

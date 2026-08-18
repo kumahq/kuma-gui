@@ -31,7 +31,7 @@
                     {{ t('http.api.property.status') }}
                   </dt>
                   <dd>
-                    <StatusBadge :status="zoneEgress.state" />
+                    <KumaStatusBadge :status="zoneEgress.state" />
                   </dd>
                 </div>
                 <div v-if="zoneEgress.namespace.length > 0">
@@ -357,7 +357,6 @@
 
 <script lang="ts" setup>
 import type { ZoneEgressOverview } from '../data'
-import StatusBadge from '@/app/common/StatusBadge.vue'
 import ConnectionCard from '@/app/connections/components/connection-traffic/ConnectionCard.vue'
 import ConnectionGroup from '@/app/connections/components/connection-traffic/ConnectionGroup.vue'
 import ConnectionTraffic from '@/app/connections/components/connection-traffic/ConnectionTraffic.vue'
