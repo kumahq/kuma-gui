@@ -104,7 +104,7 @@
                     :items="policiesData.policies"
                     v-slot="{ items }"
                   >
-                    <AccordionList
+                    <XAccordionList
                       :initially-open="0"
                       multiple-open
                       class="stack"
@@ -114,7 +114,7 @@
                         v-for="({ conf, kind, origins }) in items"
                         :key="kind"
                       >
-                        <AccordionItem
+                        <XAccordionItem
                           :card="true"
                         >
                           <template #accordion-header>
@@ -183,9 +183,9 @@
                               </tr>
                             </XTable>
                           </template>
-                        </AccordionItem>
+                        </XAccordionItem>
                       </template>
-                    </AccordionList>
+                    </XAccordionList>
                   </DataCollection>
                 </template>
               </DataLoader>
@@ -200,8 +200,6 @@
 <script lang="ts" setup>
 import type { DataplaneNetworkingLayout, DataplaneOverview } from '../data'
 import { YAML } from '@/app/application'
-import AccordionItem from '@/app/common/AccordionItem.vue'
-import AccordionList from '@/app/common/AccordionList.vue'
 import { Kri } from '@/app/kuma'
 import { sources as policySources } from '@/app/policies/sources'
 

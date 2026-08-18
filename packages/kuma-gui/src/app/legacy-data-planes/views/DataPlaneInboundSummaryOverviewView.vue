@@ -122,7 +122,7 @@
                     :items="[...rulesData!.rules, ...rulesData!.inboundRules]"
                     v-slot="{ items }"
                   >
-                    <AccordionList
+                    <XAccordionList
                       :initially-open="0"
                       multiple-open
                       class="stack"
@@ -131,7 +131,7 @@
                         v-for="(rules, key) in Object.groupBy(items, item => item.type)"
                         :key="key"
                       >
-                        <AccordionItem
+                        <XAccordionItem
                           :card="true"
                         >
                           <template #accordion-header>
@@ -211,9 +211,9 @@
                               </template>
                             </XTable>
                           </template>
-                        </AccordionItem>
+                        </XAccordionItem>
                       </template>
-                    </AccordionList>
+                    </XAccordionList>
                   </DataCollection>
                 </template>
               </DataLoader>
@@ -227,8 +227,6 @@
 
 <script lang="ts" setup>
 import { YAML } from '@/app/application'
-import AccordionItem from '@/app/common/AccordionItem.vue'
-import AccordionList from '@/app/common/AccordionList.vue'
 import type { DataplaneInbound, DataplaneOverview } from '@/app/data-planes/data'
 import { sources as policySources } from '@/app/policies/sources'
 import RuleMatchers from '@/app/rules/components/RuleMatchers.vue'
