@@ -216,8 +216,8 @@ const { uri } = nano()
 export const syntaxHighlighter = {
   options: {
     themes: {
-      dark: 'catppuccin-mocha',
-      light: 'catppuccin-mocha',
+      dark: 'catppuccin-latte',
+      light: 'catppuccin-latte',
     },
     structure: 'inline',
   } satisfies Partial<CodeToHastOptions>,
@@ -229,8 +229,8 @@ export const syntaxHighlighter = {
     ],
     themes: [
       {
-        name: 'catppuccin-mocha',
-        default: (await import('shiki/themes/catppuccin-mocha.mjs')).default,
+        name: 'catppuccin-latte',
+        default: (await import('shiki/themes/catppuccin-latte.mjs')).default,
       },
     ],
     engine: createJavaScriptRegexEngine(),
