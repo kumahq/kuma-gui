@@ -1,4 +1,4 @@
-import { Resource } from '@/app/resources/data/Resource'
+import { search } from '@/app/kuma'
 import type { PaginatedApiListResponse } from '@/types/api.d'
 import type {
   ServiceInsight as PartialServiceInsight,
@@ -11,7 +11,7 @@ export type ServiceInsight = PartialServiceInsight & {
 
 export const ServiceInsight = {
   search(query: string) {
-    return Resource.search(query)
+    return search(query)
   },
   fromObject(partialServiceInsight: PartialServiceInsight): ServiceInsight {
     const serviceType = partialServiceInsight.serviceType ?? 'internal'

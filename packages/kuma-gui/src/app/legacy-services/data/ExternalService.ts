@@ -1,4 +1,4 @@
-import { Resource } from '@/app/resources/data/Resource'
+import { search } from '@/app/kuma'
 import type { PaginatedApiListResponse } from '@/types/api.d'
 import type {
   ExternalService as PartialExternalService,
@@ -10,7 +10,7 @@ export type ExternalService = PartialExternalService & {
 
 export const ExternalService = {
   search(query: string) {
-    return Resource.search(query)
+    return search(query)
   },
   fromObject(partialExternalService: PartialExternalService): ExternalService {
     return {
