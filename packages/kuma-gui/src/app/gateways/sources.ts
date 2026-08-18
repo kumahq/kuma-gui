@@ -9,7 +9,7 @@ import { defineSources } from '@/app/application'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import type { ResourceTypeDescriptorCollection } from '@/app/resources/data'
 import { Rule } from '@/app/rules/data'
-import type { PaginatedApiListResponse as CollectionResponse, ServiceInsightsParameters  } from '@/types/api.d'
+import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
 import type { ServiceInsight as PartialServiceInsight, MeshGatewayDataplane as PartialMeshGatewayDataplane } from '@/types/index.d'
 import type { paths } from '@kumahq/kuma-http-api'
 
@@ -19,6 +19,13 @@ export type MeshGatewaySource = DataSourceResponse<MeshGateway>
 export type MeshGatewayCollection = CollectionResponse<MeshGateway>
 export type MeshGatewayCollectionSource = DataSourceResponse<MeshGatewayCollection>
 
+type ServiceInsightsParameters = {
+  name?: string
+  type?: string
+  size?: number
+  offset?: number
+  filter?: Record<string, string>
+}
 export const sources = (api: KumaApi) => {
   const http = createClient<paths>({
     baseUrl: api.client.baseUrl,
@@ -91,22 +98,22 @@ export const sources = (api: KumaApi) => {
       })
       return Rule.fromCollection(res.data!, resources)
     },
-    
+
     '/meshes/:mesh/service-insights/of/:serviceType': async (params) => {
       const { mesh, size, serviceType } = params
       const offset = params.size * (params.page - 1)
-    
+
       const search = GatewayServiceInsight.search(params.search)
       const filterParams: ServiceInsightsParameters = {
         size,
         offset,
         ...search,
       }
-    
+
       if (serviceType !== 'all') {
         filterParams.type = serviceType
       }
-    
+
       const res = await http.GET('/meshes/{mesh}/service-insights', {
         params: {
           path: {
@@ -119,7 +126,7 @@ export const sources = (api: KumaApi) => {
       })
       return GatewayServiceInsight.fromCollection(res.data! as unknown as CollectionResponse<PartialServiceInsight>)
     },
-    
+
     '/meshes/:mesh/service-insights/:name': async (params) => {
       const { mesh, name } = params
       const res = await http.GET('/meshes/{mesh}/service-insights/{name}', {

@@ -1,15 +1,6 @@
 import { type paths } from '@kumahq/kuma-http-api'
 
-import type { Config as PartialControlPlaneConfig } from '@/types/config.d'
-
-export type ControlPlaneConfig = PartialControlPlaneConfig
 export type PartialGlobalInsight = paths['/global-insight']['get']['responses']['200']['content']['application/json']
-
-export const ControlPlaneConfig = {
-  fromObject(partialControlPlaneConfig: PartialControlPlaneConfig): ControlPlaneConfig {
-    return partialControlPlaneConfig
-  },
-}
 
 export const GlobalInsight = {
   fromObject(partialGlobalInsight: PartialGlobalInsight) {
