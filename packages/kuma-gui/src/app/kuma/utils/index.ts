@@ -17,7 +17,7 @@ type SearchOptions = {
 export const searchRegex = /(\S+:\s*\S*)|(\S+)/
 const kvSeparatorRegex = /:(.*)/
 
-const parseSearch = (query: string, options: SearchOptions = {}) => {
+export const parseSearch = (query: string, options: SearchOptions = {}) => {
   const { defaultKey = 'name' } = options
   const parts = query.trim().split(searchRegex).map((part) => part?.trim().replace(/=/, ':')).filter(Boolean)
 
