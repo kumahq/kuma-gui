@@ -4,7 +4,7 @@ import { ExternalService, ServiceInsight } from './data'
 import { defineSources } from '@/app/application'
 import type { DataSourceResponse } from '@/app/application'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
-import type { PaginatedApiListResponse as CollectionResponse, ServiceInsightsParameters } from '@/types/api.d'
+import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
 import type {
   ExternalService as PartialExternalService,
   ServiceInsight as PartialServiceInsight} from '@/types/index.d'
@@ -18,6 +18,13 @@ export type ServiceInsightCollectionSource = DataSourceResponse<ServiceInsightCo
 
 export type ExternalServiceSource = DataSourceResponse<ExternalService | null>
 
+type ServiceInsightsParameters = {
+  name?: string
+  type?: string
+  size?: number
+  offset?: number
+  filter?: Record<string, string>
+}
 export const sources = (api: KumaApi) => {
   const http = createClient<paths>({
     baseUrl: api.client.baseUrl,
