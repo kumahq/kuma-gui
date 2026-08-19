@@ -10,6 +10,8 @@ import { inject } from 'vue'
 import {
   XAction,
   XActionGroup,
+  XAccordionList,
+  XAccordionItem,
   XAlert,
   XAnonymous,
   XBadge,
@@ -66,6 +68,8 @@ const components = [
   //
   ['XAction', XAction],
   ['XActionGroup', XActionGroup],
+  ['XAccordionList', XAccordionList],
+  ['XAccordionItem', XAccordionItem],
   ['XAnonymous', XAnonymous],
   ['XBadge', XBadge],
   ['XBreadcrumbs', XBreadcrumbs],
@@ -126,6 +130,8 @@ declare module 'vue' {
     XInput: typeof XInput
     XAction: typeof XAction
     XActionGroup: typeof XActionGroup
+    XAccordionList: typeof XAccordionList
+    XAccordionItem: typeof XAccordionItem
     XBadge: typeof XBadge
     XCopyButton: typeof XCopyButton
     XCodeBlock: typeof XCodeBlock
