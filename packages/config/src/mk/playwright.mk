@@ -13,7 +13,7 @@ build:
 
 .PHONY: test
 test: PLAYWRIGHT_FLAGS=""
-test: build install
+test: build $(if $(CI),,install)
 	@$(PLAYWRIGHT) test $(PLAYWRIGHT_FLAGS)
 
 
