@@ -112,11 +112,6 @@ const slots = defineSlots()
 
   /* non-link */
   ul {
-    /* these were removed from .small */
-    /* but I think we should keep them on both variants */
-    overflow-x: auto;
-    overflow-y: hidden;
-
     display: flex;
     gap: var(--x-space-40);
     list-style: none;
