@@ -61,7 +61,7 @@
     "globals": "^17.8.0",
     "husky": "^9.1.7",
     "js-yaml": "^4.1.1",
-    "lint-staged": "^17.2.0",
+    "lint-staged": "^17.3.0",
     "lockfile-lint": "^5.0.0",
     "markdown-it": "^14.3.0",
     "openapi-format": "^1.33.5",
