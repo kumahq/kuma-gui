@@ -1,0 +1,14 @@
+get:
+  parameters:
+    - name: name
+      type: string
+      in: path
+      required: true
+    - $ref: ../parameters.yaml#/format
+  responses:
+    200:
+      description: '200'
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/MeshInsight.yaml'

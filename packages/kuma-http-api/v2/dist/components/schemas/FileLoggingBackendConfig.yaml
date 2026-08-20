@@ -1,0 +1,6 @@
+description: FileLoggingBackendConfig defines configuration for file based access logs
+type: object
+properties:
+  path:
+    description: Path to a file that logs will be written to
+    type: string

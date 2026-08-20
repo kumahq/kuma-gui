@@ -1,0 +1,5 @@
+type: object
+properties:
+  inlineString:
+    description: Data source is inline string
+    type: string

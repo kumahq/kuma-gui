@@ -1,0 +1,24 @@
+overlay: 1.0.0
+info:
+  title: Customise Mesh
+  version: 0.1.0
+extends: ../../../generated/components/schemas/MeshItem.yaml
+actions:
+  - target: '$.properties'
+    update:
+      creationTime:
+        type: string
+      modificationTime:
+        type: string
+
+  # numbers to string enums
+  - target: '$.properties.meshServices.properties.mode.oneOf'
+    remove: true
+  - target: '$.properties.meshServices.properties.mode'
+    update:
+      type: string
+      enum:
+        - Disabled
+        - Everywhere
+        - ReachableBackends
+        - Exclusive

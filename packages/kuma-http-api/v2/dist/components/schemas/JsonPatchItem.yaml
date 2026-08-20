@@ -1,0 +1,18 @@
+type: object
+properties:
+  op:
+    description: Operation to be performed.
+    type: string
+    enum:
+      - add
+      - remove
+      - test
+  path:
+    description: A JSON Pointer path indicating the part of the document to operate on.
+    type: string
+  value:
+    description: The value to be used within the operations.
+required:
+  - op
+  - path
+  - value

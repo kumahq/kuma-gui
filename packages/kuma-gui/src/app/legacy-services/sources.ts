@@ -8,7 +8,7 @@ import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api
 import type {
   ExternalService as PartialExternalService,
   ServiceInsight as PartialServiceInsight} from '@/types/index.d'
-import type { paths } from '@kumahq/kuma-http-api'
+import type { paths } from '@kumahq/kuma-http-api/v2'
 
 export type { ExternalService } from './data/ExternalService'
 

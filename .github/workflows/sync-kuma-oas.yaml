@@ -36,9 +36,15 @@ jobs:
     strategy:
       matrix:
         package:
-          - name: "@kumahq/kuma-http-api"
+          - id: kuma-http-api
+            name: "@kumahq/kuma-http-api"
             path: packages/kuma-http-api
             source: kumahq/kuma
+          - id: kuma-http-api-v2
+            name: "@kumahq/kuma-http-api (v2)"
+            path: packages/kuma-http-api/v2
+            source: kumahq/kuma
+            ref: release-2.14
     name: |
       Updating ${{ matrix.package.name }} from ${{ matrix.package.source }}
     steps:
@@ -50,7 +56,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: ${{ matrix.package.source }}
-          ref: ${{ env.BRANCH }}
+          ref: ${{ matrix.package.ref || env.BRANCH }}
           path: ${{ matrix.package.path }}/kuma
       - run: |
           make -C ${{ matrix.package.path }} build \
@@ -58,13 +64,13 @@ jobs:
           echo KUMA_HEAD="$(git -C ${{ matrix.package.path }}/kuma rev-parse --short HEAD)" >> "$GITHUB_ENV"
       - if: ${{ github.event_name == 'pull_request' }}
         run: |
-          echo 'chore(kuma-http-api): bump kuma OAS based types - ${{ env.KUMA_HEAD }}'
+          echo 'chore(${{ matrix.package.id }}): bump kuma OAS based types - ${{ env.KUMA_HEAD }}'
           echo '=========='
           echo 'Files changed:'
           git ls-files --exclude-standard --modified --deleted --others -t
           echo '=========='
           echo 'Diff:'
-          git -C packages/kuma-http-api --no-pager diff --unified=0
+          git -C ${{ matrix.package.path }} --no-pager diff --unified=0
       - uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
         if: ${{ github.event_name != 'pull_request' }}
         id: github-app-token
@@ -78,18 +84,18 @@ jobs:
           token: ${{ steps.github-app-token.outputs.token }}
           base: ${{ env.BRANCH }}
           commit-message: |
-            chore(kuma-http-api): bump kuma OAS based types - ${{ env.KUMA_HEAD }}
+            chore(${{ matrix.package.id }}): bump kuma OAS based types - ${{ env.KUMA_HEAD }}
 
             Generates the OAS based types from the latest kuma OAS (${{ env.KUMA_HEAD }}).
           committer: GitHub <noreply@github.com>
           author: github-actions[bot] <github-actions[bot]@users.noreply.github.com>
           team-reviewers: kuma-gui-maintainers
           signoff: true
-          branch: chore/update-kuma-http-api-types-in-${{ env.BRANCH }}
+          branch: chore/update-${{ matrix.package.id }}-types-in-${{ env.BRANCH }}
           delete-branch: true
-          title: 'chore(kuma-http-api): bump kuma OAS based types - ${{ env.KUMA_HEAD }}'
+          title: 'chore(${{ matrix.package.id }}): bump kuma OAS based types - ${{ env.KUMA_HEAD }}'
           body: |
             Generates the OAS based types from the latest kuma OAS.
 
-            > Changelog: chore(deps): use latest OAS from kuma - ${{ env.KUMA_HEAD }}
+            > Changelog: chore(deps): use latest OAS from kuma (${{ matrix.package.name }}) - ${{ env.KUMA_HEAD }}
           draft: false

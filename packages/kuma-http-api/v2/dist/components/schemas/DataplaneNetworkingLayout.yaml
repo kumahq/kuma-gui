@@ -1,0 +1,37 @@
+description: Dataplane networking layout. It contains the most important information about the dataplane and lists the available inbounds, outbounds, and zone proxy listeners
+type: object
+properties:
+  kri:
+    type: string
+    example: kri_dp_default_default_kuma-demo_demo-app-75ff54499c-ttwd7_http-port
+  labels:
+    type: object
+    example:
+      k8s.kuma.io/namespace: kuma-demo
+      kuma.io/display-name: demo-app
+      kuma.io/mesh: default
+      kuma.io/origin: zone
+    additionalProperties:
+      type: string
+  inbounds:
+    type: array
+    items:
+      $ref: 'DataplaneInbound.yaml'
+  outbounds:
+    type: array
+    items:
+      $ref: 'DataplaneOutbound.yaml'
+  listeners:
+    type: array
+    items:
+      $ref: 'DataplaneListener.yaml'
+  spiffeId:
+    description: SPIFFE ID of the dataplane's workload identity certificate
+    type: string
+required:
+  - kri
+  - labels
+  - inbounds
+  - outbounds
+  - listeners
+title: DataplaneLayout

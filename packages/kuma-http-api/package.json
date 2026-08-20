@@ -15,7 +15,12 @@
     "./mocks": {
       "import": "./mocks/index.ts"
     },
-    "./openapi.yaml": "./openapi.yaml"
+    "./openapi.yaml": "./openapi.yaml",
+    "./v2": {
+      "import": "./v2/index.d.ts",
+      "types": "./v2/index.d.ts"
+    },
+    "./v2/openapi.yaml": "./v2/openapi.yaml"
   },
   "scripts": {
     "help": "make help"
