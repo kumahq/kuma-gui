@@ -20,7 +20,7 @@
   },
   "optionalDependencies": {
     "vue": "^3.5.35",
-    "vue-router": "^5.1.0"
+    "vue-router": "^5.2.0"
   },
   "devDependencies": {
     "@kumahq/config": "*",
