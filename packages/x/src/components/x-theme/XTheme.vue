@@ -675,68 +675,6 @@ import '@kong-ui-public/app-layout/dist/style.css'
   .mb-8 {
     margin-bottom: var(--x-space-110) !important;
   }
-
-  .mr-auto {
-    margin-right: auto !important;
-  }
-  .mr-0 {
-    margin-right: 0px !important;
-  }
-  .mr-1 {
-    margin-right: var(--x-space-20) !important;
-  }
-  .mr-2 {
-    margin-right: var(--x-space-40) !important;
-  }
-  .mr-3 {
-    margin-right: var(--x-space-50) !important;
-  }
-  .mr-4 {
-    margin-right: var(--x-space-60) !important;
-  }
-  .mr-5 {
-    margin-right: var(--x-space-80) !important;
-  }
-  .mr-6 {
-    margin-right: var(--x-space-90) !important;
-  }
-  .mr-7 {
-    margin-right: var(--x-space-110) !important;
-  }
-  .mr-8 {
-    margin-right: var(--x-space-110) !important;
-  }
-
-  .ml-auto {
-    margin-left: auto !important;
-  }
-  .ml-0 {
-    margin-left: 0px !important;
-  }
-  .ml-1 {
-    margin-left: var(--x-space-20) !important;
-  }
-  .ml-2 {
-    margin-left: var(--x-space-40) !important;
-  }
-  .ml-3 {
-    margin-left: var(--x-space-50) !important;
-  }
-  .ml-4 {
-    margin-left: var(--x-space-60) !important;
-  }
-  .ml-5 {
-    margin-left: var(--x-space-80) !important;
-  }
-  .ml-6 {
-    margin-left: var(--x-space-90) !important;
-  }
-  .ml-7 {
-    margin-left: var(--x-space-110) !important;
-  }
-  .ml-8 {
-    margin-left: var(--x-space-110) !important;
-  }
 }
 </style>
 
