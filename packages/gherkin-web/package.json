@@ -25,7 +25,7 @@
     "@kumahq/fake-api": "*",
     "@playwright/test": "^1.62.1",
     "deepmerge": "^4.3.1",
-    "esbuild": "^0.28.1",
+    "esbuild": "^0.28.2",
     "js-yaml": "^4.1.1",
     "path-to-regexp": "^8.4.2",
     "playwright-bdd": "^9.2.0"
