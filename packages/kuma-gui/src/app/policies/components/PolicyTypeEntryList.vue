@@ -33,12 +33,28 @@
             is-clickable
           >
             <template #sourceTags="{ row }: { row: PolicyTypeEntryConnection }">
-              <TagList
+              <XLayout
                 v-if="row.sourceTags.length > 0"
-                class="tag-list"
-                should-truncate
-                :tags="row.sourceTags"
-              />
+                variant="separated"
+                truncate
+              >
+                <XAction
+                  v-for="{ value, label } in row.sourceTags"
+                  :key="label"
+                  :href="t(`common.label.href.${label.replaceAll('.', '~')}`, {
+                    mesh: '',
+                    zone: '',
+                    namespace: '',
+                    name: value.replaceAll('_', '~'),
+                  }, { defaultMessage: '' })"
+                >
+                  <XBadge
+                    :variant="r('kuma.label').test(label) ? 'reserved-kv' : 'kv'"
+                  >
+                    {{ label }}:<strong>{{ value }}</strong>
+                  </XBadge>
+                </XAction>
+              </XLayout>
 
               <template v-else>
                 —
@@ -46,12 +62,28 @@
             </template>
 
             <template #destinationTags="{ row }: { row: PolicyTypeEntryConnection }">
-              <TagList
+              <XLayout
                 v-if="row.destinationTags.length > 0"
-                class="tag-list"
-                should-truncate
-                :tags="row.destinationTags"
-              />
+                variant="separated"
+                truncate
+              >
+                <XAction
+                  v-for="{ value, label } in row.destinationTags"
+                  :key="label"
+                  :href="t(`common.label.href.${label.replaceAll('.', '~')}`, {
+                    mesh: '',
+                    zone: '',
+                    namespace: '',
+                    name: value.replaceAll('_', '~'),
+                  }, { defaultMessage: '' })"
+                >
+                  <XBadge
+                    :variant="r('kuma.label').test(label) ? 'reserved-kv' : 'kv'"
+                  >
+                    {{ label }}:<strong>{{ value }}</strong>
+                  </XBadge>
+                </XAction>
+              </XLayout>
 
               <template v-else>
                 —
@@ -119,16 +151,19 @@
 import { KTableView } from '@kong/kongponents'
 
 import type { PolicyResourceType } from '../data'
-import { YAML } from '@/app/application'
+import { YAML, useI18n, useRegExp } from '@/app/application'
 import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
-import TagList from '@/app/common/TagList.vue'
 import type { PolicyTypeEntry, PolicyTypeEntryConnection } from '@/types/index.d'
 
 const props = defineProps<{
   items: PolicyTypeEntry[]
   types: Partial<Record<string, PolicyResourceType>>
 }>()
+
+
+const { t } = useI18n()
+const { r } = useRegExp()
 
 function getCellAttributes({ headerKey }: any): Record<string, string> {
   return { class: `cell-${headerKey}` }
@@ -147,8 +182,4 @@ function getCellAttributes({ headerKey }: any): Record<string, string> {
   gap: var(--x-space-40);
 }
 
-.tag-list {
-  display: flex;
-  margin-top: var(--x-space-20);
-}
 </style>
