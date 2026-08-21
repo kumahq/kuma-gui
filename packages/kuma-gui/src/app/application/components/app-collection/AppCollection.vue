@@ -140,15 +140,16 @@ onMounted(rewrite)
   isolation: isolate;
 }
 /* this used to use `> *` but thats too eager for x-badges so for now we are using span */
-.app-collection :deep(td [data-action]:is(a, button)) {
-  &, > span {
-    /* override default kongponent styling because we use links for navigating /*
-    /* using table rows instead of divs/onclicks */
-    color: inherit !important;
-    text-decoration: none !important;
-    /* end override */
-    font-weight: var(--x-font-weight-semibold);
-  }
+.app-collection :deep(td [data-action]:is(a, button)),
+.app-collection :deep(td [data-action]:is(a, button)) > span,
+.app-collection :deep(td .k-dropdown :is(a, button)),
+.app-collection :deep(td .k-dropdown :is(a, button)) > span {
+  /* override default kongponent styling because we use links for navigating /*
+  /* using table rows instead of divs/onclicks */
+  color: inherit !important;
+  text-decoration: none !important;
+  /* end override */
+  font-weight: var(--x-font-weight-semibold);
 }
 
 .app-collection :deep(td:first-child li a) {
