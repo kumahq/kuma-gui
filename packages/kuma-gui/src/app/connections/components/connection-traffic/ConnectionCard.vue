@@ -185,8 +185,8 @@
 <script lang="ts" setup>
 import formatBytes from 'pretty-bytes'
 
+import DataCard from '../data-card/DataCard.vue'
 import { useI18n } from '@/app/application'
-import DataCard from '@/app/common/data-card/DataCard.vue'
 const { t } = useI18n()
 const props = withDefaults(defineProps<{
   protocol: string
