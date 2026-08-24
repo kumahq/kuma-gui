@@ -56,26 +56,45 @@
                   </XAction>
                 </div>
 
-                <dl
+                <XDl
                   v-if="listener.tags || listener.tls"
                   class="definition-list definition-list--horizontal mt-2"
                 >
                   <div v-if="listener.tags">
                     <dt class="text-neutral">
-                      {{ t('builtin-gateways.detail.tags') }}:
+                      {{ t('builtin-gateways.detail.tags') }}
                     </dt>
                     <dd>
-                      <TagList :tags="listener.tags" />
+                      <XLayout
+                        variant="separated"
+                      >
+                        <XAction
+                          v-for="(value, key) in listener.tags"
+                          :key="key"
+                          :href="t(`common.label.href.${key.replaceAll('.', '~')}`, {
+                            mesh: meshGatewayData.mesh,
+                            zone: meshGatewayData.zone,
+                            namespace: meshGatewayData.namespace,
+                            name: value,
+                          }, { defaultMessage: '' })"
+                        >
+                          <XBadge
+                            :variant="r('kuma.label').test(key) ? 'reserved-kv' : 'kv'"
+                          >
+                            {{ key }}:<strong>{{ value }}</strong>
+                          </XBadge>
+                        </XAction>
+                      </XLayout>
                     </dd>
                   </div>
 
                   <div v-if="listener.tls">
                     <dt class="text-neutral">
-                      {{ t('http.api.property.tls') }}:
+                      {{ t('http.api.property.tls') }}
                     </dt>
                     <dd>{{ listener.tls.mode ?? 'TERMINATE' }}</dd>
                   </div>
-                </dl>
+                </XDl>
               </div>
             </template>
           </div>
@@ -274,8 +293,7 @@ import { computed } from 'vue'
 
 import type { MeshGateway } from '../data'
 import { matchesTags } from '../utilities'
-import { useI18n } from '@/app/application'
-import TagList from '@/app/common/TagList.vue'
+import { useI18n, useRegExp } from '@/app/application'
 import TargetRef from '@/app/common/TargetRef.vue'
 import type { PolicyResourceType } from '@/app/policies/data'
 import RuleFilter from '@/app/rules/components/RuleFilter.vue'
@@ -285,6 +303,7 @@ import type { Rule } from '@/app/rules/data'
 import type { TargetRef as TarRef } from '@/types/index.d'
 
 const { t } = useI18n()
+const { r } = useRegExp()
 type RouteRule = Rule & {
   config: {
     default: {
