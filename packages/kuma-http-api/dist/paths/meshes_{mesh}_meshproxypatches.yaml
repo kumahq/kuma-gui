@@ -39,6 +39,6 @@ get:
         type: string
   responses:
     '200':
-      $ref: ../components/responses/MeshProxyPatchList.yaml
+      $ref: '../components/responses/MeshProxyPatchList.yaml'
   tags:
     - MeshProxyPatch

@@ -19,7 +19,7 @@ properties:
     description: The list of policies that contributed to the 'conf'. The order is important as it reflects in what order confs were merged to get the resulting 'conf'.
     type: array
     items:
-      $ref: ResourceRuleOrigin.yaml
+      $ref: 'ResourceRuleOrigin.yaml'
 required:
   - conf
   - origin

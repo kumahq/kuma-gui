@@ -39,6 +39,6 @@ get:
         type: string
   responses:
     '200':
-      $ref: ../components/responses/MeshTraceList.yaml
+      $ref: '../components/responses/MeshTraceList.yaml'
   tags:
     - MeshTrace

@@ -39,6 +39,6 @@ get:
         type: string
   responses:
     '200':
-      $ref: ../components/responses/MeshOpenTelemetryBackendList.yaml
+      $ref: '../components/responses/MeshOpenTelemetryBackendList.yaml'
   tags:
     - MeshOpenTelemetryBackend

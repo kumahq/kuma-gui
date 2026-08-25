@@ -2,4 +2,4 @@ description: Successful response
 content:
   application/json:
     schema:
-      $ref: ../schemas/MeshOpenTelemetryBackendItem.yaml
+      $ref: '../schemas/MeshOpenTelemetryBackendItem.yaml'

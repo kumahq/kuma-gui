@@ -33,6 +33,6 @@ get:
         label.k8s.kuma.io/namespace: my-ns
   responses:
     '200':
-      $ref: ../components/responses/HostnameGeneratorList.yaml
+      $ref: '../components/responses/HostnameGeneratorList.yaml'
   tags:
     - HostnameGenerator

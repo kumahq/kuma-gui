@@ -39,6 +39,6 @@ get:
         type: string
   responses:
     '200':
-      $ref: ../components/responses/MeshHTTPRouteList.yaml
+      $ref: '../components/responses/MeshHTTPRouteList.yaml'
   tags:
     - MeshHTTPRoute

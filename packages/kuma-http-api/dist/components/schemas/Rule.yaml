@@ -3,7 +3,7 @@ properties:
   matchers:
     type: array
     items:
-      $ref: RuleMatcher.yaml
+      $ref: 'RuleMatcher.yaml'
   conf:
     description: The actual conf generated
     type: object
@@ -12,7 +12,7 @@ properties:
   origin:
     type: array
     items:
-      $ref: Meta.yaml
+      $ref: 'Meta.yaml'
 required:
   - matchers
   - conf

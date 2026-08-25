@@ -23,7 +23,7 @@ import { services as rules } from '@/app/rules'
 import { services as services, TOKENS as SERVICES } from '@/app/services'
 import { services as vue, TOKENS as VUE } from '@/app/vue'
 import { services as workloads } from '@/app/workloads'
-import { services as zones, TOKENS as ZONES } from '@/app/zones'
+import { services as zones } from '@/app/zones'
 
 async function mountVueApplication() {
   const $ = {
@@ -32,7 +32,7 @@ async function mountVueApplication() {
     ...KUMA,
     ...SERVICES,
   }
-  
+
   const env = nanoEnv(vars, () => JSON.parse(document.querySelector('#kuma-config')?.textContent || '{}'))
 
   const { build, injectionKey } = createBuilder()
@@ -62,14 +62,6 @@ async function mountVueApplication() {
     env('KUMA_LEGACY_SERVICES_ENABLED') === 'true' ? await (async () => {
       const legacyServices = await import('@/app/legacy-services')
       return legacyServices.services({ ...$, ...DATAPLANES })
-    })() : [],
-    env('KUMA_ZONE_INGRESSES_ENABLED') === 'true' ? await (async () => {
-      const zoneIngresses = await import('@/app/zone-ingresses')
-      return zoneIngresses.services($)
-    })() : [],
-    env('KUMA_ZONE_EGRESSES_ENABLED') === 'true' ? await (async () => {
-      const zoneEgresses = await import('@/app/zone-egresses')
-      return zoneEgresses.services({ ...$, ...ZONES })
     })() : [],
     env('KUMA_GATEWAYS_ENABLED') === 'true' ? await (async () => {
       const gateways = await import('@/app/gateways')

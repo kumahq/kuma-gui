@@ -39,6 +39,6 @@ get:
         type: string
   responses:
     '200':
-      $ref: ../components/responses/MeshPassthroughList.yaml
+      $ref: '../components/responses/MeshPassthroughList.yaml'
   tags:
     - MeshPassthrough

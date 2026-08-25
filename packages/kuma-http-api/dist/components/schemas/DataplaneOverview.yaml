@@ -16,7 +16,7 @@ properties:
           conf:
             type: object
             oneOf:
-              - $ref: PrometheusMetricsBackendConfig.yaml
+              - $ref: 'PrometheusMetricsBackendConfig.yaml'
           name:
             description: Name of the backend, can be then used in Mesh.metrics.enabledBackend
             type: string

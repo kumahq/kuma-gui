@@ -13,8 +13,6 @@ import _990 from './src/_kri/kri_mtrust__.ts'
 import _991 from './src/_kri/kri_mzsvc__.ts'
 import _987 from './src/_kri/kri_wl__.ts'
 import _984 from './src/_kri/kri_z__.ts'
-import _989 from './src/_kri/kri_ze__.ts'
-import _988 from './src/_kri/kri_zi__.ts'
 import _3 from './src/_resources'
 import _1 from './src/config'
 import _4 from './src/dataplanes/_overview'
@@ -110,18 +108,6 @@ import _47 from './src/meshes/_/virtual-outbounds'
 import _400 from './src/meshes/_/workloads'
 import _401 from './src/meshes/_/workloads/_'
 import _2 from './src/policies'
-import _126 from './src/zone-ingresses/_'
-import _48 from './src/zone-ingresses/_/_overview'
-import _9 from './src/zone-ingresses/_overview'
-import _127 from './src/zoneegresses/_'
-import _49 from './src/zoneegresses/_/_overview'
-import _153 from './src/zoneegresses/_/clusters'
-import _152 from './src/zoneegresses/_/stats'
-import _149 from './src/zoneegresses/_/xds'
-import _10 from './src/zoneegresses/_overview'
-import _151 from './src/zoneingresses/_/clusters'
-import _150 from './src/zoneingresses/_/stats'
-import _148 from './src/zoneingresses/_/xds'
 import _8 from './src/zones'
 import _50 from './src/zones/_'
 import _12 from './src/zones/_/_overview'
@@ -162,18 +148,6 @@ export const fs = {
   '/zones/_overview': _11,
   '/zones/:name': _50,
   '/zones/:name/_overview': _12,
-  '/zone-ingresses/_overview': _9,
-  '/zone-ingresses/:name/_overview': _48,
-  '/zone-ingresses/:name': _126,
-  '/zoneingresses/:name/xds': _148,
-  '/zoneingresses/:name/stats': _150,
-  '/zoneingresses/:name/clusters': _151,
-  '/zoneegresses/_overview': _10,
-  '/zoneegresses/:name': _127,
-  '/zoneegresses/:name/_overview': _49,
-  '/zoneegresses/:name/xds': _149,
-  '/zoneegresses/:name/stats': _152,
-  '/zoneegresses/:name/clusters': _151,
   // meshes
   '/mesh-insights': _13,
   '/mesh-insights/:mesh': _14,
@@ -279,10 +253,6 @@ export const fs = {
   '/_kri/kri_mzsvc_:kri': _991,
   // MeshTrust
   '/_kri/kri_mtrust_:kri': _990,
-  // ZoneEgress
-  '/_kri/kri_ze_:kri': _989,
-  // ZoneIngress
-  '/_kri/kri_zi_:kri': _988,
   // Workload
   '/_kri/kri_wl_:kri': _987,
   // MeshAccessLog

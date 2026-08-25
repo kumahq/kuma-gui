@@ -39,6 +39,6 @@ get:
         type: string
   responses:
     '200':
-      $ref: ../components/responses/MeshMetricList.yaml
+      $ref: '../components/responses/MeshMetricList.yaml'
   tags:
     - MeshMetric
