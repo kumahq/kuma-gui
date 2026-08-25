@@ -27,7 +27,14 @@ export const ZoneIngress = {
       kri: item.kri ?? Kri.toString({ shortName: 'zi', mesh, zone, namespace, name }),
       config: item,
       listenerAddress: item.networking?.address && item.networking?.port ? `${item.networking.address}_${item.networking.port}` : '',
-      availableServices: Array.isArray(item.availableServices) ? item.availableServices : [],
+      availableServices: Array.isArray(item.availableServices) ? item.availableServices.map(item => {
+        const name = item.tags['kuma.io/service']
+        return {
+          ...item,
+          name,
+          kri: Kri.toString({ shortName: '~standard', mesh, zone, namespace, name: name.replaceAll('_', '~')}),
+        }
+      }) : [],
       socketAddress: item.networking?.address && item.networking?.port ? `${item.networking.address}:${item.networking.port}` : '',
       advertisedSocketAddress: item.networking?.advertisedAddress && item.networking?.advertisedPort ? `${item.networking.advertisedAddress}:${item.networking.advertisedPort}` : '',
       networking: {
@@ -57,11 +64,18 @@ export const ZoneIngressInsight = {
 }
 // TODO(jc) Theres probably a better way to not copy/pasta this i.e. make `Entity` composable
 const InternalZoneIngress = {
-  fromObject: (item: PartialInternalZoneIngress) => {
+  fromObject: (item: PartialInternalZoneIngress, { namespace, zone }: { namespace: string, zone: string }) => {
     return {
       ...item,
       listenerAddress: item.networking?.address && item.networking?.port ? `${item.networking.address}_${item.networking.port}` : '',
-      availableServices: Array.isArray(item.availableServices) ? item.availableServices : [],
+      availableServices: Array.isArray(item.availableServices) ? item.availableServices.map(item => {
+        const name = item.tags['kuma.io/service']
+        return {
+          ...item,
+          name,
+          kri: Kri.toString({ shortName: '~standard', mesh: item.mesh, zone, namespace, name: name.replaceAll('_', '~')}),
+        }
+      }) : [],
       socketAddress: item.networking?.address && item.networking?.port ? `${item.networking.address}:${item.networking.port}` : '',
       advertisedSocketAddress: item.networking?.advertisedAddress && item.networking?.advertisedPort ? `${item.networking.advertisedAddress}:${item.networking.advertisedPort}` : '',
       networking: {
@@ -78,8 +92,6 @@ export const ZoneIngressOverview = {
   },
 
   fromObject: (item: PartialZoneIngressOverview) => {
-    const zoneIngressInsight = ZoneIngressInsight.fromObject(item.zoneIngressInsight)
-    const zoneIngress = InternalZoneIngress.fromObject(item.zoneIngress)
     const labels = item.labels ?? {}
     const id = item.name
     const mesh = item.mesh
@@ -87,6 +99,9 @@ export const ZoneIngressOverview = {
     const namespace = labels['k8s.kuma.io/namespace'] ?? ''
     const name = labels['kuma.io/display-name'] ?? item.name
     const kri = item.kri ?? Kri.toString({ shortName: 'zi', mesh, zone, namespace, name })
+
+    const zoneIngressInsight = ZoneIngressInsight.fromObject(item.zoneIngressInsight)
+    const zoneIngress = InternalZoneIngress.fromObject(item.zoneIngress, { namespace, zone })
 
     return {
       ...item,

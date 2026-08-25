@@ -242,7 +242,9 @@
                                 v-for="(backendRef, backendRefIndex) in rule.default.backendRefs"
                                 :key="backendRefIndex"
                               >
-                                <TargetRef :target-ref="backendRef">
+                                <TargetRef
+                                  :target-ref="backendRef"
+                                >
                                   {{ backendRef.name }}
                                 </TargetRef>
                               </div>
