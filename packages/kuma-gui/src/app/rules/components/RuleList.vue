@@ -1,5 +1,5 @@
 <template>
-  <AccordionList
+  <XAccordionList
     :initially-open="[]"
     multiple-open
   >
@@ -13,7 +13,7 @@
       }, {})]"
       :key="policies"
     >
-      <AccordionItem
+      <XAccordionItem
         v-for="(items, type) in policies"
         :key="type"
       >
@@ -104,17 +104,15 @@
             </div>
           </template>
         </template>
-      </AccordionItem>
+      </XAccordionItem>
     </template>
-  </AccordionList>
+  </XAccordionList>
 </template>
 
 <script lang="ts" setup>
 import { type InboundRule } from '../data/InboundRule'
 import { useI18n, YAML } from '@/app/application'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
-import AccordionItem from '@/app/common/AccordionItem.vue'
-import AccordionList from '@/app/common/AccordionList.vue'
 import type { PolicyResourceType } from '@/app/policies/data'
 import RuleMatchers from '@/app/rules/components/RuleMatchers.vue'
 import type { Rule } from '@/app/rules/data'
