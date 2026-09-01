@@ -23,12 +23,16 @@ Feature: zones / index
               subscriptions:
                 - connectTime: 2020-07-28T16:18:09.743141Z
                   disconnectTime: 2020-07-28T16:18:09.743141Z
+                  status:
+                    lastUpdateTime: 2020-08-28T16:18:09.743141Z
                   config: '{"store": {"type": "memory"}}'
                   version:
                     kumaCp:
                       version: 1.0.0-rc2-211-g823fe8ce
                 - connectTime: 2020-07-28T16:18:09.743141Z
                   disconnectTime: !!js/undefined
+                  status:
+                    lastUpdateTime: 2020-07-28T16:18:09.743141Z
                   config: '{"store": {"type": "memory"}}'
                   version:
                     kumaCp:
@@ -40,12 +44,16 @@ Feature: zones / index
               subscriptions:
                 - connectTime: 2020-07-28T16:18:09.743141Z
                   disconnectTime: 2020-07-28T16:18:09.743141Z
+                  status:
+                    lastUpdateTime: 2020-08-28T16:18:09.743141Z
                   config: '{"store": {"type": "memory"}}'
                   version:
                     kumaCp:
                       version: 1.0.0-rc2-211-g823fe8ce
                 - connectTime: 2020-07-28T16:18:09.743141Z
                   disconnectTime: 2020-07-28T16:18:09.743141Z
+                  status:
+                    lastUpdateTime: 2020-07-28T16:18:09.743141Z
                   version:
                     kumaCp:
                       version: 1.0.0-rc2-211-not-the-version-i-want

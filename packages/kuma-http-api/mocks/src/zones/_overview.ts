@@ -16,6 +16,7 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
       total,
       items: Array.from({ length: pageTotal }).map((_, i) => {
         const subscriptionCount = parseInt(env('KUMA_SUBSCRIPTION_COUNT', `${fake.number.int({ min: 0, max: 10 })}`))
+        const zoneVersion = env('KUMA_ZONE_VERSION', fake.kuma.version())
         const shouldHaveZoneInsight = subscriptionCount !== 0 || fake.datatype.boolean()
 
         const id = offset + i
@@ -33,6 +34,7 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
             zoneInsight: {
               subscriptions: Array.from({ length: subscriptionCount }).map((item, i, arr) => {
                 return {
+                  ...fake.kuma.connection(item, i, arr),
                   config: fake.kuma.subscriptionConfig({
                     environment: fake.helpers.arrayElement(['universal', 'kubernetes']),
                     store: {
@@ -41,9 +43,8 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
                   }),
                   id: fake.string.uuid(),
                   globalInstanceId: fake.word.noun(),
-                  ...fake.kuma.connection(item, i, arr),
                   status: {
-                    lastUpdateTime: '2021-02-19T07:06:16.384057Z',
+                    lastUpdateTime: fake.kuma.nanodate(),
                     total: {
                       responsesSent: `${fake.number.int(30)}`,
                       responsesAcknowledged: `${fake.number.int(30)}`,
@@ -109,10 +110,10 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
                   },
                   version: {
                     kumaCp: {
-                      version: '1.0.0-rc2-211-g823fe8ce',
-                      gitTag: '1.0.0-rc2-211-g823fe8ce',
+                      version: zoneVersion,
+                      gitTag: zoneVersion,
                       gitCommit: fake.git.commitSha(),
-                      buildDate: '2021-02-18T13:22:30Z',
+                      buildDate: fake.kuma.date(),
                       kumaCpGlobalCompatible: fake.datatype.boolean(),
                     },
                   },
