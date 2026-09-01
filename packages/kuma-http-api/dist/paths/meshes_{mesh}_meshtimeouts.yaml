@@ -39,6 +39,6 @@ get:
         type: string
   responses:
     '200':
-      $ref: ../components/responses/MeshTimeoutList.yaml
+      $ref: '../components/responses/MeshTimeoutList.yaml'
   tags:
     - MeshTimeout

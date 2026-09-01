@@ -25,7 +25,7 @@ properties:
     description: description resources of this type should be included in federetion-with-policies export profile (especially useful for moving from non-federated to federated or migrating to a new global).
     type: boolean
   policy:
-    $ref: PolicyDescription.yaml
+    $ref: 'PolicyDescription.yaml'
 required:
   - name
   - scope

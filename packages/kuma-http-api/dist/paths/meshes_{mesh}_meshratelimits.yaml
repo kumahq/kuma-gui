@@ -39,6 +39,6 @@ get:
         type: string
   responses:
     '200':
-      $ref: ../components/responses/MeshRateLimitList.yaml
+      $ref: '../components/responses/MeshRateLimitList.yaml'
   tags:
     - MeshRateLimit

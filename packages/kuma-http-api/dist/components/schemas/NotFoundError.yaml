@@ -1,5 +1,5 @@
 allOf:
-  - $ref: Error.yaml
+  - $ref: 'Error.yaml'
   - type: object
     properties:
       status:

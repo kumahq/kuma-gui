@@ -16,9 +16,9 @@ get:
         type: string
   responses:
     '200':
-      $ref: ../components/responses/MeshZoneAddressItem.yaml
+      $ref: '../components/responses/MeshZoneAddressItem.yaml'
     '404':
-      $ref: ../components/responses/NotFound.yaml
+      $ref: '../components/responses/NotFound.yaml'
   tags:
     - MeshZoneAddress
 put:
@@ -43,12 +43,12 @@ put:
     content:
       application/json:
         schema:
-          $ref: ../components/schemas/MeshZoneAddressItem.yaml
+          $ref: '../components/schemas/MeshZoneAddressItem.yaml'
   responses:
     '200':
-      $ref: ../components/responses/MeshZoneAddressCreateOrUpdateSuccessResponse.yaml
+      $ref: '../components/responses/MeshZoneAddressCreateOrUpdateSuccessResponse.yaml'
     '201':
-      $ref: ../components/responses/MeshZoneAddressCreateOrUpdateSuccessResponse.yaml
+      $ref: '../components/responses/MeshZoneAddressCreateOrUpdateSuccessResponse.yaml'
   tags:
     - MeshZoneAddress
 delete:
@@ -69,8 +69,8 @@ delete:
         type: string
   responses:
     '200':
-      $ref: ../components/responses/MeshZoneAddressDeleteSuccessResponse.yaml
+      $ref: '../components/responses/MeshZoneAddressDeleteSuccessResponse.yaml'
     '404':
-      $ref: ../components/responses/NotFound.yaml
+      $ref: '../components/responses/NotFound.yaml'
   tags:
     - MeshZoneAddress

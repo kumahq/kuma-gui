@@ -11,7 +11,7 @@ properties:
     description: The list of policies KRI that contributed to the 'conf'. The order is important as it reflects in what order confs were merged to get the resulting 'conf'.
     type: array
     items:
-      $ref: PolicyOrigin.yaml
+      $ref: 'PolicyOrigin.yaml'
 required:
   - kind
   - conf

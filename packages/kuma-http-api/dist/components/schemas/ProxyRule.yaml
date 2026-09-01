@@ -9,7 +9,7 @@ properties:
   origin:
     type: array
     items:
-      $ref: Meta.yaml
+      $ref: 'Meta.yaml'
 required:
   - conf
   - origin

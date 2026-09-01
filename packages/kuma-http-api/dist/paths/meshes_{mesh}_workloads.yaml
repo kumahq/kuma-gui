@@ -39,6 +39,6 @@ get:
         type: string
   responses:
     '200':
-      $ref: ../components/responses/WorkloadList.yaml
+      $ref: '../components/responses/WorkloadList.yaml'
   tags:
     - Workload

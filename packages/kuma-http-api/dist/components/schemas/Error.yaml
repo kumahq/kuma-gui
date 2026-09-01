@@ -37,7 +37,7 @@ properties:
       Used to indicate which fields have invalid values when validated.
     type: array
     items:
-      $ref: InvalidParameters.yaml
+      $ref: 'InvalidParameters.yaml'
 required:
   - status
   - title

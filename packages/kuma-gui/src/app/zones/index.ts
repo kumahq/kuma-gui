@@ -28,9 +28,6 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
     [$.ZoneActionGroup, {
       service: () => ZoneActionGroup,
     }],
-    [$.ZoneAppNavigator, {
-      service: () => undefined,
-    }],
     [token('zones.routes'), {
       service: (can: Can) => {
         return [
@@ -79,9 +76,7 @@ export const TOKENS = $
 export const [
   useZoneControlPlanesList,
   useZoneActionGroup,
-  useZoneHomeNavigatorFallback,
 ] = createInjections(
   $.ZoneControlPlanesList,
   $.ZoneActionGroup,
-  $.ZoneAppNavigator,
 )

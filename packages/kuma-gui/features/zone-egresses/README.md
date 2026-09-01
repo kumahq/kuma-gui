@@ -1,4 +1,0 @@
-# features / zone-egresses
-
-The gherkin `.feature`-files located here are separated from the general folder structure. The `zone-egresses` module of the kuma-gui application is excluded from production by default and can be pulled in optionally. Therefore all the scenarios depend on the setting `KUMA_ZONE_EGRESSES_ENABLED: true` to be set.
-At some point `zone-egresses` may be removed completely without replacement.

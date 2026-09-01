@@ -69,6 +69,7 @@ export const sources = (api: KumaApi) => {
             return res.data ?? ''
           }
           case 'zone-ingress': {
+            // @ts-expect-error @TODO zone proxies no longer exist
             const res = await http.GET('/zoneingresses/{name}/stats', {
               parseAs: 'text',
               params: {
@@ -80,6 +81,7 @@ export const sources = (api: KumaApi) => {
             return res.data ?? ''
           }
           case 'zone-egress': {
+            // @ts-expect-error @TODO zone proxies no longer exist
             const res = await http.GET('/zoneegresses/{name}/stats', {
               parseAs: 'text',
               params: {
@@ -160,6 +162,7 @@ export const sources = (api: KumaApi) => {
             return res.data ?? ''
           }
           case 'zone-ingress': {
+            // @ts-expect-error @TODO zone proxies no longer exist
             const res = await http.GET('/zoneingresses/{name}/clusters', {
               parseAs: 'text',
               params: {
@@ -171,6 +174,7 @@ export const sources = (api: KumaApi) => {
             return res.data ?? ''
           }
           case 'zone-egress': {
+            // @ts-expect-error @TODO zone proxies no longer exist
             const res = await http.GET('/zoneegresses/{name}/clusters', {
               parseAs: 'text',
               params: {
@@ -206,6 +210,7 @@ export const sources = (api: KumaApi) => {
             return res.data!
           }
           case 'zone-ingress': {
+            // @ts-expect-error @TODO zone proxies no longer exist
             const res = await http.GET('/zoneingresses/{name}/xds', {
               params: {
                 path: {
@@ -219,6 +224,7 @@ export const sources = (api: KumaApi) => {
             return res.data!
           }
           case 'zone-egress': {
+            // @ts-expect-error @TODO zone proxies no longer exist
             const res = await http.GET('/zoneegresses/{name}/xds', {
               params: {
                 path: {
@@ -258,6 +264,7 @@ export const sources = (api: KumaApi) => {
             return res.data!
           }
           case 'zone-ingress': {
+            // @ts-expect-error @TODO zone proxies no longer exist
             const res = await http.GET('/zoneingresses/{name}/xds', {
               params: {
                 path: {
@@ -271,6 +278,7 @@ export const sources = (api: KumaApi) => {
             return res.data!
           }
           case 'zone-egress': {
+            // @ts-expect-error @TODO zone proxies no longer exist
             const res = await http.GET('/zoneegresses/{name}/xds', {
               params: {
                 path: {
@@ -286,7 +294,7 @@ export const sources = (api: KumaApi) => {
           default:
             throw new Error('incorrect value for proxyType')
         }
-      })()
+      })() as Record<string, unknown> // @TODO zone proxies removal needed this
 
       const filtered = filter(res, (key: string, arr: unknown[]) => {
         switch (key) {
@@ -330,6 +338,7 @@ export const sources = (api: KumaApi) => {
             return res.data!
           }
           case 'zone-ingress': {
+            // @ts-expect-error @TODO zone proxies no longer exist
             const res = await http.GET('/zoneingresses/{name}/xds', {
               params: {
                 path: {
@@ -343,6 +352,7 @@ export const sources = (api: KumaApi) => {
             return res.data!
           }
           case 'zone-egress': {
+            // @ts-expect-error @TODO zone proxies no longer exist
             const res = await http.GET('/zoneegresses/{name}/xds', {
               params: {
                 path: {
@@ -358,7 +368,7 @@ export const sources = (api: KumaApi) => {
           default:
             throw new Error('incorrect value for proxyType')
         }
-      })()
+      })() as Record<string, unknown> // @TODO zone proxies removal needed this
 
       return filter(res, (key: string, arr: unknown[]) => {
         switch (key) {

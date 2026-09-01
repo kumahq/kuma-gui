@@ -9,28 +9,28 @@ properties:
   services:
     description: Mesh services statistics
     allOf:
-      - $ref: ServicesStats.yaml
+      - $ref: 'ServicesStats.yaml'
   zones:
     description: Zones statistics
     allOf:
-      - $ref: ZonesStats.yaml
+      - $ref: 'ZonesStats.yaml'
   dataplanes:
     description: Dataplane proxy statistics
     allOf:
-      - $ref: DataplanesStats.yaml
+      - $ref: 'DataplanesStats.yaml'
   policies:
     description: Policies statistics
     allOf:
-      - $ref: PoliciesStats.yaml
+      - $ref: 'PoliciesStats.yaml'
   meshes:
     description: Mesh statistics
     allOf:
-      - $ref: MeshesStats.yaml
+      - $ref: 'MeshesStats.yaml'
   resources:
     description: A map of resource names to their corresponding statistics
     type: object
     additionalProperties:
-      $ref: ResourceStats.yaml
+      $ref: 'ResourceStats.yaml'
 required:
   - createdAt
   - services

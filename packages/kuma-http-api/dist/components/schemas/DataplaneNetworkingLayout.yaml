@@ -16,15 +16,15 @@ properties:
   inbounds:
     type: array
     items:
-      $ref: DataplaneInbound.yaml
+      $ref: 'DataplaneInbound.yaml'
   outbounds:
     type: array
     items:
-      $ref: DataplaneOutbound.yaml
+      $ref: 'DataplaneOutbound.yaml'
   listeners:
     type: array
     items:
-      $ref: DataplaneListener.yaml
+      $ref: 'DataplaneListener.yaml'
   spiffeId:
     description: SPIFFE ID of the dataplane's workload identity certificate
     type: string
