@@ -8,7 +8,7 @@ import { createApp } from 'vue'
 import { services as application, TOKENS as APPLICATION } from '@/app/application'
 import { services as configuration } from '@/app/configuration'
 import { services as controlPlanes } from '@/app/control-planes'
-import { services as dataplanes, TOKENS as DATAPLANES } from '@/app/data-planes'
+import { services as dataplanes } from '@/app/data-planes'
 import { services as hostnameGenerators } from '@/app/hostname-generators'
 import { services as kuma, TOKENS as KUMA } from '@/app/kuma'
 import { vars } from '@/app/kuma/env'
@@ -61,7 +61,7 @@ async function mountVueApplication() {
     // any services depending on env
     env('KUMA_LEGACY_SERVICES_ENABLED') === 'true' ? await (async () => {
       const legacyServices = await import('@/app/legacy-services')
-      return legacyServices.services({ ...$, ...DATAPLANES })
+      return legacyServices.services($)
     })() : [],
     env('KUMA_ZONE_INGRESSES_ENABLED') === 'true' ? await (async () => {
       const zoneIngresses = await import('@/app/zone-ingresses')
@@ -73,7 +73,7 @@ async function mountVueApplication() {
     })() : [],
     env('KUMA_GATEWAYS_ENABLED') === 'true' ? await (async () => {
       const gateways = await import('@/app/gateways')
-      return gateways.services({ ...$, ...LEGACY_DATAPLANES, ...DATAPLANES })
+      return gateways.services({ ...$, ...LEGACY_DATAPLANES })
     })() : [],
     //
 

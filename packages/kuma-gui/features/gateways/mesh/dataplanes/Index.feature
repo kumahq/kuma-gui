@@ -13,6 +13,7 @@ Feature: gateways / mesh / dataplanes / index
     And the environment
       """
       KUMA_GATEWAYS_ENABLED: true
+      KUMA_LEGACY_SERVICES_ENABLED: true
       KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: true
       KUMA_MODE: global
       KUMA_DATAPLANE_COUNT: 9

@@ -5,9 +5,8 @@ import { features } from './features'
 import locales from './locales/en-us/index.yaml'
 import { routes } from './routes'
 import { sources } from './sources'
-import type { DataPlaneServiceLink } from '@/app/data-planes'
 import type { ServiceDefinition } from '@kumahq/container'
-import type { Router, RouteRecordRaw } from 'vue-router'
+import type { RouteRecordRaw } from 'vue-router'
 
 type Token = ReturnType<typeof token>
 
@@ -53,21 +52,6 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       ],
       labels: [
         app.features,
-      ],
-    }],
-    
-    [token('legacy-services.data-plane-service-link'), {
-      service: (router: Router): DataPlaneServiceLink[] => [
-        ({ params, dataplaneType }) => {
-          return dataplaneType === 'standard' && router.hasRoute('service-detail-view')
-            ? { name: 'service-detail-view', params }
-            : undefined},
-      ],
-      arguments: [
-        app.router,
-      ],
-      labels: [
-        app.dataPlaneServiceLinks,
       ],
     }],
 

@@ -20,9 +20,6 @@ export const features = () => {
         (dataplaneOverview.dataplaneInsight.metadata.features.includes('feature-unified-resource-naming') ||
           dataplaneOverview.zoneProxyTypes.length > 0)
     },
-    'use service-insights': (_can: unknown, mesh: Mesh) => {
-      return mesh.meshServices.mode !== 'Exclusive'
-    },
   }
 }
 declare module '@/app/application' {

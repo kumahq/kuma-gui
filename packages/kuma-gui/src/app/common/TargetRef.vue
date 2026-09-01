@@ -1,18 +1,12 @@
 <template>
   <span class="target-ref">
     <XAction
-      v-if="routeTarget !== null"
-      :to="routeTarget"
+      :href="`kri://${kri}`"
     >
       <XBadge>
         <slot />
       </XBadge>
     </XAction>
-
-    <XBadge v-else>
-      <slot />
-    </XBadge>
-
     <XLayout
       v-if="props.targetRef.kind === 'MeshServiceSubset' && props.targetRef.tags"
       variant="separated"
@@ -54,9 +48,8 @@
 import { computed } from 'vue'
 
 import { useI18n, useRegExp } from '@/app/application'
-import { useDataPlaneServiceLinks } from '@/app/data-planes'
+import { Kri } from '@/app/kuma'
 import type { TargetRef } from '@/types/index.d'
-import type { RouteLocationNamedRaw } from 'vue-router'
 
 const props = defineProps<{
   targetRef: TargetRef
@@ -65,36 +58,22 @@ const props = defineProps<{
 const { t } = useI18n()
 const { r } = useRegExp()
 
-const dataPlaneServiceLinks = useDataPlaneServiceLinks()
 
-const routeTarget = computed<Omit<RouteLocationNamedRaw, 'query'> | null>(() => {
+const kri = computed(() => {
   if (!props.targetRef.name) {
-    return null
+    return ''
   }
 
   switch (props.targetRef.kind) {
     case 'MeshService':
     case 'MeshServiceSubset': {
-      for(const resolve of dataPlaneServiceLinks) {
-        // at this point we can assume that `targetRef.proxyTypes` is `Sidecar` and therefore set `dataplaneType` to 'standard'
-        const to = resolve({ params: { service: props.targetRef.name! }, dataplaneType: 'standard' })
-        if(to) {
-          return to
-        }
-      }
-      return null
+      return Kri.toString({ shortName: '~standard', mesh: props.targetRef.mesh ?? '', name: props.targetRef.name.replaceAll('_', '~') })
     }
     case 'MeshGateway': {
-      for(const resolve of dataPlaneServiceLinks) {
-        const to = resolve({ params: { service: props.targetRef.name! }, dataplaneType: 'gateway' })
-        if(to) {
-          return to
-        }
-      }
-      return null
+      return Kri.toString({ shortName: '~builtin', mesh: props.targetRef.mesh ?? '', name: props.targetRef.name.replaceAll('_', '~') })
     }
     default: {
-      throw new Error(`Unsupported targetRef ${props.targetRef.kind}.`)
+      return ''
     }
   }
 })

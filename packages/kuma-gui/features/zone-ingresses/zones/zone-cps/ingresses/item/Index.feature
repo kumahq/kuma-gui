@@ -4,6 +4,7 @@ Feature: zones / ingresses / item
     Given the environment
       """
       KUMA_ZONE_INGRESSES_ENABLED: true
+      KUMA_LEGACY_SERVICES_ENABLED: true
       """
     Given the CSS selectors
       | Alias              | Selector                                       |

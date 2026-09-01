@@ -121,6 +121,32 @@ const protocolHandler = (can: Can, router: Router) => {
                   s: `tag:service:${name}`,
                 },
               }
+            /// for legacy TargetRef component reasons we default to the current mesh
+            case shortName === '~standard':
+              return {
+                name: 'service-detail-view',
+                params: {
+                  mesh: mesh || router.currentRoute.value.params.mesh,
+                  service: name,
+                },
+              }
+            case shortName === '~delegated':
+              return {
+                name: 'delegated-gateway-detail-view',
+                params: {
+                  mesh: mesh || router.currentRoute.value.params.mesh,
+                  service: name,
+                },
+              }
+            case shortName === '~builtin':
+              return {
+                name: 'builtin-gateway-detail-view',
+                params: {
+                  mesh: mesh || router.currentRoute.value.params.mesh,
+                  gateway: name,
+                },
+              }
+            /// end legacy reasons
             case shortName === 'msvc':
               return {
                 name: 'mesh-service-detail-view',
@@ -182,10 +208,10 @@ const protocolHandler = (can: Can, router: Router) => {
         if (to) {
           try {
             return router.resolve(to).href
-          } catch(e) {
+          } catch {
             // log the error, don't throw it
             // anything errors we just don't show the link
-            console.error(e)
+            //console.error(e)
             return ''
           }
         }

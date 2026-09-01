@@ -4,12 +4,13 @@ Feature: zones / ingresses / item / services
     Given the environment
       """
       KUMA_ZONE_INGRESSES_ENABLED: true
+      KUMA_LEGACY_SERVICES_ENABLED: true
       """
     Given the CSS selectors
       | Alias                 | Selector                                      |
       | items                 | [data-testid='available-services-collection'] |
       | item                  | $items tbody tr                               |
-      | service-link-internal | $items a[href*='services/internal']           |
+      | service-link-internal | $item:nth-child(1) a[data-action]            |
     And the environment
       """
       KUMA_MODE: global
@@ -38,4 +39,4 @@ Feature: zones / ingresses / item / services
       """
     When I visit the "/zones/kri_z____zone-1_/ingresses/kri_zi__zone-1_kuma-system_item-1_/services" URL
     Then the "$item" element exists 2 times
-    And the "$item:nth-child(1)" element exists but the "$service-link-internal" element doesn't exist
+    And the "$service-link-internal" element exists

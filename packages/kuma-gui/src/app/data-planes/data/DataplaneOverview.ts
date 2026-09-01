@@ -41,15 +41,26 @@ export const DataplaneOverview = {
 
     const kri = item.kri ?? Kri.toString({ shortName: 'dp', mesh, zone, namespace, name })
 
+    const dataplaneType = (() => {
+      switch (true) {
+        case networking.type === 'gateway':
+          return dpTypes.builtin
+        case typeof networking.gateway !== 'undefined':
+          return dpTypes.delegated
+        default:
+          return dpTypes.standard
+      }
+    })()
 
     // get all tags and labels with kuma.io/service
     // uniquify and and sort
     const services = Array.from(new Set([
       ...tags.filter((tag) => tag.label === 'kuma.io/service').map(({ value }) => value),
       ...(labels['kuma.io/service'] ? [labels['kuma.io/service']] : []),
-    ])).sort((a, b) => a.localeCompare(b))
-
-
+    ])).sort((a, b) => a.localeCompare(b)).map((service) => ({
+      name: service,
+      kri: Kri.toString({ shortName: `~${dataplaneType}`, mesh, zone, namespace, name: service.replaceAll('_', '~') }),
+    }))
 
     return {
       ...item,
@@ -68,16 +79,7 @@ export const DataplaneOverview = {
       dataplane: {
         networking,
       },
-      dataplaneType: (() => {
-        switch (true) {
-          case networking.type === 'gateway':
-            return dpTypes.builtin
-          case typeof networking.gateway !== 'undefined':
-            return dpTypes.delegated
-          default:
-            return dpTypes.standard
-        }
-      })(),
+      dataplaneType,
       zoneProxyTypes: [
         ...labels['kuma.io/listener-zoneingress'] ? ['zone-ingress'] : [],
         ...labels['kuma.io/listener-zoneegress'] ? ['zone-egress'] : [],
