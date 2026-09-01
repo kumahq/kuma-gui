@@ -13,7 +13,7 @@
         variant="columns"
         class="columns-with-borders"
       >
-        <ResourceStatus
+        <KumaResourceStatus
           v-if="props.canUseZones"
           :total="globalInsightData.zones.controlPlanes.total"
           data-testid="zone-control-planes-status"
@@ -29,9 +29,9 @@
           <template #title>
             {{ t('main-overview.detail.about.zone_control_planes') }}
           </template>
-        </ResourceStatus>
+        </KumaResourceStatus>
 
-        <ResourceStatus
+        <KumaResourceStatus
           :total="globalInsightData.meshes.total"
           data-testid="meshes-status"
         >
@@ -46,7 +46,7 @@
           <template #title>
             {{ t('main-overview.detail.about.meshes') }}
           </template>
-        </ResourceStatus>
+        </KumaResourceStatus>
         <template
           v-for="insight in [globalInsightData]"
           :key="typeof insight"
@@ -55,7 +55,7 @@
             v-for="meshServicesGeneric in [(['MeshService', 'MeshMultiZoneService', 'MeshExternalService'] as const).reduce((acc, curr) => ({ total: acc.total + insight.resources[curr].total }), { total: 0 })]"
             :key="typeof meshServicesGeneric"
           >
-            <ResourceStatus
+            <KumaResourceStatus
               :total="meshServicesGeneric.total || globalInsightData.services.internal.total"
               data-testid="services-status"
             >
@@ -86,7 +86,7 @@
                 v-if="meshServicesGeneric.total && globalInsightData.services.internal.total > 0"
                 #body
               >
-                <ResourceStatus :total="globalInsightData.services.internal.total">
+                <KumaResourceStatus :total="globalInsightData.services.internal.total">
                   <template #description>
                     <XI18n
                       path="main-overview.detail.about.descriptions.internal_services"
@@ -100,13 +100,13 @@
                       />
                     </XIcon>
                   </template>
-                </ResourceStatus>
+                </KumaResourceStatus>
               </template>
-            </ResourceStatus>
+            </KumaResourceStatus>
           </template>
         </template>
 
-        <ResourceStatus
+        <KumaResourceStatus
           :total="globalInsightData.dataplanes.standard.total"
           data-testid="data-plane-proxies-status"
         >
@@ -121,8 +121,8 @@
           <template #title>
             {{ t('main-overview.detail.about.data_plane_proxies') }}
           </template>
-        </ResourceStatus>
-        <ResourceStatus
+        </KumaResourceStatus>
+        <KumaResourceStatus
           :total="Object.entries(globalInsightData.resources).reduce((prev, [key, { total }]) => {
             return resourcesData.policyTypes.find((type) => type.name === key) ? prev + total : prev
           }, 0)"
@@ -139,7 +139,7 @@
           <template #title>
             {{ t('main-overview.detail.about.policies') }}
           </template>
-        </ResourceStatus>
+        </KumaResourceStatus>
       </XLayout>
     </DataLoader>
   </XCard>
@@ -147,7 +147,6 @@
 
 <script lang="ts" setup>
 import { useI18n } from '@/app/application'
-import ResourceStatus from '@/app/common/ResourceStatus.vue'
 import type { GlobalInsight } from '@/app/control-planes/data'
 import type { PolicyResourceTypeCollection } from '@/app/policies/data'
 

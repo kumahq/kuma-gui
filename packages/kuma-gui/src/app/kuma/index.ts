@@ -9,6 +9,7 @@ import { ValidationError } from '@/app/application'
 import type { Can } from '@/app/application'
 import { Kri } from '@/app/kuma'
 import KumaPort from '@/app/kuma/components/kuma-port/KumaPort.vue'
+import KumaResourceStatus from '@/app/kuma/components/kuma-resource-status/KumaResourceStatus.vue'
 import KumaStatusBadge from '@/app/kuma/components/kuma-status-badge/KumaStatusBadge.vue'
 import KumaTargetRef from '@/app/kuma/components/kuma-target-ref/KumaTargetRef.vue'
 import { ApiError } from '@/app/kuma/services/kuma-api/ApiError'
@@ -26,6 +27,7 @@ type Token = ReturnType<typeof token>
 declare module 'vue' {
   export interface GlobalComponents {
     KumaPort: typeof KumaPort
+    KumaResourceStatus: typeof KumaResourceStatus
     KumaTargetRef: typeof KumaTargetRef
     KumaKumaStatusBadge: typeof KumaStatusBadge
   }
@@ -350,6 +352,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       service: () => {
         return [
           ['KumaPort', KumaPort],
+          ['KumaResourceStatus', KumaResourceStatus],
           ['KumaTargetRef', KumaTargetRef],
           ['KumaStatusBadge', KumaStatusBadge],
         ]

@@ -257,7 +257,7 @@
               variant="columns"
               class="columns-with-borders"
             >
-              <ResourceStatus
+              <KumaResourceStatus
                 :total="service.status.dataplaneProxies.total"
                 :online="service.status.dataplaneProxies.connected"
                 data-testid="connected-dpps"
@@ -268,9 +268,9 @@
                 <template #title>
                   {{ t('services.detail.dpp-status.connected') }}
                 </template>
-              </ResourceStatus>
+              </KumaResourceStatus>
 
-              <ResourceStatus
+              <KumaResourceStatus
                 :total="service.status.dataplaneProxies.healthy"
                 data-testid="healthy-dpps"
               >
@@ -280,7 +280,7 @@
                 <template #title>
                   {{ t('services.detail.dpp-status.healthy') }}
                 </template>
-              </ResourceStatus>
+              </KumaResourceStatus>
             </XLayout>
           </DataLoader>
         </XCard>
@@ -490,7 +490,6 @@
 <script lang="ts" setup>
 import type { MeshService } from '../data'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
-import ResourceStatus from '@/app/common/ResourceStatus.vue'
 import { sources } from '@/app/data-planes/sources'
 import { Kri } from '@/app/kuma'
 import { sources as servicesSources } from '@/app/services/sources'

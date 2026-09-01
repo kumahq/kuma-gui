@@ -133,7 +133,7 @@
                     variant="columns"
                     class="columns-with-borders"
                   >
-                    <ResourceStatus
+                    <KumaResourceStatus
                       v-if="props.mesh.meshServices.mode === 'Exclusive'"
                       :total="data?.resources.MeshServiceGeneric.total ?? 0"
                       data-testid="services-status"
@@ -141,8 +141,8 @@
                       <template #title>
                         {{ t('meshes.detail.services') }}
                       </template>
-                    </ResourceStatus>
-                    <ResourceStatus
+                    </KumaResourceStatus>
+                    <KumaResourceStatus
                       v-else-if="props.mesh.meshServices.mode === 'Disabled'"
                       :total="data?.services.total ?? 0"
                       data-testid="services-status"
@@ -150,8 +150,8 @@
                       <template #title>
                         {{ t('meshes.detail.services') }}
                       </template>
-                    </ResourceStatus>
-                    <ResourceStatus
+                    </KumaResourceStatus>
+                    <KumaResourceStatus
                       v-else
                       :total="data?.resources.MeshServiceGeneric.total ?? 0"
                       data-testid="mesh-services-status"
@@ -171,7 +171,7 @@
                         v-if="data?.resources.MeshServiceGeneric.total && data?.services.total > 0"
                         #body
                       >
-                        <ResourceStatus
+                        <KumaResourceStatus
                           :total="data?.services.total ?? 0"
                           data-testid="services-status"
                         >
@@ -182,11 +182,11 @@
                               <XI18n path="meshes.detail.infos.services" />
                             </XIcon>
                           </template>
-                        </ResourceStatus>
+                        </KumaResourceStatus>
                       </template>
-                    </ResourceStatus>
+                    </KumaResourceStatus>
 
-                    <ResourceStatus
+                    <KumaResourceStatus
                       :total="data?.dataplanesByType.standard.total ?? 0"
                       :online="data?.dataplanesByType.standard.online ?? 0"
                       data-testid="data-plane-proxies-status"
@@ -194,7 +194,7 @@
                       <template #title>
                         {{ t('meshes.detail.data_plane_proxies') }}
                       </template>
-                    </ResourceStatus>
+                    </KumaResourceStatus>
 
                     <DataSource
                       :src="uri(policySources, '/policy-types', {})"
@@ -204,7 +204,7 @@
                         v-for="policyTypes in [resources?.policyTypes.map(item => item.name)]"
                         :key="typeof policyTypes"
                       >
-                        <ResourceStatus
+                        <KumaResourceStatus
                           :total="Object.entries(data?.resources || {}).reduce((prev, [key, { total }]) => {
                             return (policyTypes || []).includes(key) ? prev + total : prev
                           }, 0)"
@@ -213,7 +213,7 @@
                           <template #title>
                             {{ t('meshes.detail.policies') }}
                           </template>
-                        </ResourceStatus>
+                        </KumaResourceStatus>
                       </template>
                     </DataSource>
                   </XLayout>
@@ -307,7 +307,6 @@ import type { Mesh } from '../data'
 import { sources } from '../sources'
 import { YAML } from '@/app/application'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
-import ResourceStatus from '@/app/common/ResourceStatus.vue'
 import { Kri } from '@/app/kuma'
 import { sources as meshIdentitiesSources } from '@/app/mesh-identities/sources'
 import { sources as meshTrustsSources } from '@/app/mesh-trusts/sources'
