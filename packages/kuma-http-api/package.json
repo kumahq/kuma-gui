@@ -9,8 +9,8 @@
   },
   "exports": {
     ".": {
-      "import": "./index.d.ts",
-      "types": "./index.d.ts"
+      "import": "./v2.d.ts",
+      "types": "./v2.d.ts"
     },
     "./mocks": {
       "import": "./mocks/index.ts"
