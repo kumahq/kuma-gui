@@ -143,17 +143,31 @@
                     Selector
                   </th>
                   <td>
-                    <XLayout
-                      variant="separated"
-                    >
-                      <XBadge
-                        v-for="(value, key) in item.spec.selector.dataplaneTags"
-                        :key="`${key}:${value}`"
-                        appearance="info"
+                    <template v-if="Object.keys(item.spec.selector.dataplaneLabels.matchLabels).length">
+                      <XLayout
+                        variant="separated"
                       >
-                        {{ key }}:{{ value }}
-                      </XBadge>
-                    </XLayout>
+                        <XAction
+                          v-for="(value, key) in item.spec.selector.dataplaneLabels.matchLabels"
+                          :key="key"
+                          :href="t(`common.label.href.${key.replaceAll('.', '~')}`, {
+                            mesh: item.mesh,
+                            zone: item.zone,
+                            namespace: item.namespace,
+                            name: value,
+                          }, { defaultMessage: '' })"
+                        >
+                          <XBadge
+                            :variant="r('kuma.label').test(key) ? 'reserved-kv' : 'kv'"
+                          >
+                            {{ key }}:<strong>{{ value }}</strong>
+                          </XBadge>
+                        </XAction>
+                      </XLayout>
+                    </template>
+                    <template v-else>
+                      {{ t('common.detail.none') }}
+                    </template>
                   </td>
                 </tr>
                 <tr

@@ -57,15 +57,19 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
             appProtocol: fake.kuma.protocol(),
           }
         )),
-        selector: {
+        selector: fake.helpers.arrayElement([{
+          dataplaneLabels: {
+            matchLabels: fake.kuma.labels({ zone: fake.word.noun() }),
+          },
+        }, {
+          // @TODO(types): legacy v2
           dataplaneTags: fake.kuma.tags({}),
-        },
+        }]),
         state: fake.helpers.arrayElement(['Available', 'Unavailable']),
-        identities: Array.from({ length: fake.number.int({ min: 1, max: 5 }) }).map((_, index) => {
-          const type = fake.helpers.arrayElement(['ServiceTag', 'SpiffeID'])
+        identities: Array.from({ length: fake.number.int({ min: 1, max: 5 }) }).map(_ => {
           return {
-            type,
-            value: type === 'ServiceTag' ? `${fake.word.noun()}-${index + 1}` : fake.kuma.spiffeId({ mesh, namespace: nspace, sa: name }),
+            type: 'SpiffeID',
+            value: fake.kuma.spiffeId({ mesh, namespace: nspace, sa: name }),
           }
         }),
       },

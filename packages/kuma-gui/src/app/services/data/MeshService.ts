@@ -33,8 +33,15 @@ export const MeshService = {
           ...item,
           ports: Array.isArray(item.ports) ? item.ports : [],
           selector: ((item = {}) => {
+            const labels = item.dataplaneLabels ?? {}
             return {
-              dataplaneTags: Object.keys(item.dataplaneTags ?? {}).length > 0 ? item.dataplaneTags! : {},
+              dataplaneLabels: {
+                ...labels,
+                matchLabels: Object.keys(labels.matchLabels ?? {}).length > 0 ?
+                  labels.matchLabels ?? {} :
+                  // @ts-ignore (types) temporary support of old dataplaneTags
+                  Object.keys(item.dataplaneTags ?? {}).length > 0 ? item.dataplaneTags ?? {} : {},
+              },
             }
           })(item.selector),
           identities: Array.isArray(item.identities) ? item.identities : [],
