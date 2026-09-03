@@ -170,8 +170,8 @@ export function createEslintConfig(
           ],
           'newlines-between': 'always',
           alphabetize: {
-            order: 'asc',
-            caseInsensitive: true,
+            order: 'ignore',
+            orderImportKind: 'ignore',
           },
         }],
         'no-console': ['error', { allow: ['info', 'warn', 'error'] }],
