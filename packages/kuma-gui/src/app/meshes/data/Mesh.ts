@@ -20,12 +20,6 @@ export const Mesh = {
       id: item.name,
       config: item,
       labels: item.labels ?? {},
-      meshServices: ((item = {}) => {
-        return {
-          ...item,
-          mode: item.mode ?? 'Disabled',
-        }
-      })(item.meshServices),
       // @TODO(types) provide support for v2 and v3
       mtlsBackend: ((mtls: MeshBackend | undefined) => {
         if(typeof mtls === 'undefined') {

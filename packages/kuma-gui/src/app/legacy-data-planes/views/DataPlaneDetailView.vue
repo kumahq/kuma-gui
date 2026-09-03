@@ -20,7 +20,7 @@
       v-slot="{ data: traffic, error, refresh }"
     >
       <DataSource
-        :src="props.mesh.meshServices.mode === 'Exclusive' ? uri(sources, '/meshes/:mesh/dataplanes/:name/layout', {
+        :src="can('use mesh-services', props.mesh) ? uri(sources, '/meshes/:mesh/dataplanes/:name/layout', {
           mesh: route.params.mesh,
           name: props.data.id,
         }) : ''"
@@ -77,7 +77,7 @@
                 bool: !props.data.dataplaneInsight.mTLS,
                 key: 'no-mtls',
                 params: {
-                  mode: props.mesh.meshServices.mode,
+                  mode: can('use mesh-services', props.mesh) ? 'meshidentity' : 'mutualtls',
                 },
               },
               {
@@ -730,7 +730,7 @@
                         >
                           <XI18n
                             path="data-planes.notifications.recommend-reachable"
-                            :params="{ mode: props.mesh.meshServices.mode }"
+                            :params="{ mode: can('use mesh-services', props.mesh) ? 'reachablebackends' : 'reachableservices' }"
                           />
                         </XNotification>
                         <DataCollection
