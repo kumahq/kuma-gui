@@ -19,6 +19,6 @@
   "devDependencies": {
     "@kumahq/config": "*",
     "vite": "^7.3.6",
-    "vitest": "^4.1.10"
+    "vitest": "^4.1.11"
   }
 }
