@@ -1,5 +1,6 @@
 import { createInjections, token } from '@kumahq/container'
 
+import { features } from './features'
 import ServiceListTabsActionGroup from './components/ServiceListTabsActionGroup.vue'
 import locales from './locales/en-us/index.yaml'
 import { routes } from './routes'
@@ -33,7 +34,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
             if (item.name === 'mesh-detail-tabs-view') {
               item.children = (item.children ?? []).concat(_routes.items())
             }
-            if(item.name === 'mesh') {
+            if (item.name === 'mesh') {
               item.children = (item.children ?? []).concat(_routes.item())
             }
           },
@@ -53,6 +54,15 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       ],
     }],
 
+    [token('services.features'), {
+      service: features,
+      arguments: [
+        app.env,
+      ],
+      labels: [
+        app.features,
+      ],
+    }],
     [$.serviceListTabsActionGroup, {
       service: () => ServiceListTabsActionGroup,
     }],

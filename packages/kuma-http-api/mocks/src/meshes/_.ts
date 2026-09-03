@@ -1,5 +1,5 @@
 import type { Dependencies, ResponseHandler } from '#mocks'
-export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
+export default ({ fake }: Dependencies): ResponseHandler => (req) => {
   // this template can be called via the /_kri/kri_<shortName>_:kri endpoint or
   // the legacy endpoint
   const kri = req.params.kri ? `kri_m_${req.params.kri}` : undefined
@@ -20,9 +20,6 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
   ]
   const name = kri ? `${displayName}${nspace ? `.${nspace}` : ''}` : String(req.params.name)
 
-  const isMtlsEnabledOverride = env('KUMA_MTLS_ENABLED', '')
-  const isMtlsEnabled = isMtlsEnabledOverride !== '' ? isMtlsEnabledOverride === 'true' : fake.datatype.boolean()
-
   return {
     headers: {
       ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
@@ -39,38 +36,6 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
       // meshes only seem to have displayName
       labels: fake.kuma.labels({
         name: displayName,
-      }),
-      meshServices: {
-        mode: env('KUMA_MESHSERVICE_MODE', 'Everywhere'),
-      },
-      ...(isMtlsEnabled &&
-      {
-        mtls: {
-          enabledBackend: 'ca-1',
-          backends: [
-            {
-              name: 'ca-1',
-              type: 'provided',
-              dpCert: {
-                rotation: {
-                  expiration: '1d',
-                },
-              },
-              conf: {
-                cert: {
-                  secret: 'name-of-secret',
-                },
-                key: {
-                  secret: 'name-of-secret',
-                },
-              },
-            },
-            {
-              name: 'ca-2',
-              type: 'BUILTIN',
-            },
-          ],
-        },
       }),
     },
   }

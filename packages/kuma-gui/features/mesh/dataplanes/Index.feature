@@ -57,7 +57,7 @@ Feature: mesh / dataplanes / index
 
   Scenario: The Proxy listing table has the correct columns
     When I visit the "/meshes/default/data-planes" URL
-    Then the "$table-header" element exists 10 times
+    Then the "$table-header" element exists 9 times
 
   Scenario: The Proxy listing has the expected content and UI elements
     When I visit the "/meshes/default/data-planes" URL
@@ -66,15 +66,9 @@ Feature: mesh / dataplanes / index
       | Value                |
       | fake-backend         |
       | Proxy                |
-      | service-1            |
       | zone-1               |
       | Nov 3, 2023, 9:10 AM |
       | Online               |
-
-  Scenario: Without legacy services a standard proxy service renders as plain text
-    When I visit the "/meshes/default/data-planes" URL
-    Then the "$item:nth-child(1)" element contains "service-1"
-    And the "$item:nth-child(1)" element exists but the "$service-link-internal" element doesn't exist
 
   Scenario Outline: The proxy listing shows the correct status
     Given the environment

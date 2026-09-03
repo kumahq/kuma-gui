@@ -65,7 +65,7 @@
                 bool: !props.data.dataplaneInsight.mTLS,
                 key: 'no-mtls',
                 params: {
-                  mode: props.mesh.meshServices.mode,
+                  mode: can('use mesh-services', props.mesh) ? 'meshidentity' : 'mutualtls',
                 },
               },
               {
@@ -763,7 +763,7 @@
                           >
                             <XI18n
                               path="data-planes.notifications.recommend-reachable"
-                              :params="{ mode: props.mesh.meshServices.mode }"
+                              :params="{ mode: can('use mesh-services', props.mesh) ? 'reachablebackends' : 'reachableservices' }"
                             />
                           </XNotification>
                         </template>
