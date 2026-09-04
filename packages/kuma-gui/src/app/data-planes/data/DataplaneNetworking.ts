@@ -100,12 +100,16 @@ const DataplaneListener = {
 const DataplaneOutbound = {
   fromObject(item: KumaDataplaneOutbound) {
     const address = item.address ?? '127.0.0.1'
-    const tags = item.tags ?? {}
+    // @TODO(types) provide support for v2 and v3
+    const tags = ('tags' in item ? item.tags : {}) as Record<string, string>
+    //
     return {
       ...item,
       tags,
+      // @TODO(types) provide support for v2 and v3
       // @TODO how do we get the name of the outbound?
-      name: tags['kuma.io/service'] ?? '',
+      name: ('backendRef' in item) ? (item.backendRef?.name ?? '') : tags['kuma.io/service'] ?? '',
+      //
       protocol: tags['kuma.io/protocol'] ?? 'tcp',
       address,
       addressPort: `${address}${typeof item.port === 'number' ? `:${item.port}` : ''}`,
@@ -147,10 +151,12 @@ const GatewayDataplaneInbound = {
 
 const DataplaneInbound = {
   fromObject(item: KumaDataplaneInbound, networking: KumaDataplaneNetworking) {
+    // @TODO(types) provide support for v2 and v3
     // inbound address, advertisedAddress, networkingAddress because externally accessible address
-    const address = item.address ?? networking.advertisedAddress ?? networking.address ?? ''
+    const address = item.address ?? (('advertisedAddress' in networking) ? networking.advertisedAddress as string : undefined) ?? networking.address ?? ''
+    const tags = ('tags' in item ? item.tags : {}) as Record<string, string>
+    //
     const name = `localhost_${item.port}`
-    const tags = item.tags ?? {}
     return {
       type: '',
       //
