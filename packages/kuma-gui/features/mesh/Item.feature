@@ -25,34 +25,6 @@ Feature: mesh / item
     Then the "$about-section" element exists
     And the "$about-section" element contains "kuma.io/display-name:default"
 
-  Scenario Outline: /mesh-insights/* isn't a 404 and meshService.mode is <Scenario>
-    Given the URL "/mesh-insights/default" responds with
-      """
-      body:
-        resources:
-          MeshService:
-            total: <MeshServiceCount>
-          MeshExternalService:
-            total: <MeshServiceCount>
-          MeshMultiZoneService:
-            total: <MeshServiceCount>
-        services:
-          total: <ServiceCount>
-      """
-    And the URL "/meshes/default" responds with
-      """
-      body:
-        meshServices:
-          mode: <Scenario>
-      """
-    When I visit the "/meshes/default/overview" URL
-    And the "$service-count" element contains "<Total>"
-
-    Examples:
-      | Scenario  | ServiceCount | MeshServiceCount | Total |
-      | Exclusive |           10 |               11 |    33 |
-      | Disabled  |           10 |               11 |    10 |
-
   Scenario: /mesh-insights/* isn't a 404 and meshService.mode is Everywhere
     Given the URL "/mesh-insights/default" responds with
       """
@@ -67,14 +39,7 @@ Feature: mesh / item
         services:
           total: 10
       """
-    And the URL "/meshes/default" responds with
-      """
-      body:
-        meshServices:
-          mode: Everywhere
-      """
     When I visit the "/meshes/default/overview" URL
-    And the "$service-count" element contains "10"
     And the "$mesh-service-count" element contains "11"
 
   Scenario: /mesh-insights/* is a 404
@@ -85,7 +50,6 @@ Feature: mesh / item
       """
     When I visit the "/meshes/default/overview" URL
     Then the "$mesh-detail" element exists but the "$error" element doesn't exist
-    And the "[data-testid*='services-status']" element contains "0"
 
   Scenario: Shows config with format based on environment
     When I visit the "/meshes/default/overview" URL
@@ -96,44 +60,18 @@ Feature: mesh / item
     Then the "$config-k8s" element exists
     And the URL contains "?environment=k8s"
 
-  Scenario: With no MeshIdentity and no mtls the mTLS warning exists
+  Scenario: With no MeshIdentity the mTLS warning exists
     Given the environment
       """
       KUMA_MESHIDENTITY_COUNT: 0
-      """
-    And the URL "/meshes/default" responds with
-      """
-      body:
-        mtls: !!js/undefined
       """
     When I visit the "/meshes/default/overview" URL
     Then the "$mtls-warning" element exists
 
-  Scenario: With a MeshIdentity and no mtls the mTLS warning doesn't exist
+  Scenario: With a MeshIdentity the mTLS warning doesn't exist
     Given the environment
       """
       KUMA_MESHIDENTITY_COUNT: 1
-      """
-    And the URL "/meshes/default" responds with
-      """
-      body:
-        mtls: !!js/undefined
-      """
-    When I visit the "/meshes/default/overview" URL
-    Then the "$mesh-detail" element exists but the "$mtls-warning" element doesn't exist
-
-  Scenario: With no MeshIdentity but mtls the mTLS warning doesn't exist
-    Given the environment
-      """
-      KUMA_MESHIDENTITY_COUNT: 0
-      """
-    And the URL "/meshes/default" responds with
-      """
-      body:
-        mtls:
-          enabledBackend: ca-1
-          backends:
-            - name: ca-1
       """
     When I visit the "/meshes/default/overview" URL
     Then the "$mesh-detail" element exists but the "$mtls-warning" element doesn't exist

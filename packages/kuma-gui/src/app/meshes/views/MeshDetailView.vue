@@ -45,7 +45,7 @@
                 <XI18n path="meshes.notifications.mtls-warning" />
               </XNotification>
               <XNotification
-                :notify="mesh.meshServices.mode === 'Disabled'"
+                :notify="!can('use mesh-services', props.mesh)"
                 :uri="`meshes.notifications.mesh-service-activation:${props.mesh.id}`"
                 variant="info"
               >
@@ -134,7 +134,7 @@
                     class="columns-with-borders"
                   >
                     <KumaResourceStatus
-                      v-if="props.mesh.meshServices.mode === 'Exclusive'"
+                      v-if="can('use mesh-services', props.mesh)"
                       :total="data?.resources.MeshServiceGeneric.total ?? 0"
                       data-testid="services-status"
                     >
@@ -143,7 +143,7 @@
                       </template>
                     </KumaResourceStatus>
                     <KumaResourceStatus
-                      v-else-if="props.mesh.meshServices.mode === 'Disabled'"
+                      v-if="!can('use mesh-services', props.mesh)"
                       :total="data?.services.total ?? 0"
                       data-testid="services-status"
                     >
