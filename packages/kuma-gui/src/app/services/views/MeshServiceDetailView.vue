@@ -78,7 +78,6 @@
                   <template v-if="service.spec.ports.length">
                     <XLayout
                       variant="separated"
-                      truncate
                     >
                       <KumaPort
                         v-for="connection in service.spec.ports"
@@ -100,18 +99,26 @@
                   {{ t('http.api.property.selector') }}
                 </dt>
                 <dd>
-                  <template v-if="Object.keys(service.spec.selector.dataplaneTags).length">
+                  <template v-if="Object.keys(service.spec.selector.dataplaneLabels.matchLabels).length">
                     <XLayout
                       variant="separated"
-                      truncate
                     >
-                      <XBadge
-                        v-for="(value, key) in service.spec.selector.dataplaneTags"
-                        :key="`${key}:${value}`"
-                        appearance="info"
+                      <XAction
+                        v-for="(value, key) in service.spec.selector.dataplaneLabels.matchLabels"
+                        :key="key"
+                        :href="t(`common.label.href.${key.replaceAll('.', '~')}`, {
+                          mesh: service.mesh,
+                          zone: service.zone,
+                          namespace: service.namespace,
+                          name: value,
+                        }, { defaultMessage: '' })"
                       >
-                        {{ key }}:{{ value }}
-                      </XBadge>
+                        <XBadge
+                          :variant="r('kuma.label').test(key) ? 'reserved-kv' : 'kv'"
+                        >
+                          {{ key }}:<strong>{{ value }}</strong>
+                        </XBadge>
+                      </XAction>
                     </XLayout>
                   </template>
                   <template v-else>
@@ -313,7 +320,7 @@
                 :src="uri(sources, '/meshes/:mesh/dataplanes/for/mesh-service/:tags', {
                   mesh: route.params.mesh,
                   tags: JSON.stringify({
-                    ...service.spec.selector.dataplaneTags,
+                    ...service.spec.selector.dataplaneLabels.matchLabels,
                   }),
                 }, {
                   page: route.params.page,

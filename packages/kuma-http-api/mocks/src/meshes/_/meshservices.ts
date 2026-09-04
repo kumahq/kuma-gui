@@ -63,9 +63,14 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
                 appProtocol: fake.kuma.protocol(),
               }
             )),
-            selector: {
+            selector: fake.helpers.arrayElement([{
+              dataplaneLabels: {
+                matchLabels: fake.kuma.labels({ zone: fake.word.noun() }),
+              },
+            }, {
+              // @TODO(types): legacy v2
               dataplaneTags: fake.kuma.tags({}),
-            },
+            }]),
             state: fake.helpers.arrayElement(['Available', 'Unavailable']),
           },
           status: {
