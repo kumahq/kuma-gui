@@ -539,45 +539,6 @@ export type MeshGatewayListenerEntry = {
   routeEntries: MeshGatewayRouteEntry[]
 }
 
-/**
- * Entity as returned via the `/meshes/:mesh/service-insights/:service` endpoint.
- */
-export interface ServiceInsight extends MeshEntity {
-  type: 'ServiceInsight'
-  serviceType?: 'internal' | 'external' | 'gateway_builtin' | 'gateway_delegated'
-  addressPort?: string
-  status?: StatusKeyword
-  dataplanes?: {
-    total?: number
-    online?: number
-    offline?: number
-  }
-}
-
-type ByteDataSource = {
-  secret?: string
-  file?: string
-  inline?: string
-  inlineString?: string
-}
-
-export interface ExternalService extends MeshEntity {
-  type: 'ExternalService'
-  networking: {
-    address: string
-    tls?: {
-      enabled: boolean
-      caCert?: ByteDataSource
-      clientCert?: ByteDataSource
-      clientKey?: ByteDataSource
-      allowRenegotiation: boolean
-      serverName?: string
-      skipHostnameVerification?: boolean
-    }
-    disableHostDNSEntry?: boolean
-  }
-  tags: ServiceTags
-}
 export interface MeshService extends MeshEntity {
   type: 'MeshService'
   labels?: {

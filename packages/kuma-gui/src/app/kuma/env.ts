@@ -8,11 +8,6 @@ type HtmlVars = {
   mode: string
   environment: string
   storeType: string
-  //
-  legacyServicesEnabled?: string
-  zoneIngressesEnabled?: string
-  zoneEgressesEnabled?: string
-  gatewaysEnabled?: string
 }
 export const vars = (config: HtmlVars) => {
   const version = semver(config.version)
@@ -25,12 +20,6 @@ export const vars = (config: HtmlVars) => {
     KUMA_STORE_TYPE: () => config.storeType,
     //
     KUMA_VERSION_URL: () => 'https://kuma.io/latest_version',
-    //
-    KUMA_RESOURCES_ROUTE_ENABLED: () => 'false',
-    KUMA_LEGACY_SERVICES_ENABLED: () => config.legacyServicesEnabled ?? 'false',
-    KUMA_ZONE_INGRESSES_ENABLED: () => config.zoneIngressesEnabled ?? 'false',
-    KUMA_ZONE_EGRESSES_ENABLED: () => config.zoneEgressesEnabled ?? 'false',
-    KUMA_GATEWAYS_ENABLED: () => config.gatewaysEnabled ?? 'false',
   }
 }
 declare module '@/app/application' {

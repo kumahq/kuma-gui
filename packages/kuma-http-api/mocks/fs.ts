@@ -55,8 +55,6 @@ import _428 from './src/meshes/_/dataplanes/redis-54754f5b57-xl2tw.kuma-demo/_ov
 import _430 from './src/meshes/_/dataplanes/redis-54754f5b57-xl2tw.kuma-demo/_rules'
 import _429 from './src/meshes/_/dataplanes/redis-54754f5b57-xl2tw.kuma-demo/stats'
 import _129 from './src/meshes/_/dataplanes/test-dataplane/_rules'
-import _23 from './src/meshes/_/external-services'
-import _24 from './src/meshes/_/external-services/_'
 import _27 from './src/meshes/_/fault-injections'
 import _28 from './src/meshes/_/fault-injections/_'
 import _29 from './src/meshes/_/health-checks'
@@ -94,8 +92,6 @@ import _35 from './src/meshes/_/proxytemplates'
 import _36 from './src/meshes/_/proxytemplates/_'
 import _37 from './src/meshes/_/rate-limits'
 import _38 from './src/meshes/_/retries'
-import _25 from './src/meshes/_/service-insights'
-import _26 from './src/meshes/_/service-insights/_'
 import _39 from './src/meshes/_/timeouts'
 import _40 from './src/meshes/_/traffic-logs'
 import _41 from './src/meshes/_/traffic-logs/_'
@@ -196,11 +192,6 @@ export const fs = {
   '/meshes/:mesh/meshidentities/:name': _242,
   '/meshes/:mesh/meshtrusts': _243,
   '/meshes/:mesh/meshtrusts/:name': _244,
-  // legacy mesh
-  '/meshes/:mesh/service-insights': _25,
-  '/meshes/:mesh/service-insights/:name': _26,
-  '/meshes/:mesh/external-services': _23,
-  '/meshes/:mesh/external-services/:name': _24,
   // legacy policies
   '/meshes/:mesh/circuit-breakers': _17,
   '/meshes/:mesh/circuit-breakers/:name': _18,

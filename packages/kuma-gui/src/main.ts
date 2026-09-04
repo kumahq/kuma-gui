@@ -2,17 +2,15 @@
 import './assets/styles/main.scss'
 
 import { createBuilder } from '@kumahq/container'
-import { nanoEnv } from '@kumahq/settings/env'
 import { createApp } from 'vue'
 
 import { services as application, TOKENS as APPLICATION } from '@/app/application'
 import { services as configuration } from '@/app/configuration'
 import { services as controlPlanes } from '@/app/control-planes'
-import { services as dataplanes, TOKENS as DATAPLANES } from '@/app/data-planes'
+import { services as dataplanes } from '@/app/data-planes'
 import { services as hostnameGenerators } from '@/app/hostname-generators'
 import { services as kuma, TOKENS as KUMA } from '@/app/kuma'
-import { vars } from '@/app/kuma/env'
-import { services as legacyDataplanes, TOKENS as LEGACY_DATAPLANES } from '@/app/legacy-data-planes'
+import { services as legacyDataplanes } from '@/app/legacy-data-planes'
 import { services as me } from '@/app/me'
 import { services as meshIdentities } from '@/app/mesh-identities'
 import { services as meshTrusts } from '@/app/mesh-trusts'
@@ -32,8 +30,6 @@ async function mountVueApplication() {
     ...KUMA,
     ...SERVICES,
   }
-
-  const env = nanoEnv(vars, () => JSON.parse(document.querySelector('#kuma-config')?.textContent || '{}'))
 
   const { build, injectionKey } = createBuilder()
   const get = build(
@@ -57,17 +53,6 @@ async function mountVueApplication() {
     rules($),
     meshIdentities($),
     meshTrusts($),
-
-    // any services depending on env
-    env('KUMA_LEGACY_SERVICES_ENABLED') === 'true' ? await (async () => {
-      const legacyServices = await import('@/app/legacy-services')
-      return legacyServices.services({ ...$, ...DATAPLANES })
-    })() : [],
-    env('KUMA_GATEWAYS_ENABLED') === 'true' ? await (async () => {
-      const gateways = await import('@/app/gateways')
-      return gateways.services({ ...$, ...LEGACY_DATAPLANES, ...DATAPLANES })
-    })() : [],
-    //
 
     // any DEV-time only service container configuration
     import.meta.env.MODE !== 'production'
