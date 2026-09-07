@@ -1,5 +1,5 @@
 import type { Can } from '@/app/application'
-import { routes as dataPlanes } from '@/app/legacy-data-planes/routes'
+import { routes as dataPlanes } from '@/app/data-planes/routes'
 import type { RouteRecordRaw } from 'vue-router'
 
 export const routes = (can: Can) => {

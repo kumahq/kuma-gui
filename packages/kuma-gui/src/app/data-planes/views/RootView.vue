@@ -20,25 +20,19 @@
         })"
         v-slot="{ data: [data] }"
       >
-        <DataPlaneRouteGuard
-          :data="data"
-          :mesh="props.mesh"
-        >
-          <RouterView v-slot="{ Component }">
-            <component
-              :is="Component"
-              :data="data"
-              :mesh="props.mesh"
-            />
-          </RouterView>
-        </DataPlaneRouteGuard>
+        <RouterView v-slot="{ Component }">
+          <component
+            :is="Component"
+            :data="data"
+            :mesh="props.mesh"
+          />
+        </RouterView>
       </DataLoader>
     </DataLoader>
   </RouteView>
 </template>
 
 <script setup lang="ts">
-import DataPlaneRouteGuard from './DataPlaneRouteGuard.vue'
 import { sources } from '@/app/data-planes/sources'
 import type { Mesh } from '@/app/meshes/data'
 const props = defineProps<{
