@@ -7,8 +7,6 @@ export const features = () => {
   return {
     'use transparent-proxying': (_can: unknown, dataplaneOverview: DataplaneOverview) => {
       switch (true) {
-        case dataplaneOverview.dataplane.networking.gateway?.type === 'BUILTIN':
-          return false
         // TODO: `dataplane.networking.transparentProxying` is deprecated and will be removed soon. Still checking for users that still use it.
         case 'transparentProxying' in dataplaneOverview.dataplane.networking:
           return true

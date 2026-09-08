@@ -200,9 +200,10 @@
                 </XTable>
 
                 <XLayout
-                  v-if="item.dataplane.networking.gateway"
+                  v-if="'gateway' in item.dataplane.networking && typeof item.dataplane.networking.gateway !== 'undefined'"
                   variant="y-stack"
                 >
+                  >
                   <h3>{{ t('data-planes.routes.item.gateway') }}</h3>
 
                   <XTable

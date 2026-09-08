@@ -56,7 +56,7 @@ export const DataplaneNetworkingLayout = {
       inbounds: [
         ...DataplaneLayoutInbound.fromCollection(dataplaneNetworkingLayout.inbounds),
         ...DataplaneLayoutListener.fromCollection(dataplaneNetworkingLayout.listeners),
-      ] satisfies GenericDataplaneLayoutInbound[],
+      ],
       outbounds: dataplaneNetworkingLayout.outbounds.map(item => {
         const kri = Kri.fromString(item.kri)
         return {
@@ -120,34 +120,6 @@ const DataplaneOutbound = {
   },
 }
 
-const GatewayDataplaneInbound = {
-  fromObject(networking: KumaDataplaneNetworking) {
-    // if we are a builtin gateway fill in as much as we can for a single inbound
-    // we can 'clone' this later if we find out individual information for each inbound
-    // i.e. this acts as a template
-    return {
-      type: '',
-      address: networking.address ?? '',
-      tags: networking.gateway?.tags ?? {},
-      name: '',
-      protocol: '',
-      state: 'Ready',
-      // these could be filled out during 'cloning'
-      // i.e. these are like template variables to be filled out
-      port: NaN,
-      addressPort: '',
-      //
-      // this will never get set seeing as a gateway proxy never has a service
-      serviceAddressPort: '',
-      // we never set this currently as we never need it for a gateway
-      socketAddress: '',
-      listenerAddress: '',
-      // not available for gateway
-      portName: '',
-      clusterName: '',
-    }
-  },
-}
 
 const DataplaneInbound = {
   fromObject(item: KumaDataplaneInbound, networking: KumaDataplaneNetworking) {
@@ -186,40 +158,62 @@ export const DataplaneNetworking = {
     // remove singular inbound/outbound to be replaced with plural versions
     const { inbound, outbound, ...rest } = networking
 
-    const inbounds = Array.isArray(inbound) ? inbound : []
-    const listeners = Array.isArray(networking.listeners) ? networking.listeners : []
-
-    // outbounds are only present here on a universal DDP without transparent
-    // proxying
-    const outbounds = Array.isArray(outbound) ? outbound : []
-    const type = typeof networking.gateway === 'undefined' || networking.gateway?.type !== 'BUILTIN' ? 'sidecar' : 'gateway'
-
-    return {
+    const item = {
       ...rest,
-      ...(networking.gateway ? {
-        gateway: {
-          ...networking.gateway,
-          tags: networking.gateway.tags ?? {},
-        },
-      } : {}),
-      type: type as 'sidecar' | 'gateway',
+      type: 'sidecar',
       // used for a lookup for inbounds on the result of the envoy /stats endpoint
-      inboundAddress: type === 'gateway' ? networking.address ?? 'localhost' : 'localhost',
-      //
-      inbounds: (() => {
-        switch(true) {
-          case type === 'gateway' && typeof networking.gateway !== 'undefined': {
-            return [GatewayDataplaneInbound.fromObject(networking)]
-          }
-          default:
-            return [
-              ...inbounds.map(item => DataplaneInbound.fromObject(item, networking)),
-              ...DataplaneListener.fromCollection(listeners) ?? [],
-            ]
-        }
-      })() satisfies GenericDataplaneInbound[],
-      outbounds: DataplaneOutbound.fromCollection(outbounds),
+      inboundAddress: 'localhost',
+      // outbounds are only present here on a universal DDP without transparent
+      // proxying
+      outbounds: Array.isArray(outbound) ? DataplaneOutbound.fromCollection(outbound) : [],
+      inbounds: [
+        ...(Array.isArray(inbound) ? inbound.map(item => DataplaneInbound.fromObject(item, networking)) : []),
+        ...(Array.isArray(networking.listeners) ? DataplaneListener.fromCollection(networking.listeners) : []),
+      ],
     }
+    if ('gateway' in networking) {
+      const gateway = networking.gateway as {
+        type: string
+        tags: Record<string, string>
+      }
+      return {
+        ...item,
+        ...(gateway.type === 'BUILTIN' ? {
+          type: 'gateway',
+          // if we are a builtin gateway fill in as much as we can for a single inbound
+          // we can 'clone' this later if we find out individual information for each inbound
+          // i.e. this acts as a template
+          inbounds: [{
+            type: '',
+            address: networking.address ?? '',
+            tags: gateway.tags ?? {},
+            name: '',
+            protocol: '',
+            state: 'Ready',
+            // these could be filled out during 'cloning'
+            // i.e. these are like template variables to be filled out
+            port: NaN,
+            addressPort: '',
+            //
+            // this will never get set seeing as a gateway proxy never has a service
+            serviceAddressPort: '',
+            // we never set this currently as we never need it for a gateway
+            socketAddress: '',
+            listenerAddress: '',
+            // not available for gateway
+            portName: '',
+            clusterName: '',
+          }],
+        } : {}),
+        inboundAddress: networking.address ?? 'localhost',
+        gateway: {
+          ...gateway,
+          tags: gateway.tags ?? {},
+        },
+      }
+
+    }
+    return item
   },
 }
 export type DataplaneNetworkingLayout = ReturnType<typeof DataplaneNetworkingLayout['fromObject']>
@@ -227,9 +221,6 @@ export type DataplaneOutbound = ReturnType<typeof DataplaneOutbound['fromObject'
 export type DataplaneNetworking = ReturnType<typeof DataplaneNetworking['fromObject']>
 export type DataplaneInbound = ReturnType<typeof DataplaneInbound['fromObject']>
 export type DataplaneListener = ReturnType<typeof DataplaneListener['fromObject']>
-export type GatewayDataplaneInbound = ReturnType<typeof GatewayDataplaneInbound['fromObject']>
-export type GenericDataplaneInbound = DataplaneInbound & DataplaneListener & GatewayDataplaneInbound
 
 export type DataplaneLayoutInbound = ReturnType<typeof DataplaneLayoutInbound['fromObject']>
 export type DataplaneLayoutListener = ReturnType<typeof DataplaneLayoutListener['fromObject']>
-export type GenericDataplaneLayoutInbound = DataplaneLayoutInbound & DataplaneLayoutListener

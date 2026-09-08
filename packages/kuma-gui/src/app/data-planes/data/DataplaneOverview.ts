@@ -72,7 +72,7 @@ export const DataplaneOverview = {
         switch (true) {
           case networking.type === 'gateway':
             return dpTypes.builtin
-          case typeof networking.gateway !== 'undefined':
+          case 'gateway' in networking:
             return dpTypes.delegated
           default:
             return dpTypes.standard
@@ -84,7 +84,7 @@ export const DataplaneOverview = {
       ],
       status: (() => {
         const state = typeof dataplaneInsight.connectedSubscription !== 'undefined' ? states.online : states.disconnectedCp
-        if (networking.gateway || state === states.disconnectedCp) {
+        if ('gateway' in networking || state === states.disconnectedCp) {
           return state
         }
 
@@ -142,7 +142,8 @@ export const DataplaneOverview = {
     }
   },
 }
-function getTags({ gateway, inbounds }: DataplaneNetworking): LabelValue[] {
+function getTags(networking: DataplaneNetworking): LabelValue[] {
+  const { inbounds } = networking
   let tags: string[] = []
   const separator = '='
 
@@ -152,7 +153,8 @@ function getTags({ gateway, inbounds }: DataplaneNetworking): LabelValue[] {
       .map(([key, value]) => `${key}${separator}${value}`)
   }
 
-  if (gateway) {
+  if ('gateway' in networking) {
+    const gateway = networking.gateway as { tags: Record<string, string>}
     tags = Object.entries(gateway.tags ?? {}).map(([key, value]) => `${key}${separator}${value}`)
   }
 

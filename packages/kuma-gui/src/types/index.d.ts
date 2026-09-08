@@ -1,4 +1,5 @@
 import type { components } from '@kumahq/kuma-http-api'
+type KumaDataplaneNetworking = NonNullable<components['schemas']['DataplaneItem']['networking']>
 type ResourceRule = components['schemas']['ResourceRule']
 /**
  * Creates an “unsaved” variant of a resource type which is missing the fields that are only present on an object once its saved in the database.
@@ -356,7 +357,7 @@ export interface MeshEntity extends Entity {
  */
 export interface DataPlane extends MeshEntity {
   type: 'Dataplane'
-  networking: DataplaneNetworking
+  networking: KumaDataplaneNetworking
 }
 
 /**
@@ -370,7 +371,7 @@ export interface DataPlaneOverview extends MeshEntity {
     [key: string]: string
   }
   dataplane: {
-    networking: DataplaneNetworking
+    networking: KumaDataplaneNetworking
   }
   dataplaneInsight?: DataPlaneInsight
 }

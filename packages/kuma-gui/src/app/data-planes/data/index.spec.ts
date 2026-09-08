@@ -108,9 +108,10 @@ describe('DataplaneOverview', () => {
       async ({ fixture }) => {
         expect.assertions(2)
         const actual = await fixture.setup((item) => {
-          if (typeof item.dataplane.networking.gateway !== 'undefined') {
-            delete item.dataplane.networking.gateway.type
-            expect(item.dataplane.networking.gateway.type).toBeUndefined()
+          if ('gateway' in item.dataplane.networking) {
+            const gateway = item.dataplane.networking.gateway as { type?: string }
+            delete gateway.type
+            expect(gateway.type).toBeUndefined()
           }
           return item
         }, {
@@ -329,11 +330,16 @@ describe('DataplaneOverview', () => {
       async ({ fixture }) => {
         const actual = await fixture.setup((item) => {
           if (item.dataplane.networking.inbound?.length === 1) {
+            const inbound = item.dataplane.networking.inbound[0] as {
+              port: number
+              tags: Record<string, string>
+            }
+            inbound.port = 1
+            inbound.tags = {
+              'kuma.io/service': 'service-name',
+            }
             item.dataplane.networking.inbound[0] = {
-              port: 1,
-              tags: {
-                'kuma.io/service': 'service-name',
-              },
+              ...inbound,
             }
           }
           return item
