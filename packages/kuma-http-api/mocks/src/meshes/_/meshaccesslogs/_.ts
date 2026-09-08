@@ -41,34 +41,13 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
       },
       kri: fake.kuma.kri({ shortName, mesh, zone, namespace: nspace, displayName }),
       spec: {
-        from: [
+        to: [
           {
             targetRef: {
               kind: 'MeshService',
-              name: fake.word.noun(),
+              labels: fake.kuma.labels({}),
             },
-            default: {
-              backends: fake.helpers.arrayElements([
-                {
-                  type: 'Tcp' as const,
-                  tcp: {
-                    address: `${fake.internet.ip()}:${fake.internet.port()}`,
-                  },
-                },
-                {
-                  type: 'File' as const,
-                  file: {
-                    path: fake.helpers.arrayElement([fake.system.directoryPath(), `${fake.system.directoryPath()}/${fake.system.fileName()}.log`]),
-                  },
-                },
-                {
-                  type: 'OpenTelemetry' as const,
-                  openTelemetry: {
-                    endpoint: `otel-collector:${fake.internet.port()}`,
-                  },
-                },
-              ]),
-            },
+            default: {},
           },
         ],
       },

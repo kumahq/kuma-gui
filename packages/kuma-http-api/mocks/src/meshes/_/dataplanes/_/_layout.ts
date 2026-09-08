@@ -4,7 +4,8 @@ import type { components } from '@kumahq/kuma-http-api'
 type DataplaneNetworkingLayout = components['schemas']['DataplaneNetworkingLayout']
 type DataplaneInbound = components['schemas']['DataplaneInbound']
 type DataplaneOutbound = components['schemas']['DataplaneOutbound']
-type DataplaneListener = components['schemas']['DataplaneListener']
+// @TODO(types) rmeove the clusters form here once we are on v3 as its already in the spec
+type DataplaneListener = components['schemas']['DataplaneListener'] & { clusters: unknown }
 
 export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
   const mesh = req.params.mesh as string
@@ -43,22 +44,6 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
   }))
   const zone = fake.word.noun()
 
-  const meshServiceMode = env('KUMA_MESHSERVICE_MODE', 'Everywhere')
-
-  if(meshServiceMode !== 'Exclusive') {
-    return {
-      headers: {
-        'Status-Code': '400',
-      },
-      body: {
-        'type': '/std-errors',
-        'status': 400,
-        'title': 'Bad Request',
-        'detail': 'bad request: can\'t use _layout endpoint without meshService enabled',
-        'details': 'bad request: can\'t use _layout endpoint without meshService enabled',
-      },
-    }
-  }
 
   return {
     headers: {
@@ -125,6 +110,25 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
           port,
           proxyResourceName: fake.kuma.contextualKri({ context: `${type.toLowerCase()}_dp`, name: String(port) }),
           type,
+          clusters: Array.from({ length: 2 }).map(_ => {
+            const port = fake.internet.port()
+            // I'm not totally sure whether these should be random,
+            // but it feels like they should be same mesh/nspace but cross zone
+            // feel free to change is necessary as we are just filling these out for now
+            return {
+              kri: fake.kuma.kri({
+                resourceName: 'Dataplane',
+                mesh,
+                zone: fake.word.noun(),
+                namespace: nspace,
+                name: fake.word.noun(),
+                sectionName: String(port),
+              }),
+              port,
+              protocol: fake.kuma.protocol(),
+              proxyResourceName: fake.kuma.contextualKri({ context: `${type.toLowerCase()}_dp`, name: String(port) }),
+            }
+          }),
         } satisfies DataplaneListener
       }),
     } satisfies DataplaneNetworkingLayout,
