@@ -69,7 +69,7 @@
                 },
               },
               {
-                bool: props.data.dataplane.networking.gateway?.type !== 'BUILTIN' && !can('use transparent-proxying', props.data),
+                bool: !can('use transparent-proxying', props.data),
                 key: 'networking-transparent-proxying',
                 variant: 'info' as const,
               },
@@ -240,37 +240,6 @@
                         </XLayout>
                       </dd>
                     </div>
-                    <!-- @TODO gateways don't use this view at the moment, but we want move away from the legacy view -->
-                    <div
-                      v-if="props.data.dataplane.networking.gateway"
-                    >
-                      <dt>
-                        {{ t('http.api.property.tags') }}
-                      </dt>
-                      <dd>
-                        <XLayout
-                          variant="separated"
-                        >
-                          <XAction
-                            v-for="(value, key) in props.data.dataplane.networking.gateway.tags"
-                            :key="key"
-                            :href="t(`common.label.href.${key.replaceAll('.', '~')}`, {
-                              mesh: props.data.mesh,
-                              zone: props.data.zone,
-                              namespace: props.data.namespace,
-                              name: value.replaceAll('_', '~'),
-                            }, { defaultMessage: '' })"
-                          >
-                            <XBadge
-                              :variant="r('kuma.label').test(key) ? 'reserved-kv' : 'kv'"
-                            >
-                              {{ key }}:<strong>{{ value }}</strong>
-                            </XBadge>
-                          </XAction>
-                        </XLayout>
-                      </dd>
-                    </div>
-                    <!-- -->
                   </XDl>
 
                   <XLayout
