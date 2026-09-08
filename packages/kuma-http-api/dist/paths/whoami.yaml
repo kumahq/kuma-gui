@@ -1,0 +1,13 @@
+get:
+  operationId: who-am-i
+  summary: Identity of the authenticated user
+  description: Returns the name and groups of the user making the request
+  responses:
+    '200':
+      $ref: '../components/responses/WhoAmIResponse.yaml'
+    '400':
+      $ref: '../components/responses/BadRequest.yaml'
+    '500':
+      $ref: '../components/responses/Internal.yaml'
+  tags:
+    - System

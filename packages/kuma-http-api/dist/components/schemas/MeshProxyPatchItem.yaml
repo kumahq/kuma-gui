@@ -10,6 +10,8 @@ properties:
     description: Mesh is the name of the Kuma mesh this resource belongs to. It may be omitted for cluster-scoped resources.
     type: string
     default: default
+    maxLength: 253
+    pattern: ^[0-9a-z-_.]*$
   kri:
     description: A unique identifier for this resource instance used by internal tooling and integrations. Typically derived from resource attributes and may be used for cross-references or indexing
     type: string
@@ -18,6 +20,8 @@ properties:
   name:
     description: Name of the Kuma resource
     type: string
+    maxLength: 253
+    pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$
   labels:
     description: The labels to help identity resources
     type: object
@@ -91,7 +95,6 @@ properties:
                             direct-access - resources generated for Direct Access functionality.
                             ingress - resources generated for Zone Ingress.
                             egress - resources generated for Zone Egress.
-                            gateway - resources generated for MeshGateway.
 
                             The list is not complete, because policy plugins can introduce new resources.
                             For example MeshTrace plugin can create Cluster with "mesh-trace" origin.
@@ -104,7 +107,16 @@ properties:
                         - Remove
                         - Patch
                     value:
-                      description: Value of xDS resource in YAML format to add or patch.
+                      description: |-
+                        Value of xDS resource in YAML format to add or patch.
+
+                        Patch merges the value into the matched cluster, and repeated fields are
+                        appended to what the cluster already has. Circuit breaker thresholds are
+                        the exception: Envoy resolves them by routing priority and ignores every
+                        threshold after the first one of a given priority, so appending would be
+                        dead config. They are merged into the existing threshold with the same
+                        priority instead, and a value listing one priority twice keeps only the
+                        first entry.
                       type: string
                   required:
                     - operation
@@ -171,7 +183,6 @@ properties:
                             direct-access - resources generated for Direct Access functionality.
                             ingress - resources generated for Zone Ingress.
                             egress - resources generated for Zone Egress.
-                            gateway - resources generated for MeshGateway.
 
                             The list is not complete, because policy plugins can introduce new resources.
                             For example MeshTrace plugin can create Cluster with "mesh-trace" origin.
@@ -244,7 +255,6 @@ properties:
                             direct-access - resources generated for Direct Access functionality.
                             ingress - resources generated for Zone Ingress.
                             egress - resources generated for Zone Egress.
-                            gateway - resources generated for MeshGateway.
 
                             The list is not complete, because policy plugins can introduce new resources.
                             For example MeshTrace plugin can create Cluster with "mesh-trace" origin.
@@ -327,7 +337,6 @@ properties:
                             direct-access - resources generated for Direct Access functionality.
                             ingress - resources generated for Zone Ingress.
                             egress - resources generated for Zone Egress.
-                            gateway - resources generated for MeshGateway.
 
                             The list is not complete, because policy plugins can introduce new resources.
                             For example MeshTrace plugin can create Cluster with "mesh-trace" origin.
@@ -402,7 +411,6 @@ properties:
                             direct-access - resources generated for Direct Access functionality.
                             ingress - resources generated for Zone Ingress.
                             egress - resources generated for Zone Egress.
-                            gateway - resources generated for MeshGateway.
 
                             The list is not complete, because policy plugins can introduce new resources.
                             For example MeshTrace plugin can create Cluster with "mesh-trace" origin.
@@ -436,56 +444,20 @@ properties:
             type: string
             enum:
               - Mesh
-              - MeshSubset
-              - MeshGateway
-              - MeshService
-              - MeshExternalService
-              - MeshMultiZoneService
-              - MeshServiceSubset
-              - MeshHTTPRoute
               - Dataplane
           labels:
             description: |-
-              Labels are used to select group of MeshServices that match labels. Either Labels or
-              Name and Namespace can be used.
+              Labels are used to select referenced real resources and to carry legacy
+              service identity when a common TargetRef must still target old
+              service-tag based paths.
             type: object
             additionalProperties:
-              type: string
-          mesh:
-            description: Mesh is reserved for future use to identify cross mesh resources.
-            type: string
-          name:
-            description: |-
-              Name of the referenced resource. Can only be used with kinds: `MeshService`,
-              `MeshServiceSubset` and `MeshGatewayRoute`
-            type: string
-          namespace:
-            description: |-
-              Namespace specifies the namespace of target resource. If empty only resources in policy namespace
-              will be targeted.
-            type: string
-          proxyTypes:
-            description: |-
-              ProxyTypes specifies the data plane types that are subject to the policy. When not specified,
-              all data plane types are targeted by the policy.
-            type: array
-            items:
-              enum:
-                - Sidecar
-                - Gateway
               type: string
           sectionName:
             description: |-
               SectionName is used to target specific section of resource.
               For example, you can target port from MeshService.ports[] by its name. Only traffic to this port will be affected.
             type: string
-          tags:
-            description: |-
-              Tags used to select a subset of proxies by tags. Can only be used with kinds
-              `MeshSubset` and `MeshServiceSubset`
-            type: object
-            additionalProperties:
-              type: string
         required:
           - kind
     required:
@@ -494,13 +466,13 @@ properties:
     description: Time at which the resource was created
     type: string
     format: date-time
-    example: 0001-01-01T00:00:00Z
+    example: 1901-01-01T00:00:00.000Z
     readOnly: true
   modificationTime:
     description: Time at which the resource was updated
     type: string
     format: date-time
-    example: 0001-01-01T00:00:00Z
+    example: 1901-01-01T00:00:00.000Z
     readOnly: true
 required:
   - type

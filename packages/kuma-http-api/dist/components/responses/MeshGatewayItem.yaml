@@ -1,5 +1,0 @@
-description: Successful response
-content:
-  application/json:
-    schema:
-      $ref: '../schemas/MeshGatewayItem.yaml'

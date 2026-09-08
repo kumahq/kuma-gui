@@ -1,0 +1,20 @@
+get:
+  operationId: getMeshInsight
+  summary: Get the insight of a mesh
+  description: Returns the observed state of a mesh, computed by the control plane. Read only.
+  parameters:
+    - name: name
+      in: path
+      description: The name of the mesh to get the insight for.
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: '../components/responses/GetMeshInsightResponse.yaml'
+    '400':
+      $ref: '../components/responses/BadRequest.yaml'
+    '404':
+      $ref: '../components/responses/NotFound.yaml'
+    '500':
+      $ref: '../components/responses/Internal.yaml'

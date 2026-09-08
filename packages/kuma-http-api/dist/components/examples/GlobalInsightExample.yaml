@@ -14,11 +14,6 @@ value:
       online: 2
       offline: 1
       partiallyDegraded: 1
-    gatewayBuiltin:
-      total: 4
-      online: 2
-      offline: 1
-      partiallyDegraded: 1
     internalByStatus:
       total: 4
       online: 2
@@ -36,11 +31,6 @@ value:
       total: 1
   dataplanes:
     standard:
-      total: 4
-      online: 2
-      offline: 1
-      partiallyDegraded: 1
-    gatewayBuiltin:
       total: 4
       online: 2
       offline: 1

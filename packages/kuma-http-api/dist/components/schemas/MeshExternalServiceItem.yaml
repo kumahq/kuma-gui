@@ -10,6 +10,8 @@ properties:
     description: Mesh is the name of the Kuma mesh this resource belongs to. It may be omitted for cluster-scoped resources.
     type: string
     default: default
+    maxLength: 253
+    pattern: ^[0-9a-z-_.]*$
   kri:
     description: A unique identifier for this resource instance used by internal tooling and integrations. Typically derived from resource attributes and may be used for cross-references or indexing
     type: string
@@ -38,6 +40,8 @@ properties:
   name:
     description: Name of the Kuma resource
     type: string
+    maxLength: 253
+    pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$
   labels:
     description: The labels to help identity resources
     type: object
@@ -137,44 +141,140 @@ properties:
                 description: CaCert defines a certificate of CA.
                 type: object
                 properties:
-                  inline:
-                    description: Data source is inline bytes.
+                  envVar:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                    required:
+                      - name
+                  file:
+                    type: object
+                    properties:
+                      path:
+                        type: string
+                    required:
+                      - path
+                  insecureInline:
+                    type: object
+                    properties:
+                      value:
+                        type: string
+                    required:
+                      - value
+                  secretRef:
+                    type: object
+                    properties:
+                      kind:
+                        type: string
+                        enum:
+                          - Secret
+                      name:
+                        type: string
+                    required:
+                      - kind
+                      - name
+                  type:
                     type: string
-                    format: byte
-                  inlineString:
-                    description: Data source is inline string`
-                    type: string
-                  secret:
-                    description: Data source is a secret with given Secret key.
-                    type: string
+                    enum:
+                      - File
+                      - Secret
+                      - EnvVar
+                      - InsecureInline
+                required:
+                  - type
               clientCert:
                 description: ClientCert defines a certificate of a client.
                 type: object
                 properties:
-                  inline:
-                    description: Data source is inline bytes.
+                  envVar:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                    required:
+                      - name
+                  file:
+                    type: object
+                    properties:
+                      path:
+                        type: string
+                    required:
+                      - path
+                  insecureInline:
+                    type: object
+                    properties:
+                      value:
+                        type: string
+                    required:
+                      - value
+                  secretRef:
+                    type: object
+                    properties:
+                      kind:
+                        type: string
+                        enum:
+                          - Secret
+                      name:
+                        type: string
+                    required:
+                      - kind
+                      - name
+                  type:
                     type: string
-                    format: byte
-                  inlineString:
-                    description: Data source is inline string`
-                    type: string
-                  secret:
-                    description: Data source is a secret with given Secret key.
-                    type: string
+                    enum:
+                      - File
+                      - Secret
+                      - EnvVar
+                      - InsecureInline
+                required:
+                  - type
               clientKey:
                 description: ClientKey defines a client private key.
                 type: object
                 properties:
-                  inline:
-                    description: Data source is inline bytes.
+                  envVar:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                    required:
+                      - name
+                  file:
+                    type: object
+                    properties:
+                      path:
+                        type: string
+                    required:
+                      - path
+                  insecureInline:
+                    type: object
+                    properties:
+                      value:
+                        type: string
+                    required:
+                      - value
+                  secretRef:
+                    type: object
+                    properties:
+                      kind:
+                        type: string
+                        enum:
+                          - Secret
+                      name:
+                        type: string
+                    required:
+                      - kind
+                      - name
+                  type:
                     type: string
-                    format: byte
-                  inlineString:
-                    description: Data source is inline string`
-                    type: string
-                  secret:
-                    description: Data source is a secret with given Secret key.
-                    type: string
+                    enum:
+                      - File
+                      - Secret
+                      - EnvVar
+                      - InsecureInline
+                required:
+                  - type
               mode:
                 description: Mode defines if proxy should skip verification, one of `SkipSAN`, `SkipCA`, `Secured`, `SkipAll`. Default `Secured`.
                 type: string
@@ -235,13 +335,13 @@ properties:
     description: Time at which the resource was created
     type: string
     format: date-time
-    example: 0001-01-01T00:00:00Z
+    example: 1901-01-01T00:00:00.000Z
     readOnly: true
   modificationTime:
     description: Time at which the resource was updated
     type: string
     format: date-time
-    example: 0001-01-01T00:00:00Z
+    example: 1901-01-01T00:00:00.000Z
     readOnly: true
   status:
     description: Status is the current status of the Kuma MeshExternalService resource.

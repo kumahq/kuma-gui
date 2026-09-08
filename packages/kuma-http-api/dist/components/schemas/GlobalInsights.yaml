@@ -1,0 +1,14 @@
+type: object
+properties:
+  type:
+    type: string
+  creationTime:
+    type: string
+    format: date-time
+  resources:
+    type: object
+    additionalProperties:
+      type: object
+      properties:
+        total:
+          type: integer

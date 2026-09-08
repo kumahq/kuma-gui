@@ -1,6 +1,6 @@
 get:
   operationId: getMeshList
-  summary: Returns a list of Mesh in the mesh.
+  summary: Returns a list of Mesh.
   parameters:
     - name: offset
       in: query

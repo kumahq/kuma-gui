@@ -1,6 +1,6 @@
 get:
   operationId: getHostnameGeneratorList
-  summary: Returns a list of HostnameGenerator in the mesh.
+  summary: Returns a list of HostnameGenerator.
   parameters:
     - name: offset
       in: query

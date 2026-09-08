@@ -1,0 +1,24 @@
+get:
+  operationId: getMeshInsightList
+  summary: List mesh insights
+  description: Returns the observed state of every mesh, computed by the control plane. Read only.
+  parameters:
+    - name: size
+      in: query
+      description: Size of the page.
+      required: false
+      schema:
+        type: integer
+    - name: offset
+      in: query
+      description: Offset of the page to list.
+      required: false
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: '../components/responses/GetMeshInsightListResponse.yaml'
+    '400':
+      $ref: '../components/responses/BadRequest.yaml'
+    '500':
+      $ref: '../components/responses/Internal.yaml'

@@ -1,0 +1,26 @@
+get:
+  operationId: getOverviewByKri
+  summary: Returns the overview of a resource by KRI
+  description: Returns the resource merged with its insight. Only resource types that have insights are supported.
+  parameters:
+    - name: kri
+      in: path
+      description: KRI of the resource
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      description: The resource overview
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '../components/schemas/DataplaneOverviewWithMeta.yaml'
+              - $ref: '../components/schemas/MeshOverviewWithMeta.yaml'
+    '400':
+      $ref: '../components/responses/BadRequest.yaml'
+    '404':
+      $ref: '../components/responses/NotFound.yaml'
+  tags:
+    - KRI
