@@ -16,11 +16,12 @@ import { services as meshTrusts } from '@/app/mesh-trusts'
 import { services as meshes } from '@/app/meshes'
 import { services as policies } from '@/app/policies'
 import { services as resources } from '@/app/resources'
-import { services as rules } from '@/app/rules'
 import { services as services, TOKENS as SERVICES } from '@/app/services'
 import { services as vue, TOKENS as VUE } from '@/app/vue'
 import { services as workloads } from '@/app/workloads'
 import { services as zones } from '@/app/zones'
+
+// import { services as rules } from '@/app/rules'
 
 async function mountVueApplication() {
   const $ = {
@@ -48,7 +49,7 @@ async function mountVueApplication() {
     workloads($),
     policies($),
     resources($),
-    rules($),
+    // rules($),
     meshIdentities($),
     meshTrusts($),
 
