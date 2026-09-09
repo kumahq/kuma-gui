@@ -1,0 +1,5 @@
+description: A response containing the overview of a mesh.
+content:
+  application/json:
+    schema:
+      $ref: '../schemas/MeshOverviewWithMeta.yaml'

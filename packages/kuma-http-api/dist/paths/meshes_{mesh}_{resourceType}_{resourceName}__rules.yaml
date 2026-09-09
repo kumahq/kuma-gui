@@ -18,7 +18,6 @@ get:
         type: string
         enum:
           - dataplanes
-          - meshgateways
       example: dataplanes
     - name: resourceName
       in: path

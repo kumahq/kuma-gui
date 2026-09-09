@@ -10,6 +10,8 @@ properties:
     description: Mesh is the name of the Kuma mesh this resource belongs to. It may be omitted for cluster-scoped resources.
     type: string
     default: default
+    maxLength: 253
+    pattern: ^[0-9a-z-_.]*$
   kri:
     description: A unique identifier for this resource instance used by internal tooling and integrations. Typically derived from resource attributes and may be used for cross-references or indexing
     type: string
@@ -18,6 +20,8 @@ properties:
   name:
     description: Name of the Kuma resource
     type: string
+    maxLength: 253
+    pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$
   labels:
     description: The labels to help identity resources
     type: object
@@ -44,13 +48,13 @@ properties:
     description: Time at which the resource was created
     type: string
     format: date-time
-    example: 0001-01-01T00:00:00Z
+    example: 1901-01-01T00:00:00.000Z
     readOnly: true
   modificationTime:
     description: Time at which the resource was updated
     type: string
     format: date-time
-    example: 0001-01-01T00:00:00Z
+    example: 1901-01-01T00:00:00.000Z
     readOnly: true
 required:
   - type

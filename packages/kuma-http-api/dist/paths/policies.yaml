@@ -1,0 +1,13 @@
+get:
+  operationId: get-policies
+  summary: A list of all policy types
+  description: Returns metadata about every policy type supported by this control plane
+  responses:
+    '200':
+      $ref: '../components/responses/PoliciesResponse.yaml'
+    '400':
+      $ref: '../components/responses/BadRequest.yaml'
+    '500':
+      $ref: '../components/responses/Internal.yaml'
+  tags:
+    - System

@@ -1,0 +1,19 @@
+post:
+  operationId: issue-zone-token
+  summary: Issue a zone token
+  description: Issues a token used to authenticate zone control plane operations
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/ZoneTokenRequest.yaml'
+  responses:
+    '200':
+      $ref: '../components/responses/TokenResponse.yaml'
+    '400':
+      $ref: '../components/responses/BadRequest.yaml'
+    '500':
+      $ref: '../components/responses/Internal.yaml'
+  tags:
+    - Tokens

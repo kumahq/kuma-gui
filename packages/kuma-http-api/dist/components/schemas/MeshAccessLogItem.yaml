@@ -10,6 +10,8 @@ properties:
     description: Mesh is the name of the Kuma mesh this resource belongs to. It may be omitted for cluster-scoped resources.
     type: string
     default: default
+    maxLength: 253
+    pattern: ^[0-9a-z-_.]*$
   kri:
     description: A unique identifier for this resource instance used by internal tooling and integrations. Typically derived from resource attributes and may be used for cross-references or indexing
     type: string
@@ -18,6 +20,8 @@ properties:
   name:
     description: Name of the Kuma resource
     type: string
+    maxLength: 253
+    pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$
   labels:
     description: The labels to help identity resources
     type: object
@@ -27,258 +31,6 @@ properties:
     description: Spec is the specification of the Kuma MeshAccessLog resource.
     type: object
     properties:
-      from:
-        description: From list makes a match between clients and corresponding configurations
-        type: array
-        items:
-          properties:
-            default:
-              description: |-
-                Default is a configuration specific to the group of clients referenced in
-                'targetRef'
-              type: object
-              properties:
-                backends:
-                  type: array
-                  items:
-                    properties:
-                      file:
-                        description: FileBackend defines configuration for file based access logs
-                        type: object
-                        properties:
-                          format:
-                            description: |-
-                              Format of access logs. Placeholders available on
-                              https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
-                            type: object
-                            properties:
-                              json:
-                                type: array
-                                items:
-                                  properties:
-                                    key:
-                                      type: string
-                                    value:
-                                      type: string
-                                  required:
-                                    - key
-                                    - value
-                                  type: object
-                                example:
-                                  - key: start_time
-                                    value: '%START_TIME%'
-                                  - key: bytes_received
-                                    value: '%BYTES_RECEIVED%'
-                              omitEmptyValues:
-                                type: boolean
-                                default: false
-                              plain:
-                                type: string
-                                example: '[%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST%'
-                              type:
-                                type: string
-                                enum:
-                                  - Plain
-                                  - Json
-                            required:
-                              - type
-                          path:
-                            description: Path to a file that logs will be written to
-                            type: string
-                            example: /tmp/access.log
-                            minLength: 1
-                        required:
-                          - path
-                      openTelemetry:
-                        description: Defines an OpenTelemetry logging backend.
-                        type: object
-                        properties:
-                          attributes:
-                            description: |-
-                              Attributes defines custom OpenTelemetry attributes. Keys must be static
-                              OpenTelemetry attribute names. Values can contain placeholders available on
-                              https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
-                            type: array
-                            items:
-                              properties:
-                                key:
-                                  description: Key is the OpenTelemetry attribute name.
-                                  type: string
-                                  pattern: ^[a-z]([a-z0-9]|[._][a-z0-9])*$
-                                value:
-                                  description: Value can contain Kuma placeholders.
-                                  type: string
-                              required:
-                                - key
-                                - value
-                              type: object
-                            example:
-                              - key: mesh
-                                value: '%KUMA_MESH%'
-                          backendRef:
-                            description: |-
-                              BackendRef is a reference to a MeshOpenTelemetryBackend resource that
-                              defines the collector endpoint. Mutually exclusive with Endpoint.
-                            type: object
-                            properties:
-                              kind:
-                                description: Kind of the backend resource.
-                                type: string
-                                enum:
-                                  - MeshOpenTelemetryBackend
-                              labels:
-                                description: |-
-                                  Labels to match the referenced resource. When multiple resources match,
-                                  the oldest by creation time wins.
-                                type: object
-                                additionalProperties:
-                                  type: string
-                            required:
-                              - kind
-                          body:
-                            description: |-
-                              Body is a raw string or an OTLP any value as described at
-                              https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/logs/data-model.md#field-body
-                              It can contain placeholders available on
-                              https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
-                            example:
-                              kvlistValue:
-                                values:
-                                  - key: mesh
-                                    value:
-                                      stringValue: '%KUMA_MESH%'
-                            x-kubernetes-preserve-unknown-fields: true
-                          endpoint:
-                            description: |-
-                              Endpoint of OpenTelemetry collector. An empty port defaults to 4317.
-
-                              Deprecated: use BackendRef instead.
-                            type: string
-                            example: otel-collector:4317
-                            default: ''
-                      tcp:
-                        description: TCPBackend defines a TCP logging backend.
-                        type: object
-                        properties:
-                          address:
-                            description: Address of the TCP logging backend
-                            type: string
-                            example: 127.0.0.1:5000
-                            minLength: 1
-                          format:
-                            description: |-
-                              Format of access logs. Placeholders available on
-                              https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
-                            type: object
-                            properties:
-                              json:
-                                type: array
-                                items:
-                                  properties:
-                                    key:
-                                      type: string
-                                    value:
-                                      type: string
-                                  required:
-                                    - key
-                                    - value
-                                  type: object
-                                example:
-                                  - key: start_time
-                                    value: '%START_TIME%'
-                                  - key: bytes_received
-                                    value: '%BYTES_RECEIVED%'
-                              omitEmptyValues:
-                                type: boolean
-                                default: false
-                              plain:
-                                type: string
-                                example: '[%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST%'
-                              type:
-                                type: string
-                                enum:
-                                  - Plain
-                                  - Json
-                            required:
-                              - type
-                        required:
-                          - address
-                      type:
-                        type: string
-                        enum:
-                          - Tcp
-                          - File
-                          - OpenTelemetry
-                    required:
-                      - type
-                    type: object
-            targetRef:
-              description: |-
-                TargetRef is a reference to the resource that represents a group of
-                clients.
-              type: object
-              properties:
-                kind:
-                  description: Kind of the referenced resource
-                  type: string
-                  enum:
-                    - Mesh
-                    - MeshSubset
-                    - MeshGateway
-                    - MeshService
-                    - MeshExternalService
-                    - MeshMultiZoneService
-                    - MeshServiceSubset
-                    - MeshHTTPRoute
-                    - Dataplane
-                labels:
-                  description: |-
-                    Labels are used to select group of MeshServices that match labels. Either Labels or
-                    Name and Namespace can be used.
-                  type: object
-                  additionalProperties:
-                    type: string
-                mesh:
-                  description: Mesh is reserved for future use to identify cross mesh resources.
-                  type: string
-                name:
-                  description: |-
-                    Name of the referenced resource. Can only be used with kinds: `MeshService`,
-                    `MeshServiceSubset` and `MeshGatewayRoute`
-                  type: string
-                namespace:
-                  description: |-
-                    Namespace specifies the namespace of target resource. If empty only resources in policy namespace
-                    will be targeted.
-                  type: string
-                proxyTypes:
-                  description: |-
-                    ProxyTypes specifies the data plane types that are subject to the policy. When not specified,
-                    all data plane types are targeted by the policy.
-                  type: array
-                  items:
-                    enum:
-                      - Sidecar
-                      - Gateway
-                    type: string
-                sectionName:
-                  description: |-
-                    SectionName is used to target specific section of resource.
-                    For example, you can target port from MeshService.ports[] by its name. Only traffic to this port will be affected.
-                  type: string
-                tags:
-                  description: |-
-                    Tags used to select a subset of proxies by tags. Can only be used with kinds
-                    `MeshSubset` and `MeshServiceSubset`
-                  type: object
-                  additionalProperties:
-                    type: string
-              required:
-                - kind
-          required:
-            - default
-            - targetRef
-          type: object
       rules:
         description: Rules defines inbound access log configurations.
         type: array
@@ -301,6 +53,17 @@ properties:
                               Format of access logs. Placeholders available on
                               https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
                             type: object
+                            oneOf:
+                              - properties:
+                                  plain: {}
+                                  type:
+                                    enum:
+                                      - Plain
+                              - properties:
+                                  json: {}
+                                  type:
+                                    enum:
+                                      - Json
                             properties:
                               json:
                                 type: array
@@ -368,7 +131,7 @@ properties:
                           backendRef:
                             description: |-
                               BackendRef is a reference to a MeshOpenTelemetryBackend resource that
-                              defines the collector endpoint. Mutually exclusive with Endpoint.
+                              defines the collector endpoint.
                             type: object
                             properties:
                               kind:
@@ -398,14 +161,6 @@ properties:
                                     value:
                                       stringValue: '%KUMA_MESH%'
                             x-kubernetes-preserve-unknown-fields: true
-                          endpoint:
-                            description: |-
-                              Endpoint of OpenTelemetry collector. An empty port defaults to 4317.
-
-                              Deprecated: use BackendRef instead.
-                            type: string
-                            example: otel-collector:4317
-                            default: ''
                       tcp:
                         description: TCPBackend defines a TCP logging backend.
                         type: object
@@ -420,6 +175,17 @@ properties:
                               Format of access logs. Placeholders available on
                               https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
                             type: object
+                            oneOf:
+                              - properties:
+                                  plain: {}
+                                  type:
+                                    enum:
+                                      - Plain
+                              - properties:
+                                  json: {}
+                                  type:
+                                    enum:
+                                      - Json
                             properties:
                               json:
                                 type: array
@@ -462,6 +228,22 @@ properties:
                     required:
                       - type
                     type: object
+                    oneOf:
+                      - properties:
+                          tcp: {}
+                          type:
+                            enum:
+                              - Tcp
+                      - properties:
+                          file: {}
+                          type:
+                            enum:
+                              - File
+                      - properties:
+                          openTelemetry: {}
+                          type:
+                            enum:
+                              - OpenTelemetry
             matches:
               description: |-
                 Matches defines a list of conditions (by SpiffeID or SNI) that select the
@@ -517,56 +299,20 @@ properties:
             type: string
             enum:
               - Mesh
-              - MeshSubset
-              - MeshGateway
-              - MeshService
-              - MeshExternalService
-              - MeshMultiZoneService
-              - MeshServiceSubset
-              - MeshHTTPRoute
               - Dataplane
           labels:
             description: |-
-              Labels are used to select group of MeshServices that match labels. Either Labels or
-              Name and Namespace can be used.
+              Labels are used to select referenced real resources and to carry legacy
+              service identity when a common TargetRef must still target old
+              service-tag based paths.
             type: object
             additionalProperties:
-              type: string
-          mesh:
-            description: Mesh is reserved for future use to identify cross mesh resources.
-            type: string
-          name:
-            description: |-
-              Name of the referenced resource. Can only be used with kinds: `MeshService`,
-              `MeshServiceSubset` and `MeshGatewayRoute`
-            type: string
-          namespace:
-            description: |-
-              Namespace specifies the namespace of target resource. If empty only resources in policy namespace
-              will be targeted.
-            type: string
-          proxyTypes:
-            description: |-
-              ProxyTypes specifies the data plane types that are subject to the policy. When not specified,
-              all data plane types are targeted by the policy.
-            type: array
-            items:
-              enum:
-                - Sidecar
-                - Gateway
               type: string
           sectionName:
             description: |-
               SectionName is used to target specific section of resource.
               For example, you can target port from MeshService.ports[] by its name. Only traffic to this port will be affected.
             type: string
-          tags:
-            description: |-
-              Tags used to select a subset of proxies by tags. Can only be used with kinds
-              `MeshSubset` and `MeshServiceSubset`
-            type: object
-            additionalProperties:
-              type: string
         required:
           - kind
       to:
@@ -593,6 +339,17 @@ properties:
                               Format of access logs. Placeholders available on
                               https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
                             type: object
+                            oneOf:
+                              - properties:
+                                  plain: {}
+                                  type:
+                                    enum:
+                                      - Plain
+                              - properties:
+                                  json: {}
+                                  type:
+                                    enum:
+                                      - Json
                             properties:
                               json:
                                 type: array
@@ -660,7 +417,7 @@ properties:
                           backendRef:
                             description: |-
                               BackendRef is a reference to a MeshOpenTelemetryBackend resource that
-                              defines the collector endpoint. Mutually exclusive with Endpoint.
+                              defines the collector endpoint.
                             type: object
                             properties:
                               kind:
@@ -690,14 +447,6 @@ properties:
                                     value:
                                       stringValue: '%KUMA_MESH%'
                             x-kubernetes-preserve-unknown-fields: true
-                          endpoint:
-                            description: |-
-                              Endpoint of OpenTelemetry collector. An empty port defaults to 4317.
-
-                              Deprecated: use BackendRef instead.
-                            type: string
-                            example: otel-collector:4317
-                            default: ''
                       tcp:
                         description: TCPBackend defines a TCP logging backend.
                         type: object
@@ -712,6 +461,17 @@ properties:
                               Format of access logs. Placeholders available on
                               https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
                             type: object
+                            oneOf:
+                              - properties:
+                                  plain: {}
+                                  type:
+                                    enum:
+                                      - Plain
+                              - properties:
+                                  json: {}
+                                  type:
+                                    enum:
+                                      - Json
                             properties:
                               json:
                                 type: array
@@ -754,6 +514,22 @@ properties:
                     required:
                       - type
                     type: object
+                    oneOf:
+                      - properties:
+                          tcp: {}
+                          type:
+                            enum:
+                              - Tcp
+                      - properties:
+                          file: {}
+                          type:
+                            enum:
+                              - File
+                      - properties:
+                          openTelemetry: {}
+                          type:
+                            enum:
+                              - OpenTelemetry
             targetRef:
               description: |-
                 TargetRef is a reference to the resource that represents a group of
@@ -765,56 +541,23 @@ properties:
                   type: string
                   enum:
                     - Mesh
-                    - MeshSubset
-                    - MeshGateway
                     - MeshService
                     - MeshExternalService
                     - MeshMultiZoneService
-                    - MeshServiceSubset
                     - MeshHTTPRoute
-                    - Dataplane
                 labels:
                   description: |-
-                    Labels are used to select group of MeshServices that match labels. Either Labels or
-                    Name and Namespace can be used.
+                    Labels are used to select referenced real resources and to carry legacy
+                    service identity when a common TargetRef must still target old
+                    service-tag based paths.
                   type: object
                   additionalProperties:
-                    type: string
-                mesh:
-                  description: Mesh is reserved for future use to identify cross mesh resources.
-                  type: string
-                name:
-                  description: |-
-                    Name of the referenced resource. Can only be used with kinds: `MeshService`,
-                    `MeshServiceSubset` and `MeshGatewayRoute`
-                  type: string
-                namespace:
-                  description: |-
-                    Namespace specifies the namespace of target resource. If empty only resources in policy namespace
-                    will be targeted.
-                  type: string
-                proxyTypes:
-                  description: |-
-                    ProxyTypes specifies the data plane types that are subject to the policy. When not specified,
-                    all data plane types are targeted by the policy.
-                  type: array
-                  items:
-                    enum:
-                      - Sidecar
-                      - Gateway
                     type: string
                 sectionName:
                   description: |-
                     SectionName is used to target specific section of resource.
                     For example, you can target port from MeshService.ports[] by its name. Only traffic to this port will be affected.
                   type: string
-                tags:
-                  description: |-
-                    Tags used to select a subset of proxies by tags. Can only be used with kinds
-                    `MeshSubset` and `MeshServiceSubset`
-                  type: object
-                  additionalProperties:
-                    type: string
               required:
                 - kind
           required:
@@ -825,13 +568,13 @@ properties:
     description: Time at which the resource was created
     type: string
     format: date-time
-    example: 0001-01-01T00:00:00Z
+    example: 1901-01-01T00:00:00.000Z
     readOnly: true
   modificationTime:
     description: Time at which the resource was updated
     type: string
     format: date-time
-    example: 0001-01-01T00:00:00Z
+    example: 1901-01-01T00:00:00.000Z
     readOnly: true
   status:
     description: Status is the current status of the Kuma MeshAccessLog resource.

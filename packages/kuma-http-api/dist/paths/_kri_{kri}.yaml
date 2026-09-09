@@ -20,7 +20,6 @@ get:
               - $ref: '../components/schemas/MeshAccessLogItem.yaml'
               - $ref: '../components/schemas/MeshCircuitBreakerItem.yaml'
               - $ref: '../components/schemas/MeshFaultInjectionItem.yaml'
-              - $ref: '../components/schemas/MeshGatewayItem.yaml'
               - $ref: '../components/schemas/MeshHTTPRouteItem.yaml'
               - $ref: '../components/schemas/MeshHealthCheckItem.yaml'
               - $ref: '../components/schemas/MeshLoadBalancingStrategyItem.yaml'
@@ -34,8 +33,6 @@ get:
               - $ref: '../components/schemas/MeshTimeoutItem.yaml'
               - $ref: '../components/schemas/MeshTraceItem.yaml'
               - $ref: '../components/schemas/MeshTrafficPermissionItem.yaml'
-              - $ref: '../components/schemas/ZoneEgressItem.yaml'
-              - $ref: '../components/schemas/ZoneIngressItem.yaml'
     '400':
       $ref: '../components/responses/BadRequest.yaml'
     '404':

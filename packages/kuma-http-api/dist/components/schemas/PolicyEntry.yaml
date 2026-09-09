@@ -1,0 +1,20 @@
+type: object
+properties:
+  name:
+    type: string
+  readOnly:
+    type: boolean
+  path:
+    type: string
+  singularDisplayName:
+    type: string
+  pluralDisplayName:
+    type: string
+  isExperimental:
+    type: boolean
+  isTargetRefBased:
+    type: boolean
+  isInbound:
+    type: boolean
+  isOutbound:
+    type: boolean

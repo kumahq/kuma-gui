@@ -1,0 +1,5 @@
+description: A response containing all policy types.
+content:
+  application/json:
+    schema:
+      $ref: '../schemas/Policies.yaml'

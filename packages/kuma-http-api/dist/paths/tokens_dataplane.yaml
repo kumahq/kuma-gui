@@ -1,0 +1,19 @@
+post:
+  operationId: issue-dataplane-token
+  summary: Issue a dataplane token
+  description: Issues a token used to authenticate a data plane proxy to the control plane
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/DataplaneTokenRequest.yaml'
+  responses:
+    '200':
+      $ref: '../components/responses/TokenResponse.yaml'
+    '400':
+      $ref: '../components/responses/BadRequest.yaml'
+    '500':
+      $ref: '../components/responses/Internal.yaml'
+  tags:
+    - Tokens

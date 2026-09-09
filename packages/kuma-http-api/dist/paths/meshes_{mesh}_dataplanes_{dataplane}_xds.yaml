@@ -1,0 +1,38 @@
+get:
+  operationId: get-dataplane-xds
+  summary: Get the Envoy config dump of this dataplane
+  description: Proxies the Envoy admin config dump of the DPP.
+  parameters:
+    - name: mesh
+      in: path
+      description: The mesh of the DPP.
+      required: true
+      schema:
+        type: string
+    - name: dataplane
+      in: path
+      description: The name of the DPP within the mesh.
+      required: true
+      schema:
+        type: string
+    - name: include_eds
+      in: query
+      description: Include endpoint discovery data in the config dump.
+      required: false
+      schema:
+        type: boolean
+        default: false
+  responses:
+    '200':
+      description: The Envoy config dump.
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+    '400':
+      $ref: '../components/responses/BadRequest.yaml'
+    '500':
+      $ref: '../components/responses/Internal.yaml'
+  tags:
+    - Inspect

@@ -1,0 +1,23 @@
+get:
+  operationId: getDataplaneInsight
+  summary: Returns DataplaneInsight entity
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+    - name: name
+      in: path
+      description: name of the DataplaneInsight
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: '../components/responses/DataplaneInsightItem.yaml'
+    '404':
+      $ref: '../components/responses/NotFound.yaml'
+  tags:
+    - DataplaneInsight

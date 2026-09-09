@@ -1,0 +1,17 @@
+get:
+  operationId: getZoneInsight
+  summary: Returns ZoneInsight entity
+  parameters:
+    - name: name
+      in: path
+      description: name of the ZoneInsight
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: '../components/responses/ZoneInsightItem.yaml'
+    '404':
+      $ref: '../components/responses/NotFound.yaml'
+  tags:
+    - ZoneInsight

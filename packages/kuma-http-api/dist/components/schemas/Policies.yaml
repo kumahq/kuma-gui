@@ -1,0 +1,6 @@
+type: object
+properties:
+  policies:
+    type: array
+    items:
+      $ref: 'PolicyEntry.yaml'

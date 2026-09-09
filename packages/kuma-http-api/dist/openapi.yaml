@@ -3,7 +3,7 @@ info:
   title: Kuma API
   description: Kuma API
   version: v1alpha1
-  x-ref-schema-name: DataplaneOverview
+  x-ref-schema-name: ZoneOverview
 paths:
   /:
     $ref: paths/.yaml
@@ -11,10 +11,28 @@ paths:
     $ref: paths/_resources.yaml
   /global-insight:
     $ref: paths/globalinsight.yaml
+  /global-insights:
+    $ref: paths/globalinsights.yaml
+  /policies:
+    $ref: paths/policies.yaml
+  /who-am-i:
+    $ref: paths/whoami.yaml
+  /tokens/dataplane:
+    $ref: paths/tokens_dataplane.yaml
+  /tokens/zone:
+    $ref: paths/tokens_zone.yaml
   /meshes/{mesh}/{resourceType}/{resourceName}/_rules:
     $ref: paths/meshes_{mesh}_{resourceType}_{resourceName}__rules.yaml
   /meshes/{mesh}/dataplanes/{name}/_config:
     $ref: paths/meshes_{mesh}_dataplanes_{name}__config.yaml
+  /config:
+    $ref: paths/config.yaml
+  /meshes/{mesh}/dataplanes/{dataplane}/xds:
+    $ref: paths/meshes_{mesh}_dataplanes_{dataplane}_xds.yaml
+  /meshes/{mesh}/dataplanes/{dataplane}/clusters:
+    $ref: paths/meshes_{mesh}_dataplanes_{dataplane}_clusters.yaml
+  /meshes/{mesh}/dataplanes/{dataplane}/stats:
+    $ref: paths/meshes_{mesh}_dataplanes_{dataplane}_stats.yaml
   /meshes/{mesh}/dataplanes/{name}/_layout:
     $ref: paths/meshes_{mesh}_dataplanes_{name}__layout.yaml
   /meshes/{mesh}/dataplanes/{name}/_policies:
@@ -35,98 +53,158 @@ paths:
     $ref: paths/meshes_{mesh}_{serviceType}_{serviceName}__hostnames.yaml
   /_kri/{kri}:
     $ref: paths/_kri_{kri}.yaml
+  /_kri/{kri}/_overview:
+    $ref: paths/_kri_{kri}__overview.yaml
   /meshes/{mesh}/meshaccesslogs/{name}:
     $ref: paths/meshes_{mesh}_meshaccesslogs_{name}.yaml
   /meshes/{mesh}/meshaccesslogs:
     $ref: paths/meshes_{mesh}_meshaccesslogs.yaml
+  /meshaccesslogs:
+    $ref: paths/meshaccesslogs.yaml
   /meshes/{mesh}/meshcircuitbreakers/{name}:
     $ref: paths/meshes_{mesh}_meshcircuitbreakers_{name}.yaml
   /meshes/{mesh}/meshcircuitbreakers:
     $ref: paths/meshes_{mesh}_meshcircuitbreakers.yaml
+  /meshcircuitbreakers:
+    $ref: paths/meshcircuitbreakers.yaml
   /meshes/{mesh}/meshfaultinjections/{name}:
     $ref: paths/meshes_{mesh}_meshfaultinjections_{name}.yaml
   /meshes/{mesh}/meshfaultinjections:
     $ref: paths/meshes_{mesh}_meshfaultinjections.yaml
+  /meshfaultinjections:
+    $ref: paths/meshfaultinjections.yaml
   /meshes/{mesh}/meshhealthchecks/{name}:
     $ref: paths/meshes_{mesh}_meshhealthchecks_{name}.yaml
   /meshes/{mesh}/meshhealthchecks:
     $ref: paths/meshes_{mesh}_meshhealthchecks.yaml
+  /meshhealthchecks:
+    $ref: paths/meshhealthchecks.yaml
   /meshes/{mesh}/meshhttproutes/{name}:
     $ref: paths/meshes_{mesh}_meshhttproutes_{name}.yaml
   /meshes/{mesh}/meshhttproutes:
     $ref: paths/meshes_{mesh}_meshhttproutes.yaml
+  /meshhttproutes:
+    $ref: paths/meshhttproutes.yaml
   /meshes/{mesh}/meshloadbalancingstrategies/{name}:
     $ref: paths/meshes_{mesh}_meshloadbalancingstrategies_{name}.yaml
   /meshes/{mesh}/meshloadbalancingstrategies:
     $ref: paths/meshes_{mesh}_meshloadbalancingstrategies.yaml
+  /meshloadbalancingstrategies:
+    $ref: paths/meshloadbalancingstrategies.yaml
   /meshes/{mesh}/meshmetrics/{name}:
     $ref: paths/meshes_{mesh}_meshmetrics_{name}.yaml
   /meshes/{mesh}/meshmetrics:
     $ref: paths/meshes_{mesh}_meshmetrics.yaml
+  /meshmetrics:
+    $ref: paths/meshmetrics.yaml
   /meshes/{mesh}/meshpassthroughs/{name}:
     $ref: paths/meshes_{mesh}_meshpassthroughs_{name}.yaml
   /meshes/{mesh}/meshpassthroughs:
     $ref: paths/meshes_{mesh}_meshpassthroughs.yaml
+  /meshpassthroughs:
+    $ref: paths/meshpassthroughs.yaml
   /meshes/{mesh}/meshproxypatches/{name}:
     $ref: paths/meshes_{mesh}_meshproxypatches_{name}.yaml
   /meshes/{mesh}/meshproxypatches:
     $ref: paths/meshes_{mesh}_meshproxypatches.yaml
+  /meshproxypatches:
+    $ref: paths/meshproxypatches.yaml
   /meshes/{mesh}/meshratelimits/{name}:
     $ref: paths/meshes_{mesh}_meshratelimits_{name}.yaml
   /meshes/{mesh}/meshratelimits:
     $ref: paths/meshes_{mesh}_meshratelimits.yaml
+  /meshratelimits:
+    $ref: paths/meshratelimits.yaml
   /meshes/{mesh}/meshretries/{name}:
     $ref: paths/meshes_{mesh}_meshretries_{name}.yaml
   /meshes/{mesh}/meshretries:
     $ref: paths/meshes_{mesh}_meshretries.yaml
+  /meshretries:
+    $ref: paths/meshretries.yaml
   /meshes/{mesh}/meshtcproutes/{name}:
     $ref: paths/meshes_{mesh}_meshtcproutes_{name}.yaml
   /meshes/{mesh}/meshtcproutes:
     $ref: paths/meshes_{mesh}_meshtcproutes.yaml
+  /meshtcproutes:
+    $ref: paths/meshtcproutes.yaml
   /meshes/{mesh}/meshtimeouts/{name}:
     $ref: paths/meshes_{mesh}_meshtimeouts_{name}.yaml
   /meshes/{mesh}/meshtimeouts:
     $ref: paths/meshes_{mesh}_meshtimeouts.yaml
+  /meshtimeouts:
+    $ref: paths/meshtimeouts.yaml
   /meshes/{mesh}/meshtlses/{name}:
     $ref: paths/meshes_{mesh}_meshtlses_{name}.yaml
   /meshes/{mesh}/meshtlses:
     $ref: paths/meshes_{mesh}_meshtlses.yaml
+  /meshtlses:
+    $ref: paths/meshtlses.yaml
   /meshes/{mesh}/meshtraces/{name}:
     $ref: paths/meshes_{mesh}_meshtraces_{name}.yaml
   /meshes/{mesh}/meshtraces:
     $ref: paths/meshes_{mesh}_meshtraces.yaml
+  /meshtraces:
+    $ref: paths/meshtraces.yaml
   /meshes/{mesh}/meshtrafficpermissions/{name}:
     $ref: paths/meshes_{mesh}_meshtrafficpermissions_{name}.yaml
   /meshes/{mesh}/meshtrafficpermissions:
     $ref: paths/meshes_{mesh}_meshtrafficpermissions.yaml
+  /meshtrafficpermissions:
+    $ref: paths/meshtrafficpermissions.yaml
+  /dataplanes:
+    $ref: paths/dataplanes.yaml
   /meshes/{mesh}/dataplanes:
     $ref: paths/meshes_{mesh}_dataplanes.yaml
   /meshes/{mesh}/dataplanes/{name}:
     $ref: paths/meshes_{mesh}_dataplanes_{name}.yaml
+  /dataplane-insights:
+    $ref: paths/dataplaneinsights.yaml
+  /meshes/{mesh}/dataplane-insights:
+    $ref: paths/meshes_{mesh}_dataplaneinsights.yaml
+  /meshes/{mesh}/dataplane-insights/{name}:
+    $ref: paths/meshes_{mesh}_dataplaneinsights_{name}.yaml
   /meshes/{mesh}/dataplanes/{name}/_overview:
     $ref: paths/meshes_{mesh}_dataplanes_{name}__overview.yaml
   /meshes/{mesh}/dataplanes/_overview:
     $ref: paths/meshes_{mesh}_dataplanes__overview.yaml
+  /globalsecrets/{name}:
+    $ref: paths/globalsecrets_{name}.yaml
+  /globalsecrets:
+    $ref: paths/globalsecrets.yaml
+  /global-secrets/{name}:
+    $ref: paths/globalsecrets_{name}.yaml
+  /global-secrets:
+    $ref: paths/globalsecrets.yaml
   /meshes:
     $ref: paths/meshes.yaml
   /meshes/{name}:
     $ref: paths/meshes_{name}.yaml
-  /meshes/{mesh}/meshgateways:
-    $ref: paths/meshes_{mesh}_meshgateways.yaml
-  /meshes/{mesh}/meshgateways/{name}:
-    $ref: paths/meshes_{mesh}_meshgateways_{name}.yaml
+  /mesh-insights/{name}:
+    $ref: paths/mesh-insights_{name}.yaml
+  /mesh-insights:
+    $ref: paths/mesh-insights.yaml
+  /meshes/{name}/_overview:
+    $ref: paths/meshes_{name}__overview.yaml
+  /meshes/_overview:
+    $ref: paths/meshes__overview.yaml
   /meshes/{mesh}/secrets:
     $ref: paths/meshes_{mesh}_secrets.yaml
   /meshes/{mesh}/secrets/{name}:
     $ref: paths/meshes_{mesh}_secrets_{name}.yaml
-  /zoneegresses:
-    $ref: paths/zoneegresses.yaml
-  /zoneegresses/{name}:
-    $ref: paths/zoneegresses_{name}.yaml
-  /zoneingresses:
-    $ref: paths/zoneingresses.yaml
-  /zoneingresses/{name}:
-    $ref: paths/zoneingresses_{name}.yaml
+  /secrets:
+    $ref: paths/secrets.yaml
+  /zones:
+    $ref: paths/zones.yaml
+  /zones/{name}:
+    $ref: paths/zones_{name}.yaml
+  /zone-insights:
+    $ref: paths/zoneinsights.yaml
+  /zone-insights/{name}:
+    $ref: paths/zoneinsights_{name}.yaml
+  /zones/{name}/_overview:
+    $ref: paths/zones_{name}_overview.yaml
+  /zones/_overview:
+    $ref: paths/zones__overview.yaml
   /hostnamegenerators/{name}:
     $ref: paths/hostnamegenerators_{name}.yaml
   /hostnamegenerators:
@@ -135,48 +213,50 @@ paths:
     $ref: paths/meshes_{mesh}_meshexternalservices_{name}.yaml
   /meshes/{mesh}/meshexternalservices:
     $ref: paths/meshes_{mesh}_meshexternalservices.yaml
+  /meshexternalservices:
+    $ref: paths/meshexternalservices.yaml
   /meshes/{mesh}/meshidentities/{name}:
     $ref: paths/meshes_{mesh}_meshidentities_{name}.yaml
   /meshes/{mesh}/meshidentities:
     $ref: paths/meshes_{mesh}_meshidentities.yaml
+  /meshidentities:
+    $ref: paths/meshidentities.yaml
   /meshes/{mesh}/meshmultizoneservices/{name}:
     $ref: paths/meshes_{mesh}_meshmultizoneservices_{name}.yaml
   /meshes/{mesh}/meshmultizoneservices:
     $ref: paths/meshes_{mesh}_meshmultizoneservices.yaml
+  /meshmultizoneservices:
+    $ref: paths/meshmultizoneservices.yaml
   /meshes/{mesh}/meshopentelemetrybackends/{name}:
     $ref: paths/meshes_{mesh}_meshopentelemetrybackends_{name}.yaml
   /meshes/{mesh}/meshopentelemetrybackends:
     $ref: paths/meshes_{mesh}_meshopentelemetrybackends.yaml
+  /meshopentelemetrybackends:
+    $ref: paths/meshopentelemetrybackends.yaml
   /meshes/{mesh}/meshservices/{name}:
     $ref: paths/meshes_{mesh}_meshservices_{name}.yaml
   /meshes/{mesh}/meshservices:
     $ref: paths/meshes_{mesh}_meshservices.yaml
+  /meshservices:
+    $ref: paths/meshservices.yaml
   /meshes/{mesh}/meshtrusts/{name}:
     $ref: paths/meshes_{mesh}_meshtrusts_{name}.yaml
   /meshes/{mesh}/meshtrusts:
     $ref: paths/meshes_{mesh}_meshtrusts.yaml
+  /meshtrusts:
+    $ref: paths/meshtrusts.yaml
   /meshes/{mesh}/meshzoneaddresses/{name}:
     $ref: paths/meshes_{mesh}_meshzoneaddresses_{name}.yaml
   /meshes/{mesh}/meshzoneaddresses:
     $ref: paths/meshes_{mesh}_meshzoneaddresses.yaml
+  /meshzoneaddresses:
+    $ref: paths/meshzoneaddresses.yaml
   /meshes/{mesh}/workloads/{name}:
     $ref: paths/meshes_{mesh}_workloads_{name}.yaml
   /meshes/{mesh}/workloads:
     $ref: paths/meshes_{mesh}_workloads.yaml
-  /config:
-    $ref: paths/config.yaml
-  /mesh-insights:
-    $ref: paths/mesh-insights.yaml
-  /mesh-insights/{name}:
-    $ref: paths/mesh-insights_{name}.yaml
-  /meshes/{mesh}/service-insights:
-    $ref: paths/meshes_{mesh}_service-insights.yaml
-  /meshes/{mesh}/service-insights/{name}:
-    $ref: paths/meshes_{mesh}_service-insights_{name}.yaml
-  /meshes/{mesh}/external-services:
-    $ref: paths/meshes_{mesh}_external-services.yaml
-  /meshes/{mesh}/external-services/{name}:
-    $ref: paths/meshes_{mesh}_external-services_{name}.yaml
+  /workloads:
+    $ref: paths/workloads.yaml
   /meshes/{mesh}/dataplanes/{name}/xds:
     $ref: paths/meshes_{mesh}_dataplanes_{name}_xds.yaml
   /meshes/{mesh}/dataplanes/{name}/stats:
@@ -185,10 +265,6 @@ paths:
     $ref: paths/meshes_{mesh}_dataplanes_{name}_clusters.yaml
   /meshes/{mesh}/dataplanes/{name}/policies:
     $ref: paths/meshes_{mesh}_dataplanes_{name}_policies.yaml
-  /zones/_overview:
-    $ref: paths/zones__overview.yaml
-  /zones/{name}/_overview:
-    $ref: paths/zones_{name}_overview.yaml
 components:
   schemas:
     Index:
@@ -227,6 +303,18 @@ components:
       $ref: components/schemas/InspectHostnameZone.yaml
     DataplaneNetworkingLayout:
       $ref: components/schemas/DataplaneNetworkingLayout.yaml
+    GlobalInsights:
+      $ref: components/schemas/GlobalInsights.yaml
+    PolicyEntry:
+      $ref: components/schemas/PolicyEntry.yaml
+    Policies:
+      $ref: components/schemas/Policies.yaml
+    WhoAmI:
+      $ref: components/schemas/WhoAmI.yaml
+    DataplaneTokenRequest:
+      $ref: components/schemas/DataplaneTokenRequest.yaml
+    ZoneTokenRequest:
+      $ref: components/schemas/ZoneTokenRequest.yaml
     InvalidParameters:
       $ref: components/schemas/InvalidParameters.yaml
     Error:
@@ -239,18 +327,12 @@ components:
       $ref: components/schemas/Meta.yaml
     ProxyRule:
       $ref: components/schemas/ProxyRule.yaml
-    RuleMatcher:
-      $ref: components/schemas/RuleMatcher.yaml
-    Rule:
-      $ref: components/schemas/Rule.yaml
     ResourceRuleOrigin:
       $ref: components/schemas/ResourceRuleOrigin.yaml
     ResourceRule:
       $ref: components/schemas/ResourceRule.yaml
     Inbound:
       $ref: components/schemas/Inbound.yaml
-    FromRule:
-      $ref: components/schemas/FromRule.yaml
     InboundRule:
       $ref: components/schemas/InboundRule.yaml
     InboundRulesEntry:
@@ -265,6 +347,8 @@ components:
       $ref: components/schemas/DataplaneInbound.yaml
     DataplaneOutbound:
       $ref: components/schemas/DataplaneOutbound.yaml
+    DataplaneListenerCluster:
+      $ref: components/schemas/DataplaneListenerCluster.yaml
     DataplaneListener:
       $ref: components/schemas/DataplaneListener.yaml
     PolicyOrigin:
@@ -287,30 +371,8 @@ components:
       $ref: components/schemas/RoutesList.yaml
     NotFoundError:
       $ref: components/schemas/NotFoundError.yaml
-    PrometheusMetricsBackendConfig:
-      $ref: components/schemas/PrometheusMetricsBackendConfig.yaml
     DataplaneItem:
       $ref: components/schemas/DataplaneItem.yaml
-    FileLoggingBackendConfig:
-      $ref: components/schemas/FileLoggingBackendConfig.yaml
-    TcpLoggingBackendConfig:
-      $ref: components/schemas/TcpLoggingBackendConfig.yaml
-    DataSource_File:
-      $ref: components/schemas/DataSource_File.yaml
-    DataSource_Inline:
-      $ref: components/schemas/DataSource_Inline.yaml
-    DataSource_InlineString:
-      $ref: components/schemas/DataSource_InlineString.yaml
-    DataSource_Secret:
-      $ref: components/schemas/DataSource_Secret.yaml
-    ProvidedCertificateAuthorityConfig:
-      $ref: components/schemas/ProvidedCertificateAuthorityConfig.yaml
-    BuiltinCertificateAuthorityConfig:
-      $ref: components/schemas/BuiltinCertificateAuthorityConfig.yaml
-    DatadogTracingBackendConfig:
-      $ref: components/schemas/DatadogTracingBackendConfig.yaml
-    ZipkinTracingBackendConfig:
-      $ref: components/schemas/ZipkinTracingBackendConfig.yaml
     MeshItem:
       $ref: components/schemas/MeshItem.yaml
     MeshAccessLogItem:
@@ -319,8 +381,6 @@ components:
       $ref: components/schemas/MeshCircuitBreakerItem.yaml
     MeshFaultInjectionItem:
       $ref: components/schemas/MeshFaultInjectionItem.yaml
-    MeshGatewayItem:
-      $ref: components/schemas/MeshGatewayItem.yaml
     MeshHTTPRouteItem:
       $ref: components/schemas/MeshHTTPRouteItem.yaml
     MeshHealthCheckItem:
@@ -347,16 +407,32 @@ components:
       $ref: components/schemas/MeshTraceItem.yaml
     MeshTrafficPermissionItem:
       $ref: components/schemas/MeshTrafficPermissionItem.yaml
-    ZoneEgressItem:
-      $ref: components/schemas/ZoneEgressItem.yaml
-    ZoneIngressItem:
-      $ref: components/schemas/ZoneIngressItem.yaml
-    DataplaneOverviewWithMeta:
-      $ref: components/schemas/DataplaneOverviewWithMeta.yaml
     DataplaneOverview:
       $ref: components/schemas/DataplaneOverview.yaml
+    DataplaneOverviewWithMeta:
+      $ref: components/schemas/DataplaneOverviewWithMeta.yaml
+    MeshOverview:
+      $ref: components/schemas/MeshOverview.yaml
+    MeshOverviewWithMeta:
+      $ref: components/schemas/MeshOverviewWithMeta.yaml
+    DataplaneInsightItem:
+      $ref: components/schemas/DataplaneInsightItem.yaml
+    GlobalSecretItem:
+      $ref: components/schemas/GlobalSecretItem.yaml
+    MeshInsightWithMeta:
+      $ref: components/schemas/MeshInsightWithMeta.yaml
+    MeshInsight:
+      $ref: components/schemas/MeshInsight.yaml
     SecretItem:
       $ref: components/schemas/SecretItem.yaml
+    ZoneItem:
+      $ref: components/schemas/ZoneItem.yaml
+    ZoneInsightItem:
+      $ref: components/schemas/ZoneInsightItem.yaml
+    ZoneOverviewWithMeta:
+      $ref: components/schemas/ZoneOverviewWithMeta.yaml
+    ZoneOverview:
+      $ref: components/schemas/ZoneOverview.yaml
     HostnameGeneratorItem:
       $ref: components/schemas/HostnameGeneratorItem.yaml
     MeshExternalServiceItem:
@@ -377,8 +453,6 @@ components:
       $ref: components/schemas/WorkloadItem.yaml
     Policy:
       $ref: components/schemas/Policy.yaml
-    Zone:
-      $ref: components/schemas/Zone.yaml
     PolicyCollection:
       $ref: components/schemas/PolicyCollection.yaml
     LegacyPolicy:
@@ -393,6 +467,16 @@ components:
     InspectHostnamesExample:
       $ref: components/examples/InspectHostnamesExample.yaml
   responses:
+    GlobalInsightsResponse:
+      $ref: components/responses/GlobalInsightsResponse.yaml
+    PoliciesResponse:
+      $ref: components/responses/PoliciesResponse.yaml
+    WhoAmIResponse:
+      $ref: components/responses/WhoAmIResponse.yaml
+    TokenResponse:
+      $ref: components/responses/TokenResponse.yaml
+    ConfigResponse:
+      $ref: components/responses/ConfigResponse.yaml
     IndexResponse:
       $ref: components/responses/IndexResponse.yaml
     ResourceTypeDescriptionListResponse:
@@ -561,10 +645,26 @@ components:
       $ref: components/responses/DataplaneItem.yaml
     DataplaneList:
       $ref: components/responses/DataplaneList.yaml
+    DataplaneInsightCreateOrUpdateSuccessResponse:
+      $ref: components/responses/DataplaneInsightCreateOrUpdateSuccessResponse.yaml
+    DataplaneInsightDeleteSuccessResponse:
+      $ref: components/responses/DataplaneInsightDeleteSuccessResponse.yaml
+    DataplaneInsightItem:
+      $ref: components/responses/DataplaneInsightItem.yaml
+    DataplaneInsightList:
+      $ref: components/responses/DataplaneInsightList.yaml
     GetDataplaneOverviewResponse:
       $ref: components/responses/GetDataplaneOverviewResponse.yaml
     GetDataplaneOverviewListResponse:
       $ref: components/responses/GetDataplaneOverviewListResponse.yaml
+    GlobalSecretItem:
+      $ref: components/responses/GlobalSecretItem.yaml
+    GlobalSecretList:
+      $ref: components/responses/GlobalSecretList.yaml
+    GlobalSecretCreateOrUpdateSuccessResponse:
+      $ref: components/responses/GlobalSecretCreateOrUpdateSuccessResponse.yaml
+    GlobalSecretDeleteSuccessResponse:
+      $ref: components/responses/GlobalSecretDeleteSuccessResponse.yaml
     MeshCreateOrUpdateSuccessResponse:
       $ref: components/responses/MeshCreateOrUpdateSuccessResponse.yaml
     MeshDeleteSuccessResponse:
@@ -573,14 +673,14 @@ components:
       $ref: components/responses/MeshItem.yaml
     MeshList:
       $ref: components/responses/MeshList.yaml
-    MeshGatewayCreateOrUpdateSuccessResponse:
-      $ref: components/responses/MeshGatewayCreateOrUpdateSuccessResponse.yaml
-    MeshGatewayDeleteSuccessResponse:
-      $ref: components/responses/MeshGatewayDeleteSuccessResponse.yaml
-    MeshGatewayItem:
-      $ref: components/responses/MeshGatewayItem.yaml
-    MeshGatewayList:
-      $ref: components/responses/MeshGatewayList.yaml
+    GetMeshInsightResponse:
+      $ref: components/responses/GetMeshInsightResponse.yaml
+    GetMeshInsightListResponse:
+      $ref: components/responses/GetMeshInsightListResponse.yaml
+    GetMeshOverviewResponse:
+      $ref: components/responses/GetMeshOverviewResponse.yaml
+    GetMeshOverviewListResponse:
+      $ref: components/responses/GetMeshOverviewListResponse.yaml
     SecretCreateOrUpdateSuccessResponse:
       $ref: components/responses/SecretCreateOrUpdateSuccessResponse.yaml
     SecretDeleteSuccessResponse:
@@ -589,22 +689,26 @@ components:
       $ref: components/responses/SecretItem.yaml
     SecretList:
       $ref: components/responses/SecretList.yaml
-    ZoneEgressCreateOrUpdateSuccessResponse:
-      $ref: components/responses/ZoneEgressCreateOrUpdateSuccessResponse.yaml
-    ZoneEgressDeleteSuccessResponse:
-      $ref: components/responses/ZoneEgressDeleteSuccessResponse.yaml
-    ZoneEgressItem:
-      $ref: components/responses/ZoneEgressItem.yaml
-    ZoneEgressList:
-      $ref: components/responses/ZoneEgressList.yaml
-    ZoneIngressCreateOrUpdateSuccessResponse:
-      $ref: components/responses/ZoneIngressCreateOrUpdateSuccessResponse.yaml
-    ZoneIngressDeleteSuccessResponse:
-      $ref: components/responses/ZoneIngressDeleteSuccessResponse.yaml
-    ZoneIngressItem:
-      $ref: components/responses/ZoneIngressItem.yaml
-    ZoneIngressList:
-      $ref: components/responses/ZoneIngressList.yaml
+    ZoneCreateOrUpdateSuccessResponse:
+      $ref: components/responses/ZoneCreateOrUpdateSuccessResponse.yaml
+    ZoneDeleteSuccessResponse:
+      $ref: components/responses/ZoneDeleteSuccessResponse.yaml
+    ZoneItem:
+      $ref: components/responses/ZoneItem.yaml
+    ZoneList:
+      $ref: components/responses/ZoneList.yaml
+    ZoneInsightCreateOrUpdateSuccessResponse:
+      $ref: components/responses/ZoneInsightCreateOrUpdateSuccessResponse.yaml
+    ZoneInsightDeleteSuccessResponse:
+      $ref: components/responses/ZoneInsightDeleteSuccessResponse.yaml
+    ZoneInsightItem:
+      $ref: components/responses/ZoneInsightItem.yaml
+    ZoneInsightList:
+      $ref: components/responses/ZoneInsightList.yaml
+    GetZoneOverviewResponse:
+      $ref: components/responses/GetZoneOverviewResponse.yaml
+    GetZoneOverviewListResponse:
+      $ref: components/responses/GetZoneOverviewListResponse.yaml
     HostnameGeneratorItem:
       $ref: components/responses/HostnameGeneratorItem.yaml
     HostnameGeneratorList:

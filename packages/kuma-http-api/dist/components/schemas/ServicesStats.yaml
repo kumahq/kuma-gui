@@ -14,10 +14,6 @@ properties:
         example: 5
     required:
       - total
-  gatewayBuiltin:
-    description: Builtin Gateway services statistics
-    allOf:
-      - $ref: 'FullStatus.yaml'
   gatewayDelegated:
     description: Delegated Gateway services statistics
     allOf:
@@ -26,6 +22,5 @@ required:
   - total
   - internal
   - external
-  - gatewayBuiltin
   - gatewayDelegated
 title: ServicesStats

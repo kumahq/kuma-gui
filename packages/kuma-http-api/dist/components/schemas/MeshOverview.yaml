@@ -1,0 +1,138 @@
+description: MeshOverview defines the projected state of a Mesh.
+type: object
+properties:
+  mesh:
+    type: object
+    properties:
+      skipCreatingInitialPolicies:
+        description: |-
+          List of policies to skip creating by default when the mesh is created.
+          e.g. TrafficPermission, MeshRetry, etc. An '*' can be used to skip all
+          policies.
+        type: array
+        items:
+          type: string
+  meshInsight:
+    type: object
+    properties:
+      dataplanes:
+        type: object
+        properties:
+          offline:
+            type: integer
+          online:
+            type: integer
+          partiallyDegraded:
+            type: integer
+          total:
+            type: integer
+      dataplanesByType:
+        type: object
+        properties:
+          gateway:
+            type: object
+            properties:
+              offline:
+                type: integer
+              online:
+                type: integer
+              partiallyDegraded:
+                type: integer
+              total:
+                type: integer
+          gatewayDelegated:
+            type: object
+            properties:
+              offline:
+                type: integer
+              online:
+                type: integer
+              partiallyDegraded:
+                type: integer
+              total:
+                type: integer
+          standard:
+            type: object
+            properties:
+              offline:
+                type: integer
+              online:
+                type: integer
+              partiallyDegraded:
+                type: integer
+              total:
+                type: integer
+      dpVersions:
+        type: object
+        properties:
+          envoy:
+            description: Dataplane stats grouped by Envoy version
+            type: object
+            additionalProperties:
+              description: DataplaneStat defines statistic specifically for Dataplane
+              properties:
+                offline:
+                  type: integer
+                online:
+                  type: integer
+                partiallyDegraded:
+                  type: integer
+                total:
+                  type: integer
+              type: object
+          kumaDp:
+            description: Dataplane stats grouped by KumaDP version
+            type: object
+            additionalProperties:
+              description: DataplaneStat defines statistic specifically for Dataplane
+              properties:
+                offline:
+                  type: integer
+                online:
+                  type: integer
+                partiallyDegraded:
+                  type: integer
+                total:
+                  type: integer
+              type: object
+      mTLS:
+        description: mTLS statistics
+        type: object
+        properties:
+          issuedBackends:
+            description: Dataplanes grouped by issued backends.
+            type: object
+            additionalProperties:
+              description: DataplaneStat defines statistic specifically for Dataplane
+              properties:
+                offline:
+                  type: integer
+                online:
+                  type: integer
+                partiallyDegraded:
+                  type: integer
+                total:
+                  type: integer
+              type: object
+          supportedBackends:
+            description: Dataplanes grouped by supported backends.
+            type: object
+            additionalProperties:
+              description: DataplaneStat defines statistic specifically for Dataplane
+              properties:
+                offline:
+                  type: integer
+                online:
+                  type: integer
+                partiallyDegraded:
+                  type: integer
+                total:
+                  type: integer
+              type: object
+      resources:
+        type: object
+        additionalProperties:
+          properties:
+            total:
+              type: integer
+          type: object
