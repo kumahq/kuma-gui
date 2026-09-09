@@ -748,49 +748,6 @@ export interface MeshHTTPRoute extends PolicyEntity {
   }
 }
 
-export interface MeshGatewaySelector {
-  match: ServiceTags
-}
-
-export interface TlsConfDataSource {
-  secret?: string
-  file?: string
-  inline?: string
-  inlineString?: string
-}
-
-export interface TlsConfOptions { }
-
-export interface MeshGatewayTlsConf {
-  mode?: 'TERMINATE' | 'PASSTHROUGH'
-  certificates?: TlsConfDataSource[]
-  options?: TlsConfOptions
-}
-
-export interface MeshGatewayListenerResources {
-  connection_limit?: number
-}
-
-export interface MeshGatewayListener {
-  hostname?: string
-  port: number
-  protocol?: 'TCP' | 'TLS' | 'HTTP' | 'HTTPS'
-  tls?: MeshGatewayTlsConf
-  tags?: Tags
-  crossMesh?: boolean
-  resources?: MeshGatewayListenerResources
-}
-
-export interface MeshGateway extends MeshEntity {
-  type: 'MeshGateway'
-  labels?: Tags
-  selectors?: MeshGatewaySelector[]
-  tags?: Tags
-  conf?: {
-    listeners?: MeshGatewayListener[]
-  }
-}
-
 export interface PolicyDataplane {
   type: 'Dataplane'
   mesh: string

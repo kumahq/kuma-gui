@@ -5,7 +5,6 @@ import _996 from './src/_kri/kri_extsvc__.ts'
 import _985 from './src/_kri/kri_hg__.ts'
 import _986 from './src/_kri/kri_mal__.ts'
 import _995 from './src/_kri/kri_mfi__.ts'
-import _994 from './src/_kri/kri_mgw__.ts'
 import _993 from './src/_kri/kri_mhttpr__.ts'
 import _992 from './src/_kri/kri_mid__.ts'
 import _998 from './src/_kri/kri_msvc__.ts'
@@ -33,7 +32,6 @@ import _123 from './src/meshes/_/dataplanes/_/_layout'
 import _232 from './src/meshes/_/dataplanes/_/_outbounds/_/_policies.ts'
 import _22 from './src/meshes/_/dataplanes/_/_overview'
 import _233 from './src/meshes/_/dataplanes/_/_policies.ts'
-import _128 from './src/meshes/_/dataplanes/_/_rules'
 import _122 from './src/meshes/_/dataplanes/_/clusters'
 import _20 from './src/meshes/_/dataplanes/_/policies'
 import _121 from './src/meshes/_/dataplanes/_/stats'
@@ -70,12 +68,6 @@ import _53 from './src/meshes/_/meshfaultinjections/_'
 import _54 from './src/meshes/_/meshfaultinjections/_/_resources/dataplanes'
 import _31 from './src/meshes/_/meshgatewayroutes'
 import _32 from './src/meshes/_/meshgatewayroutes/_'
-import _33 from './src/meshes/_/meshgateways'
-import _34 from './src/meshes/_/meshgateways/_'
-import _130 from './src/meshes/_/meshgateways/_/_resources/dataplanes'
-import _131 from './src/meshes/_/meshgateways/_/_rules'
-import _134 from './src/meshes/_/meshgateways/test-meshgateway/_'
-import _135 from './src/meshes/_/meshgateways/test-meshgateway/_rules'
 import _132 from './src/meshes/_/meshhttproutes'
 import _133 from './src/meshes/_/meshhttproutes/_'
 import _242 from './src/meshes/_/meshidentities/_.ts'
@@ -115,8 +107,6 @@ export const remote = {
 }
 export const fs = {
   // static/testing
-  '/meshes/:mesh/meshgateways/test-meshgateway': _134,
-  '/meshes/:mesh/meshgateways/test-meshgateway/_rules': _135,
   '/meshes/:mesh/dataplanes/default-gateway-instance-1-86cbb55644-6rxhg.kuma-demo/_overview': _228,
   '/meshes/:mesh/dataplanes/default-gateway-instance-1-86cbb55644-6rxhg.kuma-demo/stats': _229,
   '/meshes/:mesh/dataplanes/default-gateway-instance-1-86cbb55644-6rxhg.kuma-demo/_rules': _230,
@@ -154,17 +144,12 @@ export const fs = {
   '/meshes/:mesh/dataplanes/:name': _19,
   '/meshes/:mesh/dataplanes/:name/_overview': _22,
   '/meshes/:mesh/dataplanes/:name/_layout': _123,
-  '/meshes/:mesh/dataplanes/:name/_rules': _128,
   '/meshes/:mesh/dataplanes/:name/policies': _20,
   '/meshes/:mesh/dataplanes/:name/xds': _120,
   '/meshes/:mesh/dataplanes/:name/stats': _121,
   '/meshes/:mesh/dataplanes/:name/clusters': _122,
   '/meshes/:mesh/meshgatewayroutes': _31,
   '/meshes/:mesh/meshgatewayroutes/:name': _32,
-  '/meshes/:mesh/meshgateways': _33,
-  '/meshes/:mesh/meshgateways/:name': _34,
-  '/meshes/:mesh/meshgateways/:name/_resources/dataplanes': _130,
-  '/meshes/:mesh/meshgateways/:name/_rules': _131,
   '/meshes/:mesh/meshservices': _136,
   '/meshes/:mesh/meshservices/:name': _137,
   '/meshes/:mesh/meshmultizoneservices': _140,
@@ -234,8 +219,6 @@ export const fs = {
   '/_kri/kri_extsvc_:kri': _996,
   // MeshFaultInjection
   '/_kri/kri_mfi_:kri': _995,
-  // MeshGateway
-  '/_kri/kri_mgw_:kri': _994,
   // MeshHTTPRoute
   '/_kri/kri_mhttpr_:kri': _993,
   // MeshIdentity
