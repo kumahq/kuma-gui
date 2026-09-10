@@ -24,7 +24,7 @@
     "github-buttons": "^2.33.0",
     "js-yaml": "^4.1.1",
     "openapi-fetch": "^0.17.0",
-    "pretty-bytes": "^7.1.1",
+    "pretty-bytes": "^7.1.2",
     "shiki": "^4.4.3",
     "urlpattern-polyfill": "^10.1.0",
     "vue": "^3.5.35",
