@@ -330,10 +330,10 @@ describe('DataplaneOverview', () => {
       async ({ fixture }) => {
         const actual = await fixture.setup((item) => {
           if (item.dataplane.networking.inbound?.length === 1) {
-            const inbound = item.dataplane.networking.inbound[0] as {
-              port: number
+            type Inbound = NonNullable<(typeof item.dataplane.networking.inbound)>[number] & {
               tags: Record<string, string>
             }
+            const { state: _, ...inbound } = item.dataplane.networking.inbound[0] as Inbound
             inbound.port = 1
             inbound.tags = {
               'kuma.io/service': 'service-name',
