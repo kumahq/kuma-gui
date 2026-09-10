@@ -21,6 +21,7 @@ export const Mesh = {
       config: item,
       labels: item.labels ?? {},
       // @TODO(types) provide support for v2 and v3
+      mtls: 'mtls' in item ? item.mtls as MeshBackend : undefined,
       mtlsBackend: ((mtls: MeshBackend | undefined) => {
         if(typeof mtls === 'undefined') {
           return
