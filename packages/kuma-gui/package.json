@@ -39,7 +39,7 @@
     "@playwright/test": "^1.62.1",
     "@types/js-yaml": "^4.0.9",
     "@vitejs/plugin-vue": "^6.0.8",
-    "@vue/test-utils": "^2.4.11",
+    "@vue/test-utils": "^2.5.0",
     "jsdom": "^30.0.1",
     "msw": "^2.15.0",
     "playwright-bdd": "^9.2.0",
