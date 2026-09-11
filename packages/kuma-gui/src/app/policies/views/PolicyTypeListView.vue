@@ -51,7 +51,7 @@
                     <ul>
                       <template
                         v-for="current in [items.find(policyType => policyType.path === route.params.policyPath)]"
-                        :key="current"
+                        :key="typeof current"
                       >
                         <li
                           v-for="(policyType, i) in items"

@@ -64,7 +64,7 @@
                     {{ t('policies.routes.item.config') }}
                   </h3>
                   <div
-                    v-for="options in [['structured', 'universal', 'k8s']]"
+                    v-for="options in [['structured', 'universal', 'k8s'] as string[]]"
                     :key="typeof options"
                   >
                     <XSelect
