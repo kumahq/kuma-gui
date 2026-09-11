@@ -1,14 +1,35 @@
+description: ZoneInsight defines the observed state of a Zone Kuma CP.
 type: object
 properties:
+  type:
+    description: the type of the resource
+    type: string
+    enum:
+      - ZoneInsight
+  name:
+    description: Name of the Kuma resource
+    type: string
+    maxLength: 253
+    pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$
+  labels:
+    description: The labels to help identity resources
+    type: object
+    additionalProperties:
+      type: string
   creationTime:
     description: Time at which the resource was created
     type: string
     format: date-time
+    example: 1901-01-01T00:00:00.000Z
+    readOnly: true
+  modificationTime:
+    description: Time at which the resource was updated
+    type: string
+    format: date-time
+    example: 1901-01-01T00:00:00.000Z
     readOnly: true
   envoyAdminStreams:
-    description: |-
-      Statistics about Envoy Admin Streams
-      Deprecated: use kds_streams instead.
+    description: Statistics about Envoy Admin Streams, superseded by KDSStreams.
     type: object
     properties:
       clustersGlobalInstanceId:
@@ -21,14 +42,15 @@ properties:
         description: Global instance ID that handles Stats streams.
         type: string
   healthCheck:
+    description: Information about the last received zone health check.
     type: object
     properties:
       time:
-        description: Time last health check received
+        description: Time last health check received.
         type: string
         format: date-time
   kdsStreams:
-    description: Information about kds streams that are estabilished between global and zone
+    description: Information about kds streams that are established between global and zone.
     type: object
     properties:
       clusters:
@@ -86,30 +108,20 @@ properties:
           globalInstanceId:
             description: Global instance ID that handles the stream.
             type: string
-  labels:
-    type: object
-    additionalProperties:
-      type: string
-  modificationTime:
-    description: Time at which the resource was updated
-    type: string
-    format: date-time
-    readOnly: true
-  name:
-    type: string
-    maxLength: 253
-    pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$
   subscriptions:
     description: List of KDS subscriptions created by a given Zone Kuma CP.
     type: array
     items:
-      description: KDSSubscription describes a single KDS subscription created by a Zone to the Global.
+      description: |-
+        KDSSubscription describes a single KDS subscription created by a Zone to the Global.
+        Ideally there is one per Zone lifecycle. Several of them indicate a transient loss of
+        connectivity, or a restart of either control plane.
       properties:
         authTokenProvided:
-          description: Indicates if subscription provided auth token
+          description: Indicates if subscription provided auth token.
           type: boolean
         config:
-          description: Config of Zone Kuma CP
+          description: Config of Zone Kuma CP.
           type: string
         connectTime:
           description: Time when a given Zone connected to the Global.
@@ -120,10 +132,9 @@ properties:
           type: string
           format: date-time
         generation:
-          description: |-
-            Generation is an integer number which is periodically increased by the
-            status sink
+          description: Generation is an integer number which is periodically increased by the status sink.
           type: integer
+          format: int32
         globalInstanceId:
           description: Global CP instance that handled given subscription.
           type: string
@@ -139,19 +150,26 @@ properties:
               type: string
               format: date-time
             stat:
+              description: Stat holds the KDS stats per resource type.
               type: object
               additionalProperties:
-                description: DiscoveryServiceStats defines all stats over a single xDS service.
+                description: |-
+                  KDSServiceStats defines all stats over a single xDS service. The counters serialize
+                  as JSON strings because protobuf writes 64 bit integers that way, and an older
+                  control plane rejects them when written as numbers.
                 properties:
                   responsesAcknowledged:
                     description: Number of xDS responses ACKed by the Dataplane.
-                    type: integer
+                    type: string
+                    format: int64
                   responsesRejected:
                     description: Number of xDS responses NACKed by the Dataplane.
-                    type: integer
+                    type: string
+                    format: int64
                   responsesSent:
                     description: Number of xDS responses sent to the Dataplane.
-                    type: integer
+                    type: string
+                    format: int64
                 type: object
             total:
               description: Total defines an aggregate over individual KDS stats.
@@ -159,44 +177,45 @@ properties:
               properties:
                 responsesAcknowledged:
                   description: Number of xDS responses ACKed by the Dataplane.
-                  type: integer
+                  type: string
+                  format: int64
                 responsesRejected:
                   description: Number of xDS responses NACKed by the Dataplane.
-                  type: integer
+                  type: string
+                  format: int64
                 responsesSent:
                   description: Number of xDS responses sent to the Dataplane.
-                  type: integer
+                  type: string
+                  format: int64
         version:
           description: Version of Zone Kuma CP.
           type: object
           properties:
             kumaCp:
-              description: Version of Zone Kuma CP
+              description: Version of Zone Kuma CP.
               type: object
               properties:
                 buildDate:
-                  description: Build date of Kuma ControlPlane version
+                  description: Build date of Kuma ControlPlane version.
                   type: string
                 gitCommit:
-                  description: Git commit of Kuma ControlPlane version
+                  description: Git commit of Kuma ControlPlane version.
                   type: string
                 gitTag:
-                  description: Git tag of Kuma ControlPlane version
+                  description: Git tag of Kuma ControlPlane version.
                   type: string
                 kumaCpGlobalCompatible:
-                  description: True iff this Zone CP version is compatible with Global CP
+                  description: True iff this Zone CP version is compatible with Global CP.
                   type: boolean
                 version:
-                  description: Version number of Kuma ControlPlane
+                  description: Version number of Kuma ControlPlane.
                   type: string
         zoneInstanceId:
           description: |-
-            Zone CP instance that handled the given subscription (This is the leader at
-            time of connection).
+            Zone CP instance that handled the given subscription, the leader at the time of
+            connection.
           type: string
       type: object
-  type:
-    type: string
 required:
   - type
   - name

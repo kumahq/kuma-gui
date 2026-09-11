@@ -6,132 +6,138 @@ properties:
     properties:
       skipCreatingInitialPolicies:
         description: |-
-          List of policies to skip creating by default when the mesh is created.
-          e.g. TrafficPermission, MeshRetry, etc. An '*' can be used to skip all
-          policies.
+          List of policies to skip creating by default when the mesh is created,
+          for example TrafficPermission or MeshRetry. An '*' skips all policies.
         type: array
         items:
           type: string
   meshInsight:
+    description: MeshInsight carries the observed state of the mesh.
     type: object
     properties:
       dataplanes:
+        description: Dataplanes aggregates over the dataplanes of the mesh.
         type: object
         properties:
           offline:
+            description: Offline counts the dataplanes that are not connected.
             type: integer
           online:
+            description: Online counts the dataplanes that are connected.
             type: integer
           partiallyDegraded:
+            description: PartiallyDegraded counts the dataplanes with some inbounds offline.
             type: integer
           total:
             type: integer
       dataplanesByType:
+        description: DataplanesByType splits the dataplane stats by proxy type.
         type: object
         properties:
-          gateway:
-            type: object
-            properties:
-              offline:
-                type: integer
-              online:
-                type: integer
-              partiallyDegraded:
-                type: integer
-              total:
-                type: integer
-          gatewayDelegated:
-            type: object
-            properties:
-              offline:
-                type: integer
-              online:
-                type: integer
-              partiallyDegraded:
-                type: integer
-              total:
-                type: integer
           standard:
+            description: Standard holds the stats of every dataplane.
             type: object
             properties:
               offline:
+                description: Offline counts the dataplanes that are not connected.
                 type: integer
               online:
+                description: Online counts the dataplanes that are connected.
                 type: integer
               partiallyDegraded:
+                description: PartiallyDegraded counts the dataplanes with some inbounds offline.
                 type: integer
               total:
                 type: integer
       dpVersions:
+        description: DpVersions holds the dataplane stats grouped by version.
         type: object
         properties:
           envoy:
-            description: Dataplane stats grouped by Envoy version
+            description: Envoy holds the dataplane stats grouped by Envoy version.
             type: object
             additionalProperties:
-              description: DataplaneStat defines statistic specifically for Dataplane
+              description: MeshInsight_DataplaneStat defines statistics specifically for Dataplanes.
               properties:
                 offline:
+                  description: Offline counts the dataplanes that are not connected.
                   type: integer
                 online:
+                  description: Online counts the dataplanes that are connected.
                   type: integer
                 partiallyDegraded:
+                  description: PartiallyDegraded counts the dataplanes with some inbounds offline.
                   type: integer
                 total:
                   type: integer
               type: object
           kumaDp:
-            description: Dataplane stats grouped by KumaDP version
+            description: KumaDp holds the dataplane stats grouped by KumaDP version.
             type: object
             additionalProperties:
-              description: DataplaneStat defines statistic specifically for Dataplane
+              description: MeshInsight_DataplaneStat defines statistics specifically for Dataplanes.
               properties:
                 offline:
+                  description: Offline counts the dataplanes that are not connected.
                   type: integer
                 online:
+                  description: Online counts the dataplanes that are connected.
                   type: integer
                 partiallyDegraded:
+                  description: PartiallyDegraded counts the dataplanes with some inbounds offline.
                   type: integer
                 total:
                   type: integer
               type: object
       mTLS:
-        description: mTLS statistics
+        description: MTLS holds the dataplane stats grouped by certificate backend.
         type: object
         properties:
           issuedBackends:
-            description: Dataplanes grouped by issued backends.
+            description: |-
+              IssuedBackends groups the dataplanes by the backend that issued their
+              certificate.
             type: object
             additionalProperties:
-              description: DataplaneStat defines statistic specifically for Dataplane
+              description: MeshInsight_DataplaneStat defines statistics specifically for Dataplanes.
               properties:
                 offline:
+                  description: Offline counts the dataplanes that are not connected.
                   type: integer
                 online:
+                  description: Online counts the dataplanes that are connected.
                   type: integer
                 partiallyDegraded:
+                  description: PartiallyDegraded counts the dataplanes with some inbounds offline.
                   type: integer
                 total:
                   type: integer
               type: object
           supportedBackends:
-            description: Dataplanes grouped by supported backends.
+            description: |-
+              SupportedBackends groups the dataplanes by the backends they accept
+              certificates from.
             type: object
             additionalProperties:
-              description: DataplaneStat defines statistic specifically for Dataplane
+              description: MeshInsight_DataplaneStat defines statistics specifically for Dataplanes.
               properties:
                 offline:
+                  description: Offline counts the dataplanes that are not connected.
                   type: integer
                 online:
+                  description: Online counts the dataplanes that are connected.
                   type: integer
                 partiallyDegraded:
+                  description: PartiallyDegraded counts the dataplanes with some inbounds offline.
                   type: integer
                 total:
                   type: integer
               type: object
       resources:
+        description: Resources counts the stored resources of the mesh by type.
         type: object
         additionalProperties:
+          description: MeshInsight_ResourceStat counts the stored resources of a single type.
           properties:
             total:
               type: integer

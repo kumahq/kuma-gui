@@ -1744,76 +1744,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/zones": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Returns a list of Zone. */
-        get: operations["getZoneList"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/zones/{name}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Returns Zone entity */
-        get: operations["getZone"];
-        /** Creates or Updates Zone entity */
-        put: operations["putZone"];
-        post?: never;
-        /** Deletes Zone entity */
-        delete: operations["deleteZone"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/zone-insights": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Returns a list of ZoneInsight. */
-        get: operations["getZoneInsightList"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/zone-insights/{name}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Returns ZoneInsight entity */
-        get: operations["getZoneInsight"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/zones/{name}/_overview": {
         parameters: {
             query?: never;
@@ -2359,6 +2289,76 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/zones/{name}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Returns Zone entity */
+        get: operations["getZone"];
+        /** Creates or Updates Zone entity */
+        put: operations["putZone"];
+        post?: never;
+        /** Deletes Zone entity */
+        delete: operations["deleteZone"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/zones": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Returns a list of Zone. */
+        get: operations["getZoneList"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/zone-insights/{name}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Returns ZoneInsight entity */
+        get: operations["getZoneInsight"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/zone-insights": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Returns a list of ZoneInsight. */
+        get: operations["getZoneInsightList"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/meshes/{mesh}/dataplanes/{name}/xds": {
         parameters: {
             query?: never;
@@ -2627,6 +2627,10 @@ export interface components {
             shortName: string;
             /** @description description resources of this type should be included in federetion-with-policies export profile (especially useful for moving from non-federated to federated or migrating to a new global). */
             includeInFederation: boolean;
+            /** @description whether this resource type holds state computed by the control plane rather than user configuration. */
+            isInsight: boolean;
+            /** @description whether accessing resources of this type requires admin credentials. */
+            adminOnly: boolean;
             policy?: components["schemas"]["PolicyDescription"];
         };
         /**
@@ -2661,8 +2665,6 @@ export interface components {
                 /** @example 5 */
                 total: number;
             };
-            /** @description Delegated Gateway services statistics */
-            gatewayDelegated: components["schemas"]["FullStatus"];
         };
         /**
          * Zones Stats
@@ -2683,8 +2685,6 @@ export interface components {
         DataplanesStats: {
             /** @description Standard dataplane proxy statistics */
             standard: components["schemas"]["FullStatus"];
-            /** @description Delegated Gateway dataplane proxy statistics */
-            gatewayDelegated: components["schemas"]["FullStatus"];
         };
         /**
          * Policies Stats
@@ -3051,7 +3051,8 @@ export interface components {
         InspectDataplanesForPolicy: {
             /** @example 200 */
             total: number;
-            next?: string;
+            /** @description URL to the next page, or null when this is the last page */
+            next: string | null;
             items: components["schemas"]["Meta"][];
         };
         /**
@@ -3240,7 +3241,7 @@ export interface components {
                 }[];
                 /**
                  * @description Listeners describes zone proxy listeners embedded in this Dataplane.
-                 *     Listeners may coexist with inbounds and gateways.
+                 *     Listeners may coexist with inbounds.
                  */
                 listeners?: {
                     /** @description Address on which the listener will be exposed. */
@@ -3275,9 +3276,10 @@ export interface components {
                     /**
                      * @description IP on which the consumed service will be available to this data plane
                      *     proxy. On Kubernetes, it's usually ClusterIP of a Service or PodIP of a
-                     *     Headless Service. Defaults to 127.0.0.1
+                     *     Headless Service. When left out, the control plane sets it to
+                     *     127.0.0.1, so a Dataplane read back from the API always carries one.
                      */
-                    address?: string;
+                    address: string;
                     /** @description BackendRef is a way to target MeshService. */
                     backendRef?: {
                         /** @description Kind is a type of the object to target. Allowed: MeshService */
@@ -3315,11 +3317,6 @@ export interface components {
                      */
                     directAccessServices?: string[];
                     /**
-                     * @description The IP family mode to enable for. Can be "IPv4" or "DualStack".
-                     * @enum {string}
-                     */
-                    ipFamilyMode?: "UnSpecified" | "DualStack" | "IPv4" | "IPv6";
-                    /**
                      * @description Reachable backend via transparent proxy when running with
                      *     MeshExternalService, MeshService and MeshMultiZoneService. Setting an
                      *     explicit list of refs can dramatically improve the performance of the
@@ -3327,45 +3324,23 @@ export interface components {
                      */
                     reachableBackends?: {
                         refs?: {
-                            /**
-                             * @description Type of the backend: MeshService, MeshExternalService or MeshMultiZoneService
-                             *
-                             *     	+required
-                             */
-                            kind?: string;
-                            /**
-                             * @description Labels used to select backends
-                             *
-                             *     	+optional
-                             */
+                            /** @description Type of the backend: MeshService, MeshExternalService or MeshMultiZoneService */
+                            kind: string;
+                            /** @description Labels used to select backends */
                             labels?: {
                                 [key: string]: string;
                             };
-                            /**
-                             * @description Name of the backend.
-                             *
-                             *     	+optional
-                             */
+                            /** @description Name of the backend. */
                             name?: string;
-                            /**
-                             * @description Namespace of the backend. Might be empty
-                             *
-                             *     	+optional
-                             */
+                            /** @description Namespace of the backend. Might be empty */
                             namespace?: string;
                             /**
                              * Format: uint32
                              * @description Port of the backend.
-                             *
-                             *     	+optional
                              */
                             port?: number;
                         }[];
                     };
-                    /** @description Port on which all inbound traffic is being transparently redirected. */
-                    redirectPortInbound?: number;
-                    /** @description Port on which all outbound traffic is being transparently redirected. */
-                    redirectPortOutbound?: number;
                 };
             };
             type: string;
@@ -4773,8 +4748,7 @@ export interface components {
                                              *     For example, you can target a port from MeshService.ports[] by its name.
                                              */
                                             sectionName?: string;
-                                            /** @default 1 */
-                                            weight: number;
+                                            weight?: number;
                                         };
                                         /**
                                          * @description Percentage of requests to mirror. If not specified, all requests
@@ -4907,8 +4881,7 @@ export interface components {
                                  *     For example, you can target a port from MeshService.ports[] by its name.
                                  */
                                 sectionName?: string;
-                                /** @default 1 */
-                                weight: number;
+                                weight?: number;
                             }[];
                             filters?: ({
                                 /**
@@ -4949,8 +4922,7 @@ export interface components {
                                          *     For example, you can target a port from MeshService.ports[] by its name.
                                          */
                                         sectionName?: string;
-                                        /** @default 1 */
-                                        weight: number;
+                                        weight?: number;
                                     };
                                     /**
                                      * @description Percentage of requests to mirror. If not specified, all requests
@@ -5078,10 +5050,9 @@ export interface components {
                                 name: string;
                                 /**
                                  * @description Type specifies how to match against the value of the header.
-                                 * @default Exact
                                  * @enum {string}
                                  */
-                                type: "Exact" | "Present" | "RegularExpression" | "Absent" | "Prefix";
+                                type?: "Exact" | "Present" | "RegularExpression" | "Absent" | "Prefix";
                                 /** @description Value is the value of HTTP Header to be matched. */
                                 value?: string;
                             }[];
@@ -5958,7 +5929,10 @@ export interface components {
                     appendMatch?: {
                         /**
                          * Format: int32
-                         * @description Port defines the port to which a user makes a request.
+                         * @description Port defines the port to which a user makes a request. It is required for a
+                         *     `Domain` that is not a wildcard: the sidecar resolves the domain itself and
+                         *     connects to this port, so the destination doesn't depend on the address the
+                         *     client dials.
                          */
                         port?: number;
                         /**
@@ -5972,7 +5946,11 @@ export interface components {
                          * @enum {string}
                          */
                         type: "Domain" | "IP" | "CIDR";
-                        /** @description Value for the specified Type. */
+                        /**
+                         * @description Value for the specified Type. A wildcard `Domain`, for example
+                         *     `*.example.com`, cannot be resolved by the sidecar, so its traffic goes to the
+                         *     address the client dials and the match only restricts the SNI or Host.
+                         */
                         value: string;
                     }[];
                     /**
@@ -6850,10 +6828,9 @@ export interface components {
                                 name: string;
                                 /**
                                  * @description Type specifies how to match against the value of the header.
-                                 * @default Exact
                                  * @enum {string}
                                  */
-                                type: "Exact" | "Present" | "RegularExpression" | "Absent" | "Prefix";
+                                type?: "Exact" | "Present" | "RegularExpression" | "Absent" | "Prefix";
                                 /** @description Value is the value of HTTP Header to be matched. */
                                 value?: string;
                             }[];
@@ -6870,10 +6847,9 @@ export interface components {
                                 name: string;
                                 /**
                                  * @description Type specifies how to match against the value of the header.
-                                 * @default Exact
                                  * @enum {string}
                                  */
-                                type: "Exact" | "Present" | "RegularExpression" | "Absent" | "Prefix";
+                                type?: "Exact" | "Present" | "RegularExpression" | "Absent" | "Prefix";
                                 /** @description Value is the value of HTTP Header to be matched. */
                                 value?: string;
                             }[];
@@ -7048,8 +7024,7 @@ export interface components {
                                  *     For example, you can target a port from MeshService.ports[] by its name.
                                  */
                                 sectionName?: string;
-                                /** @default 1 */
-                                weight: number;
+                                weight?: number;
                             }[];
                         };
                     }[];
@@ -7908,7 +7883,7 @@ export interface components {
                     }[];
                     /**
                      * @description Listeners describes zone proxy listeners embedded in this Dataplane.
-                     *     Listeners may coexist with inbounds and gateways.
+                     *     Listeners may coexist with inbounds.
                      */
                     listeners?: {
                         /** @description Address on which the listener will be exposed. */
@@ -7943,9 +7918,10 @@ export interface components {
                         /**
                          * @description IP on which the consumed service will be available to this data plane
                          *     proxy. On Kubernetes, it's usually ClusterIP of a Service or PodIP of a
-                         *     Headless Service. Defaults to 127.0.0.1
+                         *     Headless Service. When left out, the control plane sets it to
+                         *     127.0.0.1, so a Dataplane read back from the API always carries one.
                          */
-                        address?: string;
+                        address: string;
                         /** @description BackendRef is a way to target MeshService. */
                         backendRef?: {
                             /** @description Kind is a type of the object to target. Allowed: MeshService */
@@ -7983,11 +7959,6 @@ export interface components {
                          */
                         directAccessServices?: string[];
                         /**
-                         * @description The IP family mode to enable for. Can be "IPv4" or "DualStack".
-                         * @enum {string}
-                         */
-                        ipFamilyMode?: "UnSpecified" | "DualStack" | "IPv4" | "IPv6";
-                        /**
                          * @description Reachable backend via transparent proxy when running with
                          *     MeshExternalService, MeshService and MeshMultiZoneService. Setting an
                          *     explicit list of refs can dramatically improve the performance of the
@@ -7995,45 +7966,23 @@ export interface components {
                          */
                         reachableBackends?: {
                             refs?: {
-                                /**
-                                 * @description Type of the backend: MeshService, MeshExternalService or MeshMultiZoneService
-                                 *
-                                 *     	+required
-                                 */
-                                kind?: string;
-                                /**
-                                 * @description Labels used to select backends
-                                 *
-                                 *     	+optional
-                                 */
+                                /** @description Type of the backend: MeshService, MeshExternalService or MeshMultiZoneService */
+                                kind: string;
+                                /** @description Labels used to select backends */
                                 labels?: {
                                     [key: string]: string;
                                 };
-                                /**
-                                 * @description Name of the backend.
-                                 *
-                                 *     	+optional
-                                 */
+                                /** @description Name of the backend. */
                                 name?: string;
-                                /**
-                                 * @description Namespace of the backend. Might be empty
-                                 *
-                                 *     	+optional
-                                 */
+                                /** @description Namespace of the backend. Might be empty */
                                 namespace?: string;
                                 /**
                                  * Format: uint32
                                  * @description Port of the backend.
-                                 *
-                                 *     	+optional
                                  */
                                 port?: number;
                             }[];
                         };
-                        /** @description Port on which all inbound traffic is being transparently redirected. */
-                        redirectPortInbound?: number;
-                        /** @description Port on which all outbound traffic is being transparently redirected. */
-                        redirectPortOutbound?: number;
                     };
                 };
             };
@@ -8203,80 +8152,97 @@ export interface components {
         MeshOverview: {
             mesh?: {
                 /**
-                 * @description List of policies to skip creating by default when the mesh is created.
-                 *     e.g. TrafficPermission, MeshRetry, etc. An '*' can be used to skip all
-                 *     policies.
+                 * @description List of policies to skip creating by default when the mesh is created,
+                 *     for example TrafficPermission or MeshRetry. An '*' skips all policies.
                  */
                 skipCreatingInitialPolicies?: string[];
             };
+            /** @description MeshInsight carries the observed state of the mesh. */
             meshInsight?: {
+                /** @description Dataplanes aggregates over the dataplanes of the mesh. */
                 dataplanes?: {
+                    /** @description Offline counts the dataplanes that are not connected. */
                     offline?: number;
+                    /** @description Online counts the dataplanes that are connected. */
                     online?: number;
+                    /** @description PartiallyDegraded counts the dataplanes with some inbounds offline. */
                     partiallyDegraded?: number;
                     total?: number;
                 };
+                /** @description DataplanesByType splits the dataplane stats by proxy type. */
                 dataplanesByType?: {
-                    gateway?: {
-                        offline?: number;
-                        online?: number;
-                        partiallyDegraded?: number;
-                        total?: number;
-                    };
-                    gatewayDelegated?: {
-                        offline?: number;
-                        online?: number;
-                        partiallyDegraded?: number;
-                        total?: number;
-                    };
+                    /** @description Standard holds the stats of every dataplane. */
                     standard?: {
+                        /** @description Offline counts the dataplanes that are not connected. */
                         offline?: number;
+                        /** @description Online counts the dataplanes that are connected. */
                         online?: number;
+                        /** @description PartiallyDegraded counts the dataplanes with some inbounds offline. */
                         partiallyDegraded?: number;
                         total?: number;
                     };
                 };
+                /** @description DpVersions holds the dataplane stats grouped by version. */
                 dpVersions?: {
-                    /** @description Dataplane stats grouped by Envoy version */
+                    /** @description Envoy holds the dataplane stats grouped by Envoy version. */
                     envoy?: {
                         [key: string]: {
+                            /** @description Offline counts the dataplanes that are not connected. */
                             offline?: number;
+                            /** @description Online counts the dataplanes that are connected. */
                             online?: number;
+                            /** @description PartiallyDegraded counts the dataplanes with some inbounds offline. */
                             partiallyDegraded?: number;
                             total?: number;
                         };
                     };
-                    /** @description Dataplane stats grouped by KumaDP version */
+                    /** @description KumaDp holds the dataplane stats grouped by KumaDP version. */
                     kumaDp?: {
                         [key: string]: {
+                            /** @description Offline counts the dataplanes that are not connected. */
                             offline?: number;
+                            /** @description Online counts the dataplanes that are connected. */
                             online?: number;
+                            /** @description PartiallyDegraded counts the dataplanes with some inbounds offline. */
                             partiallyDegraded?: number;
                             total?: number;
                         };
                     };
                 };
-                /** @description mTLS statistics */
+                /** @description MTLS holds the dataplane stats grouped by certificate backend. */
                 mTLS?: {
-                    /** @description Dataplanes grouped by issued backends. */
+                    /**
+                     * @description IssuedBackends groups the dataplanes by the backend that issued their
+                     *     certificate.
+                     */
                     issuedBackends?: {
                         [key: string]: {
+                            /** @description Offline counts the dataplanes that are not connected. */
                             offline?: number;
+                            /** @description Online counts the dataplanes that are connected. */
                             online?: number;
+                            /** @description PartiallyDegraded counts the dataplanes with some inbounds offline. */
                             partiallyDegraded?: number;
                             total?: number;
                         };
                     };
-                    /** @description Dataplanes grouped by supported backends. */
+                    /**
+                     * @description SupportedBackends groups the dataplanes by the backends they accept
+                     *     certificates from.
+                     */
                     supportedBackends?: {
                         [key: string]: {
+                            /** @description Offline counts the dataplanes that are not connected. */
                             offline?: number;
+                            /** @description Online counts the dataplanes that are connected. */
                             online?: number;
+                            /** @description PartiallyDegraded counts the dataplanes with some inbounds offline. */
                             partiallyDegraded?: number;
                             total?: number;
                         };
                     };
                 };
+                /** @description Resources counts the stored resources of the mesh by type. */
                 resources?: {
                     [key: string]: {
                         total?: number;
@@ -8561,193 +8527,6 @@ export interface components {
              */
             readonly modificationTime?: string;
             name: string;
-            type: string;
-        };
-        ZoneItem: {
-            /**
-             * Format: date-time
-             * @description Time at which the resource was created
-             */
-            readonly creationTime?: string;
-            /**
-             * @description enable allows to turn the zone on/off and exclude the whole zone from
-             *     balancing traffic on it
-             */
-            enabled?: boolean;
-            /** @description Kuma Resource Identifier (KRI) of the given resource */
-            readonly kri?: string;
-            labels?: {
-                [key: string]: string;
-            };
-            /**
-             * Format: date-time
-             * @description Time at which the resource was updated
-             */
-            readonly modificationTime?: string;
-            name: string;
-            type: string;
-        };
-        ZoneInsightItem: {
-            /**
-             * Format: date-time
-             * @description Time at which the resource was created
-             */
-            readonly creationTime?: string;
-            /**
-             * @description Statistics about Envoy Admin Streams
-             *     Deprecated: use kds_streams instead.
-             */
-            envoyAdminStreams?: {
-                /** @description Global instance ID that handles Clusters streams. */
-                clustersGlobalInstanceId?: string;
-                /** @description Global instance ID that handles XDS Config Dump streams. */
-                configDumpGlobalInstanceId?: string;
-                /** @description Global instance ID that handles Stats streams. */
-                statsGlobalInstanceId?: string;
-            };
-            healthCheck?: {
-                /**
-                 * Format: date-time
-                 * @description Time last health check received
-                 */
-                time?: string;
-            };
-            /** @description Information about kds streams that are estabilished between global and zone */
-            kdsStreams?: {
-                /** @description Details of stream that handles Clusters stream. */
-                clusters?: {
-                    /**
-                     * Format: date-time
-                     * @description Time when the stream was open.
-                     */
-                    connectTime?: string;
-                    /** @description Global instance ID that handles the stream. */
-                    globalInstanceId?: string;
-                };
-                /** @description Details of stream that handles XDS Config Dump stream. */
-                configDump?: {
-                    /**
-                     * Format: date-time
-                     * @description Time when the stream was open.
-                     */
-                    connectTime?: string;
-                    /** @description Global instance ID that handles the stream. */
-                    globalInstanceId?: string;
-                };
-                /** @description Details of stream that handles global to zone resource sync stream. */
-                globalToZone?: {
-                    /**
-                     * Format: date-time
-                     * @description Time when the stream was open.
-                     */
-                    connectTime?: string;
-                    /** @description Global instance ID that handles the stream. */
-                    globalInstanceId?: string;
-                };
-                /** @description Details of stream that handles Stats stream. */
-                stats?: {
-                    /**
-                     * Format: date-time
-                     * @description Time when the stream was open.
-                     */
-                    connectTime?: string;
-                    /** @description Global instance ID that handles the stream. */
-                    globalInstanceId?: string;
-                };
-                /** @description Details of stream that handles zone to global resource sync stream. */
-                zoneToGlobal?: {
-                    /**
-                     * Format: date-time
-                     * @description Time when the stream was open.
-                     */
-                    connectTime?: string;
-                    /** @description Global instance ID that handles the stream. */
-                    globalInstanceId?: string;
-                };
-            };
-            labels?: {
-                [key: string]: string;
-            };
-            /**
-             * Format: date-time
-             * @description Time at which the resource was updated
-             */
-            readonly modificationTime?: string;
-            name: string;
-            /** @description List of KDS subscriptions created by a given Zone Kuma CP. */
-            subscriptions?: {
-                /** @description Indicates if subscription provided auth token */
-                authTokenProvided?: boolean;
-                /** @description Config of Zone Kuma CP */
-                config?: string;
-                /**
-                 * Format: date-time
-                 * @description Time when a given Zone connected to the Global.
-                 */
-                connectTime?: string;
-                /**
-                 * Format: date-time
-                 * @description Time when a given Zone disconnected from the Global.
-                 */
-                disconnectTime?: string;
-                /**
-                 * @description Generation is an integer number which is periodically increased by the
-                 *     status sink
-                 */
-                generation?: number;
-                /** @description Global CP instance that handled given subscription. */
-                globalInstanceId?: string;
-                /** @description Unique id per KDS subscription. */
-                id?: string;
-                /** @description Status of the KDS subscription. */
-                status?: {
-                    /**
-                     * Format: date-time
-                     * @description Time when status of a given KDS subscription was most recently updated.
-                     */
-                    lastUpdateTime?: string;
-                    stat?: {
-                        [key: string]: {
-                            /** @description Number of xDS responses ACKed by the Dataplane. */
-                            responsesAcknowledged?: number;
-                            /** @description Number of xDS responses NACKed by the Dataplane. */
-                            responsesRejected?: number;
-                            /** @description Number of xDS responses sent to the Dataplane. */
-                            responsesSent?: number;
-                        };
-                    };
-                    /** @description Total defines an aggregate over individual KDS stats. */
-                    total?: {
-                        /** @description Number of xDS responses ACKed by the Dataplane. */
-                        responsesAcknowledged?: number;
-                        /** @description Number of xDS responses NACKed by the Dataplane. */
-                        responsesRejected?: number;
-                        /** @description Number of xDS responses sent to the Dataplane. */
-                        responsesSent?: number;
-                    };
-                };
-                /** @description Version of Zone Kuma CP. */
-                version?: {
-                    /** @description Version of Zone Kuma CP */
-                    kumaCp?: {
-                        /** @description Build date of Kuma ControlPlane version */
-                        buildDate?: string;
-                        /** @description Git commit of Kuma ControlPlane version */
-                        gitCommit?: string;
-                        /** @description Git tag of Kuma ControlPlane version */
-                        gitTag?: string;
-                        /** @description True iff this Zone CP version is compatible with Global CP */
-                        kumaCpGlobalCompatible?: boolean;
-                        /** @description Version number of Kuma ControlPlane */
-                        version?: string;
-                    };
-                };
-                /**
-                 * @description Zone CP instance that handled the given subscription (This is the leader at
-                 *     time of connection).
-                 */
-                zoneInstanceId?: string;
-            }[];
             type: string;
         };
         /** @description HostnameGenerator automatically generates DNS hostnames for services in the mesh based on customizable templates. It provides a consistent naming scheme for service discovery by creating predictable hostnames from service labels and metadata, supporting both MeshService, MeshExternalService, and MeshMultiZoneService resources. */
@@ -9239,6 +9018,15 @@ export interface components {
                     /** @description type of condition in CamelCase or in foo.example.com/CamelCase. */
                     type: string;
                 }[];
+                /**
+                 * @description TrustDomain is the trust domain this identity issues certificates in. The
+                 *     control plane renders `spec.spiffeID.trustDomain` once, when it first
+                 *     initializes the identity, and then keeps issuing in the recorded value.
+                 *     Templates such as `{{ .Zone }}` therefore stop following the zone name,
+                 *     which would otherwise silently move every workload into a trust domain no
+                 *     MeshTrust publishes yet.
+                 */
+                trustDomain?: string;
             };
         };
         /**
@@ -9850,10 +9638,240 @@ export interface components {
                 };
             };
         };
+        /**
+         * @description Zone defines the Zone configuration used at the Global Control Plane within a
+         *     distributed deployment. Enabled is a pointer because an unset value and an explicit
+         *     false mean different things: protobuf omitted an unset wrapper entirely, and an older
+         *     control plane still distinguishes the two.
+         */
+        ZoneItem: {
+            /**
+             * @description the type of the resource
+             * @enum {string}
+             */
+            type: "Zone";
+            /**
+             * @description A unique identifier for this resource instance used by internal tooling and integrations. Typically derived from resource attributes and may be used for cross-references or indexing
+             * @example kri_z___kuma-demo_myresource1_
+             */
+            readonly kri?: string;
+            /** @description Name of the Kuma resource */
+            name: string;
+            /** @description The labels to help identity resources */
+            labels?: {
+                [key: string]: string;
+            };
+            /**
+             * Format: date-time
+             * @description Time at which the resource was created
+             * @example 1901-01-01T00:00:00.000Z
+             */
+            readonly creationTime?: string;
+            /**
+             * Format: date-time
+             * @description Time at which the resource was updated
+             * @example 1901-01-01T00:00:00.000Z
+             */
+            readonly modificationTime?: string;
+            /**
+             * @description Enabled allows to turn the zone on and off, and to exclude the whole zone from
+             *     balancing traffic on it.
+             */
+            enabled?: boolean;
+        };
+        /** @description ZoneInsight defines the observed state of a Zone Kuma CP. */
+        ZoneInsightItem: {
+            /**
+             * @description the type of the resource
+             * @enum {string}
+             */
+            type: "ZoneInsight";
+            /** @description Name of the Kuma resource */
+            name: string;
+            /** @description The labels to help identity resources */
+            labels?: {
+                [key: string]: string;
+            };
+            /**
+             * Format: date-time
+             * @description Time at which the resource was created
+             * @example 1901-01-01T00:00:00.000Z
+             */
+            readonly creationTime?: string;
+            /**
+             * Format: date-time
+             * @description Time at which the resource was updated
+             * @example 1901-01-01T00:00:00.000Z
+             */
+            readonly modificationTime?: string;
+            /** @description Statistics about Envoy Admin Streams, superseded by KDSStreams. */
+            envoyAdminStreams?: {
+                /** @description Global instance ID that handles Clusters streams. */
+                clustersGlobalInstanceId?: string;
+                /** @description Global instance ID that handles XDS Config Dump streams. */
+                configDumpGlobalInstanceId?: string;
+                /** @description Global instance ID that handles Stats streams. */
+                statsGlobalInstanceId?: string;
+            };
+            /** @description Information about the last received zone health check. */
+            healthCheck?: {
+                /**
+                 * Format: date-time
+                 * @description Time last health check received.
+                 */
+                time?: string;
+            };
+            /** @description Information about kds streams that are established between global and zone. */
+            kdsStreams?: {
+                /** @description Details of stream that handles Clusters stream. */
+                clusters?: {
+                    /**
+                     * Format: date-time
+                     * @description Time when the stream was open.
+                     */
+                    connectTime?: string;
+                    /** @description Global instance ID that handles the stream. */
+                    globalInstanceId?: string;
+                };
+                /** @description Details of stream that handles XDS Config Dump stream. */
+                configDump?: {
+                    /**
+                     * Format: date-time
+                     * @description Time when the stream was open.
+                     */
+                    connectTime?: string;
+                    /** @description Global instance ID that handles the stream. */
+                    globalInstanceId?: string;
+                };
+                /** @description Details of stream that handles global to zone resource sync stream. */
+                globalToZone?: {
+                    /**
+                     * Format: date-time
+                     * @description Time when the stream was open.
+                     */
+                    connectTime?: string;
+                    /** @description Global instance ID that handles the stream. */
+                    globalInstanceId?: string;
+                };
+                /** @description Details of stream that handles Stats stream. */
+                stats?: {
+                    /**
+                     * Format: date-time
+                     * @description Time when the stream was open.
+                     */
+                    connectTime?: string;
+                    /** @description Global instance ID that handles the stream. */
+                    globalInstanceId?: string;
+                };
+                /** @description Details of stream that handles zone to global resource sync stream. */
+                zoneToGlobal?: {
+                    /**
+                     * Format: date-time
+                     * @description Time when the stream was open.
+                     */
+                    connectTime?: string;
+                    /** @description Global instance ID that handles the stream. */
+                    globalInstanceId?: string;
+                };
+            };
+            /** @description List of KDS subscriptions created by a given Zone Kuma CP. */
+            subscriptions?: {
+                /** @description Indicates if subscription provided auth token. */
+                authTokenProvided?: boolean;
+                /** @description Config of Zone Kuma CP. */
+                config?: string;
+                /**
+                 * Format: date-time
+                 * @description Time when a given Zone connected to the Global.
+                 */
+                connectTime?: string;
+                /**
+                 * Format: date-time
+                 * @description Time when a given Zone disconnected from the Global.
+                 */
+                disconnectTime?: string;
+                /**
+                 * Format: int32
+                 * @description Generation is an integer number which is periodically increased by the status sink.
+                 */
+                generation?: number;
+                /** @description Global CP instance that handled given subscription. */
+                globalInstanceId?: string;
+                /** @description Unique id per KDS subscription. */
+                id?: string;
+                /** @description Status of the KDS subscription. */
+                status?: {
+                    /**
+                     * Format: date-time
+                     * @description Time when status of a given KDS subscription was most recently updated.
+                     */
+                    lastUpdateTime?: string;
+                    /** @description Stat holds the KDS stats per resource type. */
+                    stat?: {
+                        [key: string]: {
+                            /**
+                             * Format: int64
+                             * @description Number of xDS responses ACKed by the Dataplane.
+                             */
+                            responsesAcknowledged?: string;
+                            /**
+                             * Format: int64
+                             * @description Number of xDS responses NACKed by the Dataplane.
+                             */
+                            responsesRejected?: string;
+                            /**
+                             * Format: int64
+                             * @description Number of xDS responses sent to the Dataplane.
+                             */
+                            responsesSent?: string;
+                        };
+                    };
+                    /** @description Total defines an aggregate over individual KDS stats. */
+                    total?: {
+                        /**
+                         * Format: int64
+                         * @description Number of xDS responses ACKed by the Dataplane.
+                         */
+                        responsesAcknowledged?: string;
+                        /**
+                         * Format: int64
+                         * @description Number of xDS responses NACKed by the Dataplane.
+                         */
+                        responsesRejected?: string;
+                        /**
+                         * Format: int64
+                         * @description Number of xDS responses sent to the Dataplane.
+                         */
+                        responsesSent?: string;
+                    };
+                };
+                /** @description Version of Zone Kuma CP. */
+                version?: {
+                    /** @description Version of Zone Kuma CP. */
+                    kumaCp?: {
+                        /** @description Build date of Kuma ControlPlane version. */
+                        buildDate?: string;
+                        /** @description Git commit of Kuma ControlPlane version. */
+                        gitCommit?: string;
+                        /** @description Git tag of Kuma ControlPlane version. */
+                        gitTag?: string;
+                        /** @description True iff this Zone CP version is compatible with Global CP. */
+                        kumaCpGlobalCompatible?: boolean;
+                        /** @description Version number of Kuma ControlPlane. */
+                        version?: string;
+                    };
+                };
+                /**
+                 * @description Zone CP instance that handled the given subscription, the leader at the time of
+                 *     connection.
+                 */
+                zoneInstanceId?: string;
+            }[];
+        };
         MeshInsightWithMeta: components["schemas"]["Meta"] & components["schemas"]["MeshInsight"];
         /** @description ZoneOverview defines the projected state of a Zone. */
         ZoneOverview: {
-            zone?: {
+            zone: {
                 /**
                  * @description enable allows to turn the zone on/off and exclude the whole zone from
                  *     balancing traffic on it
@@ -10357,11 +10375,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["MeshAccessLogItem"][];
+                    items: components["schemas"]["MeshAccessLogItem"][];
                     /** @description The total number of entities */
-                    total?: number;
-                    /** @description URL to the next page */
-                    next?: string;
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                 };
             };
         };
@@ -10405,11 +10423,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["MeshCircuitBreakerItem"][];
+                    items: components["schemas"]["MeshCircuitBreakerItem"][];
                     /** @description The total number of entities */
-                    total?: number;
-                    /** @description URL to the next page */
-                    next?: string;
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                 };
             };
         };
@@ -10453,11 +10471,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["MeshFaultInjectionItem"][];
+                    items: components["schemas"]["MeshFaultInjectionItem"][];
                     /** @description The total number of entities */
-                    total?: number;
-                    /** @description URL to the next page */
-                    next?: string;
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                 };
             };
         };
@@ -10501,11 +10519,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["MeshHealthCheckItem"][];
+                    items: components["schemas"]["MeshHealthCheckItem"][];
                     /** @description The total number of entities */
-                    total?: number;
-                    /** @description URL to the next page */
-                    next?: string;
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                 };
             };
         };
@@ -10549,11 +10567,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["MeshHTTPRouteItem"][];
+                    items: components["schemas"]["MeshHTTPRouteItem"][];
                     /** @description The total number of entities */
-                    total?: number;
-                    /** @description URL to the next page */
-                    next?: string;
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                 };
             };
         };
@@ -10597,11 +10615,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["MeshLoadBalancingStrategyItem"][];
+                    items: components["schemas"]["MeshLoadBalancingStrategyItem"][];
                     /** @description The total number of entities */
-                    total?: number;
-                    /** @description URL to the next page */
-                    next?: string;
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                 };
             };
         };
@@ -10645,11 +10663,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["MeshMetricItem"][];
+                    items: components["schemas"]["MeshMetricItem"][];
                     /** @description The total number of entities */
-                    total?: number;
-                    /** @description URL to the next page */
-                    next?: string;
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                 };
             };
         };
@@ -10693,11 +10711,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["MeshPassthroughItem"][];
+                    items: components["schemas"]["MeshPassthroughItem"][];
                     /** @description The total number of entities */
-                    total?: number;
-                    /** @description URL to the next page */
-                    next?: string;
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                 };
             };
         };
@@ -10741,11 +10759,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["MeshProxyPatchItem"][];
+                    items: components["schemas"]["MeshProxyPatchItem"][];
                     /** @description The total number of entities */
-                    total?: number;
-                    /** @description URL to the next page */
-                    next?: string;
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                 };
             };
         };
@@ -10789,11 +10807,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["MeshRateLimitItem"][];
+                    items: components["schemas"]["MeshRateLimitItem"][];
                     /** @description The total number of entities */
-                    total?: number;
-                    /** @description URL to the next page */
-                    next?: string;
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                 };
             };
         };
@@ -10837,11 +10855,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["MeshRetryItem"][];
+                    items: components["schemas"]["MeshRetryItem"][];
                     /** @description The total number of entities */
-                    total?: number;
-                    /** @description URL to the next page */
-                    next?: string;
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                 };
             };
         };
@@ -10885,11 +10903,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["MeshTCPRouteItem"][];
+                    items: components["schemas"]["MeshTCPRouteItem"][];
                     /** @description The total number of entities */
-                    total?: number;
-                    /** @description URL to the next page */
-                    next?: string;
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                 };
             };
         };
@@ -10933,11 +10951,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["MeshTimeoutItem"][];
+                    items: components["schemas"]["MeshTimeoutItem"][];
                     /** @description The total number of entities */
-                    total?: number;
-                    /** @description URL to the next page */
-                    next?: string;
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                 };
             };
         };
@@ -10981,11 +10999,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["MeshTLSItem"][];
+                    items: components["schemas"]["MeshTLSItem"][];
                     /** @description The total number of entities */
-                    total?: number;
-                    /** @description URL to the next page */
-                    next?: string;
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                 };
             };
         };
@@ -11029,11 +11047,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["MeshTraceItem"][];
+                    items: components["schemas"]["MeshTraceItem"][];
                     /** @description The total number of entities */
-                    total?: number;
-                    /** @description URL to the next page */
-                    next?: string;
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                 };
             };
         };
@@ -11077,11 +11095,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["MeshTrafficPermissionItem"][];
+                    items: components["schemas"]["MeshTrafficPermissionItem"][];
                     /** @description The total number of entities */
-                    total?: number;
-                    /** @description URL to the next page */
-                    next?: string;
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                 };
             };
         };
@@ -11092,11 +11110,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["DataplaneItem"][];
-                    /** @description URL to the next page */
-                    next?: string;
+                    items: components["schemas"]["DataplaneItem"][];
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                     /** @description The total number of entities */
-                    total?: number;
+                    total: number;
                 };
             };
         };
@@ -11140,11 +11158,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["DataplaneInsightItem"][];
-                    /** @description URL to the next page */
-                    next?: string;
+                    items: components["schemas"]["DataplaneInsightItem"][];
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                     /** @description The total number of entities */
-                    total?: number;
+                    total: number;
                 };
             };
         };
@@ -11174,9 +11192,10 @@ export interface components {
             content: {
                 "application/json": {
                     /** @example 200 */
-                    total?: number;
-                    next?: string;
-                    items?: components["schemas"]["DataplaneOverviewWithMeta"][];
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
+                    items: components["schemas"]["DataplaneOverviewWithMeta"][];
                 };
             };
         };
@@ -11220,11 +11239,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["GlobalSecretItem"][];
+                    items: components["schemas"]["GlobalSecretItem"][];
                     /** @description The total number of entities */
-                    total?: number;
-                    /** @description URL to the next page */
-                    next?: string;
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                 };
             };
         };
@@ -11235,11 +11254,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["MeshItem"][];
-                    /** @description URL to the next page */
-                    next?: string;
+                    items: components["schemas"]["MeshItem"][];
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                     /** @description The total number of entities */
-                    total?: number;
+                    total: number;
                 };
             };
         };
@@ -11293,9 +11312,10 @@ export interface components {
             content: {
                 "application/json": {
                     /** @example 200 */
-                    total?: number;
-                    next?: string;
-                    items?: components["schemas"]["MeshOverviewWithMeta"][];
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
+                    items: components["schemas"]["MeshOverviewWithMeta"][];
                 };
             };
         };
@@ -11306,11 +11326,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["SecretItem"][];
-                    /** @description URL to the next page */
-                    next?: string;
+                    items: components["schemas"]["SecretItem"][];
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                     /** @description The total number of entities */
-                    total?: number;
+                    total: number;
                 };
             };
         };
@@ -11345,78 +11365,6 @@ export interface components {
                      */
                     readonly warnings?: string[];
                 };
-            };
-        };
-        /** @description List */
-        ZoneList: {
-            headers: {
-                [name: string]: unknown;
-            };
-            content: {
-                "application/json": {
-                    items?: components["schemas"]["ZoneItem"][];
-                    /** @description URL to the next page */
-                    next?: string;
-                    /** @description The total number of entities */
-                    total?: number;
-                };
-            };
-        };
-        /** @description Successful response */
-        ZoneDeleteSuccessResponse: {
-            headers: {
-                [name: string]: unknown;
-            };
-            content: {
-                "application/json": Record<string, never>;
-            };
-        };
-        /** @description Successful response */
-        ZoneItem: {
-            headers: {
-                [name: string]: unknown;
-            };
-            content: {
-                "application/json": components["schemas"]["ZoneItem"];
-            };
-        };
-        /** @description Successful response */
-        ZoneCreateOrUpdateSuccessResponse: {
-            headers: {
-                [name: string]: unknown;
-            };
-            content: {
-                "application/json": {
-                    /**
-                     * @description warnings is a list of warning messages to return to the requesting Kuma API clients.
-                     *     Warning messages describe a problem the client making the API request should correct or be aware of.
-                     */
-                    readonly warnings?: string[];
-                };
-            };
-        };
-        /** @description List */
-        ZoneInsightList: {
-            headers: {
-                [name: string]: unknown;
-            };
-            content: {
-                "application/json": {
-                    items?: components["schemas"]["ZoneInsightItem"][];
-                    /** @description URL to the next page */
-                    next?: string;
-                    /** @description The total number of entities */
-                    total?: number;
-                };
-            };
-        };
-        /** @description Successful response */
-        ZoneInsightItem: {
-            headers: {
-                [name: string]: unknown;
-            };
-            content: {
-                "application/json": components["schemas"]["ZoneInsightItem"];
             };
         };
         /** @description Successful response */
@@ -11459,11 +11407,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["HostnameGeneratorItem"][];
+                    items: components["schemas"]["HostnameGeneratorItem"][];
                     /** @description The total number of entities */
-                    total?: number;
-                    /** @description URL to the next page */
-                    next?: string;
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                 };
             };
         };
@@ -11507,11 +11455,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["MeshExternalServiceItem"][];
+                    items: components["schemas"]["MeshExternalServiceItem"][];
                     /** @description The total number of entities */
-                    total?: number;
-                    /** @description URL to the next page */
-                    next?: string;
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                 };
             };
         };
@@ -11555,11 +11503,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["MeshIdentityItem"][];
+                    items: components["schemas"]["MeshIdentityItem"][];
                     /** @description The total number of entities */
-                    total?: number;
-                    /** @description URL to the next page */
-                    next?: string;
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                 };
             };
         };
@@ -11603,11 +11551,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["MeshMultiZoneServiceItem"][];
+                    items: components["schemas"]["MeshMultiZoneServiceItem"][];
                     /** @description The total number of entities */
-                    total?: number;
-                    /** @description URL to the next page */
-                    next?: string;
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                 };
             };
         };
@@ -11651,11 +11599,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["MeshOpenTelemetryBackendItem"][];
+                    items: components["schemas"]["MeshOpenTelemetryBackendItem"][];
                     /** @description The total number of entities */
-                    total?: number;
-                    /** @description URL to the next page */
-                    next?: string;
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                 };
             };
         };
@@ -11699,11 +11647,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["MeshServiceItem"][];
+                    items: components["schemas"]["MeshServiceItem"][];
                     /** @description The total number of entities */
-                    total?: number;
-                    /** @description URL to the next page */
-                    next?: string;
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                 };
             };
         };
@@ -11747,11 +11695,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["MeshTrustItem"][];
+                    items: components["schemas"]["MeshTrustItem"][];
                     /** @description The total number of entities */
-                    total?: number;
-                    /** @description URL to the next page */
-                    next?: string;
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                 };
             };
         };
@@ -11795,11 +11743,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["MeshZoneAddressItem"][];
+                    items: components["schemas"]["MeshZoneAddressItem"][];
                     /** @description The total number of entities */
-                    total?: number;
-                    /** @description URL to the next page */
-                    next?: string;
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                 };
             };
         };
@@ -11843,11 +11791,83 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["WorkloadItem"][];
+                    items: components["schemas"]["WorkloadItem"][];
                     /** @description The total number of entities */
-                    total?: number;
-                    /** @description URL to the next page */
-                    next?: string;
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
+                };
+            };
+        };
+        /** @description Successful response */
+        ZoneItem: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["ZoneItem"];
+            };
+        };
+        /** @description Successful response */
+        ZoneCreateOrUpdateSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    /**
+                     * @description warnings is a list of warning messages to return to the requesting Kuma API clients.
+                     *     Warning messages describe a problem the client making the API request should correct or be aware of.
+                     */
+                    readonly warnings?: string[];
+                };
+            };
+        };
+        /** @description Successful response */
+        ZoneDeleteSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": Record<string, never>;
+            };
+        };
+        /** @description List */
+        ZoneList: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    items: components["schemas"]["ZoneItem"][];
+                    /** @description The total number of entities */
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
+                };
+            };
+        };
+        /** @description Successful response */
+        ZoneInsightItem: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["ZoneInsightItem"];
+            };
+        };
+        /** @description List */
+        ZoneInsightList: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    items: components["schemas"]["ZoneInsightItem"][];
+                    /** @description The total number of entities */
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                 };
             };
         };
@@ -11903,9 +11923,34 @@ export interface components {
             content: {
                 "application/json": {
                     /** @example 200 */
-                    total?: number;
-                    next?: string;
-                    items?: components["schemas"]["MeshInsightWithMeta"][];
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
+                    items: components["schemas"]["MeshInsightWithMeta"][];
+                };
+            };
+        };
+        /** @description A response containing the overview of a zone. */
+        GetZoneOverviewResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["ZoneOverviewWithMeta"];
+            };
+        };
+        /** @description A response containing a list of zone overviews. */
+        GetZoneOverviewListResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    /** @example 200 */
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
+                    items: components["schemas"]["ZoneOverviewWithMeta"][];
                 };
             };
         };
@@ -11931,29 +11976,6 @@ export interface components {
             };
             content: {
                 "application/json": Record<string, never>;
-            };
-        };
-        /** @description A response containing the overview of a zone. */
-        GetZoneOverviewResponse: {
-            headers: {
-                [name: string]: unknown;
-            };
-            content: {
-                "application/json": components["schemas"]["ZoneOverviewWithMeta"];
-            };
-        };
-        /** @description A response containing a list of zone overviews. */
-        GetZoneOverviewListResponse: {
-            headers: {
-                [name: string]: unknown;
-            };
-            content: {
-                "application/json": {
-                    /** @example 200 */
-                    total?: number;
-                    next?: string;
-                    items?: components["schemas"]["ZoneOverviewWithMeta"][];
-                };
             };
         };
     };
@@ -14970,135 +14992,6 @@ export interface operations {
             200: components["responses"]["SecretList"];
         };
     };
-    getZoneList: {
-        parameters: {
-            query?: {
-                /**
-                 * @description offset in the list of entities
-                 * @example 0
-                 */
-                offset?: number;
-                /** @description the number of items per page */
-                size?: number;
-                /**
-                 * @description filter by labels when multiple filters are present, they are ANDed
-                 * @example {
-                 *       "label.k8s.kuma.io/namespace": "my-ns"
-                 *     }
-                 */
-                filter?: {
-                    key?: string;
-                    value?: string;
-                };
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: components["responses"]["ZoneList"];
-        };
-    };
-    getZone: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description name of the Zone */
-                name: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: components["responses"]["ZoneItem"];
-            404: components["responses"]["NotFound"];
-        };
-    };
-    putZone: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description name of the Zone */
-                name: string;
-            };
-            cookie?: never;
-        };
-        /** @description Put request */
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["ZoneItem"];
-            };
-        };
-        responses: {
-            200: components["responses"]["ZoneCreateOrUpdateSuccessResponse"];
-            201: components["responses"]["ZoneCreateOrUpdateSuccessResponse"];
-        };
-    };
-    deleteZone: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description name of the Zone */
-                name: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: components["responses"]["ZoneDeleteSuccessResponse"];
-            404: components["responses"]["NotFound"];
-        };
-    };
-    getZoneInsightList: {
-        parameters: {
-            query?: {
-                /**
-                 * @description offset in the list of entities
-                 * @example 0
-                 */
-                offset?: number;
-                /** @description the number of items per page */
-                size?: number;
-                /**
-                 * @description filter by labels when multiple filters are present, they are ANDed
-                 * @example {
-                 *       "label.k8s.kuma.io/namespace": "my-ns"
-                 *     }
-                 */
-                filter?: {
-                    key?: string;
-                    value?: string;
-                };
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: components["responses"]["ZoneInsightList"];
-        };
-    };
-    getZoneInsight: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description name of the ZoneInsight */
-                name: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: components["responses"]["ZoneInsightItem"];
-            404: components["responses"]["NotFound"];
-        };
-    };
     getHostnameGenerator: {
         parameters: {
             query?: never;
@@ -16132,6 +16025,135 @@ export interface operations {
         requestBody?: never;
         responses: {
             200: components["responses"]["WorkloadList"];
+        };
+    };
+    getZone: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the Zone */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["ZoneItem"];
+            404: components["responses"]["NotFound"];
+        };
+    };
+    putZone: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the Zone */
+                name: string;
+            };
+            cookie?: never;
+        };
+        /** @description Put request */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ZoneItem"];
+            };
+        };
+        responses: {
+            200: components["responses"]["ZoneCreateOrUpdateSuccessResponse"];
+            201: components["responses"]["ZoneCreateOrUpdateSuccessResponse"];
+        };
+    };
+    deleteZone: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the Zone */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["ZoneDeleteSuccessResponse"];
+            404: components["responses"]["NotFound"];
+        };
+    };
+    getZoneList: {
+        parameters: {
+            query?: {
+                /**
+                 * @description offset in the list of entities
+                 * @example 0
+                 */
+                offset?: number;
+                /** @description the number of items per page */
+                size?: number;
+                /**
+                 * @description filter by labels when multiple filters are present, they are ANDed
+                 * @example {
+                 *       "label.k8s.kuma.io/namespace": "my-ns"
+                 *     }
+                 */
+                filter?: {
+                    key?: string;
+                    value?: string;
+                };
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["ZoneList"];
+        };
+    };
+    getZoneInsight: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the ZoneInsight */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["ZoneInsightItem"];
+            404: components["responses"]["NotFound"];
+        };
+    };
+    getZoneInsightList: {
+        parameters: {
+            query?: {
+                /**
+                 * @description offset in the list of entities
+                 * @example 0
+                 */
+                offset?: number;
+                /** @description the number of items per page */
+                size?: number;
+                /**
+                 * @description filter by labels when multiple filters are present, they are ANDed
+                 * @example {
+                 *       "label.k8s.kuma.io/namespace": "my-ns"
+                 *     }
+                 */
+                filter?: {
+                    key?: string;
+                    value?: string;
+                };
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["ZoneInsightList"];
         };
     };
 }

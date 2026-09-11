@@ -189,3 +189,5 @@ properties:
                 time of connection).
               type: string
           type: object
+required:
+  - zone

@@ -1,20 +1,3 @@
-delete:
-  operationId: deleteZone
-  summary: Deletes Zone entity
-  parameters:
-    - name: name
-      in: path
-      description: name of the Zone
-      required: true
-      schema:
-        type: string
-  responses:
-    '200':
-      $ref: '../components/responses/ZoneDeleteSuccessResponse.yaml'
-    '404':
-      $ref: '../components/responses/NotFound.yaml'
-  tags:
-    - Zone
 get:
   operationId: getZone
   summary: Returns Zone entity
@@ -54,5 +37,22 @@ put:
       $ref: '../components/responses/ZoneCreateOrUpdateSuccessResponse.yaml'
     '201':
       $ref: '../components/responses/ZoneCreateOrUpdateSuccessResponse.yaml'
+  tags:
+    - Zone
+delete:
+  operationId: deleteZone
+  summary: Deletes Zone entity
+  parameters:
+    - name: name
+      in: path
+      description: name of the Zone
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: '../components/responses/ZoneDeleteSuccessResponse.yaml'
+    '404':
+      $ref: '../components/responses/NotFound.yaml'
   tags:
     - Zone

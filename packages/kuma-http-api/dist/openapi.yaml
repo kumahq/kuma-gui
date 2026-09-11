@@ -193,14 +193,6 @@ paths:
     $ref: paths/meshes_{mesh}_secrets_{name}.yaml
   /secrets:
     $ref: paths/secrets.yaml
-  /zones:
-    $ref: paths/zones.yaml
-  /zones/{name}:
-    $ref: paths/zones_{name}.yaml
-  /zone-insights:
-    $ref: paths/zoneinsights.yaml
-  /zone-insights/{name}:
-    $ref: paths/zoneinsights_{name}.yaml
   /zones/{name}/_overview:
     $ref: paths/zones_{name}_overview.yaml
   /zones/_overview:
@@ -257,6 +249,14 @@ paths:
     $ref: paths/meshes_{mesh}_workloads.yaml
   /workloads:
     $ref: paths/workloads.yaml
+  /zones/{name}:
+    $ref: paths/zones_{name}.yaml
+  /zones:
+    $ref: paths/zones.yaml
+  /zone-insights/{name}:
+    $ref: paths/zoneinsights_{name}.yaml
+  /zone-insights:
+    $ref: paths/zoneinsights.yaml
   /meshes/{mesh}/dataplanes/{name}/xds:
     $ref: paths/meshes_{mesh}_dataplanes_{name}_xds.yaml
   /meshes/{mesh}/dataplanes/{name}/stats:
@@ -425,10 +425,6 @@ components:
       $ref: components/schemas/MeshInsight.yaml
     SecretItem:
       $ref: components/schemas/SecretItem.yaml
-    ZoneItem:
-      $ref: components/schemas/ZoneItem.yaml
-    ZoneInsightItem:
-      $ref: components/schemas/ZoneInsightItem.yaml
     ZoneOverviewWithMeta:
       $ref: components/schemas/ZoneOverviewWithMeta.yaml
     ZoneOverview:
@@ -451,6 +447,10 @@ components:
       $ref: components/schemas/MeshZoneAddressItem.yaml
     WorkloadItem:
       $ref: components/schemas/WorkloadItem.yaml
+    ZoneItem:
+      $ref: components/schemas/ZoneItem.yaml
+    ZoneInsightItem:
+      $ref: components/schemas/ZoneInsightItem.yaml
     Policy:
       $ref: components/schemas/Policy.yaml
     PolicyCollection:
@@ -689,22 +689,6 @@ components:
       $ref: components/responses/SecretItem.yaml
     SecretList:
       $ref: components/responses/SecretList.yaml
-    ZoneCreateOrUpdateSuccessResponse:
-      $ref: components/responses/ZoneCreateOrUpdateSuccessResponse.yaml
-    ZoneDeleteSuccessResponse:
-      $ref: components/responses/ZoneDeleteSuccessResponse.yaml
-    ZoneItem:
-      $ref: components/responses/ZoneItem.yaml
-    ZoneList:
-      $ref: components/responses/ZoneList.yaml
-    ZoneInsightCreateOrUpdateSuccessResponse:
-      $ref: components/responses/ZoneInsightCreateOrUpdateSuccessResponse.yaml
-    ZoneInsightDeleteSuccessResponse:
-      $ref: components/responses/ZoneInsightDeleteSuccessResponse.yaml
-    ZoneInsightItem:
-      $ref: components/responses/ZoneInsightItem.yaml
-    ZoneInsightList:
-      $ref: components/responses/ZoneInsightList.yaml
     GetZoneOverviewResponse:
       $ref: components/responses/GetZoneOverviewResponse.yaml
     GetZoneOverviewListResponse:
@@ -781,6 +765,22 @@ components:
       $ref: components/responses/WorkloadCreateOrUpdateSuccessResponse.yaml
     WorkloadDeleteSuccessResponse:
       $ref: components/responses/WorkloadDeleteSuccessResponse.yaml
+    ZoneItem:
+      $ref: components/responses/ZoneItem.yaml
+    ZoneList:
+      $ref: components/responses/ZoneList.yaml
+    ZoneCreateOrUpdateSuccessResponse:
+      $ref: components/responses/ZoneCreateOrUpdateSuccessResponse.yaml
+    ZoneDeleteSuccessResponse:
+      $ref: components/responses/ZoneDeleteSuccessResponse.yaml
+    ZoneInsightItem:
+      $ref: components/responses/ZoneInsightItem.yaml
+    ZoneInsightList:
+      $ref: components/responses/ZoneInsightList.yaml
+    ZoneInsightCreateOrUpdateSuccessResponse:
+      $ref: components/responses/ZoneInsightCreateOrUpdateSuccessResponse.yaml
+    ZoneInsightDeleteSuccessResponse:
+      $ref: components/responses/ZoneInsightDeleteSuccessResponse.yaml
   securitySchemes:
     BasicAuth:
       $ref: components/securitySchemes/BasicAuth.yaml

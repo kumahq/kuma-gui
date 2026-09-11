@@ -112,7 +112,6 @@ properties:
                               type: string
                             weight:
                               type: integer
-                              default: 1
                               maximum: 4294967295
                               minimum: 0
                           required:

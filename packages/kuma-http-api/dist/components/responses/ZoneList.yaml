@@ -8,9 +8,15 @@ content:
           type: array
           items:
             $ref: '../schemas/ZoneItem.yaml'
-        next:
-          description: URL to the next page
-          type: string
         total:
           description: The total number of entities
           type: number
+        next:
+          description: URL to the next page, or null when this is the last page
+          type:
+            - string
+            - 'null'
+      required:
+        - total
+        - items
+        - next

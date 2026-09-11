@@ -1,34 +1,47 @@
+description: |-
+  Zone defines the Zone configuration used at the Global Control Plane within a
+  distributed deployment. Enabled is a pointer because an unset value and an explicit
+  false mean different things: protobuf omitted an unset wrapper entirely, and an older
+  control plane still distinguishes the two.
 type: object
 properties:
+  type:
+    description: the type of the resource
+    type: string
+    enum:
+      - Zone
+  kri:
+    description: A unique identifier for this resource instance used by internal tooling and integrations. Typically derived from resource attributes and may be used for cross-references or indexing
+    type: string
+    example: kri_z___kuma-demo_myresource1_
+    readOnly: true
+  name:
+    description: Name of the Kuma resource
+    type: string
+    maxLength: 253
+    pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$
+  labels:
+    description: The labels to help identity resources
+    type: object
+    additionalProperties:
+      type: string
   creationTime:
     description: Time at which the resource was created
     type: string
     format: date-time
+    example: 1901-01-01T00:00:00.000Z
     readOnly: true
-  enabled:
-    description: |-
-      enable allows to turn the zone on/off and exclude the whole zone from
-      balancing traffic on it
-    type: boolean
-  kri:
-    description: Kuma Resource Identifier (KRI) of the given resource
-    type: string
-    readOnly: true
-  labels:
-    type: object
-    additionalProperties:
-      type: string
   modificationTime:
     description: Time at which the resource was updated
     type: string
     format: date-time
+    example: 1901-01-01T00:00:00.000Z
     readOnly: true
-  name:
-    type: string
-    maxLength: 253
-    pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$
-  type:
-    type: string
+  enabled:
+    description: |-
+      Enabled allows to turn the zone on and off, and to exclude the whole zone from
+      balancing traffic on it.
+    type: boolean
 required:
   - type
   - name

@@ -286,7 +286,6 @@ properties:
                           type:
                             description: Type specifies how to match against the value of the header.
                             type: string
-                            default: Exact
                             enum:
                               - Exact
                               - Present
@@ -321,7 +320,6 @@ properties:
                           type:
                             description: Type specifies how to match against the value of the header.
                             type: string
-                            default: Exact
                             enum:
                               - Exact
                               - Present
@@ -344,6 +342,9 @@ properties:
                         Also, any HTTP status code (500, 503, etc.).
                       type: array
                       items:
+                        description: |-
+                          HTTPRetryOn names a condition a request is retried on. Alongside the named
+                          conditions it also accepts any numeric HTTP status code.
                         type: string
                       example:
                         - 5XX
