@@ -64,7 +64,7 @@
     "lint-staged": "^17.4.1",
     "lockfile-lint": "^5.0.1",
     "markdown-it": "^15.0.1",
-    "openapi-format": "^1.33.6",
+    "openapi-format": "^1.33.7",
     "openapi-typescript": "^7.13.0",
     "playwright-bdd": "^9.2.0",
     "stylelint": "^17.14.1",
