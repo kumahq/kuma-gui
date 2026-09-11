@@ -37,6 +37,7 @@
                 params: {
                   kumaDp: props.data.dataplaneInsight.version?.kumaDp.version ?? '',
                 },
+                variant: 'warning',
               },
               {
                 bool: props.data.dataplaneInsight.version?.envoy?.kumaDpCompatible === false,
@@ -45,6 +46,7 @@
                   envoy: props.data.dataplaneInsight.version?.envoy.version ?? '',
                   kumaDp: props.data.dataplaneInsight.version?.kumaDp.version ?? '',
                 },
+                variant: 'warning',
               },
               {
                 bool: !!(can('use zones') && props.data.zone && props.data.dataplaneInsight.version?.kumaDp?.kumaCpCompatible === false),
@@ -52,14 +54,19 @@
                 params: {
                   kumaDp: props.data.dataplaneInsight.version?.kumaDp.version ?? '',
                 },
+                variant: 'warning',
               },
               {
                 bool: props.data.isCertExpiresSoon,
                 key: 'certificate-expires-soon',
+                params: {},
+                variant: 'warning',
               },
               {
                 bool: props.data.isCertExpired,
                 key: 'certificate-expired',
+                params: {},
+                variant: 'warning',
               },
               {
                 bool: !props.data.dataplaneInsight.mTLS,
@@ -67,11 +74,13 @@
                 params: {
                   mode: can('use mesh-services', props.mesh) ? 'meshidentity' : 'mutualtls',
                 },
+                variant: 'warning',
               },
               {
                 bool: !can('use transparent-proxying', props.data),
                 key: 'networking-transparent-proxying',
-                variant: 'info' as const,
+                params: {},
+                variant: 'info',
               },
             ]"
             :key="key"
@@ -84,7 +93,7 @@
             >
               <XI18n
                 :path="`data-planes.notifications.${key}`"
-                :params="Object.fromEntries(Object.entries(params ?? {}))"
+                :params="params"
               />
             </XNotification>
           </template>

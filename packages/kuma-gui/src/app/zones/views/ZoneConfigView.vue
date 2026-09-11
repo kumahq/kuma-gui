@@ -33,6 +33,7 @@
                   {
                     bool: zone.zoneInsight.store === 'memory',
                     key: 'store-memory',
+                    params: {},
                   },
                   {
                     bool: !zone.zoneInsight.version?.kumaCp?.kumaCpGlobalCompatible,
@@ -45,6 +46,7 @@
                   {
                     bool: (zone.zoneInsight.connectedSubscription?.status.total.responsesRejected ?? 0) > 0,
                     key: 'global-nack-response',
+                    params: {},
                   },
                 ]"
                 :key="key"
@@ -56,7 +58,7 @@
                 >
                   <XI18n
                     :path="`zone-cps.notifications.${key}`"
-                    :params="Object.fromEntries(Object.entries(params ?? {}))"
+                    :params="params"
                   >
                     <template
                       v-if="key === 'global-nack-response'"
