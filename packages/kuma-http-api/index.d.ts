@@ -2627,6 +2627,10 @@ export interface components {
             shortName: string;
             /** @description description resources of this type should be included in federetion-with-policies export profile (especially useful for moving from non-federated to federated or migrating to a new global). */
             includeInFederation: boolean;
+            /** @description whether this resource type holds state computed by the control plane rather than user configuration. */
+            isInsight: boolean;
+            /** @description whether accessing resources of this type requires admin credentials. */
+            adminOnly: boolean;
             policy?: components["schemas"]["PolicyDescription"];
         };
         /**
@@ -2661,8 +2665,6 @@ export interface components {
                 /** @example 5 */
                 total: number;
             };
-            /** @description Delegated Gateway services statistics */
-            gatewayDelegated: components["schemas"]["FullStatus"];
         };
         /**
          * Zones Stats
@@ -2683,8 +2685,6 @@ export interface components {
         DataplanesStats: {
             /** @description Standard dataplane proxy statistics */
             standard: components["schemas"]["FullStatus"];
-            /** @description Delegated Gateway dataplane proxy statistics */
-            gatewayDelegated: components["schemas"]["FullStatus"];
         };
         /**
          * Policies Stats
@@ -3051,7 +3051,8 @@ export interface components {
         InspectDataplanesForPolicy: {
             /** @example 200 */
             total: number;
-            next?: string;
+            /** @description URL to the next page, or null when this is the last page */
+            next: string | null;
             items: components["schemas"]["Meta"][];
         };
         /**
@@ -3240,7 +3241,7 @@ export interface components {
                 }[];
                 /**
                  * @description Listeners describes zone proxy listeners embedded in this Dataplane.
-                 *     Listeners may coexist with inbounds and gateways.
+                 *     Listeners may coexist with inbounds.
                  */
                 listeners?: {
                     /** @description Address on which the listener will be exposed. */
@@ -3275,9 +3276,10 @@ export interface components {
                     /**
                      * @description IP on which the consumed service will be available to this data plane
                      *     proxy. On Kubernetes, it's usually ClusterIP of a Service or PodIP of a
-                     *     Headless Service. Defaults to 127.0.0.1
+                     *     Headless Service. When left out, the control plane sets it to
+                     *     127.0.0.1, so a Dataplane read back from the API always carries one.
                      */
-                    address?: string;
+                    address: string;
                     /** @description BackendRef is a way to target MeshService. */
                     backendRef?: {
                         /** @description Kind is a type of the object to target. Allowed: MeshService */
@@ -3315,11 +3317,6 @@ export interface components {
                      */
                     directAccessServices?: string[];
                     /**
-                     * @description The IP family mode to enable for. Can be "IPv4" or "DualStack".
-                     * @enum {string}
-                     */
-                    ipFamilyMode?: "UnSpecified" | "DualStack" | "IPv4" | "IPv6";
-                    /**
                      * @description Reachable backend via transparent proxy when running with
                      *     MeshExternalService, MeshService and MeshMultiZoneService. Setting an
                      *     explicit list of refs can dramatically improve the performance of the
@@ -3327,45 +3324,23 @@ export interface components {
                      */
                     reachableBackends?: {
                         refs?: {
-                            /**
-                             * @description Type of the backend: MeshService, MeshExternalService or MeshMultiZoneService
-                             *
-                             *     	+required
-                             */
-                            kind?: string;
-                            /**
-                             * @description Labels used to select backends
-                             *
-                             *     	+optional
-                             */
+                            /** @description Type of the backend: MeshService, MeshExternalService or MeshMultiZoneService */
+                            kind: string;
+                            /** @description Labels used to select backends */
                             labels?: {
                                 [key: string]: string;
                             };
-                            /**
-                             * @description Name of the backend.
-                             *
-                             *     	+optional
-                             */
+                            /** @description Name of the backend. */
                             name?: string;
-                            /**
-                             * @description Namespace of the backend. Might be empty
-                             *
-                             *     	+optional
-                             */
+                            /** @description Namespace of the backend. Might be empty */
                             namespace?: string;
                             /**
                              * Format: uint32
                              * @description Port of the backend.
-                             *
-                             *     	+optional
                              */
                             port?: number;
                         }[];
                     };
-                    /** @description Port on which all inbound traffic is being transparently redirected. */
-                    redirectPortInbound?: number;
-                    /** @description Port on which all outbound traffic is being transparently redirected. */
-                    redirectPortOutbound?: number;
                 };
             };
             type: string;
@@ -4773,8 +4748,7 @@ export interface components {
                                              *     For example, you can target a port from MeshService.ports[] by its name.
                                              */
                                             sectionName?: string;
-                                            /** @default 1 */
-                                            weight: number;
+                                            weight?: number;
                                         };
                                         /**
                                          * @description Percentage of requests to mirror. If not specified, all requests
@@ -4907,8 +4881,7 @@ export interface components {
                                  *     For example, you can target a port from MeshService.ports[] by its name.
                                  */
                                 sectionName?: string;
-                                /** @default 1 */
-                                weight: number;
+                                weight?: number;
                             }[];
                             filters?: ({
                                 /**
@@ -4949,8 +4922,7 @@ export interface components {
                                          *     For example, you can target a port from MeshService.ports[] by its name.
                                          */
                                         sectionName?: string;
-                                        /** @default 1 */
-                                        weight: number;
+                                        weight?: number;
                                     };
                                     /**
                                      * @description Percentage of requests to mirror. If not specified, all requests
@@ -5078,10 +5050,9 @@ export interface components {
                                 name: string;
                                 /**
                                  * @description Type specifies how to match against the value of the header.
-                                 * @default Exact
                                  * @enum {string}
                                  */
-                                type: "Exact" | "Present" | "RegularExpression" | "Absent" | "Prefix";
+                                type?: "Exact" | "Present" | "RegularExpression" | "Absent" | "Prefix";
                                 /** @description Value is the value of HTTP Header to be matched. */
                                 value?: string;
                             }[];
@@ -5958,7 +5929,10 @@ export interface components {
                     appendMatch?: {
                         /**
                          * Format: int32
-                         * @description Port defines the port to which a user makes a request.
+                         * @description Port defines the port to which a user makes a request. It is required for a
+                         *     `Domain` that is not a wildcard: the sidecar resolves the domain itself and
+                         *     connects to this port, so the destination doesn't depend on the address the
+                         *     client dials.
                          */
                         port?: number;
                         /**
@@ -5972,7 +5946,11 @@ export interface components {
                          * @enum {string}
                          */
                         type: "Domain" | "IP" | "CIDR";
-                        /** @description Value for the specified Type. */
+                        /**
+                         * @description Value for the specified Type. A wildcard `Domain`, for example
+                         *     `*.example.com`, cannot be resolved by the sidecar, so its traffic goes to the
+                         *     address the client dials and the match only restricts the SNI or Host.
+                         */
                         value: string;
                     }[];
                     /**
@@ -6850,10 +6828,9 @@ export interface components {
                                 name: string;
                                 /**
                                  * @description Type specifies how to match against the value of the header.
-                                 * @default Exact
                                  * @enum {string}
                                  */
-                                type: "Exact" | "Present" | "RegularExpression" | "Absent" | "Prefix";
+                                type?: "Exact" | "Present" | "RegularExpression" | "Absent" | "Prefix";
                                 /** @description Value is the value of HTTP Header to be matched. */
                                 value?: string;
                             }[];
@@ -6870,10 +6847,9 @@ export interface components {
                                 name: string;
                                 /**
                                  * @description Type specifies how to match against the value of the header.
-                                 * @default Exact
                                  * @enum {string}
                                  */
-                                type: "Exact" | "Present" | "RegularExpression" | "Absent" | "Prefix";
+                                type?: "Exact" | "Present" | "RegularExpression" | "Absent" | "Prefix";
                                 /** @description Value is the value of HTTP Header to be matched. */
                                 value?: string;
                             }[];
@@ -7048,8 +7024,7 @@ export interface components {
                                  *     For example, you can target a port from MeshService.ports[] by its name.
                                  */
                                 sectionName?: string;
-                                /** @default 1 */
-                                weight: number;
+                                weight?: number;
                             }[];
                         };
                     }[];
@@ -7908,7 +7883,7 @@ export interface components {
                     }[];
                     /**
                      * @description Listeners describes zone proxy listeners embedded in this Dataplane.
-                     *     Listeners may coexist with inbounds and gateways.
+                     *     Listeners may coexist with inbounds.
                      */
                     listeners?: {
                         /** @description Address on which the listener will be exposed. */
@@ -7943,9 +7918,10 @@ export interface components {
                         /**
                          * @description IP on which the consumed service will be available to this data plane
                          *     proxy. On Kubernetes, it's usually ClusterIP of a Service or PodIP of a
-                         *     Headless Service. Defaults to 127.0.0.1
+                         *     Headless Service. When left out, the control plane sets it to
+                         *     127.0.0.1, so a Dataplane read back from the API always carries one.
                          */
-                        address?: string;
+                        address: string;
                         /** @description BackendRef is a way to target MeshService. */
                         backendRef?: {
                             /** @description Kind is a type of the object to target. Allowed: MeshService */
@@ -7983,11 +7959,6 @@ export interface components {
                          */
                         directAccessServices?: string[];
                         /**
-                         * @description The IP family mode to enable for. Can be "IPv4" or "DualStack".
-                         * @enum {string}
-                         */
-                        ipFamilyMode?: "UnSpecified" | "DualStack" | "IPv4" | "IPv6";
-                        /**
                          * @description Reachable backend via transparent proxy when running with
                          *     MeshExternalService, MeshService and MeshMultiZoneService. Setting an
                          *     explicit list of refs can dramatically improve the performance of the
@@ -7995,45 +7966,23 @@ export interface components {
                          */
                         reachableBackends?: {
                             refs?: {
-                                /**
-                                 * @description Type of the backend: MeshService, MeshExternalService or MeshMultiZoneService
-                                 *
-                                 *     	+required
-                                 */
-                                kind?: string;
-                                /**
-                                 * @description Labels used to select backends
-                                 *
-                                 *     	+optional
-                                 */
+                                /** @description Type of the backend: MeshService, MeshExternalService or MeshMultiZoneService */
+                                kind: string;
+                                /** @description Labels used to select backends */
                                 labels?: {
                                     [key: string]: string;
                                 };
-                                /**
-                                 * @description Name of the backend.
-                                 *
-                                 *     	+optional
-                                 */
+                                /** @description Name of the backend. */
                                 name?: string;
-                                /**
-                                 * @description Namespace of the backend. Might be empty
-                                 *
-                                 *     	+optional
-                                 */
+                                /** @description Namespace of the backend. Might be empty */
                                 namespace?: string;
                                 /**
                                  * Format: uint32
                                  * @description Port of the backend.
-                                 *
-                                 *     	+optional
                                  */
                                 port?: number;
                             }[];
                         };
-                        /** @description Port on which all inbound traffic is being transparently redirected. */
-                        redirectPortInbound?: number;
-                        /** @description Port on which all outbound traffic is being transparently redirected. */
-                        redirectPortOutbound?: number;
                     };
                 };
             };
@@ -9239,6 +9188,15 @@ export interface components {
                     /** @description type of condition in CamelCase or in foo.example.com/CamelCase. */
                     type: string;
                 }[];
+                /**
+                 * @description TrustDomain is the trust domain this identity issues certificates in. The
+                 *     control plane renders `spec.spiffeID.trustDomain` once, when it first
+                 *     initializes the identity, and then keeps issuing in the recorded value.
+                 *     Templates such as `{{ .Zone }}` therefore stop following the zone name,
+                 *     which would otherwise silently move every workload into a trust domain no
+                 *     MeshTrust publishes yet.
+                 */
+                trustDomain?: string;
             };
         };
         /**
@@ -10357,11 +10315,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["MeshAccessLogItem"][];
+                    items: components["schemas"]["MeshAccessLogItem"][];
                     /** @description The total number of entities */
-                    total?: number;
-                    /** @description URL to the next page */
-                    next?: string;
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                 };
             };
         };
@@ -10405,11 +10363,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["MeshCircuitBreakerItem"][];
+                    items: components["schemas"]["MeshCircuitBreakerItem"][];
                     /** @description The total number of entities */
-                    total?: number;
-                    /** @description URL to the next page */
-                    next?: string;
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                 };
             };
         };
@@ -10453,11 +10411,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["MeshFaultInjectionItem"][];
+                    items: components["schemas"]["MeshFaultInjectionItem"][];
                     /** @description The total number of entities */
-                    total?: number;
-                    /** @description URL to the next page */
-                    next?: string;
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                 };
             };
         };
@@ -10501,11 +10459,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["MeshHealthCheckItem"][];
+                    items: components["schemas"]["MeshHealthCheckItem"][];
                     /** @description The total number of entities */
-                    total?: number;
-                    /** @description URL to the next page */
-                    next?: string;
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                 };
             };
         };
@@ -10549,11 +10507,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["MeshHTTPRouteItem"][];
+                    items: components["schemas"]["MeshHTTPRouteItem"][];
                     /** @description The total number of entities */
-                    total?: number;
-                    /** @description URL to the next page */
-                    next?: string;
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                 };
             };
         };
@@ -10597,11 +10555,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["MeshLoadBalancingStrategyItem"][];
+                    items: components["schemas"]["MeshLoadBalancingStrategyItem"][];
                     /** @description The total number of entities */
-                    total?: number;
-                    /** @description URL to the next page */
-                    next?: string;
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                 };
             };
         };
@@ -10645,11 +10603,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["MeshMetricItem"][];
+                    items: components["schemas"]["MeshMetricItem"][];
                     /** @description The total number of entities */
-                    total?: number;
-                    /** @description URL to the next page */
-                    next?: string;
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                 };
             };
         };
@@ -10693,11 +10651,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["MeshPassthroughItem"][];
+                    items: components["schemas"]["MeshPassthroughItem"][];
                     /** @description The total number of entities */
-                    total?: number;
-                    /** @description URL to the next page */
-                    next?: string;
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                 };
             };
         };
@@ -10741,11 +10699,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["MeshProxyPatchItem"][];
+                    items: components["schemas"]["MeshProxyPatchItem"][];
                     /** @description The total number of entities */
-                    total?: number;
-                    /** @description URL to the next page */
-                    next?: string;
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                 };
             };
         };
@@ -10789,11 +10747,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["MeshRateLimitItem"][];
+                    items: components["schemas"]["MeshRateLimitItem"][];
                     /** @description The total number of entities */
-                    total?: number;
-                    /** @description URL to the next page */
-                    next?: string;
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                 };
             };
         };
@@ -10837,11 +10795,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["MeshRetryItem"][];
+                    items: components["schemas"]["MeshRetryItem"][];
                     /** @description The total number of entities */
-                    total?: number;
-                    /** @description URL to the next page */
-                    next?: string;
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                 };
             };
         };
@@ -10885,11 +10843,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["MeshTCPRouteItem"][];
+                    items: components["schemas"]["MeshTCPRouteItem"][];
                     /** @description The total number of entities */
-                    total?: number;
-                    /** @description URL to the next page */
-                    next?: string;
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                 };
             };
         };
@@ -10933,11 +10891,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["MeshTimeoutItem"][];
+                    items: components["schemas"]["MeshTimeoutItem"][];
                     /** @description The total number of entities */
-                    total?: number;
-                    /** @description URL to the next page */
-                    next?: string;
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                 };
             };
         };
@@ -10981,11 +10939,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["MeshTLSItem"][];
+                    items: components["schemas"]["MeshTLSItem"][];
                     /** @description The total number of entities */
-                    total?: number;
-                    /** @description URL to the next page */
-                    next?: string;
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                 };
             };
         };
@@ -11029,11 +10987,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["MeshTraceItem"][];
+                    items: components["schemas"]["MeshTraceItem"][];
                     /** @description The total number of entities */
-                    total?: number;
-                    /** @description URL to the next page */
-                    next?: string;
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                 };
             };
         };
@@ -11077,11 +11035,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["MeshTrafficPermissionItem"][];
+                    items: components["schemas"]["MeshTrafficPermissionItem"][];
                     /** @description The total number of entities */
-                    total?: number;
-                    /** @description URL to the next page */
-                    next?: string;
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                 };
             };
         };
@@ -11092,11 +11050,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["DataplaneItem"][];
-                    /** @description URL to the next page */
-                    next?: string;
+                    items: components["schemas"]["DataplaneItem"][];
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                     /** @description The total number of entities */
-                    total?: number;
+                    total: number;
                 };
             };
         };
@@ -11140,11 +11098,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["DataplaneInsightItem"][];
-                    /** @description URL to the next page */
-                    next?: string;
+                    items: components["schemas"]["DataplaneInsightItem"][];
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                     /** @description The total number of entities */
-                    total?: number;
+                    total: number;
                 };
             };
         };
@@ -11174,9 +11132,10 @@ export interface components {
             content: {
                 "application/json": {
                     /** @example 200 */
-                    total?: number;
-                    next?: string;
-                    items?: components["schemas"]["DataplaneOverviewWithMeta"][];
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
+                    items: components["schemas"]["DataplaneOverviewWithMeta"][];
                 };
             };
         };
@@ -11220,11 +11179,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["GlobalSecretItem"][];
+                    items: components["schemas"]["GlobalSecretItem"][];
                     /** @description The total number of entities */
-                    total?: number;
-                    /** @description URL to the next page */
-                    next?: string;
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                 };
             };
         };
@@ -11235,11 +11194,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["MeshItem"][];
-                    /** @description URL to the next page */
-                    next?: string;
+                    items: components["schemas"]["MeshItem"][];
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                     /** @description The total number of entities */
-                    total?: number;
+                    total: number;
                 };
             };
         };
@@ -11293,9 +11252,10 @@ export interface components {
             content: {
                 "application/json": {
                     /** @example 200 */
-                    total?: number;
-                    next?: string;
-                    items?: components["schemas"]["MeshOverviewWithMeta"][];
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
+                    items: components["schemas"]["MeshOverviewWithMeta"][];
                 };
             };
         };
@@ -11306,11 +11266,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["SecretItem"][];
-                    /** @description URL to the next page */
-                    next?: string;
+                    items: components["schemas"]["SecretItem"][];
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                     /** @description The total number of entities */
-                    total?: number;
+                    total: number;
                 };
             };
         };
@@ -11354,11 +11314,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["ZoneItem"][];
-                    /** @description URL to the next page */
-                    next?: string;
+                    items: components["schemas"]["ZoneItem"][];
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                     /** @description The total number of entities */
-                    total?: number;
+                    total: number;
                 };
             };
         };
@@ -11402,11 +11362,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["ZoneInsightItem"][];
-                    /** @description URL to the next page */
-                    next?: string;
+                    items: components["schemas"]["ZoneInsightItem"][];
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                     /** @description The total number of entities */
-                    total?: number;
+                    total: number;
                 };
             };
         };
@@ -11459,11 +11419,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["HostnameGeneratorItem"][];
+                    items: components["schemas"]["HostnameGeneratorItem"][];
                     /** @description The total number of entities */
-                    total?: number;
-                    /** @description URL to the next page */
-                    next?: string;
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                 };
             };
         };
@@ -11507,11 +11467,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["MeshExternalServiceItem"][];
+                    items: components["schemas"]["MeshExternalServiceItem"][];
                     /** @description The total number of entities */
-                    total?: number;
-                    /** @description URL to the next page */
-                    next?: string;
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                 };
             };
         };
@@ -11555,11 +11515,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["MeshIdentityItem"][];
+                    items: components["schemas"]["MeshIdentityItem"][];
                     /** @description The total number of entities */
-                    total?: number;
-                    /** @description URL to the next page */
-                    next?: string;
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                 };
             };
         };
@@ -11603,11 +11563,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["MeshMultiZoneServiceItem"][];
+                    items: components["schemas"]["MeshMultiZoneServiceItem"][];
                     /** @description The total number of entities */
-                    total?: number;
-                    /** @description URL to the next page */
-                    next?: string;
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                 };
             };
         };
@@ -11651,11 +11611,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["MeshOpenTelemetryBackendItem"][];
+                    items: components["schemas"]["MeshOpenTelemetryBackendItem"][];
                     /** @description The total number of entities */
-                    total?: number;
-                    /** @description URL to the next page */
-                    next?: string;
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                 };
             };
         };
@@ -11699,11 +11659,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["MeshServiceItem"][];
+                    items: components["schemas"]["MeshServiceItem"][];
                     /** @description The total number of entities */
-                    total?: number;
-                    /** @description URL to the next page */
-                    next?: string;
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                 };
             };
         };
@@ -11747,11 +11707,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["MeshTrustItem"][];
+                    items: components["schemas"]["MeshTrustItem"][];
                     /** @description The total number of entities */
-                    total?: number;
-                    /** @description URL to the next page */
-                    next?: string;
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                 };
             };
         };
@@ -11795,11 +11755,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["MeshZoneAddressItem"][];
+                    items: components["schemas"]["MeshZoneAddressItem"][];
                     /** @description The total number of entities */
-                    total?: number;
-                    /** @description URL to the next page */
-                    next?: string;
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                 };
             };
         };
@@ -11843,11 +11803,11 @@ export interface components {
             };
             content: {
                 "application/json": {
-                    items?: components["schemas"]["WorkloadItem"][];
+                    items: components["schemas"]["WorkloadItem"][];
                     /** @description The total number of entities */
-                    total?: number;
-                    /** @description URL to the next page */
-                    next?: string;
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
                 };
             };
         };
@@ -11903,9 +11863,10 @@ export interface components {
             content: {
                 "application/json": {
                     /** @example 200 */
-                    total?: number;
-                    next?: string;
-                    items?: components["schemas"]["MeshInsightWithMeta"][];
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
+                    items: components["schemas"]["MeshInsightWithMeta"][];
                 };
             };
         };
@@ -11950,9 +11911,10 @@ export interface components {
             content: {
                 "application/json": {
                     /** @example 200 */
-                    total?: number;
-                    next?: string;
-                    items?: components["schemas"]["ZoneOverviewWithMeta"][];
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
+                    items: components["schemas"]["ZoneOverviewWithMeta"][];
                 };
             };
         };
