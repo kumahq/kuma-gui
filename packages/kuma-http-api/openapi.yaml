@@ -4,7 +4,7 @@ info:
   description: Kuma API
   version: v1alpha1
   x-ref-schema-name: ZoneOverview
-  x-oas-source: kumahq/kuma@3e48420eed049a2c8ca75c7646cb4b161ffaeb59
+  x-oas-source: kumahq/kuma@5dec9157ad53e8e35c81c549df82d113db368fe4
 paths:
   /:
     get:
@@ -5894,6 +5894,12 @@ components:
         includeInFederation:
           description: description resources of this type should be included in federetion-with-policies export profile (especially useful for moving from non-federated to federated or migrating to a new global).
           type: boolean
+        isInsight:
+          description: whether this resource type holds state computed by the control plane rather than user configuration.
+          type: boolean
+        adminOnly:
+          description: whether accessing resources of this type requires admin credentials.
+          type: boolean
         policy:
           $ref: '#/components/schemas/PolicyDescription'
       required:
@@ -5905,6 +5911,8 @@ components:
         - pluralDisplayName
         - includeInFederation
         - shortName
+        - isInsight
+        - adminOnly
     ResourceTypeDescriptionList:
       description: A list of all resources install
       type: object
@@ -5960,15 +5968,10 @@ components:
               example: 5
           required:
             - total
-        gatewayDelegated:
-          description: Delegated Gateway services statistics
-          allOf:
-            - $ref: '#/components/schemas/FullStatus'
       required:
         - total
         - internal
         - external
-        - gatewayDelegated
       title: ServicesStats
     ZonesStats:
       description: Zone statistics
@@ -5999,13 +6002,8 @@ components:
           description: Standard dataplane proxy statistics
           allOf:
             - $ref: '#/components/schemas/FullStatus'
-        gatewayDelegated:
-          description: Delegated Gateway dataplane proxy statistics
-          allOf:
-            - $ref: '#/components/schemas/FullStatus'
       required:
         - standard
-        - gatewayDelegated
       title: Dataplanes Stats
     PoliciesStats:
       description: Policies statistics
@@ -6252,9 +6250,6 @@ components:
               type: string
               readOnly: true
               description: Set to `enabled` when the proxy has a zone egress listener. Always computed by the control plane.
-            ^kuma\.io/gateway$:
-              type: string
-              description: Set to `true` on a Dataplane that fronts a delegated gateway. On Kubernetes it is computed from the pod's `kuma.io/gateway` annotation.
             ^kuma\.io/mesh$:
               type: string
               description: Mesh the resource belongs to. Defaults to `default` when unset.
@@ -6715,7 +6710,10 @@ components:
           type: integer
           example: 200
         next:
-          type: string
+          description: URL to the next page, or null when this is the last page
+          type:
+            - string
+            - 'null'
         items:
           type: array
           items:
@@ -6723,6 +6721,7 @@ components:
       required:
         - total
         - items
+        - next
       title: InspectDataplanesForPolicy
     InspectHostnameZone:
       description: A name of the zone in which the hostname is available
@@ -6958,7 +6957,7 @@ components:
             listeners:
               description: |-
                 Listeners describes zone proxy listeners embedded in this Dataplane.
-                Listeners may coexist with inbounds and gateways.
+                Listeners may coexist with inbounds.
               type: array
               items:
                 description: Listener describes a zone proxy listener (ZoneIngress or ZoneEgress) embedded in a regular Dataplane.
@@ -7006,7 +7005,8 @@ components:
                     description: |-
                       IP on which the consumed service will be available to this data plane
                       proxy. On Kubernetes, it's usually ClusterIP of a Service or PodIP of a
-                      Headless Service. Defaults to 127.0.0.1
+                      Headless Service. When left out, the control plane sets it to
+                      127.0.0.1, so a Dataplane read back from the API always carries one.
                     type: string
                   backendRef:
                     description: BackendRef is a way to target MeshService.
@@ -7035,6 +7035,8 @@ components:
                       proxy. When transparent proxying is not used, Envoy will bind to this
                       port.
                     type: integer
+                required:
+                  - address
                 type: object
             transparentProxying:
               description: |-
@@ -7051,14 +7053,6 @@ components:
                   type: array
                   items:
                     type: string
-                ipFamilyMode:
-                  description: The IP family mode to enable for. Can be "IPv4" or "DualStack".
-                  type: string
-                  enum:
-                    - UnSpecified
-                    - DualStack
-                    - IPv4
-                    - IPv6
                 reachableBackends:
                   description: |-
                     Reachable backend via transparent proxy when running with
@@ -7072,45 +7066,26 @@ components:
                       items:
                         properties:
                           kind:
-                            description: |-
-                              Type of the backend: MeshService, MeshExternalService or MeshMultiZoneService
-
-                              	+required
+                            description: 'Type of the backend: MeshService, MeshExternalService or MeshMultiZoneService'
                             type: string
                           labels:
-                            description: |-
-                              Labels used to select backends
-
-                              	+optional
+                            description: Labels used to select backends
                             type: object
                             additionalProperties:
                               type: string
                           name:
-                            description: |-
-                              Name of the backend.
-
-                              	+optional
+                            description: Name of the backend.
                             type: string
                           namespace:
-                            description: |-
-                              Namespace of the backend. Might be empty
-
-                              	+optional
+                            description: Namespace of the backend. Might be empty
                             type: string
                           port:
-                            description: |-
-                              Port of the backend.
-
-                              	+optional
+                            description: Port of the backend.
                             type: integer
                             format: uint32
+                        required:
+                          - kind
                         type: object
-                redirectPortInbound:
-                  description: Port on which all inbound traffic is being transparently redirected.
-                  type: integer
-                redirectPortOutbound:
-                  description: Port on which all outbound traffic is being transparently redirected.
-                  type: integer
         type:
           type: string
       required:
@@ -8885,7 +8860,6 @@ components:
                                                   type: string
                                                 weight:
                                                   type: integer
-                                                  default: 1
                                                   maximum: 4294967295
                                                   minimum: 0
                                               required:
@@ -9117,7 +9091,6 @@ components:
                                     type: string
                                   weight:
                                     type: integer
-                                    default: 1
                                     maximum: 4294967295
                                     minimum: 0
                                 required:
@@ -9207,7 +9180,6 @@ components:
                                             type: string
                                           weight:
                                             type: integer
-                                            default: 1
                                             maximum: 4294967295
                                             minimum: 0
                                         required:
@@ -9441,7 +9413,6 @@ components:
                                     type:
                                       description: Type specifies how to match against the value of the header.
                                       type: string
-                                      default: Exact
                                       enum:
                                         - Exact
                                         - Present
@@ -10658,7 +10629,11 @@ components:
                   items:
                     properties:
                       port:
-                        description: Port defines the port to which a user makes a request.
+                        description: |-
+                          Port defines the port to which a user makes a request. It is required for a
+                          `Domain` that is not a wildcard: the sidecar resolves the domain itself and
+                          connects to this port, so the destination doesn't depend on the address the
+                          client dials.
                         type: integer
                         format: int32
                       protocol:
@@ -10680,7 +10655,10 @@ components:
                           - IP
                           - CIDR
                       value:
-                        description: Value for the specified Type.
+                        description: |-
+                          Value for the specified Type. A wildcard `Domain`, for example
+                          `*.example.com`, cannot be resolved by the sidecar, so its traffic goes to the
+                          address the client dials and the match only restricts the SNI or Host.
                         type: string
                     required:
                       - type
@@ -11891,7 +11869,6 @@ components:
                                 type:
                                   description: Type specifies how to match against the value of the header.
                                   type: string
-                                  default: Exact
                                   enum:
                                     - Exact
                                     - Present
@@ -11926,7 +11903,6 @@ components:
                                 type:
                                   description: Type specifies how to match against the value of the header.
                                   type: string
-                                  default: Exact
                                   enum:
                                     - Exact
                                     - Present
@@ -11949,6 +11925,9 @@ components:
                               Also, any HTTP status code (500, 503, etc.).
                             type: array
                             items:
+                              description: |-
+                                HTTPRetryOn names a condition a request is retried on. Alongside the named
+                                conditions it also accepts any numeric HTTP status code.
                               type: string
                             example:
                               - 5XX
@@ -12144,7 +12123,6 @@ components:
                                     type: string
                                   weight:
                                     type: integer
-                                    default: 1
                                     maximum: 4294967295
                                     minimum: 0
                                 required:
@@ -13266,7 +13244,7 @@ components:
                 listeners:
                   description: |-
                     Listeners describes zone proxy listeners embedded in this Dataplane.
-                    Listeners may coexist with inbounds and gateways.
+                    Listeners may coexist with inbounds.
                   type: array
                   items:
                     description: Listener describes a zone proxy listener (ZoneIngress or ZoneEgress) embedded in a regular Dataplane.
@@ -13314,7 +13292,8 @@ components:
                         description: |-
                           IP on which the consumed service will be available to this data plane
                           proxy. On Kubernetes, it's usually ClusterIP of a Service or PodIP of a
-                          Headless Service. Defaults to 127.0.0.1
+                          Headless Service. When left out, the control plane sets it to
+                          127.0.0.1, so a Dataplane read back from the API always carries one.
                         type: string
                       backendRef:
                         description: BackendRef is a way to target MeshService.
@@ -13343,6 +13322,8 @@ components:
                           proxy. When transparent proxying is not used, Envoy will bind to this
                           port.
                         type: integer
+                    required:
+                      - address
                     type: object
                 transparentProxying:
                   description: |-
@@ -13359,14 +13340,6 @@ components:
                       type: array
                       items:
                         type: string
-                    ipFamilyMode:
-                      description: The IP family mode to enable for. Can be "IPv4" or "DualStack".
-                      type: string
-                      enum:
-                        - UnSpecified
-                        - DualStack
-                        - IPv4
-                        - IPv6
                     reachableBackends:
                       description: |-
                         Reachable backend via transparent proxy when running with
@@ -13380,45 +13353,26 @@ components:
                           items:
                             properties:
                               kind:
-                                description: |-
-                                  Type of the backend: MeshService, MeshExternalService or MeshMultiZoneService
-
-                                  	+required
+                                description: 'Type of the backend: MeshService, MeshExternalService or MeshMultiZoneService'
                                 type: string
                               labels:
-                                description: |-
-                                  Labels used to select backends
-
-                                  	+optional
+                                description: Labels used to select backends
                                 type: object
                                 additionalProperties:
                                   type: string
                               name:
-                                description: |-
-                                  Name of the backend.
-
-                                  	+optional
+                                description: Name of the backend.
                                 type: string
                               namespace:
-                                description: |-
-                                  Namespace of the backend. Might be empty
-
-                                  	+optional
+                                description: Namespace of the backend. Might be empty
                                 type: string
                               port:
-                                description: |-
-                                  Port of the backend.
-
-                                  	+optional
+                                description: Port of the backend.
                                 type: integer
                                 format: uint32
+                            required:
+                              - kind
                             type: object
-                    redirectPortInbound:
-                      description: Port on which all inbound traffic is being transparently redirected.
-                      type: integer
-                    redirectPortOutbound:
-                      description: Port on which all outbound traffic is being transparently redirected.
-                      type: integer
         dataplaneInsight:
           type: object
           properties:
@@ -15306,6 +15260,15 @@ components:
               x-kubernetes-list-map-keys:
                 - type
               x-kubernetes-list-type: map
+            trustDomain:
+              description: |-
+                TrustDomain is the trust domain this identity issues certificates in. The
+                control plane renders `spec.spiffeID.trustDomain` once, when it first
+                initializes the identity, and then keeps issuing in the recorded value.
+                Templates such as `{{ .Zone }}` therefore stop following the zone name,
+                which would otherwise silently move every workload into a trust domain no
+                MeshTrust publishes yet.
+              type: string
           readOnly: true
       required:
         - type
@@ -16627,11 +16590,6 @@ components:
             partiallyDegraded: 1
           external:
             total: 1
-          gatewayDelegated:
-            total: 4
-            online: 2
-            offline: 1
-            partiallyDegraded: 1
           internalByStatus:
             total: 4
             online: 2
@@ -16649,11 +16607,6 @@ components:
             total: 1
         dataplanes:
           standard:
-            total: 4
-            online: 2
-            offline: 1
-            partiallyDegraded: 1
-          gatewayDelegated:
             total: 4
             online: 2
             offline: 1
@@ -16862,8 +16815,14 @@ components:
                 description: The total number of entities
                 type: number
               next:
-                description: URL to the next page
-                type: string
+                description: URL to the next page, or null when this is the last page
+                type:
+                  - string
+                  - 'null'
+            required:
+              - total
+              - items
+              - next
     MeshCircuitBreakerItem:
       description: Successful response
       content:
@@ -16906,8 +16865,14 @@ components:
                 description: The total number of entities
                 type: number
               next:
-                description: URL to the next page
-                type: string
+                description: URL to the next page, or null when this is the last page
+                type:
+                  - string
+                  - 'null'
+            required:
+              - total
+              - items
+              - next
     MeshFaultInjectionItem:
       description: Successful response
       content:
@@ -16950,8 +16915,14 @@ components:
                 description: The total number of entities
                 type: number
               next:
-                description: URL to the next page
-                type: string
+                description: URL to the next page, or null when this is the last page
+                type:
+                  - string
+                  - 'null'
+            required:
+              - total
+              - items
+              - next
     MeshHealthCheckItem:
       description: Successful response
       content:
@@ -16994,8 +16965,14 @@ components:
                 description: The total number of entities
                 type: number
               next:
-                description: URL to the next page
-                type: string
+                description: URL to the next page, or null when this is the last page
+                type:
+                  - string
+                  - 'null'
+            required:
+              - total
+              - items
+              - next
     MeshHTTPRouteItem:
       description: Successful response
       content:
@@ -17038,8 +17015,14 @@ components:
                 description: The total number of entities
                 type: number
               next:
-                description: URL to the next page
-                type: string
+                description: URL to the next page, or null when this is the last page
+                type:
+                  - string
+                  - 'null'
+            required:
+              - total
+              - items
+              - next
     MeshLoadBalancingStrategyItem:
       description: Successful response
       content:
@@ -17082,8 +17065,14 @@ components:
                 description: The total number of entities
                 type: number
               next:
-                description: URL to the next page
-                type: string
+                description: URL to the next page, or null when this is the last page
+                type:
+                  - string
+                  - 'null'
+            required:
+              - total
+              - items
+              - next
     MeshMetricItem:
       description: Successful response
       content:
@@ -17126,8 +17115,14 @@ components:
                 description: The total number of entities
                 type: number
               next:
-                description: URL to the next page
-                type: string
+                description: URL to the next page, or null when this is the last page
+                type:
+                  - string
+                  - 'null'
+            required:
+              - total
+              - items
+              - next
     MeshPassthroughItem:
       description: Successful response
       content:
@@ -17170,8 +17165,14 @@ components:
                 description: The total number of entities
                 type: number
               next:
-                description: URL to the next page
-                type: string
+                description: URL to the next page, or null when this is the last page
+                type:
+                  - string
+                  - 'null'
+            required:
+              - total
+              - items
+              - next
     MeshProxyPatchItem:
       description: Successful response
       content:
@@ -17214,8 +17215,14 @@ components:
                 description: The total number of entities
                 type: number
               next:
-                description: URL to the next page
-                type: string
+                description: URL to the next page, or null when this is the last page
+                type:
+                  - string
+                  - 'null'
+            required:
+              - total
+              - items
+              - next
     MeshRateLimitItem:
       description: Successful response
       content:
@@ -17258,8 +17265,14 @@ components:
                 description: The total number of entities
                 type: number
               next:
-                description: URL to the next page
-                type: string
+                description: URL to the next page, or null when this is the last page
+                type:
+                  - string
+                  - 'null'
+            required:
+              - total
+              - items
+              - next
     MeshRetryItem:
       description: Successful response
       content:
@@ -17302,8 +17315,14 @@ components:
                 description: The total number of entities
                 type: number
               next:
-                description: URL to the next page
-                type: string
+                description: URL to the next page, or null when this is the last page
+                type:
+                  - string
+                  - 'null'
+            required:
+              - total
+              - items
+              - next
     MeshTCPRouteItem:
       description: Successful response
       content:
@@ -17346,8 +17365,14 @@ components:
                 description: The total number of entities
                 type: number
               next:
-                description: URL to the next page
-                type: string
+                description: URL to the next page, or null when this is the last page
+                type:
+                  - string
+                  - 'null'
+            required:
+              - total
+              - items
+              - next
     MeshTimeoutItem:
       description: Successful response
       content:
@@ -17390,8 +17415,14 @@ components:
                 description: The total number of entities
                 type: number
               next:
-                description: URL to the next page
-                type: string
+                description: URL to the next page, or null when this is the last page
+                type:
+                  - string
+                  - 'null'
+            required:
+              - total
+              - items
+              - next
     MeshTLSItem:
       description: Successful response
       content:
@@ -17434,8 +17465,14 @@ components:
                 description: The total number of entities
                 type: number
               next:
-                description: URL to the next page
-                type: string
+                description: URL to the next page, or null when this is the last page
+                type:
+                  - string
+                  - 'null'
+            required:
+              - total
+              - items
+              - next
     MeshTraceItem:
       description: Successful response
       content:
@@ -17478,8 +17515,14 @@ components:
                 description: The total number of entities
                 type: number
               next:
-                description: URL to the next page
-                type: string
+                description: URL to the next page, or null when this is the last page
+                type:
+                  - string
+                  - 'null'
+            required:
+              - total
+              - items
+              - next
     MeshTrafficPermissionItem:
       description: Successful response
       content:
@@ -17522,8 +17565,14 @@ components:
                 description: The total number of entities
                 type: number
               next:
-                description: URL to the next page
-                type: string
+                description: URL to the next page, or null when this is the last page
+                type:
+                  - string
+                  - 'null'
+            required:
+              - total
+              - items
+              - next
     DataplaneList:
       description: List
       content:
@@ -17536,11 +17585,17 @@ components:
                 items:
                   $ref: '#/components/schemas/DataplaneItem'
               next:
-                description: URL to the next page
-                type: string
+                description: URL to the next page, or null when this is the last page
+                type:
+                  - string
+                  - 'null'
               total:
                 description: The total number of entities
                 type: number
+            required:
+              - total
+              - items
+              - next
     DataplaneDeleteSuccessResponse:
       description: Successful response
       content:
@@ -17580,11 +17635,17 @@ components:
                 items:
                   $ref: '#/components/schemas/DataplaneInsightItem'
               next:
-                description: URL to the next page
-                type: string
+                description: URL to the next page, or null when this is the last page
+                type:
+                  - string
+                  - 'null'
               total:
                 description: The total number of entities
                 type: number
+            required:
+              - total
+              - items
+              - next
     DataplaneInsightItem:
       description: Successful response
       content:
@@ -17608,11 +17669,18 @@ components:
                 type: integer
                 example: 200
               next:
-                type: string
+                description: URL to the next page, or null when this is the last page
+                type:
+                  - string
+                  - 'null'
               items:
                 type: array
                 items:
                   $ref: '#/components/schemas/DataplaneOverviewWithMeta'
+            required:
+              - total
+              - items
+              - next
     GlobalSecretItem:
       description: Successful response
       content:
@@ -17655,8 +17723,14 @@ components:
                 description: The total number of entities
                 type: number
               next:
-                description: URL to the next page
-                type: string
+                description: URL to the next page, or null when this is the last page
+                type:
+                  - string
+                  - 'null'
+            required:
+              - total
+              - items
+              - next
     MeshList:
       description: List
       content:
@@ -17669,11 +17743,17 @@ components:
                 items:
                   $ref: '#/components/schemas/MeshItem'
               next:
-                description: URL to the next page
-                type: string
+                description: URL to the next page, or null when this is the last page
+                type:
+                  - string
+                  - 'null'
               total:
                 description: The total number of entities
                 type: number
+            required:
+              - total
+              - items
+              - next
     MeshDeleteSuccessResponse:
       description: Successful response
       content:
@@ -17718,11 +17798,18 @@ components:
                 type: integer
                 example: 200
               next:
-                type: string
+                description: URL to the next page, or null when this is the last page
+                type:
+                  - string
+                  - 'null'
               items:
                 type: array
                 items:
                   $ref: '#/components/schemas/MeshOverviewWithMeta'
+            required:
+              - total
+              - items
+              - next
     SecretList:
       description: List
       content:
@@ -17735,11 +17822,17 @@ components:
                 items:
                   $ref: '#/components/schemas/SecretItem'
               next:
-                description: URL to the next page
-                type: string
+                description: URL to the next page, or null when this is the last page
+                type:
+                  - string
+                  - 'null'
               total:
                 description: The total number of entities
                 type: number
+            required:
+              - total
+              - items
+              - next
     SecretDeleteSuccessResponse:
       description: Successful response
       content:
@@ -17779,11 +17872,17 @@ components:
                 items:
                   $ref: '#/components/schemas/ZoneItem'
               next:
-                description: URL to the next page
-                type: string
+                description: URL to the next page, or null when this is the last page
+                type:
+                  - string
+                  - 'null'
               total:
                 description: The total number of entities
                 type: number
+            required:
+              - total
+              - items
+              - next
     ZoneDeleteSuccessResponse:
       description: Successful response
       content:
@@ -17823,11 +17922,17 @@ components:
                 items:
                   $ref: '#/components/schemas/ZoneInsightItem'
               next:
-                description: URL to the next page
-                type: string
+                description: URL to the next page, or null when this is the last page
+                type:
+                  - string
+                  - 'null'
               total:
                 description: The total number of entities
                 type: number
+            required:
+              - total
+              - items
+              - next
     ZoneInsightItem:
       description: Successful response
       content:
@@ -17876,8 +17981,14 @@ components:
                 description: The total number of entities
                 type: number
               next:
-                description: URL to the next page
-                type: string
+                description: URL to the next page, or null when this is the last page
+                type:
+                  - string
+                  - 'null'
+            required:
+              - total
+              - items
+              - next
     MeshExternalServiceItem:
       description: Successful response
       content:
@@ -17920,8 +18031,14 @@ components:
                 description: The total number of entities
                 type: number
               next:
-                description: URL to the next page
-                type: string
+                description: URL to the next page, or null when this is the last page
+                type:
+                  - string
+                  - 'null'
+            required:
+              - total
+              - items
+              - next
     MeshIdentityItem:
       description: Successful response
       content:
@@ -17964,8 +18081,14 @@ components:
                 description: The total number of entities
                 type: number
               next:
-                description: URL to the next page
-                type: string
+                description: URL to the next page, or null when this is the last page
+                type:
+                  - string
+                  - 'null'
+            required:
+              - total
+              - items
+              - next
     MeshMultiZoneServiceItem:
       description: Successful response
       content:
@@ -18008,8 +18131,14 @@ components:
                 description: The total number of entities
                 type: number
               next:
-                description: URL to the next page
-                type: string
+                description: URL to the next page, or null when this is the last page
+                type:
+                  - string
+                  - 'null'
+            required:
+              - total
+              - items
+              - next
     MeshOpenTelemetryBackendItem:
       description: Successful response
       content:
@@ -18052,8 +18181,14 @@ components:
                 description: The total number of entities
                 type: number
               next:
-                description: URL to the next page
-                type: string
+                description: URL to the next page, or null when this is the last page
+                type:
+                  - string
+                  - 'null'
+            required:
+              - total
+              - items
+              - next
     MeshServiceItem:
       description: Successful response
       content:
@@ -18096,8 +18231,14 @@ components:
                 description: The total number of entities
                 type: number
               next:
-                description: URL to the next page
-                type: string
+                description: URL to the next page, or null when this is the last page
+                type:
+                  - string
+                  - 'null'
+            required:
+              - total
+              - items
+              - next
     MeshTrustItem:
       description: Successful response
       content:
@@ -18140,8 +18281,14 @@ components:
                 description: The total number of entities
                 type: number
               next:
-                description: URL to the next page
-                type: string
+                description: URL to the next page, or null when this is the last page
+                type:
+                  - string
+                  - 'null'
+            required:
+              - total
+              - items
+              - next
     MeshZoneAddressItem:
       description: Successful response
       content:
@@ -18184,8 +18331,14 @@ components:
                 description: The total number of entities
                 type: number
               next:
-                description: URL to the next page
-                type: string
+                description: URL to the next page, or null when this is the last page
+                type:
+                  - string
+                  - 'null'
+            required:
+              - total
+              - items
+              - next
     WorkloadItem:
       description: Successful response
       content:
@@ -18228,8 +18381,14 @@ components:
                 description: The total number of entities
                 type: number
               next:
-                description: URL to the next page
-                type: string
+                description: URL to the next page, or null when this is the last page
+                type:
+                  - string
+                  - 'null'
+            required:
+              - total
+              - items
+              - next
     ConfigResponse:
       description: The control plane configuration.
       content:
@@ -18275,11 +18434,18 @@ components:
                 type: integer
                 example: 200
               next:
-                type: string
+                description: URL to the next page, or null when this is the last page
+                type:
+                  - string
+                  - 'null'
               items:
                 type: array
                 items:
                   $ref: '#/components/schemas/MeshInsightWithMeta'
+            required:
+              - total
+              - items
+              - next
     ZoneInsightCreateOrUpdateSuccessResponse:
       description: Successful response
       content:
@@ -18318,11 +18484,18 @@ components:
                 type: integer
                 example: 200
               next:
-                type: string
+                description: URL to the next page, or null when this is the last page
+                type:
+                  - string
+                  - 'null'
               items:
                 type: array
                 items:
                   $ref: '#/components/schemas/ZoneOverviewWithMeta'
+            required:
+              - total
+              - items
+              - next
   securitySchemes:
     BasicAuth:
       type: http
