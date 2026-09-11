@@ -80,8 +80,8 @@
         >
           <h3>Policies</h3>
           <DataSource
-            :src="uri(policySources, '/policy-types', {})"
-            v-slot="{ data: sourcePolicyTypes, error: policyTypesError }"
+            :src="uri(resourceSources, '/resource-type-descriptors', {})"
+            v-slot="{ data: sourceResources, error: resourcesError }"
           >
             <DataSource
               :src="uri(policySources, '/meshes/:mesh/dataplanes/:name/policies/for/outbound/:kri', {
@@ -92,102 +92,108 @@
               v-slot="{ data: sourcePolicies, error: policiesError }"
             >
               <DataLoader
-                :data="[sourcePolicyTypes, sourcePolicies]"
-                :errors="[policyTypesError, policiesError]"
-                v-slot="{ data: [policyTypesData, policiesData] }"
+                :data="[sourceResources, sourcePolicies]"
+                :errors="[resourcesError, policiesError]"
+                v-slot="{ data: [resourcesData, policiesData] }"
               >
-                <template
-                  v-for="policyTypes in [Object.groupBy((policyTypesData.policyTypes), ({ name }) => name)]"
-                  :key="`${typeof policyTypes}`"
+                <DataCollection
+                  :items="resourcesData.resources"
+                  :predicate="(resource) => typeof resource.policy !== 'undefined'"
+                  v-slot="{ items: policies }"
                 >
-                  <DataCollection
-                    :items="policiesData.policies"
-                    v-slot="{ items }"
+                  <template
+                    v-for="policyTypes in [Object.groupBy((policies), ({ name }) => name)]"
+                    :key="`${typeof policyTypes}`"
                   >
-                    <XAccordionList
-                      :initially-open="0"
-                      multiple-open
-                      class="stack"
-                      data-testid="outbound-policies-rules"
+                    <DataCollection
+                      :items="policiesData.policies"
+                      v-slot="{ items }"
                     >
-                      <template
-                        v-for="({ conf, kind, origins }) in items"
-                        :key="kind"
+                      <XAccordionList
+                        :initially-open="0"
+                        multiple-open
+                        class="stack"
+                        data-testid="outbound-policies-rules"
                       >
-                        <XAccordionItem
-                          :card="true"
+                        <template
+                          v-for="({ conf, kind, origins }) in items"
+                          :key="kind"
                         >
-                          <template #accordion-header>
-                            <span
-                              v-icon-start="{name: kind, size: '60', default: 'policy'}"
-                            >
-                              {{ kind }}
-                            </span>
-                          </template>
-                          <template #accordion-content>
-                            <XTable
-                              v-if="origins.length > 0"
-                              variant="kv"
-                            >
-                              <tr>
-                                <th scope="row">
-                                  Origin policies
-                                </th>
-                                <td>
-                                  <ul>
-                                    <li
-                                      v-for="origin in origins"
-                                      :key="origin.kri"
-                                    >
-                                      <template
-                                        v-for="kri in [Kri.fromString(origin.kri)]"
-                                        :key="typeof kri"
+                          <XAccordionItem
+                            :card="true"
+                          >
+                            <template #accordion-header>
+                              <span
+                                v-icon-start="{name: kind, size: '60', default: 'policy'}"
+                              >
+                                {{ kind }}
+                              </span>
+                            </template>
+                            <template #accordion-content>
+                              <XTable
+                                v-if="origins.length > 0"
+                                variant="kv"
+                              >
+                                <tr>
+                                  <th scope="row">
+                                    Origin policies
+                                  </th>
+                                  <td>
+                                    <ul>
+                                      <li
+                                        v-for="origin in origins"
+                                        :key="origin.kri"
                                       >
-                                        <XAction
-                                          v-if="policyTypes[kind]"
-                                          :to="{
-                                            name: 'policy-detail-view',
-                                            params: {
-                                              mesh: kri.mesh,
-                                              policyPath: policyTypes[kind]![0].path,
-                                              policy: origin.kri,
-                                            },
-                                          }"
-                                        >
-                                          {{ origin.kri }}
-                                        </XAction>
                                         <template
-                                          v-else
+                                          v-for="kri in [Kri.fromString(origin.kri)]"
+                                          :key="typeof kri"
                                         >
-                                          {{ origin.kri }}
+                                          <XAction
+                                            v-if="policyTypes[kind]"
+                                            :to="{
+                                              name: 'policy-detail-view',
+                                              params: {
+                                                mesh: kri.mesh,
+                                                policyPath: policyTypes[kind]![0].path,
+                                                policy: origin.kri,
+                                              },
+                                            }"
+                                          >
+                                            {{ origin.kri }}
+                                          </XAction>
+                                          <template
+                                            v-else
+                                          >
+                                            {{ origin.kri }}
+                                          </template>
                                         </template>
-                                      </template>
-                                    </li>
-                                  </ul>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td colspan="2">
-                                  <XLayout
-                                    variant="y-stack"
-                                    size="small"
-                                  >
-                                    <span>Config</span>
-                                    <XCodeBlock
-                                      :code="YAML.stringify(conf)"
-                                      language="yaml"
-                                      :show-copy-button="false"
-                                    />
-                                  </XLayout>
-                                </td>
-                              </tr>
-                            </XTable>
-                          </template>
-                        </XAccordionItem>
-                      </template>
-                    </XAccordionList>
-                  </DataCollection>
-                </template>
+                                      </li>
+                                    </ul>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td colspan="2">
+                                    <XLayout
+                                      variant="y-stack"
+                                      size="small"
+                                    >
+                                      <span>Config</span>
+                                      <XCodeBlock
+                                        :code="YAML.stringify(conf)"
+                                        language="yaml"
+                                        :show-copy-button="false"
+                                      />
+                                    </XLayout>
+                                  </td>
+                                </tr>
+                              </XTable>
+                            </template>
+                          </XAccordionItem>
+                        </template>
+                      </XAccordionList>
+                    </DataCollection>
+                  </template>
+                </DataCollection>
               </DataLoader>
             </DataSource>
           </DataSource>
@@ -202,6 +208,7 @@ import type { DataplaneNetworkingLayout, DataplaneOverview } from '../data'
 import { YAML } from '@/app/application'
 import { Kri } from '@/app/kuma'
 import { sources as policySources } from '@/app/policies/sources'
+import { sources as resourceSources } from '@/app/resources/sources'
 
 const props = defineProps<{
   data: DataplaneNetworkingLayout['outbounds'][number]
