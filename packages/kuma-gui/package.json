@@ -27,7 +27,7 @@
     "pretty-bytes": "^7.1.2",
     "shiki": "^4.4.3",
     "urlpattern-polyfill": "^10.1.0",
-    "vue": "^3.5.35",
+    "vue": "^3.5.42",
     "vue-router": "^5.3.0"
   },
   "devDependencies": {
