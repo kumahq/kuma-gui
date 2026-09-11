@@ -24,29 +24,6 @@ export const routes = () => {
   }
 
   return {
-    items: (): RouteRecordRaw[] => {
-      return [
-        {
-          path: 'policies',
-          name: 'policy-list-index-view',
-          component: () => import('@/app/policies/views/PolicyTypeListView.vue'),
-          children: [
-            {
-              path: ':policyPath',
-              name: 'policy-list-view',
-              component: () => import('@/app/policies/views/PolicyListView.vue'),
-              children: [
-                {
-                  path: ':policy',
-                  name: 'policy-summary-view',
-                  component: () => import('@/app/policies/views/PolicySummaryView.vue'),
-                },
-              ],
-            },
-          ],
-        },
-      ]
-    },
     item,
   }
 }
