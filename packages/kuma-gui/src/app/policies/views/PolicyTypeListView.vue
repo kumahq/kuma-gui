@@ -17,7 +17,7 @@
         :src="uri(meshSources, '/mesh-insights/:name', {
           name: route.params.mesh,
         }, {})"
-        v-slot="{ data: meshInsight }"
+        v-slot="{ data: meshInsightSource, error: meshInsightError }"
       >
         <DataSource
           :src="uri(sources, '/policy-types', {})"
@@ -38,14 +38,14 @@
                 v-slot="{ data: [policyTypesData] }"
               >
                 <template
-                  v-for="legacy in [typeof meshInsight?.policies === 'undefined' ? policyTypesData.policyTypes : policyTypesData.policyTypes.filter(item => {
+                  v-for="legacy in [typeof meshInsightSource?.policies === 'undefined' ? policyTypesData.policyTypes : policyTypesData.policyTypes.filter(item => {
                     // legacy policies are those that aren't targetRef and are also in use
-                    return !item.policy.isTargetRef && (meshInsight.policies?.[item.name]?.total ?? 0) > 0
+                    return !item.policy.isTargetRef && (meshInsightSource.policies?.[item.name]?.total ?? 0) > 0
                   })]"
                   :key="typeof legacy"
                 >
                   <DataCollection
-                    :predicate="typeof meshInsight?.policies === 'undefined' ? undefined : (item) => legacy.length > 0 || item.policy.isTargetRef"
+                    :predicate="typeof meshInsightSource?.policies === 'undefined' ? undefined : (item) => legacy.length > 0 || item.policy.isTargetRef"
                     :items="policyTypesData.policyTypes"
                     v-slot="{ items }"
                   >
@@ -84,9 +84,22 @@
                               <span>
                                 {{ policyType.name }}
                               </span>
-                              <span>
-                                {{ meshInsight?.policies?.[policyType.name]?.total ?? 0 }}
-                              </span>
+                              <DataLoader
+                                variant="count"
+                                :data="[meshInsightSource]"
+                                :errors="[meshInsightError]"
+                              >
+                                <template #default="{ data: [meshInsight] }">
+                                  {{ meshInsight?.policies?.[policyType.name]?.total ?? 0 }}
+                                </template>
+                                <template #error>
+                                  <XIcon
+                                    name="warning"
+                                  >
+                                    {{ t('common.error_state.detail') }}
+                                  </XIcon>
+                                </template>
+                              </DataLoader>
                             </XLayout>
                           </XAction>
                         </li>
