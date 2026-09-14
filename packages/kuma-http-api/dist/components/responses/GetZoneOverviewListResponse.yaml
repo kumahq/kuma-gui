@@ -8,8 +8,15 @@ content:
           type: integer
           example: 200
         next:
-          type: string
+          description: URL to the next page, or null when this is the last page
+          type:
+            - string
+            - 'null'
         items:
           type: array
           items:
             $ref: '../schemas/ZoneOverviewWithMeta.yaml'
+      required:
+        - total
+        - items
+        - next

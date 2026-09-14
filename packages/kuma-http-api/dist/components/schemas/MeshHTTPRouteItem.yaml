@@ -175,7 +175,6 @@ properties:
                                             type: string
                                           weight:
                                             type: integer
-                                            default: 1
                                             maximum: 4294967295
                                             minimum: 0
                                         required:
@@ -407,7 +406,6 @@ properties:
                               type: string
                             weight:
                               type: integer
-                              default: 1
                               maximum: 4294967295
                               minimum: 0
                           required:
@@ -497,7 +495,6 @@ properties:
                                       type: string
                                     weight:
                                       type: integer
-                                      default: 1
                                       maximum: 4294967295
                                       minimum: 0
                                   required:
@@ -731,7 +728,6 @@ properties:
                               type:
                                 description: Type specifies how to match against the value of the header.
                                 type: string
-                                default: Exact
                                 enum:
                                   - Exact
                                   - Present
