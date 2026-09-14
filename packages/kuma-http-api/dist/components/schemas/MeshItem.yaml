@@ -22,14 +22,6 @@ properties:
     type: string
     maxLength: 253
     pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$
-  skipCreatingInitialPolicies:
-    description: |-
-      List of policies to skip creating by default when the mesh is created.
-      e.g. TrafficPermission, MeshRetry, etc. An '*' can be used to skip all
-      policies.
-    type: array
-    items:
-      type: string
   type:
     type: string
 required:
