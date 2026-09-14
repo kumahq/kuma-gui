@@ -14,7 +14,6 @@ import _987 from './src/_kri/kri_wl__.ts'
 import _984 from './src/_kri/kri_z__.ts'
 import _3 from './src/_resources'
 import _1 from './src/config'
-import _4 from './src/dataplanes/_overview'
 import _5 from './src/global-insight'
 import _200 from './src/hostnamegenerators'
 import _201 from './src/hostnamegenerators/_'
@@ -127,8 +126,6 @@ export const fs = {
   '/config': _1,
   '/policies': _2,
   '/global-insight': _5,
-  // onboarding
-  '/dataplanes/_overview': _4,
   // zones
   '/zones': _8,
   '/zones/_overview': _11,

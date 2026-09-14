@@ -116,6 +116,7 @@ export default ({ fake, env, pager }: Dependencies): ResponseHandler => (req) =>
                 {
                   port: fake.internet.port(),
                   tags: fake.kuma.tags({ service: fake.kuma.serviceName() }),
+                  address: fake.internet.ip(),
                 },
               ],
             }
