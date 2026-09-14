@@ -200,10 +200,9 @@
                       :src="uri(resourceSources, '/resource-type-descriptors', {})"
                       v-slot="{ data: resources }"
                     >
-                      <DataCollection
-                        :items="resources?.resources ?? []"
-                        :predicate="(resource) => typeof resource.policy !== 'undefined'"
-                        v-slot="{ items: policies }"
+                      <template
+                        v-for="policies in [(resources?.resources ?? []).filter((resource) => typeof resource.policy !== 'undefined')]"
+                        :key="typeof policies"
                       >
                         <template
                           v-for="policyTypes in [policies.map(item => item.name)]"
@@ -220,7 +219,7 @@
                             </template>
                           </KumaResourceStatus>
                         </template>
-                      </DataCollection>
+                      </template>
                     </DataSource>
                   </XLayout>
                 </XCard>

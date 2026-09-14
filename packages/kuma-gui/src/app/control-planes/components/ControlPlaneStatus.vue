@@ -123,10 +123,9 @@
           </template>
         </KumaResourceStatus>
 
-        <DataCollection
-          :items="resourcesData?.resources ?? []"
-          :predicate="(resource) => typeof resource.policy !== 'undefined'"
-          v-slot="{ items: policies }"
+        <template
+          v-for="policies in [(resourcesData?.resources ?? []).filter((resource) => typeof resource.policy !== 'undefined')]"
+          :key="typeof policies"
         >
           <KumaResourceStatus
             :total="Object.entries(globalInsightData.resources).reduce((prev, [key, { total }]) => {
@@ -146,7 +145,7 @@
               {{ t('main-overview.detail.about.policies') }}
             </template>
           </KumaResourceStatus>
-        </DataCollection>
+        </template>
       </XLayout>
     </DataLoader>
   </XCard>

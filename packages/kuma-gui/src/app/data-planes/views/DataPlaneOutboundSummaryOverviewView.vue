@@ -96,10 +96,9 @@
                 :errors="[resourcesError, policiesError]"
                 v-slot="{ data: [resourcesData, policiesData] }"
               >
-                <DataCollection
-                  :items="resourcesData.resources"
-                  :predicate="(resource) => typeof resource.policy !== 'undefined'"
-                  v-slot="{ items: policies }"
+                <template
+                  v-for="policies in [resourcesData.resources.filter((resource) => typeof resource.policy !== 'undefined')]"
+                  :key="typeof policies"
                 >
                   <template
                     v-for="policyTypes in [Object.groupBy((policies), ({ name }) => name)]"
@@ -193,7 +192,7 @@
                       </XAccordionList>
                     </DataCollection>
                   </template>
-                </DataCollection>
+                </template>
               </DataLoader>
             </DataSource>
           </DataSource>

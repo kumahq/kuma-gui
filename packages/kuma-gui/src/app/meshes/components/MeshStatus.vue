@@ -22,10 +22,9 @@
             :start="props.mesh.creationTime"
             :end="props.mesh.modificationTime"
           />
-          <DataCollection
-            :items="resourcesData.resources"
-            :predicate="(resource) => ['MeshTrafficPermission', 'MeshMetric', 'MeshAccessLog', 'MeshTrace'].includes(resource.name)"
-            v-slot="{ items: policyTypes }"
+          <template
+            v-for="policyTypes in [resourcesData.resources.filter((resource) => ['MeshTrafficPermission', 'MeshMetric', 'MeshAccessLog', 'MeshTrace'].includes(resource.name))]"
+            :key="typeof policyTypes"
           >
             <XDl
               variant="x-stack"
@@ -145,7 +144,7 @@
                 </dd>
               </div>
             </XDl>
-          </DataCollection>
+          </template>
         </DataLoader>
       </XCard>
     </XI18n>

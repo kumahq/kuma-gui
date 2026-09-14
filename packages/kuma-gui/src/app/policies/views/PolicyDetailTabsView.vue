@@ -11,10 +11,9 @@
       :src="uri(resourceSources, '/resource-type-descriptors', {})"
       v-slot="{ data: [resourcesData] }"
     >
-      <DataCollection
-        :items="resourcesData.resources"
-        :predicate="(resource) => typeof resource.policy !== 'undefined'"
-        v-slot="{ items: policies }"
+      <template
+        v-for="policies in [resourcesData.resources.filter((resource) => typeof resource.policy !== 'undefined')]"
+        :key="typeof policies"
       >
         <template
           v-for="policyType in [policies.find((policyType) => {
@@ -137,7 +136,7 @@
             </AppView>
           </DataSource>
         </template>
-      </DataCollection>
+      </template>
     </DataLoader>
   </RouteView>
 </template>

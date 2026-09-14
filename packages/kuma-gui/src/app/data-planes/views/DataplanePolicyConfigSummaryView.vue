@@ -17,10 +17,9 @@
         :data="[props.policies, sourceResources]"
         v-slot="{ data: [policiesData, resourcesData]}"
       >
-        <DataCollection
-          :items="resourcesData.resources"
-          :predicate="(resource) => typeof resource.policy !== 'undefined'"
-          v-slot="{ items: policyTypesData }"
+        <template
+          v-for="policyTypesData in [resourcesData.resources.filter((resource) => typeof resource.policy !== 'undefined')]"
+          :key="typeof policyTypesData"
         >
           <DataCollection
             :items="Object.entries(Object.groupBy(policiesData, ({ kind }) => kind ))"
@@ -114,7 +113,7 @@
               </AppView>
             </template>
           </DataCollection>
-        </DataCollection>
+        </template>
       </DataLoader>
     </DataSource>
   </RouteView>
