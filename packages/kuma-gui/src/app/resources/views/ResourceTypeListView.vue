@@ -19,11 +19,11 @@
       >
         <DataSource
           :src="uri(controlPlanesSources, '/global-insight', {})"
-          v-slot="{ data: sourceGlobalInsight, error: globalInsightError }"
+          v-slot="{ data: globalInsight }"
         >
           <DataSource
             :src="uri(meshesSources, '/mesh-insights/:name', { name: route.params.mesh })"
-            v-slot="{ data: sourceMeshInsight, error: meshInsightError }"
+            v-slot="{ data: meshInsight }"
           >
             <XLayout
               variant="x-stack"
@@ -64,10 +64,11 @@
                     </template>
                   </XLayout>
                 </template>
+                <!-- block on resource-type-descriptors types but not *Insight -->
                 <DataLoader
-                  :data="[sourceResources, sourceGlobalInsight, sourceMeshInsight]"
-                  :errors="[resourcesError, globalInsightError, meshInsightError]"
-                  v-slot="{ data: [resources, globalInsight, meshInsight] }"
+                  :data="[sourceResources]"
+                  :errors="[resourcesError]"
+                  v-slot="{ data: [resources] }"
                 >
                   <XLayout
                     v-for="filtered in [resources.resources.filter((item) =>

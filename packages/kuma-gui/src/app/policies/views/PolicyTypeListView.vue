@@ -35,9 +35,10 @@
               <DataLoader
                 :data="[data]"
                 :errors="[error]"
+                v-slot="{ data: [policyTypesData] }"
               >
                 <template
-                  v-for="legacy in [typeof meshInsight?.policies === 'undefined' ? data!.policyTypes : data!.policyTypes.filter(item => {
+                  v-for="legacy in [typeof meshInsight?.policies === 'undefined' ? policyTypesData.policyTypes : policyTypesData.policyTypes.filter(item => {
                     // legacy policies are those that aren't targetRef and are also in use
                     return !item.policy.isTargetRef && (meshInsight.policies?.[item.name]?.total ?? 0) > 0
                   })]"
@@ -45,7 +46,7 @@
                 >
                   <DataCollection
                     :predicate="typeof meshInsight?.policies === 'undefined' ? undefined : (item) => legacy.length > 0 || item.policy.isTargetRef"
-                    :items="data!.policyTypes"
+                    :items="policyTypesData.policyTypes"
                     v-slot="{ items }"
                   >
                     <ul>
