@@ -22,7 +22,7 @@
         variant="y-stack"
       >
         <DataSource
-          :src="uri(PolicySources, '/policy-types', {})"
+          :src="uri(ResourceSource, '/resource-type-descriptors', {})"
           v-slot="{ data: resources }"
         >
           <DataSource
@@ -138,7 +138,7 @@ import { sources as ControlPlaneSources } from '../sources'
 import { useControlPlaneStatus, useControlPlaneActionGroup } from '@/app/control-planes'
 import { useMeshInsightsList } from '@/app/meshes'
 import { sources as MeshSources } from '@/app/meshes/sources'
-import { sources as PolicySources } from '@/app/policies/sources'
+import { sources as ResourceSource } from '@/app/resources/sources'
 import { useZoneControlPlanesList } from '@/app/zones'
 import { sources as ZoneSources } from '@/app/zones/sources'
 

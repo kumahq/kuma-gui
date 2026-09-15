@@ -122,24 +122,30 @@
             {{ t('main-overview.detail.about.data_plane_proxies') }}
           </template>
         </KumaResourceStatus>
-        <KumaResourceStatus
-          :total="Object.entries(globalInsightData.resources).reduce((prev, [key, { total }]) => {
-            return resourcesData.policyTypes.find((type) => type.name === key) ? prev + total : prev
-          }, 0)"
-          data-testid="policies-status"
-        >
-          <template #icon>
-            <img
-              class="icon"
-              src="@/assets/images/policy.svg?url"
-              alt=""
-            >
-          </template>
 
-          <template #title>
-            {{ t('main-overview.detail.about.policies') }}
-          </template>
-        </KumaResourceStatus>
+        <template
+          v-for="policies in [(resourcesData?.resources ?? []).filter((resource) => typeof resource.policy !== 'undefined')]"
+          :key="typeof policies"
+        >
+          <KumaResourceStatus
+            :total="Object.entries(globalInsightData.resources).reduce((prev, [key, { total }]) => {
+              return policies.find((type) => type.name === key) ? prev + total : prev
+            }, 0)"
+            data-testid="policies-status"
+          >
+            <template #icon>
+              <img
+                class="icon"
+                src="@/assets/images/policy.svg?url"
+                alt=""
+              >
+            </template>
+
+            <template #title>
+              {{ t('main-overview.detail.about.policies') }}
+            </template>
+          </KumaResourceStatus>
+        </template>
       </XLayout>
     </DataLoader>
   </XCard>
@@ -148,13 +154,13 @@
 <script lang="ts" setup>
 import { useI18n } from '@/app/application'
 import type { GlobalInsight } from '@/app/control-planes/data'
-import type { PolicyResourceTypeCollection } from '@/app/policies/data'
+import type { ResourceTypeDescriptorCollection } from '@/app/resources/data'
 
 const { t } = useI18n()
 
 const props = defineProps<{
   globalInsight?: GlobalInsight | Error
-  resources?: PolicyResourceTypeCollection
+  resources?: ResourceTypeDescriptorCollection
   canUseZones: boolean
 }>()
 </script>

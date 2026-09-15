@@ -197,23 +197,28 @@
                     </KumaResourceStatus>
 
                     <DataSource
-                      :src="uri(policySources, '/policy-types', {})"
+                      :src="uri(resourceSources, '/resource-type-descriptors', {})"
                       v-slot="{ data: resources }"
                     >
                       <template
-                        v-for="policyTypes in [resources?.policyTypes.map(item => item.name)]"
-                        :key="typeof policyTypes"
+                        v-for="policies in [(resources?.resources ?? []).filter((resource) => typeof resource.policy !== 'undefined')]"
+                        :key="typeof policies"
                       >
-                        <KumaResourceStatus
-                          :total="Object.entries(data?.resources || {}).reduce((prev, [key, { total }]) => {
-                            return (policyTypes || []).includes(key) ? prev + total : prev
-                          }, 0)"
-                          data-testid="policies-status"
+                        <template
+                          v-for="policyTypes in [policies.map(item => item.name)]"
+                          :key="typeof policyTypes"
                         >
-                          <template #title>
-                            {{ t('meshes.detail.policies') }}
-                          </template>
-                        </KumaResourceStatus>
+                          <KumaResourceStatus
+                            :total="Object.entries(data?.resources || {}).reduce((prev, [key, { total }]) => {
+                              return (policyTypes || []).includes(key) ? prev + total : prev
+                            }, 0)"
+                            data-testid="policies-status"
+                          >
+                            <template #title>
+                              {{ t('meshes.detail.policies') }}
+                            </template>
+                          </KumaResourceStatus>
+                        </template>
                       </template>
                     </DataSource>
                   </XLayout>
@@ -310,7 +315,7 @@ import AppCollection from '@/app/application/components/app-collection/AppCollec
 import { Kri } from '@/app/kuma'
 import { sources as meshIdentitiesSources } from '@/app/mesh-identities/sources'
 import { sources as meshTrustsSources } from '@/app/mesh-trusts/sources'
-import { sources as policySources } from '@/app/policies/sources'
+import { sources as resourceSources } from '@/app/resources/sources'
 
 const props = defineProps<{
   mesh: Mesh
