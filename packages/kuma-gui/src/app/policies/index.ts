@@ -17,6 +17,44 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
     [$.PolicyActionGroup, {
       service: () => PolicyActionGroup,
     }],
+    [token('policies.kri'), {
+      service: () => {
+        return [
+          // policies
+          ({ shortName, mesh, kri }: { shortName: string, mesh: string, kri: string }) => {
+            if ([
+              'mal',
+              'mcb',
+              'mfi',
+              'mhttpr',
+              'mhc',
+              'mlbs',
+              'mm',
+              'mp',
+              'mpp',
+              'mrl',
+              'mr',
+              'mtcpr',
+              'mtls',
+              'mt',
+              'mtr',
+              'mtp',
+            ].includes(shortName)) {
+              return {
+                name: 'policy-detail-view',
+                params: {
+                  mesh,
+                  policy: kri,
+                },
+              }
+            }
+          },
+        ]
+      },
+      labels: [
+        app.kriHandlers,
+      ],
+    }],
     [token('policies.sources'), {
       service: sources,
       arguments: [

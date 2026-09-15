@@ -26,6 +26,48 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
         app.sources,
       ],
     }],
+    [token('services.kri'), {
+      service: () => {
+        return [
+          ({ shortName, mesh, kri }: { shortName: string, mesh: string, kri: string }) => {
+            if(shortName === 'msvc') {
+              return {
+                name: 'mesh-service-detail-view',
+                params: {
+                  mesh,
+                  kri,
+                },
+              }
+            }
+          },
+          ({ shortName, mesh, kri }: { shortName: string, mesh: string, kri: string }) => {
+            if(shortName === 'mzsvc') {
+              return {
+                name: 'mesh-multi-zone-service-detail-view',
+                params: {
+                  mesh,
+                  kri,
+                },
+              }
+            }
+          },
+          ({ shortName, mesh, kri }: { shortName: string, mesh: string, kri: string }) => {
+            if(shortName === 'extsvc') {
+              return {
+                name: 'mesh-external-service-detail-view',
+                params: {
+                  mesh,
+                  kri,
+                },
+              }
+            }
+          },
+        ]
+      },
+      labels: [
+        app.kriHandlers,
+      ],
+    }],
     [token('services.routes'), {
       service: (can: Can) => {
         const _routes = routes(can)

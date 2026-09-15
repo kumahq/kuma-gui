@@ -6,7 +6,6 @@ import X, { syntaxHighlighter } from '@kumahq/x'
 import { vars } from './env'
 import locales from './locales/en-us/index.yaml'
 import { ValidationError } from '@/app/application'
-import type { Can } from '@/app/application'
 import { Kri } from '@/app/kuma'
 import KumaPort from '@/app/kuma/components/kuma-port/KumaPort.vue'
 import KumaResourceStatus from '@/app/kuma/components/kuma-resource-status/KumaResourceStatus.vue'
@@ -56,147 +55,7 @@ function normalizeBaseUrl(url: string): string {
   url = !url.includes('://') && !url.startsWith('/') ? `/${url}` : url
   return stripTrailingSlashes(url)
 }
-
-const protocolHandler = (can: Can, router: Router) => {
-  return (href: string) => {
-    const kriProto = 'kri://'
-    switch (true) {
-      case href.startsWith(kriProto): {
-        const kri = href.substring(kriProto.length)
-        const { mesh, name: encodedName, shortName } = Kri.fromString(kri)
-        // old style names can have _ in them that are replaced with `~`
-        const name = encodedName.replaceAll('~', '_')
-        const to = (() => {
-          switch (true) {
-            case shortName === 'mal':
-            case shortName === 'mcb':
-            case shortName === 'mfi':
-            case shortName === 'mhttpr':
-            case shortName === 'mhc':
-            case shortName === 'mlbs':
-            case shortName === 'mm':
-            case shortName === 'mp':
-            case shortName === 'mpp':
-            case shortName === 'mrl':
-            case shortName === 'mr':
-            case shortName === 'mtcpr':
-            case shortName === 'mtls':
-            case shortName === 'mt':
-            case shortName === 'mtr':
-            case shortName === 'mtp':
-              return {
-                name: 'policy-detail-view',
-                params: {
-                  mesh,
-                  policy: kri,
-                },
-              }
-            case shortName === 'm':
-              return {
-                name: 'mesh-detail-view',
-                params: {
-                  mesh: name,
-                },
-              }
-            case shortName === 'z':
-              if(can('use zones')) {
-                return {
-                  name: 'zone-cp-detail-view',
-                  params: {
-                    zone: kri,
-                  },
-                }
-              }
-              break
-            case shortName === 'wl':
-              return {
-                name: 'workload-detail-view',
-                params: {
-                  mesh,
-                  wl: kri,
-                },
-              }
-            case shortName === '~hostport':
-              return {
-                name: 'data-plane-list-view',
-                query: {
-                  s: `tag:service:${name}`,
-                },
-              }
-            case shortName === 'msvc':
-              return {
-                name: 'mesh-service-detail-view',
-                params: {
-                  mesh,
-                  kri,
-                },
-              }
-            case shortName === 'mzsvc':
-              return {
-                name: 'mesh-multi-zone-service-detail-view',
-                params: {
-                  mesh,
-                  kri,
-                },
-              }
-            case shortName === 'extsvc':
-              return {
-                name: 'mesh-external-service-detail-view',
-                params: {
-                  mesh,
-                  kri,
-                },
-              }
-            case shortName === 'hg':
-              return {
-                name: 'hostname-generator-detail-view',
-                params: {
-                  kri,
-                },
-              }
-            case shortName === 'dp':
-              return {
-                name: 'data-plane-detail-view',
-                params: {
-                  mesh,
-                  proxy: kri,
-                },
-              }
-            default:
-              // mesh-scoped resources live under a mesh, global-scoped
-              // resources are reachable via the top-level resources tab
-              return mesh.length > 0
-                ? {
-                  name: 'mesh-resource-detail-view',
-                  params: {
-                    mesh,
-                    kri,
-                  },
-                }
-                : {
-                  name: 'control-plane-resource-detail-view',
-                  params: {
-                    kri,
-                  },
-                }
-          }
-        })()
-        if (to) {
-          try {
-            return router.resolve(to).href
-          } catch(e) {
-            // log the error, don't throw it
-            // anything errors we just don't show the link
-            console.error(e)
-            return ''
-          }
-        }
-        return ''
-      }
-    }
-    return href
-  }
-}
+type Handler = (item: { shortName: string, mesh: string, name: string, kri: string}) => RouteLocationAsRelative | undefined
 
 const href = (router: Router) => (to: RouteLocationAsRelative) => {
   try {
@@ -221,6 +80,8 @@ export const TOKENS = {
   httpClient: token<RestClient>('httpClient'),
   api: token<KumaApi>('KumaApi'),
   htmlVars: token('kuma.html.vars'),
+  protocolHandler: token('kuma.protocolHandler'),
+  kriHandlers: token('kuma.kriHandlers'),
   dataSource: token<<T>(src: string) => Promise<T>>('app.dataSource'),
   syntaxHighlighter: token('kuma.syntaxHighlighter'),
   href: token<ReturnType<typeof href>>('kuma.router.href'),
@@ -229,14 +90,84 @@ export const TOKENS = {
 }
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   return [
+    [app.protocolHandler, {
+      service: (router: Router, handlers: Handler[]) => {
+        return (href: string) => {
+          const kriProto = 'kri://'
+          switch (true) {
+            // KRIs
+            case href.startsWith(kriProto): {
+
+              const item = Kri.fromString(href.substring(kriProto.length))
+              const kri = Kri.toString({
+                ...item,
+                // old style names can have _ in them that are replaced with `~`
+                name: item.name.replaceAll('~', '_'),
+              })
+              const args = {
+                ...Kri.fromString(kri),
+                kri,
+              }
+
+              // add a default catchall to the end of the handlers
+              handlers.push(
+                ({ mesh, kri }) => {
+                  // mesh-scoped resources live under a mesh, global-scoped
+                  // resources are reachable via the top-level resources tab
+                  return mesh.length > 0
+                    ? {
+                      name: 'mesh-resource-detail-view',
+                      params: {
+                        mesh,
+                        kri,
+                      },
+                    }
+                    : {
+                      name: 'control-plane-resource-detail-view',
+                      params: {
+                        kri,
+                      },
+                    }
+                },
+
+              )
+              const to = handlers.reduce((prev, handler) => {
+                return typeof prev === 'undefined' ? handler(args) : prev
+              }, undefined as ReturnType<Handler>)
+
+              if (to) {
+                try {
+                  return router.resolve(to).href
+                } catch(e) {
+                  // log the error, don't throw it
+                  // anything errors we just don't show the link
+                  console.error(e)
+                  return ''
+                }
+              }
+              return ''
+            }
+          }
+          // if its not a KRI just pass it back
+          return href
+        }
+      },
+      arguments: [
+        app.router,
+        app.kriHandlers,
+      ],
+    }],
+    [app.kriHandlers, {
+      service: () => [],
+    }],
     [token('kuma.plugins'), {
-      service: (i18n, can, router, syntaxHighlighter, href, push, routerElement) => {
+      service: (i18n, syntaxHighlighter, protocolHandler, href, push, routerElement) => {
         return [
           [Kongponents],
           [X, {
             i18n,
-            protocolHandler: protocolHandler(can, router),
             syntaxHighlighter,
+            protocolHandler,
             href,
             push,
             routerElement,
@@ -245,9 +176,8 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       },
       arguments: [
         app.i18n,
-        app.can,
-        app.router,
         app.syntaxHighlighter,
+        app.protocolHandler,
         app.href,
         app.routerPush,
         app.routerElement,
