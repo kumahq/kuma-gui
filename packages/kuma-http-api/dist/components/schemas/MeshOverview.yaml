@@ -3,15 +3,7 @@ type: object
 properties:
   mesh:
     type: object
-    properties:
-      skipCreatingInitialPolicies:
-        description: |-
-          List of policies to skip creating by default when the mesh is created.
-          e.g. TrafficPermission, MeshRetry, etc. An '*' can be used to skip all
-          policies.
-        type: array
-        items:
-          type: string
+    properties: {}
   meshInsight:
     type: object
     properties:
