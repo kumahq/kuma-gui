@@ -1,14 +1,9 @@
 get:
-  parameters:
-    - $ref: '../parameters.yaml#/name'
-    - $ref: '../parameters.yaml#/size'
-    - $ref: '../parameters.yaml#/offset'
-    - $ref: '../parameters.yaml#/filter'
+  operationId: getZoneOverviewList
   responses:
-    200:
-      description: '200'
-      content:
-        application/json:
-          schema:
-            type: object
-
+    '200':
+      $ref: '../components/responses/GetZoneOverviewListResponse.yaml'
+    '400':
+      $ref: '../components/responses/BadRequest.yaml'
+    '500':
+      $ref: '../components/responses/Internal.yaml'

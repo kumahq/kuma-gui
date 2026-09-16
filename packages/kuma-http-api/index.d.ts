@@ -211,26 +211,11 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description 200 */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["ControlPlaneConfig"];
-                    };
-                };
-            };
-        };
+        /**
+         * Get the control plane configuration
+         * @description Returns the configuration of the control plane, with sensitive values redacted.
+         */
+        get: operations["get-config"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1581,30 +1566,11 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: {
-            parameters: {
-                query?: {
-                    format?: components["parameters"]["format"];
-                };
-                header?: never;
-                path: {
-                    name: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description 200 */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["MeshInsight"];
-                    };
-                };
-            };
-        };
+        /**
+         * Get the insight of a mesh
+         * @description Returns the observed state of a mesh, computed by the control plane. Read only.
+         */
+        get: operations["getMeshInsight"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1620,37 +1586,11 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: {
-            parameters: {
-                query?: {
-                    name?: components["parameters"]["name"];
-                    size?: components["parameters"]["size"];
-                    offset?: components["parameters"]["offset"];
-                    /**
-                     * @description filter by labels when multiple filters are present, they are ANDed
-                     * @example {
-                     *       "label.k8s.kuma.io/namespace": "my-ns"
-                     *     }
-                     */
-                    "undefined"?: components["parameters"]["filter"];
-                };
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description 200 */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["MeshInsightCollection"];
-                    };
-                };
-            };
-        };
+        /**
+         * List mesh insights
+         * @description Returns the observed state of every mesh, computed by the control plane. Read only.
+         */
+        get: operations["getMeshInsightList"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1821,30 +1761,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: {
-            parameters: {
-                query?: {
-                    format?: components["parameters"]["format"];
-                };
-                header?: never;
-                path: {
-                    name: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description 200 */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": Record<string, never>;
-                    };
-                };
-            };
-        };
+        get: operations["getZoneOverview"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1860,37 +1777,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: {
-            parameters: {
-                query?: {
-                    name?: components["parameters"]["name"];
-                    size?: components["parameters"]["size"];
-                    offset?: components["parameters"]["offset"];
-                    /**
-                     * @description filter by labels when multiple filters are present, they are ANDed
-                     * @example {
-                     *       "label.k8s.kuma.io/namespace": "my-ns"
-                     *     }
-                     */
-                    "undefined"?: components["parameters"]["filter"];
-                };
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description 200 */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": Record<string, never>;
-                    };
-                };
-            };
-        };
+        get: operations["getZoneOverviewList"];
         put?: never;
         post?: never;
         delete?: never;
@@ -2351,122 +2238,6 @@ export interface paths {
         };
         /** Returns a list of Workload across all meshes. */
         get: operations["getWorkloadListAllMeshes"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/meshes/{mesh}/dataplanes/{name}/xds": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: {
-            parameters: {
-                query?: {
-                    include_eds?: string;
-                };
-                header?: never;
-                path: {
-                    mesh: string;
-                    name: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description 200 */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": Record<string, never>;
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/meshes/{mesh}/dataplanes/{name}/stats": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    mesh: string;
-                    name: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description 200 */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": string;
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/meshes/{mesh}/dataplanes/{name}/clusters": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    mesh: string;
-                    name: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description 200 */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": string;
-                    };
-                };
-            };
-        };
         put?: never;
         post?: never;
         delete?: never;
@@ -2936,7 +2707,6 @@ export interface components {
              */
             diff?: components["schemas"]["JsonPatchItem"][];
         };
-        ControlPlaneConfig: Record<string, never>;
         DataplaneInbound: {
             kri: string;
             port: number;
@@ -8471,11 +8241,7 @@ export interface components {
                 external?: number;
             };
         };
-        MeshInsightCollection: {
-            total: number;
-            items: components["schemas"]["MeshInsight"][];
-            next: string | null;
-        };
+        MeshInsightWithMeta: components["schemas"]["Meta"] & components["schemas"]["MeshInsight"];
         SecretItem: {
             /**
              * Format: date-time
@@ -8686,6 +8452,165 @@ export interface components {
             }[];
             type: string;
         };
+        /** @description ZoneOverview defines the projected state of a Zone. */
+        ZoneOverview: {
+            zone?: {
+                /**
+                 * @description enable allows to turn the zone on/off and exclude the whole zone from
+                 *     balancing traffic on it
+                 */
+                enabled?: boolean;
+            };
+            zoneInsight?: {
+                /**
+                 * @description Statistics about Envoy Admin Streams
+                 *     Deprecated: use kds_streams instead.
+                 */
+                envoyAdminStreams?: {
+                    /** @description Global instance ID that handles Clusters streams. */
+                    clustersGlobalInstanceId?: string;
+                    /** @description Global instance ID that handles XDS Config Dump streams. */
+                    configDumpGlobalInstanceId?: string;
+                    /** @description Global instance ID that handles Stats streams. */
+                    statsGlobalInstanceId?: string;
+                };
+                healthCheck?: {
+                    /**
+                     * Format: date-time
+                     * @description Time last health check received
+                     */
+                    time?: string;
+                };
+                /** @description Information about kds streams that are estabilished between global and zone */
+                kdsStreams?: {
+                    /** @description Details of stream that handles Clusters stream. */
+                    clusters?: {
+                        /**
+                         * Format: date-time
+                         * @description Time when the stream was open.
+                         */
+                        connectTime?: string;
+                        /** @description Global instance ID that handles the stream. */
+                        globalInstanceId?: string;
+                    };
+                    /** @description Details of stream that handles XDS Config Dump stream. */
+                    configDump?: {
+                        /**
+                         * Format: date-time
+                         * @description Time when the stream was open.
+                         */
+                        connectTime?: string;
+                        /** @description Global instance ID that handles the stream. */
+                        globalInstanceId?: string;
+                    };
+                    /** @description Details of stream that handles global to zone resource sync stream. */
+                    globalToZone?: {
+                        /**
+                         * Format: date-time
+                         * @description Time when the stream was open.
+                         */
+                        connectTime?: string;
+                        /** @description Global instance ID that handles the stream. */
+                        globalInstanceId?: string;
+                    };
+                    /** @description Details of stream that handles Stats stream. */
+                    stats?: {
+                        /**
+                         * Format: date-time
+                         * @description Time when the stream was open.
+                         */
+                        connectTime?: string;
+                        /** @description Global instance ID that handles the stream. */
+                        globalInstanceId?: string;
+                    };
+                    /** @description Details of stream that handles zone to global resource sync stream. */
+                    zoneToGlobal?: {
+                        /**
+                         * Format: date-time
+                         * @description Time when the stream was open.
+                         */
+                        connectTime?: string;
+                        /** @description Global instance ID that handles the stream. */
+                        globalInstanceId?: string;
+                    };
+                };
+                /** @description List of KDS subscriptions created by a given Zone Kuma CP. */
+                subscriptions?: {
+                    /** @description Indicates if subscription provided auth token */
+                    authTokenProvided?: boolean;
+                    /** @description Config of Zone Kuma CP */
+                    config?: string;
+                    /**
+                     * Format: date-time
+                     * @description Time when a given Zone connected to the Global.
+                     */
+                    connectTime?: string;
+                    /**
+                     * Format: date-time
+                     * @description Time when a given Zone disconnected from the Global.
+                     */
+                    disconnectTime?: string;
+                    /**
+                     * @description Generation is an integer number which is periodically increased by the
+                     *     status sink
+                     */
+                    generation?: number;
+                    /** @description Global CP instance that handled given subscription. */
+                    globalInstanceId?: string;
+                    /** @description Unique id per KDS subscription. */
+                    id?: string;
+                    /** @description Status of the KDS subscription. */
+                    status?: {
+                        /**
+                         * Format: date-time
+                         * @description Time when status of a given KDS subscription was most recently updated.
+                         */
+                        lastUpdateTime?: string;
+                        stat?: {
+                            [key: string]: {
+                                /** @description Number of xDS responses ACKed by the Dataplane. */
+                                responsesAcknowledged?: number;
+                                /** @description Number of xDS responses NACKed by the Dataplane. */
+                                responsesRejected?: number;
+                                /** @description Number of xDS responses sent to the Dataplane. */
+                                responsesSent?: number;
+                            };
+                        };
+                        /** @description Total defines an aggregate over individual KDS stats. */
+                        total?: {
+                            /** @description Number of xDS responses ACKed by the Dataplane. */
+                            responsesAcknowledged?: number;
+                            /** @description Number of xDS responses NACKed by the Dataplane. */
+                            responsesRejected?: number;
+                            /** @description Number of xDS responses sent to the Dataplane. */
+                            responsesSent?: number;
+                        };
+                    };
+                    /** @description Version of Zone Kuma CP. */
+                    version?: {
+                        /** @description Version of Zone Kuma CP */
+                        kumaCp?: {
+                            /** @description Build date of Kuma ControlPlane version */
+                            buildDate?: string;
+                            /** @description Git commit of Kuma ControlPlane version */
+                            gitCommit?: string;
+                            /** @description Git tag of Kuma ControlPlane version */
+                            gitTag?: string;
+                            /** @description True iff this Zone CP version is compatible with Global CP */
+                            kumaCpGlobalCompatible?: boolean;
+                            /** @description Version number of Kuma ControlPlane */
+                            version?: string;
+                        };
+                    };
+                    /**
+                     * @description Zone CP instance that handled the given subscription (This is the leader at
+                     *     time of connection).
+                     */
+                    zoneInstanceId?: string;
+                }[];
+            };
+        };
+        ZoneOverviewWithMeta: components["schemas"]["Meta"] & components["schemas"]["ZoneOverview"];
         /** @description HostnameGenerator automatically generates DNS hostnames for services in the mesh based on customizable templates. It provides a consistent naming scheme for service discovery by creating predictable hostnames from service labels and metadata, supporting both MeshService, MeshExternalService, and MeshMultiZoneService resources. */
         HostnameGeneratorItem: {
             /**
@@ -9795,166 +9720,6 @@ export interface components {
                 };
             };
         };
-        MeshInsightWithMeta: components["schemas"]["Meta"] & components["schemas"]["MeshInsight"];
-        /** @description ZoneOverview defines the projected state of a Zone. */
-        ZoneOverview: {
-            zone?: {
-                /**
-                 * @description enable allows to turn the zone on/off and exclude the whole zone from
-                 *     balancing traffic on it
-                 */
-                enabled?: boolean;
-            };
-            zoneInsight?: {
-                /**
-                 * @description Statistics about Envoy Admin Streams
-                 *     Deprecated: use kds_streams instead.
-                 */
-                envoyAdminStreams?: {
-                    /** @description Global instance ID that handles Clusters streams. */
-                    clustersGlobalInstanceId?: string;
-                    /** @description Global instance ID that handles XDS Config Dump streams. */
-                    configDumpGlobalInstanceId?: string;
-                    /** @description Global instance ID that handles Stats streams. */
-                    statsGlobalInstanceId?: string;
-                };
-                healthCheck?: {
-                    /**
-                     * Format: date-time
-                     * @description Time last health check received
-                     */
-                    time?: string;
-                };
-                /** @description Information about kds streams that are estabilished between global and zone */
-                kdsStreams?: {
-                    /** @description Details of stream that handles Clusters stream. */
-                    clusters?: {
-                        /**
-                         * Format: date-time
-                         * @description Time when the stream was open.
-                         */
-                        connectTime?: string;
-                        /** @description Global instance ID that handles the stream. */
-                        globalInstanceId?: string;
-                    };
-                    /** @description Details of stream that handles XDS Config Dump stream. */
-                    configDump?: {
-                        /**
-                         * Format: date-time
-                         * @description Time when the stream was open.
-                         */
-                        connectTime?: string;
-                        /** @description Global instance ID that handles the stream. */
-                        globalInstanceId?: string;
-                    };
-                    /** @description Details of stream that handles global to zone resource sync stream. */
-                    globalToZone?: {
-                        /**
-                         * Format: date-time
-                         * @description Time when the stream was open.
-                         */
-                        connectTime?: string;
-                        /** @description Global instance ID that handles the stream. */
-                        globalInstanceId?: string;
-                    };
-                    /** @description Details of stream that handles Stats stream. */
-                    stats?: {
-                        /**
-                         * Format: date-time
-                         * @description Time when the stream was open.
-                         */
-                        connectTime?: string;
-                        /** @description Global instance ID that handles the stream. */
-                        globalInstanceId?: string;
-                    };
-                    /** @description Details of stream that handles zone to global resource sync stream. */
-                    zoneToGlobal?: {
-                        /**
-                         * Format: date-time
-                         * @description Time when the stream was open.
-                         */
-                        connectTime?: string;
-                        /** @description Global instance ID that handles the stream. */
-                        globalInstanceId?: string;
-                    };
-                };
-                /** @description List of KDS subscriptions created by a given Zone Kuma CP. */
-                subscriptions?: {
-                    /** @description Indicates if subscription provided auth token */
-                    authTokenProvided?: boolean;
-                    /** @description Config of Zone Kuma CP */
-                    config?: string;
-                    /**
-                     * Format: date-time
-                     * @description Time when a given Zone connected to the Global.
-                     */
-                    connectTime?: string;
-                    /**
-                     * Format: date-time
-                     * @description Time when a given Zone disconnected from the Global.
-                     */
-                    disconnectTime?: string;
-                    /**
-                     * @description Generation is an integer number which is periodically increased by the
-                     *     status sink
-                     */
-                    generation?: number;
-                    /** @description Global CP instance that handled given subscription. */
-                    globalInstanceId?: string;
-                    /** @description Unique id per KDS subscription. */
-                    id?: string;
-                    /** @description Status of the KDS subscription. */
-                    status?: {
-                        /**
-                         * Format: date-time
-                         * @description Time when status of a given KDS subscription was most recently updated.
-                         */
-                        lastUpdateTime?: string;
-                        stat?: {
-                            [key: string]: {
-                                /** @description Number of xDS responses ACKed by the Dataplane. */
-                                responsesAcknowledged?: number;
-                                /** @description Number of xDS responses NACKed by the Dataplane. */
-                                responsesRejected?: number;
-                                /** @description Number of xDS responses sent to the Dataplane. */
-                                responsesSent?: number;
-                            };
-                        };
-                        /** @description Total defines an aggregate over individual KDS stats. */
-                        total?: {
-                            /** @description Number of xDS responses ACKed by the Dataplane. */
-                            responsesAcknowledged?: number;
-                            /** @description Number of xDS responses NACKed by the Dataplane. */
-                            responsesRejected?: number;
-                            /** @description Number of xDS responses sent to the Dataplane. */
-                            responsesSent?: number;
-                        };
-                    };
-                    /** @description Version of Zone Kuma CP. */
-                    version?: {
-                        /** @description Version of Zone Kuma CP */
-                        kumaCp?: {
-                            /** @description Build date of Kuma ControlPlane version */
-                            buildDate?: string;
-                            /** @description Git commit of Kuma ControlPlane version */
-                            gitCommit?: string;
-                            /** @description Git tag of Kuma ControlPlane version */
-                            gitTag?: string;
-                            /** @description True iff this Zone CP version is compatible with Global CP */
-                            kumaCpGlobalCompatible?: boolean;
-                            /** @description Version number of Kuma ControlPlane */
-                            version?: string;
-                        };
-                    };
-                    /**
-                     * @description Zone CP instance that handled the given subscription (This is the leader at
-                     *     time of connection).
-                     */
-                    zoneInstanceId?: string;
-                }[];
-            };
-        };
-        ZoneOverviewWithMeta: components["schemas"]["Meta"] & components["schemas"]["ZoneOverview"];
         /** @description MeshAccessLog configures access logging for traffic between services in the mesh. It allows you to capture and export request/response logs to various backends (file, TCP, or OpenTelemetry) for monitoring, debugging, and auditing purposes. */
         TargetRefPolicy: {
             /** @description the type of the resource */
@@ -10179,6 +9944,17 @@ export interface components {
             };
             content: {
                 "application/json": components["schemas"]["DataplaneXDSConfig"];
+            };
+        };
+        /** @description The control plane configuration. */
+        ConfigResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    [key: string]: unknown;
+                };
             };
         };
         /** @description A response containing dataplane networking layout. */
@@ -11222,6 +10998,30 @@ export interface components {
                 };
             };
         };
+        /** @description A response containing the insight of a mesh. */
+        GetMeshInsightResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["MeshInsightWithMeta"];
+            };
+        };
+        /** @description A response containing a list of mesh insights. */
+        GetMeshInsightListResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    /** @example 200 */
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
+                    items: components["schemas"]["MeshInsightWithMeta"][];
+                };
+            };
+        };
         /** @description A response containing the overview of a mesh. */
         GetMeshOverviewResponse: {
             headers: {
@@ -11364,6 +11164,30 @@ export interface components {
             };
             content: {
                 "application/json": components["schemas"]["ZoneInsightItem"];
+            };
+        };
+        /** @description A response containing the overview of a zone. */
+        GetZoneOverviewResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["ZoneOverviewWithMeta"];
+            };
+        };
+        /** @description A response containing a list of zone overviews. */
+        GetZoneOverviewListResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    /** @example 200 */
+                    total: number;
+                    /** @description URL to the next page, or null when this is the last page */
+                    next: string | null;
+                    items: components["schemas"]["ZoneOverviewWithMeta"][];
+                };
             };
         };
         /** @description Successful response */
@@ -11798,17 +11622,6 @@ export interface components {
                 };
             };
         };
-        /** @description The control plane configuration. */
-        ConfigResponse: {
-            headers: {
-                [name: string]: unknown;
-            };
-            content: {
-                "application/json": {
-                    [key: string]: unknown;
-                };
-            };
-        };
         /** @description Successful response */
         DataplaneInsightCreateOrUpdateSuccessResponse: {
             headers: {
@@ -11831,30 +11644,6 @@ export interface components {
             };
             content: {
                 "application/json": Record<string, never>;
-            };
-        };
-        /** @description A response containing the insight of a mesh. */
-        GetMeshInsightResponse: {
-            headers: {
-                [name: string]: unknown;
-            };
-            content: {
-                "application/json": components["schemas"]["MeshInsightWithMeta"];
-            };
-        };
-        /** @description A response containing a list of mesh insights. */
-        GetMeshInsightListResponse: {
-            headers: {
-                [name: string]: unknown;
-            };
-            content: {
-                "application/json": {
-                    /** @example 200 */
-                    total: number;
-                    /** @description URL to the next page, or null when this is the last page */
-                    next: string | null;
-                    items: components["schemas"]["MeshInsightWithMeta"][];
-                };
             };
         };
         /** @description Successful response */
@@ -11881,47 +11670,8 @@ export interface components {
                 "application/json": Record<string, never>;
             };
         };
-        /** @description A response containing the overview of a zone. */
-        GetZoneOverviewResponse: {
-            headers: {
-                [name: string]: unknown;
-            };
-            content: {
-                "application/json": components["schemas"]["ZoneOverviewWithMeta"];
-            };
-        };
-        /** @description A response containing a list of zone overviews. */
-        GetZoneOverviewListResponse: {
-            headers: {
-                [name: string]: unknown;
-            };
-            content: {
-                "application/json": {
-                    /** @example 200 */
-                    total: number;
-                    /** @description URL to the next page, or null when this is the last page */
-                    next: string | null;
-                    items: components["schemas"]["ZoneOverviewWithMeta"][];
-                };
-            };
-        };
     };
-    parameters: {
-        name: string;
-        /**
-         * @description filter by labels when multiple filters are present, they are ANDed
-         * @example {
-         *       "label.k8s.kuma.io/namespace": "my-ns"
-         *     }
-         */
-        filter: {
-            key?: string;
-            value?: string;
-        };
-        format: string;
-        offset: number;
-        size: number;
-    };
+    parameters: never;
     requestBodies: never;
     headers: never;
     pathItems: never;
@@ -12101,6 +11851,20 @@ export interface operations {
         requestBody?: never;
         responses: {
             200: components["responses"]["GetDataplaneXDSConfigResponse"];
+            400: components["responses"]["BadRequest"];
+            500: components["responses"]["Internal"];
+        };
+    };
+    "get-config": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["ConfigResponse"];
             400: components["responses"]["BadRequest"];
             500: components["responses"]["Internal"];
         };
@@ -14769,6 +14533,43 @@ export interface operations {
             404: components["responses"]["NotFound"];
         };
     };
+    getMeshInsight: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The name of the mesh to get the insight for. */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["GetMeshInsightResponse"];
+            400: components["responses"]["BadRequest"];
+            404: components["responses"]["NotFound"];
+            500: components["responses"]["Internal"];
+        };
+    };
+    getMeshInsightList: {
+        parameters: {
+            query?: {
+                /** @description Size of the page. */
+                size?: number;
+                /** @description Offset of the page to list. */
+                offset?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["GetMeshInsightListResponse"];
+            400: components["responses"]["BadRequest"];
+            500: components["responses"]["Internal"];
+        };
+    };
     getMeshOverview: {
         parameters: {
             query?: never;
@@ -15046,6 +14847,37 @@ export interface operations {
         responses: {
             200: components["responses"]["ZoneInsightItem"];
             404: components["responses"]["NotFound"];
+        };
+    };
+    getZoneOverview: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The name of the zone to get the overview for. */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["GetZoneOverviewResponse"];
+            400: components["responses"]["BadRequest"];
+            500: components["responses"]["Internal"];
+        };
+    };
+    getZoneOverviewList: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["GetZoneOverviewListResponse"];
+            400: components["responses"]["BadRequest"];
+            500: components["responses"]["Internal"];
         };
     };
     getHostnameGenerator: {

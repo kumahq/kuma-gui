@@ -43,7 +43,7 @@ export const sources = (api: KumaApi) => {
 
     '/mesh-insights': async (params) => {
       const { size } = params
-      const offset = params.size * (params.page - 1)
+      const offset = String(params.size * (params.page - 1))
       const search = MeshInsight.search(params.search)
 
       const res = await http.GET('/mesh-insights', {

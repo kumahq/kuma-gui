@@ -213,13 +213,18 @@ paths:
           $ref: '#/components/responses/Internal'
   /config:
     get:
+      operationId: get-config
+      summary: Get the control plane configuration
+      description: Returns the configuration of the control plane, with sensitive values redacted.
       responses:
         '200':
-          description: '200'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ControlPlaneConfig'
+          $ref: '#/components/responses/ConfigResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/Internal'
+      tags:
+        - System
   /meshes/{mesh}/dataplanes/{dataplane}/xds:
     get:
       operationId: get-dataplane-xds
@@ -3818,33 +3823,50 @@ paths:
         - Mesh
   /mesh-insights/{name}:
     get:
+      operationId: getMeshInsight
+      summary: Get the insight of a mesh
+      description: Returns the observed state of a mesh, computed by the control plane. Read only.
       parameters:
         - name: name
           in: path
+          description: The name of the mesh to get the insight for.
           required: true
-          type: string
-        - $ref: '#/components/parameters/format'
+          schema:
+            type: string
       responses:
         '200':
-          description: '200'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/MeshInsight'
+          $ref: '#/components/responses/GetMeshInsightResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/Internal'
   /mesh-insights:
     get:
+      operationId: getMeshInsightList
+      summary: List mesh insights
+      description: Returns the observed state of every mesh, computed by the control plane. Read only.
       parameters:
-        - $ref: '#/components/parameters/name'
-        - $ref: '#/components/parameters/size'
-        - $ref: '#/components/parameters/offset'
-        - $ref: '#/components/parameters/filter'
+        - name: size
+          in: query
+          description: Size of the page.
+          required: false
+          schema:
+            type: integer
+        - name: offset
+          in: query
+          description: Offset of the page to list.
+          required: false
+          schema:
+            type: string
       responses:
         '200':
-          description: '200'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/MeshInsightCollection'
+          $ref: '#/components/responses/GetMeshInsightListResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/Internal'
   /meshes/{name}/_overview:
     get:
       operationId: getMeshOverview
@@ -4190,33 +4212,31 @@ paths:
         - ZoneInsight
   /zones/{name}/_overview:
     get:
+      operationId: getZoneOverview
       parameters:
         - name: name
           in: path
+          description: The name of the zone to get the overview for.
           required: true
-          type: string
-        - $ref: '#/components/parameters/format'
+          schema:
+            type: string
       responses:
         '200':
-          description: '200'
-          content:
-            application/json:
-              schema:
-                type: object
+          $ref: '#/components/responses/GetZoneOverviewResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/Internal'
   /zones/_overview:
     get:
-      parameters:
-        - $ref: '#/components/parameters/name'
-        - $ref: '#/components/parameters/size'
-        - $ref: '#/components/parameters/offset'
-        - $ref: '#/components/parameters/filter'
+      operationId: getZoneOverviewList
       responses:
         '200':
-          description: '200'
-          content:
-            application/json:
-              schema:
-                type: object
+          $ref: '#/components/responses/GetZoneOverviewListResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/Internal'
   /hostnamegenerators/{name}:
     get:
       operationId: getHostnameGenerator
@@ -5603,64 +5623,6 @@ paths:
           $ref: '#/components/responses/WorkloadList'
       tags:
         - Workload
-  /meshes/{mesh}/dataplanes/{name}/xds:
-    get:
-      parameters:
-        - name: mesh
-          in: path
-          required: true
-          type: string
-        - name: name
-          in: path
-          required: true
-          type: string
-        - name: include_eds
-          in: query
-          required: false
-          type: string
-      responses:
-        '200':
-          description: '200'
-          content:
-            application/json:
-              schema:
-                type: object
-  /meshes/{mesh}/dataplanes/{name}/stats:
-    get:
-      parameters:
-        - name: mesh
-          in: path
-          required: true
-          type: string
-        - name: name
-          in: path
-          required: true
-          type: string
-      responses:
-        '200':
-          description: '200'
-          content:
-            application/json:
-              schema:
-                type: string
-  /meshes/{mesh}/dataplanes/{name}/clusters:
-    get:
-      parameters:
-        - name: mesh
-          in: path
-          required: true
-          type: string
-        - name: name
-          in: path
-          required: true
-          type: string
-      responses:
-        '200':
-          description: '200'
-          content:
-            application/json:
-              schema:
-                type: string
   /meshes/{mesh}/dataplanes/{name}/policies:
     get:
       parameters:
@@ -5680,44 +5642,6 @@ paths:
               schema:
                 type: object
 components:
-  parameters:
-    name:
-      in: query
-      name: name
-      required: false
-      schema:
-        type: string
-    filter:
-      in: query
-      description: filter by labels when multiple filters are present, they are ANDed
-      required: false
-      schema:
-        type: object
-        properties:
-          key:
-            type: string
-          value:
-            type: string
-      example:
-        label.k8s.kuma.io/namespace: my-ns
-    format:
-      in: query
-      name: format
-      required: false
-      schema:
-        type: string
-    offset:
-      in: query
-      name: offset
-      required: false
-      schema:
-        type: integer
-    size:
-      in: query
-      name: size
-      required: false
-      schema:
-        type: integer
   schemas:
     Index:
       description: Some metadata about the service
@@ -6458,8 +6382,6 @@ components:
       required:
         - xds
       title: DataplaneXDSConfig
-    ControlPlaneConfig:
-      type: object
     DataplaneInbound:
       type: object
       properties:
@@ -14147,22 +14069,10 @@ components:
         - name
         - creationTime
         - modificationTime
-    MeshInsightCollection:
-      type: object
-      properties:
-        total:
-          type: integer
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/MeshInsight'
-        next:
-          type: string
-          nullable: true
-      required:
-        - next
-        - total
-        - items
+    MeshInsightWithMeta:
+      allOf:
+        - $ref: '#/components/schemas/Meta'
+        - $ref: '#/components/schemas/MeshInsight'
     SecretItem:
       type: object
       properties:
@@ -14436,6 +14346,202 @@ components:
       required:
         - type
         - name
+    ZoneOverview:
+      description: ZoneOverview defines the projected state of a Zone.
+      type: object
+      properties:
+        zone:
+          type: object
+          properties:
+            enabled:
+              description: |-
+                enable allows to turn the zone on/off and exclude the whole zone from
+                balancing traffic on it
+              type: boolean
+        zoneInsight:
+          type: object
+          properties:
+            envoyAdminStreams:
+              description: |-
+                Statistics about Envoy Admin Streams
+                Deprecated: use kds_streams instead.
+              type: object
+              properties:
+                clustersGlobalInstanceId:
+                  description: Global instance ID that handles Clusters streams.
+                  type: string
+                configDumpGlobalInstanceId:
+                  description: Global instance ID that handles XDS Config Dump streams.
+                  type: string
+                statsGlobalInstanceId:
+                  description: Global instance ID that handles Stats streams.
+                  type: string
+            healthCheck:
+              type: object
+              properties:
+                time:
+                  description: Time last health check received
+                  type: string
+                  format: date-time
+            kdsStreams:
+              description: Information about kds streams that are estabilished between global and zone
+              type: object
+              properties:
+                clusters:
+                  description: Details of stream that handles Clusters stream.
+                  type: object
+                  properties:
+                    connectTime:
+                      description: Time when the stream was open.
+                      type: string
+                      format: date-time
+                    globalInstanceId:
+                      description: Global instance ID that handles the stream.
+                      type: string
+                configDump:
+                  description: Details of stream that handles XDS Config Dump stream.
+                  type: object
+                  properties:
+                    connectTime:
+                      description: Time when the stream was open.
+                      type: string
+                      format: date-time
+                    globalInstanceId:
+                      description: Global instance ID that handles the stream.
+                      type: string
+                globalToZone:
+                  description: Details of stream that handles global to zone resource sync stream.
+                  type: object
+                  properties:
+                    connectTime:
+                      description: Time when the stream was open.
+                      type: string
+                      format: date-time
+                    globalInstanceId:
+                      description: Global instance ID that handles the stream.
+                      type: string
+                stats:
+                  description: Details of stream that handles Stats stream.
+                  type: object
+                  properties:
+                    connectTime:
+                      description: Time when the stream was open.
+                      type: string
+                      format: date-time
+                    globalInstanceId:
+                      description: Global instance ID that handles the stream.
+                      type: string
+                zoneToGlobal:
+                  description: Details of stream that handles zone to global resource sync stream.
+                  type: object
+                  properties:
+                    connectTime:
+                      description: Time when the stream was open.
+                      type: string
+                      format: date-time
+                    globalInstanceId:
+                      description: Global instance ID that handles the stream.
+                      type: string
+            subscriptions:
+              description: List of KDS subscriptions created by a given Zone Kuma CP.
+              type: array
+              items:
+                description: KDSSubscription describes a single KDS subscription created by a Zone to the Global.
+                properties:
+                  authTokenProvided:
+                    description: Indicates if subscription provided auth token
+                    type: boolean
+                  config:
+                    description: Config of Zone Kuma CP
+                    type: string
+                  connectTime:
+                    description: Time when a given Zone connected to the Global.
+                    type: string
+                    format: date-time
+                  disconnectTime:
+                    description: Time when a given Zone disconnected from the Global.
+                    type: string
+                    format: date-time
+                  generation:
+                    description: |-
+                      Generation is an integer number which is periodically increased by the
+                      status sink
+                    type: integer
+                  globalInstanceId:
+                    description: Global CP instance that handled given subscription.
+                    type: string
+                  id:
+                    description: Unique id per KDS subscription.
+                    type: string
+                  status:
+                    description: Status of the KDS subscription.
+                    type: object
+                    properties:
+                      lastUpdateTime:
+                        description: Time when status of a given KDS subscription was most recently updated.
+                        type: string
+                        format: date-time
+                      stat:
+                        type: object
+                        additionalProperties:
+                          description: DiscoveryServiceStats defines all stats over a single xDS service.
+                          properties:
+                            responsesAcknowledged:
+                              description: Number of xDS responses ACKed by the Dataplane.
+                              type: integer
+                            responsesRejected:
+                              description: Number of xDS responses NACKed by the Dataplane.
+                              type: integer
+                            responsesSent:
+                              description: Number of xDS responses sent to the Dataplane.
+                              type: integer
+                          type: object
+                      total:
+                        description: Total defines an aggregate over individual KDS stats.
+                        type: object
+                        properties:
+                          responsesAcknowledged:
+                            description: Number of xDS responses ACKed by the Dataplane.
+                            type: integer
+                          responsesRejected:
+                            description: Number of xDS responses NACKed by the Dataplane.
+                            type: integer
+                          responsesSent:
+                            description: Number of xDS responses sent to the Dataplane.
+                            type: integer
+                  version:
+                    description: Version of Zone Kuma CP.
+                    type: object
+                    properties:
+                      kumaCp:
+                        description: Version of Zone Kuma CP
+                        type: object
+                        properties:
+                          buildDate:
+                            description: Build date of Kuma ControlPlane version
+                            type: string
+                          gitCommit:
+                            description: Git commit of Kuma ControlPlane version
+                            type: string
+                          gitTag:
+                            description: Git tag of Kuma ControlPlane version
+                            type: string
+                          kumaCpGlobalCompatible:
+                            description: True iff this Zone CP version is compatible with Global CP
+                            type: boolean
+                          version:
+                            description: Version number of Kuma ControlPlane
+                            type: string
+                  zoneInstanceId:
+                    description: |-
+                      Zone CP instance that handled the given subscription (This is the leader at
+                      time of connection).
+                    type: string
+                type: object
+    ZoneOverviewWithMeta:
+      allOf:
+        - $ref: '#/components/schemas/Meta'
+        - $ref: '#/components/schemas/ZoneOverview'
     HostnameGeneratorItem:
       description: HostnameGenerator automatically generates DNS hostnames for services in the mesh based on customizable templates. It provides a consistent naming scheme for service discovery by creating predictable hostnames from service labels and metadata, supporting both MeshService, MeshExternalService, and MeshMultiZoneService resources.
       type: object
@@ -16159,206 +16265,6 @@ components:
         - type
         - name
         - spec
-    MeshInsightWithMeta:
-      allOf:
-        - $ref: '#/components/schemas/Meta'
-        - $ref: '#/components/schemas/MeshInsight'
-    ZoneOverview:
-      description: ZoneOverview defines the projected state of a Zone.
-      type: object
-      properties:
-        zone:
-          type: object
-          properties:
-            enabled:
-              description: |-
-                enable allows to turn the zone on/off and exclude the whole zone from
-                balancing traffic on it
-              type: boolean
-        zoneInsight:
-          type: object
-          properties:
-            envoyAdminStreams:
-              description: |-
-                Statistics about Envoy Admin Streams
-                Deprecated: use kds_streams instead.
-              type: object
-              properties:
-                clustersGlobalInstanceId:
-                  description: Global instance ID that handles Clusters streams.
-                  type: string
-                configDumpGlobalInstanceId:
-                  description: Global instance ID that handles XDS Config Dump streams.
-                  type: string
-                statsGlobalInstanceId:
-                  description: Global instance ID that handles Stats streams.
-                  type: string
-            healthCheck:
-              type: object
-              properties:
-                time:
-                  description: Time last health check received
-                  type: string
-                  format: date-time
-            kdsStreams:
-              description: Information about kds streams that are estabilished between global and zone
-              type: object
-              properties:
-                clusters:
-                  description: Details of stream that handles Clusters stream.
-                  type: object
-                  properties:
-                    connectTime:
-                      description: Time when the stream was open.
-                      type: string
-                      format: date-time
-                    globalInstanceId:
-                      description: Global instance ID that handles the stream.
-                      type: string
-                configDump:
-                  description: Details of stream that handles XDS Config Dump stream.
-                  type: object
-                  properties:
-                    connectTime:
-                      description: Time when the stream was open.
-                      type: string
-                      format: date-time
-                    globalInstanceId:
-                      description: Global instance ID that handles the stream.
-                      type: string
-                globalToZone:
-                  description: Details of stream that handles global to zone resource sync stream.
-                  type: object
-                  properties:
-                    connectTime:
-                      description: Time when the stream was open.
-                      type: string
-                      format: date-time
-                    globalInstanceId:
-                      description: Global instance ID that handles the stream.
-                      type: string
-                stats:
-                  description: Details of stream that handles Stats stream.
-                  type: object
-                  properties:
-                    connectTime:
-                      description: Time when the stream was open.
-                      type: string
-                      format: date-time
-                    globalInstanceId:
-                      description: Global instance ID that handles the stream.
-                      type: string
-                zoneToGlobal:
-                  description: Details of stream that handles zone to global resource sync stream.
-                  type: object
-                  properties:
-                    connectTime:
-                      description: Time when the stream was open.
-                      type: string
-                      format: date-time
-                    globalInstanceId:
-                      description: Global instance ID that handles the stream.
-                      type: string
-            subscriptions:
-              description: List of KDS subscriptions created by a given Zone Kuma CP.
-              type: array
-              items:
-                description: KDSSubscription describes a single KDS subscription created by a Zone to the Global.
-                properties:
-                  authTokenProvided:
-                    description: Indicates if subscription provided auth token
-                    type: boolean
-                  config:
-                    description: Config of Zone Kuma CP
-                    type: string
-                  connectTime:
-                    description: Time when a given Zone connected to the Global.
-                    type: string
-                    format: date-time
-                  disconnectTime:
-                    description: Time when a given Zone disconnected from the Global.
-                    type: string
-                    format: date-time
-                  generation:
-                    description: |-
-                      Generation is an integer number which is periodically increased by the
-                      status sink
-                    type: integer
-                  globalInstanceId:
-                    description: Global CP instance that handled given subscription.
-                    type: string
-                  id:
-                    description: Unique id per KDS subscription.
-                    type: string
-                  status:
-                    description: Status of the KDS subscription.
-                    type: object
-                    properties:
-                      lastUpdateTime:
-                        description: Time when status of a given KDS subscription was most recently updated.
-                        type: string
-                        format: date-time
-                      stat:
-                        type: object
-                        additionalProperties:
-                          description: DiscoveryServiceStats defines all stats over a single xDS service.
-                          properties:
-                            responsesAcknowledged:
-                              description: Number of xDS responses ACKed by the Dataplane.
-                              type: integer
-                            responsesRejected:
-                              description: Number of xDS responses NACKed by the Dataplane.
-                              type: integer
-                            responsesSent:
-                              description: Number of xDS responses sent to the Dataplane.
-                              type: integer
-                          type: object
-                      total:
-                        description: Total defines an aggregate over individual KDS stats.
-                        type: object
-                        properties:
-                          responsesAcknowledged:
-                            description: Number of xDS responses ACKed by the Dataplane.
-                            type: integer
-                          responsesRejected:
-                            description: Number of xDS responses NACKed by the Dataplane.
-                            type: integer
-                          responsesSent:
-                            description: Number of xDS responses sent to the Dataplane.
-                            type: integer
-                  version:
-                    description: Version of Zone Kuma CP.
-                    type: object
-                    properties:
-                      kumaCp:
-                        description: Version of Zone Kuma CP
-                        type: object
-                        properties:
-                          buildDate:
-                            description: Build date of Kuma ControlPlane version
-                            type: string
-                          gitCommit:
-                            description: Git commit of Kuma ControlPlane version
-                            type: string
-                          gitTag:
-                            description: Git tag of Kuma ControlPlane version
-                            type: string
-                          kumaCpGlobalCompatible:
-                            description: True iff this Zone CP version is compatible with Global CP
-                            type: boolean
-                          version:
-                            description: Version number of Kuma ControlPlane
-                            type: string
-                  zoneInstanceId:
-                    description: |-
-                      Zone CP instance that handled the given subscription (This is the leader at
-                      time of connection).
-                    type: string
-                type: object
-    ZoneOverviewWithMeta:
-      allOf:
-        - $ref: '#/components/schemas/Meta'
-        - $ref: '#/components/schemas/ZoneOverview'
     TargetRefPolicy:
       description: MeshAccessLog configures access logging for traffic between services in the mesh. It allows you to capture and export request/response logs to various backends (file, TCP, or OpenTelemetry) for monitoring, debugging, and auditing purposes.
       type: object
@@ -16697,6 +16603,13 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/DataplaneXDSConfig'
+    ConfigResponse:
+      description: The control plane configuration.
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
     DataplaneNetworkingLayoutResponse:
       description: A response containing dataplane networking layout.
       content:
@@ -17765,6 +17678,35 @@ components:
                 items:
                   type: string
                 readOnly: true
+    GetMeshInsightResponse:
+      description: A response containing the insight of a mesh.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/MeshInsightWithMeta'
+    GetMeshInsightListResponse:
+      description: A response containing a list of mesh insights.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              total:
+                type: integer
+                example: 200
+              next:
+                description: URL to the next page, or null when this is the last page
+                type:
+                  - string
+                  - 'null'
+              items:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MeshInsightWithMeta'
+            required:
+              - total
+              - items
+              - next
     GetMeshOverviewResponse:
       description: A response containing the overview of a mesh.
       content:
@@ -17923,6 +17865,35 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ZoneInsightItem'
+    GetZoneOverviewResponse:
+      description: A response containing the overview of a zone.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ZoneOverviewWithMeta'
+    GetZoneOverviewListResponse:
+      description: A response containing a list of zone overviews.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              total:
+                type: integer
+                example: 200
+              next:
+                description: URL to the next page, or null when this is the last page
+                type:
+                  - string
+                  - 'null'
+              items:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ZoneOverviewWithMeta'
+            required:
+              - total
+              - items
+              - next
     HostnameGeneratorItem:
       description: Successful response
       content:
@@ -18373,13 +18344,6 @@ components:
               - total
               - items
               - next
-    ConfigResponse:
-      description: The control plane configuration.
-      content:
-        application/json:
-          schema:
-            type: object
-            additionalProperties: true
     DataplaneInsightCreateOrUpdateSuccessResponse:
       description: Successful response
       content:
@@ -18401,35 +18365,6 @@ components:
         application/json:
           schema:
             type: object
-    GetMeshInsightResponse:
-      description: A response containing the insight of a mesh.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/MeshInsightWithMeta'
-    GetMeshInsightListResponse:
-      description: A response containing a list of mesh insights.
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              total:
-                type: integer
-                example: 200
-              next:
-                description: URL to the next page, or null when this is the last page
-                type:
-                  - string
-                  - 'null'
-              items:
-                type: array
-                items:
-                  $ref: '#/components/schemas/MeshInsightWithMeta'
-            required:
-              - total
-              - items
-              - next
     ZoneInsightCreateOrUpdateSuccessResponse:
       description: Successful response
       content:
@@ -18451,35 +18386,6 @@ components:
         application/json:
           schema:
             type: object
-    GetZoneOverviewResponse:
-      description: A response containing the overview of a zone.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ZoneOverviewWithMeta'
-    GetZoneOverviewListResponse:
-      description: A response containing a list of zone overviews.
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              total:
-                type: integer
-                example: 200
-              next:
-                description: URL to the next page, or null when this is the last page
-                type:
-                  - string
-                  - 'null'
-              items:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ZoneOverviewWithMeta'
-            required:
-              - total
-              - items
-              - next
   securitySchemes:
     BasicAuth:
       type: http
