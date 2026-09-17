@@ -117,16 +117,10 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
               )
               //
 
-              const item = Kri.fromString(href.substring(kriProto.length))
-              // old style names can have _ in them that are replaced with `~`
-              const name = item.name.replaceAll('~', '_')
-              const kri = Kri.toString({
-                ...item,
-                name,
-              })
+              const kri = href.substring(kriProto.length)
+              const item = Kri.fromString(kri)
               const args = {
                 ...item,
-                name,
                 kri,
               }
 
