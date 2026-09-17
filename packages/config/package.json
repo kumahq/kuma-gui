@@ -67,7 +67,7 @@
     "openapi-format": "^1.33.7",
     "openapi-typescript": "^7.13.0",
     "playwright-bdd": "^9.2.0",
-    "stylelint": "^17.14.1",
+    "stylelint": "^17.15.0",
     "stylelint-config-html": "^2.0.0",
     "stylelint-config-recommended-scss": "^17.0.1",
     "stylelint-config-recommended-vue": "^2.0.0",
