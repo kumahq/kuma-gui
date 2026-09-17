@@ -98,17 +98,6 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
             // KRIs
             case href.startsWith(kriProto): {
 
-              const item = Kri.fromString(href.substring(kriProto.length))
-              const kri = Kri.toString({
-                ...item,
-                // old style names can have _ in them that are replaced with `~`
-                name: item.name.replaceAll('~', '_'),
-              })
-              const args = {
-                ...Kri.fromString(kri),
-                kri,
-              }
-
               // add a default catchall to the end of the handlers
               handlers.push(
                 ({ mesh, kri }) => {
@@ -129,8 +118,22 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
                       },
                     }
                 },
-
               )
+              //
+
+              const item = Kri.fromString(href.substring(kriProto.length))
+              // old style names can have _ in them that are replaced with `~`
+              const name = item.name.replaceAll('~', '_')
+              const kri = Kri.toString({
+                ...item,
+                name,
+              })
+              const args = {
+                ...item,
+                name,
+                kri,
+              }
+
               const to = handlers.reduce((prev, handler) => {
                 return typeof prev === 'undefined' ? handler(args) : prev
               }, undefined as ReturnType<Handler>)
