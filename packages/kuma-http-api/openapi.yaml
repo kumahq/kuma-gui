@@ -4,7 +4,7 @@ info:
   description: Kuma API
   version: v1alpha1
   x-ref-schema-name: ZoneOverview
-  x-oas-source: kumahq/kuma@85d45602aaa382c66b57b02119c10d161b6705c8
+  x-oas-source: kumahq/kuma@e7f9dc321b2de07624feb7f981c114dd19115f48
 paths:
   /:
     get:
@@ -7086,6 +7086,23 @@ components:
                         required:
                           - kind
                         type: object
+                redirectPortInbound:
+                  description: |-
+                    Port on which all inbound traffic is being transparently redirected.
+
+                    Deprecated: read only for a proxy that sends no transparent proxy
+                    metadata, which means a sidecar injected before 3.0. Gone in 3.1.
+
+                    Deprecated: Marked as deprecated in api/mesh/v1alpha1/dataplane.proto.
+                  type: integer
+                redirectPortOutbound:
+                  description: |-
+                    Port on which all outbound traffic is being transparently redirected.
+
+                    Deprecated: see `redirect_port_inbound`.
+
+                    Deprecated: Marked as deprecated in api/mesh/v1alpha1/dataplane.proto.
+                  type: integer
         type:
           type: string
       required:
@@ -13365,6 +13382,23 @@ components:
                             required:
                               - kind
                             type: object
+                    redirectPortInbound:
+                      description: |-
+                        Port on which all inbound traffic is being transparently redirected.
+
+                        Deprecated: read only for a proxy that sends no transparent proxy
+                        metadata, which means a sidecar injected before 3.0. Gone in 3.1.
+
+                        Deprecated: Marked as deprecated in api/mesh/v1alpha1/dataplane.proto.
+                      type: integer
+                    redirectPortOutbound:
+                      description: |-
+                        Port on which all outbound traffic is being transparently redirected.
+
+                        Deprecated: see `redirect_port_inbound`.
+
+                        Deprecated: Marked as deprecated in api/mesh/v1alpha1/dataplane.proto.
+                      type: integer
         dataplaneInsight:
           type: object
           properties:
