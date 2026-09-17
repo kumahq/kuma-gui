@@ -3341,6 +3341,23 @@ export interface components {
                             port?: number;
                         }[];
                     };
+                    /**
+                     * @description Port on which all inbound traffic is being transparently redirected.
+                     *
+                     *     Deprecated: read only for a proxy that sends no transparent proxy
+                     *     metadata, which means a sidecar injected before 3.0. Gone in 3.1.
+                     *
+                     *     Deprecated: Marked as deprecated in api/mesh/v1alpha1/dataplane.proto.
+                     */
+                    redirectPortInbound?: number;
+                    /**
+                     * @description Port on which all outbound traffic is being transparently redirected.
+                     *
+                     *     Deprecated: see `redirect_port_inbound`.
+                     *
+                     *     Deprecated: Marked as deprecated in api/mesh/v1alpha1/dataplane.proto.
+                     */
+                    redirectPortOutbound?: number;
                 };
             };
             type: string;
@@ -7977,6 +7994,23 @@ export interface components {
                                 port?: number;
                             }[];
                         };
+                        /**
+                         * @description Port on which all inbound traffic is being transparently redirected.
+                         *
+                         *     Deprecated: read only for a proxy that sends no transparent proxy
+                         *     metadata, which means a sidecar injected before 3.0. Gone in 3.1.
+                         *
+                         *     Deprecated: Marked as deprecated in api/mesh/v1alpha1/dataplane.proto.
+                         */
+                        redirectPortInbound?: number;
+                        /**
+                         * @description Port on which all outbound traffic is being transparently redirected.
+                         *
+                         *     Deprecated: see `redirect_port_inbound`.
+                         *
+                         *     Deprecated: Marked as deprecated in api/mesh/v1alpha1/dataplane.proto.
+                         */
+                        redirectPortOutbound?: number;
                     };
                 };
             };
