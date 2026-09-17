@@ -31,6 +31,7 @@ export const sources = (api: KumaApi) => {
 
       const res = await http.GET('/zones/_overview', {
         params: {
+          // @ts-expect-error
           query: {
             offset,
             size,

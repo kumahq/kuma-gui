@@ -1,8 +1,9 @@
 import { Resource } from '@/app/resources/data/Resource'
-import type { components } from '@kumahq/kuma-http-api'
+import type { paths } from '@kumahq/kuma-http-api'
 
-type PartialMeshInsightCollection = components['schemas']['MeshInsightCollection']
-type PartialMeshInsight = components['schemas']['MeshInsight']
+type KumaMeshInsightCollection = paths['/mesh-insights']['get']['responses']['200']['content']['application/json']
+// @TODO(types): once the types are correct here we can remove the omit
+type KumaMeshInsight = Omit<paths['/mesh-insights/{name}']['get']['responses']['200']['content']['application/json'], 'labels' | 'kri' | 'mesh'>
 type MeshInsightsResources = Record<string, { total: number }>
   & Record<
     | 'MeshService'
@@ -37,7 +38,7 @@ export const MeshInsight = {
     return Resource.search(query)
   },
 
-  fromObject(item: PartialMeshInsight) {
+  fromObject(item: KumaMeshInsight) {
     return {
       ...item,
       mTLS: item.mTLS ?? {},
@@ -88,7 +89,7 @@ export const MeshInsight = {
     }
   },
 
-  fromCollection(collection: PartialMeshInsightCollection) {
+  fromCollection(collection: KumaMeshInsightCollection) {
     const items = Array.isArray(collection.items) ? collection.items.map(MeshInsight.fromObject) : []
     return {
       ...collection,

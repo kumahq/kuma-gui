@@ -180,9 +180,9 @@ paths:
   /meshes/{name}:
     $ref: paths/meshes_{name}.yaml
   /mesh-insights/{name}:
-    $ref: paths/mesh-insights_{name}.yaml
+    $ref: paths/meshinsights_{name}.yaml
   /mesh-insights:
-    $ref: paths/mesh-insights.yaml
+    $ref: paths/meshinsights.yaml
   /meshes/{name}/_overview:
     $ref: paths/meshes_{name}__overview.yaml
   /meshes/_overview:
@@ -202,7 +202,7 @@ paths:
   /zone-insights/{name}:
     $ref: paths/zoneinsights_{name}.yaml
   /zones/{name}/_overview:
-    $ref: paths/zones_{name}_overview.yaml
+    $ref: paths/zones_{name}__overview.yaml
   /zones/_overview:
     $ref: paths/zones__overview.yaml
   /hostnamegenerators/{name}:
@@ -257,12 +257,6 @@ paths:
     $ref: paths/meshes_{mesh}_workloads.yaml
   /workloads:
     $ref: paths/workloads.yaml
-  /meshes/{mesh}/dataplanes/{name}/xds:
-    $ref: paths/meshes_{mesh}_dataplanes_{name}_xds.yaml
-  /meshes/{mesh}/dataplanes/{name}/stats:
-    $ref: paths/meshes_{mesh}_dataplanes_{name}_stats.yaml
-  /meshes/{mesh}/dataplanes/{name}/clusters:
-    $ref: paths/meshes_{mesh}_dataplanes_{name}_clusters.yaml
   /meshes/{mesh}/dataplanes/{name}/policies:
     $ref: paths/meshes_{mesh}_dataplanes_{name}_policies.yaml
 components:

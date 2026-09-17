@@ -1,6 +1,7 @@
 import type { Dependencies, ResponseHandler } from '#mocks'
 import type { paths } from '@kumahq/kuma-http-api'
-type MeshInsightResponse = paths['/mesh-insights/{name}']['get']['responses']['200']['content']['application/json']
+// @TODO(types): once the types are correct here we can remove the omit
+type MeshInsightResponse = Omit<paths['/mesh-insights/{name}']['get']['responses']['200']['content']['application/json'], 'labels' | 'kri' | 'mesh'>
 
 export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
   const params = req.params

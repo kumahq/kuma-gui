@@ -57,12 +57,12 @@ export const sources = (api: KumaApi) => {
       const res = await (async () => {
         switch (proxyType) {
           case 'dataplane': {
-            const res = await http.GET('/meshes/{mesh}/dataplanes/{name}/stats', {
+            const res = await http.GET('/meshes/{mesh}/dataplanes/{dataplane}/stats', {
               parseAs: 'text',
               params: {
                 path: {
                   mesh,
-                  name,
+                  dataplane: name,
                 },
               },
             })
@@ -150,12 +150,12 @@ export const sources = (api: KumaApi) => {
       const res = await (async () => {
         switch (proxyType) {
           case 'dataplane': {
-            const res = await http.GET('/meshes/{mesh}/dataplanes/{name}/clusters', {
+            const res = await http.GET('/meshes/{mesh}/dataplanes/{dataplane}/clusters', {
               parseAs: 'text',
               params: {
                 path: {
                   mesh,
-                  name,
+                  dataplane: name,
                 },
               },
             })
@@ -196,14 +196,14 @@ export const sources = (api: KumaApi) => {
       const res = await (async () => {
         switch (proxyType) {
           case 'dataplane': {
-            const res = await http.GET('/meshes/{mesh}/dataplanes/{name}/xds', {
+            const res = await http.GET('/meshes/{mesh}/dataplanes/{dataplane}/xds', {
               params: {
                 path: {
                   mesh,
-                  name,
+                  dataplane: name,
                 },
                 query: {
-                  include_eds: endpoints,
+                  include_eds: endpoints === 'true' ? true : false,
                 },
               },
             })
@@ -250,14 +250,14 @@ export const sources = (api: KumaApi) => {
       const res = await (async () => {
         switch (proxyType) {
           case 'dataplane': {
-            const res = await http.GET('/meshes/{mesh}/dataplanes/{name}/xds', {
+            const res = await http.GET('/meshes/{mesh}/dataplanes/{dataplane}/xds', {
               params: {
                 path: {
                   mesh,
-                  name,
+                  dataplane: name,
                 },
                 query: {
-                  include_eds: endpoints,
+                  include_eds: endpoints === 'true' ? true : false,
                 },
               },
             })
@@ -324,21 +324,21 @@ export const sources = (api: KumaApi) => {
       const res = await (async () => {
         switch (proxyType) {
           case 'dataplane': {
-            const res = await http.GET('/meshes/{mesh}/dataplanes/{name}/xds', {
+            const res = await http.GET('/meshes/{mesh}/dataplanes/{dataplane}/xds', {
               params: {
                 path: {
                   mesh,
-                  name,
+                  dataplane: name,
                 },
                 query: {
-                  include_eds: 'false',
+                  include_eds: false,
                 },
               },
             })
             return res.data!
           }
           case 'zone-ingress': {
-            // @ts-expect-error @TODO zone proxies no longer exist
+            // @ts-expect-error @TODO(types) zone proxies no longer exist
             const res = await http.GET('/zoneingresses/{name}/xds', {
               params: {
                 path: {
@@ -352,7 +352,7 @@ export const sources = (api: KumaApi) => {
             return res.data!
           }
           case 'zone-egress': {
-            // @ts-expect-error @TODO zone proxies no longer exist
+            // @ts-expect-error @TODO(types) zone proxies no longer exist
             const res = await http.GET('/zoneegresses/{name}/xds', {
               params: {
                 path: {

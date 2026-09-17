@@ -98,11 +98,11 @@ export const sources = (api: KumaApi) => {
             break
           case 'xds':
             prev.push(async () => {
-              const res = await http.GET('/meshes/{mesh}/dataplanes/{name}/xds', {
+              const res = await http.GET('/meshes/{mesh}/dataplanes/{dataplane}/xds', {
                 params: {
                   path: {
                     mesh,
-                    name,
+                    dataplane: name,
                   },
                   query: {
                     include_eds: spec.eds,
@@ -117,12 +117,12 @@ export const sources = (api: KumaApi) => {
             break
           case 'stats':
             prev.push(async () => {
-              const res = await http.GET('/meshes/{mesh}/dataplanes/{name}/stats', {
+              const res = await http.GET('/meshes/{mesh}/dataplanes/{dataplane}/stats', {
                 parseAs: 'text',
                 params: {
                   path: {
                     mesh,
-                    name,
+                    dataplane: name,
                   },
                 },
               })
@@ -134,12 +134,12 @@ export const sources = (api: KumaApi) => {
             break
           case 'clusters':
             prev.push(async () => {
-              const res = await http.GET('/meshes/{mesh}/dataplanes/{name}/clusters', {
+              const res = await http.GET('/meshes/{mesh}/dataplanes/{dataplane}/clusters', {
                 parseAs: 'text',
                 params: {
                   path: {
                     mesh,
-                    name,
+                    dataplane: name,
                   },
                 },
               })
