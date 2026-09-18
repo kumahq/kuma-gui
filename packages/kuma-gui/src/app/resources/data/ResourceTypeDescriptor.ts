@@ -56,7 +56,7 @@ export const ResourceTypeDescriptor = {
           ...item.policy,
           // Backfills some legacy flags that are gone from OAS, but we keep reading them in the views.
           isTargetRef: 'isTargetRef' in item.policy ? item.policy.isTargetRef as boolean : true,
-          // @ts-expect-error - missing item.policy.hasRulesTargetRef in OAS, refactor once it's there
+          // @ts-expect-error - hasFromTargetRef is still in OAS which causes the type of item.policy in the second branch to be `never` (not reachable).
           hasFromTargetRef: 'hasFromTargetRef' in item.policy ? item.policy.hasFromTargetRef as boolean : (item.policy.hasRulesTargetRef ?? true),
           isFromAsRules: 'isFromAsRules' in item.policy ? item.policy.isFromAsRules as boolean : true,
         },
