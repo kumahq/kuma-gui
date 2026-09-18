@@ -51,6 +51,15 @@ export const ResourceTypeDescriptor = {
     return {
       ...item,
       group,
+      ...(typeof item.policy !== 'undefined' && {
+        policy: {
+          ...item.policy,
+          // Backfills some legacy flags that are gone from OAS, but we keep reading them in the views.
+          isTargetRef: 'isTargetRef' in item.policy ? item.policy.isTargetRef as boolean : true,
+          hasFromTargetRef: 'hasFromTargetRef' in item.policy ? item.policy.hasFromTargetRef as boolean : true,
+          isFromAsRules: 'isFromAsRules' in item.policy ? item.policy.isFromAsRules as boolean : true,
+        },
+      }),
       categories: resourceCategories.get(item.name.toLowerCase()) ?? [],
       insightPath: ((shortName) => {
         switch (shortName) {
