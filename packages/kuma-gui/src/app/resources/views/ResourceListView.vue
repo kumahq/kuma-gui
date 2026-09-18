@@ -28,7 +28,7 @@
             <header>
               <div>
                 <XBadge
-                  v-if="'policy' in type && type.policy?.hasFromTargetRef"
+                  v-if="'policy' in type && (type.policy?.hasFromTargetRef || type.policy?.hasRulesTargetRef)"
                   appearance="neutral"
                 >
                   {{ t('resources.routes.items.types.collection.inbound') }}

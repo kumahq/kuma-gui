@@ -226,13 +226,14 @@
 </template>
 
 <script lang="ts" setup>
-import type { Policy, PolicyResourceType } from '../data'
+import type { Policy } from '../data'
+import type { ResourceTypeDescriptor } from '@/app/resources/data'
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import { Kri } from '@/app/kuma'
 
 const props = defineProps<{
   data: Policy | Error | undefined
-  policyType: PolicyResourceType | undefined
+  policyType: ResourceTypeDescriptor | undefined
 }>()
 </script>
