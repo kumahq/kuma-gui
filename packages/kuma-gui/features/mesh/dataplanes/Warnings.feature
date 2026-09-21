@@ -33,7 +33,7 @@ Feature: mesh / dataplanes / warnings
         dataplaneInsight:
           mTLS:
             certificateExpirationTime: 2022-10-03T12:40:13Z
-            lastCertificateRegeneration: 2021-10-03T12:40:13Z
+            lastCertificateRegeneration: 2022-10-01T12:40:13Z
       """
     When the date is "2022-10-03T06:45:13Z"
     And I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_dpp-1_/overview" URL
