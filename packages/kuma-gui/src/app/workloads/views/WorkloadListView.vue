@@ -52,6 +52,7 @@
               v-slot="{ data: [workloads] }"
             >
               <DataCollection
+                type="workloads"
                 :items="workloads.items"
                 :total="workloads.total"
                 :page="route.params.page"
@@ -60,7 +61,6 @@
               >
                 <AppCollection
                   :items="workloads.items"
-                  type="workload" 
                   :headers="[
                     { ...me.get('headers.name'), label: t('workloads.routes.items.headers.name'), key: 'name' },
                     { ...me.get('headers.namespace'), label: t('workloads.routes.items.headers.namespace'), key: 'namespace' },

@@ -27,3 +27,5 @@ workloads:
         namespace: Namespace
         dpps: DP proxies (connected / healthy / total)
         actions: Actions
+  x-empty-state:
+    title: There are no workloads present
