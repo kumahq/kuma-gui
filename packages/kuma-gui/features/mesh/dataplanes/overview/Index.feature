@@ -7,7 +7,6 @@ Feature: mesh / dataplanes / item / overview
     And the environment
       """
       KUMA_DATAPLANE_COUNT: 1
-      KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: true
       KUMA_MESHSERVICE_MODE: Exclusive
       """
     And the URL "/_kri/kri_dp_default_zone-1_kuma-demo_dataplane-1_" responds with

@@ -7,7 +7,6 @@ Feature: mesh / dataplanes / overview / summary / Policy
       | about-dp-policies | [data-testid='about-dataplane-policies'] |
     And the environment
       """
-      KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: true
       KUMA_MESHSERVICE_MODE: Exclusive
       """
     And the URL "/_kri/kri_dp_default_zone-1_kuma-demo_backend_" responds with

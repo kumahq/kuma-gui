@@ -3,7 +3,6 @@ Feature: mesh / dataplanes / connections / clusters
   Background:
     Given the environment
       """
-      KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: true
       KUMA_MESHSERVICE_MODE: Exclusive
       """
 

@@ -6,7 +6,6 @@ Feature: mesh / dataplanes / overview / summary / Listener
       | summary | [data-testid='slideout-container'] |
     And the environment
       """
-      KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: true
       KUMA_MESHSERVICE_MODE: Exclusive
       KUMA_DATAPLANELISTENER_COUNT: 1
       KUMA_DATAPLANE_TYPE: standard

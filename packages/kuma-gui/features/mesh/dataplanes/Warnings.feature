@@ -14,7 +14,6 @@ Feature: mesh / dataplanes / warnings
       | dataplane-disconnected-cp       | [data-testid^='notification-data-planes.notifications.dataplane-disconnected-cp']       |
     And the environment
       """
-      KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: true
       KUMA_MESHSERVICE_MODE: Exclusive
       """
     And the URL "/_kri/kri_dp_default_zone-1_kuma-demo_dpp-1_" responds with

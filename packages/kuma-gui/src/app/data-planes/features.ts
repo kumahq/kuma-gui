@@ -1,7 +1,5 @@
 import type { DataplaneOverview } from '@/app/data-planes/data'
-import type { Mesh } from '@/app/meshes/data'
 import type { Features } from '@kumahq/settings/can'
-import type { Can } from '@/app/application'
 
 export const features = () => {
   return {
@@ -13,12 +11,6 @@ export const features = () => {
         case new Set(dataplaneOverview.dataplaneInsight.metadata.features).intersection(new Set(['feature-transparent-proxy-in-dataplane-metadata', 'feature-bind-outbounds'])).size > 0:
           return true
       }
-    },
-    'use unified-resource-naming': (can: Can, { dataplaneOverview, mesh }: { dataplaneOverview: DataplaneOverview, mesh: Mesh }) => {
-      return can('use mesh-services', mesh) &&
-        dataplaneOverview.dataplaneType === 'standard' &&
-        (dataplaneOverview.dataplaneInsight.metadata.features.includes('feature-unified-resource-naming') ||
-          dataplaneOverview.zoneProxyTypes.length > 0)
     },
   }
 }

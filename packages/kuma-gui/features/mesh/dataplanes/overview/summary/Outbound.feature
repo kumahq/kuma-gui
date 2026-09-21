@@ -8,7 +8,6 @@ Feature: mesh / dataplanes / overview / summary / Outbound
       | outbound-policies-rule  | $outbound-policies-rules li.accordion-item:first-of-type |
     And the environment
       """
-      KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: true
       KUMA_MESHSERVICE_MODE: Exclusive
       KUMA_DATAPLANE_TYPE: standard
       """

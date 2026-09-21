@@ -10,7 +10,6 @@ Feature: mesh / dataplanes / overview / summary / Inbound
       | inbound-policies-rule  | $inbound-policies-rules li:first-of-type        |
     And the environment
       """
-      KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: true
       KUMA_MESHSERVICE_MODE: Exclusive
       KUMA_DATAPLANEINBOUND_COUNT: 1
       KUMA_DATAPLANE_TYPE: standard
