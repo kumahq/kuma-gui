@@ -52,8 +52,10 @@ const justify = computed(() => table?.props.variant === 'kv' || props.variant ==
   display: flex;
   width: 100%;
   align-items: center;
+  /* make sure any conditional actions leave the same room for headers */
+  min-height: var(--x-space-90);
   /* anything not action-like will be header on explantory text on the left */
-  :deep(:where(.x-i18n, p, header, h1, h2, h3, h4, h5, h6):first-child) {
+  & > :deep(:where(.x-layout, .x-i18n, p, header, h1, h2, h3, h4, h5, h6):first-child) {
     flex-grow: 1;
   }
 }
