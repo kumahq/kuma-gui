@@ -43,7 +43,7 @@
                   params: {},
                 },
                 {
-                  bool: !zone.zoneInsight.version?.kumaCp?.kumaCpGlobalCompatible,
+                  bool: zone.zoneInsight.subscriptions.length > 0 && !zone.zoneInsight.version?.kumaCp?.kumaCpGlobalCompatible,
                   key: 'global-cp-incompatible',
                   params: {
                     zoneCpVersion: zone.zoneInsight.version?.kumaCp?.version ?? '-',

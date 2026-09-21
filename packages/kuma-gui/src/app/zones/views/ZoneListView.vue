@@ -126,7 +126,7 @@
                           key: 'store-memory',
                         },
                         {
-                          bool: !item.zoneInsight.version?.kumaCp?.kumaCpGlobalCompatible,
+                          bool: item.zoneInsight.subscriptions.length > 0 && !item.zoneInsight.version?.kumaCp?.kumaCpGlobalCompatible,
                           key: 'global-cp-incompatible',
                         },
                       ].filter(({ bool }) => bool)]"
