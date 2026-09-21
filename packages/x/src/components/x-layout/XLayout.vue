@@ -17,7 +17,7 @@ type XComponent<T extends abstract new (...args: any) => any> = {
 }
 
 const props = withDefaults(defineProps<{
-  variant: 'x-stack' | 'y-stack' | 'separated' | 'columns' | 'action-group'
+  variant: 'x-stack' | 'y-stack' | 'separated' | 'columns' | 'action-group' | 'inline'
   size?: 'small' | 'normal' | 'large' | 'max'
   justify?: 'start' | 'around' | 'between' | 'end'
   truncate?: boolean
@@ -52,8 +52,12 @@ const justify = computed(() => table?.props.variant === 'kv' || props.variant ==
   display: flex;
   width: 100%;
   align-items: center;
+  /* anything not action-like will be header on explantory text on the left */
+  :deep(:where(.x-i18n, p, header, h1, h2, h3, h4, h5, h6):first-child) {
+    flex-grow: 1;
+  }
 }
-.separated:not(.k-truncate) {
+:where(.inline, .separated):not(.k-truncate) {
   display: inline-flex;
   width: 100%;
   align-items: center;
@@ -61,6 +65,7 @@ const justify = computed(() => table?.props.variant === 'kv' || props.variant ==
 }
 :is(
   .x-stack,
+  .inline:not(.k-truncate),
   .separated:not(.k-truncate),
   .action-group
 ) {

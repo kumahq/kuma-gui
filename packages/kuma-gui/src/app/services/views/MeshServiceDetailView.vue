@@ -240,13 +240,11 @@
               </b>
             </template>
             <template #type="{ row: item }">
-              <XLayout variant="separated">
-                <XBadge
-                  appearance="decorative"
-                >
-                  {{ item.type }}
-                </XBadge>
-              </XLayout>
+              <XBadge
+                appearance="decorative"
+              >
+                {{ item.type }}
+              </XBadge>
             </template>
           </AppCollection>
         </XCard>

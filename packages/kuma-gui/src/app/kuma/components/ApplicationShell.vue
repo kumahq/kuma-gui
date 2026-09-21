@@ -38,7 +38,7 @@
                 appearance="info"
               >
                 <XLayout
-                  variant="separated"
+                  variant="action-group"
                 >
                   <p>
                     {{ t('common.product.name') }} update available

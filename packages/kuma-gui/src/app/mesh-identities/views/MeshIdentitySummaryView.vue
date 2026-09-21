@@ -23,8 +23,7 @@
           </h2>
         </template>
         <XLayout
-          variant="separated"
-          justify="end"
+          variant="action-group"
         >
           <div
             v-for="options in [['universal', 'k8s']]"
