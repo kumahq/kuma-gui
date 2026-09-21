@@ -132,7 +132,7 @@
                     #footer-actions
                   >
                     <XLayout
-                      variant="separated"
+                      variant="inline"
                     >
                       <XDownload
                         @start="toggle"

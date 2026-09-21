@@ -35,8 +35,7 @@
           >
             <header>
               <XLayout
-                variant="separated"
-                size="max"
+                variant="action-group"
               >
                 <h3>
                   {{ t('hostname-generators.routes.item.config') }}

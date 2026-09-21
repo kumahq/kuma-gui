@@ -30,10 +30,9 @@
               size="large"
             >
               <XCard class="resource-type-collection">
-                <template #actions>
+                <XLayout variant="y-stack">
                   <XLayout
-                    variant="separated"
-                    size="large"
+                    variant="action-group"
                   >
                     <template
                       v-for="options in [[
@@ -63,122 +62,122 @@
                       </XSelect>
                     </template>
                   </XLayout>
-                </template>
-                <!-- block on resource-type-descriptors types but not *Insight -->
-                <DataLoader
-                  :data="[sourceResources]"
-                  :errors="[resourcesError]"
-                  v-slot="{ data: [resources] }"
-                >
-                  <XLayout
-                    v-for="filtered in [resources.resources.filter((item) =>
-                      (route.params.category === 'all' || item.categories.includes(route.params.category)) && item.shortName.length > 0,
-                    )]"
-                    :key="typeof filtered"
-                    variant="y-stack"
+                  <!-- block on resource-type-descriptors types but not *Insight -->
+                  <DataLoader
+                    :data="[sourceResources]"
+                    :errors="[resourcesError]"
+                    v-slot="{ data: [resources] }"
                   >
-                    <template
-                      v-for="([key, group], i) in Object.entries(Object.groupBy(filtered, (resource) => resource.group)).toSorted((a, b) => a[0] > b[0] ? -1 : 1)"
-                      :key="key"
+                    <XLayout
+                      v-for="filtered in [resources.resources.filter((item) =>
+                        (route.params.category === 'all' || item.categories.includes(route.params.category)) && item.shortName.length > 0,
+                      )]"
+                      :key="typeof filtered"
+                      variant="y-stack"
                     >
-                      <ul v-if="group?.length">
-                        <li>
-                          <XLayout
-                            variant="y-stack"
-                          >
-                            <header>
-                              <h3>{{ t(`resources.routes.items.types.${key}.title`) }}</h3>
-                            </header>
-                            <DataCollection
-                              :items="group"
-                              v-slot="{ items }"
+                      <template
+                        v-for="([key, group], i) in Object.entries(Object.groupBy(filtered, (resource) => resource.group)).toSorted((a, b) => a[0] > b[0] ? -1 : 1)"
+                        :key="key"
+                      >
+                        <ul v-if="group?.length">
+                          <li>
+                            <XLayout
+                              variant="y-stack"
                             >
-                              <ul>
-                                <li
-                                  v-for="(item, j) in items"
-                                  :key="item.name"
-                                  :class="{
-                                    'active': item.shortName === route.params.shortName,
-                                  }"
-                                >
-                                  <XAction
-                                    :to="{
-                                      name: `${props.routePrefix}-resource-list-view`,
-                                      params: {
-                                        mesh: route.params.mesh,
-                                        shortName: item.shortName,
-                                      },
-                                      query: {
-                                        category: route.params.category,
-                                      },
-                                    }"
-                                    :data-testid="`resource-type-link-${item.name}`"
-                                    @vue:mounted="(vNode) => {
-                                      if((route.params.shortName.length === 0 || !resources.resources.find((resource) => resource.shortName === route.params.shortName)) && i === 0 && j === 0 && vNode.props?.to) {
-                                        $nextTick(() => {
-                                          route.replace(vNode.props!.to)
-                                        })
-                                      }
+                              <header>
+                                <h3>{{ t(`resources.routes.items.types.${key}.title`) }}</h3>
+                              </header>
+                              <DataCollection
+                                :items="group"
+                                v-slot="{ items }"
+                              >
+                                <ul>
+                                  <li
+                                    v-for="(item, j) in items"
+                                    :key="item.name"
+                                    :class="{
+                                      'active': item.shortName === route.params.shortName,
                                     }"
                                   >
-                                    <XLayout
-                                      variant="x-stack"
-                                      justify="between"
+                                    <XAction
+                                      :to="{
+                                        name: `${props.routePrefix}-resource-list-view`,
+                                        params: {
+                                          mesh: route.params.mesh,
+                                          shortName: item.shortName,
+                                        },
+                                        query: {
+                                          category: route.params.category,
+                                        },
+                                      }"
+                                      :data-testid="`resource-type-link-${item.name}`"
+                                      @vue:mounted="(vNode) => {
+                                        if((route.params.shortName.length === 0 || !resources.resources.find((resource) => resource.shortName === route.params.shortName)) && i === 0 && j === 0 && vNode.props?.to) {
+                                          $nextTick(() => {
+                                            route.replace(vNode.props!.to)
+                                          })
+                                        }
+                                      }"
                                     >
-                                      <span>
-                                        {{ item.name }}
-                                      </span>
-                                      <span
-                                        v-if="item.group === 'global'"
+                                      <XLayout
+                                        variant="x-stack"
+                                        justify="between"
                                       >
-                                        <DataLoader
-                                          variant="count"
-                                          :data="[globalInsightSource]"
-                                          :errors="[globalInsightError]"
+                                        <span>
+                                          {{ item.name }}
+                                        </span>
+                                        <span
+                                          v-if="item.group === 'global'"
                                         >
-                                          <template #default="{ data: [globalInsight] }">
-                                            {{ get(globalInsight, item.insightPath)?.total ?? 0 }}
-                                          </template>
-                                          <template #error>
-                                            <XIcon
-                                              name="warning"
-                                            >
-                                              {{ t('common.error_state.detail') }}
-                                            </XIcon>
-                                          </template>
-                                        </DataLoader>
-                                      </span>
-                                      <span
-                                        v-else
-                                      >
-                                        <DataLoader
-                                          variant="count"
-                                          :data="[meshInsightSource]"
-                                          :errors="[meshInsightError]"
+                                          <DataLoader
+                                            variant="count"
+                                            :data="[globalInsightSource]"
+                                            :errors="[globalInsightError]"
+                                          >
+                                            <template #default="{ data: [globalInsight] }">
+                                              {{ get(globalInsight, item.insightPath)?.total ?? 0 }}
+                                            </template>
+                                            <template #error>
+                                              <XIcon
+                                                name="warning"
+                                              >
+                                                {{ t('common.error_state.detail') }}
+                                              </XIcon>
+                                            </template>
+                                          </DataLoader>
+                                        </span>
+                                        <span
+                                          v-else
                                         >
-                                          <template #default="{ data: [meshInsight] }">
-                                            {{ get(meshInsight, item.insightPath)?.total ?? 0 }}
-                                          </template>
-                                          <template #error>
-                                            <XIcon
-                                              name="warning"
-                                            >
-                                              {{ t('common.error_state.detail') }}
-                                            </XIcon>
-                                          </template>
-                                        </DataLoader>
-                                      </span>
-                                    </XLayout>
-                                  </XAction>
-                                </li>
-                              </ul>
-                            </DataCollection>
-                          </XLayout>
-                        </li>
-                      </ul>
-                    </template>
-                  </XLayout>
-                </DataLoader>
+                                          <DataLoader
+                                            variant="count"
+                                            :data="[meshInsightSource]"
+                                            :errors="[meshInsightError]"
+                                          >
+                                            <template #default="{ data: [meshInsight] }">
+                                              {{ get(meshInsight, item.insightPath)?.total ?? 0 }}
+                                            </template>
+                                            <template #error>
+                                              <XIcon
+                                                name="warning"
+                                              >
+                                                {{ t('common.error_state.detail') }}
+                                              </XIcon>
+                                            </template>
+                                          </DataLoader>
+                                        </span>
+                                      </XLayout>
+                                    </XAction>
+                                  </li>
+                                </ul>
+                              </DataCollection>
+                            </XLayout>
+                          </li>
+                        </ul>
+                      </template>
+                    </XLayout>
+                  </DataLoader>
+                </XLayout>
               </XCard>
               <div v-if="route.params.shortName.length > 0">
                 <RouterView v-slot="{ Component }">

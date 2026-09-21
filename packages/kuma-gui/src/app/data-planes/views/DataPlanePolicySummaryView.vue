@@ -57,8 +57,7 @@
             <template #header>
               <header>
                 <XLayout
-                  variant="separated"
-                  size="max"
+                  variant="action-group"
                 >
                   <h3>
                     {{ t('policies.routes.item.config') }}

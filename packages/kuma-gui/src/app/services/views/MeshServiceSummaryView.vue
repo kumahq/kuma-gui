@@ -55,8 +55,7 @@
           >
             <header>
               <XLayout
-                variant="separated"
-                size="max"
+                variant="action-group"
               >
                 <h3>
                   {{ t('services.routes.item.config') }}
