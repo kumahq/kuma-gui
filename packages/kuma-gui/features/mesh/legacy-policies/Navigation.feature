@@ -39,7 +39,7 @@ Feature: mesh / policies / navigation
       And the "[data-testid='policy-detail-view']" element exists
 
       Examples:
-        | URL                                                                               |
+        | URL                                          |
         | /meshes/default/policies/meshfaultinjections |
 
     Scenario Outline: clicking the row, opening and summary, and clicking the title
@@ -52,7 +52,7 @@ Feature: mesh / policies / navigation
       And the "[data-testid='policy-detail-view']" element exists
 
       Examples:
-        | URL                                                                               |
+        | URL                                          |
         | /meshes/default/policies/meshfaultinjections |
 
   Rule: In a non-namespaced environment
@@ -78,7 +78,7 @@ Feature: mesh / policies / navigation
       And the "[data-testid='policy-detail-view']" element exists
 
       Examples:
-        | URL                                                                               |
+        | URL                                          |
         | /meshes/default/policies/meshfaultinjections |
 
     Scenario Outline: clicking the row, opening and summary, and clicking the title
@@ -91,5 +91,5 @@ Feature: mesh / policies / navigation
       And the "[data-testid='policy-detail-view']" element exists
 
       Examples:
-        | URL                                                                               |
+        | URL                                          |
         | /meshes/default/policies/meshfaultinjections |

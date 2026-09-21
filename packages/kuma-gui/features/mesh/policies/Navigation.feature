@@ -39,8 +39,8 @@ Feature: mesh / policies / navigation
       And the "[data-testid='policy-detail-view']" element exists
 
       Examples:
-        | URL                                          |
-        | /meshes/default/policies/mfi                 |
+        | URL                          |
+        | /meshes/default/policies/mfi |
 
     Scenario Outline: clicking the row, opening and summary, and clicking the title
       When I visit the "<URL>" URL
@@ -52,8 +52,8 @@ Feature: mesh / policies / navigation
       And the "[data-testid='policy-detail-view']" element exists
 
       Examples:
-        | URL                                          |
-        | /meshes/default/policies/mfi                 |
+        | URL                          |
+        | /meshes/default/policies/mfi |
 
   Rule: In a non-namespaced environment
 
@@ -78,8 +78,8 @@ Feature: mesh / policies / navigation
       And the "[data-testid='policy-detail-view']" element exists
 
       Examples:
-        | URL                                          |
-        | /meshes/default/policies/mfi                 |
+        | URL                          |
+        | /meshes/default/policies/mfi |
 
     Scenario Outline: clicking the row, opening and summary, and clicking the title
       When I visit the "<URL>" URL
@@ -91,5 +91,5 @@ Feature: mesh / policies / navigation
       And the "[data-testid='policy-detail-view']" element exists
 
       Examples:
-        | URL                                          |
-        | /meshes/default/policies/mfi                 |
+        | URL                          |
+        | /meshes/default/policies/mfi |

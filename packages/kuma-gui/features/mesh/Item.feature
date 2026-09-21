@@ -91,3 +91,15 @@ Feature: mesh / item
       """
     When I visit the "/meshes/default/overview" URL
     Then the "$mesh-detail" element exists but the "$mtrust-section" element doesn't exist
+
+  Scenario Outline: Resource status links
+    When I visit the "/meshes/default/overview" URL
+    And I click the "<Anchor>" element
+    Then the URL contains "<Url>"
+    And the "<View>" element exists
+
+    Examples:
+      | Anchor                                      | Url                         | View                                   |
+      | [data-testid='mesh-services-status'] a      | /meshes/default/services    | [data-testid='service-list-tabs-view'] |
+      | [data-testid='data-plane-proxies-status'] a | /meshes/default/data-planes | [data-testid='data-plane-list-view']   |
+      | [data-testid='policies-status'] a           | /meshes/default/policies    | [data-testid='policy-list-index-view'] |
