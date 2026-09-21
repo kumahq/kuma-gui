@@ -14,12 +14,11 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
     [token('hostname-generators.kri'), {
       service: () => {
         return [
-          ({ shortName, mesh, kri }: { shortName: string, mesh: string, kri: string }) => {
+          ({ shortName, kri }: { shortName: string, kri: string }) => {
             if(shortName === 'hg') {
               return {
                 name: 'hostname-generator-detail-view',
                 params: {
-                  mesh,
                   kri,
                 },
               }

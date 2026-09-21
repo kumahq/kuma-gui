@@ -15,12 +15,13 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
     [token('workloads.kri'), {
       service: () => {
         return [
-          ({ shortName, kri }: { shortName: string, kri: string }) => {
+          ({ shortName, mesh, kri }: { shortName: string, mesh: string, kri: string }) => {
             if(shortName === 'wl') {
               return {
                 name: 'workload-detail-view',
                 params: {
-                  zone: kri,
+                  mesh,
+                  wl: kri,
                 },
               }
             }
