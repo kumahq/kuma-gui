@@ -2,15 +2,7 @@ import createClient from 'openapi-fetch'
 
 import { GlobalInsight } from './data'
 import { defineSources } from '@/app/application'
-import type { DataSourceResponse, Env } from '@/app/application'
-import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import type { paths } from '@kumahq/kuma-http-api'
-
-export type ControlPlaneAddresses = {
-  http: string
-}
-
-export type ControlPlaneAddressesSource = DataSourceResponse<ControlPlaneAddresses>
 
 // mostly taken from semver-compare
 export const compare = (a: string, b: string) => {
@@ -24,16 +16,25 @@ export const compare = (a: string, b: string) => {
   }
   return 0
 }
-export const sources = (env: Env, api: KumaApi) => {
+
+type Options = {
+  baseUrl: string
+  apiUrl: string
+  versionUrl: string
+  version: string
+  fetch: typeof fetch
+}
+
+export const sources = ({ apiUrl, baseUrl, versionUrl, fetch, version }: Options) => {
   const http = createClient<paths>({
-    baseUrl: api.client.baseUrl,
-    fetch: api.client.fetch,
+    baseUrl,
+    fetch,
   })
 
   return defineSources({
-    '/control-plane/addresses': async (): Promise<ControlPlaneAddresses> => {
+    '/control-plane/addresses': async () => {
       return {
-        http: env('KUMA_API_URL'),
+        http: apiUrl,
       }
     },
 
@@ -44,30 +45,30 @@ export const sources = (env: Env, api: KumaApi) => {
       // are on the latest version and therefore not outdated
       if (!params.version.match('^[0-9]+.[0-9]+.[0-9]+$')) {
         return {
-          version: env('KUMA_VERSION'),
+          version,
           outdated: false,
         }
       }
       return {
-        version: env('KUMA_VERSION'),
-        outdated: compare(env('KUMA_VERSION'), params.version) === 1,
+        version,
+        outdated: compare(version, params.version) === 1,
       }
     },
 
     // used to figure out if the currently running global control-plane
     // is out of date with the latest release
     '/control-plane/version/latest': async (): Promise<{ version: string }> => {
-      const current = env('KUMA_VERSION')
+      const local = version
       // if the current version includes some sort of `-dev` then pretend we
       // are on the latest version
-      if (!current.match('^[0-9]+.[0-9]+.[0-9]+$')) {
+      if (!local.match('^[0-9]+.[0-9]+.[0-9]+$')) {
         return {
-          version: current,
+          version: local,
         }
       }
-      const version = await (async () => {
+      const remote = await (async () => {
         try {
-          const url = new URL(env('KUMA_VERSION_URL'))
+          const url = new URL(versionUrl)
           // @ts-expect-error we allow any pathname here
           const res = await http.GET(url.pathname, {
             baseUrl: url.origin,
@@ -83,7 +84,7 @@ export const sources = (env: Env, api: KumaApi) => {
       // if we were able to get the latest version in the first place.
       // Otherwise pretend we are on the latest version
       return {
-        version: (version !== '' && compare(version, current) === 1) ? version : current,
+        version: (remote !== '' && compare(remote, local) === 1) ? remote : local,
       }
     },
 

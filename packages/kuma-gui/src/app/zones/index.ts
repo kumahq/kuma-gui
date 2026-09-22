@@ -11,6 +11,7 @@ import { services as subscriptions } from '@/app/subscriptions'
 import type { ServiceDefinition } from '@kumahq/container'
 import type { Component } from 'vue'
 import type { RouteRecordRaw } from 'vue-router'
+import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 
 type Token = ReturnType<typeof token>
 
@@ -46,7 +47,10 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       ],
     }],
     [token('zone.sources'), {
-      service: sources,
+      service: (api: KumaApi) => sources({
+        baseUrl: api.client.baseUrl,
+        fetch: api.client.fetch,
+      }),
       arguments: [
         app.api,
       ],

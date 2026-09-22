@@ -3,14 +3,17 @@ import { token } from '@kumahq/container'
 import locales from './locales/en-us/index.yaml'
 import { sources } from './sources'
 import type { ServiceDefinition } from '@kumahq/container'
+import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 
 type Token = ReturnType<typeof token>
-type Sources = ReturnType<typeof sources>
 
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   return [
-    [token<Sources>('mesh-trusts.sources'), {
-      service: sources,
+    [token('mesh-trusts.sources'), {
+      service: (api: KumaApi) => sources({
+        baseUrl: api.client.baseUrl,
+        fetch: api.client.fetch,
+      }),
       arguments: [
         app.api,
       ],

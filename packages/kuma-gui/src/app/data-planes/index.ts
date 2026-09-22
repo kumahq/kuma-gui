@@ -7,6 +7,7 @@ import { sources } from './sources'
 import { services as connections } from '@/app/connections'
 import type { ServiceDefinition } from '@kumahq/container'
 import type { RouteRecordRaw } from 'vue-router'
+import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 
 type Token = ReturnType<typeof token>
 type DataplaneSources = ReturnType<typeof sources>
@@ -50,7 +51,10 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       service: () => routes().item,
     }],
     [token<DataplaneSources>('data-planes.sources'), {
-      service: sources,
+      service: (api: KumaApi) => sources({
+        baseUrl: api.client.baseUrl,
+        fetch: api.client.fetch,
+      }),
       arguments: [
         app.api,
       ],
