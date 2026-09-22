@@ -4,7 +4,7 @@ info:
   description: Kuma API
   version: v1alpha1
   x-ref-schema-name: ZoneOverview
-  x-oas-source: kumahq/kuma@a18f2baeb644bd20b975f7bacc8526f54c74821d
+  x-oas-source: kumahq/kuma@9615c4097b604ec33c6cb37f8e995595d9f5b991
 paths:
   /:
     get:
@@ -7009,7 +7009,8 @@ components:
                     Reachable backend via transparent proxy when running with
                     MeshExternalService, MeshService and MeshMultiZoneService. Setting an
                     explicit list of refs can dramatically improve the performance of the
-                    mesh. If not specified, all services in the mesh are reachable.
+                    mesh. If not specified, no services in the mesh are reachable, unless
+                    the control plane sets KUMA_DEFAULTS_ALLOW_ALL_OUTBOUND.
                   type: object
                   properties:
                     refs:
@@ -7024,18 +7025,13 @@ components:
                             type: object
                             additionalProperties:
                               type: string
-                          name:
-                            description: Name of the backend.
-                            type: string
-                          namespace:
-                            description: Namespace of the backend. Might be empty
-                            type: string
                           port:
                             description: Port of the backend.
                             type: integer
                             format: uint32
                         required:
                           - kind
+                          - labels
                         type: object
                 redirectPortInbound:
                   description: |-
@@ -13305,7 +13301,8 @@ components:
                         Reachable backend via transparent proxy when running with
                         MeshExternalService, MeshService and MeshMultiZoneService. Setting an
                         explicit list of refs can dramatically improve the performance of the
-                        mesh. If not specified, all services in the mesh are reachable.
+                        mesh. If not specified, no services in the mesh are reachable, unless
+                        the control plane sets KUMA_DEFAULTS_ALLOW_ALL_OUTBOUND.
                       type: object
                       properties:
                         refs:
@@ -13320,18 +13317,13 @@ components:
                                 type: object
                                 additionalProperties:
                                   type: string
-                              name:
-                                description: Name of the backend.
-                                type: string
-                              namespace:
-                                description: Namespace of the backend. Might be empty
-                                type: string
                               port:
                                 description: Port of the backend.
                                 type: integer
                                 format: uint32
                             required:
                               - kind
+                              - labels
                             type: object
                     redirectPortInbound:
                       description: |-
