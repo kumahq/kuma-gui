@@ -4,7 +4,7 @@ info:
   description: Kuma API
   version: v1alpha1
   x-ref-schema-name: ZoneOverview
-  x-oas-source: kumahq/kuma@85d45602aaa382c66b57b02119c10d161b6705c8
+  x-oas-source: kumahq/kuma@a18f2baeb644bd20b975f7bacc8526f54c74821d
 paths:
   /:
     get:
@@ -6130,9 +6130,11 @@ components:
             Labels of the resource.
 
             Labels documented as `readOnly` are always computed by the control plane; a value supplied by the
-            user is overwritten. The remaining documented labels can be set by the user, and the control plane
-            only fills in a default when they are absent. `kuma.io/origin` and `kuma.io/zone` are immutable
-            after creation.
+            user is overwritten or rejected. The remaining documented labels can be set by the user, and the
+            control plane only fills in a default when they are absent. `kuma.io/origin` and `kuma.io/zone` are
+            immutable after creation.
+
+            Every other key under `kuma.io/` or `k8s.kuma.io/` is reserved and rejected.
           type: object
           example:
             k8s.kuma.io/namespace: kuma-system
@@ -6174,6 +6176,22 @@ components:
               type: string
               readOnly: true
               description: Set to `enabled` when the proxy has a zone egress listener. Always computed by the control plane.
+            ^kuma\.io/managed-by$:
+              type: string
+              readOnly: true
+              description: Component that generated the resource. Set by the control plane, cannot be set manually.
+            ^kuma\.io/deletion-grace-period-started-at$:
+              type: string
+              readOnly: true
+              description: When the control plane started the grace period before deleting a generated `MeshService` no proxy serves. Set by the control plane, cannot be set manually.
+            ^k8s\.kuma\.io/service-name$:
+              type: string
+              readOnly: true
+              description: Kubernetes `Service` a generated `MeshService` is derived from. Set by the control plane, cannot be set manually.
+            ^k8s\.kuma\.io/is-headless-service$:
+              type: string
+              readOnly: true
+              description: Whether the Kubernetes `Service` a generated `MeshService` is derived from is headless. Set by the control plane, cannot be set manually.
             ^kuma\.io/mesh$:
               type: string
               description: Mesh the resource belongs to. Defaults to `default` when unset.
@@ -6183,6 +6201,17 @@ components:
             ^kuma\.io/env$:
               type: string
               description: Environment the resource was applied in. Defaults to `universal` or `kubernetes` when unset.
+            ^kuma\.io/kds-sync$:
+              type: string
+              enum:
+                - enabled
+                - disabled
+              description: Whether the resource is synced to the other control planes over KDS. Overrides the default of its type.
+            ^kuma\.io/effect$:
+              type: string
+              enum:
+                - shadow
+              description: Set to `shadow` on a policy to keep it out of the proxy configuration while the Inspect API still reports it.
       required:
         - type
         - mesh
@@ -7008,6 +7037,23 @@ components:
                         required:
                           - kind
                         type: object
+                redirectPortInbound:
+                  description: |-
+                    Port on which all inbound traffic is being transparently redirected.
+
+                    Deprecated: read only for a proxy that sends no transparent proxy
+                    metadata, which means a sidecar injected before 3.0. Gone in 3.1.
+
+                    Deprecated: Marked as deprecated in api/mesh/v1alpha1/dataplane.proto.
+                  type: integer
+                redirectPortOutbound:
+                  description: |-
+                    Port on which all outbound traffic is being transparently redirected.
+
+                    Deprecated: see `redirect_port_inbound`.
+
+                    Deprecated: Marked as deprecated in api/mesh/v1alpha1/dataplane.proto.
+                  type: integer
         type:
           type: string
       required:
@@ -13287,6 +13333,23 @@ components:
                             required:
                               - kind
                             type: object
+                    redirectPortInbound:
+                      description: |-
+                        Port on which all inbound traffic is being transparently redirected.
+
+                        Deprecated: read only for a proxy that sends no transparent proxy
+                        metadata, which means a sidecar injected before 3.0. Gone in 3.1.
+
+                        Deprecated: Marked as deprecated in api/mesh/v1alpha1/dataplane.proto.
+                      type: integer
+                    redirectPortOutbound:
+                      description: |-
+                        Port on which all outbound traffic is being transparently redirected.
+
+                        Deprecated: see `redirect_port_inbound`.
+
+                        Deprecated: Marked as deprecated in api/mesh/v1alpha1/dataplane.proto.
+                      type: integer
         dataplaneInsight:
           type: object
           properties:

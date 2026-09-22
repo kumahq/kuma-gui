@@ -2593,9 +2593,11 @@ export interface components {
              * @description Labels of the resource.
              *
              *     Labels documented as `readOnly` are always computed by the control plane; a value supplied by the
-             *     user is overwritten. The remaining documented labels can be set by the user, and the control plane
-             *     only fills in a default when they are absent. `kuma.io/origin` and `kuma.io/zone` are immutable
-             *     after creation.
+             *     user is overwritten or rejected. The remaining documented labels can be set by the user, and the
+             *     control plane only fills in a default when they are absent. `kuma.io/origin` and `kuma.io/zone` are
+             *     immutable after creation.
+             *
+             *     Every other key under `kuma.io/` or `k8s.kuma.io/` is reserved and rejected.
              * @example {
              *       "k8s.kuma.io/namespace": "kuma-system",
              *       "kuma.io/display-name": "mtp",
@@ -2604,7 +2606,7 @@ export interface components {
              *     }
              */
             labels: {
-                [key: string]: string;
+                [key: string]: string | ("enabled" | "disabled") | "shadow";
             };
         };
         /** @description a rule that affects the entire proxy */
@@ -3111,6 +3113,23 @@ export interface components {
                             port?: number;
                         }[];
                     };
+                    /**
+                     * @description Port on which all inbound traffic is being transparently redirected.
+                     *
+                     *     Deprecated: read only for a proxy that sends no transparent proxy
+                     *     metadata, which means a sidecar injected before 3.0. Gone in 3.1.
+                     *
+                     *     Deprecated: Marked as deprecated in api/mesh/v1alpha1/dataplane.proto.
+                     */
+                    redirectPortInbound?: number;
+                    /**
+                     * @description Port on which all outbound traffic is being transparently redirected.
+                     *
+                     *     Deprecated: see `redirect_port_inbound`.
+                     *
+                     *     Deprecated: Marked as deprecated in api/mesh/v1alpha1/dataplane.proto.
+                     */
+                    redirectPortOutbound?: number;
                 };
             };
             type: string;
@@ -7747,6 +7766,23 @@ export interface components {
                                 port?: number;
                             }[];
                         };
+                        /**
+                         * @description Port on which all inbound traffic is being transparently redirected.
+                         *
+                         *     Deprecated: read only for a proxy that sends no transparent proxy
+                         *     metadata, which means a sidecar injected before 3.0. Gone in 3.1.
+                         *
+                         *     Deprecated: Marked as deprecated in api/mesh/v1alpha1/dataplane.proto.
+                         */
+                        redirectPortInbound?: number;
+                        /**
+                         * @description Port on which all outbound traffic is being transparently redirected.
+                         *
+                         *     Deprecated: see `redirect_port_inbound`.
+                         *
+                         *     Deprecated: Marked as deprecated in api/mesh/v1alpha1/dataplane.proto.
+                         */
+                        redirectPortOutbound?: number;
                     };
                 };
             };
