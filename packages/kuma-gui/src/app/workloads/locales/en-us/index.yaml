@@ -1,3 +1,10 @@
+common:
+  label:
+    href:
+      kuma~io/workload: kri://kri_wl_{mesh}_{zone}_{namespace}_{name}_
+  kri:
+    shortNames:
+      workload: wl
 workloads:
   href:
     docs:
