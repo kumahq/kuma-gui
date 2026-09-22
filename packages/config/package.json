@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "@types/markdown-it": "^14.2.0",
-    "@types/node": "^25.9.5"
+    "@types/node": "^25.9.6"
   },
   "dependencies": {
     "@apidevtools/json-schema-ref-parser": "^16.0.1",
