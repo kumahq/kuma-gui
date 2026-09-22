@@ -13,6 +13,7 @@ import { services as kuma, TOKENS as KUMA } from '@/app/kuma'
 import { services as me } from '@/app/me'
 import { services as meshIdentities } from '@/app/mesh-identities'
 import { services as meshTrusts } from '@/app/mesh-trusts'
+import { services as meshZoneAddresses } from '@/app/mesh-zone-addresses'
 import { services as meshes } from '@/app/meshes'
 import { services as policies } from '@/app/policies'
 import { services as resources } from '@/app/resources'
@@ -45,8 +46,9 @@ async function mountVueApplication() {
     meshes($),
     hostnameGenerators($),
     services($),
-    dataplanes($),
     workloads($),
+    dataplanes($),
+    meshZoneAddresses($),
     policies($),
     resources($),
     // rules($),
