@@ -23,11 +23,18 @@ const resourceCategories = new Map<string, string[]>([
   ['meshloadbalancingstrategy', ['traffic']],
   ['meshpassthrough', ['traffic']],
   ['meshgatewayroute', ['traffic']],
+  ['meshservice', ['traffic']],
+  ['meshmultizoneservice', ['traffic']],
+  ['meshexternalservice', ['traffic']],
+  ['meshzoneaddress', ['traffic']],
+  ['dataplane', ['traffic']],
 
   // security
   ['trafficpermission', ['security']],
   ['meshtrafficpermission', ['security']],
   ['meshtls', ['security']],
+  ['meshidentity', ['security']],
+  ['meshtrust', ['security']],
 
   // o11y
   ['meshaccesslog', ['observability']],
@@ -35,6 +42,7 @@ const resourceCategories = new Map<string, string[]>([
   ['meshtrace', ['observability']],
   ['traffictrace', ['observability']],
   ['trafficlog', ['observability']],
+  ['meshopentelemetrybackend', ['observability']],
 
   // testing
   ['faultinjection', ['testing']],
