@@ -302,7 +302,6 @@ import '@kong-ui-public/app-layout/dist/style.css'
 
   /* component specific */
   /* kong/design-token grays are either too light or too dark i.e. we need weaker-than-weak-but-not-weakest */
-  --x-search-color-token-background: #f0f4f7;
   --x-anchor-text-color: var(--x-color-text-primary);
 }
 :deep(> *) {
