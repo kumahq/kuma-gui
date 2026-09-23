@@ -7,7 +7,6 @@ import { DataplanePolicies } from './data/DataplanePolicies'
 import { DataplaneInboundPolicies, DataplaneOutboundPolicies } from './data/DataplaneTrafficPolicies'
 import type { DataSourceResponse } from '@/app/application'
 import { defineSources, YAML } from '@/app/application'
-import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
 import type {
   PolicyDataplane as PartialPolicyDataplane,
@@ -16,10 +15,14 @@ import type { paths } from '@kumahq/kuma-http-api'
 
 export type PolicySource = DataSourceResponse<Policy>
 
-export const sources = (api: KumaApi) => {
+type Options = {
+  baseUrl: string
+  fetch: typeof fetch
+}
+export const sources = ({ baseUrl, fetch }: Options) => {
   const http = createClient<paths>({
-    baseUrl: api.client.baseUrl,
-    fetch: api.client.fetch,
+    baseUrl,
+    fetch,
   })
 
   return defineSources({

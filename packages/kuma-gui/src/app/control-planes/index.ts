@@ -8,6 +8,8 @@ import ControlPlaneActionGroup from '@/app/control-planes/components/ControlPlan
 import ControlPlaneStatus from '@/app/control-planes/components/ControlPlaneStatus.vue'
 import type { ServiceDefinition } from '@kumahq/container'
 import type { RouteRecordRaw } from 'vue-router'
+import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
+import type { Env } from '@/app/application'
 
 type Token = ReturnType<typeof token>
 
@@ -18,10 +20,16 @@ const $ = {
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   return [
     [token('control-planes.sources'), {
-      service: sources,
+      service: (api: KumaApi, env: Env) => sources({
+        apiUrl: env('KUMA_API_URL'),
+        versionUrl: env('KUMA_VERSION_URL'),
+        baseUrl: api.client.baseUrl,
+        fetch: api.client.fetch,
+        version: env('KUMA_VERSION'),
+      }),
       arguments: [
-        app.env,
         app.api,
+        app.env,
       ],
       labels: [
         app.sources,
