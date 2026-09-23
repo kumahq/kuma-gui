@@ -19,13 +19,12 @@ export const compare = (a: string, b: string) => {
 
 type Options = {
   baseUrl: string
-  apiUrl: string
   versionUrl: string
   version: string
   fetch: typeof fetch
 }
 
-export const sources = ({ apiUrl, baseUrl, versionUrl, fetch, version }: Options) => {
+export const sources = ({ fetch, baseUrl, versionUrl, version }: Options) => {
   const http = createClient<paths>({
     baseUrl,
     fetch,
@@ -34,7 +33,7 @@ export const sources = ({ apiUrl, baseUrl, versionUrl, fetch, version }: Options
   return defineSources({
     '/control-plane/addresses': async () => {
       return {
-        http: apiUrl,
+        http: baseUrl,
       }
     },
 

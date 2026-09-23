@@ -6,7 +6,7 @@ import { routes } from './routes'
 import { sources } from './sources'
 import type { ServiceDefinition } from '@kumahq/container'
 import type { RouteRecordRaw } from 'vue-router'
-import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
+import type { Env } from '@/app/application'
 
 type Token = ReturnType<typeof token>
 
@@ -31,12 +31,13 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       ],
     }],
     [token('workloads.sources'), {
-      service: (api: KumaApi) => sources({
-        baseUrl: api.client.baseUrl,
-        fetch: api.client.fetch,
+      service: (fetch: typeof globalThis.fetch, env: Env) => sources({
+        fetch,
+        baseUrl: env('KUMA_API_URL'),
       }),
       arguments: [
-        app.api,
+        app.fetch,
+        app.env,
       ],
       labels: [
         app.sources,
