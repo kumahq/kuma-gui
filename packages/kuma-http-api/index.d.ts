@@ -3092,20 +3092,17 @@ export interface components {
                      * @description Reachable backend via transparent proxy when running with
                      *     MeshExternalService, MeshService and MeshMultiZoneService. Setting an
                      *     explicit list of refs can dramatically improve the performance of the
-                     *     mesh. If not specified, all services in the mesh are reachable.
+                     *     mesh. If not specified, no services in the mesh are reachable, unless
+                     *     the control plane sets KUMA_DEFAULTS_ALLOW_ALL_OUTBOUND.
                      */
                     reachableBackends?: {
                         refs?: {
                             /** @description Type of the backend: MeshService, MeshExternalService or MeshMultiZoneService */
                             kind: string;
                             /** @description Labels used to select backends */
-                            labels?: {
+                            labels: {
                                 [key: string]: string;
                             };
-                            /** @description Name of the backend. */
-                            name?: string;
-                            /** @description Namespace of the backend. Might be empty */
-                            namespace?: string;
                             /**
                              * Format: uint32
                              * @description Port of the backend.
@@ -7745,20 +7742,17 @@ export interface components {
                          * @description Reachable backend via transparent proxy when running with
                          *     MeshExternalService, MeshService and MeshMultiZoneService. Setting an
                          *     explicit list of refs can dramatically improve the performance of the
-                         *     mesh. If not specified, all services in the mesh are reachable.
+                         *     mesh. If not specified, no services in the mesh are reachable, unless
+                         *     the control plane sets KUMA_DEFAULTS_ALLOW_ALL_OUTBOUND.
                          */
                         reachableBackends?: {
                             refs?: {
                                 /** @description Type of the backend: MeshService, MeshExternalService or MeshMultiZoneService */
                                 kind: string;
                                 /** @description Labels used to select backends */
-                                labels?: {
+                                labels: {
                                     [key: string]: string;
                                 };
-                                /** @description Name of the backend. */
-                                name?: string;
-                                /** @description Namespace of the backend. Might be empty */
-                                namespace?: string;
                                 /**
                                  * Format: uint32
                                  * @description Port of the backend.
