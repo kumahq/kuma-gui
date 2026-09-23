@@ -301,7 +301,6 @@ import '@kong-ui-public/app-layout/dist/style.css'
   --x-space-110: var(--kui-space-110, #{$kui-space-110});
 
   /* component specific */
-  /* kong/design-token grays are either too light or too dark i.e. we need weaker-than-weak-but-not-weakest */
   --x-anchor-text-color: var(--x-color-text-primary);
 }
 :deep(> *) {
