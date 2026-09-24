@@ -40,25 +40,16 @@
                   },
                   text: route.params.mesh,
                 },
-                ...(router.hasRoute('policy-list-view') ? [{
+                {
                   to: {
                     name: 'policy-list-view',
                     params: {
                       mesh: route.params.mesh,
-                      policyPath: policyType?.path,
+                      policyPath: policyType?.shortName || policyType?.path,
                     },
                   },
                   text: t('policies.routes.item.breadcrumbs'),
-                }] : [{
-                  to: {
-                    name: 'mesh-resource-list-view',
-                    params: {
-                      mesh: route.params.mesh,
-                      shortName: policyType?.shortName,
-                    },
-                  },
-                  text: 'Resources',
-                }]),
+                },
               ]"
             >
               <template #title>
@@ -80,21 +71,13 @@
                 <PolicyActionGroup
                   :item="data"
                   :type="{ path: policyType?.path }"
-                  @change="() => route.replace(
-                    router.hasRoute('policy-list-view') ? {
-                      name: 'policy-list-view',
-                      params: {
-                        mesh: route.params.mesh,
-                        policyPath: policyType?.path,
-                      },
-                    } : {
-                      name: 'mesh-resource-list-view',
-                      params: {
-                        mesh: route.params.mesh,
-                        shortName: policyType?.shortName,
-                      },
+                  @change="() => route.replace({
+                    name: 'policy-list-view',
+                    params: {
+                      mesh: route.params.mesh,
+                      policyPath: policyType?.shortName,
                     },
-                  )"
+                  })"
                 >
                   <template
                     #control
@@ -142,12 +125,10 @@
 </template>
 
 <script lang="ts" setup>
-import { useRouter } from 'vue-router'
 
 import { usePolicyActionGroup } from '../'
 import { sources as resourceSources } from '@/app/resources/sources'
 import { sources } from '../sources'
 import { Kri } from '@/app/kuma'
 const PolicyActionGroup = usePolicyActionGroup()
-const router = useRouter()
 </script>
