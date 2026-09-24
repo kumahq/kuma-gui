@@ -1,3 +1,4 @@
+import { ApiError } from '../services/kuma-api/ApiError'
 /**
  * Filters should follow the rules of [kong-aip#160](https://kong-aip.netlify.app/aip/160/).
  *
@@ -110,3 +111,28 @@ export function semver(version: string): { major: string, minor: string, patch: 
     pre: `${major}.${minor}.${patch}${typeof pre !== 'undefined' ? `-${pre}` : ''}`,
   }
 }
+type FetchParams = Parameters<typeof globalThis.fetch>
+export const createFetch = (fetch = globalThis.fetch) => {
+  return async (...rest: FetchParams) => {
+    try {
+      const response = await fetch(...rest)
+      if (response.ok) {
+        return response
+      } else {
+        const contentType = response.headers.get('content-type')
+        const isJson = contentType !== null ? contentType.startsWith('application/json') || contentType.startsWith('application/problem+json') : false
+        const data = isJson ? await response.json() : await response.text()
+        const error = typeof data === 'object' ? { ...data, status: data.status ?? response.status } : { title: data, status: response.status }
+        throw new ApiError(error)
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        const completeUrl = typeof rest[0] === 'string' || rest[0] instanceof URL ? String(rest[0]) : rest[0].url
+        error.message = `${error.message} (${completeUrl})`
+      }
+      throw error
+    }
+  }
+}
+
+
