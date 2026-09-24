@@ -52,7 +52,7 @@
                           name: 'policy-list-view',
                           params: {
                             mesh: props.mesh.name,
-                            policyPath: policy.path,
+                            policyPath: policy.shortName,
                           },
                         } : {
                           name: 'mesh-resource-list-view',

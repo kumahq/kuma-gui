@@ -2,7 +2,7 @@ import createClient from 'openapi-fetch'
 
 import { Policy, PolicyDataplane } from './data'
 import { Kri } from '../kuma'
-import type { KumaPolicy, DynamicPath } from './data'
+import type { KumaPolicy, KumaPolicyCollection, DynamicPath } from './data'
 import { DataplanePolicies } from './data/DataplanePolicies'
 import { DataplaneInboundPolicies, DataplaneOutboundPolicies } from './data/DataplaneTrafficPolicies'
 import type { DataSourceResponse } from '@/app/application'
@@ -26,6 +26,27 @@ export const sources = ({ baseUrl, fetch }: Options) => {
   })
 
   return defineSources({
+    '/meshes/:mesh/policy-path/:path': async (params) => {
+      const { mesh, path, size } = params
+      const offset = params.size * (params.page - 1)
+
+      const search = Policy.search(params.search)
+      const res = await http.GET(`/meshes/{mesh}/${path as DynamicPath}`, {
+        params: {
+          path: {
+            mesh,
+          },
+          query: {
+            size,
+            offset,
+            ...search,
+          },
+        },
+      })
+
+      return Policy.fromCollection(res.data as KumaPolicyCollection)
+    },
+
     '/policy-path/:path/policy/:kri': async (params) => {
       const { path, kri } = params
       const { shortName, mesh, name } = Kri.fromString(kri)
