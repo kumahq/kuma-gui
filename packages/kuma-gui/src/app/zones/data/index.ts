@@ -3,24 +3,26 @@ import { Kri } from '@/app/kuma/kri'
 import { Resource } from '@/app/resources/data/Resource'
 import { Subscription, SubscriptionCollection } from '@/app/subscriptions/data'
 import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
-import type {
-  ZoneOverview as PartialZoneOverview,
-  ZoneInsight as PartialZoneInsight,
-  Zone as PartialZone,
-  KDSSubscription as PartialKDSSubscription,
-} from '@/types/index.d'
+import type { components } from '@kumahq/kuma-http-api'
 
-export type KDSSubscription = PartialKDSSubscription
+type KumaZoneOverview = components['schemas']['ZoneOverviewWithMeta'] & {
+  // TODO: move to overlays
+  creationTime?: string
+  modificationTime?: string
+}
+type KumaZoneInsight = NonNullable<KumaZoneOverview['zoneInsight']>
+type KumaZone = NonNullable<KumaZoneOverview['zone']>
+
+export type KDSSubscription = NonNullable<KumaZoneInsight['subscriptions']>[number]
 
 type KDSSubscriptionCollection = {
   config: Record<string, unknown>
 } & SubscriptionCollection
 
 export const Zone = {
-  fromObject: (item: PartialZone) => {
+  fromObject: (item?: KumaZone) => {
     return {
-      ...item,
-      enabled: !(item.enabled === false),
+      enabled: !(item?.enabled === false),
     }
   },
 }
@@ -62,7 +64,7 @@ const KDSSubscriptionCollection = {
 }
 
 export const ZoneInsight = {
-  fromObject: (item?: PartialZoneInsight) => {
+  fromObject: (item?: KumaZoneInsight) => {
     const subs = KDSSubscriptionCollection.fromArray(item?.subscriptions)
     return {
       ...item,
@@ -83,7 +85,7 @@ export const ZoneOverview = {
     return Resource.search(query)
   },
 
-  fromObject: (item: PartialZoneOverview) => {
+  fromObject: (item: KumaZoneOverview) => {
 
     const labels = item.labels ?? {}
     const id = item.name
@@ -116,7 +118,7 @@ export const ZoneOverview = {
       state: !zone.enabled ? state.disabled : typeof insight.connectedSubscription !== 'undefined' ? state.online : state.offline,
     }
   },
-  fromCollection: (collection: CollectionResponse<PartialZoneOverview>) => {
+  fromCollection: (collection: CollectionResponse<KumaZoneOverview>) => {
     const items = Array.isArray(collection.items) ? collection.items.map(ZoneOverview.fromObject) : []
     return {
       ...collection,
