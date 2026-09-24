@@ -1,10 +1,6 @@
 import type { components } from '@kumahq/kuma-http-api'
 type KumaDataplaneNetworking = NonNullable<components['schemas']['DataplaneItem']['networking']>
 type ResourceRule = components['schemas']['ResourceRule']
-/**
- * Creates an “unsaved” variant of a resource type which is missing the fields that are only present on an object once its saved in the database.
- */
-export type Unsaved<RT> = Omit<RT, 'creationTime' | 'modificationTime'>
 
 export type StatusKeyword = 'online' | 'offline' | 'partially_degraded' | 'not_available' | 'disconnected_cp'
 
@@ -106,234 +102,6 @@ export interface ToTargetRef<T extends string = string> {
   rules: ToTargetRefRule[]
 }
 
-export interface ZoneInsight {
-  subscriptions: KDSSubscription[]
-}
-
-export interface DataPlaneProxyStatus {
-  total?: number
-  online?: number
-  offline?: number
-  partiallyDegraded?: number
-}
-
-export interface ServiceStatus {
-  total?: number
-  internal?: number
-  external?: number
-}
-
-export interface ResourceStat {
-  total: number
-}
-
-export interface GlobalInsightDataPlaneProxies {
-  gatewayBuiltin: {
-    total: number
-    online: number
-    partiallyDegraded: number
-    offline: number
-  }
-  gatewayDelegated: {
-    total: number
-    online: number
-    partiallyDegraded: number
-    offline: number
-  }
-  standard: {
-    total: number
-    online: number
-    partiallyDegraded: number
-    offline: number
-  }
-}
-
-export interface GlobalInsightMeshes {
-  total: number
-}
-
-export interface GlobalInsightPolicies {
-  total: number
-}
-
-export interface GlobalInsightServices {
-  external: {
-    total: number
-  }
-  gatewayBuiltin: {
-    total: number
-    online: number
-    partiallyDegraded: number
-    offline: number
-  }
-  gatewayDelegated: {
-    total: number
-    online: number
-    partiallyDegraded: number
-    offline: number
-  }
-  internal: {
-    total: number
-    online: number
-    partiallyDegraded: number
-    offline: number
-  }
-}
-
-export interface GlobalInsightZones {
-  controlPlanes: {
-    total: number
-    online: number
-  }
-  zoneEgresses: {
-    total: number
-    online: number
-  }
-  zoneIngresses: {
-    total: number
-    online: number
-  }
-}
-
-export interface GlobalInsight {
-  dataplanes: GlobalInsightDataPlaneProxies
-  meshes: GlobalInsightMeshes
-  policies: GlobalInsightPolicies
-  services: GlobalInsightServices
-  zones: GlobalInsightZones
-}
-
-export interface KumaDpVersion {
-  version: string
-  gitTag: string
-  gitCommit: string
-  buildDate: string
-  kumaCpCompatible?: boolean
-}
-
-export interface EnvoyVersion {
-  version: string
-  build: string
-  kumaDpCompatible?: boolean
-}
-export interface Version {
-  envoy: EnvoyVersion
-  kumaDp: KumaDpVersion
-  kumaCp?: KumaCpVersion
-  dependencies: Record<string, string>
-}
-
-export interface DiscoveryServiceStats {
-  responsesSent?: number
-  responsesAcknowledged?: number
-  responsesRejected?: number
-}
-
-export type SubscriptionStatus = {
-  lastUpdateTime: string
-  total: DiscoveryServiceStats
-}
-
-export type KDSSubscriptionStatus = {
-  stat: Record<string, DiscoveryServiceStats>
-} & SubscriptionStatus
-
-export type DiscoverySubscriptionStatus = {
-  cds: DiscoveryServiceStats
-  eds: DiscoveryServiceStats
-  lds: DiscoveryServiceStats
-  rds: DiscoveryServiceStats
-} & SubscriptionStatus
-
-export type Subscription = {
-  id: string
-  connectTime?: string
-  disconnectTime?: string
-}
-
-export type KDSSubscription = {
-  version: any
-
-  config: string
-  zoneInstanceId?: string
-  globalInstanceId?: string
-  status: KDSSubscriptionStatus
-} & Subscription
-
-export type DiscoverySubscription = {
-  version?: Version
-
-  controlPlaneInstanceId: string
-  generation?: number
-  status: DiscoverySubscriptionStatus
-} & Subscription
-
-export interface DataPlaneInsight {
-  mTLS?: Partial<{
-    certificateExpirationTime: string
-    lastCertificateRegeneration: string
-    certificateRegenerations: number
-    issuedBackend: string
-    supportedBackends: string[]
-  }>
-  subscriptions: DiscoverySubscription[]
-}
-
-export type DataplaneGateway = {
-  tags: ServiceTags
-  /**
-   * Type of the gateway. **Default**: `'DELEGATED'`
-   */
-  type?: 'BUILTIN' | 'DELEGATED'
-}
-
-export type DataplaneInbound = {
-  address?: string
-  port: number
-  servicePort?: number
-  serviceAddress?: string
-  tags: ServiceTags
-  state?: 'Ready' | 'NotReady' | 'Ignored'
-  name?: string
-}
-
-export type DataplaneListener = {
-  state: 'Ready' | 'NotReady' | 'Ignored'
-  port: number
-}
-
-export type DataplaneOutbound = {
-  port: number
-  tags: ServiceTags
-}
-
-export type DataplaneNetworking = {
-  address: string
-  advertisedAddress?: string
-  inbound?: DataplaneInbound[]
-  outbound?: DataplaneOutbound[]
-  listeners?: DataplaneListener[]
-  admin?: {
-    port?: number
-  }
-  /**
-   * The presence of the `gateway` field means the resource is a gateway. The `gateway.type` property indicates which type of gateway it is.
-   *
-   * The absence of the `gateway` field means the resource is a regular Data Plane Proxy.
-   */
-  gateway?: DataplaneGateway
-}
-
-export type DataPlaneStatus = 'Online' | 'Offline' | 'Partially degraded'
-
-export type ZoneCompatibility = {
-  kind: 'INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS'
-  payload?: {
-    zoneCpVersion: string
-    globalCpVersion: string
-  }
-}
-
 export interface LabelValue {
   label: string
   value: string
@@ -352,50 +120,12 @@ export interface MeshEntity extends Entity {
   labels?: Record<string, string>
 }
 
-/**
- * Entity as returned via the `/meshes/:mesh/dataplanes/:dataPlane` endpoint.
- */
-export interface DataPlane extends MeshEntity {
-  type: 'Dataplane'
-  networking: KumaDataplaneNetworking
-}
-
-/**
- * Overview entity as returned via the `/meshes/:mesh/dataplanes/:dataPlane/_overview` endpoint.
- */
-export interface DataPlaneOverview extends MeshEntity {
-  type: 'DataplaneOverview'
-  labels?: {
-    'kuma.io/display-name'?: string
-    'k8s.kuma.io/namespace'?: string
-    [key: string]: string
-  }
-  dataplane: {
-    networking: KumaDataplaneNetworking
-  }
-  dataplaneInsight?: DataPlaneInsight
-}
-
-export interface DataplaneRule {
-  type: 'ClientSubset' | 'DestinationSubset' | 'SingleItem'
-  name: string
-  service?: string
-  addresses?: string[]
-  policyType: string
-  subset?: Record<string, string>
-  tags?: Record<string, string>
-  conf: Record<string, unknown>
-  origins: Array<{ mesh: string, name: string }>
-}
-
 export interface Meta<Type extends string = string> {
   type: Type
   mesh: string
   name: string
   kri?: string
 }
-
-export type Conf = Record<string, unknown>
 
 export interface RuleConf {
   rules?: ToTargetRefRule[]
@@ -470,39 +200,6 @@ export interface SidecarDataplane {
   matchedPolicies: Record<string, MatchedPolicyType[]>
 }
 
-export type MeshGatewayDataplaneDestination = {
-  tags: {
-    'kuma.io/service': string
-  }
-  policies: Record<string, MatchedPolicyType>
-}
-
-export type MeshGatewayDataplaneRoute = {
-  route: string
-  destinations: MeshGatewayDataplaneDestination[]
-}
-
-export type MeshGatewayDataplaneHost = {
-  hostName: string
-  routes: MeshGatewayDataplaneRoute[]
-}
-
-export type MeshGatewayDataplaneListener = {
-  port: number
-  protocol: string
-  hosts: MeshGatewayDataplaneHost[]
-}
-
-export interface MeshGatewayDataplane {
-  kind: 'MeshGatewayDataplane'
-  gateway: {
-    mesh: string
-    name: string
-  }
-  listeners: MeshGatewayDataplaneListener[] | null
-  policies?: Record<string, MatchedPolicyType>
-}
-
 export type PolicyTypeEntryConnection = {
   sourceTags: LabelValue[]
   destinationTags: LabelValue[]
@@ -514,215 +211,6 @@ export type PolicyTypeEntryConnection = {
 export type PolicyTypeEntry = {
   type: string
   connections: PolicyTypeEntryConnection[]
-}
-
-export type RuleEntryRule = {
-  config: object | undefined
-  matchers?: InspectRuleMatcher[]
-  origins: Meta[]
-}
-
-export type RuleEntry = {
-  type: string
-  rules: RuleEntryRule[]
-}
-
-export type MeshGatewayRouteEntry = {
-  route: Meta
-  service: string
-  origins: Meta[]
-}
-
-export type MeshGatewayListenerEntry = {
-  protocol: string
-  port: number
-  hostName: string
-  routeEntries: MeshGatewayRouteEntry[]
-}
-
-export interface MeshService extends MeshEntity {
-  type: 'MeshService'
-  labels?: {
-    'kuma.io/display-name'?: string
-    'kuma.io/zone'?: string
-    'k8s.kuma.io/namespace'?: string
-    [key: string]: string | undefined
-  }
-  spec: {
-    ports?: { port: number, targetPort: number, appProtocol: string }[]
-    selector?: { dataplaneTags?: Record<string, string> }
-  }
-  status: {
-    tls?: { status: string }
-    vips?: { ip: string }[]
-    addresses?: { hostname: string }[]
-  }
-}
-export interface MeshExternalService extends MeshEntity {
-  type: 'MeshExternalService'
-  labels?: {
-    'kuma.io/display-name'?: string
-    'kuma.io/zone'?: string
-    'k8s.kuma.io/namespace'?: string
-    [key: string]: string | undefined
-  }
-  spec: {
-    match?: { type: string, port: number, protocol: string }
-    endpoints?: { address: string, port?: number }[]
-    tls?: { enabled: boolean }
-  }
-  status: {
-    vip?: { ip: string }
-    addresses?: { hostname: string }[]
-  }
-}
-
-export interface Zone {
-  name: string
-  enabled?: boolean
-}
-
-/**
- * Overview entity as returned via the `/zones/:zone/_overview` endpoint.
- */
-export interface ZoneOverview extends MeshEntity {
-  type: 'ZoneOverview'
-  zone: Zone
-  zoneInsight?: ZoneInsight
-}
-
-export interface ZoneIngressNetworking {
-  address?: string
-  advertisedAddress?: string
-  port?: number
-  advertisedPort?: number
-}
-
-export interface AvailableService {
-  tags: Record<'kuma.io/service', string> & Record<string, string | undefined>
-  instances?: number
-  mesh?: string
-  externalService?: boolean
-}
-
-export interface ZoneIngress extends MeshEntity {
-  zone?: string
-  kri?: string
-  networking?: ZoneIngressNetworking
-  availableServices?: AvailableService[]
-}
-
-export interface ZoneIngressInsight {
-  subscriptions: DiscoverySubscription[]
-}
-
-export interface ZoneIngressOverview extends MeshEntity {
-  type: 'ZoneIngressOverview'
-  labels?: {
-    'kuma.io/display-name'?: string
-    'k8s.kuma.io/namespace'?: string
-    [key: string]: string | undefined
-  }
-  zoneIngress: {
-    zone?: string
-    networking?: ZoneIngressNetworking
-    availableServices?: AvailableService[]
-  }
-  zoneIngressInsight?: ZoneIngressInsight
-}
-
-export interface ZoneEgressNetworking {
-  address?: string
-  port?: number
-}
-
-export interface ZoneEgress extends MeshEntity {
-  zone?: string
-  kri?: string
-  networking?: ZoneEgressNetworking
-}
-export interface ZoneEgressInsight {
-  subscriptions: DiscoverySubscription[]
-}
-
-export interface ZoneEgressOverview extends MeshEntity {
-  type: 'ZoneEgressOverview'
-  labels?: {
-    'kuma.io/display-name'?: string
-    'k8s.kuma.io/namespace'?: string
-    [key: string]: string | undefined
-  }
-  zoneEgress: {
-    zone?: string
-    networking?: ZoneEgressNetworking
-  }
-  zoneEgressInsight?: ZoneEgressInsight
-}
-
-export interface DpCert {
-  rotation?: {
-    expiration?: string
-  }
-  requestTimeout?: string
-}
-
-export interface Backend {
-  name: string
-  type: string
-  conf?: Conf
-  dpCert?: DpCert
-}
-
-export interface MeshBackend {
-  enabledBackend?: string
-  defaultBackend?: string
-  backends?: Backend[]
-}
-
-/**
- * Entity as returned via the `/meshes/:mesh` endpoint.
- */
-export interface Mesh extends Entity {
-  type: 'Mesh'
-  mtls?: MeshBackend
-  logging?: MeshBackend
-  tracing?: MeshBackend
-  metrics?: MeshBackend
-  routing?: {
-    localityAwareLoadBalancing?: boolean
-    zoneEgress?: boolean
-  }
-  meshServices?: {
-    mode?: 'Disabled' | 'Everywhere' | 'ReachableBackends' | 'Exclusive'
-  }
-}
-
-export type DpVersions = {
-  kumaDp: Record<string, DataPlaneProxyStatus>
-  envoy: Record<string, DataPlaneProxyStatus>
-}
-
-/**
- * Overview entity as returned via the `/meshes-insights/:mesh` endpoint.
- */
-export interface MeshInsight extends Entity {
-  type: 'MeshInsight'
-  lastSync: string
-  dataplanes: DataPlaneProxyStatus
-  dataplanesByType: {
-    standard: DataPlaneProxyStatus
-    gateway: DataPlaneProxyStatus
-    gatewayBuiltin: DataPlaneProxyStatus
-    gatewayDelegated: DataPlaneProxyStatus
-  }
-  policies?: Record<string, ResourceStat>
-  resources?: Record<string, ResourceStat>
-  dpVersions: DpVersions
-  mTLS: {
-    issuedBackends?: Record<string, DataPlaneProxyStatus>
-    supportedBackends?: Record<string, DataPlaneProxyStatus>
-  }
-  services: ServiceStatus
 }
 
 export interface PolicyEntity extends MeshEntity {
@@ -757,4 +245,92 @@ export interface PolicyDataplane {
     'k8s.kuma.io/namespace'?: string
     [key: string]: string | undefined
   }
+}
+
+export interface KumaDpVersion {
+  version: string
+  gitTag: string
+  gitCommit: string
+  buildDate: string
+  kumaCpCompatible?: boolean
+}
+
+export interface EnvoyVersion {
+  version: string
+  build: string
+  kumaDpCompatible?: boolean
+}
+
+export interface KumaCpVersion {
+  version?: string
+  gitTag?: string
+  gitCommit?: string
+  buildDate?: string
+  kumaCpGlobalCompatible?: boolean
+}
+
+export interface Version {
+  envoy?: EnvoyVersion
+  kumaDp?: KumaDpVersion
+  kumaCp?: KumaCpVersion
+  dependencies?: Record<string, string>
+}
+
+export interface DiscoveryServiceStats {
+  responsesSent?: number
+  responsesAcknowledged?: number
+  responsesRejected?: number
+}
+
+export type SubscriptionStatus = {
+  lastUpdateTime?: string
+  total?: DiscoveryServiceStats
+}
+
+export type DiscoverySubscriptionStatus = {
+  cds: DiscoveryServiceStats
+  eds: DiscoveryServiceStats
+  lds: DiscoveryServiceStats
+  rds: DiscoveryServiceStats
+} & SubscriptionStatus
+
+export type Subscription = {
+  id?: string
+  connectTime?: string
+  disconnectTime?: string
+}
+
+export type DiscoverySubscription = {
+  version?: Version
+
+  controlPlaneInstanceId: string
+  generation?: number
+  status: DiscoverySubscriptionStatus
+} & Subscription
+
+export interface DataPlaneInsight {
+  mTLS?: Partial<{
+    certificateExpirationTime: string
+    lastCertificateRegeneration: string
+    certificateRegenerations: number
+    issuedBackend: string
+    supportedBackends: string[]
+  }>
+  subscriptions: DiscoverySubscription[]
+}
+
+/**
+ * Overview entity as returned via the `/meshes/:mesh/dataplanes/:dataPlane/_overview` endpoint.
+ */
+export interface DataPlaneOverview extends MeshEntity {
+  type: 'DataplaneOverview'
+  labels?: {
+    'kuma.io/display-name'?: string
+    'k8s.kuma.io/namespace'?: string
+    [key: string]: string
+  }
+  dataplane: {
+    networking: KumaDataplaneNetworking
+  }
+  dataplaneInsight?: DataPlaneInsight
 }

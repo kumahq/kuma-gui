@@ -18,7 +18,7 @@ type Acknowledgements = {
 export type Version = PartialVersion
 
 export type PartialSubscription = {
-  status: PartialSubscriptionStatus
+  status?: PartialSubscriptionStatus
   version?: Version
 } & ProtoSubscription
 
@@ -81,7 +81,7 @@ export const SubscriptionCollection = {
 
     // sort the array by lastUpdateTime so we end up with the latest one in the
     // case that there are multiple of anything
-    subs.sort((a, b) => Date.parse(b.status.lastUpdateTime) - Date.parse(a.status.lastUpdateTime))
+    subs.sort((a, b) => b.status.lastUpdateTime && a.status.lastUpdateTime ? Date.parse(b.status.lastUpdateTime) - Date.parse(a.status.lastUpdateTime) : 1)
 
     // find a version
     const withVersion = subs.find((item) => typeof item.version !== 'undefined')

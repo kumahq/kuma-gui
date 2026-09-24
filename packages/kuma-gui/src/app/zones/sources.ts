@@ -6,10 +6,9 @@ import type { DataSourceResponse } from '@/app/application'
 import { defineSources } from '@/app/application'
 import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
 export type { ZoneOverview } from './data'
-import type {
-  ZoneOverview as PartialZoneOverview,
-} from '@/types/index.d'
-import type { paths } from '@kumahq/kuma-http-api'
+import type { paths, components } from '@kumahq/kuma-http-api'
+
+type KumaZoneOverview = components['schemas']['ZoneOverviewWithMeta']
 
 export type ZoneOverviewCollection = CollectionResponse<ZoneOverview>
 export type ZoneOverviewSource = DataSourceResponse<ZoneOverview>
@@ -44,7 +43,7 @@ export const sources = ({ baseUrl, fetch }: Options) => {
       })
 
 
-      return ZoneOverview.fromCollection(res.data as unknown as CollectionResponse<PartialZoneOverview>)
+      return ZoneOverview.fromCollection(res.data as unknown as CollectionResponse<KumaZoneOverview>)
     },
     '/zone-cps/:kri': async (params) => {
       const { kri } = params
@@ -56,7 +55,7 @@ export const sources = ({ baseUrl, fetch }: Options) => {
           },
         },
       })
-      return ZoneOverview.fromObject(res.data as unknown as PartialZoneOverview)
+      return ZoneOverview.fromObject(res.data as unknown as KumaZoneOverview)
     },
   })
 }

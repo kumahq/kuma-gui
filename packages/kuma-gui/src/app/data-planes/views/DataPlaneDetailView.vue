@@ -35,7 +35,7 @@
                 bool: props.data.dataplaneInsight.version?.kumaDp?.kumaCpCompatible === false,
                 key: 'dp-cp-incompatible',
                 params: {
-                  kumaDp: props.data.dataplaneInsight.version?.kumaDp.version ?? '',
+                  kumaDp: props.data.dataplaneInsight.version?.kumaDp?.version ?? '',
                 },
                 variant: 'warning',
               },
@@ -43,8 +43,8 @@
                 bool: props.data.dataplaneInsight.version?.envoy?.kumaDpCompatible === false,
                 key: 'envoy-dp-incompatible',
                 params: {
-                  envoy: props.data.dataplaneInsight.version?.envoy.version ?? '',
-                  kumaDp: props.data.dataplaneInsight.version?.kumaDp.version ?? '',
+                  envoy: props.data.dataplaneInsight.version?.envoy?.version ?? '',
+                  kumaDp: props.data.dataplaneInsight.version?.kumaDp?.version ?? '',
                 },
                 variant: 'warning',
               },
@@ -52,7 +52,7 @@
                 bool: !!(can('use zones') && props.data.zone && props.data.dataplaneInsight.version?.kumaDp?.kumaCpCompatible === false),
                 key: 'dp-zone-cp-incompatible',
                 params: {
-                  kumaDp: props.data.dataplaneInsight.version?.kumaDp.version ?? '',
+                  kumaDp: props.data.dataplaneInsight.version?.kumaDp?.version ?? '',
                 },
                 variant: 'warning',
               },
