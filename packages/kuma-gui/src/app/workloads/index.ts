@@ -12,6 +12,26 @@ type Token = ReturnType<typeof token>
 
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   return [
+    [token('workloads.kri'), {
+      service: () => {
+        return [
+          ({ shortName, mesh, kri }: { shortName: string, mesh: string, kri: string }) => {
+            if(shortName === 'wl') {
+              return {
+                name: 'workload-detail-view',
+                params: {
+                  mesh,
+                  wl: kri,
+                },
+              }
+            }
+          },
+        ]
+      },
+      labels: [
+        app.kriHandlers,
+      ],
+    }],
     [token('workloads.routes'), {
       service: () => {
         const _routes = routes()

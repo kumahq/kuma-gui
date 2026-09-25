@@ -1,3 +1,10 @@
+common:
+  label:
+    href:
+      kuma~io/mesh: kri://kri_m____{name}_
+  kri:
+    shortNames:
+      mesh: m
 meshes:
   docs: &meshes.docs
     type: docs
