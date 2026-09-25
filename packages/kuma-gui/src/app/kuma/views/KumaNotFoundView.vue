@@ -8,7 +8,6 @@
           <template #icon>
             <XIcon
               name="warning"
-              class="mb-3"
             />
           </template>
 
