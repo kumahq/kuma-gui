@@ -226,8 +226,8 @@
 </template>
 
 <script lang="ts" setup>
-import type { Policy } from '../data'
 import type { ResourceTypeDescriptor } from '@/app/resources/data'
+import type { Policy } from '../data'
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import { Kri } from '@/app/kuma'

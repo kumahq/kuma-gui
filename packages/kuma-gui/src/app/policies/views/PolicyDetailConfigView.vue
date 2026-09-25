@@ -90,8 +90,8 @@
 </template>
 
 <script lang="ts" setup>
-import type { Policy } from '../data'
 import type { ResourceTypeDescriptor } from '@/app/resources/data'
+import type { Policy } from '../data'
 import { sources } from '../sources'
 const props = defineProps<{
   data: Policy | Error | undefined

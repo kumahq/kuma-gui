@@ -150,13 +150,13 @@
 
 import { KTableView } from '@kong/kongponents'
 
-import type { PolicyResourceType } from '../data'
 import { YAML, useI18n, useRegExp } from '@/app/application'
 import type { PolicyTypeEntry, PolicyTypeEntryConnection } from '@/types/index.d'
+import type { ResourceTypeDescriptor } from '@/app/resources/data'
 
 const props = defineProps<{
   items: PolicyTypeEntry[]
-  types: Partial<Record<string, PolicyResourceType>>
+  types: Partial<Record<string, ResourceTypeDescriptor>>
 }>()
 
 
