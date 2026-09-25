@@ -2,15 +2,18 @@ import createClient from 'openapi-fetch'
 
 import { MeshTrust } from './data'
 import { defineSources } from '@/app/application'
-import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import type { paths, components } from '@kumahq/kuma-http-api'
 
 type KumaMeshTrust = components['schemas']['MeshTrustItem']
 
-export const sources = (api: KumaApi) => {
+type Options = {
+  baseUrl: string
+  fetch: typeof fetch
+}
+export const sources = ({ baseUrl, fetch }: Options) => {
   const http = createClient<paths>({
-    baseUrl: api.client.baseUrl,
-    fetch: api.client.fetch,
+    baseUrl,
+    fetch,
   })
   return defineSources({
     '/meshes/:mesh/meshtrusts': async (params) => {

@@ -6,7 +6,7 @@ import { features } from './features'
 import locales from './locales/en-us/index.yaml'
 import { routes } from './routes'
 import { sources } from './sources'
-import type { Can } from '@/app/application'
+import type { Can, Env } from '@/app/application'
 import { services as subscriptions } from '@/app/subscriptions'
 import type { ServiceDefinition } from '@kumahq/container'
 import type { Component } from 'vue'
@@ -46,9 +46,13 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       ],
     }],
     [token('zone.sources'), {
-      service: sources,
+      service: (fetch: typeof globalThis.fetch, env: Env) => sources({
+        fetch,
+        baseUrl: env('KUMA_API_URL'),
+      }),
       arguments: [
-        app.api,
+        app.fetch,
+        app.env,
       ],
       labels: [
         app.sources,
