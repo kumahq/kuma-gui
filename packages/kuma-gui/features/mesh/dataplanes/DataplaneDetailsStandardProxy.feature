@@ -11,7 +11,6 @@ Feature: Dataplane details for standard Data Plane Proxy
       | select-environment | [data-testid='select-input']                |
     And the environment
       """
-      KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: true
       KUMA_MESHSERVICE_MODE: Exclusive
       """
     And the URL "/_kri/kri_dp_default_zone-1_kuma-demo_dpp-1-name-of-dataplane_" responds with

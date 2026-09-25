@@ -6,7 +6,6 @@ Feature: mesh / dataplanes / connections / Traffic
       | about-section | [data-testid='about-section-content'] |
     And the environment
       """
-      KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: true
       KUMA_MESHSERVICE_MODE: Exclusive
       """
     And the URL "/_kri/kri_dp_default_zone-1_kuma-demo_backend_" responds with

@@ -483,7 +483,6 @@
                   </XLayout>
 
                   <DataSource
-                    v-if="can('use unified-resource-naming', { mesh: props.mesh, dataplaneOverview: props.data })"
                     :src="uri(policySources, '/meshes/:mesh/dataplanes/:name/policies/for/proxy', {
                       mesh: route.params.mesh,
                       name: props.data.id,
