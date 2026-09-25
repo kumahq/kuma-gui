@@ -139,7 +139,13 @@
                       data-testid="mesh-services-status"
                     >
                       <template #title>
-                        {{ t('meshes.detail.services') }}
+                        <XAction
+                          :to="{
+                            name: 'service-list-tabs-view',
+                          }"
+                        >
+                          {{ t('meshes.detail.services') }}
+                        </XAction>
                       </template>
                     </KumaResourceStatus>
                     <KumaResourceStatus
@@ -157,7 +163,13 @@
                       data-testid="mesh-services-status"
                     >
                       <template #title>
-                        {{ t('meshes.detail.services') }}
+                        <XAction
+                          :to="{
+                            name: 'service-list-tabs-view',
+                          }"
+                        >
+                          {{ t('meshes.detail.services') }}
+                        </XAction>
                       </template>
 
                       <template
@@ -192,7 +204,13 @@
                       data-testid="data-plane-proxies-status"
                     >
                       <template #title>
-                        {{ t('meshes.detail.data_plane_proxies') }}
+                        <XAction
+                          :to="{
+                            name: 'data-plane-list-view',
+                          }"
+                        >
+                          {{ t('meshes.detail.data_plane_proxies') }}
+                        </XAction>
                       </template>
                     </KumaResourceStatus>
 
@@ -215,7 +233,13 @@
                             data-testid="policies-status"
                           >
                             <template #title>
-                              {{ t('meshes.detail.policies') }}
+                              <XAction
+                                :to="{
+                                  name: 'mesh-resource-type-list-view',
+                                }"
+                              >
+                                {{ t('meshes.detail.policies') }}
+                              </XAction>
                             </template>
                           </KumaResourceStatus>
                         </template>
