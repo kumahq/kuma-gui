@@ -1,6 +1,6 @@
 import { inject } from 'vue'
 
-import { DataSourcePool, create, destroy } from '../'
+import { waitFor, DataSourcePool, create, destroy } from '../'
 // import {
 //   DataLoader,
 //   DataSink,
@@ -108,4 +108,20 @@ const plugin: Plugin = {
 export const [ useDataSourcePool ] = createInjections(
   tokens.dataSourcePool,
 )
+export const useData = () => {
+  const data = useDataSourcePool()
+  return {
+    fetch: async <T>(src: string): Promise<T> => {
+      const sym = Symbol('')
+      try {
+        return waitFor(data.source(`${src}${src.includes('?') ? '&' : '?'}cacheControl=no-cache`, sym))
+      } finally {
+        data.close(src, sym)
+      }
+    },
+    source: (...args: Parameters<typeof data.source>) => {
+      return data.source(...args)
+    },
+  }
+}
 export default plugin
