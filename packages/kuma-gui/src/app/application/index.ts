@@ -69,7 +69,7 @@ const $ = {
   env: token<Env>('application.env'),
   vars: token('application.env.vars'),
 
-  fetch: token<typeof fetch>('application.fetch'),
+  fetch: token<typeof globalThis.fetch>('application.fetch'),
   can: token<Can>('application.can'),
   features: token('application.can.features'),
 

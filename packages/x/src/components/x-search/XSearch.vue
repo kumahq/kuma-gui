@@ -305,10 +305,11 @@ watch(() => props.value, () => {
     padding: var(--x-space-10) 0px;
 
     &.highlight {
-      background: var(--x-search-color-token-background);
+      background: var(--x-color-background-neutral-weaker);
       border-radius: var(--x-border-radius-20);
       &.invalid {
-        background: var(--x-color-background-warning-weak);
+        background: var(--x-color-background-warning-weaker);
+        color: var(--x-color-text-warning-weak);
       }
     }
   }
@@ -359,12 +360,12 @@ input {
   position: absolute !important;
   top: 100% !important;
   left: 0;
-  width: 100%;
+  width: 100% !important;
 
   .popover-container {
     width: 100% !important;
     margin-top: unset !important;
-    padding: 0;
+    padding: 0 !important;
     overflow: hidden;
   }
 

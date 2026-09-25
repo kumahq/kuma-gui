@@ -7,14 +7,12 @@ import { vars } from './env'
 import locales from './locales/en-us/index.yaml'
 import { ValidationError } from '@/app/application'
 import type { Can } from '@/app/application'
-import { Kri } from '@/app/kuma'
+import { Kri, createFetch } from '@/app/kuma'
 import KumaPort from '@/app/kuma/components/kuma-port/KumaPort.vue'
 import KumaResourceStatus from '@/app/kuma/components/kuma-resource-status/KumaResourceStatus.vue'
 import KumaStatusBadge from '@/app/kuma/components/kuma-status-badge/KumaStatusBadge.vue'
 import KumaTargetRef from '@/app/kuma/components/kuma-target-ref/KumaTargetRef.vue'
 import { ApiError } from '@/app/kuma/services/kuma-api/ApiError'
-import KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
-import { RestClient } from '@/app/kuma/services/kuma-api/RestClient'
 import type { ServiceDefinition } from '@kumahq/container'
 import type { DataSourcePool } from '@kumahq/data'
 import type { Router, RouteLocationAsRelative } from 'vue-router'
@@ -218,8 +216,6 @@ const push = (router: Router) => (href: string) => {
   return router.push(h.length > 0 ? h : '/')
 }
 export const TOKENS = {
-  httpClient: token<RestClient>('httpClient'),
-  api: token<KumaApi>('KumaApi'),
   htmlVars: token('kuma.html.vars'),
   dataSource: token<<T>(src: string) => Promise<T>>('app.dataSource'),
   syntaxHighlighter: token('kuma.syntaxHighlighter'),
@@ -259,6 +255,9 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
     [app.storagePrefix, {
       service: () => 'kumahq.kuma-gui',
     }],
+    [app.fetch, {
+      service: () => createFetch(fetch),
+    }],
     [app.routerElement, {
       service: () => () => document.querySelector('.kuma-application'),
     }],
@@ -284,20 +283,6 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       ],
       labels: [
         app.vars,
-      ],
-    }],
-    // KumaAPI
-    [app.httpClient, {
-      service: RestClient,
-      arguments: [
-        app.env,
-      ],
-    }],
-    [app.api, {
-      service: KumaApi,
-      arguments: [
-        app.httpClient,
-        app.env,
       ],
     }],
     [app.dataSource, {

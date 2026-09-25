@@ -9,6 +9,7 @@ import _993 from './src/_kri/kri_mhttpr__.ts'
 import _992 from './src/_kri/kri_mid__.ts'
 import _998 from './src/_kri/kri_msvc__.ts'
 import _990 from './src/_kri/kri_mtrust__.ts'
+import _989 from './src/_kri/kri_mza__.ts'
 import _991 from './src/_kri/kri_mzsvc__.ts'
 import _987 from './src/_kri/kri_wl__.ts'
 import _984 from './src/_kri/kri_z__.ts'
@@ -79,6 +80,8 @@ import _137 from './src/meshes/_/meshservices/_'
 import _170 from './src/meshes/_/meshservices/_/_hostnames'
 import _243 from './src/meshes/_/meshtrusts'
 import _244 from './src/meshes/_/meshtrusts/_.ts'
+import _251 from './src/meshes/_/meshzoneaddresses/_.ts'
+import _250 from './src/meshes/_/meshzoneaddresses.ts'
 import _35 from './src/meshes/_/proxytemplates'
 import _36 from './src/meshes/_/proxytemplates/_'
 import _37 from './src/meshes/_/rate-limits'
@@ -174,6 +177,8 @@ export const fs = {
   '/meshes/:mesh/meshidentities/:name': _242,
   '/meshes/:mesh/meshtrusts': _243,
   '/meshes/:mesh/meshtrusts/:name': _244,
+  '/meshes/:mesh/meshzoneaddresses': _250,
+  '/meshes/:mesh/meshzoneaddresses/:name': _251,
   // legacy policies
   '/meshes/:mesh/circuit-breakers': _17,
   '/meshes/:mesh/circuit-breakers/:name': _18,
@@ -224,6 +229,8 @@ export const fs = {
   '/_kri/kri_mzsvc_:kri': _991,
   // MeshTrust
   '/_kri/kri_mtrust_:kri': _990,
+  // MeshZoneAddress
+  '/_kri/kri_mza_:kri': _989,
   // Workload
   '/_kri/kri_wl_:kri': _987,
   // MeshAccessLog

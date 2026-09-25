@@ -4,7 +4,6 @@ import { ConnectionXdsConfig } from './data/ConnectionXdsConfig'
 import type { DataSourceResponse } from '@/app/application'
 import { defineSources } from '@/app/application'
 import { Stat, ConnectionCollection } from '@/app/connections/data/'
-import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import type { paths } from '@kumahq/kuma-http-api'
 
 export type StatsSource = DataSourceResponse<{
@@ -45,10 +44,14 @@ const filter = (data: Record<string, unknown>, cb: (key: string, arr: unknown[])
     }, [] as typeof configs),
   }
 }
-export const sources = (api: KumaApi) => {
+type Options = {
+  baseUrl: string
+  fetch: typeof fetch
+}
+export const sources = ({ baseUrl, fetch }: Options) => {
   const http = createClient<paths>({
-    baseUrl: api.client.baseUrl,
-    fetch: api.client.fetch,
+    baseUrl,
+    fetch,
   })
   return defineSources({
     '/connections/stats/for/:proxyType/:name/:mesh/:socketAddress': async (params) => {

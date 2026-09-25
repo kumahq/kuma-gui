@@ -8,9 +8,8 @@ import {
   DataplaneNetworkingLayout,
   type KumaDataplane,
 } from './data'
-import { YAML , defineSources } from '@/app/application'
-import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
-import { Resource } from '@/app/resources/data/Resource'
+import { YAML, defineSources } from '@/app/application'
+import { search } from '@/app/kuma'
 import type { PaginatedApiListResponse as CollectionResponse, ApiKindListResponse as KindCollectionResponse } from '@/types/api.d'
 import type {
   SidecarDataplane as PartialSidecarDataplane,
@@ -18,15 +17,17 @@ import type {
 } from '@/types/index.d'
 import type { paths } from '@kumahq/kuma-http-api'
 
-export type { Dataplane, DataplaneOverview } from './data'
-
 const includes = <T extends readonly string[]>(arr: T, item: string): item is T[number] => {
   return arr.includes(item as T[number])
 }
-export const sources = (api: KumaApi) => {
+type Options = {
+  baseUrl: string
+  fetch: typeof fetch
+}
+export const sources = ({ baseUrl, fetch }: Options) => {
   const http = createClient<paths>({
-    baseUrl: api.client.baseUrl,
-    fetch: api.client.fetch,
+    baseUrl,
+    fetch,
   })
   return defineSources({
     '/dataplanes/:kri': async (params) => {
@@ -210,14 +211,12 @@ export const sources = (api: KumaApi) => {
       const { mesh, size } = params
       const offset = size * (params.page - 1)
 
-      const search = Resource.search(params.search)
-
       const type = params.type === 'standard' ? 'false' : params.type
       const gatewayParams = includes(['delegated', 'builtin', 'false'] as const, type)
         ? { gateway: type }
         : {}
-      const zoneIngress = type === 'zone-ingress' ? Resource.search('kuma.io/listener-zoneingress:enabled') : {}
-      const zoneEgress = type === 'zone-egress' ? Resource.search('kuma.io/listener-zoneegress:enabled') : {}
+      const zoneIngress = type === 'zone-ingress' ? search('kuma.io/listener-zoneingress:enabled') : {}
+      const zoneEgress = type === 'zone-egress' ? search('kuma.io/listener-zoneegress:enabled') : {}
 
       const res = await http.GET('/meshes/{mesh}/dataplanes/_overview', {
         params: {
@@ -226,7 +225,7 @@ export const sources = (api: KumaApi) => {
           },
           // @ts-expect-error OpenAPI says query is undefined
           query: {
-            ...search,
+            ...search(params.search),
             ...zoneIngress,
             ...zoneEgress,
             ...gatewayParams,
@@ -241,12 +240,12 @@ export const sources = (api: KumaApi) => {
     '/meshes/:mesh/dataplanes/for/mesh-service/:tags': async (params) => {
       const { mesh, size } = params
       const offset = size * (params.page - 1)
-      const search = Resource.search(params.search)
+      const s = search(params.search)
 
       // MeshService dataplanes should always be filtered by the zone for the MeshService via `dataplaneTags`
       // The zone tag is part of the search query `zone:<zone>`, but there might be more tags in `dataplaneTags`
       const tagsParam = JSON.parse(params.tags ?? '{}')
-      const searchTags = Array.isArray(search.tag) ? search.tag : []
+      const searchTags = Array.isArray(s.tag) ? s.tag : []
       const tag = [...searchTags, ...Object.entries(tagsParam).map(([key, value]) => `${key}:${value}`)]
 
       const res = await http.GET('/meshes/{mesh}/dataplanes/_overview', {
@@ -256,7 +255,7 @@ export const sources = (api: KumaApi) => {
           },
           // @ts-expect-error OpenAPI says query is undefined
           query: {
-            ...search,
+            ...s,
             tag,
             offset,
             size,
@@ -270,10 +269,10 @@ export const sources = (api: KumaApi) => {
       const { mesh, size } = params
       const offset = size * (params.page - 1)
 
-      const search = Resource.search(params.search)
+      const s = search(params.search)
 
       // Service dataplanes should always be filtered by the service tag
-      const tag = [...(Array.isArray(search.tag) ? search.tag.filter((item) => !item.startsWith('kuma.io/service')) : []), `kuma.io/service:${params.service}`]
+      const tag = [...(Array.isArray(s.tag) ? s.tag.filter((item) => !item.startsWith('kuma.io/service')) : []), `kuma.io/service:${params.service}`]
 
       const res = await http.GET('/meshes/{mesh}/dataplanes/_overview', {
         params: {
@@ -282,7 +281,7 @@ export const sources = (api: KumaApi) => {
           },
           // @ts-expect-error OpenAPI says query is undefined
           query: {
-            ...search,
+            ...s,
             tag,
             offset,
             size,
