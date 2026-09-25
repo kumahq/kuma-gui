@@ -14,7 +14,6 @@ Feature: mesh / dataplanes / warnings
       | dataplane-disconnected-cp       | [data-testid^='notification-data-planes.notifications.dataplane-disconnected-cp']       |
     And the environment
       """
-      KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: true
       KUMA_MESHSERVICE_MODE: Exclusive
       """
     And the URL "/_kri/kri_dp_default_zone-1_kuma-demo_dpp-1_" responds with
@@ -33,7 +32,7 @@ Feature: mesh / dataplanes / warnings
         dataplaneInsight:
           mTLS:
             certificateExpirationTime: 2022-10-03T12:40:13Z
-            lastCertificateRegeneration: 2021-10-03T12:40:13Z
+            lastCertificateRegeneration: 2022-10-01T12:40:13Z
       """
     When the date is "2022-10-03T06:45:13Z"
     And I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_dpp-1_/overview" URL

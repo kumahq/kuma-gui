@@ -4,7 +4,6 @@ import { ZoneOverview } from './data'
 import { Kri } from '../kuma'
 import type { DataSourceResponse } from '@/app/application'
 import { defineSources } from '@/app/application'
-import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
 export type { ZoneOverview } from './data'
 import type {
@@ -18,10 +17,14 @@ export type ZoneOverviewCollectionSource = DataSourceResponse<ZoneOverviewCollec
 
 export type EnvoyDataSource = DataSourceResponse<object | string>
 
-export const sources = (api: KumaApi) => {
+type Options = {
+  baseUrl: string
+  fetch: typeof fetch
+}
+export const sources = ({ baseUrl, fetch }: Options) => {
   const http = createClient<paths>({
-    baseUrl: api.client.baseUrl,
-    fetch: api.client.fetch,
+    baseUrl,
+    fetch,
   })
   return defineSources({
     '/zone-cps': async (params) => {

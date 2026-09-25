@@ -3,16 +3,20 @@ import { token } from '@kumahq/container'
 import locales from './locales/en-us/index.yaml'
 import { sources } from './sources'
 import type { ServiceDefinition } from '@kumahq/container'
+import type { Env } from '@/app/application'
 
 type Token = ReturnType<typeof token>
-type Sources = ReturnType<typeof sources>
 
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   return [
-    [token<Sources>('mesh-identities.sources'), {
-      service: sources,
+    [token('mesh-identities.sources'), {
+      service: (fetch: typeof globalThis.fetch, env: Env) => sources({
+        fetch,
+        baseUrl: env('KUMA_API_URL'),
+      }),
       arguments: [
-        app.api,
+        app.fetch,
+        app.env,
       ],
       labels: [
         app.sources,

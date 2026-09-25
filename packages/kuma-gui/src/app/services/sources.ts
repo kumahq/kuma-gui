@@ -8,7 +8,6 @@ import {
 } from './data'
 import type { KumaMeshService, KumaMeshMultiZoneService, KumaMeshExternalService } from './data'
 import { defineSources } from '@/app/application'
-import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import type { paths } from '@kumahq/kuma-http-api'
 
 
@@ -16,10 +15,14 @@ const includes = <T extends readonly string[]>(arr: T, item: string): item is T[
   return arr.includes(item as T[number])
 }
 
-export const sources = (api: KumaApi) => {
+type Options = {
+  baseUrl: string
+  fetch: typeof fetch
+}
+export const sources = ({ baseUrl, fetch }: Options) => {
   const http = createClient<paths>({
-    baseUrl: api.client.baseUrl,
-    fetch: api.client.fetch,
+    baseUrl,
+    fetch,
   })
 
   return defineSources({
@@ -180,7 +183,7 @@ export const sources = (api: KumaApi) => {
           },
         },
       })
-      
+
       return response.data!
     },
 

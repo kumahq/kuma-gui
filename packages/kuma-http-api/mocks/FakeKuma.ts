@@ -553,6 +553,7 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
       ['MeshTrace', 'mtr'],
       ['MeshTrafficPermission', 'mtp'],
       ['MeshTrust', 'mtrust'],
+      ['MeshZoneAddress', 'mza'],
       ['Workload', 'wl'],
       ['ZoneEgress', 'ze'],
       ['ZoneIngress', 'zi'],

@@ -219,6 +219,7 @@ import '@kong-ui-public/app-layout/dist/style.css'
   --x-color-background-primary-weakest: var(--kui-color-background-primary-weakest, #{$kui-color-background-primary-weakest});
   --x-color-background-success-weakest: var(--kui-color-background-success-weakest, #{$kui-color-background-success-weakest});
   --x-color-background-warning-weak: var(--kui-color-background-warning-weak, #{$kui-color-background-warning-weak});
+  --x-color-background-warning-weaker: var(--kui-color-background-warning-weaker, #{$kui-color-background-warning-weaker});
   --x-color-background-danger: var(--kui-color-background-danger, #{$kui-color-background-danger});
 
   /* color-border */
@@ -300,8 +301,6 @@ import '@kong-ui-public/app-layout/dist/style.css'
   --x-space-110: var(--kui-space-110, #{$kui-space-110});
 
   /* component specific */
-  /* kong/design-token grays are either too light or too dark i.e. we need weaker-than-weak-but-not-weakest */
-  --x-search-color-token-background: #f0f4f7;
   --x-anchor-text-color: var(--x-color-text-primary);
 }
 :deep(> *) {

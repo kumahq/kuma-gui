@@ -2,13 +2,16 @@ import createClient from 'openapi-fetch'
 
 import { Workload, type KumaWorkloadItem } from './data'
 import { defineSources } from '@/app/application'
-import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import type { paths } from '@kumahq/kuma-http-api'
 
-export const sources = (api: KumaApi) => {
+type Options = {
+  baseUrl: string
+  fetch: typeof fetch
+}
+export const sources = ({ baseUrl, fetch }: Options) => {
   const http = createClient<paths>({
-    baseUrl: api.client.baseUrl,
-    fetch: api.client.fetch,
+    baseUrl,
+    fetch,
   })
   return defineSources({
     '/meshes/:mesh/workloads': async (params) => {
@@ -32,23 +35,23 @@ export const sources = (api: KumaApi) => {
       return Workload.fromCollection(res.data!)
     },
 
-    '/workloads/:wl': async (params) => {
-      const { wl } = params
+    '/workloads/:kri': async (params) => {
+      const { kri } = params
 
       const res = await http.GET('/_kri/{kri}', {
-        params: { path: { kri: wl } },
+        params: { path: { kri } },
       })
 
       return Workload.fromObject(res.data as KumaWorkloadItem)
     },
 
-    '/workloads/:wl/as/kubernetes': async (params) => {
-      const { wl } = params
+    '/workloads/:kri/as/kubernetes': async (params) => {
+      const { kri } = params
 
       const res = await http.GET('/_kri/{kri}', {
         params: {
           path: {
-            kri: wl,
+            kri,
           },
           // @ts-expect-error -- query type is not defined in openapi spec --
           query: {
@@ -57,7 +60,7 @@ export const sources = (api: KumaApi) => {
         },
       })
 
-      return res.data
+      return res.data!
     },
   })
 }

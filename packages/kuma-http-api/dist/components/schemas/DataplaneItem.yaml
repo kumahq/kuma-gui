@@ -270,7 +270,8 @@ properties:
               Reachable backend via transparent proxy when running with
               MeshExternalService, MeshService and MeshMultiZoneService. Setting an
               explicit list of refs can dramatically improve the performance of the
-              mesh. If not specified, all services in the mesh are reachable.
+              mesh. If not specified, no services in the mesh are reachable, unless
+              the control plane sets KUMA_DEFAULTS_ALLOW_ALL_OUTBOUND.
             type: object
             properties:
               refs:
@@ -285,19 +286,31 @@ properties:
                       type: object
                       additionalProperties:
                         type: string
-                    name:
-                      description: Name of the backend.
-                      type: string
-                    namespace:
-                      description: Namespace of the backend. Might be empty
-                      type: string
                     port:
                       description: Port of the backend.
                       type: integer
                       format: uint32
                   required:
                     - kind
+                    - labels
                   type: object
+          redirectPortInbound:
+            description: |-
+              Port on which all inbound traffic is being transparently redirected.
+
+              Deprecated: read only for a proxy that sends no transparent proxy
+              metadata, which means a sidecar injected before 3.0. Gone in 3.1.
+
+              Deprecated: Marked as deprecated in api/mesh/v1alpha1/dataplane.proto.
+            type: integer
+          redirectPortOutbound:
+            description: |-
+              Port on which all outbound traffic is being transparently redirected.
+
+              Deprecated: see `redirect_port_inbound`.
+
+              Deprecated: Marked as deprecated in api/mesh/v1alpha1/dataplane.proto.
+            type: integer
   type:
     type: string
 required:
