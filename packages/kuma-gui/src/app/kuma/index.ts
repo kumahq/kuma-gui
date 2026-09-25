@@ -1,6 +1,5 @@
 import Kongponents from '@kong/kongponents'
-import { token, createInjections } from '@kumahq/container'
-import { waitFor } from '@kumahq/data'
+import { token } from '@kumahq/container'
 import X, { syntaxHighlighter } from '@kumahq/x'
 
 import { vars } from './env'
@@ -14,7 +13,6 @@ import KumaStatusBadge from '@/app/kuma/components/kuma-status-badge/KumaStatusB
 import KumaTargetRef from '@/app/kuma/components/kuma-target-ref/KumaTargetRef.vue'
 import { ApiError } from '@/app/kuma/services/kuma-api/ApiError'
 import type { ServiceDefinition } from '@kumahq/container'
-import type { DataSourcePool } from '@kumahq/data'
 import type { Router, RouteLocationAsRelative } from 'vue-router'
 
 export * from './utils'
@@ -285,21 +283,6 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
         app.vars,
       ],
     }],
-    [app.dataSource, {
-      service: (data: DataSourcePool) => {
-        const fetch = async <T>(src: string): Promise<T> => {
-          const sym = Symbol('')
-          try {
-            return waitFor(data.source(`${src}${src.includes('?') ? '&' : '?'}cacheControl=no-cache`, sym))
-          } finally {
-            data.close(src, sym)
-          }
-        }
-
-        return fetch
-      },
-      arguments: [app.dataSourcePool],
-    }],
 
     [token('kuma.locales'), {
       service: () => locales,
@@ -349,8 +332,3 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
 
   ]
 }
-export const [
-  useDataSource,
-] = createInjections(
-  TOKENS.dataSource,
-)
