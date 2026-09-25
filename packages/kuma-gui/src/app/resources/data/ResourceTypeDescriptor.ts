@@ -57,9 +57,9 @@ export const ResourceTypeDescriptor = {
   fromObject(item: KumaResourceTypeDescriptor) {
     const group = ('policy' in item ? 'policy' : (item.scope ?? 'others')).toLowerCase()
     return {
-      ...item,
-      group,
-      ...(typeof item.policy !== 'undefined' && {
+      // we omit policy here to equalize the type just below
+      ...(item as Omit<typeof item, 'policy'>),
+      ...(typeof item.policy !== 'undefined' ? {
         policy: {
           ...item.policy,
           // Backfills some legacy flags that are gone from OAS, but we keep reading them in the views.
@@ -67,7 +67,9 @@ export const ResourceTypeDescriptor = {
           hasFromTargetRef: 'hasFromTargetRef' in item.policy ? item.policy.hasFromTargetRef as boolean : false,
           isFromAsRules: 'isFromAsRules' in item.policy ? item.policy.isFromAsRules as boolean : false,
         },
-      }),
+      } : {}),
+      //
+      group,
       categories: resourceCategories.get(item.name.toLowerCase()) ?? [],
       insightPath: ((shortName) => {
         switch (shortName) {

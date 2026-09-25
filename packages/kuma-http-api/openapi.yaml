@@ -4,7 +4,7 @@ info:
   description: Kuma API
   version: v1alpha1
   x-ref-schema-name: ZoneOverview
-  x-oas-source: kumahq/kuma@9615c4097b604ec33c6cb37f8e995595d9f5b991
+  x-oas-source: kumahq/kuma@d81799fa4077b83052b408bd50e52f1bc80c9088
 paths:
   /:
     get:
@@ -5770,27 +5770,15 @@ components:
       description: information about a policy
       type: object
       properties:
-        isTargetRef:
-          description: whether this policy uses targetRef matching
-          type: boolean
         hasToTargetRef:
           description: indicates that this policy can be used as an outbound policy
-          type: boolean
-        hasFromTargetRef:
-          description: indicates that this policy can be used as an inbound policy
           type: boolean
         hasRulesTargetRef:
           description: indicates that the policy has a rules targetRef field for matching
           type: boolean
-        isFromAsRules:
-          description: If set to `true`, performs a backward compatibility conversion from the deprecated 'from' array to the new 'rules' array. This ensures older policies remain functional under the updated schema.
-          type: boolean
       required:
         - hasToTargetRef
-        - hasFromTargetRef
         - hasRulesTargetRef
-        - isTargetRef
-        - isFromAsRules
     ResourceTypeDescription:
       description: Description of a resource type, this is useful for dynamically generated clients and the gui
       type: object

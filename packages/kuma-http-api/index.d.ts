@@ -2372,16 +2372,10 @@ export interface components {
         };
         /** @description information about a policy */
         PolicyDescription: {
-            /** @description whether this policy uses targetRef matching */
-            isTargetRef: boolean;
             /** @description indicates that this policy can be used as an outbound policy */
             hasToTargetRef: boolean;
-            /** @description indicates that this policy can be used as an inbound policy */
-            hasFromTargetRef: boolean;
             /** @description indicates that the policy has a rules targetRef field for matching */
             hasRulesTargetRef: boolean;
-            /** @description If set to `true`, performs a backward compatibility conversion from the deprecated 'from' array to the new 'rules' array. This ensures older policies remain functional under the updated schema. */
-            isFromAsRules: boolean;
         };
         /** @description Description of a resource type, this is useful for dynamically generated clients and the gui */
         ResourceTypeDescription: {
