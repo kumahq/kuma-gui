@@ -56,8 +56,7 @@
             <XLayout variant="y-stack">
               <header>
                 <XLayout
-                  variant="separated"
-                  size="max"
+                  variant="action-group"
                 >
                   <h3>
                     {{ t('resources.routes.item.config') }}
