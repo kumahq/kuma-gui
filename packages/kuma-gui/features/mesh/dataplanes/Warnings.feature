@@ -12,6 +12,7 @@ Feature: mesh / dataplanes / warnings
       | networking-transparent-proxying | [data-testid^='notification-data-planes.notifications.networking-transparent-proxying'] |
       | dataplane-offline               | [data-testid^='notification-data-planes.notifications.dataplane-offline']               |
       | dataplane-disconnected-cp       | [data-testid^='notification-data-planes.notifications.dataplane-disconnected-cp']       |
+      | recommend-reachable             | [data-testid^='notification-data-planes.notifications.recommend-reachable-services']    |
     And the environment
       """
       KUMA_MESHSERVICE_MODE: Exclusive
@@ -140,12 +141,25 @@ Feature: mesh / dataplanes / warnings
         dataplane:
           networking:
             outbound: !!js/undefined
+            transparentProxying: !!js/undefined
         dataplaneInsight:
           metadata:
             features: !!js/undefined
       """
     When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_dpp-1_/overview" URL
     Then the "$networking-transparent-proxying" element exists
+
+  Scenario: Performance optimization
+    And the URL "/meshes/default/dataplanes/dpp-1.kuma-demo/_overview" responds with
+      """
+      body:
+        dataplane:
+          networking:
+            transparentProxying:
+              reachableBackends: !!js/undefined
+      """
+    When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_dpp-1_/overview" URL
+    Then the "$recommend-reachable" element exists
 
   Scenario: Dataplane offline notification
     And the environment

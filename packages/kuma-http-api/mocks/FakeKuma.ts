@@ -298,7 +298,7 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
       ...additionalTags,
     }
   }
-  labels({ name, mesh, zone, namespace, env }: { name?: string, mesh?: string, zone?: string, namespace?: string, env?: string }): Record<string, string> {
+  labels({ name, mesh, zone, namespace, env }: { name?: string, mesh?: string, zone?: string, namespace?: string, env?: string } = {}): Record<string, string> {
     const additional = Object.fromEntries(
       this.faker.helpers.multiple(
         () => [

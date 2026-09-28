@@ -156,6 +156,18 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
               type,
             },
           }),
+          ...(outboundCount > 0 && {transparentProxying: {
+            reachableBackends: {
+              refs: fake.helpers.arrayElements(Array.from({ length: outboundCount }).map(() => service), { min: 0, max: outboundCount }).map((service) => ({
+                kind: fake.helpers.arrayElement(['MeshService', 'MeshExternalService', 'MeshMultiZoneService']),
+                labels: {
+                  ...fake.kuma.labels(),
+                  'kuma.io/service': service,
+                },
+                port: fake.internet.port(),
+              })),
+            },
+          }}),
         },
       },
       dataplaneInsight: {
