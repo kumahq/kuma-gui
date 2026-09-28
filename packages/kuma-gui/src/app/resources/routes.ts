@@ -1,16 +1,15 @@
 import type { RouteRecordRaw } from 'vue-router'
 
+export const controlPlaneRoutes = (): RouteRecordRaw[] => {
+  return [
+    {
+      name: 'control-plane-resource-type-list-view',
+      path: 'resources',
+      component: () => import('./views/ControlPlaneResourceTypeListView.vue'),
+    },
+  ]
+}
 export const routes = (prefix: string) => {
-  const summary = (): RouteRecordRaw[] => {
-    return [
-      {
-        name: `${prefix}-resource-summary-view`,
-        path: ':kri',
-        component: () => import('@/app/resources/views/ResourceSummaryView.vue'),
-      },
-    ]
-  }
-
   const item = (): RouteRecordRaw[] => {
     return [
       {
@@ -19,7 +18,7 @@ export const routes = (prefix: string) => {
         props: {
           routePrefix: prefix,
         },
-        component: () => import('@/app/resources/views/ResourceDetailView.vue'),
+        component: () => import('./views/ResourceDetailView.vue'),
       },
     ]
   }
@@ -33,7 +32,7 @@ export const routes = (prefix: string) => {
           props: {
             routePrefix: prefix,
           },
-          component: () => import('@/app/resources/views/ResourceTypeListView.vue'),
+          component: () => import('./views/ResourceTypeListView.vue'),
           children: [
             {
               name: `${prefix}-resource-list-view`,
@@ -41,9 +40,13 @@ export const routes = (prefix: string) => {
               props: {
                 routePrefix: prefix,
               },
-              component: () => import('@/app/resources/views/ResourceListView.vue'),
+              component: () => import('./views/ResourceListView.vue'),
               children: [
-                ...summary(),
+                {
+                  name: `${prefix}-resource-summary-view`,
+                  path: ':kri',
+                  component: () => import('./views/ResourceSummaryView.vue'),
+                },
               ],
             },
           ],
@@ -51,6 +54,5 @@ export const routes = (prefix: string) => {
       ]
     },
     item,
-    summary,
   }
 }
