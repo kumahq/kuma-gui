@@ -175,6 +175,7 @@ Feature: mesh / dataplanes / warnings
             inbound:
               - state: NotReady
             listeners: !!js/undefined
+            transparentProxying: !!js/undefined
         dataplaneInsight:
           subscriptions:
             - connectTime: 2022-10-03T12:40:13Z
