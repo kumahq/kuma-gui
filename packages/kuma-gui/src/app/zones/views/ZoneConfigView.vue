@@ -96,7 +96,6 @@
 
           <XAlert
             v-else
-            class="mt-4"
             data-testid="warning-no-subscriptions"
             variant="warning"
           >
