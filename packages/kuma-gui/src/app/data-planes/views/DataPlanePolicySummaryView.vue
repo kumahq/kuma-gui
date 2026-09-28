@@ -52,7 +52,7 @@
           <PolicySummary
             :policy="policy"
             :format="route.params.format"
-            :legacy="!props.policyTypes.find(({ name }) => name === data?.type )?.policy.isTargetRef"
+            :legacy="!props.policyTypes.find(({ name }) => name === data?.type )?.policy?.isTargetRef"
           >
             <template #header>
               <header>
@@ -134,10 +134,10 @@
 
 <script lang="ts" setup>
 import PolicySummary from '@/app/policies/components/PolicySummary.vue'
-import type { PolicyResourceType } from '@/app/policies/data'
 import { sources } from '@/app/policies/sources'
+import type { ResourceTypeDescriptor } from '@/app/resources/data'
 const props = defineProps<{
-  policyTypes: PolicyResourceType[]
+  policyTypes: ResourceTypeDescriptor[]
 }>()
 </script>
 
