@@ -1,0 +1,22 @@
+meshes:
+  routes:
+    item:
+      navigation:
+        mesh-zone-address-list-view: Connected zones
+mesh-zone-addresses:
+  href:
+    docs: &mesh-zone-addresses.href.docs |
+      {KUMA_DOCS_URL}/resources/meshzoneaddress?{KUMA_UTM_QUERY_PARAMS}
+  x-empty-state:
+    title: 'No data'
+    body: !!text/markdown |
+      Unable to compute Connected Zones. There are no `MeshZoneAddress`s present
+    action:
+      type: docs
+      label: Documentation
+      href: *mesh-zone-addresses.href.docs
+  routes:
+    items:
+      title: Connected Zones
+      intro: !!text/markdown |
+        "Connected zones" are zones referenced by a `MeshZoneAddress` in this mesh. This means services/workloads both from this mesh _and_ in these zones can participate in cross zone communication.

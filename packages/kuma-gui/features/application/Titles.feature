@@ -29,6 +29,7 @@ Feature: application / titles
       | /meshes/default/resources/kri_mfi_default_adviser_kuma-system_pension-0-959cb35ab-xtzqf_/overview | pension-0-959cb35ab-xtzqf |
       | /meshes/default/workloads                                                                         | Workloads                 |
       | /meshes/default/workloads/kri_wl_default_z1_ns1_workload-1_/overview                              | workload-1                |
+      | /meshes/default/zones                                                                             | Connected Zones           |
       | /hostname-generators                                                                              | HostnameGenerators        |
       | /hostname-generators/kri_hg____hg-name_/overview                                                  | hg-name                   |
       | /resources/hg                                                                                     | Resources                 |
