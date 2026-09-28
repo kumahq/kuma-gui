@@ -1,4 +1,3 @@
-import { routes as resourcesRoutes } from '@/app/resources/routes'
 import type { RouteRecordRaw } from 'vue-router'
 
 export const routes = (): RouteRecordRaw[] => {
@@ -19,15 +18,3 @@ export const routes = (): RouteRecordRaw[] => {
   ]
 }
 
-export const controlPlaneResourcesRoutes = () => {
-  const cpResourcesRoutes = resourcesRoutes('control-plane')
-  return [
-    {
-      name: 'control-plane-resource-type-list-view',
-      path: 'resources',
-      component: () => import('@/app/control-planes/views/ControlPlaneResourceTypeListView.vue'),
-      children: cpResourcesRoutes.items()[0].children,
-    },
-    ...cpResourcesRoutes.item(),
-  ]
-}
