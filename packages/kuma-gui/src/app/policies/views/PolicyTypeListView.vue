@@ -56,7 +56,7 @@
                           v-for="(policyType, i) in items"
                           :key="policyType.path"
                           :class="{
-                            'active': current && (current.shortName === policyType.shortName || current.path === policyType.path),
+                            'active': current && ((current.shortName.length && (current.shortName === policyType.shortName)) || current.path === policyType.path),
                           }"
                         >
                           <XAction
