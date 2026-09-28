@@ -279,8 +279,6 @@ components:
       $ref: components/schemas/ServicesStats.yaml
     ZonesStats:
       $ref: components/schemas/ZonesStats.yaml
-    DataplanesStats:
-      $ref: components/schemas/DataplanesStats.yaml
     PoliciesStats:
       $ref: components/schemas/PoliciesStats.yaml
     ResourceStats:
