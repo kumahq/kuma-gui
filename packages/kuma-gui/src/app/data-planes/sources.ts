@@ -10,10 +10,9 @@ import {
 } from './data'
 import { YAML, defineSources } from '@/app/application'
 import { search } from '@/app/kuma'
-import type { PaginatedApiListResponse as CollectionResponse, ApiKindListResponse as KindCollectionResponse } from '@/types/api.d'
+import type { ApiKindListResponse as KindCollectionResponse } from '@/types/api.d'
 import type {
   SidecarDataplane as PartialSidecarDataplane,
-  DataPlaneOverview as PartialDataplaneOverview,
 } from '@/types/index.d'
 import type { paths } from '@kumahq/kuma-http-api'
 
@@ -204,7 +203,7 @@ export const sources = ({ baseUrl, fetch }: Options) => {
           },
         },
       })
-      return DataplaneOverview.fromObject(res.data! as unknown as PartialDataplaneOverview)
+      return DataplaneOverview.fromObject(res.data!)
     },
 
     '/meshes/:mesh/dataplanes/of/:type': async (params) => {
@@ -234,7 +233,7 @@ export const sources = ({ baseUrl, fetch }: Options) => {
           },
         },
       })
-      return DataplaneOverview.fromCollection(res.data! as unknown as CollectionResponse<PartialDataplaneOverview>)
+      return DataplaneOverview.fromCollection(res.data!)
     },
 
     '/meshes/:mesh/dataplanes/for/mesh-service/:tags': async (params) => {
@@ -262,7 +261,7 @@ export const sources = ({ baseUrl, fetch }: Options) => {
           },
         },
       })
-      return DataplaneOverview.fromCollection(res.data! as unknown as CollectionResponse<PartialDataplaneOverview>)
+      return DataplaneOverview.fromCollection(res.data!)
     },
 
     '/meshes/:mesh/dataplanes/for/service-insight/:service': async (params) => {
@@ -288,7 +287,7 @@ export const sources = ({ baseUrl, fetch }: Options) => {
           },
         },
       })
-      return DataplaneOverview.fromCollection(res.data! as unknown as CollectionResponse<PartialDataplaneOverview>)
+      return DataplaneOverview.fromCollection(res.data!)
     },
 
     '/meshes/:mesh/dataplanes/:name/layout': async (params) => {

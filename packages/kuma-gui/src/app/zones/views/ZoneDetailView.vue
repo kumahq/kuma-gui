@@ -227,7 +227,7 @@
                         </dt>
                         <dd>
                           <XBadge appearance="info">
-                            {{ subscription.version?.kumaCp?.version ?? t('common.unknown') }}
+                            {{ subscription.version?.kumaCp?.version || t('common.unknown') }}
                           </XBadge>
                         </dd>
                       </div>

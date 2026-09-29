@@ -1,12 +1,14 @@
+import type { paths } from '@kumahq/kuma-http-api'
 import { Dataplane } from './Dataplane'
 import { DataplaneInsight } from './DataplaneInsight'
 import { DataplaneNetworking } from './DataplaneNetworking'
 import { Kri } from '@/app/kuma/kri'
-import type { PaginatedApiListResponse } from '@/types/api.d'
 import type {
-  DataPlaneOverview as PartialDataplaneOverview,
   LabelValue,
 } from '@/types/index.d'
+
+type KumaDataplaneOverviewCollection = paths['/meshes/{mesh}/dataplanes/_overview']['get']['responses']['200']['content']['application/json']
+type KumaDataplaneOverview = KumaDataplaneOverviewCollection['items'][number]
 
 const states = {
   online: 'online',
@@ -22,10 +24,10 @@ const dpTypes = {
 
 export const DataplaneOverview = {
   // TODO: use export type KumaDataplaneOverview = NonNullable<components['schemas']['DataplaneOverviewWithMeta']>
-  fromObject(item: PartialDataplaneOverview) {
+  fromObject(item: KumaDataplaneOverview) {
     const dataplaneInsight = DataplaneInsight.fromObject(item.dataplaneInsight)
 
-    const networking = DataplaneNetworking.fromObject(item.dataplane.networking)
+    const networking = DataplaneNetworking.fromObject(item.dataplane?.networking ?? {})
 
     const tags = getTags(networking)
     const isCertExpired = getIsCertExpired(dataplaneInsight)
@@ -57,8 +59,9 @@ export const DataplaneOverview = {
       name,
       mesh,
       labels,
-      creationTime: item.creationTime ?? '',
-      modificationTime: item.modificationTime ?? '',
+      // TODO: refactor once `creationTime` and `modificationTime` and in OAS
+      creationTime: ('creationTime' in item ? item.creationTime : '') as string | undefined ?? '',
+      modificationTime: ('modificationTime' in item ? item.modificationTime : '') as string | undefined ?? '',
       // aliases
       id,
       namespace,
@@ -127,13 +130,15 @@ export const DataplaneOverview = {
         kri,
         // we only copy these over if they exist
         ...(typeof item.labels !== 'undefined' ? { labels: item.labels } : {}),
-        ...(typeof item.creationTime !== 'undefined' ? { creationTime: item.creationTime } : {}),
-        ...(typeof item.modificationTime !== 'undefined' ? { modificationTime: item.modificationTime } : {}),
+
+        // TODO: refactor once `creationTime` and `modificationTime` and in OAS
+        ...('creationTime' in item && typeof item.creationTime !== 'undefined' ? { creationTime: item.creationTime } : {}),
+        ...('modificationTime' in item && typeof item.modificationTime !== 'undefined' ? { modificationTime: item.modificationTime } : {}),
       },
     }
   },
 
-  fromCollection(partialDataplaneOverviews: PaginatedApiListResponse<PartialDataplaneOverview>) {
+  fromCollection(partialDataplaneOverviews: KumaDataplaneOverviewCollection) {
     return {
       ...partialDataplaneOverviews,
       items: Array.isArray(partialDataplaneOverviews.items)

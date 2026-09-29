@@ -1,30 +1,18 @@
-import { DiscoverySubscriptionCollection, Subscription } from '@/app/subscriptions/data'
-import type { DataPlaneInsight } from '@/types'
+import { DiscoverySubscriptionCollection } from '@/app/subscriptions/data'
 import type { components } from '@kumahq/kuma-http-api'
 
-// TODO: revisit when fixed: `dataplaneInsight.subscriptions` and `dataplaneInsight.mTLS` from OAS are slightly incorrect, therefore omitting for the moment and keep using custom types
-type OasDataplaneInsight = NonNullable<NonNullable<components['responses']['GetDataplaneOverviewResponse']['content']['application/json']>['dataplaneInsight']>
-type PartialDataPlaneInsight = Omit<OasDataplaneInsight, 'subscriptions' | 'mTLS'> & DataPlaneInsight & {
+type KumaDataplaneInsight = NonNullable<components['schemas']['DataplaneOverview']['dataplaneInsight']> & {
   metadata?: {
     features?: string[]
   }
 }
 
 export const DataplaneInsight = {
-  fromObject(item?: PartialDataPlaneInsight) {
+  fromObject(item?: KumaDataplaneInsight) {
     const collection = DiscoverySubscriptionCollection.fromArray(item?.subscriptions)
     return {
       ...(item ?? {}),
       ...collection,
-      subscriptions: collection?.subscriptions?.map((sub) => {
-        return {
-          ...sub,
-          instance: {
-            id: sub.controlPlaneInstanceId,
-            version: sub.version?.kumaDp?.version ?? '',
-          },
-        } satisfies Subscription
-      }) ?? [],
       // ensure features is always an array
       metadata: {
         ...item?.metadata,

@@ -71,7 +71,8 @@ describe('DataplaneOverview', () => {
       async ({ fixture }) => {
         const actual = await fixture.setup((item) => {
           if (typeof item.labels !== 'undefined') {
-            delete item.labels
+            // labels is required by the schema, but older control planes can omit it
+            delete (item as Partial<typeof item>).labels
           }
           return item
         }, {
@@ -108,8 +109,9 @@ describe('DataplaneOverview', () => {
       async ({ fixture }) => {
         expect.assertions(2)
         const actual = await fixture.setup((item) => {
-          if ('gateway' in item.dataplane.networking) {
-            const gateway = item.dataplane.networking.gateway as { type?: string }
+          if ('gateway' in (item.dataplane?.networking ?? {})) {
+            // `gateway` isn't modelled in the OAS schema for networking, so cast around it
+            const gateway = (item.dataplane!.networking as { gateway: { type?: string } }).gateway
             delete gateway.type
             expect(gateway.type).toBeUndefined()
           }
@@ -142,7 +144,7 @@ describe('DataplaneOverview', () => {
           if (typeof item.dataplaneInsight !== 'undefined') {
             item.dataplaneInsight.subscriptions = []
           }
-          item.dataplane.networking.inbound = []
+          item.dataplane!.networking!.inbound = []
           return item
         })
         expect(actual.dataplaneInsight.subscriptions.length).toStrictEqual(0)
@@ -155,14 +157,14 @@ describe('DataplaneOverview', () => {
       async ({ fixture }) => {
         const actual = await fixture.setup((item) => {
           if (typeof item.dataplaneInsight !== 'undefined') {
-            item.dataplaneInsight.subscriptions.forEach((item) => {
+            item.dataplaneInsight.subscriptions!.forEach((item) => {
               item.connectTime = '2021-02-19T07:06:16.384057Z'
               item.disconnectTime = '2021-03-19T07:06:16.384057Z'
             })
           }
           // take inbounds out of the equation
-          if (item.dataplane.networking.inbound?.length === 1) {
-            item.dataplane.networking.inbound[0].state = 'Ready'
+          if (item.dataplane!.networking!.inbound?.length === 1) {
+            item.dataplane!.networking!.inbound[0].state = 'Ready'
           }
           return item
         }, {
@@ -181,7 +183,7 @@ describe('DataplaneOverview', () => {
       async ({ fixture }) => {
         const actual = await fixture.setup((item) => {
           if (typeof item.dataplaneInsight !== 'undefined') {
-            item.dataplaneInsight.subscriptions.forEach((item, i) => {
+            item.dataplaneInsight.subscriptions!.forEach((item, i) => {
               item.connectTime = '2021-02-19T07:06:16.384057Z'
               item.disconnectTime = '2021-03-19T07:06:16.384057Z'
               if (i === 5) {
@@ -190,8 +192,8 @@ describe('DataplaneOverview', () => {
             })
           }
           // take inbounds out of the equation
-          if (item.dataplane.networking.inbound?.length === 1) {
-            item.dataplane.networking.inbound[0].state = 'Ready'
+          if (item.dataplane!.networking!.inbound?.length === 1) {
+            item.dataplane!.networking!.inbound[0].state = 'Ready'
           }
           return item
         }, {
@@ -210,7 +212,7 @@ describe('DataplaneOverview', () => {
       async ({ fixture }) => {
         const actual = await fixture.setup((item) => {
           if (typeof item.dataplaneInsight !== 'undefined') {
-            item.dataplaneInsight.subscriptions.forEach((item, i) => {
+            item.dataplaneInsight.subscriptions!.forEach((item, i) => {
               item.connectTime = '2021-02-19T07:06:16.384057Z'
               item.disconnectTime = '2021-03-19T07:06:16.384057Z'
               if (i === 5) {
@@ -218,9 +220,9 @@ describe('DataplaneOverview', () => {
               }
             })
           }
-          if (item.dataplane.networking.inbound?.length === 2) {
-            item.dataplane.networking.inbound[0].state = 'Ready'
-            item.dataplane.networking.inbound[1].state = 'NotReady'
+          if (item.dataplane!.networking!.inbound?.length === 2) {
+            item.dataplane!.networking!.inbound[0].state = 'Ready'
+            item.dataplane!.networking!.inbound[1].state = 'NotReady'
           }
           return item
         }, {
@@ -239,7 +241,7 @@ describe('DataplaneOverview', () => {
       async ({ fixture }) => {
         const actual = await fixture.setup((item) => {
           if (typeof item.dataplaneInsight !== 'undefined') {
-            item.dataplaneInsight.subscriptions.forEach((item, i) => {
+            item.dataplaneInsight.subscriptions!.forEach((item, i) => {
               item.connectTime = '2021-02-19T07:06:16.384057Z'
               item.disconnectTime = '2021-03-19T07:06:16.384057Z'
               if (i === 5) {
@@ -247,9 +249,9 @@ describe('DataplaneOverview', () => {
               }
             })
           }
-          if (item.dataplane.networking.inbound?.length === 2) {
-            item.dataplane.networking.inbound[0].state = 'NotReady'
-            item.dataplane.networking.inbound[1].state = 'NotReady'
+          if (item.dataplane!.networking!.inbound?.length === 2) {
+            item.dataplane!.networking!.inbound[0].state = 'NotReady'
+            item.dataplane!.networking!.inbound[1].state = 'NotReady'
           }
           return item
         }, {
@@ -268,7 +270,7 @@ describe('DataplaneOverview', () => {
       async ({ fixture }) => {
         const actual = await fixture.setup((item) => {
           if (typeof item.dataplaneInsight !== 'undefined') {
-            item.dataplaneInsight.subscriptions.forEach((item, i) => {
+            item.dataplaneInsight.subscriptions!.forEach((item, i) => {
               item.connectTime = '2021-02-19T07:06:16.384057Z'
               item.disconnectTime = '2021-03-19T07:06:16.384057Z'
               if (i === 5) {
@@ -276,9 +278,9 @@ describe('DataplaneOverview', () => {
               }
             })
           }
-          if (item.dataplane.networking.inbound?.length === 2) {
-            item.dataplane.networking.inbound[0].state = 'NotReady'
-            item.dataplane.networking.inbound[1].state = 'NotReady'
+          if (item.dataplane!.networking!.inbound?.length === 2) {
+            item.dataplane!.networking!.inbound[0].state = 'NotReady'
+            item.dataplane!.networking!.inbound[1].state = 'NotReady'
           }
           return item
         }, {
@@ -298,7 +300,7 @@ describe('DataplaneOverview', () => {
       async ({ fixture }) => {
         const actual = await fixture.setup((item) => {
           if (typeof item.dataplaneInsight !== 'undefined') {
-            item.dataplaneInsight.subscriptions.forEach((item, i) => {
+            item.dataplaneInsight.subscriptions!.forEach((item, i) => {
               item.connectTime = '2021-02-19T07:06:16.384057Z'
               item.disconnectTime = '2021-03-19T07:06:16.384057Z'
               if (i === 5) {
@@ -306,9 +308,9 @@ describe('DataplaneOverview', () => {
               }
             })
           }
-          if (item.dataplane.networking.inbound?.length === 2) {
-            item.dataplane.networking.inbound[0].state = 'NotReady'
-            item.dataplane.networking.inbound[1].state = 'NotReady'
+          if (item.dataplane!.networking!.inbound?.length === 2) {
+            item.dataplane!.networking!.inbound[0].state = 'NotReady'
+            item.dataplane!.networking!.inbound[1].state = 'NotReady'
           }
           return item
         }, {
@@ -329,16 +331,17 @@ describe('DataplaneOverview', () => {
       "if state isn't set we default it to Ready",
       async ({ fixture }) => {
         const actual = await fixture.setup((item) => {
-          if (item.dataplane.networking.inbound?.length === 1) {
-            type Inbound = NonNullable<(typeof item.dataplane.networking.inbound)>[number] & {
+          const inboundList = item.dataplane!.networking!.inbound
+          if (inboundList?.length === 1) {
+            type Inbound = NonNullable<typeof inboundList>[number] & {
               tags: Record<string, string>
             }
-            const { state: _, ...inbound } = item.dataplane.networking.inbound[0] as Inbound
+            const { state: _, ...inbound } = inboundList[0] as Inbound
             inbound.port = 1
             inbound.tags = {
               'kuma.io/service': 'service-name',
             }
-            item.dataplane.networking.inbound[0] = {
+            inboundList[0] = {
               ...inbound,
             }
           }
@@ -355,8 +358,8 @@ describe('DataplaneOverview', () => {
       "if state is set we don't overwrite it",
       async ({ fixture }) => {
         const actual = await fixture.setup((item) => {
-          if (item.dataplane.networking.inbound?.length === 1) {
-            item.dataplane.networking.inbound[0].state = 'NotReady'
+          if (item.dataplane!.networking!.inbound?.length === 1) {
+            item.dataplane!.networking!.inbound[0].state = 'NotReady'
           }
           return item
         }, {
@@ -395,9 +398,10 @@ describe('DataplaneOverview', () => {
           item.name = expected.name
           item.mesh = expected.mesh
           item.kri = expected.kri
-          item.creationTime = expected.creationTime
-          item.modificationTime = expected.modificationTime
-          item.dataplane.networking = expected.networking
+          // creationTime/modificationTime aren't yet in the OAS schema
+          ;(item as typeof item & { creationTime?: string, modificationTime?: string }).creationTime = expected.creationTime
+          ;(item as typeof item & { creationTime?: string, modificationTime?: string }).modificationTime = expected.modificationTime
+          item.dataplane!.networking = expected.networking
           item.labels = {
             'kuma.io/display-name': 'dp-name',
           }
@@ -486,15 +490,15 @@ describe('DataplaneOverview', () => {
       ] as const).forEach(async ({ inbounds, listeners, subscriptions, status }) => {
         const actual = await fixture.setup((item) => {
           item.name = 'test-zone-ingress'
-          item.dataplane.networking.inbound?.forEach((item, i) => {
+          item.dataplane!.networking!.inbound?.forEach((item, i) => {
             item.state = inbounds[i]?.state
           })
-          item.dataplane.networking.listeners?.forEach((item, i) => {
+          item.dataplane!.networking!.listeners?.forEach((item, i) => {
             item.state = listeners[i]?.state
           })
           item.dataplaneInsight = {
             ...item.dataplaneInsight,
-            subscriptions: item.dataplaneInsight?.subscriptions.map((item, i) => {
+            subscriptions: item.dataplaneInsight?.subscriptions?.map((item, i) => {
               item.connectTime = subscriptions[i]?.connectTime
               item.disconnectTime = 'disconnectTime' in subscriptions[i] ? subscriptions[i]?.disconnectTime : undefined
               return item
