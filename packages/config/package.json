@@ -63,7 +63,7 @@
     "js-yaml": "^4.3.2",
     "lint-staged": "^17.5.1",
     "lockfile-lint": "^5.0.1",
-    "markdown-it": "^15.0.1",
+    "markdown-it": "^15.0.2",
     "openapi-format": "^1.33.7",
     "openapi-typescript": "^7.13.0",
     "playwright-bdd": "^9.2.1",
