@@ -1,3 +1,10 @@
+common:
+  label:
+    href:
+      kuma~io/zone: kri://kri_z____{name}_
+  kri:
+    shortNames:
+      zone: z
 zone-cps:
   docs: &zone-cps.docs
     type: docs

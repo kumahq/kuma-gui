@@ -45,6 +45,25 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
         app.sources,
       ],
     }],
+    [token('meshes.kri'), {
+      service: () => {
+        return [
+          ({ shortName, name }: { shortName: string, name: string }) => {
+            if(shortName === 'm') {
+              return {
+                name: 'mesh-detail-view',
+                params: {
+                  mesh: name,
+                },
+              }
+            }
+          },
+        ]
+      },
+      labels: [
+        app.kriHandlers,
+      ],
+    }],
     [token('meshes.routes'), {
       service: () => {
         return [

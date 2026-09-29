@@ -28,6 +28,30 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
     [$.ZoneActionGroup, {
       service: () => ZoneActionGroup,
     }],
+    [token('zones.kri'), {
+      service: (can: Can) => {
+        return [
+          ({ shortName, kri }: { shortName: string, kri: string }) => {
+            if(shortName === 'z') {
+              if(can('use zones')) {
+                return {
+                  name: 'zone-cp-detail-view',
+                  params: {
+                    zone: kri,
+                  },
+                }
+              }
+            }
+          },
+        ]
+      },
+      arguments: [
+        app.can,
+      ],
+      labels: [
+        app.kriHandlers,
+      ],
+    }],
     [token('zones.routes'), {
       service: (can: Can) => {
         return [

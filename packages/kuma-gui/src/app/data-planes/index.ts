@@ -27,6 +27,26 @@ export const TOKENS = $
 
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   return [
+    [token('data-planes.kri'), {
+      service: () => {
+        return [
+          ({ shortName, mesh, kri }: { shortName: string, mesh: string, kri: string }) => {
+            if(shortName === 'dp') {
+              return {
+                name: 'data-plane-detail-view',
+                params: {
+                  mesh,
+                  proxy: kri,
+                },
+              }
+            }
+          },
+        ]
+      },
+      labels: [
+        app.kriHandlers,
+      ],
+    }],
     [token('data-planes.routes'), {
       service: (rootViewRoute: () => RouteRecordRaw[]) => {
         return [

@@ -11,6 +11,25 @@ type Token = ReturnType<typeof token>
 
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   return [
+    [token('hostname-generators.kri'), {
+      service: () => {
+        return [
+          ({ shortName, kri }: { shortName: string, kri: string }) => {
+            if(shortName === 'hg') {
+              return {
+                name: 'hostname-generator-detail-view',
+                params: {
+                  kri,
+                },
+              }
+            }
+          },
+        ]
+      },
+      labels: [
+        app.kriHandlers,
+      ],
+    }],
     [token('hostname-generators.sources'), {
       service: (fetch: typeof globalThis.fetch, env: Env) => sources({
         fetch,
