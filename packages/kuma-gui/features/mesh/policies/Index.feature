@@ -44,12 +44,9 @@ Feature: mesh / policies / index
             name: 'MeshAccessLog'
             path: 'meshaccesslogs'
             pluralDisplayName: 'Mesh Access Logs'
-            policy: 
-              hasFromTargetRef: true
+            policy:
               hasRulesTargetRef: true
               hasToTargetRef: true
-              isFromAsRules: true
-              isTargetRef: true
             readOnly: false
             scope: 'Mesh'
             shortName: 'mal'
@@ -72,7 +69,7 @@ Feature: mesh / policies / index
             name: 'MeshAccessLog'
             path: 'meshaccesslogs'
             pluralDisplayName: 'Mesh Access Logs'
-            policy: 
+            policy:
               hasFromTargetRef: true
               hasRulesTargetRef: true
               hasToTargetRef: true

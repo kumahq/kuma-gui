@@ -2372,16 +2372,10 @@ export interface components {
         };
         /** @description information about a policy */
         PolicyDescription: {
-            /** @description whether this policy uses targetRef matching */
-            isTargetRef: boolean;
             /** @description indicates that this policy can be used as an outbound policy */
             hasToTargetRef: boolean;
-            /** @description indicates that this policy can be used as an inbound policy */
-            hasFromTargetRef: boolean;
             /** @description indicates that the policy has a rules targetRef field for matching */
             hasRulesTargetRef: boolean;
-            /** @description If set to `true`, performs a backward compatibility conversion from the deprecated 'from' array to the new 'rules' array. This ensures older policies remain functional under the updated schema. */
-            isFromAsRules: boolean;
         };
         /** @description Description of a resource type, this is useful for dynamically generated clients and the gui */
         ResourceTypeDescription: {
@@ -2444,18 +2438,6 @@ export interface components {
         ZonesStats: {
             /** @description Control Planes statistics */
             controlPlanes: components["schemas"]["BaseStatus"];
-            /** @description Zone Egresses statistics */
-            zoneEgresses: components["schemas"]["BaseStatus"];
-            /** @description Zone Ingresses statistics */
-            zoneIngresses: components["schemas"]["BaseStatus"];
-        };
-        /**
-         * Dataplanes Stats
-         * @description Dataplanes statistics
-         */
-        DataplanesStats: {
-            /** @description Standard dataplane proxy statistics */
-            standard: components["schemas"]["FullStatus"];
         };
         /**
          * Policies Stats
@@ -2506,7 +2488,7 @@ export interface components {
             /** @description Zones statistics */
             zones: components["schemas"]["ZonesStats"];
             /** @description Dataplane proxy statistics */
-            dataplanes: components["schemas"]["DataplanesStats"];
+            dataplanes: components["schemas"]["FullStatus"];
             /** @description Policies statistics */
             policies: components["schemas"]["PoliciesStats"];
             /** @description Mesh statistics */
@@ -3093,7 +3075,7 @@ export interface components {
                      *     MeshExternalService, MeshService and MeshMultiZoneService. Setting an
                      *     explicit list of refs can dramatically improve the performance of the
                      *     mesh. If not specified, no services in the mesh are reachable, unless
-                     *     the control plane sets KUMA_DEFAULTS_ALLOW_ALL_OUTBOUND.
+                     *     the control plane disables KUMA_DEFAULTS_RESTRICT_OUTBOUND.
                      */
                     reachableBackends?: {
                         refs?: {
@@ -3141,6 +3123,16 @@ export interface components {
             readonly kri?: string;
             labels?: {
                 [key: string]: string;
+            };
+            /**
+             * @description Deprecated: ignored since 3.0, where every mesh behaves as Exclusive.
+             *     Kept only so pre-3.0 zones keep receiving the mode over KDS.
+             *
+             *     Deprecated: Marked as deprecated in api/mesh/v1alpha1/mesh.proto.
+             */
+            meshServices?: {
+                /** @enum {string} */
+                mode?: "Disabled" | "Everywhere" | "ReachableBackends" | "Exclusive" | "Disabled" | "Everywhere" | "ReachableBackends" | "Exclusive";
             };
             /**
              * Format: date-time
@@ -7743,7 +7735,7 @@ export interface components {
                          *     MeshExternalService, MeshService and MeshMultiZoneService. Setting an
                          *     explicit list of refs can dramatically improve the performance of the
                          *     mesh. If not specified, no services in the mesh are reachable, unless
-                         *     the control plane sets KUMA_DEFAULTS_ALLOW_ALL_OUTBOUND.
+                         *     the control plane disables KUMA_DEFAULTS_RESTRICT_OUTBOUND.
                          */
                         reachableBackends?: {
                             refs?: {
@@ -7944,33 +7936,24 @@ export interface components {
         DataplaneOverviewWithMeta: components["schemas"]["Meta"] & components["schemas"]["DataplaneOverview"];
         /** @description MeshOverview defines the projected state of a Mesh. */
         MeshOverview: {
-            mesh?: Record<string, never>;
+            mesh?: {
+                /**
+                 * @description Deprecated: ignored since 3.0, where every mesh behaves as Exclusive.
+                 *     Kept only so pre-3.0 zones keep receiving the mode over KDS.
+                 *
+                 *     Deprecated: Marked as deprecated in api/mesh/v1alpha1/mesh.proto.
+                 */
+                meshServices?: {
+                    /** @enum {string} */
+                    mode?: "Disabled" | "Everywhere" | "ReachableBackends" | "Exclusive";
+                };
+            };
             meshInsight?: {
                 dataplanes?: {
                     offline?: number;
                     online?: number;
                     partiallyDegraded?: number;
                     total?: number;
-                };
-                dataplanesByType?: {
-                    gateway?: {
-                        offline?: number;
-                        online?: number;
-                        partiallyDegraded?: number;
-                        total?: number;
-                    };
-                    gatewayDelegated?: {
-                        offline?: number;
-                        online?: number;
-                        partiallyDegraded?: number;
-                        total?: number;
-                    };
-                    standard?: {
-                        offline?: number;
-                        online?: number;
-                        partiallyDegraded?: number;
-                        total?: number;
-                    };
                 };
                 dpVersions?: {
                     /** @description Dataplane stats grouped by Envoy version */
