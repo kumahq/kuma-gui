@@ -60,7 +60,7 @@
                 >
                   <tr
                     v-for="[key, value] in [
-                      [t('http.api.property.version'), item.version?.kumaCp?.version ?? '-'],
+                      [t('http.api.property.version'), item.instance.version || '-'],
                       [t('http.api.property.connectTime'), t('common.formats.datetime', { value: Date.parse(item.connectTime ?? '') })],
                       ...(item.disconnectTime ? [[t('http.api.property.disconnectTime'), t('common.formats.datetime', { value: Date.parse(item.disconnectTime) })]] : []),
                       [t('subscriptions.routes.item.headers.responses'), `${item.status.total.responsesSent}/${item.status.total.responsesAcknowledged}`],
