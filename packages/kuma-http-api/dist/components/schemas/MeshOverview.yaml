@@ -3,7 +3,22 @@ type: object
 properties:
   mesh:
     type: object
-    properties: {}
+    properties:
+      meshServices:
+        description: |-
+          Deprecated: ignored since 3.0, where every mesh behaves as Exclusive.
+          Kept only so pre-3.0 zones keep receiving the mode over KDS.
+
+          Deprecated: Marked as deprecated in api/mesh/v1alpha1/mesh.proto.
+        type: object
+        properties:
+          mode:
+            type: string
+            enum:
+              - Disabled
+              - Everywhere
+              - ReachableBackends
+              - Exclusive
   meshInsight:
     type: object
     properties:
@@ -18,42 +33,6 @@ properties:
             type: integer
           total:
             type: integer
-      dataplanesByType:
-        type: object
-        properties:
-          gateway:
-            type: object
-            properties:
-              offline:
-                type: integer
-              online:
-                type: integer
-              partiallyDegraded:
-                type: integer
-              total:
-                type: integer
-          gatewayDelegated:
-            type: object
-            properties:
-              offline:
-                type: integer
-              online:
-                type: integer
-              partiallyDegraded:
-                type: integer
-              total:
-                type: integer
-          standard:
-            type: object
-            properties:
-              offline:
-                type: integer
-              online:
-                type: integer
-              partiallyDegraded:
-                type: integer
-              total:
-                type: integer
       dpVersions:
         type: object
         properties:
