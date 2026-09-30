@@ -9,7 +9,7 @@ type JSONValue = JSONPrimitive | JSONComposite
 
 export type RestRequest = {
   method: string
-  params: Record<string, string | readonly string[]>
+  params: Record<string, string | string[]>
   body: Record<string, any>
   url: URL
 }

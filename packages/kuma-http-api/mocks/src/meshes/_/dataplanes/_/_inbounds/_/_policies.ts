@@ -4,6 +4,7 @@ import type { components } from '@kumahq/kuma-http-api'
 type InboundPoliciesList = components['schemas']['InboundPoliciesList']
 type InboundPolicyConf = components['schemas']['InboundPolicyConf']
 
+
 export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
   const mesh = req.params.mesh as string
   const ruleCount = parseInt(env('KUMA_DATAPLANE_RULE_COUNT', `${fake.number.int({ min: 1, max: 5 })}`))
@@ -19,7 +20,7 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
           kind,
           rules: Array.from({ length: ruleCount }).map(() => {
             return {
-              conf: (() => {
+              conf: ((): Record<string, any> => {
                 switch(kind) {
                   case 'MeshLoadBalancingStrategy':
                     return {

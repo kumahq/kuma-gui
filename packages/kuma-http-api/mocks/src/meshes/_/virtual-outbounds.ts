@@ -8,7 +8,7 @@ export default ({ fake }: Dependencies): ResponseHandler => (_req) => {
     },
     body: {
       total,
-      items: Array.from({ length: total }),
+      items: [],
       next: null,
     },
   }
