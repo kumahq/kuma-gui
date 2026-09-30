@@ -17,7 +17,7 @@ properties:
   dataplanes:
     description: Dataplane proxy statistics
     allOf:
-      - $ref: 'DataplanesStats.yaml'
+      - $ref: 'FullStatus.yaml'
   policies:
     description: Policies statistics
     allOf:
