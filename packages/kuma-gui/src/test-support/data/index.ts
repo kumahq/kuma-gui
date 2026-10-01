@@ -42,7 +42,7 @@ export const plugin = <T>(
     // containing a function
     fixture: {
       setup: async (
-        fn: (item: Partial) => Partial,
+        fn: (item: Writeable<Partial>) => Partial,
         options: TestOptions = {},
       ): Promise<K> => {
         // recreate the mock/partial from our mocks for every test
