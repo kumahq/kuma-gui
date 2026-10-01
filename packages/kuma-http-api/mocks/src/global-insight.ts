@@ -9,8 +9,6 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (_req) => {
   const serviceTotal = parseInt(env('KUMA_SERVICE_COUNT', `${fake.number.int({ min: 1, max: 30 })}`))
 
   const dataplaneTotal = parseInt(env('KUMA_DATAPLANE_COUNT', `${fake.number.int({ min: 1, max: 100 })}`))
-  const gatewayBuiltinTotal = fake.number.int({ min: 0, max: 20 })
-  const gatewayDelegatedTotal = fake.number.int({ min: 0, max: 20 })
 
   const zoneControlPlaneTotal = parseInt(env('KUMA_ZONE_COUNT', `${fake.number.int({ min: 1, max: 100 })}`))
   const zoneControlPlaneOnline = fake.number.int({ min: 0, max: zoneControlPlaneTotal })
@@ -27,26 +25,12 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (_req) => {
     },
     body: {
       createdAt: fake.kuma.nanodate(),
-      dataplanes: {
-        gatewayBuiltin: fake.kuma.partitionInto({
-          online: Number,
-          offline: Number,
-          partiallyDegraded: Number,
-          total: gatewayBuiltinTotal,
-        }, gatewayBuiltinTotal),
-        gatewayDelegated: fake.kuma.partitionInto({
-          online: Number,
-          offline: Number,
-          partiallyDegraded: Number,
-          total: gatewayDelegatedTotal,
-        }, gatewayDelegatedTotal),
-        standard: fake.kuma.partitionInto({
-          online: Number,
-          offline: Number,
-          partiallyDegraded: Number,
-          total: dataplaneTotal,
-        }, dataplaneTotal),
-      },
+      dataplanes: fake.kuma.partitionInto({
+        online: Number,
+        offline: Number,
+        partiallyDegraded: Number,
+        total: dataplaneTotal,
+      }, dataplaneTotal),
       meshes: {
         total: meshTotal,
       },

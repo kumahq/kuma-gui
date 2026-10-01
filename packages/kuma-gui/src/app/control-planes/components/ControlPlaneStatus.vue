@@ -107,7 +107,7 @@
         </template>
 
         <KumaResourceStatus
-          :total="globalInsightData.dataplanes.standard.total"
+          :total="globalInsightData.dataplanes.total"
           data-testid="data-plane-proxies-status"
         >
           <template #icon>

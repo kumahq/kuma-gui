@@ -57,8 +57,10 @@ export const ResourceTypeDescriptor = {
   fromObject(item: KumaResourceTypeDescriptor) {
     const group = ('policy' in item ? 'policy' : (item.scope ?? 'others')).toLowerCase()
     return {
-      ...item,
       group,
+      // omit policy here, which gets added back in below
+      // this ensure we maintain v2 compatibility for the moment
+      ...(item as Omit<KumaResourceTypeDescriptor, 'policy'>),
       ...(typeof item.policy !== 'undefined' && {
         policy: {
           ...item.policy,
@@ -68,6 +70,7 @@ export const ResourceTypeDescriptor = {
           isFromAsRules: 'isFromAsRules' in item.policy ? item.policy.isFromAsRules as boolean : false,
         },
       }),
+      //
       categories: resourceCategories.get(item.name.toLowerCase()) ?? [],
       insightPath: ((shortName) => {
         switch (shortName) {
