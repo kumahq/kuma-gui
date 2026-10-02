@@ -5,15 +5,21 @@ import FakeKuma from './FakeKuma'
 export { default as FakeKuma } from './FakeKuma'
 export * from './fs'
 
+type JSONPrimitive = string | number | boolean | null
+type JSONArray = JSONValue[]
+type JSONObject = { [key: string]: JSONValue | undefined }
+type JSONComposite = JSONArray | JSONObject
+type JSONValue = JSONPrimitive | JSONComposite
+
 export interface RestRequest {
   method: string
-  params: Record<string, string | readonly string[]>
+  params: Record<string, string | string[]>
   body: Record<string, any>
   url: URL
 }
 export type Response = {
   headers?: Record<string, string>
-  body: string | Record<string, unknown>
+  body: JSONValue
 } | undefined
 
 export type ResponseHandler = (req: RestRequest) => Response
@@ -47,6 +53,6 @@ export interface Dependencies {
 export const dependencies: Dependencies = {
   fake: new FakeKuma({ locale: [base, en] }),
   pager,
-  env: (key, d = '') => d,
+  env: (_, d = '') => d,
 }
 
