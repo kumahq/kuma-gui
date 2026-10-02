@@ -2,11 +2,12 @@ Feature: mesh / mesh-trust
 
   Background:
     Given the CSS selectors
-      | Alias              | Selector                                |
-      | meshtrusts-listing | [data-testid="mesh-trusts-listing"]     |
-      | item               | $meshtrusts-listing tbody tr            |
-      | summary            | [data-testid="slideout-container"]      |
-      | summary-title      | $summary [data-testid='slideout-title'] |
+      | Alias              | Selector                                  |
+      | meshtrusts-listing | [data-testid="mesh-trusts-listing"]       |
+      | item               | $meshtrusts-listing tbody tr              |
+      | summary            | [data-testid="slideout-container"]        |
+      | summary-title      | $summary [data-testid='slideout-title']   |
+      | detail-view        | [data-testid='mesh-resource-detail-view'] |
     And the URL "/meshes/default/meshtrusts" responds with
       """
       body:
@@ -63,3 +64,9 @@ Feature: mesh / mesh-trust
     And the "$summary [data-testid='k-code-block']" element contains "type: MeshIdentity"
     And the "$summary [data-testid='k-code-block']" element contains "mesh: default"
     And the "$summary [data-testid='k-code-block']" element contains "name: bar"
+
+  Scenario: Navigating to resource detail page
+    When I visit the "/meshes/default" URL
+    Then I click the "$item:nth-child(1) td:first-child a" element
+    Then I click the "$summary-title a" element
+    Then the "$detail-view" element contains "trust-1"

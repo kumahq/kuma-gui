@@ -1,6 +1,7 @@
 mesh-trusts:
   routes:
     item:
+      title: "{name}"
       format: Format
       formats:
         universal: Universal
