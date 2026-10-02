@@ -19,7 +19,13 @@
           <h2
             v-icon-start="'mesh-trust'"
           >
-            {{ data.name }}
+            <XAction
+              :href="`kri://${data.kri}`"
+            >
+              <RouteTitle
+                :title="t('mesh-trusts.routes.item.title', { name: data.name })"
+              />
+            </XAction>
           </h2>
         </template>
         <XLayout
