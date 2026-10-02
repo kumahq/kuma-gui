@@ -19,7 +19,7 @@ import type { RouteRecordRaw } from 'vue-router'
 
 export { runInDebug } from './utilities'
 export { defineSources, ValidationError, useUri } from '@kumahq/data'
-export { useDataSourcePool } from '@kumahq/data/vue'
+export { useDataSourcePool, useData } from '@kumahq/data/vue'
 export type { DataSourceResponse, TypeOf } from '@kumahq/data'
 
 // temporary Set.prototype.difference polyfill
