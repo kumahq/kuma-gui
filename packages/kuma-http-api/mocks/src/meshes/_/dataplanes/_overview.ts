@@ -76,7 +76,7 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
         const name = `${fake.word.noun()}-${type.toLowerCase()}`
         const displayName = `${_name || name}-${id}${fake.kuma.dataplaneSuffix(k8s)}`
         const nspace = tags['k8s.kuma.io/namespace'] ? tags['k8s.kuma.io/namespace'] : namespaceQuery ?? fake.k8s.namespace()
-        const service = tags['kuma.io/service'] ?? serviceQuery
+        const service = tags['kuma.io/service'] ?? serviceQuery ?? fake.word.noun()
         const address = fake.internet.ip()
         const zone = tags['kuma.io/zone'] ?? zoneQuery ?? fake.word.noun()
 
