@@ -183,7 +183,7 @@
                 data-testid="about-zone-cp-subscriptions"
                 class="about-subsection"
               >
-                <XLayout variant="separated">
+                <XLayout variant="inline">
                   <h3>{{ t('zone-cps.routes.item.subscriptions.title') }}</h3>
                   <XAction
                     data-action

@@ -128,7 +128,7 @@
                       </dt>
                       <dd>
                         <XLayout
-                          variant="separated"
+                          variant="inline"
                         >
                           <KumaStatusBadge :status="props.data.status" />
                           <DataCollection
@@ -422,7 +422,7 @@
                     variant="y-stack"
                   >
                     <XLayout
-                      variant="separated"
+                      variant="inline"
                     >
                       <h3>{{ t('data-planes.routes.item.subscriptions.title') }}</h3>
                       <XAction
@@ -561,7 +561,7 @@
                           #title
                         >
                           <XLayout
-                            variant="separated"
+                            variant="inline"
                           >
                             <XIcon
                               name="inbound"
@@ -708,7 +708,7 @@
                         #title
                       >
                         <XLayout
-                          variant="separated"
+                          variant="inline"
                         >
                           <XIcon name="outbound" />
                           <span>Outbounds</span>

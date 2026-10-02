@@ -18,6 +18,22 @@ Quick reference for choosing the right variant:
 - **Label/badge lists** → `separated` - Display labels naturally `label-one, label-two, label-three`
 - **Column layouts** → `columns` - Responsive side-by-side content
 
+### `action-group` - Right aligned controls
+
+The majority of our controls/buttons/dropdowns etc are right aligned. The
+`action-group` variant should wrap these sorts of controls into a group so we
+can align them all together. `action-group` also allows a `<XI18n />`, `<header
+/>` or `<h*>` elements 1 through 6 to be used as its first child. This element
+will be left aligned. This helps with layouts that require a header or
+explanation for the "action group" itself.
+
+### `inline` - center aligned text flow
+
+When you have text of different sizes that you want to flow inline but all be
+aligned (centrally). This is very similar to `separated` but `separated` should
+be "reserved" specifically for things you might separate with a comma such as
+lists of things.
+
 ### `y-stack` - Vertical Stack
 
 Stacks child elements vertically with consistent spacing between them. Ideal
@@ -72,8 +88,8 @@ they are not separated with commas, but `separated` describes this
 relationship.
 
 Think carefully about whether to use this layout or not. If the layout is a
-horizontal stack "because design" you probably want `x-stack` whereas it's
-"because separated list" then you probably want `separated`.
+horizontal stack "because design" you probably want `x-stack` or `inline`
+whereas it's "because separated list" then you probably want `separated`.
 
 Even if the CSS rules used for each horizontal layout may be the same, the
 semantic naming distinction is important.

@@ -29,8 +29,7 @@
           >
             <header>
               <XLayout
-                variant="separated"
-                justify="end"
+                variant="action-group"
               >
                 <XSelect
                   :label="t('subscriptions.routes.item.format')"

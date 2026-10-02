@@ -178,8 +178,7 @@
         <XCard>
           <XLayout variant="y-stack">
             <XLayout
-              variant="separated"
-              justify="end"
+              variant="action-group"
             >
               <div
                 v-for="options in [['universal', 'k8s']]"
