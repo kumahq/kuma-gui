@@ -17,6 +17,7 @@
           v-if="props.canUseZones"
           :total="globalInsightData.zones.controlPlanes.total"
           data-testid="zone-control-planes-status"
+          data-actionable
         >
           <template #icon>
             <img
@@ -27,13 +28,21 @@
           </template>
 
           <template #title>
-            {{ t('main-overview.detail.about.zone_control_planes') }}
+            <XAction
+              data-action
+              :to="{
+                name: 'zone-cp-list-view',
+              }"
+            >
+              {{ t('main-overview.detail.about.zone_control_planes') }}
+            </XAction>
           </template>
         </KumaResourceStatus>
 
         <KumaResourceStatus
           :total="globalInsightData.meshes.total"
           data-testid="meshes-status"
+          data-actionable
         >
           <template #icon>
             <img
@@ -44,7 +53,14 @@
           </template>
 
           <template #title>
-            {{ t('main-overview.detail.about.meshes') }}
+            <XAction
+              data-action
+              :to="{
+                name: 'mesh-list-view',
+              }"
+            >
+              {{ t('main-overview.detail.about.meshes') }}
+            </XAction>
           </template>
         </KumaResourceStatus>
         <template
