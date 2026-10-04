@@ -21,7 +21,7 @@
     "@kumahq/x": "*",
     "@vueuse/core": "^15.0.0",
     "deepmerge": "^4.3.1",
-    "github-buttons": "^2.33.0",
+    "github-buttons": "^2.33.1",
     "js-yaml": "^4.3.2",
     "openapi-fetch": "^0.17.0",
     "pretty-bytes": "^7.1.3",
