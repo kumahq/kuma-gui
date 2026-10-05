@@ -53,7 +53,7 @@
   </template>
 </template>
 <script lang="ts" setup>
- 
+
 import { escapeHtml } from '@vue/shared'
 import { useAttrs, useId } from 'vue'
 
@@ -118,8 +118,18 @@ const safeT: TFunction = (
 /* the x-i18n scope is necessary here */
 /* to prevent "global" `p` styles from overwriting this */
 .x-i18n {
-  :deep(p + p) {
+  :deep(:where(p, x-markdown-fence) + :where(p, ol, ul, x-markdown-fence)) {
     margin-block-start: 1em;
   }
+  :deep(ol) {
+    padding-left: var(--x-space-60);
+  }
+  :deep(:where(p, li) code) {
+    font-size: inherit !important;
+  }
+  :deep(:where(p, li) a) {
+    text-decoration: underline;
+  }
 }
+
 </style>

@@ -1,5 +1,6 @@
 import { load, CORE_SCHEMA, defineScalarTag, mergeTag } from 'js-yaml'
 import markdown from 'markdown-it'
+import { markdownFence } from '@kumahq/x/vite'
 import { execSync } from 'node:child_process'
 import { dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -26,7 +27,7 @@ export const yamlLoader = (): Plugin => {
     {
       html: true,
     },
-  )
+  ).use(markdownFence)
   const schema = CORE_SCHEMA.withTags(
     mergeTag,
     defineScalarTag('tag:yaml.org,2002:text/markdown', {
@@ -65,6 +66,7 @@ export const vuePluginConfig = () => ({
       whitespace: 'preserve' as const,
       isCustomElement: (item: string) => [
         'search',
+        'x-markdown-fence',
       ].includes(item),
     },
   },
