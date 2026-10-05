@@ -45,6 +45,7 @@
     "@kong/stylelint-plugin-design-tokens": "^2.0.1",
     "@kumahq/eslint-package-constraints": "*",
     "@kumahq/gherkin-web": "*",
+    "@kumahq/x": "*",
     "@playwright/test": "^1.63.0",
     "@stylistic/eslint-plugin": "^5.10.0",
     "@stylistic/stylelint-plugin": "^5.3.0",

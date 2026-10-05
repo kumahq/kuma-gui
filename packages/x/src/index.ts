@@ -5,7 +5,7 @@ import {
 } from '@kong/kongponents'
 import { createHighlighterCore } from 'shiki/core'
 import { createJavaScriptRegexEngine } from 'shiki/engine/javascript'
-import { inject } from 'vue'
+import { defineCustomElement, inject } from 'vue'
 
 import {
   XAction,
@@ -33,6 +33,7 @@ import {
   XInput,
   XInputSwitch,
   XLayout,
+  XMarkdownFence,
   XModal,
   XNotification,
   XNotificationHub,
@@ -58,6 +59,10 @@ import type { CodeToHastOptions } from 'shiki/core'
 import type { App, Plugin, InjectionKey } from 'vue'
 
 export * from './components'
+
+const elements = [
+  ['x-markdown-fence', XMarkdownFence],
+] as const
 
 const components = [
   ['XAlert', XAlert],
@@ -264,11 +269,27 @@ const tokens = {
   push: uri<typeof deps.href>('x.router.push'),
   routerElement: uri<HTMLElement>('x.router.routerElement'),
 }
+
 const plugin: Plugin = {
   install: (app, options: Partial<typeof deps> = {}) => {
     const services = {
       ...deps,
       ...options,
+    }
+
+
+    const customElement = (name: string, item: Parameters<typeof defineCustomElement>[0]) => {
+      if (typeof customElements === 'undefined' || typeof customElements.get(name) !== 'undefined') {
+        return
+      }
+      customElements.define(name, defineCustomElement(item, {
+        shadowRoot: true,
+        // each element is its own app root, so nothing we provide here reaches
+        // it, we therefore re-install ourselves with the same services
+        configureApp: (elementApp) => {
+          elementApp.use(plugin, services)
+        },
+      }))
     }
 
     const { build } = createBuilder(nano())
@@ -285,6 +306,9 @@ const plugin: Plugin = {
     })
     directives.forEach(([name, item]) => {
       app.directive(name, item)
+    })
+    elements.forEach(([name, item]) => {
+      customElement(name, item)
     })
   },
 }
