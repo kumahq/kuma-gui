@@ -4,7 +4,7 @@ info:
   description: Kuma API
   version: v1alpha1
   x-ref-schema-name: ZoneOverview
-  x-oas-source: kumahq/kuma@4e48a432eea7d4079ea14978ff698adebf8ec652
+  x-oas-source: kumahq/kuma@4c9d255fc016b5356fdceed683fdb81fb00f4845
 paths:
   /:
     get:
@@ -871,45 +871,6 @@ paths:
           $ref: '#/components/responses/MeshAccessLogList'
       tags:
         - MeshAccessLog
-  /meshaccesslogs:
-    get:
-      operationId: getMeshAccessLogListAllMeshes
-      summary: Returns a list of MeshAccessLog across all meshes.
-      parameters:
-        - name: offset
-          in: query
-          description: offset in the list of entities
-          required: false
-          schema:
-            type: integer
-            example: 0
-        - name: size
-          in: query
-          description: the number of items per page
-          required: false
-          schema:
-            type: integer
-            default: 100
-            maximum: 1000
-            minimum: 1
-        - name: filter
-          in: query
-          description: filter by labels when multiple filters are present, they are ANDed
-          required: false
-          schema:
-            type: object
-            properties:
-              key:
-                type: string
-              value:
-                type: string
-          example:
-            label.k8s.kuma.io/namespace: my-ns
-      responses:
-        '200':
-          $ref: '#/components/responses/MeshAccessLogList'
-      tags:
-        - MeshAccessLog
   /meshes/{mesh}/meshcircuitbreakers/{name}:
     get:
       operationId: getMeshCircuitBreaker
@@ -1027,45 +988,6 @@ paths:
           required: true
           schema:
             type: string
-      responses:
-        '200':
-          $ref: '#/components/responses/MeshCircuitBreakerList'
-      tags:
-        - MeshCircuitBreaker
-  /meshcircuitbreakers:
-    get:
-      operationId: getMeshCircuitBreakerListAllMeshes
-      summary: Returns a list of MeshCircuitBreaker across all meshes.
-      parameters:
-        - name: offset
-          in: query
-          description: offset in the list of entities
-          required: false
-          schema:
-            type: integer
-            example: 0
-        - name: size
-          in: query
-          description: the number of items per page
-          required: false
-          schema:
-            type: integer
-            default: 100
-            maximum: 1000
-            minimum: 1
-        - name: filter
-          in: query
-          description: filter by labels when multiple filters are present, they are ANDed
-          required: false
-          schema:
-            type: object
-            properties:
-              key:
-                type: string
-              value:
-                type: string
-          example:
-            label.k8s.kuma.io/namespace: my-ns
       responses:
         '200':
           $ref: '#/components/responses/MeshCircuitBreakerList'
@@ -1193,45 +1115,6 @@ paths:
           $ref: '#/components/responses/MeshFaultInjectionList'
       tags:
         - MeshFaultInjection
-  /meshfaultinjections:
-    get:
-      operationId: getMeshFaultInjectionListAllMeshes
-      summary: Returns a list of MeshFaultInjection across all meshes.
-      parameters:
-        - name: offset
-          in: query
-          description: offset in the list of entities
-          required: false
-          schema:
-            type: integer
-            example: 0
-        - name: size
-          in: query
-          description: the number of items per page
-          required: false
-          schema:
-            type: integer
-            default: 100
-            maximum: 1000
-            minimum: 1
-        - name: filter
-          in: query
-          description: filter by labels when multiple filters are present, they are ANDed
-          required: false
-          schema:
-            type: object
-            properties:
-              key:
-                type: string
-              value:
-                type: string
-          example:
-            label.k8s.kuma.io/namespace: my-ns
-      responses:
-        '200':
-          $ref: '#/components/responses/MeshFaultInjectionList'
-      tags:
-        - MeshFaultInjection
   /meshes/{mesh}/meshhealthchecks/{name}:
     get:
       operationId: getMeshHealthCheck
@@ -1349,45 +1232,6 @@ paths:
           required: true
           schema:
             type: string
-      responses:
-        '200':
-          $ref: '#/components/responses/MeshHealthCheckList'
-      tags:
-        - MeshHealthCheck
-  /meshhealthchecks:
-    get:
-      operationId: getMeshHealthCheckListAllMeshes
-      summary: Returns a list of MeshHealthCheck across all meshes.
-      parameters:
-        - name: offset
-          in: query
-          description: offset in the list of entities
-          required: false
-          schema:
-            type: integer
-            example: 0
-        - name: size
-          in: query
-          description: the number of items per page
-          required: false
-          schema:
-            type: integer
-            default: 100
-            maximum: 1000
-            minimum: 1
-        - name: filter
-          in: query
-          description: filter by labels when multiple filters are present, they are ANDed
-          required: false
-          schema:
-            type: object
-            properties:
-              key:
-                type: string
-              value:
-                type: string
-          example:
-            label.k8s.kuma.io/namespace: my-ns
       responses:
         '200':
           $ref: '#/components/responses/MeshHealthCheckList'
@@ -1515,45 +1359,6 @@ paths:
           $ref: '#/components/responses/MeshHTTPRouteList'
       tags:
         - MeshHTTPRoute
-  /meshhttproutes:
-    get:
-      operationId: getMeshHTTPRouteListAllMeshes
-      summary: Returns a list of MeshHTTPRoute across all meshes.
-      parameters:
-        - name: offset
-          in: query
-          description: offset in the list of entities
-          required: false
-          schema:
-            type: integer
-            example: 0
-        - name: size
-          in: query
-          description: the number of items per page
-          required: false
-          schema:
-            type: integer
-            default: 100
-            maximum: 1000
-            minimum: 1
-        - name: filter
-          in: query
-          description: filter by labels when multiple filters are present, they are ANDed
-          required: false
-          schema:
-            type: object
-            properties:
-              key:
-                type: string
-              value:
-                type: string
-          example:
-            label.k8s.kuma.io/namespace: my-ns
-      responses:
-        '200':
-          $ref: '#/components/responses/MeshHTTPRouteList'
-      tags:
-        - MeshHTTPRoute
   /meshes/{mesh}/meshloadbalancingstrategies/{name}:
     get:
       operationId: getMeshLoadBalancingStrategy
@@ -1671,45 +1476,6 @@ paths:
           required: true
           schema:
             type: string
-      responses:
-        '200':
-          $ref: '#/components/responses/MeshLoadBalancingStrategyList'
-      tags:
-        - MeshLoadBalancingStrategy
-  /meshloadbalancingstrategies:
-    get:
-      operationId: getMeshLoadBalancingStrategyListAllMeshes
-      summary: Returns a list of MeshLoadBalancingStrategy across all meshes.
-      parameters:
-        - name: offset
-          in: query
-          description: offset in the list of entities
-          required: false
-          schema:
-            type: integer
-            example: 0
-        - name: size
-          in: query
-          description: the number of items per page
-          required: false
-          schema:
-            type: integer
-            default: 100
-            maximum: 1000
-            minimum: 1
-        - name: filter
-          in: query
-          description: filter by labels when multiple filters are present, they are ANDed
-          required: false
-          schema:
-            type: object
-            properties:
-              key:
-                type: string
-              value:
-                type: string
-          example:
-            label.k8s.kuma.io/namespace: my-ns
       responses:
         '200':
           $ref: '#/components/responses/MeshLoadBalancingStrategyList'
@@ -1837,45 +1603,6 @@ paths:
           $ref: '#/components/responses/MeshMetricList'
       tags:
         - MeshMetric
-  /meshmetrics:
-    get:
-      operationId: getMeshMetricListAllMeshes
-      summary: Returns a list of MeshMetric across all meshes.
-      parameters:
-        - name: offset
-          in: query
-          description: offset in the list of entities
-          required: false
-          schema:
-            type: integer
-            example: 0
-        - name: size
-          in: query
-          description: the number of items per page
-          required: false
-          schema:
-            type: integer
-            default: 100
-            maximum: 1000
-            minimum: 1
-        - name: filter
-          in: query
-          description: filter by labels when multiple filters are present, they are ANDed
-          required: false
-          schema:
-            type: object
-            properties:
-              key:
-                type: string
-              value:
-                type: string
-          example:
-            label.k8s.kuma.io/namespace: my-ns
-      responses:
-        '200':
-          $ref: '#/components/responses/MeshMetricList'
-      tags:
-        - MeshMetric
   /meshes/{mesh}/meshpassthroughs/{name}:
     get:
       operationId: getMeshPassthrough
@@ -1993,45 +1720,6 @@ paths:
           required: true
           schema:
             type: string
-      responses:
-        '200':
-          $ref: '#/components/responses/MeshPassthroughList'
-      tags:
-        - MeshPassthrough
-  /meshpassthroughs:
-    get:
-      operationId: getMeshPassthroughListAllMeshes
-      summary: Returns a list of MeshPassthrough across all meshes.
-      parameters:
-        - name: offset
-          in: query
-          description: offset in the list of entities
-          required: false
-          schema:
-            type: integer
-            example: 0
-        - name: size
-          in: query
-          description: the number of items per page
-          required: false
-          schema:
-            type: integer
-            default: 100
-            maximum: 1000
-            minimum: 1
-        - name: filter
-          in: query
-          description: filter by labels when multiple filters are present, they are ANDed
-          required: false
-          schema:
-            type: object
-            properties:
-              key:
-                type: string
-              value:
-                type: string
-          example:
-            label.k8s.kuma.io/namespace: my-ns
       responses:
         '200':
           $ref: '#/components/responses/MeshPassthroughList'
@@ -2159,45 +1847,6 @@ paths:
           $ref: '#/components/responses/MeshProxyPatchList'
       tags:
         - MeshProxyPatch
-  /meshproxypatches:
-    get:
-      operationId: getMeshProxyPatchListAllMeshes
-      summary: Returns a list of MeshProxyPatch across all meshes.
-      parameters:
-        - name: offset
-          in: query
-          description: offset in the list of entities
-          required: false
-          schema:
-            type: integer
-            example: 0
-        - name: size
-          in: query
-          description: the number of items per page
-          required: false
-          schema:
-            type: integer
-            default: 100
-            maximum: 1000
-            minimum: 1
-        - name: filter
-          in: query
-          description: filter by labels when multiple filters are present, they are ANDed
-          required: false
-          schema:
-            type: object
-            properties:
-              key:
-                type: string
-              value:
-                type: string
-          example:
-            label.k8s.kuma.io/namespace: my-ns
-      responses:
-        '200':
-          $ref: '#/components/responses/MeshProxyPatchList'
-      tags:
-        - MeshProxyPatch
   /meshes/{mesh}/meshratelimits/{name}:
     get:
       operationId: getMeshRateLimit
@@ -2315,45 +1964,6 @@ paths:
           required: true
           schema:
             type: string
-      responses:
-        '200':
-          $ref: '#/components/responses/MeshRateLimitList'
-      tags:
-        - MeshRateLimit
-  /meshratelimits:
-    get:
-      operationId: getMeshRateLimitListAllMeshes
-      summary: Returns a list of MeshRateLimit across all meshes.
-      parameters:
-        - name: offset
-          in: query
-          description: offset in the list of entities
-          required: false
-          schema:
-            type: integer
-            example: 0
-        - name: size
-          in: query
-          description: the number of items per page
-          required: false
-          schema:
-            type: integer
-            default: 100
-            maximum: 1000
-            minimum: 1
-        - name: filter
-          in: query
-          description: filter by labels when multiple filters are present, they are ANDed
-          required: false
-          schema:
-            type: object
-            properties:
-              key:
-                type: string
-              value:
-                type: string
-          example:
-            label.k8s.kuma.io/namespace: my-ns
       responses:
         '200':
           $ref: '#/components/responses/MeshRateLimitList'
@@ -2481,45 +2091,6 @@ paths:
           $ref: '#/components/responses/MeshRetryList'
       tags:
         - MeshRetry
-  /meshretries:
-    get:
-      operationId: getMeshRetryListAllMeshes
-      summary: Returns a list of MeshRetry across all meshes.
-      parameters:
-        - name: offset
-          in: query
-          description: offset in the list of entities
-          required: false
-          schema:
-            type: integer
-            example: 0
-        - name: size
-          in: query
-          description: the number of items per page
-          required: false
-          schema:
-            type: integer
-            default: 100
-            maximum: 1000
-            minimum: 1
-        - name: filter
-          in: query
-          description: filter by labels when multiple filters are present, they are ANDed
-          required: false
-          schema:
-            type: object
-            properties:
-              key:
-                type: string
-              value:
-                type: string
-          example:
-            label.k8s.kuma.io/namespace: my-ns
-      responses:
-        '200':
-          $ref: '#/components/responses/MeshRetryList'
-      tags:
-        - MeshRetry
   /meshes/{mesh}/meshtcproutes/{name}:
     get:
       operationId: getMeshTCPRoute
@@ -2637,45 +2208,6 @@ paths:
           required: true
           schema:
             type: string
-      responses:
-        '200':
-          $ref: '#/components/responses/MeshTCPRouteList'
-      tags:
-        - MeshTCPRoute
-  /meshtcproutes:
-    get:
-      operationId: getMeshTCPRouteListAllMeshes
-      summary: Returns a list of MeshTCPRoute across all meshes.
-      parameters:
-        - name: offset
-          in: query
-          description: offset in the list of entities
-          required: false
-          schema:
-            type: integer
-            example: 0
-        - name: size
-          in: query
-          description: the number of items per page
-          required: false
-          schema:
-            type: integer
-            default: 100
-            maximum: 1000
-            minimum: 1
-        - name: filter
-          in: query
-          description: filter by labels when multiple filters are present, they are ANDed
-          required: false
-          schema:
-            type: object
-            properties:
-              key:
-                type: string
-              value:
-                type: string
-          example:
-            label.k8s.kuma.io/namespace: my-ns
       responses:
         '200':
           $ref: '#/components/responses/MeshTCPRouteList'
@@ -2803,45 +2335,6 @@ paths:
           $ref: '#/components/responses/MeshTimeoutList'
       tags:
         - MeshTimeout
-  /meshtimeouts:
-    get:
-      operationId: getMeshTimeoutListAllMeshes
-      summary: Returns a list of MeshTimeout across all meshes.
-      parameters:
-        - name: offset
-          in: query
-          description: offset in the list of entities
-          required: false
-          schema:
-            type: integer
-            example: 0
-        - name: size
-          in: query
-          description: the number of items per page
-          required: false
-          schema:
-            type: integer
-            default: 100
-            maximum: 1000
-            minimum: 1
-        - name: filter
-          in: query
-          description: filter by labels when multiple filters are present, they are ANDed
-          required: false
-          schema:
-            type: object
-            properties:
-              key:
-                type: string
-              value:
-                type: string
-          example:
-            label.k8s.kuma.io/namespace: my-ns
-      responses:
-        '200':
-          $ref: '#/components/responses/MeshTimeoutList'
-      tags:
-        - MeshTimeout
   /meshes/{mesh}/meshtlses/{name}:
     get:
       operationId: getMeshTLS
@@ -2959,45 +2452,6 @@ paths:
           required: true
           schema:
             type: string
-      responses:
-        '200':
-          $ref: '#/components/responses/MeshTLSList'
-      tags:
-        - MeshTLS
-  /meshtlses:
-    get:
-      operationId: getMeshTLSListAllMeshes
-      summary: Returns a list of MeshTLS across all meshes.
-      parameters:
-        - name: offset
-          in: query
-          description: offset in the list of entities
-          required: false
-          schema:
-            type: integer
-            example: 0
-        - name: size
-          in: query
-          description: the number of items per page
-          required: false
-          schema:
-            type: integer
-            default: 100
-            maximum: 1000
-            minimum: 1
-        - name: filter
-          in: query
-          description: filter by labels when multiple filters are present, they are ANDed
-          required: false
-          schema:
-            type: object
-            properties:
-              key:
-                type: string
-              value:
-                type: string
-          example:
-            label.k8s.kuma.io/namespace: my-ns
       responses:
         '200':
           $ref: '#/components/responses/MeshTLSList'
@@ -3125,45 +2579,6 @@ paths:
           $ref: '#/components/responses/MeshTraceList'
       tags:
         - MeshTrace
-  /meshtraces:
-    get:
-      operationId: getMeshTraceListAllMeshes
-      summary: Returns a list of MeshTrace across all meshes.
-      parameters:
-        - name: offset
-          in: query
-          description: offset in the list of entities
-          required: false
-          schema:
-            type: integer
-            example: 0
-        - name: size
-          in: query
-          description: the number of items per page
-          required: false
-          schema:
-            type: integer
-            default: 100
-            maximum: 1000
-            minimum: 1
-        - name: filter
-          in: query
-          description: filter by labels when multiple filters are present, they are ANDed
-          required: false
-          schema:
-            type: object
-            properties:
-              key:
-                type: string
-              value:
-                type: string
-          example:
-            label.k8s.kuma.io/namespace: my-ns
-      responses:
-        '200':
-          $ref: '#/components/responses/MeshTraceList'
-      tags:
-        - MeshTrace
   /meshes/{mesh}/meshtrafficpermissions/{name}:
     get:
       operationId: getMeshTrafficPermission
@@ -3286,84 +2701,6 @@ paths:
           $ref: '#/components/responses/MeshTrafficPermissionList'
       tags:
         - MeshTrafficPermission
-  /meshtrafficpermissions:
-    get:
-      operationId: getMeshTrafficPermissionListAllMeshes
-      summary: Returns a list of MeshTrafficPermission across all meshes.
-      parameters:
-        - name: offset
-          in: query
-          description: offset in the list of entities
-          required: false
-          schema:
-            type: integer
-            example: 0
-        - name: size
-          in: query
-          description: the number of items per page
-          required: false
-          schema:
-            type: integer
-            default: 100
-            maximum: 1000
-            minimum: 1
-        - name: filter
-          in: query
-          description: filter by labels when multiple filters are present, they are ANDed
-          required: false
-          schema:
-            type: object
-            properties:
-              key:
-                type: string
-              value:
-                type: string
-          example:
-            label.k8s.kuma.io/namespace: my-ns
-      responses:
-        '200':
-          $ref: '#/components/responses/MeshTrafficPermissionList'
-      tags:
-        - MeshTrafficPermission
-  /dataplanes:
-    get:
-      operationId: getDataplaneListAllMeshes
-      summary: Returns a list of Dataplane across all meshes.
-      parameters:
-        - name: offset
-          in: query
-          description: offset in the list of entities
-          required: false
-          schema:
-            type: integer
-            example: 0
-        - name: size
-          in: query
-          description: the number of items per page
-          required: false
-          schema:
-            type: integer
-            default: 100
-            maximum: 1000
-            minimum: 1
-        - name: filter
-          in: query
-          description: filter by labels when multiple filters are present, they are ANDed
-          required: false
-          schema:
-            type: object
-            properties:
-              key:
-                type: string
-              value:
-                type: string
-          example:
-            label.k8s.kuma.io/namespace: my-ns
-      responses:
-        '200':
-          $ref: '#/components/responses/DataplaneList'
-      tags:
-        - Dataplane
   /meshes/{mesh}/dataplanes:
     get:
       operationId: getDataplaneList
@@ -3486,45 +2823,6 @@ paths:
           $ref: '#/components/responses/DataplaneCreateOrUpdateSuccessResponse'
       tags:
         - Dataplane
-  /dataplane-insights:
-    get:
-      operationId: getDataplaneInsightListAllMeshes
-      summary: Returns a list of DataplaneInsight across all meshes.
-      parameters:
-        - name: offset
-          in: query
-          description: offset in the list of entities
-          required: false
-          schema:
-            type: integer
-            example: 0
-        - name: size
-          in: query
-          description: the number of items per page
-          required: false
-          schema:
-            type: integer
-            default: 100
-            maximum: 1000
-            minimum: 1
-        - name: filter
-          in: query
-          description: filter by labels when multiple filters are present, they are ANDed
-          required: false
-          schema:
-            type: object
-            properties:
-              key:
-                type: string
-              value:
-                type: string
-          example:
-            label.k8s.kuma.io/namespace: my-ns
-      responses:
-        '200':
-          $ref: '#/components/responses/DataplaneInsightList'
-      tags:
-        - DataplaneInsight
   /meshes/{mesh}/dataplane-insights:
     get:
       operationId: getDataplaneInsightList
@@ -4016,45 +3314,6 @@ paths:
           $ref: '#/components/responses/SecretCreateOrUpdateSuccessResponse'
       tags:
         - Secret
-  /secrets:
-    get:
-      operationId: getSecretListAllMeshes
-      summary: Returns a list of Secret across all meshes.
-      parameters:
-        - name: offset
-          in: query
-          description: offset in the list of entities
-          required: false
-          schema:
-            type: integer
-            example: 0
-        - name: size
-          in: query
-          description: the number of items per page
-          required: false
-          schema:
-            type: integer
-            default: 100
-            maximum: 1000
-            minimum: 1
-        - name: filter
-          in: query
-          description: filter by labels when multiple filters are present, they are ANDed
-          required: false
-          schema:
-            type: object
-            properties:
-              key:
-                type: string
-              value:
-                type: string
-          example:
-            label.k8s.kuma.io/namespace: my-ns
-      responses:
-        '200':
-          $ref: '#/components/responses/SecretList'
-      tags:
-        - Secret
   /zones:
     get:
       operationId: getZoneList
@@ -4457,45 +3716,6 @@ paths:
           $ref: '#/components/responses/MeshExternalServiceList'
       tags:
         - MeshExternalService
-  /meshexternalservices:
-    get:
-      operationId: getMeshExternalServiceListAllMeshes
-      summary: Returns a list of MeshExternalService across all meshes.
-      parameters:
-        - name: offset
-          in: query
-          description: offset in the list of entities
-          required: false
-          schema:
-            type: integer
-            example: 0
-        - name: size
-          in: query
-          description: the number of items per page
-          required: false
-          schema:
-            type: integer
-            default: 100
-            maximum: 1000
-            minimum: 1
-        - name: filter
-          in: query
-          description: filter by labels when multiple filters are present, they are ANDed
-          required: false
-          schema:
-            type: object
-            properties:
-              key:
-                type: string
-              value:
-                type: string
-          example:
-            label.k8s.kuma.io/namespace: my-ns
-      responses:
-        '200':
-          $ref: '#/components/responses/MeshExternalServiceList'
-      tags:
-        - MeshExternalService
   /meshes/{mesh}/meshidentities/{name}:
     get:
       operationId: getMeshIdentity
@@ -4613,45 +3833,6 @@ paths:
           required: true
           schema:
             type: string
-      responses:
-        '200':
-          $ref: '#/components/responses/MeshIdentityList'
-      tags:
-        - MeshIdentity
-  /meshidentities:
-    get:
-      operationId: getMeshIdentityListAllMeshes
-      summary: Returns a list of MeshIdentity across all meshes.
-      parameters:
-        - name: offset
-          in: query
-          description: offset in the list of entities
-          required: false
-          schema:
-            type: integer
-            example: 0
-        - name: size
-          in: query
-          description: the number of items per page
-          required: false
-          schema:
-            type: integer
-            default: 100
-            maximum: 1000
-            minimum: 1
-        - name: filter
-          in: query
-          description: filter by labels when multiple filters are present, they are ANDed
-          required: false
-          schema:
-            type: object
-            properties:
-              key:
-                type: string
-              value:
-                type: string
-          example:
-            label.k8s.kuma.io/namespace: my-ns
       responses:
         '200':
           $ref: '#/components/responses/MeshIdentityList'
@@ -4779,45 +3960,6 @@ paths:
           $ref: '#/components/responses/MeshMultiZoneServiceList'
       tags:
         - MeshMultiZoneService
-  /meshmultizoneservices:
-    get:
-      operationId: getMeshMultiZoneServiceListAllMeshes
-      summary: Returns a list of MeshMultiZoneService across all meshes.
-      parameters:
-        - name: offset
-          in: query
-          description: offset in the list of entities
-          required: false
-          schema:
-            type: integer
-            example: 0
-        - name: size
-          in: query
-          description: the number of items per page
-          required: false
-          schema:
-            type: integer
-            default: 100
-            maximum: 1000
-            minimum: 1
-        - name: filter
-          in: query
-          description: filter by labels when multiple filters are present, they are ANDed
-          required: false
-          schema:
-            type: object
-            properties:
-              key:
-                type: string
-              value:
-                type: string
-          example:
-            label.k8s.kuma.io/namespace: my-ns
-      responses:
-        '200':
-          $ref: '#/components/responses/MeshMultiZoneServiceList'
-      tags:
-        - MeshMultiZoneService
   /meshes/{mesh}/meshopentelemetrybackends/{name}:
     get:
       operationId: getMeshOpenTelemetryBackend
@@ -4935,45 +4077,6 @@ paths:
           required: true
           schema:
             type: string
-      responses:
-        '200':
-          $ref: '#/components/responses/MeshOpenTelemetryBackendList'
-      tags:
-        - MeshOpenTelemetryBackend
-  /meshopentelemetrybackends:
-    get:
-      operationId: getMeshOpenTelemetryBackendListAllMeshes
-      summary: Returns a list of MeshOpenTelemetryBackend across all meshes.
-      parameters:
-        - name: offset
-          in: query
-          description: offset in the list of entities
-          required: false
-          schema:
-            type: integer
-            example: 0
-        - name: size
-          in: query
-          description: the number of items per page
-          required: false
-          schema:
-            type: integer
-            default: 100
-            maximum: 1000
-            minimum: 1
-        - name: filter
-          in: query
-          description: filter by labels when multiple filters are present, they are ANDed
-          required: false
-          schema:
-            type: object
-            properties:
-              key:
-                type: string
-              value:
-                type: string
-          example:
-            label.k8s.kuma.io/namespace: my-ns
       responses:
         '200':
           $ref: '#/components/responses/MeshOpenTelemetryBackendList'
@@ -5101,45 +4204,6 @@ paths:
           $ref: '#/components/responses/MeshServiceList'
       tags:
         - MeshService
-  /meshservices:
-    get:
-      operationId: getMeshServiceListAllMeshes
-      summary: Returns a list of MeshService across all meshes.
-      parameters:
-        - name: offset
-          in: query
-          description: offset in the list of entities
-          required: false
-          schema:
-            type: integer
-            example: 0
-        - name: size
-          in: query
-          description: the number of items per page
-          required: false
-          schema:
-            type: integer
-            default: 100
-            maximum: 1000
-            minimum: 1
-        - name: filter
-          in: query
-          description: filter by labels when multiple filters are present, they are ANDed
-          required: false
-          schema:
-            type: object
-            properties:
-              key:
-                type: string
-              value:
-                type: string
-          example:
-            label.k8s.kuma.io/namespace: my-ns
-      responses:
-        '200':
-          $ref: '#/components/responses/MeshServiceList'
-      tags:
-        - MeshService
   /meshes/{mesh}/meshtrusts/{name}:
     get:
       operationId: getMeshTrust
@@ -5257,45 +4321,6 @@ paths:
           required: true
           schema:
             type: string
-      responses:
-        '200':
-          $ref: '#/components/responses/MeshTrustList'
-      tags:
-        - MeshTrust
-  /meshtrusts:
-    get:
-      operationId: getMeshTrustListAllMeshes
-      summary: Returns a list of MeshTrust across all meshes.
-      parameters:
-        - name: offset
-          in: query
-          description: offset in the list of entities
-          required: false
-          schema:
-            type: integer
-            example: 0
-        - name: size
-          in: query
-          description: the number of items per page
-          required: false
-          schema:
-            type: integer
-            default: 100
-            maximum: 1000
-            minimum: 1
-        - name: filter
-          in: query
-          description: filter by labels when multiple filters are present, they are ANDed
-          required: false
-          schema:
-            type: object
-            properties:
-              key:
-                type: string
-              value:
-                type: string
-          example:
-            label.k8s.kuma.io/namespace: my-ns
       responses:
         '200':
           $ref: '#/components/responses/MeshTrustList'
@@ -5423,45 +4448,6 @@ paths:
           $ref: '#/components/responses/MeshZoneAddressList'
       tags:
         - MeshZoneAddress
-  /meshzoneaddresses:
-    get:
-      operationId: getMeshZoneAddressListAllMeshes
-      summary: Returns a list of MeshZoneAddress across all meshes.
-      parameters:
-        - name: offset
-          in: query
-          description: offset in the list of entities
-          required: false
-          schema:
-            type: integer
-            example: 0
-        - name: size
-          in: query
-          description: the number of items per page
-          required: false
-          schema:
-            type: integer
-            default: 100
-            maximum: 1000
-            minimum: 1
-        - name: filter
-          in: query
-          description: filter by labels when multiple filters are present, they are ANDed
-          required: false
-          schema:
-            type: object
-            properties:
-              key:
-                type: string
-              value:
-                type: string
-          example:
-            label.k8s.kuma.io/namespace: my-ns
-      responses:
-        '200':
-          $ref: '#/components/responses/MeshZoneAddressList'
-      tags:
-        - MeshZoneAddress
   /meshes/{mesh}/workloads/{name}:
     get:
       operationId: getWorkload
@@ -5579,45 +4565,6 @@ paths:
           required: true
           schema:
             type: string
-      responses:
-        '200':
-          $ref: '#/components/responses/WorkloadList'
-      tags:
-        - Workload
-  /workloads:
-    get:
-      operationId: getWorkloadListAllMeshes
-      summary: Returns a list of Workload across all meshes.
-      parameters:
-        - name: offset
-          in: query
-          description: offset in the list of entities
-          required: false
-          schema:
-            type: integer
-            example: 0
-        - name: size
-          in: query
-          description: the number of items per page
-          required: false
-          schema:
-            type: integer
-            default: 100
-            maximum: 1000
-            minimum: 1
-        - name: filter
-          in: query
-          description: filter by labels when multiple filters are present, they are ANDed
-          required: false
-          schema:
-            type: object
-            properties:
-              key:
-                type: string
-              value:
-                type: string
-          example:
-            label.k8s.kuma.io/namespace: my-ns
       responses:
         '200':
           $ref: '#/components/responses/WorkloadList'

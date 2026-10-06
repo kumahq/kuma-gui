@@ -537,23 +537,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/meshaccesslogs": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Returns a list of MeshAccessLog across all meshes. */
-        get: operations["getMeshAccessLogListAllMeshes"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/meshes/{mesh}/meshcircuitbreakers/{name}": {
         parameters: {
             query?: never;
@@ -582,23 +565,6 @@ export interface paths {
         };
         /** Returns a list of MeshCircuitBreaker in the mesh. */
         get: operations["getMeshCircuitBreakerList"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/meshcircuitbreakers": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Returns a list of MeshCircuitBreaker across all meshes. */
-        get: operations["getMeshCircuitBreakerListAllMeshes"];
         put?: never;
         post?: never;
         delete?: never;
@@ -643,23 +609,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/meshfaultinjections": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Returns a list of MeshFaultInjection across all meshes. */
-        get: operations["getMeshFaultInjectionListAllMeshes"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/meshes/{mesh}/meshhealthchecks/{name}": {
         parameters: {
             query?: never;
@@ -688,23 +637,6 @@ export interface paths {
         };
         /** Returns a list of MeshHealthCheck in the mesh. */
         get: operations["getMeshHealthCheckList"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/meshhealthchecks": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Returns a list of MeshHealthCheck across all meshes. */
-        get: operations["getMeshHealthCheckListAllMeshes"];
         put?: never;
         post?: never;
         delete?: never;
@@ -749,23 +681,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/meshhttproutes": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Returns a list of MeshHTTPRoute across all meshes. */
-        get: operations["getMeshHTTPRouteListAllMeshes"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/meshes/{mesh}/meshloadbalancingstrategies/{name}": {
         parameters: {
             query?: never;
@@ -794,23 +709,6 @@ export interface paths {
         };
         /** Returns a list of MeshLoadBalancingStrategy in the mesh. */
         get: operations["getMeshLoadBalancingStrategyList"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/meshloadbalancingstrategies": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Returns a list of MeshLoadBalancingStrategy across all meshes. */
-        get: operations["getMeshLoadBalancingStrategyListAllMeshes"];
         put?: never;
         post?: never;
         delete?: never;
@@ -855,23 +753,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/meshmetrics": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Returns a list of MeshMetric across all meshes. */
-        get: operations["getMeshMetricListAllMeshes"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/meshes/{mesh}/meshpassthroughs/{name}": {
         parameters: {
             query?: never;
@@ -900,23 +781,6 @@ export interface paths {
         };
         /** Returns a list of MeshPassthrough in the mesh. */
         get: operations["getMeshPassthroughList"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/meshpassthroughs": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Returns a list of MeshPassthrough across all meshes. */
-        get: operations["getMeshPassthroughListAllMeshes"];
         put?: never;
         post?: never;
         delete?: never;
@@ -961,23 +825,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/meshproxypatches": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Returns a list of MeshProxyPatch across all meshes. */
-        get: operations["getMeshProxyPatchListAllMeshes"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/meshes/{mesh}/meshratelimits/{name}": {
         parameters: {
             query?: never;
@@ -1006,23 +853,6 @@ export interface paths {
         };
         /** Returns a list of MeshRateLimit in the mesh. */
         get: operations["getMeshRateLimitList"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/meshratelimits": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Returns a list of MeshRateLimit across all meshes. */
-        get: operations["getMeshRateLimitListAllMeshes"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1067,23 +897,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/meshretries": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Returns a list of MeshRetry across all meshes. */
-        get: operations["getMeshRetryListAllMeshes"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/meshes/{mesh}/meshtcproutes/{name}": {
         parameters: {
             query?: never;
@@ -1112,23 +925,6 @@ export interface paths {
         };
         /** Returns a list of MeshTCPRoute in the mesh. */
         get: operations["getMeshTCPRouteList"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/meshtcproutes": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Returns a list of MeshTCPRoute across all meshes. */
-        get: operations["getMeshTCPRouteListAllMeshes"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1173,23 +969,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/meshtimeouts": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Returns a list of MeshTimeout across all meshes. */
-        get: operations["getMeshTimeoutListAllMeshes"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/meshes/{mesh}/meshtlses/{name}": {
         parameters: {
             query?: never;
@@ -1218,23 +997,6 @@ export interface paths {
         };
         /** Returns a list of MeshTLS in the mesh. */
         get: operations["getMeshTLSList"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/meshtlses": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Returns a list of MeshTLS across all meshes. */
-        get: operations["getMeshTLSListAllMeshes"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1279,23 +1041,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/meshtraces": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Returns a list of MeshTrace across all meshes. */
-        get: operations["getMeshTraceListAllMeshes"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/meshes/{mesh}/meshtrafficpermissions/{name}": {
         parameters: {
             query?: never;
@@ -1324,40 +1069,6 @@ export interface paths {
         };
         /** Returns a list of MeshTrafficPermission in the mesh. */
         get: operations["getMeshTrafficPermissionList"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/meshtrafficpermissions": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Returns a list of MeshTrafficPermission across all meshes. */
-        get: operations["getMeshTrafficPermissionListAllMeshes"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/dataplanes": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Returns a list of Dataplane across all meshes. */
-        get: operations["getDataplaneListAllMeshes"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1397,23 +1108,6 @@ export interface paths {
         post?: never;
         /** Deletes Dataplane entity */
         delete: operations["deleteDataplane"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/dataplane-insights": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Returns a list of DataplaneInsight across all meshes. */
-        get: operations["getDataplaneInsightListAllMeshes"];
-        put?: never;
-        post?: never;
-        delete?: never;
         options?: never;
         head?: never;
         patch?: never;
@@ -1667,23 +1361,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/secrets": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Returns a list of Secret across all meshes. */
-        get: operations["getSecretListAllMeshes"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/zones": {
         parameters: {
             query?: never;
@@ -1858,23 +1535,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/meshexternalservices": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Returns a list of MeshExternalService across all meshes. */
-        get: operations["getMeshExternalServiceListAllMeshes"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/meshes/{mesh}/meshidentities/{name}": {
         parameters: {
             query?: never;
@@ -1903,23 +1563,6 @@ export interface paths {
         };
         /** Returns a list of MeshIdentity in the mesh. */
         get: operations["getMeshIdentityList"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/meshidentities": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Returns a list of MeshIdentity across all meshes. */
-        get: operations["getMeshIdentityListAllMeshes"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1964,23 +1607,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/meshmultizoneservices": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Returns a list of MeshMultiZoneService across all meshes. */
-        get: operations["getMeshMultiZoneServiceListAllMeshes"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/meshes/{mesh}/meshopentelemetrybackends/{name}": {
         parameters: {
             query?: never;
@@ -2009,23 +1635,6 @@ export interface paths {
         };
         /** Returns a list of MeshOpenTelemetryBackend in the mesh. */
         get: operations["getMeshOpenTelemetryBackendList"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/meshopentelemetrybackends": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Returns a list of MeshOpenTelemetryBackend across all meshes. */
-        get: operations["getMeshOpenTelemetryBackendListAllMeshes"];
         put?: never;
         post?: never;
         delete?: never;
@@ -2070,23 +1679,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/meshservices": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Returns a list of MeshService across all meshes. */
-        get: operations["getMeshServiceListAllMeshes"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/meshes/{mesh}/meshtrusts/{name}": {
         parameters: {
             query?: never;
@@ -2115,23 +1707,6 @@ export interface paths {
         };
         /** Returns a list of MeshTrust in the mesh. */
         get: operations["getMeshTrustList"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/meshtrusts": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Returns a list of MeshTrust across all meshes. */
-        get: operations["getMeshTrustListAllMeshes"];
         put?: never;
         post?: never;
         delete?: never;
@@ -2176,23 +1751,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/meshzoneaddresses": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Returns a list of MeshZoneAddress across all meshes. */
-        get: operations["getMeshZoneAddressListAllMeshes"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/meshes/{mesh}/workloads/{name}": {
         parameters: {
             query?: never;
@@ -2221,23 +1779,6 @@ export interface paths {
         };
         /** Returns a list of Workload in the mesh. */
         get: operations["getWorkloadList"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/workloads": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Returns a list of Workload across all meshes. */
-        get: operations["getWorkloadListAllMeshes"];
         put?: never;
         post?: never;
         delete?: never;
@@ -12348,33 +11889,6 @@ export interface operations {
             200: components["responses"]["MeshAccessLogList"];
         };
     };
-    getMeshAccessLogListAllMeshes: {
-        parameters: {
-            query?: {
-                /** @description offset in the list of entities */
-                offset?: number;
-                /** @description the number of items per page */
-                size?: number;
-                /**
-                 * @description filter by labels when multiple filters are present, they are ANDed
-                 * @example {
-                 *       "label.k8s.kuma.io/namespace": "my-ns"
-                 *     }
-                 */
-                filter?: {
-                    key?: string;
-                    value?: string;
-                };
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: components["responses"]["MeshAccessLogList"];
-        };
-    };
     getMeshCircuitBreaker: {
         parameters: {
             query?: never;
@@ -12460,33 +11974,6 @@ export interface operations {
                 /** @description name of the mesh */
                 mesh: string;
             };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: components["responses"]["MeshCircuitBreakerList"];
-        };
-    };
-    getMeshCircuitBreakerListAllMeshes: {
-        parameters: {
-            query?: {
-                /** @description offset in the list of entities */
-                offset?: number;
-                /** @description the number of items per page */
-                size?: number;
-                /**
-                 * @description filter by labels when multiple filters are present, they are ANDed
-                 * @example {
-                 *       "label.k8s.kuma.io/namespace": "my-ns"
-                 *     }
-                 */
-                filter?: {
-                    key?: string;
-                    value?: string;
-                };
-            };
-            header?: never;
-            path?: never;
             cookie?: never;
         };
         requestBody?: never;
@@ -12586,33 +12073,6 @@ export interface operations {
             200: components["responses"]["MeshFaultInjectionList"];
         };
     };
-    getMeshFaultInjectionListAllMeshes: {
-        parameters: {
-            query?: {
-                /** @description offset in the list of entities */
-                offset?: number;
-                /** @description the number of items per page */
-                size?: number;
-                /**
-                 * @description filter by labels when multiple filters are present, they are ANDed
-                 * @example {
-                 *       "label.k8s.kuma.io/namespace": "my-ns"
-                 *     }
-                 */
-                filter?: {
-                    key?: string;
-                    value?: string;
-                };
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: components["responses"]["MeshFaultInjectionList"];
-        };
-    };
     getMeshHealthCheck: {
         parameters: {
             query?: never;
@@ -12698,33 +12158,6 @@ export interface operations {
                 /** @description name of the mesh */
                 mesh: string;
             };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: components["responses"]["MeshHealthCheckList"];
-        };
-    };
-    getMeshHealthCheckListAllMeshes: {
-        parameters: {
-            query?: {
-                /** @description offset in the list of entities */
-                offset?: number;
-                /** @description the number of items per page */
-                size?: number;
-                /**
-                 * @description filter by labels when multiple filters are present, they are ANDed
-                 * @example {
-                 *       "label.k8s.kuma.io/namespace": "my-ns"
-                 *     }
-                 */
-                filter?: {
-                    key?: string;
-                    value?: string;
-                };
-            };
-            header?: never;
-            path?: never;
             cookie?: never;
         };
         requestBody?: never;
@@ -12824,33 +12257,6 @@ export interface operations {
             200: components["responses"]["MeshHTTPRouteList"];
         };
     };
-    getMeshHTTPRouteListAllMeshes: {
-        parameters: {
-            query?: {
-                /** @description offset in the list of entities */
-                offset?: number;
-                /** @description the number of items per page */
-                size?: number;
-                /**
-                 * @description filter by labels when multiple filters are present, they are ANDed
-                 * @example {
-                 *       "label.k8s.kuma.io/namespace": "my-ns"
-                 *     }
-                 */
-                filter?: {
-                    key?: string;
-                    value?: string;
-                };
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: components["responses"]["MeshHTTPRouteList"];
-        };
-    };
     getMeshLoadBalancingStrategy: {
         parameters: {
             query?: never;
@@ -12936,33 +12342,6 @@ export interface operations {
                 /** @description name of the mesh */
                 mesh: string;
             };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: components["responses"]["MeshLoadBalancingStrategyList"];
-        };
-    };
-    getMeshLoadBalancingStrategyListAllMeshes: {
-        parameters: {
-            query?: {
-                /** @description offset in the list of entities */
-                offset?: number;
-                /** @description the number of items per page */
-                size?: number;
-                /**
-                 * @description filter by labels when multiple filters are present, they are ANDed
-                 * @example {
-                 *       "label.k8s.kuma.io/namespace": "my-ns"
-                 *     }
-                 */
-                filter?: {
-                    key?: string;
-                    value?: string;
-                };
-            };
-            header?: never;
-            path?: never;
             cookie?: never;
         };
         requestBody?: never;
@@ -13062,33 +12441,6 @@ export interface operations {
             200: components["responses"]["MeshMetricList"];
         };
     };
-    getMeshMetricListAllMeshes: {
-        parameters: {
-            query?: {
-                /** @description offset in the list of entities */
-                offset?: number;
-                /** @description the number of items per page */
-                size?: number;
-                /**
-                 * @description filter by labels when multiple filters are present, they are ANDed
-                 * @example {
-                 *       "label.k8s.kuma.io/namespace": "my-ns"
-                 *     }
-                 */
-                filter?: {
-                    key?: string;
-                    value?: string;
-                };
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: components["responses"]["MeshMetricList"];
-        };
-    };
     getMeshPassthrough: {
         parameters: {
             query?: never;
@@ -13174,33 +12526,6 @@ export interface operations {
                 /** @description name of the mesh */
                 mesh: string;
             };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: components["responses"]["MeshPassthroughList"];
-        };
-    };
-    getMeshPassthroughListAllMeshes: {
-        parameters: {
-            query?: {
-                /** @description offset in the list of entities */
-                offset?: number;
-                /** @description the number of items per page */
-                size?: number;
-                /**
-                 * @description filter by labels when multiple filters are present, they are ANDed
-                 * @example {
-                 *       "label.k8s.kuma.io/namespace": "my-ns"
-                 *     }
-                 */
-                filter?: {
-                    key?: string;
-                    value?: string;
-                };
-            };
-            header?: never;
-            path?: never;
             cookie?: never;
         };
         requestBody?: never;
@@ -13300,33 +12625,6 @@ export interface operations {
             200: components["responses"]["MeshProxyPatchList"];
         };
     };
-    getMeshProxyPatchListAllMeshes: {
-        parameters: {
-            query?: {
-                /** @description offset in the list of entities */
-                offset?: number;
-                /** @description the number of items per page */
-                size?: number;
-                /**
-                 * @description filter by labels when multiple filters are present, they are ANDed
-                 * @example {
-                 *       "label.k8s.kuma.io/namespace": "my-ns"
-                 *     }
-                 */
-                filter?: {
-                    key?: string;
-                    value?: string;
-                };
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: components["responses"]["MeshProxyPatchList"];
-        };
-    };
     getMeshRateLimit: {
         parameters: {
             query?: never;
@@ -13412,33 +12710,6 @@ export interface operations {
                 /** @description name of the mesh */
                 mesh: string;
             };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: components["responses"]["MeshRateLimitList"];
-        };
-    };
-    getMeshRateLimitListAllMeshes: {
-        parameters: {
-            query?: {
-                /** @description offset in the list of entities */
-                offset?: number;
-                /** @description the number of items per page */
-                size?: number;
-                /**
-                 * @description filter by labels when multiple filters are present, they are ANDed
-                 * @example {
-                 *       "label.k8s.kuma.io/namespace": "my-ns"
-                 *     }
-                 */
-                filter?: {
-                    key?: string;
-                    value?: string;
-                };
-            };
-            header?: never;
-            path?: never;
             cookie?: never;
         };
         requestBody?: never;
@@ -13538,33 +12809,6 @@ export interface operations {
             200: components["responses"]["MeshRetryList"];
         };
     };
-    getMeshRetryListAllMeshes: {
-        parameters: {
-            query?: {
-                /** @description offset in the list of entities */
-                offset?: number;
-                /** @description the number of items per page */
-                size?: number;
-                /**
-                 * @description filter by labels when multiple filters are present, they are ANDed
-                 * @example {
-                 *       "label.k8s.kuma.io/namespace": "my-ns"
-                 *     }
-                 */
-                filter?: {
-                    key?: string;
-                    value?: string;
-                };
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: components["responses"]["MeshRetryList"];
-        };
-    };
     getMeshTCPRoute: {
         parameters: {
             query?: never;
@@ -13650,33 +12894,6 @@ export interface operations {
                 /** @description name of the mesh */
                 mesh: string;
             };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: components["responses"]["MeshTCPRouteList"];
-        };
-    };
-    getMeshTCPRouteListAllMeshes: {
-        parameters: {
-            query?: {
-                /** @description offset in the list of entities */
-                offset?: number;
-                /** @description the number of items per page */
-                size?: number;
-                /**
-                 * @description filter by labels when multiple filters are present, they are ANDed
-                 * @example {
-                 *       "label.k8s.kuma.io/namespace": "my-ns"
-                 *     }
-                 */
-                filter?: {
-                    key?: string;
-                    value?: string;
-                };
-            };
-            header?: never;
-            path?: never;
             cookie?: never;
         };
         requestBody?: never;
@@ -13776,33 +12993,6 @@ export interface operations {
             200: components["responses"]["MeshTimeoutList"];
         };
     };
-    getMeshTimeoutListAllMeshes: {
-        parameters: {
-            query?: {
-                /** @description offset in the list of entities */
-                offset?: number;
-                /** @description the number of items per page */
-                size?: number;
-                /**
-                 * @description filter by labels when multiple filters are present, they are ANDed
-                 * @example {
-                 *       "label.k8s.kuma.io/namespace": "my-ns"
-                 *     }
-                 */
-                filter?: {
-                    key?: string;
-                    value?: string;
-                };
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: components["responses"]["MeshTimeoutList"];
-        };
-    };
     getMeshTLS: {
         parameters: {
             query?: never;
@@ -13888,33 +13078,6 @@ export interface operations {
                 /** @description name of the mesh */
                 mesh: string;
             };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: components["responses"]["MeshTLSList"];
-        };
-    };
-    getMeshTLSListAllMeshes: {
-        parameters: {
-            query?: {
-                /** @description offset in the list of entities */
-                offset?: number;
-                /** @description the number of items per page */
-                size?: number;
-                /**
-                 * @description filter by labels when multiple filters are present, they are ANDed
-                 * @example {
-                 *       "label.k8s.kuma.io/namespace": "my-ns"
-                 *     }
-                 */
-                filter?: {
-                    key?: string;
-                    value?: string;
-                };
-            };
-            header?: never;
-            path?: never;
             cookie?: never;
         };
         requestBody?: never;
@@ -14014,33 +13177,6 @@ export interface operations {
             200: components["responses"]["MeshTraceList"];
         };
     };
-    getMeshTraceListAllMeshes: {
-        parameters: {
-            query?: {
-                /** @description offset in the list of entities */
-                offset?: number;
-                /** @description the number of items per page */
-                size?: number;
-                /**
-                 * @description filter by labels when multiple filters are present, they are ANDed
-                 * @example {
-                 *       "label.k8s.kuma.io/namespace": "my-ns"
-                 *     }
-                 */
-                filter?: {
-                    key?: string;
-                    value?: string;
-                };
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: components["responses"]["MeshTraceList"];
-        };
-    };
     getMeshTrafficPermission: {
         parameters: {
             query?: never;
@@ -14133,60 +13269,6 @@ export interface operations {
             200: components["responses"]["MeshTrafficPermissionList"];
         };
     };
-    getMeshTrafficPermissionListAllMeshes: {
-        parameters: {
-            query?: {
-                /** @description offset in the list of entities */
-                offset?: number;
-                /** @description the number of items per page */
-                size?: number;
-                /**
-                 * @description filter by labels when multiple filters are present, they are ANDed
-                 * @example {
-                 *       "label.k8s.kuma.io/namespace": "my-ns"
-                 *     }
-                 */
-                filter?: {
-                    key?: string;
-                    value?: string;
-                };
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: components["responses"]["MeshTrafficPermissionList"];
-        };
-    };
-    getDataplaneListAllMeshes: {
-        parameters: {
-            query?: {
-                /** @description offset in the list of entities */
-                offset?: number;
-                /** @description the number of items per page */
-                size?: number;
-                /**
-                 * @description filter by labels when multiple filters are present, they are ANDed
-                 * @example {
-                 *       "label.k8s.kuma.io/namespace": "my-ns"
-                 *     }
-                 */
-                filter?: {
-                    key?: string;
-                    value?: string;
-                };
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: components["responses"]["DataplaneList"];
-        };
-    };
     getDataplaneList: {
         parameters: {
             query?: {
@@ -14277,33 +13359,6 @@ export interface operations {
         responses: {
             200: components["responses"]["DataplaneDeleteSuccessResponse"];
             404: components["responses"]["NotFound"];
-        };
-    };
-    getDataplaneInsightListAllMeshes: {
-        parameters: {
-            query?: {
-                /** @description offset in the list of entities */
-                offset?: number;
-                /** @description the number of items per page */
-                size?: number;
-                /**
-                 * @description filter by labels when multiple filters are present, they are ANDed
-                 * @example {
-                 *       "label.k8s.kuma.io/namespace": "my-ns"
-                 *     }
-                 */
-                filter?: {
-                    key?: string;
-                    value?: string;
-                };
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: components["responses"]["DataplaneInsightList"];
         };
     };
     getDataplaneInsightList: {
@@ -14706,33 +13761,6 @@ export interface operations {
             404: components["responses"]["NotFound"];
         };
     };
-    getSecretListAllMeshes: {
-        parameters: {
-            query?: {
-                /** @description offset in the list of entities */
-                offset?: number;
-                /** @description the number of items per page */
-                size?: number;
-                /**
-                 * @description filter by labels when multiple filters are present, they are ANDed
-                 * @example {
-                 *       "label.k8s.kuma.io/namespace": "my-ns"
-                 *     }
-                 */
-                filter?: {
-                    key?: string;
-                    value?: string;
-                };
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: components["responses"]["SecretList"];
-        };
-    };
     getZoneList: {
         parameters: {
             query?: {
@@ -15068,33 +14096,6 @@ export interface operations {
             200: components["responses"]["MeshExternalServiceList"];
         };
     };
-    getMeshExternalServiceListAllMeshes: {
-        parameters: {
-            query?: {
-                /** @description offset in the list of entities */
-                offset?: number;
-                /** @description the number of items per page */
-                size?: number;
-                /**
-                 * @description filter by labels when multiple filters are present, they are ANDed
-                 * @example {
-                 *       "label.k8s.kuma.io/namespace": "my-ns"
-                 *     }
-                 */
-                filter?: {
-                    key?: string;
-                    value?: string;
-                };
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: components["responses"]["MeshExternalServiceList"];
-        };
-    };
     getMeshIdentity: {
         parameters: {
             query?: never;
@@ -15180,33 +14181,6 @@ export interface operations {
                 /** @description name of the mesh */
                 mesh: string;
             };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: components["responses"]["MeshIdentityList"];
-        };
-    };
-    getMeshIdentityListAllMeshes: {
-        parameters: {
-            query?: {
-                /** @description offset in the list of entities */
-                offset?: number;
-                /** @description the number of items per page */
-                size?: number;
-                /**
-                 * @description filter by labels when multiple filters are present, they are ANDed
-                 * @example {
-                 *       "label.k8s.kuma.io/namespace": "my-ns"
-                 *     }
-                 */
-                filter?: {
-                    key?: string;
-                    value?: string;
-                };
-            };
-            header?: never;
-            path?: never;
             cookie?: never;
         };
         requestBody?: never;
@@ -15306,33 +14280,6 @@ export interface operations {
             200: components["responses"]["MeshMultiZoneServiceList"];
         };
     };
-    getMeshMultiZoneServiceListAllMeshes: {
-        parameters: {
-            query?: {
-                /** @description offset in the list of entities */
-                offset?: number;
-                /** @description the number of items per page */
-                size?: number;
-                /**
-                 * @description filter by labels when multiple filters are present, they are ANDed
-                 * @example {
-                 *       "label.k8s.kuma.io/namespace": "my-ns"
-                 *     }
-                 */
-                filter?: {
-                    key?: string;
-                    value?: string;
-                };
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: components["responses"]["MeshMultiZoneServiceList"];
-        };
-    };
     getMeshOpenTelemetryBackend: {
         parameters: {
             query?: never;
@@ -15418,33 +14365,6 @@ export interface operations {
                 /** @description name of the mesh */
                 mesh: string;
             };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: components["responses"]["MeshOpenTelemetryBackendList"];
-        };
-    };
-    getMeshOpenTelemetryBackendListAllMeshes: {
-        parameters: {
-            query?: {
-                /** @description offset in the list of entities */
-                offset?: number;
-                /** @description the number of items per page */
-                size?: number;
-                /**
-                 * @description filter by labels when multiple filters are present, they are ANDed
-                 * @example {
-                 *       "label.k8s.kuma.io/namespace": "my-ns"
-                 *     }
-                 */
-                filter?: {
-                    key?: string;
-                    value?: string;
-                };
-            };
-            header?: never;
-            path?: never;
             cookie?: never;
         };
         requestBody?: never;
@@ -15544,33 +14464,6 @@ export interface operations {
             200: components["responses"]["MeshServiceList"];
         };
     };
-    getMeshServiceListAllMeshes: {
-        parameters: {
-            query?: {
-                /** @description offset in the list of entities */
-                offset?: number;
-                /** @description the number of items per page */
-                size?: number;
-                /**
-                 * @description filter by labels when multiple filters are present, they are ANDed
-                 * @example {
-                 *       "label.k8s.kuma.io/namespace": "my-ns"
-                 *     }
-                 */
-                filter?: {
-                    key?: string;
-                    value?: string;
-                };
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: components["responses"]["MeshServiceList"];
-        };
-    };
     getMeshTrust: {
         parameters: {
             query?: never;
@@ -15656,33 +14549,6 @@ export interface operations {
                 /** @description name of the mesh */
                 mesh: string;
             };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: components["responses"]["MeshTrustList"];
-        };
-    };
-    getMeshTrustListAllMeshes: {
-        parameters: {
-            query?: {
-                /** @description offset in the list of entities */
-                offset?: number;
-                /** @description the number of items per page */
-                size?: number;
-                /**
-                 * @description filter by labels when multiple filters are present, they are ANDed
-                 * @example {
-                 *       "label.k8s.kuma.io/namespace": "my-ns"
-                 *     }
-                 */
-                filter?: {
-                    key?: string;
-                    value?: string;
-                };
-            };
-            header?: never;
-            path?: never;
             cookie?: never;
         };
         requestBody?: never;
@@ -15782,33 +14648,6 @@ export interface operations {
             200: components["responses"]["MeshZoneAddressList"];
         };
     };
-    getMeshZoneAddressListAllMeshes: {
-        parameters: {
-            query?: {
-                /** @description offset in the list of entities */
-                offset?: number;
-                /** @description the number of items per page */
-                size?: number;
-                /**
-                 * @description filter by labels when multiple filters are present, they are ANDed
-                 * @example {
-                 *       "label.k8s.kuma.io/namespace": "my-ns"
-                 *     }
-                 */
-                filter?: {
-                    key?: string;
-                    value?: string;
-                };
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: components["responses"]["MeshZoneAddressList"];
-        };
-    };
     getWorkload: {
         parameters: {
             query?: never;
@@ -15894,33 +14733,6 @@ export interface operations {
                 /** @description name of the mesh */
                 mesh: string;
             };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: components["responses"]["WorkloadList"];
-        };
-    };
-    getWorkloadListAllMeshes: {
-        parameters: {
-            query?: {
-                /** @description offset in the list of entities */
-                offset?: number;
-                /** @description the number of items per page */
-                size?: number;
-                /**
-                 * @description filter by labels when multiple filters are present, they are ANDed
-                 * @example {
-                 *       "label.k8s.kuma.io/namespace": "my-ns"
-                 *     }
-                 */
-                filter?: {
-                    key?: string;
-                    value?: string;
-                };
-            };
-            header?: never;
-            path?: never;
             cookie?: never;
         };
         requestBody?: never;
