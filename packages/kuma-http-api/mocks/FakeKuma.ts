@@ -358,7 +358,7 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
     const supportedBackends = [issuedBackend].concat(this.faker.helpers.multiple(() => this.faker.word.noun()))
 
     return {
-      certificateExpirationTime: this.faker.date.anytime(),
+      certificateExpirationTime: this.date(),
       lastCertificateRegeneration: '2023-10-02T12:40:13.956741929Z',
       certificateRegenerations: this.faker.number.int(),
       issuedBackend,
