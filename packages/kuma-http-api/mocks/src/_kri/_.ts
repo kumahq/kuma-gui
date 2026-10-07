@@ -1,5 +1,5 @@
 import type { Dependencies, ResponseHandler } from '#mocks'
-import type { components } from '@kumahq/kuma-http-api'
+import type { paths } from '@kumahq/kuma-http-api'
 
 export default (_dependencies: Dependencies): ResponseHandler => (req) => {
   const kri = req.params.kri ? String(req.params.kri) : undefined
@@ -31,6 +31,6 @@ export default (_dependencies: Dependencies): ResponseHandler => (req) => {
           source: 'path',
         },
       ],
-    } satisfies components['schemas']['Error'],
+    } satisfies paths['/_kri/{kri}']['get']['responses']['404']['content']['application/problem+json'],
   }
 }

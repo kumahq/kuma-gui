@@ -1,4 +1,12 @@
 import type { Dependencies, ResponseHandler } from '#mocks'
+import type { paths } from '@kumahq/kuma-http-api'
+
+type MeshInsights = paths['/mesh-insights']['get']['responses']['200']['content']['application/json']
+// @TODO(types): once the types are correct here we can remove the omit
+type MeshInsightsResponse = Omit<MeshInsights, 'items'> & {
+  items: Omit<MeshInsights['items'][number], 'labels' | 'kri' | 'mesh'>[]
+}
+
 export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) => {
   const query = req.url.searchParams
   const { offset, total, next, pageTotal } = pager(
@@ -25,27 +33,49 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
         const serviceTotal = parseInt(env('KUMA_SERVICE_COUNT', `${fake.number.int({ min: 1, max: 30 })}`))
         const max = env('KUMA_DATAPLANE_COUNT', '30') === '0' ? 0 : 30
 
-        const { standard, gatewayBuiltin, gatewayDelegated } = fake.kuma.partitionInto({
-          standard: Number,
-          gatewayBuiltin: Number,
-          gatewayDelegated: Number,
+        // split the count into types
+        const { standardTotal, gatewayBuiltinTotal, gatewayDelegatedTotal } = fake.kuma.partitionInto({
+          standardTotal: Number,
+          gatewayBuiltinTotal: Number,
+          gatewayDelegatedTotal: Number,
         }, max)
 
-        const gatewaysTotal = gatewayBuiltin + gatewayDelegated
-        const gateway = fake.kuma.partitionInto({
-          total: gatewaysTotal,
+        // dp types
+        const standard = fake.kuma.partitionInto({
+          total: standardTotal,
           online: Number,
           partiallyDegraded: Number,
           offline: Number,
-        }, gatewaysTotal)
+        }, standardTotal)
 
-        const dataplanesTotal = standard + gateway.total
-        const dataplanes = fake.kuma.partitionInto({
-          total: dataplanesTotal,
+        const gatewayBuiltin = fake.kuma.partitionInto({
+          total: gatewayBuiltinTotal,
           online: Number,
           partiallyDegraded: Number,
           offline: Number,
-        }, dataplanesTotal)
+        }, gatewayBuiltinTotal)
+
+        const gatewayDelegated = fake.kuma.partitionInto({
+          total: gatewayDelegatedTotal,
+          online: Number,
+          partiallyDegraded: Number,
+          offline: Number,
+        }, gatewayDelegatedTotal)
+
+        // aggregations of types/categories
+        const gateway = {
+          total: gatewayBuiltin.total + gatewayDelegated.total,
+          online: gatewayBuiltin.online + gatewayDelegated.online,
+          partiallyDegraded: gatewayBuiltin.partiallyDegraded + gatewayDelegated.partiallyDegraded,
+          offline: gatewayBuiltin.offline + gatewayDelegated.offline,
+        }
+        const dataplanes = {
+          total: standard.total + gateway.total,
+          online: standard.online + gateway.online,
+          partiallyDegraded: standard.partiallyDegraded + gateway.partiallyDegraded,
+          offline: standard.offline + gateway.offline,
+        }
+        const dataplanesTotal = dataplanes.total
 
         return {
           type: 'MeshInsight',
@@ -153,6 +183,6 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
         }
       }),
       next,
-    },
+    } satisfies MeshInsightsResponse,
   }
 }

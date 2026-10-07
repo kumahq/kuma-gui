@@ -1,4 +1,8 @@
 import type { Dependencies, ResponseHandler } from '#mocks'
+import type { paths } from '@kumahq/kuma-http-api'
+
+type DataplaneResponse = paths['/meshes/{mesh}/dataplanes/{name}']['get']['responses']['200']['content']['application/json']
+
 export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
   const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
   // this template can be called via the /_kri/kri_<shortName>_:kri endpoint or
@@ -106,12 +110,13 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
             : {}),
           outbound: [
             {
+              address: fake.internet.ipv4(),
               port: fake.internet.port(),
               tags: fake.kuma.tags({ service: fake.kuma.serviceName() }),
             },
           ],
         }
       })(),
-    },
+    } satisfies DataplaneResponse,
   }
 }

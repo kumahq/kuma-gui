@@ -1,8 +1,8 @@
 import type { Dependencies, ResponseHandler } from '#mocks'
-import type { components } from '@kumahq/kuma-http-api'
+import type { paths } from '@kumahq/kuma-http-api'
 
-type PoliciesList = components['schemas']['PoliciesList']
-type PolicyConf = components['schemas']['PolicyConf']
+type PoliciesList = paths['/meshes/{mesh}/dataplanes/{name}/_policies']['get']['responses']['200']['content']['application/json']
+type PolicyConf = PoliciesList['policies'][number]
 
 export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
   const mesh = req.params.mesh as string

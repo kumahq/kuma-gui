@@ -228,39 +228,6 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
     return JSON.stringify(deepmerge(subscriptionConfig({ faker: this.faker }), config), null, 4)
   }
 
-  globalInsightServices({ min = 0, max = 30 }: { min?: number, max?: number } = {}) {
-    const total = this.faker.number.int({ min, max })
-
-    const internalTotal = this.faker.number.int({ min: 0, max: total })
-    const externalTotal = this.faker.number.int({ min: 0, max: total - internalTotal })
-    const gatewayBuiltinTotal = this.faker.number.int({ min: 0, max: total - internalTotal - externalTotal })
-    const gatewayDelegatedTotal = total - internalTotal - externalTotal - gatewayBuiltinTotal
-
-    return {
-      external: {
-        total: externalTotal,
-      },
-      gatewayBuiltin: this.partitionInto({
-        total: gatewayBuiltinTotal,
-        online: Number,
-        offline: Number,
-        partiallyDegraded: Number,
-      }, gatewayBuiltinTotal),
-      gatewayDelegated: this.partitionInto({
-        total: gatewayDelegatedTotal,
-        online: Number,
-        offline: Number,
-        partiallyDegraded: Number,
-      }, gatewayDelegatedTotal),
-      internal: this.partitionInto({
-        total: internalTotal,
-        online: Number,
-        offline: Number,
-        partiallyDegraded: Number,
-      }, internalTotal),
-    }
-  }
-
   /**
    * Returns a random policy type status object.
    */

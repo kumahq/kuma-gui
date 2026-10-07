@@ -1,4 +1,7 @@
 import type { Dependencies, ResponseHandler } from '#mocks'
+import type { paths } from '@kumahq/kuma-http-api'
+
+type ZonesResponse = paths['/zones']['get']['responses']['200']['content']['application/json']
 
 export default ({ fake, env, pager }: Dependencies): ResponseHandler => (req) => {
   const { offset, total, next, pageTotal } = pager(
@@ -26,6 +29,6 @@ export default ({ fake, env, pager }: Dependencies): ResponseHandler => (req) =>
         }
       }),
       next,
-    },
+    } satisfies ZonesResponse,
   }
 }
