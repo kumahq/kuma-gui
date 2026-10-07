@@ -18,7 +18,3 @@
 		$(VITEST) \
 			--configLoader runner \
 			-c vite.config.production.ts \
-
-
-.PHONY: .test/e2e
-.test/e2e:
