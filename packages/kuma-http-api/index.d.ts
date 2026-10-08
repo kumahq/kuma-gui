@@ -530,7 +530,11 @@ export interface paths {
         /** Returns a list of MeshAccessLog in the mesh. */
         get: operations["getMeshAccessLogList"];
         put?: never;
-        post?: never;
+        /**
+         * Creates MeshAccessLog entity
+         * @description Creates a resource using the name in the body. An existing resource is never modified. Requires Kuma 3.0 or later.
+         */
+        post: operations["postMeshAccessLog"];
         delete?: never;
         options?: never;
         head?: never;
@@ -566,7 +570,11 @@ export interface paths {
         /** Returns a list of MeshCircuitBreaker in the mesh. */
         get: operations["getMeshCircuitBreakerList"];
         put?: never;
-        post?: never;
+        /**
+         * Creates MeshCircuitBreaker entity
+         * @description Creates a resource using the name in the body. An existing resource is never modified. Requires Kuma 3.0 or later.
+         */
+        post: operations["postMeshCircuitBreaker"];
         delete?: never;
         options?: never;
         head?: never;
@@ -602,7 +610,11 @@ export interface paths {
         /** Returns a list of MeshFaultInjection in the mesh. */
         get: operations["getMeshFaultInjectionList"];
         put?: never;
-        post?: never;
+        /**
+         * Creates MeshFaultInjection entity
+         * @description Creates a resource using the name in the body. An existing resource is never modified. Requires Kuma 3.0 or later.
+         */
+        post: operations["postMeshFaultInjection"];
         delete?: never;
         options?: never;
         head?: never;
@@ -638,7 +650,11 @@ export interface paths {
         /** Returns a list of MeshHealthCheck in the mesh. */
         get: operations["getMeshHealthCheckList"];
         put?: never;
-        post?: never;
+        /**
+         * Creates MeshHealthCheck entity
+         * @description Creates a resource using the name in the body. An existing resource is never modified. Requires Kuma 3.0 or later.
+         */
+        post: operations["postMeshHealthCheck"];
         delete?: never;
         options?: never;
         head?: never;
@@ -674,7 +690,11 @@ export interface paths {
         /** Returns a list of MeshHTTPRoute in the mesh. */
         get: operations["getMeshHTTPRouteList"];
         put?: never;
-        post?: never;
+        /**
+         * Creates MeshHTTPRoute entity
+         * @description Creates a resource using the name in the body. An existing resource is never modified. Requires Kuma 3.0 or later.
+         */
+        post: operations["postMeshHTTPRoute"];
         delete?: never;
         options?: never;
         head?: never;
@@ -710,7 +730,11 @@ export interface paths {
         /** Returns a list of MeshLoadBalancingStrategy in the mesh. */
         get: operations["getMeshLoadBalancingStrategyList"];
         put?: never;
-        post?: never;
+        /**
+         * Creates MeshLoadBalancingStrategy entity
+         * @description Creates a resource using the name in the body. An existing resource is never modified. Requires Kuma 3.0 or later.
+         */
+        post: operations["postMeshLoadBalancingStrategy"];
         delete?: never;
         options?: never;
         head?: never;
@@ -746,7 +770,11 @@ export interface paths {
         /** Returns a list of MeshMetric in the mesh. */
         get: operations["getMeshMetricList"];
         put?: never;
-        post?: never;
+        /**
+         * Creates MeshMetric entity
+         * @description Creates a resource using the name in the body. An existing resource is never modified. Requires Kuma 3.0 or later.
+         */
+        post: operations["postMeshMetric"];
         delete?: never;
         options?: never;
         head?: never;
@@ -782,7 +810,11 @@ export interface paths {
         /** Returns a list of MeshPassthrough in the mesh. */
         get: operations["getMeshPassthroughList"];
         put?: never;
-        post?: never;
+        /**
+         * Creates MeshPassthrough entity
+         * @description Creates a resource using the name in the body. An existing resource is never modified. Requires Kuma 3.0 or later.
+         */
+        post: operations["postMeshPassthrough"];
         delete?: never;
         options?: never;
         head?: never;
@@ -818,7 +850,11 @@ export interface paths {
         /** Returns a list of MeshProxyPatch in the mesh. */
         get: operations["getMeshProxyPatchList"];
         put?: never;
-        post?: never;
+        /**
+         * Creates MeshProxyPatch entity
+         * @description Creates a resource using the name in the body. An existing resource is never modified. Requires Kuma 3.0 or later.
+         */
+        post: operations["postMeshProxyPatch"];
         delete?: never;
         options?: never;
         head?: never;
@@ -854,7 +890,11 @@ export interface paths {
         /** Returns a list of MeshRateLimit in the mesh. */
         get: operations["getMeshRateLimitList"];
         put?: never;
-        post?: never;
+        /**
+         * Creates MeshRateLimit entity
+         * @description Creates a resource using the name in the body. An existing resource is never modified. Requires Kuma 3.0 or later.
+         */
+        post: operations["postMeshRateLimit"];
         delete?: never;
         options?: never;
         head?: never;
@@ -890,7 +930,11 @@ export interface paths {
         /** Returns a list of MeshRetry in the mesh. */
         get: operations["getMeshRetryList"];
         put?: never;
-        post?: never;
+        /**
+         * Creates MeshRetry entity
+         * @description Creates a resource using the name in the body. An existing resource is never modified. Requires Kuma 3.0 or later.
+         */
+        post: operations["postMeshRetry"];
         delete?: never;
         options?: never;
         head?: never;
@@ -926,7 +970,11 @@ export interface paths {
         /** Returns a list of MeshTCPRoute in the mesh. */
         get: operations["getMeshTCPRouteList"];
         put?: never;
-        post?: never;
+        /**
+         * Creates MeshTCPRoute entity
+         * @description Creates a resource using the name in the body. An existing resource is never modified. Requires Kuma 3.0 or later.
+         */
+        post: operations["postMeshTCPRoute"];
         delete?: never;
         options?: never;
         head?: never;
@@ -962,7 +1010,11 @@ export interface paths {
         /** Returns a list of MeshTimeout in the mesh. */
         get: operations["getMeshTimeoutList"];
         put?: never;
-        post?: never;
+        /**
+         * Creates MeshTimeout entity
+         * @description Creates a resource using the name in the body. An existing resource is never modified. Requires Kuma 3.0 or later.
+         */
+        post: operations["postMeshTimeout"];
         delete?: never;
         options?: never;
         head?: never;
@@ -998,7 +1050,11 @@ export interface paths {
         /** Returns a list of MeshTLS in the mesh. */
         get: operations["getMeshTLSList"];
         put?: never;
-        post?: never;
+        /**
+         * Creates MeshTLS entity
+         * @description Creates a resource using the name in the body. An existing resource is never modified. Requires Kuma 3.0 or later.
+         */
+        post: operations["postMeshTLS"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1034,7 +1090,11 @@ export interface paths {
         /** Returns a list of MeshTrace in the mesh. */
         get: operations["getMeshTraceList"];
         put?: never;
-        post?: never;
+        /**
+         * Creates MeshTrace entity
+         * @description Creates a resource using the name in the body. An existing resource is never modified. Requires Kuma 3.0 or later.
+         */
+        post: operations["postMeshTrace"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1070,7 +1130,11 @@ export interface paths {
         /** Returns a list of MeshTrafficPermission in the mesh. */
         get: operations["getMeshTrafficPermissionList"];
         put?: never;
-        post?: never;
+        /**
+         * Creates MeshTrafficPermission entity
+         * @description Creates a resource using the name in the body. An existing resource is never modified. Requires Kuma 3.0 or later.
+         */
+        post: operations["postMeshTrafficPermission"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1087,7 +1151,11 @@ export interface paths {
         /** Returns a list of Dataplane in the mesh. */
         get: operations["getDataplaneList"];
         put?: never;
-        post?: never;
+        /**
+         * Creates Dataplane entity
+         * @description Creates a resource using the name in the body. An existing resource is never modified. Requires Kuma 3.0 or later.
+         */
+        post: operations["postDataplane"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1208,7 +1276,11 @@ export interface paths {
         /** Returns a list of GlobalSecret entities. */
         get: operations["getGlobalSecretListAlias"];
         put?: never;
-        post?: never;
+        /**
+         * Creates GlobalSecret entity
+         * @description Creates a resource using the name in the body. An existing resource is never modified. Requires Kuma 3.0 or later.
+         */
+        post: operations["postGlobalSecretAlias"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1227,7 +1299,11 @@ export interface paths {
         /** Returns a list of Mesh. */
         get: operations["getMeshList"];
         put?: never;
-        post?: never;
+        /**
+         * Creates Mesh entity
+         * @description Creates a resource using the name in the body. An existing resource is never modified. Requires Kuma 3.0 or later.
+         */
+        post: operations["postMesh"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1335,7 +1411,11 @@ export interface paths {
         /** Returns a list of Secret in the mesh. */
         get: operations["getSecretList"];
         put?: never;
-        post?: never;
+        /**
+         * Creates Secret entity
+         * @description Creates a resource using the name in the body. An existing resource is never modified. Requires Kuma 3.0 or later.
+         */
+        post: operations["postSecret"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1371,7 +1451,11 @@ export interface paths {
         /** Returns a list of Zone. */
         get: operations["getZoneList"];
         put?: never;
-        post?: never;
+        /**
+         * Creates Zone entity
+         * @description Creates a resource using the name in the body. An existing resource is never modified. Requires Kuma 3.0 or later.
+         */
+        post: operations["postZone"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1492,7 +1576,11 @@ export interface paths {
         /** Returns a list of HostnameGenerator. */
         get: operations["getHostnameGeneratorList"];
         put?: never;
-        post?: never;
+        /**
+         * Creates HostnameGenerator entity
+         * @description Creates a resource using the name in the body. An existing resource is never modified. Requires Kuma 3.0 or later.
+         */
+        post: operations["postHostnameGenerator"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1528,7 +1616,11 @@ export interface paths {
         /** Returns a list of MeshExternalService in the mesh. */
         get: operations["getMeshExternalServiceList"];
         put?: never;
-        post?: never;
+        /**
+         * Creates MeshExternalService entity
+         * @description Creates a resource using the name in the body. An existing resource is never modified. Requires Kuma 3.0 or later.
+         */
+        post: operations["postMeshExternalService"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1564,7 +1656,11 @@ export interface paths {
         /** Returns a list of MeshIdentity in the mesh. */
         get: operations["getMeshIdentityList"];
         put?: never;
-        post?: never;
+        /**
+         * Creates MeshIdentity entity
+         * @description Creates a resource using the name in the body. An existing resource is never modified. Requires Kuma 3.0 or later.
+         */
+        post: operations["postMeshIdentity"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1600,7 +1696,11 @@ export interface paths {
         /** Returns a list of MeshMultiZoneService in the mesh. */
         get: operations["getMeshMultiZoneServiceList"];
         put?: never;
-        post?: never;
+        /**
+         * Creates MeshMultiZoneService entity
+         * @description Creates a resource using the name in the body. An existing resource is never modified. Requires Kuma 3.0 or later.
+         */
+        post: operations["postMeshMultiZoneService"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1636,7 +1736,11 @@ export interface paths {
         /** Returns a list of MeshOpenTelemetryBackend in the mesh. */
         get: operations["getMeshOpenTelemetryBackendList"];
         put?: never;
-        post?: never;
+        /**
+         * Creates MeshOpenTelemetryBackend entity
+         * @description Creates a resource using the name in the body. An existing resource is never modified. Requires Kuma 3.0 or later.
+         */
+        post: operations["postMeshOpenTelemetryBackend"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1672,7 +1776,11 @@ export interface paths {
         /** Returns a list of MeshService in the mesh. */
         get: operations["getMeshServiceList"];
         put?: never;
-        post?: never;
+        /**
+         * Creates MeshService entity
+         * @description Creates a resource using the name in the body. An existing resource is never modified. Requires Kuma 3.0 or later.
+         */
+        post: operations["postMeshService"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1708,7 +1816,11 @@ export interface paths {
         /** Returns a list of MeshTrust in the mesh. */
         get: operations["getMeshTrustList"];
         put?: never;
-        post?: never;
+        /**
+         * Creates MeshTrust entity
+         * @description Creates a resource using the name in the body. An existing resource is never modified. Requires Kuma 3.0 or later.
+         */
+        post: operations["postMeshTrust"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1744,7 +1856,11 @@ export interface paths {
         /** Returns a list of MeshZoneAddress in the mesh. */
         get: operations["getMeshZoneAddressList"];
         put?: never;
-        post?: never;
+        /**
+         * Creates MeshZoneAddress entity
+         * @description Creates a resource using the name in the body. An existing resource is never modified. Requires Kuma 3.0 or later.
+         */
+        post: operations["postMeshZoneAddress"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1780,7 +1896,11 @@ export interface paths {
         /** Returns a list of Workload in the mesh. */
         get: operations["getWorkloadList"];
         put?: never;
-        post?: never;
+        /**
+         * Creates Workload entity
+         * @description Creates a resource using the name in the body. An existing resource is never modified. Requires Kuma 3.0 or later.
+         */
+        post: operations["postWorkload"];
         delete?: never;
         options?: never;
         head?: never;
@@ -2712,7 +2832,7 @@ export interface components {
                 rules?: {
                     /** @description Default contains configuration of the inbound access logging */
                     default: {
-                        backends?: ({
+                        backends?: {
                             /** @description FileBackend defines configuration for file based access logs */
                             file?: {
                                 /**
@@ -2742,15 +2862,7 @@ export interface components {
                                     plain?: string;
                                     /** @enum {string} */
                                     type: "Plain" | "Json";
-                                } & ({
-                                    plain?: unknown;
-                                    /** @enum {unknown} */
-                                    type?: "Plain";
-                                } | {
-                                    json?: unknown;
-                                    /** @enum {unknown} */
-                                    type?: "Json";
-                                });
+                                };
                                 /**
                                  * @description Path to a file that logs will be written to
                                  * @example /tmp/access.log
@@ -2848,31 +2960,11 @@ export interface components {
                                     plain?: string;
                                     /** @enum {string} */
                                     type: "Plain" | "Json";
-                                } & ({
-                                    plain?: unknown;
-                                    /** @enum {unknown} */
-                                    type?: "Plain";
-                                } | {
-                                    json?: unknown;
-                                    /** @enum {unknown} */
-                                    type?: "Json";
-                                });
+                                };
                             };
                             /** @enum {string} */
                             type: "Tcp" | "File" | "OpenTelemetry";
-                        } & ({
-                            tcp?: unknown;
-                            /** @enum {unknown} */
-                            type?: "Tcp";
-                        } | {
-                            file?: unknown;
-                            /** @enum {unknown} */
-                            type?: "File";
-                        } | {
-                            openTelemetry?: unknown;
-                            /** @enum {unknown} */
-                            type?: "OpenTelemetry";
-                        }))[];
+                        }[];
                     };
                     /**
                      * @description Matches defines a list of conditions (by SpiffeID or SNI) that select the
@@ -2934,7 +3026,7 @@ export interface components {
                      *     'targetRef'
                      */
                     default: {
-                        backends?: ({
+                        backends?: {
                             /** @description FileBackend defines configuration for file based access logs */
                             file?: {
                                 /**
@@ -2964,15 +3056,7 @@ export interface components {
                                     plain?: string;
                                     /** @enum {string} */
                                     type: "Plain" | "Json";
-                                } & ({
-                                    plain?: unknown;
-                                    /** @enum {unknown} */
-                                    type?: "Plain";
-                                } | {
-                                    json?: unknown;
-                                    /** @enum {unknown} */
-                                    type?: "Json";
-                                });
+                                };
                                 /**
                                  * @description Path to a file that logs will be written to
                                  * @example /tmp/access.log
@@ -3070,31 +3154,11 @@ export interface components {
                                     plain?: string;
                                     /** @enum {string} */
                                     type: "Plain" | "Json";
-                                } & ({
-                                    plain?: unknown;
-                                    /** @enum {unknown} */
-                                    type?: "Plain";
-                                } | {
-                                    json?: unknown;
-                                    /** @enum {unknown} */
-                                    type?: "Json";
-                                });
+                                };
                             };
                             /** @enum {string} */
                             type: "Tcp" | "File" | "OpenTelemetry";
-                        } & ({
-                            tcp?: unknown;
-                            /** @enum {unknown} */
-                            type?: "Tcp";
-                        } | {
-                            file?: unknown;
-                            /** @enum {unknown} */
-                            type?: "File";
-                        } | {
-                            openTelemetry?: unknown;
-                            /** @enum {unknown} */
-                            type?: "OpenTelemetry";
-                        }))[];
+                        }[];
                     };
                     /**
                      * @description TargetRef is a reference to the resource that represents a group of
@@ -4022,7 +4086,7 @@ export interface components {
                          */
                         default: {
                             backendRefs?: {
-                                filters?: ({
+                                filters?: {
                                     /**
                                      * @description Only one action is supported per header name.
                                      *     Configuration to set or add multiple values for a header must use RFC 7230
@@ -4090,15 +4154,7 @@ export interface components {
                                             replacePrefixMatch?: string;
                                             /** @enum {string} */
                                             type: "ReplaceFullPath" | "ReplacePrefixMatch";
-                                        } & ({
-                                            replaceFullPath?: unknown;
-                                            /** @enum {unknown} */
-                                            type?: "ReplaceFullPath";
-                                        } | {
-                                            replacePrefixMatch?: unknown;
-                                            /** @enum {unknown} */
-                                            type?: "ReplacePrefixMatch";
-                                        });
+                                        };
                                         /**
                                          * Format: int32
                                          * @description Port is the port to be used in the value of the `Location`
@@ -4144,37 +4200,9 @@ export interface components {
                                             replacePrefixMatch?: string;
                                             /** @enum {string} */
                                             type: "ReplaceFullPath" | "ReplacePrefixMatch";
-                                        } & ({
-                                            replaceFullPath?: unknown;
-                                            /** @enum {unknown} */
-                                            type?: "ReplaceFullPath";
-                                        } | {
-                                            replacePrefixMatch?: unknown;
-                                            /** @enum {unknown} */
-                                            type?: "ReplacePrefixMatch";
-                                        });
+                                        };
                                     };
-                                } & ({
-                                    requestHeaderModifier?: unknown;
-                                    /** @enum {unknown} */
-                                    type?: "RequestHeaderModifier";
-                                } | {
-                                    responseHeaderModifier?: unknown;
-                                    /** @enum {unknown} */
-                                    type?: "ResponseHeaderModifier";
-                                } | {
-                                    requestRedirect?: unknown;
-                                    /** @enum {unknown} */
-                                    type?: "RequestRedirect";
-                                } | {
-                                    /** @enum {unknown} */
-                                    type?: "URLRewrite";
-                                    urlRewrite?: unknown;
-                                } | {
-                                    requestMirror?: unknown;
-                                    /** @enum {unknown} */
-                                    type?: "RequestMirror";
-                                }))[];
+                                }[];
                                 /**
                                  * @description Kind of the referenced resource
                                  * @enum {string}
@@ -4196,7 +4224,7 @@ export interface components {
                                 sectionName?: string;
                                 weight?: number;
                             }[];
-                            filters?: ({
+                            filters?: {
                                 /**
                                  * @description Only one action is supported per header name.
                                  *     Configuration to set or add multiple values for a header must use RFC 7230
@@ -4264,15 +4292,7 @@ export interface components {
                                         replacePrefixMatch?: string;
                                         /** @enum {string} */
                                         type: "ReplaceFullPath" | "ReplacePrefixMatch";
-                                    } & ({
-                                        replaceFullPath?: unknown;
-                                        /** @enum {unknown} */
-                                        type?: "ReplaceFullPath";
-                                    } | {
-                                        replacePrefixMatch?: unknown;
-                                        /** @enum {unknown} */
-                                        type?: "ReplacePrefixMatch";
-                                    });
+                                    };
                                     /**
                                      * Format: int32
                                      * @description Port is the port to be used in the value of the `Location`
@@ -4318,37 +4338,9 @@ export interface components {
                                         replacePrefixMatch?: string;
                                         /** @enum {string} */
                                         type: "ReplaceFullPath" | "ReplacePrefixMatch";
-                                    } & ({
-                                        replaceFullPath?: unknown;
-                                        /** @enum {unknown} */
-                                        type?: "ReplaceFullPath";
-                                    } | {
-                                        replacePrefixMatch?: unknown;
-                                        /** @enum {unknown} */
-                                        type?: "ReplacePrefixMatch";
-                                    });
+                                    };
                                 };
-                            } & ({
-                                requestHeaderModifier?: unknown;
-                                /** @enum {unknown} */
-                                type?: "RequestHeaderModifier";
-                            } | {
-                                responseHeaderModifier?: unknown;
-                                /** @enum {unknown} */
-                                type?: "ResponseHeaderModifier";
-                            } | {
-                                requestRedirect?: unknown;
-                                /** @enum {unknown} */
-                                type?: "RequestRedirect";
-                            } | {
-                                /** @enum {unknown} */
-                                type?: "URLRewrite";
-                                urlRewrite?: unknown;
-                            } | {
-                                requestMirror?: unknown;
-                                /** @enum {unknown} */
-                                type?: "RequestMirror";
-                            }))[];
+                            }[];
                         };
                         /**
                          * @description Matches describes how to match HTTP requests this rule should be applied
@@ -4726,7 +4718,7 @@ export interface components {
                          *     set to true, and there is already a hash generated, the hash is returned immediately,
                          *     ignoring the rest of the hash policy list.
                          */
-                        hashPolicies?: ({
+                        hashPolicies?: {
                             connection?: {
                                 /** @description Hash on source IP address. */
                                 sourceIP?: boolean;
@@ -4768,27 +4760,7 @@ export interface components {
                             terminal?: boolean;
                             /** @enum {string} */
                             type: "Header" | "Cookie" | "Connection" | "QueryParameter" | "FilterState";
-                        } & ({
-                            header?: unknown;
-                            /** @enum {unknown} */
-                            type?: "Header";
-                        } | {
-                            cookie?: unknown;
-                            /** @enum {unknown} */
-                            type?: "Cookie";
-                        } | {
-                            connection?: unknown;
-                            /** @enum {unknown} */
-                            type?: "Connection";
-                        } | {
-                            queryParameter?: unknown;
-                            /** @enum {unknown} */
-                            type?: "QueryParameter";
-                        } | {
-                            filterState?: unknown;
-                            /** @enum {unknown} */
-                            type?: "FilterState";
-                        }))[];
+                        }[];
                         /** @description LoadBalancer allows to specify load balancing algorithm. */
                         loadBalancer?: {
                             /**
@@ -4869,27 +4841,7 @@ export interface components {
                             roundRobin?: Record<string, never>;
                             /** @enum {string} */
                             type: "RoundRobin" | "LeastRequest" | "RingHash" | "Random" | "Maglev";
-                        } & ({
-                            roundRobin?: unknown;
-                            /** @enum {unknown} */
-                            type?: "RoundRobin";
-                        } | {
-                            leastRequest?: unknown;
-                            /** @enum {unknown} */
-                            type?: "LeastRequest";
-                        } | {
-                            ringHash?: unknown;
-                            /** @enum {unknown} */
-                            type?: "RingHash";
-                        } | {
-                            random?: unknown;
-                            /** @enum {unknown} */
-                            type?: "Random";
-                        } | {
-                            maglev?: unknown;
-                            /** @enum {unknown} */
-                            type?: "Maglev";
-                        });
+                        };
                         /** @description LocalityAwareness contains configuration for locality aware load balancing. */
                         localityAwareness?: {
                             /**
@@ -5036,7 +4988,7 @@ export interface components {
                         port: number;
                     }[];
                     /** @description Backends list that will be used to collect metrics. */
-                    backends?: ({
+                    backends?: {
                         /** @description OpenTelemetry backend configuration */
                         openTelemetry?: {
                             /**
@@ -5090,15 +5042,7 @@ export interface components {
                          * @enum {string}
                          */
                         type: "Prometheus" | "OpenTelemetry";
-                    } & ({
-                        prometheus?: unknown;
-                        /** @enum {unknown} */
-                        type?: "Prometheus";
-                    } | {
-                        openTelemetry?: unknown;
-                        /** @enum {unknown} */
-                        type?: "OpenTelemetry";
-                    }))[];
+                    }[];
                     /** @description Sidecar metrics collection configuration */
                     sidecar?: {
                         /**
@@ -6726,7 +6670,7 @@ export interface components {
                      *     reasons explained in MADR 009-tracing-policy this has to be a one element
                      *     array for now.
                      */
-                    backends?: ({
+                    backends?: {
                         /** @description Datadog backend configuration. */
                         datadog?: {
                             /**
@@ -6791,19 +6735,7 @@ export interface components {
                             /** @description Address of Zipkin collector. */
                             url: string;
                         };
-                    } & ({
-                        /** @enum {unknown} */
-                        type?: "Zipkin";
-                        zipkin?: unknown;
-                    } | {
-                        datadog?: unknown;
-                        /** @enum {unknown} */
-                        type?: "Datadog";
-                    } | {
-                        openTelemetry?: unknown;
-                        /** @enum {unknown} */
-                        type?: "OpenTelemetry";
-                    }))[];
+                    }[];
                     /**
                      * @description Sampling configuration.
                      *     Sampling is the process by which a decision is made on whether to
@@ -8592,19 +8524,7 @@ export interface components {
                      * @enum {string}
                      */
                     type: "Bundled" | "Spire" | "Extension";
-                } & ({
-                    bundled?: unknown;
-                    /** @enum {unknown} */
-                    type?: "Bundled";
-                } | {
-                    spire?: unknown;
-                    /** @enum {unknown} */
-                    type?: "Spire";
-                } | {
-                    extension?: unknown;
-                    /** @enum {unknown} */
-                    type?: "Extension";
-                });
+                };
                 selector?: {
                     dataplane?: {
                         matchLabels?: {
@@ -10376,6 +10296,21 @@ export interface components {
             };
         };
         /** @description Successful response */
+        DataplaneCreateOrUpdateSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    /**
+                     * @description warnings is a list of warning messages to return to the requesting Kuma API clients.
+                     *     Warning messages describe a problem the client making the API request should correct or be aware of.
+                     */
+                    readonly warnings?: string[];
+                };
+            };
+        };
+        /** @description Successful response */
         DataplaneDeleteSuccessResponse: {
             headers: {
                 [name: string]: unknown;
@@ -10391,21 +10326,6 @@ export interface components {
             };
             content: {
                 "application/json": components["schemas"]["DataplaneItem"];
-            };
-        };
-        /** @description Successful response */
-        DataplaneCreateOrUpdateSuccessResponse: {
-            headers: {
-                [name: string]: unknown;
-            };
-            content: {
-                "application/json": {
-                    /**
-                     * @description warnings is a list of warning messages to return to the requesting Kuma API clients.
-                     *     Warning messages describe a problem the client making the API request should correct or be aware of.
-                     */
-                    readonly warnings?: string[];
-                };
             };
         };
         /** @description List */
@@ -10520,6 +10440,21 @@ export interface components {
             };
         };
         /** @description Successful response */
+        MeshCreateOrUpdateSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    /**
+                     * @description warnings is a list of warning messages to return to the requesting Kuma API clients.
+                     *     Warning messages describe a problem the client making the API request should correct or be aware of.
+                     */
+                    readonly warnings?: string[];
+                };
+            };
+        };
+        /** @description Successful response */
         MeshDeleteSuccessResponse: {
             headers: {
                 [name: string]: unknown;
@@ -10535,21 +10470,6 @@ export interface components {
             };
             content: {
                 "application/json": components["schemas"]["MeshItem"];
-            };
-        };
-        /** @description Successful response */
-        MeshCreateOrUpdateSuccessResponse: {
-            headers: {
-                [name: string]: unknown;
-            };
-            content: {
-                "application/json": {
-                    /**
-                     * @description warnings is a list of warning messages to return to the requesting Kuma API clients.
-                     *     Warning messages describe a problem the client making the API request should correct or be aware of.
-                     */
-                    readonly warnings?: string[];
-                };
             };
         };
         /** @description A response containing the insight of a mesh. */
@@ -10616,6 +10536,21 @@ export interface components {
             };
         };
         /** @description Successful response */
+        SecretCreateOrUpdateSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    /**
+                     * @description warnings is a list of warning messages to return to the requesting Kuma API clients.
+                     *     Warning messages describe a problem the client making the API request should correct or be aware of.
+                     */
+                    readonly warnings?: string[];
+                };
+            };
+        };
+        /** @description Successful response */
         SecretDeleteSuccessResponse: {
             headers: {
                 [name: string]: unknown;
@@ -10633,21 +10568,6 @@ export interface components {
                 "application/json": components["schemas"]["SecretItem"];
             };
         };
-        /** @description Successful response */
-        SecretCreateOrUpdateSuccessResponse: {
-            headers: {
-                [name: string]: unknown;
-            };
-            content: {
-                "application/json": {
-                    /**
-                     * @description warnings is a list of warning messages to return to the requesting Kuma API clients.
-                     *     Warning messages describe a problem the client making the API request should correct or be aware of.
-                     */
-                    readonly warnings?: string[];
-                };
-            };
-        };
         /** @description List */
         ZoneList: {
             headers: {
@@ -10660,6 +10580,21 @@ export interface components {
                     next: string | null;
                     /** @description The total number of entities */
                     total: number;
+                };
+            };
+        };
+        /** @description Successful response */
+        ZoneCreateOrUpdateSuccessResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    /**
+                     * @description warnings is a list of warning messages to return to the requesting Kuma API clients.
+                     *     Warning messages describe a problem the client making the API request should correct or be aware of.
+                     */
+                    readonly warnings?: string[];
                 };
             };
         };
@@ -10679,21 +10614,6 @@ export interface components {
             };
             content: {
                 "application/json": components["schemas"]["ZoneItem"];
-            };
-        };
-        /** @description Successful response */
-        ZoneCreateOrUpdateSuccessResponse: {
-            headers: {
-                [name: string]: unknown;
-            };
-            content: {
-                "application/json": {
-                    /**
-                     * @description warnings is a list of warning messages to return to the requesting Kuma API clients.
-                     *     Warning messages describe a problem the client making the API request should correct or be aware of.
-                     */
-                    readonly warnings?: string[];
-                };
             };
         };
         /** @description List */
@@ -11889,6 +11809,53 @@ export interface operations {
             200: components["responses"]["MeshAccessLogList"];
         };
     };
+    postMeshAccessLog: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+            };
+            cookie?: never;
+        };
+        /** @description Resource to create */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MeshAccessLogItem"];
+            };
+        };
+        responses: {
+            201: components["responses"]["MeshAccessLogCreateOrUpdateSuccessResponse"];
+            /** @description Invalid resource */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Parent mesh not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotFoundError"];
+                };
+            };
+            /** @description A resource with this identity already exists */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
     getMeshCircuitBreaker: {
         parameters: {
             query?: never;
@@ -11979,6 +11946,53 @@ export interface operations {
         requestBody?: never;
         responses: {
             200: components["responses"]["MeshCircuitBreakerList"];
+        };
+    };
+    postMeshCircuitBreaker: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+            };
+            cookie?: never;
+        };
+        /** @description Resource to create */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MeshCircuitBreakerItem"];
+            };
+        };
+        responses: {
+            201: components["responses"]["MeshCircuitBreakerCreateOrUpdateSuccessResponse"];
+            /** @description Invalid resource */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Parent mesh not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotFoundError"];
+                };
+            };
+            /** @description A resource with this identity already exists */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
         };
     };
     getMeshFaultInjection: {
@@ -12073,6 +12087,53 @@ export interface operations {
             200: components["responses"]["MeshFaultInjectionList"];
         };
     };
+    postMeshFaultInjection: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+            };
+            cookie?: never;
+        };
+        /** @description Resource to create */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MeshFaultInjectionItem"];
+            };
+        };
+        responses: {
+            201: components["responses"]["MeshFaultInjectionCreateOrUpdateSuccessResponse"];
+            /** @description Invalid resource */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Parent mesh not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotFoundError"];
+                };
+            };
+            /** @description A resource with this identity already exists */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
     getMeshHealthCheck: {
         parameters: {
             query?: never;
@@ -12163,6 +12224,53 @@ export interface operations {
         requestBody?: never;
         responses: {
             200: components["responses"]["MeshHealthCheckList"];
+        };
+    };
+    postMeshHealthCheck: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+            };
+            cookie?: never;
+        };
+        /** @description Resource to create */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MeshHealthCheckItem"];
+            };
+        };
+        responses: {
+            201: components["responses"]["MeshHealthCheckCreateOrUpdateSuccessResponse"];
+            /** @description Invalid resource */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Parent mesh not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotFoundError"];
+                };
+            };
+            /** @description A resource with this identity already exists */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
         };
     };
     getMeshHTTPRoute: {
@@ -12257,6 +12365,53 @@ export interface operations {
             200: components["responses"]["MeshHTTPRouteList"];
         };
     };
+    postMeshHTTPRoute: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+            };
+            cookie?: never;
+        };
+        /** @description Resource to create */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MeshHTTPRouteItem"];
+            };
+        };
+        responses: {
+            201: components["responses"]["MeshHTTPRouteCreateOrUpdateSuccessResponse"];
+            /** @description Invalid resource */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Parent mesh not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotFoundError"];
+                };
+            };
+            /** @description A resource with this identity already exists */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
     getMeshLoadBalancingStrategy: {
         parameters: {
             query?: never;
@@ -12347,6 +12502,53 @@ export interface operations {
         requestBody?: never;
         responses: {
             200: components["responses"]["MeshLoadBalancingStrategyList"];
+        };
+    };
+    postMeshLoadBalancingStrategy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+            };
+            cookie?: never;
+        };
+        /** @description Resource to create */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MeshLoadBalancingStrategyItem"];
+            };
+        };
+        responses: {
+            201: components["responses"]["MeshLoadBalancingStrategyCreateOrUpdateSuccessResponse"];
+            /** @description Invalid resource */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Parent mesh not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotFoundError"];
+                };
+            };
+            /** @description A resource with this identity already exists */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
         };
     };
     getMeshMetric: {
@@ -12441,6 +12643,53 @@ export interface operations {
             200: components["responses"]["MeshMetricList"];
         };
     };
+    postMeshMetric: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+            };
+            cookie?: never;
+        };
+        /** @description Resource to create */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MeshMetricItem"];
+            };
+        };
+        responses: {
+            201: components["responses"]["MeshMetricCreateOrUpdateSuccessResponse"];
+            /** @description Invalid resource */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Parent mesh not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotFoundError"];
+                };
+            };
+            /** @description A resource with this identity already exists */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
     getMeshPassthrough: {
         parameters: {
             query?: never;
@@ -12531,6 +12780,53 @@ export interface operations {
         requestBody?: never;
         responses: {
             200: components["responses"]["MeshPassthroughList"];
+        };
+    };
+    postMeshPassthrough: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+            };
+            cookie?: never;
+        };
+        /** @description Resource to create */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MeshPassthroughItem"];
+            };
+        };
+        responses: {
+            201: components["responses"]["MeshPassthroughCreateOrUpdateSuccessResponse"];
+            /** @description Invalid resource */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Parent mesh not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotFoundError"];
+                };
+            };
+            /** @description A resource with this identity already exists */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
         };
     };
     getMeshProxyPatch: {
@@ -12625,6 +12921,53 @@ export interface operations {
             200: components["responses"]["MeshProxyPatchList"];
         };
     };
+    postMeshProxyPatch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+            };
+            cookie?: never;
+        };
+        /** @description Resource to create */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MeshProxyPatchItem"];
+            };
+        };
+        responses: {
+            201: components["responses"]["MeshProxyPatchCreateOrUpdateSuccessResponse"];
+            /** @description Invalid resource */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Parent mesh not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotFoundError"];
+                };
+            };
+            /** @description A resource with this identity already exists */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
     getMeshRateLimit: {
         parameters: {
             query?: never;
@@ -12715,6 +13058,53 @@ export interface operations {
         requestBody?: never;
         responses: {
             200: components["responses"]["MeshRateLimitList"];
+        };
+    };
+    postMeshRateLimit: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+            };
+            cookie?: never;
+        };
+        /** @description Resource to create */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MeshRateLimitItem"];
+            };
+        };
+        responses: {
+            201: components["responses"]["MeshRateLimitCreateOrUpdateSuccessResponse"];
+            /** @description Invalid resource */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Parent mesh not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotFoundError"];
+                };
+            };
+            /** @description A resource with this identity already exists */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
         };
     };
     getMeshRetry: {
@@ -12809,6 +13199,53 @@ export interface operations {
             200: components["responses"]["MeshRetryList"];
         };
     };
+    postMeshRetry: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+            };
+            cookie?: never;
+        };
+        /** @description Resource to create */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MeshRetryItem"];
+            };
+        };
+        responses: {
+            201: components["responses"]["MeshRetryCreateOrUpdateSuccessResponse"];
+            /** @description Invalid resource */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Parent mesh not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotFoundError"];
+                };
+            };
+            /** @description A resource with this identity already exists */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
     getMeshTCPRoute: {
         parameters: {
             query?: never;
@@ -12899,6 +13336,53 @@ export interface operations {
         requestBody?: never;
         responses: {
             200: components["responses"]["MeshTCPRouteList"];
+        };
+    };
+    postMeshTCPRoute: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+            };
+            cookie?: never;
+        };
+        /** @description Resource to create */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MeshTCPRouteItem"];
+            };
+        };
+        responses: {
+            201: components["responses"]["MeshTCPRouteCreateOrUpdateSuccessResponse"];
+            /** @description Invalid resource */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Parent mesh not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotFoundError"];
+                };
+            };
+            /** @description A resource with this identity already exists */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
         };
     };
     getMeshTimeout: {
@@ -12993,6 +13477,53 @@ export interface operations {
             200: components["responses"]["MeshTimeoutList"];
         };
     };
+    postMeshTimeout: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+            };
+            cookie?: never;
+        };
+        /** @description Resource to create */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MeshTimeoutItem"];
+            };
+        };
+        responses: {
+            201: components["responses"]["MeshTimeoutCreateOrUpdateSuccessResponse"];
+            /** @description Invalid resource */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Parent mesh not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotFoundError"];
+                };
+            };
+            /** @description A resource with this identity already exists */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
     getMeshTLS: {
         parameters: {
             query?: never;
@@ -13083,6 +13614,53 @@ export interface operations {
         requestBody?: never;
         responses: {
             200: components["responses"]["MeshTLSList"];
+        };
+    };
+    postMeshTLS: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+            };
+            cookie?: never;
+        };
+        /** @description Resource to create */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MeshTLSItem"];
+            };
+        };
+        responses: {
+            201: components["responses"]["MeshTLSCreateOrUpdateSuccessResponse"];
+            /** @description Invalid resource */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Parent mesh not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotFoundError"];
+                };
+            };
+            /** @description A resource with this identity already exists */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
         };
     };
     getMeshTrace: {
@@ -13177,6 +13755,53 @@ export interface operations {
             200: components["responses"]["MeshTraceList"];
         };
     };
+    postMeshTrace: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+            };
+            cookie?: never;
+        };
+        /** @description Resource to create */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MeshTraceItem"];
+            };
+        };
+        responses: {
+            201: components["responses"]["MeshTraceCreateOrUpdateSuccessResponse"];
+            /** @description Invalid resource */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Parent mesh not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotFoundError"];
+                };
+            };
+            /** @description A resource with this identity already exists */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
     getMeshTrafficPermission: {
         parameters: {
             query?: never;
@@ -13269,6 +13894,53 @@ export interface operations {
             200: components["responses"]["MeshTrafficPermissionList"];
         };
     };
+    postMeshTrafficPermission: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+            };
+            cookie?: never;
+        };
+        /** @description Resource to create */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MeshTrafficPermissionItem"];
+            };
+        };
+        responses: {
+            201: components["responses"]["MeshTrafficPermissionCreateOrUpdateSuccessResponse"];
+            /** @description Invalid resource */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Parent mesh not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotFoundError"];
+                };
+            };
+            /** @description A resource with this identity already exists */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
     getDataplaneList: {
         parameters: {
             query?: {
@@ -13300,6 +13972,53 @@ export interface operations {
         requestBody?: never;
         responses: {
             200: components["responses"]["DataplaneList"];
+        };
+    };
+    postDataplane: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+            };
+            cookie?: never;
+        };
+        /** @description Resource to create */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DataplaneItem"];
+            };
+        };
+        responses: {
+            201: components["responses"]["DataplaneCreateOrUpdateSuccessResponse"];
+            /** @description Invalid resource */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Parent mesh not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotFoundError"];
+                };
+            };
+            /** @description A resource with this identity already exists */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
         };
     };
     getDataplane: {
@@ -13518,6 +14237,41 @@ export interface operations {
             200: components["responses"]["GlobalSecretList"];
         };
     };
+    postGlobalSecretAlias: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Resource to create */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["GlobalSecretItem"];
+            };
+        };
+        responses: {
+            201: components["responses"]["GlobalSecretCreateOrUpdateSuccessResponse"];
+            /** @description Invalid resource */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description A resource with this identity already exists */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
     getMeshList: {
         parameters: {
             query?: {
@@ -13546,6 +14300,41 @@ export interface operations {
         requestBody?: never;
         responses: {
             200: components["responses"]["MeshList"];
+        };
+    };
+    postMesh: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Resource to create */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MeshItem"];
+            };
+        };
+        responses: {
+            201: components["responses"]["MeshCreateOrUpdateSuccessResponse"];
+            /** @description Invalid resource */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description A resource with this identity already exists */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
         };
     };
     getMesh: {
@@ -13702,6 +14491,53 @@ export interface operations {
             200: components["responses"]["SecretList"];
         };
     };
+    postSecret: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+            };
+            cookie?: never;
+        };
+        /** @description Resource to create */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SecretItem"];
+            };
+        };
+        responses: {
+            201: components["responses"]["SecretCreateOrUpdateSuccessResponse"];
+            /** @description Invalid resource */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Parent mesh not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotFoundError"];
+                };
+            };
+            /** @description A resource with this identity already exists */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
     getSecret: {
         parameters: {
             query?: never;
@@ -13789,6 +14625,41 @@ export interface operations {
         requestBody?: never;
         responses: {
             200: components["responses"]["ZoneList"];
+        };
+    };
+    postZone: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Resource to create */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ZoneItem"];
+            };
+        };
+        responses: {
+            201: components["responses"]["ZoneCreateOrUpdateSuccessResponse"];
+            /** @description Invalid resource */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description A resource with this identity already exists */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
         };
     };
     getZone: {
@@ -14004,6 +14875,41 @@ export interface operations {
             200: components["responses"]["HostnameGeneratorList"];
         };
     };
+    postHostnameGenerator: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Resource to create */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["HostnameGeneratorItem"];
+            };
+        };
+        responses: {
+            201: components["responses"]["HostnameGeneratorCreateOrUpdateSuccessResponse"];
+            /** @description Invalid resource */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description A resource with this identity already exists */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
     getMeshExternalService: {
         parameters: {
             query?: never;
@@ -14094,6 +15000,53 @@ export interface operations {
         requestBody?: never;
         responses: {
             200: components["responses"]["MeshExternalServiceList"];
+        };
+    };
+    postMeshExternalService: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+            };
+            cookie?: never;
+        };
+        /** @description Resource to create */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MeshExternalServiceItem"];
+            };
+        };
+        responses: {
+            201: components["responses"]["MeshExternalServiceCreateOrUpdateSuccessResponse"];
+            /** @description Invalid resource */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Parent mesh not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotFoundError"];
+                };
+            };
+            /** @description A resource with this identity already exists */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
         };
     };
     getMeshIdentity: {
@@ -14188,6 +15141,53 @@ export interface operations {
             200: components["responses"]["MeshIdentityList"];
         };
     };
+    postMeshIdentity: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+            };
+            cookie?: never;
+        };
+        /** @description Resource to create */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MeshIdentityItem"];
+            };
+        };
+        responses: {
+            201: components["responses"]["MeshIdentityCreateOrUpdateSuccessResponse"];
+            /** @description Invalid resource */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Parent mesh not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotFoundError"];
+                };
+            };
+            /** @description A resource with this identity already exists */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
     getMeshMultiZoneService: {
         parameters: {
             query?: never;
@@ -14278,6 +15278,53 @@ export interface operations {
         requestBody?: never;
         responses: {
             200: components["responses"]["MeshMultiZoneServiceList"];
+        };
+    };
+    postMeshMultiZoneService: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+            };
+            cookie?: never;
+        };
+        /** @description Resource to create */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MeshMultiZoneServiceItem"];
+            };
+        };
+        responses: {
+            201: components["responses"]["MeshMultiZoneServiceCreateOrUpdateSuccessResponse"];
+            /** @description Invalid resource */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Parent mesh not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotFoundError"];
+                };
+            };
+            /** @description A resource with this identity already exists */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
         };
     };
     getMeshOpenTelemetryBackend: {
@@ -14372,6 +15419,53 @@ export interface operations {
             200: components["responses"]["MeshOpenTelemetryBackendList"];
         };
     };
+    postMeshOpenTelemetryBackend: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+            };
+            cookie?: never;
+        };
+        /** @description Resource to create */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MeshOpenTelemetryBackendItem"];
+            };
+        };
+        responses: {
+            201: components["responses"]["MeshOpenTelemetryBackendCreateOrUpdateSuccessResponse"];
+            /** @description Invalid resource */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Parent mesh not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotFoundError"];
+                };
+            };
+            /** @description A resource with this identity already exists */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
     getMeshService: {
         parameters: {
             query?: never;
@@ -14462,6 +15556,53 @@ export interface operations {
         requestBody?: never;
         responses: {
             200: components["responses"]["MeshServiceList"];
+        };
+    };
+    postMeshService: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+            };
+            cookie?: never;
+        };
+        /** @description Resource to create */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MeshServiceItem"];
+            };
+        };
+        responses: {
+            201: components["responses"]["MeshServiceCreateOrUpdateSuccessResponse"];
+            /** @description Invalid resource */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Parent mesh not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotFoundError"];
+                };
+            };
+            /** @description A resource with this identity already exists */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
         };
     };
     getMeshTrust: {
@@ -14556,6 +15697,53 @@ export interface operations {
             200: components["responses"]["MeshTrustList"];
         };
     };
+    postMeshTrust: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+            };
+            cookie?: never;
+        };
+        /** @description Resource to create */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MeshTrustItem"];
+            };
+        };
+        responses: {
+            201: components["responses"]["MeshTrustCreateOrUpdateSuccessResponse"];
+            /** @description Invalid resource */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Parent mesh not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotFoundError"];
+                };
+            };
+            /** @description A resource with this identity already exists */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
     getMeshZoneAddress: {
         parameters: {
             query?: never;
@@ -14648,6 +15836,53 @@ export interface operations {
             200: components["responses"]["MeshZoneAddressList"];
         };
     };
+    postMeshZoneAddress: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+            };
+            cookie?: never;
+        };
+        /** @description Resource to create */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MeshZoneAddressItem"];
+            };
+        };
+        responses: {
+            201: components["responses"]["MeshZoneAddressCreateOrUpdateSuccessResponse"];
+            /** @description Invalid resource */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Parent mesh not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotFoundError"];
+                };
+            };
+            /** @description A resource with this identity already exists */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
     getWorkload: {
         parameters: {
             query?: never;
@@ -14738,6 +15973,53 @@ export interface operations {
         requestBody?: never;
         responses: {
             200: components["responses"]["WorkloadList"];
+        };
+    };
+    postWorkload: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+            };
+            cookie?: never;
+        };
+        /** @description Resource to create */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["WorkloadItem"];
+            };
+        };
+        responses: {
+            201: components["responses"]["WorkloadCreateOrUpdateSuccessResponse"];
+            /** @description Invalid resource */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Parent mesh not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotFoundError"];
+                };
+            };
+            /** @description A resource with this identity already exists */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
         };
     };
 }
