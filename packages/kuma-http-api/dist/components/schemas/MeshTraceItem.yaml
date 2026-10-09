@@ -128,22 +128,6 @@ properties:
               required:
                 - type
               type: object
-              oneOf:
-                - properties:
-                    type:
-                      enum:
-                        - Zipkin
-                    zipkin: {}
-                - properties:
-                    datadog: {}
-                    type:
-                      enum:
-                        - Datadog
-                - properties:
-                    openTelemetry: {}
-                    type:
-                      enum:
-                        - OpenTelemetry
             maxItems: 1
           sampling:
             description: |-
