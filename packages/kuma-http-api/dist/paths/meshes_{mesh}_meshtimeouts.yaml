@@ -1,3 +1,44 @@
+post:
+  operationId: postMeshTimeout
+  summary: Creates MeshTimeout entity
+  description: Creates a resource using the name in the body. An existing resource is never modified. Requires Kuma 3.0 or later.
+  parameters:
+    - name: mesh
+      in: path
+      description: name of the mesh
+      required: true
+      schema:
+        type: string
+  requestBody:
+    description: Resource to create
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/MeshTimeoutItem.yaml'
+  responses:
+    '201':
+      $ref: '../components/responses/MeshTimeoutCreateOrUpdateSuccessResponse.yaml'
+    '400':
+      description: Invalid resource
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/Error.yaml'
+    '404':
+      description: Parent mesh not found
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/NotFoundError.yaml'
+    '409':
+      description: A resource with this identity already exists
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/Error.yaml'
+  tags:
+    - MeshTimeout
 get:
   operationId: getMeshTimeoutList
   summary: Returns a list of MeshTimeout in the mesh.

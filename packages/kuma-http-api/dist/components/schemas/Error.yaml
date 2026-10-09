@@ -41,7 +41,6 @@ properties:
 required:
   - status
   - title
-  - instance
   - type
   - detail
 title: Error
