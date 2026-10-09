@@ -211,17 +211,6 @@ properties:
                                           The modified path is then used to construct the location header.
                                           When empty, the request path is used as-is.
                                         type: object
-                                        oneOf:
-                                          - properties:
-                                              replaceFullPath: {}
-                                              type:
-                                                enum:
-                                                  - ReplaceFullPath
-                                          - properties:
-                                              replacePrefixMatch: {}
-                                              type:
-                                                enum:
-                                                  - ReplacePrefixMatch
                                         properties:
                                           replaceFullPath:
                                             type: string
@@ -331,17 +320,6 @@ properties:
                                       path:
                                         description: Path defines a path rewrite.
                                         type: object
-                                        oneOf:
-                                          - properties:
-                                              replaceFullPath: {}
-                                              type:
-                                                enum:
-                                                  - ReplaceFullPath
-                                          - properties:
-                                              replacePrefixMatch: {}
-                                              type:
-                                                enum:
-                                                  - ReplacePrefixMatch
                                         properties:
                                           replaceFullPath:
                                             type: string
@@ -357,32 +335,6 @@ properties:
                                 required:
                                   - type
                                 type: object
-                                oneOf:
-                                  - properties:
-                                      requestHeaderModifier: {}
-                                      type:
-                                        enum:
-                                          - RequestHeaderModifier
-                                  - properties:
-                                      responseHeaderModifier: {}
-                                      type:
-                                        enum:
-                                          - ResponseHeaderModifier
-                                  - properties:
-                                      requestRedirect: {}
-                                      type:
-                                        enum:
-                                          - RequestRedirect
-                                  - properties:
-                                      type:
-                                        enum:
-                                          - URLRewrite
-                                      urlRewrite: {}
-                                  - properties:
-                                      requestMirror: {}
-                                      type:
-                                        enum:
-                                          - RequestMirror
                             kind:
                               description: Kind of the referenced resource
                               type: string
@@ -531,17 +483,6 @@ properties:
                                     The modified path is then used to construct the location header.
                                     When empty, the request path is used as-is.
                                   type: object
-                                  oneOf:
-                                    - properties:
-                                        replaceFullPath: {}
-                                        type:
-                                          enum:
-                                            - ReplaceFullPath
-                                    - properties:
-                                        replacePrefixMatch: {}
-                                        type:
-                                          enum:
-                                            - ReplacePrefixMatch
                                   properties:
                                     replaceFullPath:
                                       type: string
@@ -651,17 +592,6 @@ properties:
                                 path:
                                   description: Path defines a path rewrite.
                                   type: object
-                                  oneOf:
-                                    - properties:
-                                        replaceFullPath: {}
-                                        type:
-                                          enum:
-                                            - ReplaceFullPath
-                                    - properties:
-                                        replacePrefixMatch: {}
-                                        type:
-                                          enum:
-                                            - ReplacePrefixMatch
                                   properties:
                                     replaceFullPath:
                                       type: string
@@ -677,32 +607,6 @@ properties:
                           required:
                             - type
                           type: object
-                          oneOf:
-                            - properties:
-                                requestHeaderModifier: {}
-                                type:
-                                  enum:
-                                    - RequestHeaderModifier
-                            - properties:
-                                responseHeaderModifier: {}
-                                type:
-                                  enum:
-                                    - ResponseHeaderModifier
-                            - properties:
-                                requestRedirect: {}
-                                type:
-                                  enum:
-                                    - RequestRedirect
-                            - properties:
-                                type:
-                                  enum:
-                                    - URLRewrite
-                                urlRewrite: {}
-                            - properties:
-                                requestMirror: {}
-                                type:
-                                  enum:
-                                    - RequestMirror
                   matches:
                     description: |-
                       Matches describes how to match HTTP requests this rule should be applied
