@@ -1,4 +1,7 @@
 import type { Dependencies, ResponseHandler } from '#mocks'
+import type { paths } from '@kumahq/kuma-http-api'
+
+type DataplaneOverviewsResponse = paths['/meshes/{mesh}/dataplanes/_overview']['get']['responses']['200']['content']['application/json']
 
 export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) => {
   const mesh = String(req.params.mesh)
@@ -120,7 +123,7 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
                     address,
                     port,
                     name: fake.helpers.arrayElement([String(port), `${isIngress ? 'ingress' : 'egress'}-port`]),
-                    state: fake.kuma.state(),
+                    state: fake.helpers.arrayElement(['Ready', 'NotReady'] as const),
                     type: isIngress ? 'ZoneIngress' : 'ZoneEgress',
                   }
                 }),
@@ -152,11 +155,9 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
                 }),
                 outbound: Array.from({ length: outboundCount }).map((_, _i) => {
                   return {
+                    address: fake.internet.ip(),
                     port: fake.internet.port(),
                     tags: fake.kuma.tags({ service: fake.word.noun() }),
-                    ...(fake.datatype.boolean() && {
-                      address: fake.internet.ip(),
-                    }),
                   }
                 }),
               } : {
@@ -234,6 +235,6 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
         }
       }),
       next,
-    },
+    } satisfies DataplaneOverviewsResponse,
   }
 }

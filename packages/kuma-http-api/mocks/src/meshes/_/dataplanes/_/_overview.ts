@@ -1,4 +1,11 @@
 import type { Dependencies, ResponseHandler } from '#mocks'
+import type { paths } from '@kumahq/kuma-http-api'
+
+// @TODO(types): once the types are correct here we can remove the omit
+type DataplaneOverviewResponse = paths['/meshes/{mesh}/dataplanes/{name}/_overview']['get']['responses']['200']['content']['application/json']
+type DataplaneInsight = Omit<NonNullable<DataplaneOverviewResponse['dataplaneInsight']>, 'metadata'> & { metadata?: { features?: string[] } }
+type DataplaneOverviewBody = Omit<DataplaneOverviewResponse, 'dataplaneInsight'> & { dataplaneInsight?: DataplaneInsight }
+
 export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
   const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
   const [
@@ -109,7 +116,7 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
                 address,
                 port,
                 name: fake.helpers.arrayElement([String(port), `${isIngress ? 'ingress' : 'egress'}-port`]),
-                state: fake.kuma.state(),
+                state: fake.helpers.arrayElement(['Ready', 'NotReady'] as const),
                 type: isIngress ? 'ZoneIngress' : 'ZoneEgress',
               }
             }),
@@ -142,6 +149,7 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
             }),
             outbound: Array.from({ length: outboundCount }).map((_, _i) => {
               return {
+                address: fake.internet.ipv4(),
                 port: fake.internet.port(),
                 tags: fake.kuma.tags({ service }),
               }
@@ -243,6 +251,6 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
           ],
         },
       },
-    },
+    } satisfies DataplaneOverviewBody,
   }
 }

@@ -1,4 +1,8 @@
 import type { Dependencies, ResponseHandler } from '#mocks'
+import type { paths } from '@kumahq/kuma-http-api'
+
+type MeshResponse = paths['/meshes/{name}']['get']['responses']['200']['content']['application/json']
+
 export default ({ fake }: Dependencies): ResponseHandler => (req) => {
   // this template can be called via the /_kri/kri_<shortName>_:kri endpoint or
   // the legacy endpoint
@@ -37,6 +41,6 @@ export default ({ fake }: Dependencies): ResponseHandler => (req) => {
       labels: fake.kuma.labels({
         name: displayName,
       }),
-    },
+    } satisfies MeshResponse,
   }
 }

@@ -1,4 +1,8 @@
 import type { Dependencies, ResponseHandler } from '#mocks'
+import type { paths } from '@kumahq/kuma-http-api'
+
+type MeshFaultInjectionResponse = paths['/meshes/{mesh}/meshfaultinjections/{name}']['get']['responses']['200']['content']['application/json']
+
 export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
   const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
 
@@ -41,12 +45,8 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
         }),
       },
       spec: {
-        from: [
+        rules: [
           {
-            targetRef: {
-              kind: 'MeshService',
-              name: fake.word.noun(),
-            },
             default: {
               http: [
                 {
@@ -60,6 +60,6 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
           },
         ],
       },
-    },
+    } satisfies MeshFaultInjectionResponse,
   }
 }

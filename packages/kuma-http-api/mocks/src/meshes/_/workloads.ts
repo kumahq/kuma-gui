@@ -1,5 +1,5 @@
 import type { Dependencies, ResponseHandler } from '#mocks'
-import type { components } from '@kumahq/kuma-http-api'
+import type { paths } from '@kumahq/kuma-http-api'
 
 export default ({ fake, env, pager }: Dependencies): ResponseHandler => (req) => {
   const { mesh } = req.params as Record<string, string>
@@ -53,6 +53,6 @@ export default ({ fake, env, pager }: Dependencies): ResponseHandler => (req) =>
           },
         }
       }),
-    } satisfies components['responses']['WorkloadList']['content']['application/json'],
+    } satisfies paths['/meshes/{mesh}/workloads']['get']['responses']['200']['content']['application/json'],
   }
 }

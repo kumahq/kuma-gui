@@ -1,4 +1,8 @@
 import type { Dependencies, ResponseHandler } from '#mocks'
+import type { paths } from '@kumahq/kuma-http-api'
+
+type MeshesResponse = paths['/meshes']['get']['responses']['200']['content']['application/json']
+
 export default ({ fake, env, pager }: Dependencies): ResponseHandler => (req) => {
   const { total, next, pageTotal } = pager(
     env('KUMA_MESH_COUNT', `${fake.number.int({ min: 1, max: 200 })}`),
@@ -22,6 +26,6 @@ export default ({ fake, env, pager }: Dependencies): ResponseHandler => (req) =>
         }
       }),
       next,
-    },
+    } satisfies MeshesResponse,
   }
 }
