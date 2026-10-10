@@ -43,13 +43,18 @@ export const DataplaneOverview = {
 
     const kri = item.kri ?? Kri.toString({ shortName: 'dp', mesh, zone, namespace, name })
 
-
+    // TODO(types): services are only used for legacy-services / service-insights
     // get all tags and labels with kuma.io/service
     // uniquify and and sort
     const services = Array.from(new Set([
       ...tags.filter((tag) => tag.label === 'kuma.io/service').map(({ value }) => value),
       ...(labels['kuma.io/service'] ? [labels['kuma.io/service']] : []),
-    ])).sort((a, b) => a.localeCompare(b))
+    ])).sort((a, b) => a.localeCompare(b)).map((service) => ({
+      name: service,
+      // we encode `kuma.io/service: name_of_something_svc` by turning
+      // the _'s into ~'s so this replaceAll puts them back
+      kri: Kri.toString({ shortName: '$hostport', mesh, zone, namespace, name: service.replaceAll('_', '~') }),
+    }))
 
 
 
@@ -110,6 +115,7 @@ export const DataplaneOverview = {
       })(),
       isCertExpired,
       isCertExpiresSoon,
+      // TODO(types): services are only used for legacy-services / service-insights
       services,
       // config should only contain non-defaulted values
       // because we want to show what the API responded with

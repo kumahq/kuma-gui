@@ -142,31 +142,15 @@
                   truncate
                 >
                   <div
-                    v-for="({ service, to }, index) in row.services.map((service) => ({
-                      service,
-                      to: (() => {
-                        for (const resolve of dataPlaneServiceLinks) {
-                          const to = resolve({ params: { service }, dataplaneType: row.dataplaneType })
-                          if (to) {
-                            return to
-                          }
-                        }
-                        return undefined
-                      })(),
-                    }))"
+                    v-for="({ name, kri }, index) in row.services"
                     :key="index"
                   >
-                    <XCopyButton :text="service">
+                    <XCopyButton :text="name">
                       <XAction
-                        v-if="to"
-                        :to="to"
+                        :href="`kri://${kri}`"
                       >
-                        {{ service }}
+                        {{ name }}
                       </XAction>
-
-                      <template v-else>
-                        {{ service }}
-                      </template>
                     </XCopyButton>
                   </div>
                 </XLayout>
@@ -175,7 +159,6 @@
                   {{ t('common.collection.none') }}
                 </template>
               </template>
-
               <template #zone="{ row }">
                 <XAction
                   v-if="row.zone"
@@ -319,7 +302,6 @@
 </template>
 
 <script lang="ts" setup>
-import { useDataPlaneServiceLinks } from '../index.ts'
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import { Kri } from '@/app/kuma'
@@ -327,7 +309,6 @@ import type { Mesh } from '@/app/meshes/data'
 const props = defineProps<{
   mesh: Mesh
 }>()
-const dataPlaneServiceLinks = useDataPlaneServiceLinks()
 </script>
 
 <style lang="scss" scoped>
