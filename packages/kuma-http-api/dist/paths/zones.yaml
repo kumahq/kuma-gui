@@ -36,3 +36,31 @@ get:
       $ref: '../components/responses/ZoneList.yaml'
   tags:
     - Zone
+post:
+  operationId: postZone
+  summary: Creates Zone entity
+  description: Creates a resource using the name in the body. An existing resource is never modified. Requires Kuma 3.0 or later.
+  requestBody:
+    description: Resource to create
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/ZoneItem.yaml'
+  responses:
+    '201':
+      $ref: '../components/responses/ZoneCreateOrUpdateSuccessResponse.yaml'
+    '400':
+      description: Invalid resource
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/Error.yaml'
+    '409':
+      description: A resource with this identity already exists
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/Error.yaml'
+  tags:
+    - Zone

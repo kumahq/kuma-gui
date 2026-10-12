@@ -1,3 +1,30 @@
 allOf:
-  - $ref: 'Meta.yaml'
+  - type: object
+    required:
+      - type
+      - name
+    properties:
+      type:
+        description: the type of this resource
+        type: string
+        example: MeshInsight
+      name:
+        description: the name of the mesh this insight is computed for
+        type: string
+        example: default
+      labels:
+        description: Labels computed by the control plane, if any.
+        type: object
+        additionalProperties:
+          type: string
+      creationTime:
+        description: Time at which the resource was created
+        type: string
+        format: date-time
+        readOnly: true
+      modificationTime:
+        description: Time at which the resource was updated
+        type: string
+        format: date-time
+        readOnly: true
   - $ref: 'MeshInsight.yaml'

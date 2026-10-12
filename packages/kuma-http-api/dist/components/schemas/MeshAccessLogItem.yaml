@@ -53,17 +53,6 @@ properties:
                               Format of access logs. Placeholders available on
                               https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
                             type: object
-                            oneOf:
-                              - properties:
-                                  plain: {}
-                                  type:
-                                    enum:
-                                      - Plain
-                              - properties:
-                                  json: {}
-                                  type:
-                                    enum:
-                                      - Json
                             properties:
                               json:
                                 type: array
@@ -175,17 +164,6 @@ properties:
                               Format of access logs. Placeholders available on
                               https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
                             type: object
-                            oneOf:
-                              - properties:
-                                  plain: {}
-                                  type:
-                                    enum:
-                                      - Plain
-                              - properties:
-                                  json: {}
-                                  type:
-                                    enum:
-                                      - Json
                             properties:
                               json:
                                 type: array
@@ -228,22 +206,6 @@ properties:
                     required:
                       - type
                     type: object
-                    oneOf:
-                      - properties:
-                          tcp: {}
-                          type:
-                            enum:
-                              - Tcp
-                      - properties:
-                          file: {}
-                          type:
-                            enum:
-                              - File
-                      - properties:
-                          openTelemetry: {}
-                          type:
-                            enum:
-                              - OpenTelemetry
             matches:
               description: |-
                 Matches defines a list of conditions (by SpiffeID or SNI) that select the
@@ -339,17 +301,6 @@ properties:
                               Format of access logs. Placeholders available on
                               https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
                             type: object
-                            oneOf:
-                              - properties:
-                                  plain: {}
-                                  type:
-                                    enum:
-                                      - Plain
-                              - properties:
-                                  json: {}
-                                  type:
-                                    enum:
-                                      - Json
                             properties:
                               json:
                                 type: array
@@ -461,17 +412,6 @@ properties:
                               Format of access logs. Placeholders available on
                               https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
                             type: object
-                            oneOf:
-                              - properties:
-                                  plain: {}
-                                  type:
-                                    enum:
-                                      - Plain
-                              - properties:
-                                  json: {}
-                                  type:
-                                    enum:
-                                      - Json
                             properties:
                               json:
                                 type: array
@@ -514,22 +454,6 @@ properties:
                     required:
                       - type
                     type: object
-                    oneOf:
-                      - properties:
-                          tcp: {}
-                          type:
-                            enum:
-                              - Tcp
-                      - properties:
-                          file: {}
-                          type:
-                            enum:
-                              - File
-                      - properties:
-                          openTelemetry: {}
-                          type:
-                            enum:
-                              - OpenTelemetry
             targetRef:
               description: |-
                 TargetRef is a reference to the resource that represents a group of

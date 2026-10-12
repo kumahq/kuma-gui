@@ -59,106 +59,70 @@ paths:
     $ref: paths/meshes_{mesh}_meshaccesslogs_{name}.yaml
   /meshes/{mesh}/meshaccesslogs:
     $ref: paths/meshes_{mesh}_meshaccesslogs.yaml
-  /meshaccesslogs:
-    $ref: paths/meshaccesslogs.yaml
   /meshes/{mesh}/meshcircuitbreakers/{name}:
     $ref: paths/meshes_{mesh}_meshcircuitbreakers_{name}.yaml
   /meshes/{mesh}/meshcircuitbreakers:
     $ref: paths/meshes_{mesh}_meshcircuitbreakers.yaml
-  /meshcircuitbreakers:
-    $ref: paths/meshcircuitbreakers.yaml
   /meshes/{mesh}/meshfaultinjections/{name}:
     $ref: paths/meshes_{mesh}_meshfaultinjections_{name}.yaml
   /meshes/{mesh}/meshfaultinjections:
     $ref: paths/meshes_{mesh}_meshfaultinjections.yaml
-  /meshfaultinjections:
-    $ref: paths/meshfaultinjections.yaml
   /meshes/{mesh}/meshhealthchecks/{name}:
     $ref: paths/meshes_{mesh}_meshhealthchecks_{name}.yaml
   /meshes/{mesh}/meshhealthchecks:
     $ref: paths/meshes_{mesh}_meshhealthchecks.yaml
-  /meshhealthchecks:
-    $ref: paths/meshhealthchecks.yaml
   /meshes/{mesh}/meshhttproutes/{name}:
     $ref: paths/meshes_{mesh}_meshhttproutes_{name}.yaml
   /meshes/{mesh}/meshhttproutes:
     $ref: paths/meshes_{mesh}_meshhttproutes.yaml
-  /meshhttproutes:
-    $ref: paths/meshhttproutes.yaml
   /meshes/{mesh}/meshloadbalancingstrategies/{name}:
     $ref: paths/meshes_{mesh}_meshloadbalancingstrategies_{name}.yaml
   /meshes/{mesh}/meshloadbalancingstrategies:
     $ref: paths/meshes_{mesh}_meshloadbalancingstrategies.yaml
-  /meshloadbalancingstrategies:
-    $ref: paths/meshloadbalancingstrategies.yaml
   /meshes/{mesh}/meshmetrics/{name}:
     $ref: paths/meshes_{mesh}_meshmetrics_{name}.yaml
   /meshes/{mesh}/meshmetrics:
     $ref: paths/meshes_{mesh}_meshmetrics.yaml
-  /meshmetrics:
-    $ref: paths/meshmetrics.yaml
   /meshes/{mesh}/meshpassthroughs/{name}:
     $ref: paths/meshes_{mesh}_meshpassthroughs_{name}.yaml
   /meshes/{mesh}/meshpassthroughs:
     $ref: paths/meshes_{mesh}_meshpassthroughs.yaml
-  /meshpassthroughs:
-    $ref: paths/meshpassthroughs.yaml
   /meshes/{mesh}/meshproxypatches/{name}:
     $ref: paths/meshes_{mesh}_meshproxypatches_{name}.yaml
   /meshes/{mesh}/meshproxypatches:
     $ref: paths/meshes_{mesh}_meshproxypatches.yaml
-  /meshproxypatches:
-    $ref: paths/meshproxypatches.yaml
   /meshes/{mesh}/meshratelimits/{name}:
     $ref: paths/meshes_{mesh}_meshratelimits_{name}.yaml
   /meshes/{mesh}/meshratelimits:
     $ref: paths/meshes_{mesh}_meshratelimits.yaml
-  /meshratelimits:
-    $ref: paths/meshratelimits.yaml
   /meshes/{mesh}/meshretries/{name}:
     $ref: paths/meshes_{mesh}_meshretries_{name}.yaml
   /meshes/{mesh}/meshretries:
     $ref: paths/meshes_{mesh}_meshretries.yaml
-  /meshretries:
-    $ref: paths/meshretries.yaml
   /meshes/{mesh}/meshtcproutes/{name}:
     $ref: paths/meshes_{mesh}_meshtcproutes_{name}.yaml
   /meshes/{mesh}/meshtcproutes:
     $ref: paths/meshes_{mesh}_meshtcproutes.yaml
-  /meshtcproutes:
-    $ref: paths/meshtcproutes.yaml
   /meshes/{mesh}/meshtimeouts/{name}:
     $ref: paths/meshes_{mesh}_meshtimeouts_{name}.yaml
   /meshes/{mesh}/meshtimeouts:
     $ref: paths/meshes_{mesh}_meshtimeouts.yaml
-  /meshtimeouts:
-    $ref: paths/meshtimeouts.yaml
   /meshes/{mesh}/meshtlses/{name}:
     $ref: paths/meshes_{mesh}_meshtlses_{name}.yaml
   /meshes/{mesh}/meshtlses:
     $ref: paths/meshes_{mesh}_meshtlses.yaml
-  /meshtlses:
-    $ref: paths/meshtlses.yaml
   /meshes/{mesh}/meshtraces/{name}:
     $ref: paths/meshes_{mesh}_meshtraces_{name}.yaml
   /meshes/{mesh}/meshtraces:
     $ref: paths/meshes_{mesh}_meshtraces.yaml
-  /meshtraces:
-    $ref: paths/meshtraces.yaml
   /meshes/{mesh}/meshtrafficpermissions/{name}:
     $ref: paths/meshes_{mesh}_meshtrafficpermissions_{name}.yaml
   /meshes/{mesh}/meshtrafficpermissions:
     $ref: paths/meshes_{mesh}_meshtrafficpermissions.yaml
-  /meshtrafficpermissions:
-    $ref: paths/meshtrafficpermissions.yaml
-  /dataplanes:
-    $ref: paths/dataplanes.yaml
   /meshes/{mesh}/dataplanes:
     $ref: paths/meshes_{mesh}_dataplanes.yaml
   /meshes/{mesh}/dataplanes/{name}:
     $ref: paths/meshes_{mesh}_dataplanes_{name}.yaml
-  /dataplane-insights:
-    $ref: paths/dataplaneinsights.yaml
   /meshes/{mesh}/dataplane-insights:
     $ref: paths/meshes_{mesh}_dataplaneinsights.yaml
   /meshes/{mesh}/dataplane-insights/{name}:
@@ -191,8 +155,6 @@ paths:
     $ref: paths/meshes_{mesh}_secrets.yaml
   /meshes/{mesh}/secrets/{name}:
     $ref: paths/meshes_{mesh}_secrets_{name}.yaml
-  /secrets:
-    $ref: paths/secrets.yaml
   /zones:
     $ref: paths/zones.yaml
   /zones/{name}:
@@ -213,50 +175,34 @@ paths:
     $ref: paths/meshes_{mesh}_meshexternalservices_{name}.yaml
   /meshes/{mesh}/meshexternalservices:
     $ref: paths/meshes_{mesh}_meshexternalservices.yaml
-  /meshexternalservices:
-    $ref: paths/meshexternalservices.yaml
   /meshes/{mesh}/meshidentities/{name}:
     $ref: paths/meshes_{mesh}_meshidentities_{name}.yaml
   /meshes/{mesh}/meshidentities:
     $ref: paths/meshes_{mesh}_meshidentities.yaml
-  /meshidentities:
-    $ref: paths/meshidentities.yaml
   /meshes/{mesh}/meshmultizoneservices/{name}:
     $ref: paths/meshes_{mesh}_meshmultizoneservices_{name}.yaml
   /meshes/{mesh}/meshmultizoneservices:
     $ref: paths/meshes_{mesh}_meshmultizoneservices.yaml
-  /meshmultizoneservices:
-    $ref: paths/meshmultizoneservices.yaml
   /meshes/{mesh}/meshopentelemetrybackends/{name}:
     $ref: paths/meshes_{mesh}_meshopentelemetrybackends_{name}.yaml
   /meshes/{mesh}/meshopentelemetrybackends:
     $ref: paths/meshes_{mesh}_meshopentelemetrybackends.yaml
-  /meshopentelemetrybackends:
-    $ref: paths/meshopentelemetrybackends.yaml
   /meshes/{mesh}/meshservices/{name}:
     $ref: paths/meshes_{mesh}_meshservices_{name}.yaml
   /meshes/{mesh}/meshservices:
     $ref: paths/meshes_{mesh}_meshservices.yaml
-  /meshservices:
-    $ref: paths/meshservices.yaml
   /meshes/{mesh}/meshtrusts/{name}:
     $ref: paths/meshes_{mesh}_meshtrusts_{name}.yaml
   /meshes/{mesh}/meshtrusts:
     $ref: paths/meshes_{mesh}_meshtrusts.yaml
-  /meshtrusts:
-    $ref: paths/meshtrusts.yaml
   /meshes/{mesh}/meshzoneaddresses/{name}:
     $ref: paths/meshes_{mesh}_meshzoneaddresses_{name}.yaml
   /meshes/{mesh}/meshzoneaddresses:
     $ref: paths/meshes_{mesh}_meshzoneaddresses.yaml
-  /meshzoneaddresses:
-    $ref: paths/meshzoneaddresses.yaml
   /meshes/{mesh}/workloads/{name}:
     $ref: paths/meshes_{mesh}_workloads_{name}.yaml
   /meshes/{mesh}/workloads:
     $ref: paths/meshes_{mesh}_workloads.yaml
-  /workloads:
-    $ref: paths/workloads.yaml
   /meshes/{mesh}/dataplanes/{name}/policies:
     $ref: paths/meshes_{mesh}_dataplanes_{name}_policies.yaml
 components:

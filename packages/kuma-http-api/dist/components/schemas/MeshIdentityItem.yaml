@@ -33,22 +33,6 @@ properties:
     properties:
       provider:
         type: object
-        oneOf:
-          - properties:
-              bundled: {}
-              type:
-                enum:
-                  - Bundled
-          - properties:
-              spire: {}
-              type:
-                enum:
-                  - Spire
-          - properties:
-              extension: {}
-              type:
-                enum:
-                  - Extension
         properties:
           bundled:
             description: |-
