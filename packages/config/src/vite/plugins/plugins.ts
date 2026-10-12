@@ -66,7 +66,7 @@ export const vuePluginConfig = () => ({
       whitespace: 'preserve' as const,
       isCustomElement: (item: string) => [
         'search',
-        'x-markdown-fence',
+        'x-pre-code',
       ].includes(item),
     },
   },

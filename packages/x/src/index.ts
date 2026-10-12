@@ -33,10 +33,10 @@ import {
   XInput,
   XInputSwitch,
   XLayout,
-  XMarkdownFence,
   XModal,
   XNotification,
   XNotificationHub,
+  XPreCode,
   XProgress,
   XPrompt,
   XProvider,
@@ -61,7 +61,7 @@ import type { App, Plugin, InjectionKey } from 'vue'
 export * from './components'
 
 const elements = [
-  ['x-markdown-fence', XMarkdownFence],
+  ['x-pre-code', XPreCode],
 ] as const
 
 const components = [

@@ -1,1 +1,1 @@
-export * from '../src/components/x-markdown-fence/index'
+export * from '../src/components/x-pre-code/index'

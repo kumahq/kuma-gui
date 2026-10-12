@@ -118,7 +118,7 @@ const safeT: TFunction = (
 /* the x-i18n scope is necessary here */
 /* to prevent "global" `p` styles from overwriting this */
 .x-i18n {
-  :deep(:where(p, x-markdown-fence) + :where(p, ol, ul, x-markdown-fence)) {
+  :deep(:where(p, x-pre-code) + :where(p, ol, ul, x-pre-code)) {
     margin-block-start: 1em;
   }
   :deep(ol) {

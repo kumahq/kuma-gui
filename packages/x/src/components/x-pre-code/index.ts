@@ -7,6 +7,6 @@ export const markdownFence = (md: MarkdownIt) => {
     // our own here, it would end up in the code itself.
     // markdown-it always terminates fence content with a newline
     const code = md.utils.escapeHtml(content.replace(/\n$/, ''))
-    return `<x-markdown-fence language="${language}">${code}</x-markdown-fence>\n`
+    return `<x-pre-code language="${language}">${code}</x-pre-code>\n`
   }
 }
