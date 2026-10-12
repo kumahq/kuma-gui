@@ -1,5 +1,5 @@
 import deepmerge from 'deepmerge'
-import jsYaml, { DEFAULT_SCHEMA, Type } from 'js-yaml'
+import { load, CORE_SCHEMA, defineScalarTag } from 'js-yaml'
 import { pathToRegexp } from 'path-to-regexp'
 
 import type { ArrayMergeOptions } from 'deepmerge'
@@ -32,15 +32,15 @@ export const merge = <T>(response: T, obj: Partial<T>): T => {
 }
 export const YAML = {
   parse: (str: string) => {
-    return jsYaml.load(str, {
-      schema: DEFAULT_SCHEMA.extend([
-        new Type('tag:yaml.org,2002:js/undefined', {
-          kind: 'scalar',
-          construct: () => {
+    return load(str, {
+      schema: CORE_SCHEMA.withTags(
+        defineScalarTag('tag:yaml.org,2002:js/undefined', {
+          resolve: () => {
             return undefinedSymbol
           },
+          identify: () => false,
         }),
-      ]),
+      ),
     })
   },
 }
