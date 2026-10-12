@@ -1,4 +1,4 @@
-import { token, createInjections } from '@kumahq/container'
+import { token } from '@kumahq/container'
 
 import { features } from './features'
 import locales from './locales/en-us/index.yaml'
@@ -12,14 +12,7 @@ import type { Env } from '@/app/application'
 type Token = ReturnType<typeof token>
 type DataplaneSources = ReturnType<typeof sources>
 
-/**
- * Resolves a service to a route based on the type of the dataplane.
- * Allows contributions of any other module by using `labels` in the service container definition.
- */
-export type DataPlaneServiceLink = (item: { params: Record<string, string> & { service: string }, dataplaneType: string }) => { name: string, params?: Record<string, string> } | undefined
-
 const $ = {
-  dataPlaneServiceLinks: token<DataPlaneServiceLink[]>('data-planes.data-plane-service-links'),
   rootViewRoute: token<() => RouteRecordRaw[]>('data-planes.root-view-route'),
 }
 
@@ -98,20 +91,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
         app.enUs,
       ],
     }],
-
-    [token('data-planes.data-plane-service-links.default'), {
-      service: (): DataPlaneServiceLink[] => [],
-      labels: [
-        $.dataPlaneServiceLinks,
-      ],
-    }],
-
     ...connections(app),
   ]
 }
 
-export const [
-  useDataPlaneServiceLinks,
-] = createInjections(
-  $.dataPlaneServiceLinks,
-)
