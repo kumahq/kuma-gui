@@ -142,7 +142,6 @@ properties:
                   enum:
                     - Ready
                     - NotReady
-                    - Ignored
               type: object
           listeners:
             description: |-
