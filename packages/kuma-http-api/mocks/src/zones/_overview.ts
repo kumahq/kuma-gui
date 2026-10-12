@@ -1,4 +1,11 @@
 import type { Dependencies, ResponseHandler } from '#mocks'
+import type { paths } from '@kumahq/kuma-http-api'
+
+// @TODO(types): once the types are correct here we can remove the omit
+type ZoneOverviewsResponse = paths['/zones/_overview']['get']['responses']['200']['content']['application/json']
+type ZoneOverview = Omit<ZoneOverviewsResponse['items'][number], 'mesh' | 'labels'>
+type ZoneOverviewsBody = Omit<ZoneOverviewsResponse, 'items'> & { items: ZoneOverview[] }
+
 export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) => {
   const query = req.url.searchParams
   const { offset, total, next, pageTotal } = pager(
@@ -46,65 +53,65 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
                   status: {
                     lastUpdateTime: fake.kuma.nanodate(),
                     total: {
-                      responsesSent: `${fake.number.int(30)}`,
-                      responsesAcknowledged: `${fake.number.int(30)}`,
+                      responsesSent: fake.number.int(30),
+                      responsesAcknowledged: fake.number.int(30),
                     },
                     stat: {
                       CircuitBreaker: {
-                        responsesSent: `${fake.number.int(30)}`,
-                        responsesAcknowledged: `${fake.number.int(30)}`,
+                        responsesSent: fake.number.int(30),
+                        responsesAcknowledged: fake.number.int(30),
                       },
                       Config: {
-                        responsesSent: `${fake.number.int(30)}`,
-                        responsesAcknowledged: `${fake.number.int(30)}`,
+                        responsesSent: fake.number.int(30),
+                        responsesAcknowledged: fake.number.int(30),
                       },
                       Dataplane: {
-                        responsesSent: `${fake.number.int(30)}`,
-                        responsesAcknowledged: `${fake.number.int(30)}`,
+                        responsesSent: fake.number.int(30),
+                        responsesAcknowledged: fake.number.int(30),
                       },
                       ExternalService: {
-                        responsesSent: `${fake.number.int(30)}`,
-                        responsesAcknowledged: `${fake.number.int(30)}`,
+                        responsesSent: fake.number.int(30),
+                        responsesAcknowledged: fake.number.int(30),
                       },
                       FaultInjection: {
-                        responsesSent: `${fake.number.int(30)}`,
-                        responsesAcknowledged: `${fake.number.int(30)}`,
+                        responsesSent: fake.number.int(30),
+                        responsesAcknowledged: fake.number.int(30),
                       },
                       HealthCheck: {
-                        responsesSent: `${fake.number.int(30)}`,
-                        responsesAcknowledged: `${fake.number.int(30)}`,
+                        responsesSent: fake.number.int(30),
+                        responsesAcknowledged: fake.number.int(30),
                       },
                       Mesh: {
-                        responsesSent: `${fake.number.int(30)}`,
-                        responsesAcknowledged: `${fake.number.int(30)}`,
+                        responsesSent: fake.number.int(30),
+                        responsesAcknowledged: fake.number.int(30),
                       },
                       ProxyTemplate: {
-                        responsesSent: `${fake.number.int(30)}`,
-                        responsesAcknowledged: `${fake.number.int(30)}`,
+                        responsesSent: fake.number.int(30),
+                        responsesAcknowledged: fake.number.int(30),
                       },
                       Retry: {
-                        responsesSent: `${fake.number.int(30)}`,
-                        responsesAcknowledged: `${fake.number.int(30)}`,
+                        responsesSent: fake.number.int(30),
+                        responsesAcknowledged: fake.number.int(30),
                       },
                       Secret: {
-                        responsesSent: `${fake.number.int(30)}`,
-                        responsesAcknowledged: `${fake.number.int(30)}`,
+                        responsesSent: fake.number.int(30),
+                        responsesAcknowledged: fake.number.int(30),
                       },
                       TrafficLog: {
-                        responsesSent: `${fake.number.int(30)}`,
-                        responsesAcknowledged: `${fake.number.int(30)}`,
+                        responsesSent: fake.number.int(30),
+                        responsesAcknowledged: fake.number.int(30),
                       },
                       TrafficPermission: {
-                        responsesSent: `${fake.number.int(30)}`,
-                        responsesAcknowledged: `${fake.number.int(30)}`,
+                        responsesSent: fake.number.int(30),
+                        responsesAcknowledged: fake.number.int(30),
                       },
                       TrafficRoute: {
-                        responsesSent: `${fake.number.int(30)}`,
-                        responsesAcknowledged: `${fake.number.int(30)}`,
+                        responsesSent: fake.number.int(30),
+                        responsesAcknowledged: fake.number.int(30),
                       },
                       TrafficTrace: {
-                        responsesSent: `${fake.number.int(30)}`,
-                        responsesAcknowledged: `${fake.number.int(30)}`,
+                        responsesSent: fake.number.int(30),
+                        responsesAcknowledged: fake.number.int(30),
                       },
                     },
                   },
@@ -124,6 +131,6 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
         }
       }),
       next,
-    },
+    } satisfies ZoneOverviewsBody,
   }
 }

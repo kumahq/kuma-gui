@@ -1,4 +1,8 @@
 import type { Dependencies, ResponseHandler } from '#mocks'
+import type { paths } from '@kumahq/kuma-http-api'
+
+type ZoneDeleteResponse = paths['/zones/{name}']['delete']['responses']['200']['content']['application/json']
+type ZoneResponse = paths['/zones/{name}']['get']['responses']['200']['content']['application/json']
 
 export default ({ fake }: Dependencies): ResponseHandler => (req) => {
   // this template can be called via the /_kri/kri_<shortName>_:kri endpoint or
@@ -25,7 +29,7 @@ export default ({ fake }: Dependencies): ResponseHandler => (req) => {
         headers: {
           ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
         },
-        body: {},
+        body: {} satisfies ZoneDeleteResponse,
       }
     default:
       return {
@@ -35,11 +39,11 @@ export default ({ fake }: Dependencies): ResponseHandler => (req) => {
         body: {
           type: 'Zone',
           kri: fake.kuma.kri({ resourceName: 'Zone', zone: '', mesh: '', namespace: '', name, sectionName: '' }),
-          name: req.params.name,
+          name,
           creationTime: '2021-02-19T08:06:15.380674+01:00',
           modificationTime: '2021-02-19T08:06:15.380674+01:00',
           enabled: true,
-        },
+        } satisfies ZoneResponse,
       }
   }
 }

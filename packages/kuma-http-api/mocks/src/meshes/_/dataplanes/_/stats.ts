@@ -680,7 +680,7 @@ tcp.${service}.${direction}_cx_rx_bytes_total: ${fake.number.int(minMax)}`
 ${inbounds}
 ${listenerStats}
 ${passthrough}
-${stats()}${isSpireEnabled ? `\n${spireStats({ service: services[0] })}` : ''}`,
+${stats()}${isSpireEnabled ? `\n${spireStats({ service: services[0] })}` : ''}` satisfies string,
   }
 }
 

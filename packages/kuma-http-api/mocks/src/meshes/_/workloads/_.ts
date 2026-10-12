@@ -1,5 +1,5 @@
 import type { Dependencies, ResponseHandler } from '#mocks'
-import type { components } from '@kumahq/kuma-http-api'
+import type { paths } from '@kumahq/kuma-http-api'
 
 export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
   const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
@@ -59,6 +59,6 @@ export default ({ fake, env }: Dependencies): ResponseHandler => (req) => {
           }
         })(fake.number.int({ min: 0, max: 10 })),
       },
-    } satisfies components['schemas']['WorkloadItem'],
+    } satisfies paths['/meshes/{mesh}/workloads/{name}']['get']['responses']['200']['content']['application/json'],
   }
 }

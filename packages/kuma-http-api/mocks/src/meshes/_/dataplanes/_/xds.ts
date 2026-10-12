@@ -712,6 +712,6 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
         },
       ],
 
-    },
+    } satisfies any,
   }
 }

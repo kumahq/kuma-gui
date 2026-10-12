@@ -434,6 +434,6 @@ ads_cluster::10.43.138.71:5678::sub_zone::
 ads_cluster::10.43.138.71:5678::canary::false
 ads_cluster::10.43.138.71:5678::priority::0
 ads_cluster::10.43.138.71:5678::success_rate::-1
-ads_cluster::10.43.138.71:5678::local_origin_success_rate::-1`,
+ads_cluster::10.43.138.71:5678::local_origin_success_rate::-1` satisfies string,
   }
 }

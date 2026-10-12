@@ -1,11 +1,11 @@
 import type { Dependencies, ResponseHandler } from '#mocks'
-import type { components } from '@kumahq/kuma-http-api'
+import type { paths } from '@kumahq/kuma-http-api'
 
-type DataplaneNetworkingLayout = components['schemas']['DataplaneNetworkingLayout']
-type DataplaneInbound = components['schemas']['DataplaneInbound']
-type DataplaneOutbound = components['schemas']['DataplaneOutbound']
+type DataplaneNetworkingLayout = paths['/meshes/{mesh}/dataplanes/{name}/_layout']['get']['responses']['200']['content']['application/json']
+type DataplaneInbound = DataplaneNetworkingLayout['inbounds'][number]
+type DataplaneOutbound = DataplaneNetworkingLayout['outbounds'][number]
 // @TODO(types) rmeove the clusters form here once we are on v3 as its already in the spec
-type DataplaneListener = components['schemas']['DataplaneListener'] & { clusters: unknown }
+type DataplaneListener = DataplaneNetworkingLayout['listeners'][number] & { clusters: unknown }
 
 export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
   const mesh = req.params.mesh as string
