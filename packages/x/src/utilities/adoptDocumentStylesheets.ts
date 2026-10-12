@@ -14,7 +14,7 @@ const clone = (sheet: CSSStyleSheet) => {
   try {
     rules = sheet.cssRules
   } catch {
-    console.error("CrossOrigin stylesheet can't be read, and therefore can't be cloned")
+    // console.error("CrossOrigin stylesheet can't be read, and therefore can't be cloned")
     return
   }
   const clone = new CSSStyleSheet({ media: sheet.media.mediaText })
