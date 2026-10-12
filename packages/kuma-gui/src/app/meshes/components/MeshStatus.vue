@@ -48,17 +48,11 @@
                   <div>
                     <dt>
                       <XAction
-                        :to="router.hasRoute('policy-list-view') ? {
+                        :to="{
                           name: 'policy-list-view',
                           params: {
                             mesh: props.mesh.name,
                             policyPath: policy.shortName,
-                          },
-                        } : {
-                          name: 'mesh-resource-list-view',
-                          params: {
-                            mesh: props.mesh.name,
-                            shortName: policy.shortName,
                           },
                         }"
                       >
@@ -151,8 +145,6 @@
   </DataSource>
 </template>
 <script lang="ts" setup>
-import { useRouter } from 'vue-router'
-
 import type { Mesh } from '../data'
 import { useRegExp, useUri } from '@/app/application'
 import type { MeshIdentity } from '@/app/mesh-identities/data'
@@ -163,7 +155,6 @@ const props = defineProps<{
   policies?: Record<string, { total: number }>
 }>()
 
-const router = useRouter()
 const { r } = useRegExp()
 const uri = useUri()
 </script>

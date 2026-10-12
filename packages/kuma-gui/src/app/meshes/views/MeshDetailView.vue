@@ -137,9 +137,11 @@
                       v-if="can('use mesh-services', props.mesh) && !can('use service-insights', props.mesh)"
                       :total="data?.resources.MeshServiceGeneric.total ?? 0"
                       data-testid="mesh-services-status"
+                      data-actionable
                     >
                       <template #title>
                         <XAction
+                          data-action
                           :to="{
                             name: 'service-list-tabs-view',
                           }"
@@ -152,18 +154,28 @@
                       v-else-if="!can('use mesh-services', props.mesh)"
                       :total="data?.services.total ?? 0"
                       data-testid="services-status"
+                      data-actionable
                     >
                       <template #title>
-                        {{ t('meshes.detail.services') }}
+                        <XAction
+                          data-action
+                          :to="{
+                            name: 'service-list-tabs-view',
+                          }"
+                        >
+                          {{ t('meshes.detail.services') }}
+                        </XAction>
                       </template>
                     </KumaResourceStatus>
                     <KumaResourceStatus
                       v-else
                       :total="data?.resources.MeshServiceGeneric.total ?? 0"
                       data-testid="mesh-services-status"
+                      data-actionable
                     >
                       <template #title>
                         <XAction
+                          data-action
                           :to="{
                             name: 'service-list-tabs-view',
                           }"
@@ -202,9 +214,11 @@
                       :total="data?.dataplanesByType.standard.total ?? 0"
                       :online="data?.dataplanesByType.standard.online ?? 0"
                       data-testid="data-plane-proxies-status"
+                      data-actionable
                     >
                       <template #title>
                         <XAction
+                          data-action
                           :to="{
                             name: 'data-plane-list-view',
                           }"
@@ -230,10 +244,12 @@
                             :total="Object.entries(data?.resources || {}).reduce((prev, [key, { total }]) => {
                               return (policyTypes || []).includes(key) ? prev + total : prev
                             }, 0)"
+                            data-actionable
                             data-testid="policies-status"
                           >
                             <template #title>
                               <XAction
+                                data-action
                                 :to="{
                                   name: 'policy-list-index-view',
                                 }"

@@ -467,6 +467,11 @@ import '@kong-ui-public/app-layout/dist/style.css'
   a {
     color: var(--x-anchor-text-color);
   }
+
+  /* XRouter can accept data-actionables as clickable links */
+  [data-actionable] {
+    cursor: pointer;
+  }
   :where(p, td, dd, li) a:where(:hover, :focus) {
     text-decoration: underline;
   }
