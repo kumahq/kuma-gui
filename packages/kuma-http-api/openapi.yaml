@@ -4,7 +4,7 @@ info:
   description: Kuma API
   version: v1alpha1
   x-ref-schema-name: ZoneOverview
-  x-oas-source: kumahq/kuma@b4ec6c2a9561ec735211341168004a72e6bc305b
+  x-oas-source: kumahq/kuma@46b08a1ffd4c8a65fc2354a78a97504905d1fe73
 paths:
   /:
     get:
@@ -13569,7 +13569,38 @@ components:
                 type: object
     MeshOverviewWithMeta:
       allOf:
-        - $ref: '#/components/schemas/Meta'
+        - type: object
+          required:
+            - type
+            - name
+          properties:
+            type:
+              description: the type of this resource
+              type: string
+              example: MeshOverview
+            name:
+              description: the name of the mesh this overview describes
+              type: string
+              example: default
+            kri:
+              description: Kuma Resource Identifier (KRI) of the given resource
+              type: string
+              readOnly: true
+            labels:
+              description: Labels computed by the control plane, if any.
+              type: object
+              additionalProperties:
+                type: string
+            creationTime:
+              description: Time at which the resource was created
+              type: string
+              format: date-time
+              readOnly: true
+            modificationTime:
+              description: Time at which the resource was updated
+              type: string
+              format: date-time
+              readOnly: true
         - $ref: '#/components/schemas/MeshOverview'
     DataplaneInsightItem:
       type: object
@@ -14434,7 +14465,38 @@ components:
                 type: object
     ZoneOverviewWithMeta:
       allOf:
-        - $ref: '#/components/schemas/Meta'
+        - type: object
+          required:
+            - type
+            - name
+          properties:
+            type:
+              description: the type of this resource
+              type: string
+              example: ZoneOverview
+            name:
+              description: the name of the zone this overview describes
+              type: string
+              example: zone-1
+            kri:
+              description: Kuma Resource Identifier (KRI) of the given resource
+              type: string
+              readOnly: true
+            labels:
+              description: Labels computed by the control plane, if any.
+              type: object
+              additionalProperties:
+                type: string
+            creationTime:
+              description: Time at which the resource was created
+              type: string
+              format: date-time
+              readOnly: true
+            modificationTime:
+              description: Time at which the resource was updated
+              type: string
+              format: date-time
+              readOnly: true
         - $ref: '#/components/schemas/ZoneOverview'
     HostnameGeneratorItem:
       description: HostnameGenerator automatically generates DNS hostnames for services in the mesh based on customizable templates. It provides a consistent naming scheme for service discovery by creating predictable hostnames from service labels and metadata, supporting both MeshService, MeshExternalService, and MeshMultiZoneService resources.

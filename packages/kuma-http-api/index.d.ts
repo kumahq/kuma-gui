@@ -7476,7 +7476,34 @@ export interface components {
                 };
             };
         };
-        MeshOverviewWithMeta: components["schemas"]["Meta"] & components["schemas"]["MeshOverview"];
+        MeshOverviewWithMeta: {
+            /**
+             * @description the type of this resource
+             * @example MeshOverview
+             */
+            type: string;
+            /**
+             * @description the name of the mesh this overview describes
+             * @example default
+             */
+            name: string;
+            /** @description Kuma Resource Identifier (KRI) of the given resource */
+            readonly kri?: string;
+            /** @description Labels computed by the control plane, if any. */
+            labels?: {
+                [key: string]: string;
+            };
+            /**
+             * Format: date-time
+             * @description Time at which the resource was created
+             */
+            readonly creationTime?: string;
+            /**
+             * Format: date-time
+             * @description Time at which the resource was updated
+             */
+            readonly modificationTime?: string;
+        } & components["schemas"]["MeshOverview"];
         DataplaneInsightItem: {
             /**
              * Format: date-time
@@ -8096,7 +8123,34 @@ export interface components {
                 }[];
             };
         };
-        ZoneOverviewWithMeta: components["schemas"]["Meta"] & components["schemas"]["ZoneOverview"];
+        ZoneOverviewWithMeta: {
+            /**
+             * @description the type of this resource
+             * @example ZoneOverview
+             */
+            type: string;
+            /**
+             * @description the name of the zone this overview describes
+             * @example zone-1
+             */
+            name: string;
+            /** @description Kuma Resource Identifier (KRI) of the given resource */
+            readonly kri?: string;
+            /** @description Labels computed by the control plane, if any. */
+            labels?: {
+                [key: string]: string;
+            };
+            /**
+             * Format: date-time
+             * @description Time at which the resource was created
+             */
+            readonly creationTime?: string;
+            /**
+             * Format: date-time
+             * @description Time at which the resource was updated
+             */
+            readonly modificationTime?: string;
+        } & components["schemas"]["ZoneOverview"];
         /** @description HostnameGenerator automatically generates DNS hostnames for services in the mesh based on customizable templates. It provides a consistent naming scheme for service discovery by creating predictable hostnames from service labels and metadata, supporting both MeshService, MeshExternalService, and MeshMultiZoneService resources. */
         HostnameGeneratorItem: {
             /**
