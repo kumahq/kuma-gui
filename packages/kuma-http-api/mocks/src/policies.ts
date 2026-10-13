@@ -1,4 +1,8 @@
 import type { Dependencies, ResponseHandler } from '#mocks'
+import type { paths } from '@kumahq/kuma-http-api'
+
+type PoliciesResponse = paths['/policies']['get']['responses']['200']['content']['application/json']
+
 export default ({ fake }: Dependencies): ResponseHandler => (_req) => {
   return {
     headers: {
@@ -326,6 +330,6 @@ export default ({ fake }: Dependencies): ResponseHandler => (_req) => {
           isOutbound: false,
         },
       ],
-    },
+    } satisfies PoliciesResponse,
   }
 }

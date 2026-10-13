@@ -1,6 +1,6 @@
 import type { Dependencies, ResponseHandler } from '#mocks'
-import type { components } from '@kumahq/kuma-http-api'
-type Entity = components['schemas']['MeshExternalServiceItem']
+import type { paths } from '@kumahq/kuma-http-api'
+type Entity = paths['/meshes/{mesh}/meshexternalservices']['get']['responses']['200']['content']['application/json']['items'][number]
 
 export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) => {
   const query = req.url.searchParams

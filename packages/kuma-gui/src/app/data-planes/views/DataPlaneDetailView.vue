@@ -938,10 +938,6 @@ const resources = ref<DataplanePolicies | undefined>()
 </script>
 
 <style lang="scss" scoped>
-.service-traffic-group:not(.type-passthrough) .service-traffic-card {
-  cursor: pointer;
-}
-
 .traffic {
   padding: 0;
   contain: content;

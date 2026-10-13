@@ -1,7 +1,7 @@
 import type { Dependencies, ResponseHandler } from '#mocks'
-import type { components } from '@kumahq/kuma-http-api'
+import type { paths } from '@kumahq/kuma-http-api'
 
-type HostnameGenerator = components['responses']['HostnameGeneratorItem']['content']['application/json']
+type HostnameGenerator = paths['/hostnamegenerators']['get']['responses']['200']['content']['application/json']['items'][number]
 
 export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) => {
   const { offset, total, next, pageTotal } = pager(
