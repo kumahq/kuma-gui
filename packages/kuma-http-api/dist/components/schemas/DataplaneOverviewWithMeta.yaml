@@ -1,3 +1,41 @@
 allOf:
-  - $ref: 'Meta.yaml'
+  - type: object
+    required:
+      - type
+      - mesh
+      - name
+    properties:
+      type:
+        description: the type of this resource
+        type: string
+        example: DataplaneOverview
+      mesh:
+        description: the mesh this overview is part of
+        type: string
+        example: default
+        maxLength: 253
+        pattern: ^[0-9a-z-_.]*$
+      name:
+        description: the name of the dataplane this overview describes
+        type: string
+        example: dp-1
+      kri:
+        description: Kuma Resource Identifier (KRI) of the given resource
+        type: string
+        readOnly: true
+      labels:
+        description: Labels computed by the control plane, if any.
+        type: object
+        additionalProperties:
+          type: string
+      creationTime:
+        description: Time at which the resource was created
+        type: string
+        format: date-time
+        readOnly: true
+      modificationTime:
+        description: Time at which the resource was updated
+        type: string
+        format: date-time
+        readOnly: true
   - $ref: 'DataplaneOverview.yaml'

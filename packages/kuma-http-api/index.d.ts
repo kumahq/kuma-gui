@@ -2652,7 +2652,7 @@ export interface components {
                      * @description State describes the current state of the listener.
                      * @enum {string}
                      */
-                    state?: "Ready" | "NotReady" | "Ignored";
+                    state?: "Ready" | "NotReady";
                 }[];
                 /**
                  * @description Listeners describes zone proxy listeners embedded in this Dataplane.
@@ -7124,7 +7124,7 @@ export interface components {
                          * @description State describes the current state of the listener.
                          * @enum {string}
                          */
-                        state?: "Ready" | "NotReady" | "Ignored";
+                        state?: "Ready" | "NotReady";
                     }[];
                     /**
                      * @description Listeners describes zone proxy listeners embedded in this Dataplane.
@@ -7406,7 +7406,39 @@ export interface components {
                 }[];
             };
         };
-        DataplaneOverviewWithMeta: components["schemas"]["Meta"] & components["schemas"]["DataplaneOverview"];
+        DataplaneOverviewWithMeta: {
+            /**
+             * @description the type of this resource
+             * @example DataplaneOverview
+             */
+            type: string;
+            /**
+             * @description the mesh this overview is part of
+             * @example default
+             */
+            mesh: string;
+            /**
+             * @description the name of the dataplane this overview describes
+             * @example dp-1
+             */
+            name: string;
+            /** @description Kuma Resource Identifier (KRI) of the given resource */
+            readonly kri?: string;
+            /** @description Labels computed by the control plane, if any. */
+            labels?: {
+                [key: string]: string;
+            };
+            /**
+             * Format: date-time
+             * @description Time at which the resource was created
+             */
+            readonly creationTime?: string;
+            /**
+             * Format: date-time
+             * @description Time at which the resource was updated
+             */
+            readonly modificationTime?: string;
+        } & components["schemas"]["DataplaneOverview"];
         /** @description MeshOverview defines the projected state of a Mesh. */
         MeshOverview: {
             mesh?: {
