@@ -1,4 +1,4 @@
-import { load, DEFAULT_SCHEMA, Type } from 'js-yaml'
+import { load, CORE_SCHEMA, defineScalarTag, mergeTag } from 'js-yaml'
 import markdown from 'markdown-it'
 import { execSync } from 'node:child_process'
 import { dirname } from 'node:path'
@@ -27,10 +27,10 @@ export const yamlLoader = (): Plugin => {
       html: true,
     },
   )
-  const schema = DEFAULT_SCHEMA.extend(
-    new Type('tag:yaml.org,2002:text/markdown', {
-      kind: 'scalar',
-      construct: (data) => {
+  const schema = CORE_SCHEMA.withTags(
+    mergeTag,
+    defineScalarTag('tag:yaml.org,2002:text/markdown', {
+      resolve: (data) => {
         // We only currently use !!text/markdown within yaml for out locales/i18n text
         // for which we use FormatJS under the hood. FormatJS requires you to escape any XML/HTML looking
         // things, plus ICU '{' and '}', hence this replace.
@@ -41,13 +41,14 @@ export const yamlLoader = (): Plugin => {
           .replace(/%7B/g, '{')
           .replace(/%7D/g, '}')
       },
+      identify: () => false,
     }),
   )
   return {
     name: 'yamlLoader',
     transform: async (code, filename) => {
       if (/\.ya?ml$/.test(filename)) {
-        const json = load(code, { schema, filename, onWarning: (warning) => console.warn(warning.toString()) })
+        const json = load(code, { schema, filename })
         return {
           code: `export default ${JSON.stringify(json)};`,
           map: { mappings: '' },

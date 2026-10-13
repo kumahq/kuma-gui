@@ -1,4 +1,4 @@
-import jsYaml from 'js-yaml'
+import { load, dump } from 'js-yaml'
 
 export const runInDebug = (func: () => void) => {
   if (import.meta.env.PROD) return
@@ -7,14 +7,12 @@ export const runInDebug = (func: () => void) => {
 
 export const YAML = {
   stringify: (json: any) => {
-    return jsYaml
-      .dump(json, { lineWidth: -1 })
+    return dump(json, { lineWidth: -1 })
       // Removes the trailing new line js-yaml is outputting.
       .replace(/\n$/, '')
   },
   parse: (str: string) => {
-    return jsYaml
-      .load(str)
+    return load(str)
   },
 }
 
