@@ -86,35 +86,34 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   return [
     [app.protocolHandler, {
       service: (router: Router, handlers: Handler[]) => {
+        // add a default catchall to the end of the handlers
+        handlers.push(
+          ({ mesh, kri }) => {
+            // mesh-scoped resources live under a mesh, global-scoped
+            // resources are reachable via the top-level resources tab
+            return mesh.length > 0
+              ? {
+                name: 'mesh-resource-detail-view',
+                params: {
+                  mesh,
+                  kri,
+                },
+              }
+              : {
+                name: 'control-plane-resource-detail-view',
+                params: {
+                  kri,
+                },
+              }
+          },
+        )
+        //
+
         return (href: string) => {
           const kriProto = 'kri://'
           switch (true) {
             // KRIs
             case href.startsWith(kriProto): {
-
-              // add a default catchall to the end of the handlers
-              handlers.push(
-                ({ mesh, kri }) => {
-                  // mesh-scoped resources live under a mesh, global-scoped
-                  // resources are reachable via the top-level resources tab
-                  return mesh.length > 0
-                    ? {
-                      name: 'mesh-resource-detail-view',
-                      params: {
-                        mesh,
-                        kri,
-                      },
-                    }
-                    : {
-                      name: 'control-plane-resource-detail-view',
-                      params: {
-                        kri,
-                      },
-                    }
-                },
-              )
-              //
-
               const kri = href.substring(kriProto.length)
               const item = Kri.fromString(kri)
               const args = {
