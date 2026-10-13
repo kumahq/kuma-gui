@@ -52,8 +52,10 @@ test/unit/watch: .test/unit/watch ## Dev: run unit tests but watch for changes
 
 .PHONY: test/e2e
 test/e2e: ## Run browser-based e2e tests against a running GUI, you may want to set KUMA_TEST_BROWSER=chrome
-ifndef KUMA_TEST_BROWSER
+ifdef CI
 	@while ! nc -z localhost 5681; do sleep 1; done;
+endif
+ifndef KUMA_TEST_BROWSER
 	@$(MAKE) \
 		-f $(MK)/playwright.mk \
 			test

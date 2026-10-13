@@ -38,7 +38,6 @@ export const routes = (can: Can) => {
                     path: 'overview',
                     name: 'mesh-multi-zone-service-detail-view',
                     component: () => import('@/app/services/views/MeshMultiZoneServiceDetailView.vue'),
-                    children: dataPlanes().summary('mesh-multi-zone-service'),
                   },
                 ],
               },

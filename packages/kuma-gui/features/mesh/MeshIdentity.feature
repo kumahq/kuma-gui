@@ -53,4 +53,3 @@ Feature: mesh / mesh-identity
     Then I click the "$mesh-mtls a:first-child" element
     Then I click the "$summary-title a" element
     Then the "$detail-view" element contains "identity-1"
-

@@ -6,8 +6,10 @@ import type { PlaywrightTestConfig } from '@playwright/test'
 export const config = (config: Parameters<typeof defineBddConfig>[0] = {}) => {
   const testDir = defineBddConfig(config)
   return {
+    ...(process.env.CI ? {
+      maxFailures: 1,
+    } : {}),
     fullyParallel: true,
-    maxFailures: 1,
     forbidOnly: true,
     testDir,
     outputDir: './test-results',
@@ -19,6 +21,11 @@ export const config = (config: Parameters<typeof defineBddConfig>[0] = {}) => {
     use: {
       headless: true,
       timezoneId: 'UTC',
+      ...(process.env.PLAYWRIGHT_WINDOW_POSITION ? {
+        launchOptions: {
+          args: [`--window-position=${process.env.PLAYWRIGHT_WINDOW_POSITION}`],
+        },
+      } : {}),
       viewport: { width: 1920, height: 1080 },
       video: 'retain-on-failure',
       screenshot: 'only-on-failure',
