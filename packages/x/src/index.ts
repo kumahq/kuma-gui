@@ -283,7 +283,8 @@ const plugin: Plugin = {
         return
       }
       customElements.define(name, defineCustomElement(item, {
-        shadowRoot: true,
+        // NOTE(llm): no shadow root, so document styles (kongponents etc.) apply as normal
+        shadowRoot: false,
         // each element is its own app root, so nothing we provide here reaches
         // it, we therefore re-install ourselves with the same services
         configureApp: (elementApp) => {
