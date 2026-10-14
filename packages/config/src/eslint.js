@@ -2,7 +2,8 @@ import eslint from '@eslint/js'
 import { defineConfig as packageConstraints, getNpmWorkspaceJSON } from '@kumahq/eslint-package-constraints'
 import stylistic from '@stylistic/eslint-plugin'
 import { defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript'
-import importPlugin from 'eslint-plugin-import'
+import { createTypeScriptImportResolver } from 'eslint-import-resolver-typescript'
+import { importX } from 'eslint-plugin-import-x'
 import nounsanitized from 'eslint-plugin-no-unsanitized'
 import vuePlugin from 'eslint-plugin-vue'
 import globals from 'globals'
@@ -74,10 +75,10 @@ export function createEslintConfig(
   )
 
   const importConfig = [
-    importPlugin.flatConfigs.recommended,
+    importX.flatConfigs.recommended,
     {
       rules: {
-        'import/no-extraneous-dependencies': 'error',
+        'import-x/no-extraneous-dependencies': 'error',
       },
     },
   ]
@@ -149,11 +150,11 @@ export function createEslintConfig(
         '**/*.json',
       ],
       settings: {
-        'import/resolver': {
-          typescript: {
+        'import-x/resolver-next': [
+          createTypeScriptImportResolver({
             project: tsConfigPath,
-          },
-        },
+          }),
+        ],
       },
       rules: {
         'multiline-ternary': 'off',
@@ -162,8 +163,8 @@ export function createEslintConfig(
           named: 'never',
           asyncArrow: 'always',
         }],
-        'import/no-named-as-default-member': 'off',
-        'import/order': ['error', {
+        'import-x/no-named-as-default-member': 'off',
+        'import-x/order': ['error', {
           groups: [
             ['builtin', 'external'],
             ['internal', 'parent', 'sibling', 'index', 'object', 'type'],

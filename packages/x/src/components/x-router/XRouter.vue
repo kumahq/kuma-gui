@@ -87,7 +87,7 @@ const pool = new SharedPool<Key, (e: PointerEvent) => void>((state, key, item) =
 
 </script>
 <script lang="ts" setup>
-// eslint-disable-next-line import/order
+// eslint-disable-next-line import-x/order
 import { onMounted, onBeforeUnmount } from 'vue'
  
 

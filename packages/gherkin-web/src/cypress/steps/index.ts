@@ -1,4 +1,4 @@
-// eslint-disable-next-line import/no-unresolved
+// eslint-disable-next-line import-x/no-unresolved
 import { When, Then, Before, Given, DataTable, After } from '@badeball/cypress-cucumber-preprocessor'
 
 import { getClient, YAML, merge } from '../../'
