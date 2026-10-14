@@ -4,7 +4,7 @@ info:
   description: Kuma API
   version: v1alpha1
   x-ref-schema-name: ZoneOverview
-  x-oas-source: kumahq/kuma@8289db773f197f1132edd41ecda985f61ed801eb
+  x-oas-source: kumahq/kuma@7858a637d9bb1038aec60ca069c641490acca697
 paths:
   /:
     get:
