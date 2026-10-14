@@ -70,7 +70,7 @@ export function createEslintConfig(
 
 
   const vueTsConfig = defineConfigWithVueTs(
-    ...vuePlugin.configs['flat/recommended'],
+    ...vuePlugin.configs['flat/recommended-error'],
     vueTsConfigs.recommended,
   )
 
@@ -207,7 +207,6 @@ export function createEslintConfig(
           ignoreWhenEmpty: true,
           ignores: ['router-link', 'pre', ...INLINE_NON_VOID_ELEMENTS],
         }],
-        'vue/no-v-html': 'error',
         // Reason: https://github.com/vuejs/eslint-plugin-vue/issues/2259
         'vue/no-setup-props-destructure': 'off',
         'vue/comma-dangle': ['error', 'always-multiline'],
