@@ -10,7 +10,7 @@
     >
       <slot
         name="error"
-        :data="data as Data"
+        :data="allData as NullableArray<Data>"
         :error="allErrors[0]"
         :refresh="typeof props.src !== 'undefined' ? refresh : () => {}"
       >
@@ -40,7 +40,7 @@
     >
       <slot
         name="default"
-        :data="data as NonNullableData<Data>"
+        :data="allData as Data"
         :error="srcError"
         :refresh="typeof props.src !== 'undefined' ? refresh : () => {}"
       />
@@ -50,33 +50,21 @@
 <script lang="ts" generic="T extends string | {
   toString(): string
   typeOf(): any
-} = never, const K extends unknown[] = never" setup
+} = never, const K extends unknown[] = []" setup
 >
+import { XProgress, XErrorState } from '@kumahq/x'
 import { computed, ref, provide } from 'vue'
 
-import type { NonNullableArray, NullableArray, TypeOf } from '../../../'
+import type { ArrayExclude, NullableArray, TypeOf } from '../../../'
 import DataSource from '../data-source/DataSource.vue'
 
-// We need to prevent distributive conditional types here (i.e. therefore wrapping TSrc in [] and others)
-type InferredDataType<TSrc, TData extends any[]> = 
-  [TSrc] extends [never]
-    ? [TData] extends [never]
-      ? undefined
-      : NullableArray<TData>
-    : [TData] extends [never]
-      ? TSrc | undefined
-      : TData extends [...infer Items]
-        ? NullableArray<[TSrc, ...Items]>
-        : undefined
-
-type NonNullableData<T> = T extends [...infer U] ? NonNullableArray<U> : NonNullable<T>
-type Data = InferredDataType<TypeOf<T>, K>
+type Data = ArrayExclude<TypeOf<T> extends never ? [...K] : [TypeOf<T>, ...K], Error | undefined>
 
 const props = withDefaults(defineProps<{
   src?: T
   data?: K // (K | undefined)[]
   errors?: (Error | undefined)[]
-  variant?: 'default' | 'list' | 'spinner'
+  variant?: 'default' | 'list' | 'spinner' | 'header' | 'count'
 }>(), {
   src: undefined,
   data: undefined,
@@ -86,7 +74,7 @@ const props = withDefaults(defineProps<{
 
 defineSlots<{
   default(props: {
-    data: NonNullableData<Data>
+    data: Data
     error: Error | undefined
     refresh: () => void
   }): any
@@ -96,7 +84,7 @@ defineSlots<{
     refresh: () => void
   }): any
   error(props: {
-    data: Data
+    data: NullableArray<Data>
     error: Error | undefined
     refresh: () => void
   }): any
@@ -108,22 +96,29 @@ provide('data-loader', {
 
 const srcData = ref<TypeOf<T> | undefined>()
 const srcError = ref<Error | undefined>()
-  
-// all data, including potentially the src data in index zero.
-// all elements can be undefined which means its still connecting
+
+/**
+ * All data, including potentially the src data in index zero.
+ * All elements can be undefined which means it's still connecting.
+ */
 const allData = computed(() => {
-  const propsData = (props.data ?? []).filter(item => !(item instanceof Error)) as K
-  const data = typeof props.src === 'undefined' ? propsData : [srcData.value, ...propsData]
-  return data
+  const _srcData = typeof props.src === 'undefined' || props.src === '' ? [] : [srcData.value]
+  const propsData = (props.data ?? []).filter(item => !(item instanceof Error)) as ArrayExclude<K, Error>
+  return [
+    ..._srcData,
+    ...propsData,
+  ]
 })
 
-// all errors, including potentially the src error in index zero.
-// undefineds are filtered out allowing allErrors.length checks
+/**
+ * All errors, including potentially the src error in index zero.
+ * `undefined`s are filtered out allowing allErrors.length checks.
+ */
 const allErrors = computed(() => {
   // gather everything that can be erroneous
-  const propsErrors = props.errors ?? []
-  const dataErrors = (props.data ?? []).filter((item) => item instanceof Error) as Error[]
   const srcErrors = typeof props.src === 'undefined' ? [] : [srcError.value]
+  const dataErrors = (props.data ?? []).filter((item) => item instanceof Error) as Error[]
+  const propsErrors = props.errors ?? []
   // squeeze it all together
   return [
     ...srcErrors,
@@ -132,20 +127,18 @@ const allErrors = computed(() => {
   ].filter((item) => !!item)
 })
 
-const data = computed(() => {
-  return typeof props.data === 'undefined' ? allData.value[0] : allData.value
-})
-
-// The state will only ever be connecting if either props.src or props.data is set.
-// In any other case the state will only be error or default.
-const state = computed<'error' | 'connecting' | 'default'>(() => {
+/**
+ * The state will only ever be connecting if either props.src or props.data is set.
+ * In any other case the state will only be error or default.
+ */
+const state = computed(() => {
   switch(true) {
     case allErrors.value.length > 0:
-      return 'error' as const
+      return 'error'
     case allData.value.some(item => typeof item === 'undefined'):
-      return 'connecting' as const
+      return 'connecting'
     default:
-      return 'default' as const
+      return 'default'
   }
 })
 

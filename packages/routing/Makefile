@@ -22,7 +22,7 @@ clean: .clean ## Dev: Remove all `node_modules` recursively
 install: .install ## Dev: Install all dependencies
 
 .PHONY: lint
-lint: .lint/script ## Dev: Run all lint script checks (js,ts)
+lint: .lint/script .lint/css ## Dev: Run all lint script checks (js,ts)
 
 .PHONY: test/unit
 test/unit: .test/unit ## Dev: run unit tests and exit

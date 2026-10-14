@@ -1,0 +1,8 @@
+mesh-identities:
+  routes:
+    item:
+      title: "{name}"
+      format: Format
+      formats:
+        universal: Universal
+        k8s: Kubernetes

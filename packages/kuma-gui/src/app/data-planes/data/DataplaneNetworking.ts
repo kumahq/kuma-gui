@@ -2,49 +2,114 @@ import { Kri } from '@/app/kuma'
 import type { components } from '@kumahq/kuma-http-api'
 
 type KumaDataplaneNetworking = NonNullable<components['schemas']['DataplaneItem']['networking']>
+type KumaDataplaneInbound = NonNullable<NonNullable<NonNullable<components['schemas']['DataplaneOverviewWithMeta']['dataplane']>['networking']>['inbound']>[number]
+type KumaDataplaneListener = NonNullable<NonNullable<NonNullable<components['schemas']['DataplaneOverviewWithMeta']['dataplane']>['networking']>['listeners']>[number]
 type KumaDataplaneOutbound = NonNullable<NonNullable<NonNullable<components['schemas']['DataplaneOverviewWithMeta']['dataplane']>['networking']>['outbound']>[number]
 type KumaDataplaneNetworkingLayout = components['schemas']['DataplaneNetworkingLayout']
 
+const DataplaneLayoutInbound = {
+  fromObject(item: KumaDataplaneNetworkingLayout['inbounds'][number]) {
+    const kri = Kri.fromString(item.kri)
+    return {
+      ...item,
+      type: '' as 'ZoneIngress' | 'ZoneEgress',
+      stat_prefix: item.proxyResourceName,
+      portName: kri.sectionName !== String(item.port) ? kri.sectionName : undefined,
+    }
+  },
+
+  fromCollection(items: KumaDataplaneNetworkingLayout['inbounds']) {
+    // don't show a card for anything on port 49151 as those are service-less inbounds
+    // we currently only do this on the layout endpoint
+    return Array.isArray(items) ? items.filter(item => item.port !== 49151).map(item => DataplaneLayoutInbound.fromObject(item)) : []
+  },
+}
+
+const DataplaneLayoutListener = {
+  fromObject(item: KumaDataplaneNetworkingLayout['listeners'][number]) {
+    const kri = Kri.fromString(item.kri)
+    return {
+      ...item,
+      // protocol of ZoneIngress listeners is always tcp, for ZoneEgress it depends and therefore it's not set
+      protocol: item.type === 'ZoneIngress' ? 'tcp' : '',
+      stat_prefix: item.proxyResourceName,
+      portName: kri.sectionName !== String(item.port) ? kri.sectionName : undefined,
+    }
+  },
+
+  fromCollection(items: KumaDataplaneNetworkingLayout['listeners']) {
+    return Array.isArray(items) ? items.map(item => DataplaneLayoutListener.fromObject(item)) : []
+  },
+}
+
 export const DataplaneNetworkingLayout = {
   fromObject(dataplaneNetworkingLayout: KumaDataplaneNetworkingLayout) {
+    const { inbounds, listeners, ...rest } = dataplaneNetworkingLayout
     // `stat_prefix` corresponds to the stat_prefix used in the Envoy stats.
     // proxyResourceName.sectionName can either be a portName or port, so we
     // make sure its always the port as this is what the Envoy stat_prefix
     // uses. Once the following issue is resolved we won't have to do this
     // https://github.com/kumahq/kuma/issues/14469
     return {
-      ...dataplaneNetworkingLayout,
-      // don't show a card for anything on port 49151 as those are service-less inbounds
-      // we currently only do this on the layout endpoint
-      inbounds: dataplaneNetworkingLayout.inbounds.filter(item => item.port !== 49151).map(item => {
-        const kri = Kri.fromString(item.kri)
-        return {
-          ...item,
-          stat_prefix: item.proxyResourceName,
-          portName: kri.sectionName !== String(item.port) ? kri.sectionName : undefined,
-        }
-      }),
+      ...rest,
+      spiffeId: dataplaneNetworkingLayout.spiffeId ?? '',
+      inbounds: [
+        ...DataplaneLayoutInbound.fromCollection(dataplaneNetworkingLayout.inbounds),
+        ...DataplaneLayoutListener.fromCollection(dataplaneNetworkingLayout.listeners),
+      ],
       outbounds: dataplaneNetworkingLayout.outbounds.map(item => {
         const kri = Kri.fromString(item.kri)
         return {
           ...item,
+          type: '',
           stat_prefix: item.proxyResourceName,
           portName: kri.sectionName !== String(item.port) ? kri.sectionName : undefined,
         }
       }),
-    } satisfies KumaDataplaneNetworkingLayout
+    }
+  },
+}
+
+const DataplaneListener = {
+  fromObject(item: KumaDataplaneListener) {
+    const name = item.name ?? ''
+    const address = item.address ?? ''
+    return {
+      tags: {} as Record<string, string>,
+      socketAddress: '',
+      listenerAddress: '',
+      clusterName: '',
+      serviceAddressPort: '',
+      //
+      ...item,
+      name,
+      address,
+      port: item.port ?? NaN,
+      state: typeof item.state !== 'undefined' ? String(item.state) : 'Ready',
+      addressPort: `${address}:${item.port}`,
+      protocol: item.type === 'ZoneIngress' ? 'tcp' : '',
+      portName: name,
+      type: String(item.type ?? ''),
+    }
+  },
+  fromCollection(items: KumaDataplaneListener[] = []) {
+    return Array.isArray(items) ? items.map(item => DataplaneListener.fromObject(item)) : []
   },
 }
 
 const DataplaneOutbound = {
   fromObject(item: KumaDataplaneOutbound) {
     const address = item.address ?? '127.0.0.1'
-    const tags = item.tags ?? {}
+    // @TODO(types) provide support for v2 and v3
+    const tags = ('tags' in item ? item.tags : {}) as Record<string, string>
+    //
     return {
       ...item,
       tags,
-      name: tags['kuma.io/service'],
-      service: tags['kuma.io/service'],
+      // @TODO(types) provide support for v2 and v3
+      // @TODO how do we get the name of the outbound?
+      name: ('backendRef' in item) ? (item.backendRef?.name ?? '') : tags['kuma.io/service'] ?? '',
+      //
       protocol: tags['kuma.io/protocol'] ?? 'tcp',
       address,
       addressPort: `${address}${typeof item.port === 'number' ? `:${item.port}` : ''}`,
@@ -56,87 +121,106 @@ const DataplaneOutbound = {
 }
 
 
+const DataplaneInbound = {
+  fromObject(item: KumaDataplaneInbound, networking: KumaDataplaneNetworking) {
+    // @TODO(types) provide support for v2 and v3
+    // inbound address, advertisedAddress, networkingAddress because externally accessible address
+    const address = item.address ?? (('advertisedAddress' in networking) ? networking.advertisedAddress as string : undefined) ?? networking.address ?? ''
+    const tags = ('tags' in item ? item.tags : {}) as Record<string, string>
+    //
+    const name = `localhost_${item.port}`
+    return {
+      type: '',
+      //
+      ...item,
+      tags,
+      // the name can be used to lookup listener envoy stats
+      name,
+      port: Number(item.port),
+      // the portName adds another way of referencing the port, usable with MeshService
+      portName: item.name?.length ? item.name : '',
+      socketAddress: `${address}_${item.port}`,
+      listenerAddress: `${address}_${item.port}`,
+      clusterName: item.servicePort && item.servicePort !== item.port ? `localhost_${item.servicePort}` : name,
+      // If a health property is unset the inbound is considered healthy
+      state: (typeof item.state !== 'undefined' ? String(item.state) : 'Ready'),
+      protocol: item.protocol ?? tags['kuma.io/protocol'] ?? 'tcp',
+      address,
+      addressPort: `${address}:${item.port}`,
+      // inbound serviceAddress, inbound address, networkingAddress because the internal services accessible address
+      serviceAddressPort: `${item.serviceAddress ?? address}:${item.servicePort ?? item.port}`,
+    }
+  },
+}
+
 export const DataplaneNetworking = {
   fromObject(networking: KumaDataplaneNetworking) {
     // remove singular inbound/outbound to be replaced with plural versions
     const { inbound, outbound, ...rest } = networking
 
-    const inbounds = Array.isArray(inbound) ? inbound : []
-
-    // outbounds are only present here on a universal DDP without transparent
-    // proxying
-    const outbounds = Array.isArray(outbound) ? outbound : []
-    const type = typeof networking.gateway === 'undefined' || networking.gateway?.type !== 'BUILTIN' ? 'sidecar' : 'gateway'
-
-    return {
+    const item = {
       ...rest,
-      ...(networking.gateway ? {
-        gateway: {
-          ...networking.gateway,
-          tags: networking.gateway.tags ?? {},
-        },
-      } : {}),
-      type: type as 'sidecar' | 'gateway',
+      type: 'sidecar',
       // used for a lookup for inbounds on the result of the envoy /stats endpoint
-      inboundAddress: type === 'gateway' ? networking.address ?? 'localhost' : 'localhost',
-      //
-      // if we are a builtin gateway fill in as much as we can for a single inbound
-      // we can 'clone' this later if we find out individual information for each inbound
-      // i.e. this acts as a template
-      inbounds: type === 'gateway' && typeof networking.gateway !== 'undefined'
-        ? ((tags = {}) => [{
-          address: networking.address ?? '',
-          tags,
-          name: tags['kuma.io/service'] ?? '',
-          service: tags['kuma.io/service'] ?? '',
-          protocol: tags['kuma.io/protocol'] ?? 'tcp',
-          state: 'Ready',
-          // these could be filled out during 'cloning'
-          // i.e. these are like template variables to be filled out
-          port: NaN,
-          addressPort: '',
-          //
-          // this will never get set seeing as a gateway proxy never has a service
-          serviceAddressPort: '',
-          // we never set this currently as we never need it for a gateway
-          socketAddress: '',
-          listenerAddress: '',
-          // not available for gateway
-          portName: '',
-          clusterName: '',
-        }])(networking.gateway.tags)
-        : inbounds.map((item) => {
-          // inbound address, advertisedAddress, networkingAddress because externally accessible address
-          const address = item.address ?? networking.advertisedAddress ?? networking.address ?? ''
-          const name = `localhost_${item.port}`
-          const tags = item.tags ?? {}
-          return {
-            ...item,
-            tags,
-            // the name can be used to lookup listener envoy stats
-            name,
-            port: Number(item.port),
-            // the portName adds another way of referencing the port, usable with MeshService
-            portName: item.name?.length ? item.name : '',
-            socketAddress: `${address}_${item.port}`,
-            listenerAddress: `${address}_${item.port}`,
-            clusterName: item.servicePort && item.servicePort !== item.port ? `localhost_${item.servicePort}` : name,
-            // If a health property is unset the inbound is considered healthy
-            state: (typeof item.state !== 'undefined' ? String(item.state) : 'Ready'),
-            service: tags['kuma.io/service'] ?? '',
-            protocol: tags['kuma.io/protocol'] ?? 'tcp',
-            address,
-            addressPort: `${address}:${item.port}`,
-            // inbound serviceAddress, inbound address, networkingAddress because the internal services accessible address
-            serviceAddressPort: `${item.serviceAddress ?? address}:${item.servicePort ?? item.port}`,
-          }
-        }),
-      outbounds: DataplaneOutbound.fromCollection(outbounds),
+      inboundAddress: 'localhost',
+      // outbounds are only present here on a universal DDP without transparent
+      // proxying
+      outbounds: Array.isArray(outbound) ? DataplaneOutbound.fromCollection(outbound) : [],
+      inbounds: [
+        ...(Array.isArray(inbound) ? inbound.map(item => DataplaneInbound.fromObject(item, networking)) : []),
+        ...(Array.isArray(networking.listeners) ? DataplaneListener.fromCollection(networking.listeners) : []),
+      ],
     }
+    if ('gateway' in networking) {
+      const gateway = networking.gateway as {
+        type: string
+        tags: Record<string, string>
+      }
+      return {
+        ...item,
+        ...(gateway.type === 'BUILTIN' ? {
+          type: 'gateway',
+          // if we are a builtin gateway fill in as much as we can for a single inbound
+          // we can 'clone' this later if we find out individual information for each inbound
+          // i.e. this acts as a template
+          inbounds: [{
+            type: '',
+            address: networking.address ?? '',
+            tags: gateway.tags ?? {},
+            name: '',
+            protocol: '',
+            state: 'Ready',
+            // these could be filled out during 'cloning'
+            // i.e. these are like template variables to be filled out
+            port: NaN,
+            addressPort: '',
+            //
+            // this will never get set seeing as a gateway proxy never has a service
+            serviceAddressPort: '',
+            // we never set this currently as we never need it for a gateway
+            socketAddress: '',
+            listenerAddress: '',
+            // not available for gateway
+            portName: '',
+            clusterName: '',
+          }],
+        } : {}),
+        inboundAddress: networking.address ?? 'localhost',
+        gateway: {
+          ...gateway,
+          tags: gateway.tags ?? {},
+        },
+      }
+
+    }
+    return item
   },
 }
 export type DataplaneNetworkingLayout = ReturnType<typeof DataplaneNetworkingLayout['fromObject']>
 export type DataplaneOutbound = ReturnType<typeof DataplaneOutbound['fromObject']>
 export type DataplaneNetworking = ReturnType<typeof DataplaneNetworking['fromObject']>
-export type DataplaneInbound = DataplaneNetworking['inbounds'][number]
+export type DataplaneInbound = ReturnType<typeof DataplaneInbound['fromObject']>
+export type DataplaneListener = ReturnType<typeof DataplaneListener['fromObject']>
 
+export type DataplaneLayoutInbound = ReturnType<typeof DataplaneLayoutInbound['fromObject']>
+export type DataplaneLayoutListener = ReturnType<typeof DataplaneLayoutListener['fromObject']>

@@ -29,19 +29,6 @@ const read = async (path: string) => {
   }
   return (await readFile(`${cwd}/${path}`)).toString()
 }
-const version = JSON.parse((await read('./package.json'))).version
-
-export const defaultKumaHtmlVars = {
-  baseGuiPath: '/gui',
-  apiUrl: 'http://localhost:5681',
-  version,
-  product: 'Kuma', // we no longer use this, it can be removed in the backend
-  mode: 'global',
-  environment: 'universal',
-  storeType: 'postgres',
-  apiReadOnly: false,
-}
-
 const exists = async (path: string) => {
   try {
     return (await stat(path)).isFile()
@@ -49,6 +36,30 @@ const exists = async (path: string) => {
     return false
   }
 }
+const Cookie = {
+  parse: (str: string, { prefix = '' } = { prefix: '' }) => {
+    return Object.fromEntries(str.split(';')
+      .map((item) => item.trim())
+      .filter((item) => item !== '')
+      .map((item) => {
+        const [key, ...value] = item.split('=')
+        return [key, value.join('=')] as [string, string]
+      })
+      .filter(([key, value]) => key.startsWith(prefix)))
+  },
+}
+
+export const defaultKumaHtmlVars = {
+  baseGuiPath: '/gui',
+  apiUrl: 'http://localhost:5681',
+  version: JSON.parse((await read('./package.json'))).version,
+  product: 'Kuma', // we no longer use this, it can be removed in the backend
+  mode: 'global',
+  environment: 'universal',
+  storeType: 'postgres',
+  apiReadOnly: false,
+}
+
 const interpolate = (template: string, vars: KumaHtmlVars) => {
   return template
     .replace('{{.BaseGuiPath}}', '/gui')
@@ -63,6 +74,7 @@ export const kumaIndexHtmlVars = (htmlVars: Partial<KumaHtmlVars> = {}): Plugin 
   }
 }
 
+
 const server = ({
   template = './index.html',
   vars = {},
@@ -70,19 +82,22 @@ const server = ({
 }: Partial<ServerOptions> = {}) => async (server: PreviewServer | ViteDevServer) => {
   const { enabled: isCspEnabled = true } = csp
   server.middlewares.use('/', async (req, res, next) => {
-    const url = req.originalUrl || ''
-    const baseGuiPath = vars.baseGuiPath || '/gui'
-    const path = `${dirname(template).replace(baseGuiPath, '')}${url}`
-    if ((url === '/' || url.startsWith(`${baseGuiPath}/`)) && !await exists(path)) {
+    const add = server.httpServer?.address() ?? ''
+    const address = {
+      address: 'localhost',
+      port: typeof add === 'string' ? server.config.server.port : add.port,
+    }
 
-      const cookies = (req.headers?.cookie ?? '').split(';')
-        .map((item) => item.trim())
-        .filter((item) => item !== '')
-        .reduce((prev, item) => {
-          const [key, value] = item.split('=')
-          prev[key] = value
-          return prev
-        }, {} as Record<string, string>)
+    const htmlVars = {
+      ...defaultKumaHtmlVars,
+      apiUrl: `http://${address.address}:${address.port}`,
+      ...vars,
+    }
+
+    const url = req.originalUrl || ''
+    const path = `${dirname(template).replace(htmlVars.baseGuiPath, '')}${url}`
+    if (!await exists(path) && (url === '/' || url.startsWith(`${htmlVars.baseGuiPath}/`))) {
+      const cookies = Cookie.parse(req.headers?.cookie ?? '', { prefix: 'KUMA_' })
 
       // we create a totally new index.html from our template here
       // so anything added by Vite that is not in our index.html template
@@ -91,14 +106,15 @@ const server = ({
       let body = interpolate(
         await read(template),
         {
-          ...defaultKumaHtmlVars,
-          ...vars,
+          ...htmlVars,
+          // only overwrite with a cookie if the cookie is defined
           ...Object.fromEntries(Object.entries({
             version: cookies.KUMA_VERSION,
             mode: cookies.KUMA_MODE,
             environment: cookies.KUMA_ENVIRONMENT,
             storeType: cookies.KUMA_STORE_TYPE,
           }).filter(([_, value]) => typeof value !== 'undefined')),
+          //
         } satisfies KumaHtmlVars,
       )
 

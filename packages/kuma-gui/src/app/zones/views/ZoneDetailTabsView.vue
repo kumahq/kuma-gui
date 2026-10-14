@@ -6,14 +6,13 @@
     }"
     v-slot="{ route, t, uri }"
   >
-    <DataLoader
-      :src="uri(sources, `/zone-cps/:name`, {
-        name: route.params.zone,
+    <DataSource
+      :src="uri(sources, `/zone-cps/:kri`, {
+        kri: route.params.zone,
       })"
-      v-slot="{ data }"
+      v-slot="{ data, error, result }"
     >
       <AppView
-        v-if="data"
         :breadcrumbs="[
           {
             to: {
@@ -24,33 +23,11 @@
         ]"
       >
         <template #title>
-          <XLayout size="small">
-            <XLayout type="separated">
-              <template
-                v-for="env in [(['kubernetes', 'universal'] as const).find(env => env === data.zoneInsight.environment) ?? 'kubernetes']"
-                :key="env"
-              >
-                <XIcon
-                  :name="env"
-                  :size="KUI_ICON_SIZE_50"
-                >
-                  {{ t(`common.product.environment.${env}`) }}
-                </XIcon>
-              </template>
-              <h1>
-                <XCopyButton :text="data.name">
-                  <RouteTitle
-                    :title="t('zone-cps.routes.item.title', { name: data.name })"
-                  />
-                </XCopyButton>
-              </h1>
-            </XLayout>
-            <XBadge
-              :appearance="t(`common.status.appearance.${data.state}`, undefined, { defaultMessage: 'neutral' })"
-            >
-              {{ t(`http.api.value.${data.state}`) }}
-            </XBadge>
-          </XLayout>
+          <h1>
+            <RouteTitle
+              :title="Kri.fromString(route.params.zone).name"
+            />
+          </h1>
         </template>
 
         <template
@@ -92,19 +69,19 @@
         <RouterView v-slot="child">
           <component
             :is="child.Component"
-            :data="data"
-            :subscriptions="data.zoneInsight.subscriptions"
+            :data="result"
+            :subscriptions="error ?? data?.zoneInsight.subscriptions"
           />
         </RouterView>
       </AppView>
-    </DataLoader>
+    </DataSource>
   </RouteView>
 </template>
 
 <script lang="ts" setup>
-import { KUI_ICON_SIZE_50 } from '@kong/design-tokens'
 
 import { useZoneActionGroup } from '../'
 import { sources } from '../sources'
+import { Kri } from '@/app/kuma'
 const ZoneActionGroup = useZoneActionGroup()
 </script>

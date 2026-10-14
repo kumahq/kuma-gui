@@ -1,15 +1,18 @@
 <template>
   <KAlert
-    show-icon
+    :show-icon="props.icon"
     :appearance="props.variant"
     :dismissible="typeof attrs.onDismiss === 'function'"
   >
     <template
-      v-for="(_, key) in slots"
-      :key="key"
-      #[`${key}`]
+      v-for="(_, slotName) in slots"
+      :key="slotName"
+      #[slotName]="slotProps"
     >
-      <slot :name="key" />
+      <slot
+        :name="slotName"
+        v-bind="(slotProps)"
+      />
     </template>
   </KAlert>
 </template>
@@ -21,8 +24,10 @@ import type { AlertAppearance } from '@kong/kongponents'
 
 const props = withDefaults(defineProps<{
   variant?: AlertAppearance
+  icon?: boolean
 }>(), {
   variant: 'warning',
+  icon: true,
 })
 const slots = defineSlots()
 
@@ -30,7 +35,7 @@ const attrs = useAttrs()
 </script>
 <style lang="scss" scoped>
 :deep(.k-button.primary) {
-  color: $kui-color-text-inverse !important;
+  color: var(--x-color-text-inverse) !important;
 }
 :deep(.x-action-appearance-anchor),
 :deep(a:not([class])) {

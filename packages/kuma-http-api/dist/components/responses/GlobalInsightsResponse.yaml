@@ -1,0 +1,5 @@
+description: A response containing counts of global resources.
+content:
+  application/json:
+    schema:
+      $ref: '../schemas/GlobalInsights.yaml'

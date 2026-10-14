@@ -1,3 +1,10 @@
+common:
+  label:
+    href:
+      kuma~io/zone: kri://kri_z____{name}_
+  kri:
+    shortNames:
+      zone: z
 zone-cps:
   docs: &zone-cps.docs
     type: docs
@@ -41,8 +48,6 @@ zone-cps:
         zone-cp-detail-view: Overview
         zone-cp-config-view: Config
         zone-cp-subscriptions-list-view: KDS connections
-        zone-ingress-list-view: Ingresses
-        zone-egress-list-view: Egresses
       authentication_type: Dataplane authentication type
       overview: Overview
       version: Version
@@ -98,8 +103,6 @@ zones:
       title: Zones
       navigation:
         zone-cp-list-view: Zone control planes
-        zone-ingress-list-view: Ingresses
-        zone-egress-list-view: Egresses
   index:
     create: 'Create zone'
   action_menu:

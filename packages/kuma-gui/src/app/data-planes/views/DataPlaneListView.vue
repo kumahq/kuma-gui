@@ -41,16 +41,16 @@
               :selected="route.params.dataplaneType"
               @change="(value: string) => route.update({ page: 1, dataplaneType: value })"
             >
-              <template #selected="{ item }: { item: 'all' | 'standard' | 'builtin' | 'delegated'}">
+              <template #selected="{ item }: { item: 'all' | 'standard' | 'builtin' | 'delegated' | 'zone-ingress' | 'zone-egress' }">
                 <XIcon
                   v-if="item !== 'all'"
-                  :size="KUI_ICON_SIZE_40"
+                  :size="`var(--x-icon-size-40)`"
                   :name="item"
                 />
                 {{ t(`data-planes.type.${item}`) }}
               </template>
               <template
-                v-for="item in (['all', 'standard', 'builtin', 'delegated'] as const)"
+                v-for="item in (['all', 'standard', 'builtin', 'delegated', 'zone-ingress', 'zone-egress'] as const)"
                 :key="item"
                 #[`${item}-option`]
               >
@@ -73,7 +73,7 @@
             search: route.params.s,
           })"
           variant="list"
-          v-slot="{ data }"
+          v-slot="{ data: [data] }"
         >
           <DataCollection
             type="data-planes"
@@ -92,13 +92,14 @@
                 { ...me.get('headers.namespace'), label: 'Namespace', key: 'namespace' },
                 ...(can('use zones') ? [{ ...me.get('headers.zone'), label: 'Zone', key: 'zone' }] : []),
                 ...(can('use service-insights', props.mesh) ? [{ ...me.get('headers.services'), label: 'Services', key: 'services' }] : []),
+                { ...me.get('headers.zone-proxy'), label: t('http.api.property.zone-proxy'), key: 'zone-proxy' },
                 { ...me.get('headers.certificate'), label: 'Certificate info', key: 'certificate' },
                 { ...me.get('headers.status'), label: 'Status', key: 'status' },
                 { ...me.get('headers.warnings'), label: 'Warnings', key: 'warnings', hideLabel: true },
                 { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
               ]"
               :items="data.items"
-              :is-selected-row="(row) => row.name === route.params.proxy"
+              :is-selected-row="(row) => row.kri === route.params.proxy"
               @resize="me.set"
             >
               <template #type="{ row: item }">
@@ -116,7 +117,7 @@
                     name: 'data-plane-summary-view',
                     params: {
                       mesh: item.mesh,
-                      proxy: item.id,
+                      proxy: item.kri,
                     },
                     query: {
                       page: route.params.page,
@@ -137,41 +138,19 @@
               <template #services="{ row }">
                 <XLayout
                   v-if="row.services.length > 0"
-                  type="separated"
+                  variant="separated"
                   truncate
                 >
                   <div
-                    v-for="(service, index) in row.services"
+                    v-for="({ name, kri }, index) in row.services"
                     :key="index"
                   >
-                    <XCopyButton :text="service">
+                    <XCopyButton :text="name">
                       <XAction
-                        v-if="row.dataplaneType === 'standard'"
-                        :to="{
-                          name: 'service-detail-view',
-                          params: {
-                            service,
-                          },
-                        }"
+                        :href="`kri://${kri}`"
                       >
-                        {{ service }}
+                        {{ name }}
                       </XAction>
-
-                      <XAction
-                        v-else-if="row.dataplaneType === 'delegated'"
-                        :to="{
-                          name: 'delegated-gateway-detail-view',
-                          params: {
-                            service,
-                          },
-                        }"
-                      >
-                        {{ service }}
-                      </XAction>
-
-                      <template v-else>
-                        {{ service }}
-                      </template>
                     </XCopyButton>
                   </div>
                 </XLayout>
@@ -180,16 +159,10 @@
                   {{ t('common.collection.none') }}
                 </template>
               </template>
-
               <template #zone="{ row }">
                 <XAction
                   v-if="row.zone"
-                  :to="{
-                    name: 'zone-cp-detail-view',
-                    params: {
-                      zone: row.zone,
-                    },
-                  }"
+                  :href="`kri://${Kri.toString({ shortName: 'z', name: row.zone })}`"
                 >
                   {{ row.zone }}
                 </XAction>
@@ -197,6 +170,24 @@
                 <template v-else>
                   {{ t('common.collection.none') }}
                 </template>
+              </template>
+
+              <template #zone-proxy="{ row: item }">
+                <XLayout
+                  v-if="item.zoneProxyTypes.length > 0"
+                  variant="separated"
+                >
+                  <XBadge
+                    v-if="item.zoneProxyTypes.includes('zone-ingress')"
+                  >
+                    {{ t(`data-planes.type.zone-ingress`) }}
+                  </XBadge>
+                  <XBadge
+                    v-if="item.zoneProxyTypes.includes('zone-egress')"
+                  >
+                    {{ t(`data-planes.type.zone-egress`) }}
+                  </XBadge>
+                </XLayout>
               </template>
 
               <template #certificate="{ row }">
@@ -219,7 +210,7 @@
               </template>
 
               <template #status="{ row }">
-                <StatusBadge
+                <KumaStatusBadge
                   :status="row.status"
                 />
               </template>
@@ -269,7 +260,7 @@
                     :to="{
                       name: 'data-plane-detail-view',
                       params: {
-                        proxy: item.id,
+                        proxy: item.kri,
                       },
                     }"
                   >
@@ -311,11 +302,9 @@
 </template>
 
 <script lang="ts" setup>
-import { KUI_ICON_SIZE_40 } from '@kong/design-tokens'
-
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
-import StatusBadge from '@/app/common/StatusBadge.vue'
+import { Kri } from '@/app/kuma'
 import type { Mesh } from '@/app/meshes/data'
 const props = defineProps<{
   mesh: Mesh
@@ -335,21 +324,17 @@ search {
   justify-content: flex-end;
   align-items: stretch;
   flex-wrap: wrap;
-  margin-bottom: $kui-space-70;
+  margin-bottom: var(--x-space-70);
 }
 
 .search-form {
   display: flex;
   width: 100%;
-  gap: $kui-space-70;
+  gap: var(--x-space-70);
 }
 
 .search-field {
   flex-basis: 310px;
-  flex-grow: 1;
-}
-
-.search-field {
   flex: 1;
 }
 

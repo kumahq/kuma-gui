@@ -1,0 +1,26 @@
+type: object
+properties:
+  name:
+    description: Name of the data plane proxy
+    type: string
+  mesh:
+    description: Mesh of the data plane proxy
+    type: string
+  tags:
+    description: Tags of the data plane proxy
+    type: object
+    additionalProperties:
+      type: array
+      items:
+        type: string
+  type:
+    description: Proxy type, only Dataplane is valid
+    type: string
+  workload:
+    description: Workload of the data plane proxy
+    type: string
+  validFor:
+    description: How long the token is valid for, e.g. 24h
+    type: string
+required:
+  - mesh

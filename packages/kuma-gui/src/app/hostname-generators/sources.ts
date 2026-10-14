@@ -1,14 +1,18 @@
 import createClient from 'openapi-fetch'
 
 import { HostnameGenerator } from './data/HostnameGenerator'
+import type { KumaHostnameGenerator } from './data/HostnameGenerator'
 import { defineSources } from '@/app/application'
-import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import type { paths } from '@kumahq/kuma-http-api'
 
-export const sources = (api: KumaApi) => {
+type Options = {
+  baseUrl: string
+  fetch: typeof fetch
+}
+export const sources = ({ baseUrl, fetch }: Options) => {
   const http = createClient<paths>({
-    baseUrl: '',
-    fetch: api.client.fetch,
+    baseUrl,
+    fetch,
   })
 
   return defineSources({
@@ -31,36 +35,36 @@ export const sources = (api: KumaApi) => {
       return HostnameGenerator.fromCollection(res.data!)
     },
 
-    '/hostname-generators/:name': async (params) => {
-      const { name } = params
+    '/hostname-generators/:kri': async (params) => {
+      const { kri } = params
 
-      const res = await http.GET('/hostnamegenerators/{name}', {
+      const  response = await http.GET('/_kri/{kri}', {
         params: {
           path: {
-            name,
+            kri,
           },
         },
       })
 
-      return HostnameGenerator.fromObject(res.data!)
+      return HostnameGenerator.fromObject(response.data as KumaHostnameGenerator)
     },
 
-    '/hostname-generators/:name/as/kubernetes': async (params) => {
-      const { name } = params
+    '/hostname-generators/:kri/as/kubernetes': async (params) => {
+      const { kri } = params
 
-      const res = await http.GET('/hostnamegenerators/{name}', {
+      const response = await http.GET('/_kri/{kri}', {
         params: {
           path: {
-            name,
+            kri,
           },
-          // @ts-ignore
+          // @ts-expect-error - query type missing in OAS
           query: {
             format: 'kubernetes',
           },
         },
       })
 
-      return res.data!
+      return response.data!
     },
   })
 }

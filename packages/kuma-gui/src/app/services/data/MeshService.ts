@@ -1,31 +1,47 @@
+import { Kri } from '@/app/kuma/kri'
 import { Resource } from '@/app/resources/data/Resource'
 import type { components } from '@kumahq/kuma-http-api'
-type GeneratedMeshService = components['schemas']['MeshServiceItem']
-type GeneratedMeshServiceList = components['responses']['MeshServiceList']['content']['application/json']
+export type KumaMeshService = components['schemas']['MeshServiceItem']
+export type KumaMeshServiceCollection = components['responses']['MeshServiceList']['content']['application/json']
 
 export const MeshService = {
   search(query: string) {
     return Resource.search(query)
   },
 
-  fromObject(item: GeneratedMeshService) {
+  fromObject(item: KumaMeshService) {
     const labels = item.labels ?? {}
-    const name = labels['kuma.io/display-name'] ?? item.name
+    const id = item.name
+    const mesh = item.mesh
+    const zone = labels['kuma.io/origin'] === 'zone' && labels['kuma.io/zone'] ? labels['kuma.io/zone'] : ''
     const namespace = labels['k8s.kuma.io/namespace'] ?? ''
+    const name = labels['kuma.io/display-name'] ?? item.name
     return {
       ...item,
-      id: item.name,
+      kri: item.kri ?? Kri.toString({ shortName: 'msvc', mesh, zone, namespace, name }),
       name,
-      namespace,
+      mesh,
       labels,
-      zone: labels['kuma.io/origin'] === 'zone' && labels['kuma.io/zone'] ? labels['kuma.io/zone'] : '',
+      creationTime: item.creationTime ?? '',
+      modificationTime: item.modificationTime ?? '',
+      // aliases
+      id,
+      namespace,
+      zone,
       spec: ((item) => {
         return {
           ...item,
           ports: Array.isArray(item.ports) ? item.ports : [],
           selector: ((item = {}) => {
+            const labels = item.dataplaneLabels ?? {}
             return {
-              dataplaneTags: Object.keys(item.dataplaneTags ?? {}).length > 0 ? item.dataplaneTags! : {},
+              dataplaneLabels: {
+                ...labels,
+                matchLabels: Object.keys(labels.matchLabels ?? {}).length > 0 ?
+                  labels.matchLabels ?? {} :
+                  // @ts-ignore (types) temporary support of old dataplaneTags
+                  Object.keys(item.dataplaneTags ?? {}).length > 0 ? item.dataplaneTags ?? {} : {},
+              },
             }
           })(item.selector),
           identities: Array.isArray(item.identities) ? item.identities : [],
@@ -55,7 +71,7 @@ export const MeshService = {
     }
   },
 
-  fromCollection(collection: GeneratedMeshServiceList) {
+  fromCollection(collection: KumaMeshServiceCollection) {
     const items = Array.isArray(collection.items) ? collection.items.map(MeshService.fromObject) : []
     return {
       ...collection,

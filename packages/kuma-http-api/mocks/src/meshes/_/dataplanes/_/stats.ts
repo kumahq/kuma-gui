@@ -5,7 +5,6 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
   const displayName = parts.slice(0, -1).join('.')
   const nspace = parts.at(-1) ?? ''
 
-  const isUnifiedResourceNamingEnabled = env('KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED', '') === 'true'
   const isSpireEnabled = env('KUMA_DATAPLANE_TLS_ISSUED_MESHIDENTITY', '') === 'true'
   // use seed to sync the ports in stats.ts with the ports in _overview.ts
   fake.kuma.seed(name as string)
@@ -16,15 +15,12 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
   }))
   const serviceCount = parseInt(env('KUMA_SERVICE_COUNT', `${fake.number.int({ min: 7, max: 50 })}`))
   const services = Array.from({ length: serviceCount }).map(() => {
-    // even if KRIs are on, we don't currently use them for gateways
-    if(isUnifiedResourceNamingEnabled && !name.includes('-gateway_')) {
-      return fake.kuma.kri({ shortName: fake.helpers.arrayElement(['msvc', 'mzsvc', 'extsvc']), namespace: nspace, name: displayName, mesh: mesh as string, sectionName: fake.number.int({ min: 1, max: 65535 }).toString() })
-    } else if (fake.datatype.boolean()) {
-      return `${fake.word.noun()}_${fake.word.noun()}_${fake.word.noun()}_${fake.word.noun()}_${fake.helpers.arrayElement(['msvc', 'mzsvc', 'extsvc'])}_${fake.number.int({ min: 1, max: 65535 })}`
-    } else {
-      return `${fake.word.noun()}_svc_${fake.number.int({ min: 1, max: 65535 })}`
-    }
+    return fake.kuma.kri({ resourceName: fake.helpers.arrayElement(['MeshService', 'MeshMultiZoneService', 'MeshExternalService']), namespace: nspace, name: displayName, mesh: mesh as string, sectionName: fake.number.int({ min: 1, max: 65535 }).toString() })
   })
+  const listenerCount = parseInt(env('KUMA_DATAPLANELISTENER_COUNT', `${fake.number.int({ min: 0, max: 50 })}`))
+  const listeners = Array.from({ length: listenerCount }).map(() => ({
+    port: fake.number.int({ min: 1, max: 65535 }),
+  }))
   const address = fake.internet.ip()
   fake.kuma.seed()
   if (env('KUMA_CLUSTER_NAME', '').length > 0) {
@@ -36,10 +32,19 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
     max: fake.number.int({ max: 100000 }),
   }
 
+  const listenerStats = listeners.map(({ port }) => {
+    return `
+listener.self_zoneingress_dp_${port}.downstream.cx_active: ${fake.number.int(minMax)}
+listener.self_zoneingress_dp_${port}.downstream.cx_total: ${fake.number.int(minMax)}
+listener.self_zoneegress_dp_${port}.downstream.cx_active: ${fake.number.int(minMax)}
+listener.self_zoneegress_dp_${port}.downstream.cx_total: ${fake.number.int(minMax)}
+    `
+  })
+
   const inbounds = ports.map(item => {
     const port = item.port
     const direction = 'downstream'
-    const service = isUnifiedResourceNamingEnabled ? fake.kuma.contextualKri({ context: fake.helpers.arrayElement(['inbound', 'inbound_dp']), name: port.toString() }) : `localhost_${port}`
+    const service = fake.kuma.contextualKri({ context: fake.helpers.arrayElement(['inbound', 'inbound_dp']), name: port.toString() })
     const _minMax = fake.datatype.boolean() ? minMax : { min: 0, max: 0 }
     switch (true) {
       case ['http', 'grpc'].includes(item.protocol): {
@@ -667,13 +672,15 @@ tcp.${service}.${direction}_cx_rx_bytes_total: ${fake.number.int(minMax)}`
 
   return {
     headers: {
+      ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
       // 'Status-Code': '500',
       'Content-Type': 'text/plain',
     },
     body: `${outbounds}
 ${inbounds}
+${listenerStats}
 ${passthrough}
-${stats()}${isSpireEnabled ? `\n${spireStats({ service: services[0] })}` : ''}`,
+${stats()}${isSpireEnabled ? `\n${spireStats({ service: services[0] })}` : ''}` satisfies string,
   }
 }
 

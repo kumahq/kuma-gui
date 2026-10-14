@@ -1,6 +1,6 @@
 import $RefParser from '@apidevtools/json-schema-ref-parser'
 import { readFileSync as read, existsSync as exists } from 'fs'
-import jsYaml, { DEFAULT_SCHEMA, Type } from 'js-yaml'
+import { load, dump, CORE_SCHEMA, defineScalarTag } from 'js-yaml'
 import openapiFormat from 'openapi-format'
 import { dirname, isAbsolute, resolve } from 'path'
 
@@ -8,19 +8,19 @@ import type { OpenAPIOverlayOptions } from 'openapi-format'
 
 const schema = () => {
   const nspace = 'tag:yaml.org,2002'
-  return DEFAULT_SCHEMA.extend([
-    new Type(`${nspace}:oas-overlay/dereference`, {
-      kind: 'scalar',
-      construct: (data: any) => {
+  return CORE_SCHEMA.withTags(
+    defineScalarTag(`${nspace}:oas-overlay/dereference`, {
+      resolve: (data) => {
         return new String(data)
       },
+      identify: () => false,
     }),
-  ])
+  )
 }
 
 const YAML = {
-  stringify: (json: any) => jsYaml.dump(json, { lineWidth: -1, noRefs: true }),
-  parse: (str: string) => jsYaml.load(str, { schema: schema() }),
+  stringify: (json: any) => dump(json, { lineWidth: -1, noRefs: true }),
+  parse: (str: string) => load(str, { schema: schema() }),
 }
 
 type WalkOptions = {
@@ -88,7 +88,7 @@ const flags = process.argv.reduce((prev, flag, i, arr) => {
     const dereferenced = await openapiFormat.parseString(
       YAML.stringify(await $RefParser.dereference(filepath, hiddenRefs, {})),
       opts,
-    )
+    ) as OpenAPIOverlayOptions['overlaySet'] & { extends: string }
 
     // unhide the "private" `#$ref` backto `$ref`
     const overlay = walk(dereferenced, {
@@ -104,7 +104,7 @@ const flags = process.argv.reduce((prev, flag, i, arr) => {
     )
 
     const res = await openapiFormat.openapiOverlay(oas, {
-      overlaySet: overlay as OpenAPIOverlayOptions['overlaySet'],
+      overlaySet: overlay,
     })
 
     const output = YAML.stringify(res.data)

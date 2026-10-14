@@ -1,70 +1,51 @@
+import { Kri, search } from '@/app/kuma'
+import type { paths } from '@kumahq/kuma-http-api'
+
 /**
- * Filters should follow the rules of [kong-aip#160](https://kong-aip.netlify.app/aip/160/).
- * 
- * `filters` are the current defaults, but may not necessarily be used depending on the actual requirements of an API.
+ * There is no types based on OAS that guarantee the shape of a generic resource collection.
+ * Therefore we are only assuming that it's an object of unknown entries and we shape it to what we expect in the data layer.
  */
-const shortFilters = {
-  namespace: 'k8s.kuma.io/namespace',
-  zone: 'kuma.io/zone',
-  service: 'kuma.io/service',
-  protocol: 'kuma.io/protocol',
-}
-
-type SearchOptions = {
-  defaultKey?: string
-}
-
-const isShortFilter = (k: string): k is keyof typeof shortFilters => k in shortFilters
-
-export const searchRegex = /(\S+:\s*\S*)|(\S+)/
-
-const kvSeparatorRegex = /:(.*)/
+type KumaResourceCollection = Record<string, unknown>
+type KumaResource = paths['/_kri/{kri}']['get']['responses']['200']['content']['application/json']
 
 export const Resource = {
-  search(query: string, options: SearchOptions = {}) {
-    const { defaultKey = 'name' } = options
-    const parts = query.trim().split(searchRegex).map((part) => part?.trim().replace(/=/, ':')).filter(Boolean)
+  search(...rest: Parameters<typeof search>) {
+    return search(...rest)
+  },
 
-    return parts.reduce((acc, curr) => {
-      const [key, value] = curr.split(kvSeparatorRegex).map((item) => item.trim())
-      
-      switch(true) {
-        // Filter out invalids, such as: ":foo" or "bar:"
-        case curr.includes(':') && !value?.length:
-          return acc
-        
-        // Use defaultKey for single words, i.e. "foo" or "bar"
-        case key === defaultKey || !value?.length:
-          return {
-            ...acc,
-            [defaultKey]: value?.length ? value : key,
-          }
-        case ['label', 'labels'].includes(key): {
-          const [k, v] = value.split(kvSeparatorRegex)
-          const _key = `filter[labels.${isShortFilter(k) ? shortFilters[k] : k}]`
-          return {
-            ...acc,
-            [_key]: v,
-          }
-        }
-        case ['tag', 'tags'].includes(key): {
-          const [k, v] = value.split(kvSeparatorRegex)
-          const _value = isShortFilter(k) ? `${shortFilters[k]}:${v}` : value
-          return {
-            ...acc,
-            tag: [...acc.tag ?? [], _value],
-          }
-        }
-        case !!key?.length: {
-          const _key = `filter[labels.${isShortFilter(key) ? shortFilters[key] : key}]`
-          return {
-            ...acc,
-            [_key]: value,
-          }
-        }
-        default:
-          return acc
-      }
-    }, {} as Record<string, string | string[]>)
+  fromObject(partialResource: KumaResource) {
+    const labels = 'labels' in partialResource ? partialResource.labels ?? {} : {}
+    const mesh = 'mesh' in partialResource ? partialResource.mesh : labels['kuma.io/mesh'] ?? ''
+    const namespace = labels['k8s.kuma.io/namespace'] ?? ''
+    const name = labels['kuma.io/display-name'] ?? partialResource.name ?? ''
+    const zone = labels['kuma.io/origin'] === 'zone' ? labels['kuma.io/zone'] ?? '' : ''
+
+    const kri = 'kri' in partialResource ? partialResource.kri ?? '' : ''
+
+    return {
+      ...partialResource,
+      config: partialResource,
+      id: partialResource.name,
+      kri: Kri.isKriString(kri) ? kri : Kri.toString({ shortName: `~${partialResource.type?.toLowerCase()}`, mesh, zone, namespace, name }),
+      mesh,
+      namespace,
+      name,
+      zone,
+      creationTime: 'creationTime' in partialResource ? partialResource.creationTime ?? '' : '',
+      modificationTime: 'modificationTime' in partialResource ? partialResource.modificationTime ?? '' : '',
+      labels: partialResource.labels ?? {},
+    }
+  },
+
+  fromCollection(partialResources: KumaResourceCollection = {}) {
+    const collection = Object.values(partialResources).find((value) => Array.isArray(value)) ?? []
+    return {
+      ...partialResources,
+      items: collection.map(Resource.fromObject),
+      total: partialResources.total as number | undefined ?? collection.length ?? 0,
+    }
   },
 }
+
+export type Resource = ReturnType<typeof Resource.fromObject>
+export type ResourceCollection = ReturnType<typeof Resource.fromCollection>

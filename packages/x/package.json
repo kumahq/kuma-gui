@@ -8,22 +8,33 @@
   "main": "src/index.ts",
   "module": "src/index.ts",
   "types": "src/index.ts",
+  "exports": {
+    ".": {
+      "default": "./src/index.ts"
+    },
+    "./vite": {
+      "import": "./vite/index.ts"
+    }
+  },
   "scripts": {
     "help": "make help"
   },
   "dependencies": {
-    "@kong-ui-public/app-layout": "^4.10.21",
-    "@kong/kongponents": "^9.50.5",
-    "@kong/icons": "^1.43.0",
-    "shiki": "^3.22.0",
-    "@vueuse/core": "^14.2.1",
-    "@vue/shared": "^3.5.28",
+    "@kong-ui-public/app-layout": "5.0.4",
+    "@kong/kongponents": "^9.64.25",
+    "@kong/icons": "^1.63.1",
+    "shiki": "^4.5.0",
+    "@vueuse/core": "^15.0.0",
+    "@vue/shared": "^3.5.42",
     "vue-global-events": "^3.0.1",
-    "vue-router": "^4.6.4"
+    "vue-router": "^5.3.1"
+  },
+  "optionalDependencies": {
+    "markdown-it": "^15.0.2"
   },
   "devDependencies": {
-    "@kumahq/config": "*",
-    "@kong/design-tokens": "^1.18.2"
+    "@kong/design-tokens": "^3.3.3",
+    "@kumahq/config": "*"
   },
   "peerDependencies": {
     "vue": "*"

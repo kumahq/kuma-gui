@@ -3,20 +3,19 @@
     name="mesh-service-config-view"
     :params="{
       mesh: '',
-      service: '',
+      kri: '',
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
       environment: String,
     }"
-    v-slot="{ route, t }"
+    v-slot="{ route, t, uri }"
   >
     <AppView>
       <XCard>
-        <XLayout>
+        <XLayout variant="y-stack">
           <XLayout
-            type="separated"
-            justify="end"
+            variant="action-group"
           >
             <div
               v-for="options in [['universal', 'k8s']]"
@@ -42,24 +41,31 @@
           </XLayout>
 
           <template v-if="route.params.environment === 'universal'">
-            <XCodeBlock
-              data-testid="codeblock-yaml-universal"
-              language="yaml"
-              :code="YAML.stringify(props.data.config)"
-              is-searchable
-              :query="route.params.codeSearch"
-              :is-filter-mode="route.params.codeFilter"
-              :is-reg-exp-mode="route.params.codeRegExp"
-              @query-change="route.update({ codeSearch: $event })"
-              @filter-mode-change="route.update({ codeFilter: $event })"
-              @reg-exp-mode-change="route.update({ codeRegExp: $event })"
-            />
+            <DataLoader
+              :data="[props.data]"
+              v-slot="{ data: [service] }"
+            >
+              <XCodeBlock
+                data-testid="codeblock-yaml-universal"
+                language="yaml"
+                :code="YAML.stringify(service.config)"
+                is-searchable
+                :query="route.params.codeSearch"
+                :is-filter-mode="route.params.codeFilter"
+                :is-reg-exp-mode="route.params.codeRegExp"
+                @query-change="route.update({ codeSearch: $event })"
+                @filter-mode-change="route.update({ codeFilter: $event })"
+                @reg-exp-mode-change="route.update({ codeRegExp: $event })"
+              />
+            </DataLoader>
           </template>
 
           <template v-else>
             <DataLoader
-              :src="`/meshes/${props.data.mesh}/mesh-service/${props.data.id}/as/kubernetes`"
-              v-slot="{ data: k8sConfig }"
+              :src="uri(sources, '/mesh-service/:kri/as/kubernetes', {
+                kri: route.params.kri,
+              })"
+              v-slot="{ data: [k8sConfig] }"
             >
               <XCodeBlock
                 data-testid="codeblock-yaml-k8s"
@@ -83,8 +89,9 @@
 
 <script lang="ts" setup>
 import type { MeshService } from '../data'
+import { sources } from '../sources'
 import { YAML } from '@/app/application'
 const props = defineProps<{
-  data: MeshService
+  data: MeshService | Error | undefined
 }>()
 </script>

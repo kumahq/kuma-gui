@@ -9,107 +9,101 @@
       proxy: '',
       s: '',
     }"
-    v-slot="{ route, t, uri, me, can }"
+    v-slot="{ route, t, uri, me, can, r }"
   >
     <RouteTitle
       :render="false"
       :title="t('workloads.routes.item.title', { name: Kri.fromString(route.params.wl).name })"
     />
     <AppView>
-      <XAboutCard
-        :title="t('workloads.routes.item.about.title')"
-        :created="typeof props.data !== 'undefined' && !(props.data instanceof Error) ? props.data.creationTime : undefined"
-        :modified="typeof props.data !== 'undefined' && !(props.data instanceof Error) ? props.data.modificationTime : undefined"
+      <XCard
         data-testid="about-workload"
       >
+        <template #title>
+          {{ t('workloads.routes.item.about.title') }}
+        </template>
         <DataLoader
           :data="[props.data]"
+          v-slot="{ data: [workload] }"
         >
-          <template v-if="typeof props.data !== 'undefined' && !(props.data instanceof Error)">
-            <XDl>
-              <div>
-                <dt>{{ t('http.api.property.status') }}</dt>
-                <dd>
-                  <XBadge
-                    :appearance="t(`common.status.appearance.${props.data.status.state}`, undefined, { defaultMessage: 'neutral' })"
-                  >
-                    {{ t(`http.api.value.${props.data.status.state}`) }}
-                  </XBadge>
-                </dd>
-              </div>
+          <XTimespan
+            :start="workload.creationTime"
+            :end="workload.modificationTime"
+          />
+          <XDl>
+            <div>
+              <dt>{{ t('http.api.property.status') }}</dt>
+              <dd>
+                <XBadge
+                  :appearance="t(`common.status.appearance.${workload.status.state}`, undefined, { defaultMessage: 'neutral' })"
+                >
+                  {{ t(`http.api.value.${workload.status.state}`) }}
+                </XBadge>
+              </dd>
+            </div>
 
-              <div v-if="props.data.zone.length">
-                <dt>{{ t('http.api.property.zone') }}</dt>
-                <dd>
+            <div v-if="can('use zones') && workload.zone.length">
+              <dt>{{ t('http.api.property.zone') }}</dt>
+              <dd>
+                <XAction
+                  v-if="workload.zone"
+                  :href="`kri://${Kri.toString({ shortName: 'z', name: workload.zone })}`"
+                >
+                  <XBadge>{{ workload.zone }}</XBadge>
+                </XAction>
+              </dd>
+            </div>
+
+            <div v-if="workload.namespace.length">
+              <dt>{{ t('http.api.property.namespace') }}</dt>
+              <dd>
+                <XBadge>{{ workload.namespace }}</XBadge>
+              </dd>
+            </div>
+
+            <div v-if="Object.keys(workload.labels).length > 0">
+              <dt>{{ t('workloads.routes.item.about.labels') }}</dt>
+              <dd>
+                <XLayout
+                  variant="separated"
+                >
                   <XAction
-                    v-if="props.data.zone"
-                    :to="{
-                      name: 'zone-cp-detail-view',
-                      params: {
-                        zone: props.data.zone,
-                      },
-                    }"
+                    v-for="(value, key) in workload.labels"
+                    :key="key"
+                    :href="t(`common.label.href.${key.replaceAll('.', '~')}`, {
+                      mesh: workload.mesh,
+                      zone: workload.zone,
+                      namespace: workload.namespace,
+                      name: value,
+                    }, { defaultMessage: '' })"
                   >
-                    <XBadge>{{ props.data.zone }}</XBadge>
-                  </XAction>
-                </dd>
-              </div>
-
-              <div v-if="props.data.namespace.length">
-                <dt>{{ t('http.api.property.namespace') }}</dt>
-                <dd>
-                  <XBadge>{{ props.data.namespace }}</XBadge>
-                </dd>
-              </div>
-
-              <template
-                v-for="labels in [Object.entries(props.data.labels)]"
-                :key="typeof labels"
-              >
-                <div v-if="labels.length > 0">
-                  <dt>{{ t('workloads.routes.item.about.labels') }}</dt>
-                  <dd>
-                    <XLayout
-                      variant="separated"
-                      truncate
+                    <XBadge
+                      :variant="r('kuma.label').test(key) ? 'reserved-kv' : 'kv'"
                     >
-                      <template
-                        v-for="kumaRe in [/^(.+\.)?kuma\.io\//]"
-                        :key="typeof kumaRe"
-                      >
-                        <XBadge
-                          v-for="[key, value] in labels"
-                          :key="key"
-                          :appearance="kumaRe.test(key) ? 'info' : 'decorative'"
-                        >
-                          {{ key }}:{{ value }}
-                        </XBadge>
-                      </template>
-                    </XLayout>
-                  </dd>
-                </div>
-              </template>
-            </XDl>
-          </template>
+                      {{ key }}:<strong>{{ value }}</strong>
+                    </XBadge>
+                  </XAction>
+                </XLayout>
+              </dd>
+            </div>
+          </XDl>
         </DataLoader>
-      </XAboutCard>
+      </XCard>
 
       <XCard>
+        <template #title>
+          <h2>
+            {{ t('workloads.routes.item.dataplaneProxies.title') }}
+          </h2>
+        </template>
         <XLayout
           variant="y-stack"
         >
-          <slot name="title">
-            <h2>
-              {{ t('workloads.routes.item.dataplaneProxies.title') }}
-            </h2>
-          </slot>
           <search>
             <form
-              class="search-form"
               @submit.prevent
             >
               <XSearch
-                class="search-field"
                 :keys="['name', 'tag', 'label']"
                 :value="route.params.s"
                 @change="(s) => route.update({ page: 1, s })"
@@ -130,7 +124,7 @@
                 search: `${route.params.s} kuma.io/workload:${kri.name} ${[['namespace', kri.namespace], ['zone', kri.zone]].filter(([ , v]) => v.length > 0).map(([k, v]) => `${k}:${v}`).join(' ')}`,
               })"
               variant="list"
-              v-slot="{ data: dataPlanes }"
+              v-slot="{ data: [dataPlanes] }"
             >
               <DataCollection
                 :items="dataPlanes.items"
@@ -152,6 +146,7 @@
                     { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
                   ]"
                   :items="dataPlanes.items"
+                  :is-selected-row="(row) => row.kri === route.params.proxy"
                   @resize="me.set"
                 >
                   <template #name="{ row: item }">
@@ -163,7 +158,7 @@
                         name: 'workload-data-plane-summary-view',
                         params: {
                           mesh: item.mesh,
-                          proxy: item.id,
+                          proxy: item.kri,
                         },
                       }"
                     >
@@ -178,12 +173,7 @@
                   <template #zone="{ row }">
                     <XAction
                       v-if="row.zone"
-                      :to="{
-                        name: 'zone-cp-detail-view',
-                        params: {
-                          zone: row.zone,
-                        },
-                      }"
+                      :href="`kri://${Kri.toString({ shortName: 'z', name: row.zone })}`"
                     >
                       {{ row.zone }}
                     </XAction>
@@ -256,7 +246,7 @@
                         :to="{
                           name: 'data-plane-detail-view',
                           params: {
-                            proxy: item.id,
+                            proxy: item.kri,
                           },
                         }"
                       >
@@ -305,8 +295,3 @@ const props = defineProps<{
   data: WorkloadItem | Error | undefined
 }>()
 </script>
-<style scoped lang="scss">
-.search-field {
-  width: 100%;
-}
-</style>

@@ -1,0 +1,5 @@
+description: A response containing the issued token.
+content:
+  text/plain:
+    schema:
+      type: string

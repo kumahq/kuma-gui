@@ -1,0 +1,66 @@
+get:
+  operationId: getZoneList
+  summary: Returns a list of Zone.
+  parameters:
+    - name: offset
+      in: query
+      description: offset in the list of entities
+      required: false
+      schema:
+        type: integer
+      example: 0
+    - name: size
+      in: query
+      description: the number of items per page
+      required: false
+      schema:
+        type: integer
+        default: 100
+        maximum: 1000
+        minimum: 1
+    - name: filter
+      in: query
+      description: filter by labels when multiple filters are present, they are ANDed
+      required: false
+      schema:
+        type: object
+        properties:
+          key:
+            type: string
+          value:
+            type: string
+      example:
+        label.k8s.kuma.io/namespace: my-ns
+  responses:
+    '200':
+      $ref: '../components/responses/ZoneList.yaml'
+  tags:
+    - Zone
+post:
+  operationId: postZone
+  summary: Creates Zone entity
+  description: Creates a resource using the name in the body. An existing resource is never modified. Requires Kuma 3.0 or later.
+  requestBody:
+    description: Resource to create
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/ZoneItem.yaml'
+  responses:
+    '201':
+      $ref: '../components/responses/ZoneCreateOrUpdateSuccessResponse.yaml'
+    '400':
+      description: Invalid resource
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/Error.yaml'
+    '409':
+      description: A resource with this identity already exists
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/Error.yaml'
+  tags:
+    - Zone

@@ -1,4 +1,11 @@
 import type { Dependencies, ResponseHandler } from '#mocks'
+import type { paths } from '@kumahq/kuma-http-api'
+
+// @TODO(types): once the types are correct here we can remove the omit
+type ZoneOverviewsResponse = paths['/zones/_overview']['get']['responses']['200']['content']['application/json']
+type ZoneOverview = Omit<ZoneOverviewsResponse['items'][number], 'mesh' | 'labels'>
+type ZoneOverviewsBody = Omit<ZoneOverviewsResponse, 'items'> & { items: ZoneOverview[] }
+
 export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) => {
   const query = req.url.searchParams
   const { offset, total, next, pageTotal } = pager(
@@ -9,11 +16,14 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
   const nameQuery = query.get('name')
 
   return {
-    headers: {},
+    headers: {
+      ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
+    },
     body: {
       total,
       items: Array.from({ length: pageTotal }).map((_, i) => {
         const subscriptionCount = parseInt(env('KUMA_SUBSCRIPTION_COUNT', `${fake.number.int({ min: 0, max: 10 })}`))
+        const zoneVersion = env('KUMA_ZONE_VERSION', fake.kuma.version())
         const shouldHaveZoneInsight = subscriptionCount !== 0 || fake.datatype.boolean()
 
         const id = offset + i
@@ -22,8 +32,8 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
         return {
           type: 'ZoneOverview',
           name,
-          creationTime: '2021-02-19T08:06:15.380674+01:00',
-          modificationTime: '2021-02-19T08:06:15.380674+01:00',
+          ...fake.kuma.timespan(),
+          kri: fake.kuma.kri({ resourceName: 'Zone', zone: '', mesh: '', namespace: '', name, sectionName: '' }),
           zone: {
             enabled: fake.datatype.boolean(),
           },
@@ -31,6 +41,7 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
             zoneInsight: {
               subscriptions: Array.from({ length: subscriptionCount }).map((item, i, arr) => {
                 return {
+                  ...fake.kuma.connection(item, i, arr),
                   config: fake.kuma.subscriptionConfig({
                     environment: fake.helpers.arrayElement(['universal', 'kubernetes']),
                     store: {
@@ -39,78 +50,77 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
                   }),
                   id: fake.string.uuid(),
                   globalInstanceId: fake.word.noun(),
-                  ...fake.kuma.connection(item, i, arr),
                   status: {
-                    lastUpdateTime: '2021-02-19T07:06:16.384057Z',
+                    lastUpdateTime: fake.kuma.nanodate(),
                     total: {
-                      responsesSent: `${fake.number.int(30)}`,
-                      responsesAcknowledged: `${fake.number.int(30)}`,
+                      responsesSent: fake.number.int(30),
+                      responsesAcknowledged: fake.number.int(30),
                     },
                     stat: {
                       CircuitBreaker: {
-                        responsesSent: `${fake.number.int(30)}`,
-                        responsesAcknowledged: `${fake.number.int(30)}`,
+                        responsesSent: fake.number.int(30),
+                        responsesAcknowledged: fake.number.int(30),
                       },
                       Config: {
-                        responsesSent: `${fake.number.int(30)}`,
-                        responsesAcknowledged: `${fake.number.int(30)}`,
+                        responsesSent: fake.number.int(30),
+                        responsesAcknowledged: fake.number.int(30),
                       },
                       Dataplane: {
-                        responsesSent: `${fake.number.int(30)}`,
-                        responsesAcknowledged: `${fake.number.int(30)}`,
+                        responsesSent: fake.number.int(30),
+                        responsesAcknowledged: fake.number.int(30),
                       },
                       ExternalService: {
-                        responsesSent: `${fake.number.int(30)}`,
-                        responsesAcknowledged: `${fake.number.int(30)}`,
+                        responsesSent: fake.number.int(30),
+                        responsesAcknowledged: fake.number.int(30),
                       },
                       FaultInjection: {
-                        responsesSent: `${fake.number.int(30)}`,
-                        responsesAcknowledged: `${fake.number.int(30)}`,
+                        responsesSent: fake.number.int(30),
+                        responsesAcknowledged: fake.number.int(30),
                       },
                       HealthCheck: {
-                        responsesSent: `${fake.number.int(30)}`,
-                        responsesAcknowledged: `${fake.number.int(30)}`,
+                        responsesSent: fake.number.int(30),
+                        responsesAcknowledged: fake.number.int(30),
                       },
                       Mesh: {
-                        responsesSent: `${fake.number.int(30)}`,
-                        responsesAcknowledged: `${fake.number.int(30)}`,
+                        responsesSent: fake.number.int(30),
+                        responsesAcknowledged: fake.number.int(30),
                       },
                       ProxyTemplate: {
-                        responsesSent: `${fake.number.int(30)}`,
-                        responsesAcknowledged: `${fake.number.int(30)}`,
+                        responsesSent: fake.number.int(30),
+                        responsesAcknowledged: fake.number.int(30),
                       },
                       Retry: {
-                        responsesSent: `${fake.number.int(30)}`,
-                        responsesAcknowledged: `${fake.number.int(30)}`,
+                        responsesSent: fake.number.int(30),
+                        responsesAcknowledged: fake.number.int(30),
                       },
                       Secret: {
-                        responsesSent: `${fake.number.int(30)}`,
-                        responsesAcknowledged: `${fake.number.int(30)}`,
+                        responsesSent: fake.number.int(30),
+                        responsesAcknowledged: fake.number.int(30),
                       },
                       TrafficLog: {
-                        responsesSent: `${fake.number.int(30)}`,
-                        responsesAcknowledged: `${fake.number.int(30)}`,
+                        responsesSent: fake.number.int(30),
+                        responsesAcknowledged: fake.number.int(30),
                       },
                       TrafficPermission: {
-                        responsesSent: `${fake.number.int(30)}`,
-                        responsesAcknowledged: `${fake.number.int(30)}`,
+                        responsesSent: fake.number.int(30),
+                        responsesAcknowledged: fake.number.int(30),
                       },
                       TrafficRoute: {
-                        responsesSent: `${fake.number.int(30)}`,
-                        responsesAcknowledged: `${fake.number.int(30)}`,
+                        responsesSent: fake.number.int(30),
+                        responsesAcknowledged: fake.number.int(30),
                       },
                       TrafficTrace: {
-                        responsesSent: `${fake.number.int(30)}`,
-                        responsesAcknowledged: `${fake.number.int(30)}`,
+                        responsesSent: fake.number.int(30),
+                        responsesAcknowledged: fake.number.int(30),
                       },
                     },
                   },
                   version: {
                     kumaCp: {
-                      version: '1.0.0-rc2-211-g823fe8ce',
-                      gitTag: '1.0.0-rc2-211-g823fe8ce',
+                      version: zoneVersion,
+                      gitTag: zoneVersion,
                       gitCommit: fake.git.commitSha(),
-                      buildDate: '2021-02-18T13:22:30Z',
+                      buildDate: fake.kuma.date(),
                       kumaCpGlobalCompatible: fake.datatype.boolean(),
                     },
                   },
@@ -121,6 +131,6 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
         }
       }),
       next,
-    },
+    } satisfies ZoneOverviewsBody,
   }
 }

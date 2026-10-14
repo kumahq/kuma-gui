@@ -8,6 +8,8 @@ properties:
     description: Mesh is the name of the Kuma mesh this resource belongs to. It may be omitted for cluster-scoped resources.
     type: string
     default: default
+    maxLength: 253
+    pattern: ^[0-9a-z-_.]*$
   kri:
     description: A unique identifier for this resource instance used by internal tooling and integrations. Typically derived from resource attributes and may be used for cross-references or indexing
     type: string
@@ -16,6 +18,8 @@ properties:
   name:
     description: Name of the Kuma resource
     type: string
+    maxLength: 253
+    pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$
   labels:
     description: The labels to help identity resources
     type: object
@@ -25,13 +29,57 @@ properties:
     description: Time at which the resource was created
     type: string
     format: date-time
-    example: '0001-01-01T00:00:00Z'
+    example: '1901-01-01T00:00:00.000Z'
     readOnly: true
   modificationTime:
     description: Time at which the resource was updated
     type: string
     format: date-time
-    example: '0001-01-01T00:00:00Z'
+    example: '1901-01-01T00:00:00.000Z'
+    readOnly: true
+  status:
+    description: Status is the current status of the Kuma MeshAccessLog resource.
+    type: object
+    properties:
+      conditions:
+        type: array
+        items:
+          properties:
+            message:
+              description: |-
+                message is a human readable message indicating details about the transition.
+                This may be an empty string.
+              type: string
+              maxLength: 32768
+            reason:
+              description: |-
+                reason contains a programmatic identifier indicating the reason for the condition's last transition.
+                Producers of specific condition types may define expected values and meanings for this field,
+                and whether the values are considered a guaranteed API.
+                The value should be a CamelCase string.
+                This field may not be empty.
+              type: string
+              maxLength: 1024
+              minLength: 1
+              pattern: ^[A-Za-z]([A-Za-z0-9_,:]*[A-Za-z0-9_])?$
+            status:
+              description: status of the condition, one of True, False, Unknown.
+              type: string
+              enum:
+                - 'True'
+                - 'False'
+                - Unknown
+            type:
+              description: type of condition in CamelCase or in foo.example.com/CamelCase.
+              type: string
+              maxLength: 316
+              pattern: ^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$
+          required:
+            - message
+            - reason
+            - status
+            - type
+          type: object
     readOnly: true
   spec:
     description: Spec is the specification of the Kuma Policy resource.

@@ -4,7 +4,7 @@ properties:
   hostname:
     type: string
   product:
-    description: 'The product line (Kuma for OSS, different for other distributions)'
+    description: The product line (Kuma for OSS, different for other distributions)
     type: string
   version:
     description: The semantic version of the server running

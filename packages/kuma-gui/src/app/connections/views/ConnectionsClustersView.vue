@@ -18,52 +18,59 @@
       />
       <XCard>
         <DataLoader
-          :src="uri(sources, `/connections/clusters/for/:proxyType/:name/:mesh`, {
-            proxyType: ({ ingresses: 'zone-ingress', egresses: 'zone-egress'})[route.params.proxyType] ?? 'dataplane',
-            name: route.params.proxy,
-            mesh: route.params.mesh || '*',
-          })"
-          v-slot="{ data, refresh }"
+          :data="[props.data]"
+          v-slot="{ data: [overviewData]}"
         >
-          <XWindow
-            :resize="true"
-            v-slot="{ resize }"
+          <DataLoader
+            :src="uri(sources, `/connections/clusters/for/:proxyType/:name/:mesh`, {
+              proxyType: ({ ingresses: 'zone-ingress', egresses: 'zone-egress'})[route.params.proxyType] ?? 'dataplane',
+              name: overviewData.id,
+              mesh: route.params.mesh || '*',
+            })"
+            v-slot="{ data: [clusters], refresh }"
           >
-            <div
-              ref="$el"
+            <XWindow
+              :resize="true"
+              v-slot="{ resize }"
             >
-              <XCodeBlock
-                :max-height="`${(resize?.target?.innerHeight ?? 0) - ($el?.getBoundingClientRect().top + 200)}`"
-                language="json"
-                :code="data"
-                is-searchable
-                :query="route.params.codeSearch"
-                :is-filter-mode="route.params.codeFilter"
-                :is-reg-exp-mode="route.params.codeRegExp"
-                @query-change="route.update({ codeSearch: $event })"
-                @filter-mode-change="route.update({ codeFilter: $event })"
-                @reg-exp-mode-change="route.update({ codeRegExp: $event })"
+              <div
+                ref="$el"
               >
-                <template #primary-actions>
-                  <XAction
-                    action="refresh"
-                    appearance="primary"
-                    @click="refresh"
-                  >
-                    Refresh
-                  </XAction>
-                </template>
-              </XCodeBlock>
-            </div>
-          </XWindow>
+                <XCodeBlock
+                  :max-height="`${(resize?.target?.innerHeight ?? 0) - ($el?.getBoundingClientRect().top + 200)}`"
+                  language="json"
+                  :code="clusters"
+                  is-searchable
+                  :query="route.params.codeSearch"
+                  :is-filter-mode="route.params.codeFilter"
+                  :is-reg-exp-mode="route.params.codeRegExp"
+                  @query-change="route.update({ codeSearch: $event })"
+                  @filter-mode-change="route.update({ codeFilter: $event })"
+                  @reg-exp-mode-change="route.update({ codeRegExp: $event })"
+                >
+                  <template #primary-actions>
+                    <XAction
+                      action="refresh"
+                      appearance="primary"
+                      @click="refresh"
+                    >
+                      Refresh
+                    </XAction>
+                  </template>
+                </XCodeBlock>
+              </div>
+            </XWindow>
+          </DataLoader>
         </DataLoader>
       </XCard>
     </AppView>
   </RouteView>
 </template>
 <script lang="ts" setup>
+import type { ConnectionOverview } from '../data'
 import { sources } from '../sources'
 const props = defineProps<{
   routeName: string
+  data: ConnectionOverview | Error | undefined
 }>()
 </script>

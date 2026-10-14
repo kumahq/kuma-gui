@@ -7,7 +7,7 @@
       <XIcon
         class="mb-3"
         name="progress"
-        :color="KUI_COLOR_TEXT_NEUTRAL_WEAK"
+        :color="`var(--x-color-text-neutral-weak)`"
       />
     </template>
 
@@ -19,7 +19,7 @@
     v-else-if="props.variant === 'spinner'"
     name="progress"
     data-testid="spinner"
-    :color="KUI_COLOR_TEXT_NEUTRAL_WEAK"
+    :color="`var(--x-color-text-neutral-weak)`"
   />
   <KSkeleton
     v-else-if="props.variant === 'list'"
@@ -31,13 +31,34 @@
     data-testid="line-skeleton"
     width="10"
   />
+  <KSkeletonBox
+    v-else-if="props.variant === 'count'"
+    data-testid="value-skeleton"
+    width="1"
+  />
+  <XLayout
+    v-else-if="props.variant === 'header'"
+    variant="y-stack"
+    size="small"
+    class="header-skeleton"
+    data-testid="header-skeleton"
+  >
+    <KSkeletonBox
+      width="10"
+      height="2"
+    />
+  </XLayout>
 </template>
 <script lang="ts" setup>
-import { KUI_COLOR_TEXT_NEUTRAL_WEAK } from '@kong/design-tokens'
 import { KEmptyState } from '@kong/kongponents'
 const props = withDefaults(defineProps<{
-  variant?: 'list' | 'line' | 'spinner' | 'legacy'
+  variant?: 'list' | 'line' | 'spinner' | 'legacy' | 'header' | 'count'
 }>(), {
   variant: 'legacy',
 })
 </script>
+<style lang="scss" scoped>
+.header-skeleton > * {
+  display: flex;
+}
+</style>

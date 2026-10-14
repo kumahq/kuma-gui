@@ -9,13 +9,9 @@
     <AppView>
       <template #title>
         <h1>
-          <XCopyButton
-            :text="route.params.mesh"
-          >
-            <RouteTitle
-              :title="t('meshes.routes.item.title', { name: route.params.mesh })"
-            />
-          </XCopyButton>
+          <RouteTitle
+            :title="t('meshes.routes.item.title', { name: route.params.mesh })"
+          />
         </h1>
       </template>
       <template
@@ -43,7 +39,7 @@
         data-testid="mesh-tabs"
       >
         <template
-          v-for="{ name } in route.children.filter(({ name }) => name !== 'external-service-list-view')"
+          v-for="{ name } in route.children"
           :key="name"
           #[`${name}-tab`]
         >

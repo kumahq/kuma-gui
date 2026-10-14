@@ -1,7 +1,7 @@
 import Router from './Router'
 import SharedPool from './SharedPool'
 
-type EventSource = {
+export type EventSource = {
   configuration: object
   open: () => void
   close: () => void

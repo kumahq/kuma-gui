@@ -23,6 +23,7 @@ Feature: MeshExternalService summary
         body:
           items:
           - name: monitor-proxy-0.kuma-demo
+            kri: kri_extsvc_default__kuma-demo_monitor-proxy-0_
             labels:
               kuma.io/display-name: monitor-proxy-0
               k8s.kuma.io/namespace: kuma-demo
@@ -42,5 +43,5 @@ Feature: MeshExternalService summary
       And the "$structured-view" element exists
 
       Examples:
-        | URL                                                                       |
-        | /meshes/default/services/mesh-external-services/monitor-proxy-0.kuma-demo |
+        | URL                                                                                            |
+        | /meshes/default/services/mesh-external-services/kri_extsvc_default__kuma-demo_monitor-proxy-0_ |

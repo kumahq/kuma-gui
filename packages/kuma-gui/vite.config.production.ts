@@ -1,4 +1,4 @@
-import { replicateKumaServer, defineConfig as defineBaseConfig, yamlLoader, vuePluginConfig } from '@kumahq/config/vite'
+import { replicateKumaServer, defineConfig as defineBaseConfig, yamlLoader, playwrightBdd, vuePluginConfig } from '@kumahq/config/vite'
 import fakeApi from '@kumahq/fake-api/vite'
 import { fs, dependencies } from '@kumahq/kuma-http-api/mocks'
 import vue from '@vitejs/plugin-vue'
@@ -16,6 +16,7 @@ export const config: UserConfigFn = () => {
       svgLoader(),
       replicateKumaServer(),
       fakeApi({ dependencies, fs }),
+      playwrightBdd(),
     ],
     test: {
       setupFiles: [

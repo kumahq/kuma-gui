@@ -1,0 +1,16 @@
+get:
+  operationId: getMeshOverview
+  parameters:
+    - name: name
+      in: path
+      description: The name of the mesh to get the overview for.
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      $ref: '../components/responses/GetMeshOverviewResponse.yaml'
+    '400':
+      $ref: '../components/responses/BadRequest.yaml'
+    '500':
+      $ref: '../components/responses/Internal.yaml'

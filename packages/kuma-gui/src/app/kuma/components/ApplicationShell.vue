@@ -16,13 +16,14 @@
             <slot name="home" />
           </XAction>
 
-          <GithubButton
+          <a
+            ref="gh"
+            aria-label="Star kumahq/kuma on GitHub"
             class="gh-star"
             href="https://github.com/kumahq/kuma"
-            aria-label="Star kumahq/kuma on GitHub"
           >
             Star
-          </GithubButton>
+          </a>
 
           <div class="upgrade-check-wrapper">
             <DataSource
@@ -37,7 +38,7 @@
                 appearance="info"
               >
                 <XLayout
-                  type="separated"
+                  variant="action-group"
                 >
                   <p>
                     {{ t('common.product.name') }} update available
@@ -137,11 +138,15 @@
           </ul>
         </nav>
       </div>
-      <main
-        class="app-main-content"
-      >
+      <main>
+        <div class="drawer">
+          <XTeleportSlot
+            name="drawer-layer"
+          />
+        </div>
         <XLayout
-          type="stack"
+          variant="y-stack"
+          class="app-main-content"
         >
           <div>
             <slot name="default" />
@@ -152,7 +157,9 @@
   </div>
 </template>
 <script lang="ts" setup>
-import GithubButton from 'vue-github-button'
+import { render } from 'github-buttons'
+import { useTemplateRef, onMounted } from 'vue'
+
 
 import { useEnv, useI18n } from '@/app/application'
 
@@ -161,37 +168,42 @@ const slots = defineSlots()
 const env = useEnv()
 const { t } = useI18n()
 
-</script>
-<style lang="scss">
-html.is-fullscreen {
-  .application-shell > header {
-    display: none;
-  }
-  .application-shell > .app-content-container > nav {
-    display: none;
-  }
-  .application-shell > .app-content-container > .app-notifications {
-    display: none;
-  }
-}
-html.no-navigation {
-  .application-shell > .app-content-container .app-sidebar > nav {
-    display: none;
-  }
-}
-</style>
+const gh = useTemplateRef<HTMLAnchorElement>('gh')
 
+onMounted(() => {
+  const $gh = gh.value
+  if($gh) {
+    render($gh, (el) => $gh.parentNode?.replaceChild(el, $gh))
+  }
+})
+
+</script>
 <style lang="scss" scoped>
+.application-shell {
+  --kuma-app-top: 60px;
+  --x-drawer-offset-top: var(--kuma-app-top);
+
+  --AppSidebarWidth: 240px;
+  --AppContentPadding: var(--x-space-80);
+
+}
 .app-content-container {
-  padding-top: var(--AppHeaderHeight, initial);
-  display: var(--AppDisplay);
+  display: grid;
+  padding-top: var(--kuma-app-top, initial);
   // Note: `minmax(0, 1fr)` is used because `1fr` implies `minmax(auto, 1fr)` which will allow grid items to grow beyond their container's size.
   grid-template-columns: var(--AppSidebarWidth) minmax(0, 1fr);
 }
+.drawer {
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+}
 
+main {
+  min-height: calc(100vh - var(--kuma-app-top));
+}
 .app-main-content {
   padding: var(--AppContentPadding);
-  min-height: calc(100vh - var(--AppHeaderHeight));
 }
 
 header {
@@ -200,21 +212,21 @@ header {
   top: 0;
   left: 0;
   width: 100%;
-  height: var(--AppHeaderHeight);
+  height: var(--kuma-app-top);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: $kui-space-80;
-  padding-right: $kui-space-80;
-  padding-left: $kui-space-80;
-  border-bottom: $kui-border-width-10 solid $kui-color-border;
-  background-color: $kui-color-background;
+  gap: var(--x-space-80);
+  padding-right: var(--x-space-80);
+  padding-left: var(--x-space-80);
+  border-bottom: var(--x-border-width-10) solid var(--x-color-border);
+  background-color: var(--x-color-background);
 }
 
 .horizontal-list {
   display: flex;
   align-items: center;
-  gap: $kui-space-80;
+  gap: var(--x-space-80);
 }
 // This wrapping element is necessary. It ensures that the sidebar can participate in a grid or flex container.
 .app-sidebar {
@@ -226,43 +238,43 @@ nav {
   padding: 0;
   width: var(--AppSidebarWidth);
   z-index: 10;
-  top: var(--AppHeaderHeight);
+  top: var(--kuma-app-top);
   bottom: 0;
   left: 0;
   overflow-y: auto;
-  padding: $kui-space-40 $kui-space-40 $kui-space-80 $kui-space-40;
-  border-right: $kui-border-width-10 solid $kui-color-border;
-  background-color:  $kui-color-background;
+  padding: var(--x-space-40) var(--x-space-40) var(--x-space-80) var(--x-space-40);
+  border-right: var(--x-border-width-10) solid var(--x-color-border);
+  background-color:  var(--x-color-background);
   display: flex;
   flex-flow: column nowrap;
 }
 
 .navigation-separator {
-  width: calc(100% - 2 * $kui-space-40);
-  margin: $kui-space-80 $kui-space-40;
+  width: calc(100% - 2 * var(--x-space-40));
+  margin: var(--x-space-80) var(--x-space-40);
   height: 1px;
-  background-color: $kui-color-border;
+  background-color: var(--x-color-border);
 }
 
 nav ul {
   list-style-type: none;
-  padding: unset;
-  margin: unset;
+  padding: 0 !important;
+  margin: 0 !important;
 }
 nav :deep(.app-navigator) + .app-navigator {
-  margin-top: $kui-space-20;
+  margin-top: var(--x-space-20);
 }
 nav :deep(.app-navigator) > a {
   width: 100%;
   display: inline-block;
-  padding: $kui-space-40 $kui-space-60 $kui-space-40 $kui-space-70;
+  padding: var(--x-space-40) var(--x-space-60) var(--x-space-40) var(--x-space-70);
   border-radius: 5px;
   text-decoration: none;
   color: currentColor;
-  font-size: $kui-font-size-40;
+  font-size: var(--x-font-size-40);
   &:hover,
   &:is(.is-active) {
-    background-color: $kui-color-background-neutral-weaker;
+    background-color: var(--x-color-background-neutral-weaker);
   }
 }
 
@@ -271,7 +283,7 @@ nav :deep(.app-navigator) > a {
 }
 .app-status {
   margin-top: 0;
-  color: $kui-color-text-neutral;
+  color: var(--x-color-text-neutral);
 }
 .app-status--desktop {
   display: none;
@@ -294,14 +306,14 @@ nav :deep(.app-navigator) > a {
   }
   .upgrade-alert {
     // Uses smaller paddings for this particular alert.
-    padding: $kui-space-20 $kui-space-40;
-    font-size: $kui-font-size-30;
+    padding: var(--x-space-20) var(--x-space-40);
+    font-size: var(--x-font-size-30);
   }
 
   .upgrade-alert {
     display: flex;
     align-items: center;
-    gap: $kui-space-50;
+    gap: var(--x-space-50);
   }
 }
 </style>

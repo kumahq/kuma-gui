@@ -35,13 +35,7 @@
                 v-icon-start="'workload'"
               >
                 <XAction
-                  :to="{
-                    name: 'workload-detail-view',
-                    params: {
-                      mesh: route.params.mesh,
-                      wl: route.params.wl,
-                    },
-                  }"
+                  :href="`kri://${route.params.wl}`"
                 >
                   <RouteTitle
                     :title="t('workloads.routes.item.title', { name: data.name })"
@@ -50,8 +44,7 @@
               </h2>
             </template>
             <XLayout
-              type="separated"
-              justify="end"
+              variant="action-group"
             >
               <div
                 v-for="options in [['universal', 'k8s']]"
@@ -83,10 +76,10 @@
             </template>
             <template v-else>
               <DataLoader
-                :src="uri(sources, '/workloads/:wl/as/kubernetes', {
-                  wl: route.params.wl,
+                :src="uri(sources, '/workloads/:kri/as/kubernetes', {
+                  kri: route.params.wl,
                 })"
-                v-slot="{ data: k8sYaml }"
+                v-slot="{ data: [k8sYaml] }"
               >
                 <XCodeBlock
                   language="yaml"

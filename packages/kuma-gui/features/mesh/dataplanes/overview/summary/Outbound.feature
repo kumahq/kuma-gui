@@ -2,28 +2,35 @@ Feature: mesh / dataplanes / overview / summary / Outbound
 
   Background:
     Given the CSS selectors
-      | Alias                   | Selector                                         |
-      | summary                 | [data-testid='slideout-container']               |
-      | outbound-policies-rules | $summary [data-testid='outbound-policies-rules'] |
-      | outbound-policies-rule  | $outbound-policies-rules li:first-of-type        |
+      | Alias                   | Selector                                                 |
+      | summary                 | [data-testid='slideout-container']                       |
+      | outbound-policies-rules | $summary [data-testid='outbound-policies-rules']         |
+      | outbound-policies-rule  | $outbound-policies-rules li.accordion-item:first-of-type |
     And the environment
       """
-      KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: true
       KUMA_MESHSERVICE_MODE: Exclusive
       KUMA_DATAPLANE_TYPE: standard
       """
+    And the URL "/_kri/kri_dp_default_zone-1_kuma-demo_service-less_" responds with
+      """
+      body:
+        name: service-less.kuma-demo
+        kri: kri_dp_default_zone-1_kuma-demo_service-less_
+        labels:
+          kuma.io/display-name: service-less
+      """
 
   Scenario: Outbound summary overview shows expected content
-    Given the URL "/meshes/default/dataplanes/service-less/_layout" responds with
+    Given the URL "/meshes/default/dataplanes/service-less.kuma-demo/_layout" responds with
       """
       body:
         outbounds:
-          - kri: kri_dp_default_numeric_kuma-system_service-less_httpport
+          - kri: kri_dp_default_numeric_kuma-demo_service-less_httpport
             port: 12345
             protocol: http
-            proxyResourceName: kri_dp_default_numeric_kuma-system_service-less_httpport
+            proxyResourceName: kri_dp_default_numeric_kuma-demo_service-less_httpport
       """
-    And the URL "/meshes/default/dataplanes/service-less/_outbounds/kri_dp_default_numeric_kuma-system_service-less_httpport/_policies" responds with
+    And the URL "/meshes/default/dataplanes/service-less.kuma-demo/_outbounds/kri_dp_default_numeric_kuma-demo_service-less_httpport/_policies" responds with
       """
       body:
         policies:
@@ -35,12 +42,12 @@ Feature: mesh / dataplanes / overview / summary / Outbound
             origins:
               - kri: kri_mfi_default_pigsty_jury_innovation_appliance
       """
-    When I visit the "/meshes/default/data-planes/service-less/overview/outbound/kri_dp_default_numeric_kuma-system_service-less_httpport/overview" URL
+    When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_service-less_/overview/outbound/kri_dp_default_numeric_kuma-demo_service-less_httpport/overview" URL
     And the "$summary" element exists
     And the "$summary" element contains "Outbound service-less"
     And the "$summary" element contains "HTTP"
     And the "$outbound-policies-rule" element contains "MeshFaultInjection"
-    And the "$outbound-policies-rule" element contains "kri_mfi_default_pigsty_jury_innovation_appliance"
+    And the "$outbound-policies-rule li:first-of-type" element contains "kri_mfi_default_pigsty_jury_innovation_appliance"
     And the "$outbound-policies-rule [data-testid='k-code-block']" element exists
 
   Scenario: Clicking on origin leads to policy detail view
@@ -48,16 +55,16 @@ Feature: mesh / dataplanes / overview / summary / Outbound
       """
       KUMA_DATAPLANE_RULE_COUNT: 1
       """
-    And the URL "/meshes/default/dataplanes/service-less/_layout" responds with
+    And the URL "/meshes/default/dataplanes/service-less.kuma-demo/_layout" responds with
       """
       body:
         outbounds:
-          - kri: kri_dp_default_numeric_kuma-system_service-less_httpport
+          - kri: kri_dp_default_numeric_kuma-demo_service-less_httpport
             port: 12345
             protocol: http
-            proxyResourceName: kri_dp_default_numeric_kuma-system_service-less_httpport
+            proxyResourceName: kri_dp_default_numeric_kuma-demo_service-less_httpport
       """
-    And the URL "/meshes/default/dataplanes/service-less/_outbounds/kri_dp_default_numeric_kuma-system_service-less_httpport/_policies" responds with
+    And the URL "/meshes/default/dataplanes/service-less.kuma-demo/_outbounds/kri_dp_default_numeric_kuma-demo_service-less_httpport/_policies" responds with
       """
       body:
         policies:
@@ -65,6 +72,6 @@ Feature: mesh / dataplanes / overview / summary / Outbound
             origins:
               - kri: kri_mfi_default_pigsty_jury_the-policy-name_appliance
       """
-    When I visit the "/meshes/default/data-planes/service-less/overview/outbound/kri_dp_default_numeric_kuma-system_service-less_httpport/overview" URL
+    When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_service-less_/overview/outbound/kri_dp_default_numeric_kuma-demo_service-less_httpport/overview" URL
     Then I click on the "$outbound-policies-rule ul:first-of-type li:first-of-type a:first-of-type" element
-    Then the URL contains "/gui/meshes/default/policies/meshfaultinjections/kri_mfi_default_pigsty_jury_the-policy-name_appliance/overview/overview"
+    Then the URL contains "/gui/meshes/default/policies/kri_mfi_default_pigsty_jury_the-policy-name_appliance/overview"

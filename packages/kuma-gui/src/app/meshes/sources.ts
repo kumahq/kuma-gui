@@ -2,13 +2,16 @@ import createClient from 'openapi-fetch'
 
 import { Mesh, MeshInsight } from './data'
 import { defineSources } from '@/app/application'
-import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import type { paths } from '@kumahq/kuma-http-api'
 
-export const sources = (api: KumaApi) => {
+type Options = {
+  baseUrl: string
+  fetch: typeof fetch
+}
+export const sources = ({ baseUrl, fetch }: Options) => {
   const http = createClient<paths>({
-    baseUrl: '',
-    fetch: api.client.fetch,
+    baseUrl,
+    fetch,
   })
   return defineSources({
     '/meshes/:name': async (params) => {
@@ -43,7 +46,7 @@ export const sources = (api: KumaApi) => {
 
     '/mesh-insights': async (params) => {
       const { size } = params
-      const offset = params.size * (params.page - 1)
+      const offset = String(params.size * (params.page - 1))
       const search = MeshInsight.search(params.search)
 
       const res = await http.GET('/mesh-insights', {

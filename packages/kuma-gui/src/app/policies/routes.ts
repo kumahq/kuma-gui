@@ -4,7 +4,7 @@ export const routes = () => {
   const item = (): RouteRecordRaw[] => {
     return [
       {
-        path: 'policies/:policyPath/:policy/overview',
+        path: 'policies/:policy',
         name: 'policy-detail-tabs-view',
         component: () => import('@/app/policies/views/PolicyDetailTabsView.vue'),
         children: [

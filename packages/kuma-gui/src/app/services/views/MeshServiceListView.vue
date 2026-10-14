@@ -5,7 +5,7 @@
       page: 1,
       size: Number,
       mesh: '',
-      service: '',
+      kri: '',
       s: '',
     }"
     v-slot="{ route, t, can, uri, me }"
@@ -18,13 +18,12 @@
       :docs="t('services.mesh-service.href.docs')"
     >
       <XCard>
-        <XLayout>
+        <XLayout variant="y-stack">
           <search>
             <form
               @submit.prevent
             >
               <XSearch
-                class="search-field"
                 :keys="['name', 'namespace', ...(can('use zones') ? ['zone'] : []), 'label']"
                 :value="route.params.s"
                 @change="(s) => route.update({ s })"
@@ -40,7 +39,7 @@
               search: route.params.s,
             })"
             variant="list"
-            v-slot="{ data }"
+            v-slot="{ data: [data] }"
           >
             <DataCollection
               type="services"
@@ -62,7 +61,7 @@
                   { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
                 ]"
                 :items="data.items"
-                :is-selected-row="(item) => item.name === route.params.service"
+                :is-selected-row="(item) => item.kri === route.params.kri"
                 @resize="me.set"
               >
                 <template #name="{ row: item }">
@@ -74,8 +73,7 @@
                       :to="{
                         name: 'mesh-service-summary-view',
                         params: {
-                          mesh: item.mesh,
-                          service: item.id,
+                          kri: item.kri,
                         },
                         query: {
                           page: route.params.page,
@@ -96,12 +94,7 @@
                 <template #zone="{ row: item }">
                   <template v-if="item.zone">
                     <XAction
-                      :to="{
-                        name: 'zone-cp-detail-view',
-                        params: {
-                          zone: item.zone,
-                        },
-                      }"
+                      :href="`kri://${Kri.toString({ shortName: 'z', name: item.zone })}`"
                     >
                       {{ item.zone }}
                     </XAction>
@@ -129,7 +122,7 @@
                   #ports="{ row: item }"
                 >
                   <XLayout
-                    type="separated"
+                    variant="separated"
                     truncate
                   >
                     <KumaPort
@@ -149,7 +142,7 @@
                         name: 'mesh-service-detail-view',
                         params: {
                           mesh: item.mesh,
-                          service: item.id,
+                          kri: item.kri,
                         },
                       }"
                     >
@@ -159,7 +152,7 @@
                 </template>
               </AppCollection>
               <RouterView
-                v-if="data.items && route.params.service"
+                v-if="route.params.kri"
                 v-slot="child"
               >
                 <XDrawer
@@ -192,9 +185,5 @@
 <script lang="ts" setup>
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
+import { Kri } from '@/app/kuma'
 </script>
-<style lang="scss" scoped>
-.search-field {
-  width: 100%;
-}
-</style>

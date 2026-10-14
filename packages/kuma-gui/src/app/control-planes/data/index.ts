@@ -1,39 +1,35 @@
-import { type paths } from '@kumahq/kuma-http-api'
+import type { paths } from '@kumahq/kuma-http-api'
 
-import type { Config as PartialControlPlaneConfig } from '@/types/config.d'
-
-export type ControlPlaneConfig = PartialControlPlaneConfig
-export type PartialGlobalInsight = paths['/global-insight']['get']['responses']['200']['content']['application/json']
-
-export const ControlPlaneConfig = {
-  fromObject(partialControlPlaneConfig: PartialControlPlaneConfig): ControlPlaneConfig {
-    return partialControlPlaneConfig
-  },
-}
+type KumaGlobalInsight = paths['/global-insight']['get']['responses']['200']['content']['application/json']
 
 export const GlobalInsight = {
-  fromObject(partialGlobalInsight: PartialGlobalInsight) {
+  fromObject(item: KumaGlobalInsight) {
     return {
-      ...partialGlobalInsight,
-      resources: {
-        ...partialGlobalInsight.resources,
-        MeshService: {
-          ...partialGlobalInsight.resources.MeshService,
-          total: partialGlobalInsight.resources.MeshService?.total ?? 0,
-        },
-        MeshMultiZoneService: {
-          ...partialGlobalInsight.resources.MeshMultiZoneService,
-          total: partialGlobalInsight.resources.MeshMultiZoneService?.total ?? 0,
-        },
-        MeshExternalService: {
-          ...partialGlobalInsight.resources.MeshExternalService,
-          total: partialGlobalInsight.resources.MeshExternalService?.total ?? 0,
-        },
+      ...item,
+      dataplanes: {
+        ...item.dataplanes,
+        ...('standard' in item.dataplanes ? item.dataplanes.standard as Omit<typeof item.dataplanes, 'standard'> : {}),
       },
+      resources: (() => {
+        const resources = {
+          ...item.resources,
+          MeshService: {
+            ...item.resources.MeshService,
+            total: item.resources.MeshService?.total ?? 0,
+          },
+          MeshMultiZoneService: {
+            ...item.resources.MeshMultiZoneService,
+            total: item.resources.MeshMultiZoneService?.total ?? 0,
+          },
+          MeshExternalService: {
+            ...item.resources.MeshExternalService,
+            total: item.resources.MeshExternalService?.total ?? 0,
+          },
+        }
+        return resources as KumaGlobalInsight['resources'] & typeof resources
+      })(),
     }
   },
 }
 
-export type GlobalInsight = ReturnType<typeof GlobalInsight.fromObject> & {
-  resources: PartialGlobalInsight['resources']
-}
+export type GlobalInsight = ReturnType<typeof GlobalInsight.fromObject>

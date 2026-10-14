@@ -1,25 +1,28 @@
 import { get } from '@/app/application'
+import { Kri } from '@/app/kuma/kri'
 import { Resource } from '@/app/resources/data/Resource'
-import { Subscription, SubscriptionCollection } from '@/app/subscriptions/data'
+import { SubscriptionCollection } from '@/app/subscriptions/data'
 import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
-import type {
-  ZoneOverview as PartialZoneOverview,
-  ZoneInsight as PartialZoneInsight,
-  Zone as PartialZone,
-  KDSSubscription as PartialKDSSubscription,
-} from '@/types/index.d'
+import type { components } from '@kumahq/kuma-http-api'
 
-export type KDSSubscription = PartialKDSSubscription
+type KumaZoneOverview = components['schemas']['ZoneOverviewWithMeta'] & {
+  // TODO: move to overlays
+  creationTime?: string
+  modificationTime?: string
+}
+type KumaZoneInsight = NonNullable<KumaZoneOverview['zoneInsight']>
+type KumaZone = NonNullable<KumaZoneOverview['zone']>
+
+export type KDSSubscription = NonNullable<KumaZoneInsight['subscriptions']>[number]
 
 type KDSSubscriptionCollection = {
   config: Record<string, unknown>
 } & SubscriptionCollection
 
 export const Zone = {
-  fromObject: (item: PartialZone) => {
+  fromObject: (item?: KumaZone) => {
     return {
-      ...item,
-      enabled: !(item.enabled === false),
+      enabled: !(item?.enabled === false),
     }
   },
 }
@@ -28,15 +31,6 @@ export type Zone = ReturnType<typeof Zone.fromObject>
 const KDSSubscriptionCollection = {
   fromArray: (items?: KDSSubscription[]) => {
     const collection = SubscriptionCollection.fromArray(items)
-    const subscriptions = collection.subscriptions.map((sub) => {
-      return {
-        ...sub,
-        instance: {
-          id: sub.zoneInstanceId ?? '',
-          version: sub.version?.kumaCp?.version ?? '',
-        },
-      } satisfies Subscription
-    })
     // find the first subscription in the list for a config
     // if its valid JSON and is not null, turn it into an object
     const config: Record<string, unknown> = (() => {
@@ -54,14 +48,13 @@ const KDSSubscriptionCollection = {
     })()
     return {
       ...collection,
-      subscriptions,
       config,
     }
   },
 }
 
 export const ZoneInsight = {
-  fromObject: (item?: PartialZoneInsight) => {
+  fromObject: (item?: KumaZoneInsight) => {
     const subs = KDSSubscriptionCollection.fromArray(item?.subscriptions)
     return {
       ...item,
@@ -82,7 +75,16 @@ export const ZoneOverview = {
     return Resource.search(query)
   },
 
-  fromObject: (item: PartialZoneOverview) => {
+  fromObject: (item: KumaZoneOverview) => {
+
+    const labels = item.labels ?? {}
+    const id = item.name
+
+    const name = labels['kuma.io/display-name'] ?? item.name
+
+    // temporarily make a KRI until we have those from the backend
+    const kri = item.kri ?? Kri.toString({ shortName: 'z', mesh: '', zone: '', namespace: '', name })
+
     const insight = ZoneInsight.fromObject(item.zoneInsight)
     const zone = Zone.fromObject(item.zone)
     const state = {
@@ -92,15 +94,21 @@ export const ZoneOverview = {
     } as const
     return {
       ...item,
-      id: item.name,
-      labels: item.labels ?? {},
+      kri,
+      name,
+      labels,
+      creationTime: item.creationTime ?? '',
+      modificationTime: item.modificationTime ?? '',
+      // aliases
+      id,
+
       zoneInsight: insight,
       zone,
       // first check see if the zone is disabled, if not look for the connectedSubscription
       state: !zone.enabled ? state.disabled : typeof insight.connectedSubscription !== 'undefined' ? state.online : state.offline,
     }
   },
-  fromCollection: (collection: CollectionResponse<PartialZoneOverview>) => {
+  fromCollection: (collection: CollectionResponse<KumaZoneOverview>) => {
     const items = Array.isArray(collection.items) ? collection.items.map(ZoneOverview.fromObject) : []
     return {
       ...collection,

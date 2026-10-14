@@ -42,19 +42,6 @@ describe('Dataplane', () => {
         expect(actual.networking.inbounds).toBeDefined()
       },
     )
-    test(
-      'dataplane.networking.inbound.service is set',
-      async ({ fixture }) => {
-        const actual = await fixture.setup((item) => {
-          return item
-        }, {
-          env: {
-            KUMA_DATAPLANEINBOUND_COUNT: '1',
-          },
-        })
-        expect(actual.networking.inbounds[0].service).toStrictEqual(actual.networking.inbounds[0].tags['kuma.io/service'])
-      },
-    )
   })
   describe('dataplane.networking.outbounds', () => {
     test(
@@ -84,7 +71,8 @@ describe('DataplaneOverview', () => {
       async ({ fixture }) => {
         const actual = await fixture.setup((item) => {
           if (typeof item.labels !== 'undefined') {
-            delete item.labels
+            // labels is required by the schema, but older control planes can omit it
+            delete (item as Partial<typeof item>).labels
           }
           return item
         }, {
@@ -121,9 +109,11 @@ describe('DataplaneOverview', () => {
       async ({ fixture }) => {
         expect.assertions(2)
         const actual = await fixture.setup((item) => {
-          if (typeof item.dataplane.networking.gateway !== 'undefined') {
-            delete item.dataplane.networking.gateway.type
-            expect(item.dataplane.networking.gateway.type).toBeUndefined()
+          if ('gateway' in (item.dataplane?.networking ?? {})) {
+            // `gateway` isn't modelled in the OAS schema for networking, so cast around it
+            const gateway = (item.dataplane!.networking as { gateway: { type?: string } }).gateway
+            delete gateway.type
+            expect(gateway.type).toBeUndefined()
           }
           return item
         }, {
@@ -148,33 +138,33 @@ describe('DataplaneOverview', () => {
       },
     )
     test(
-      'no subscriptions, connectedSubscription remains undefined, status = offline',
+      'no subscriptions, connectedSubscription remains undefined, status = disconnected_cp',
       async ({ fixture }) => {
         const actual = await fixture.setup((item) => {
           if (typeof item.dataplaneInsight !== 'undefined') {
             item.dataplaneInsight.subscriptions = []
           }
-          item.dataplane.networking.inbound = []
+          item.dataplane!.networking!.inbound = []
           return item
         })
         expect(actual.dataplaneInsight.subscriptions.length).toStrictEqual(0)
         expect(actual.dataplaneInsight.connectedSubscription).toBeUndefined()
-        expect(actual.status).toStrictEqual('offline')
+        expect(actual.status).toStrictEqual('disconnected_cp')
       },
     )
     test(
-      'all disconnected subscriptions, connectedSubscription remains undefined, status = offline',
+      'all disconnected subscriptions, connectedSubscription remains undefined, status = disconnected_cp',
       async ({ fixture }) => {
         const actual = await fixture.setup((item) => {
           if (typeof item.dataplaneInsight !== 'undefined') {
-            item.dataplaneInsight.subscriptions.forEach((item) => {
+            item.dataplaneInsight.subscriptions!.forEach((item) => {
               item.connectTime = '2021-02-19T07:06:16.384057Z'
               item.disconnectTime = '2021-03-19T07:06:16.384057Z'
             })
           }
           // take inbounds out of the equation
-          if (item.dataplane.networking.inbound?.length === 1) {
-            item.dataplane.networking.inbound[0].state = 'Ready'
+          if (item.dataplane!.networking!.inbound?.length === 1) {
+            item.dataplane!.networking!.inbound[0].state = 'Ready'
           }
           return item
         }, {
@@ -185,7 +175,7 @@ describe('DataplaneOverview', () => {
         })
         expect(actual.dataplaneInsight.subscriptions.length).toStrictEqual(10)
         expect(actual.dataplaneInsight.connectedSubscription).toBeUndefined()
-        expect(actual.status).toStrictEqual('offline')
+        expect(actual.status).toStrictEqual('disconnected_cp')
       },
     )
     test(
@@ -193,7 +183,7 @@ describe('DataplaneOverview', () => {
       async ({ fixture }) => {
         const actual = await fixture.setup((item) => {
           if (typeof item.dataplaneInsight !== 'undefined') {
-            item.dataplaneInsight.subscriptions.forEach((item, i) => {
+            item.dataplaneInsight.subscriptions!.forEach((item, i) => {
               item.connectTime = '2021-02-19T07:06:16.384057Z'
               item.disconnectTime = '2021-03-19T07:06:16.384057Z'
               if (i === 5) {
@@ -202,8 +192,8 @@ describe('DataplaneOverview', () => {
             })
           }
           // take inbounds out of the equation
-          if (item.dataplane.networking.inbound?.length === 1) {
-            item.dataplane.networking.inbound[0].state = 'Ready'
+          if (item.dataplane!.networking!.inbound?.length === 1) {
+            item.dataplane!.networking!.inbound[0].state = 'Ready'
           }
           return item
         }, {
@@ -222,7 +212,7 @@ describe('DataplaneOverview', () => {
       async ({ fixture }) => {
         const actual = await fixture.setup((item) => {
           if (typeof item.dataplaneInsight !== 'undefined') {
-            item.dataplaneInsight.subscriptions.forEach((item, i) => {
+            item.dataplaneInsight.subscriptions!.forEach((item, i) => {
               item.connectTime = '2021-02-19T07:06:16.384057Z'
               item.disconnectTime = '2021-03-19T07:06:16.384057Z'
               if (i === 5) {
@@ -230,9 +220,9 @@ describe('DataplaneOverview', () => {
               }
             })
           }
-          if (item.dataplane.networking.inbound?.length === 2) {
-            item.dataplane.networking.inbound[0].state = 'Ready'
-            item.dataplane.networking.inbound[1].state = 'NotReady'
+          if (item.dataplane!.networking!.inbound?.length === 2) {
+            item.dataplane!.networking!.inbound[0].state = 'Ready'
+            item.dataplane!.networking!.inbound[1].state = 'NotReady'
           }
           return item
         }, {
@@ -251,7 +241,7 @@ describe('DataplaneOverview', () => {
       async ({ fixture }) => {
         const actual = await fixture.setup((item) => {
           if (typeof item.dataplaneInsight !== 'undefined') {
-            item.dataplaneInsight.subscriptions.forEach((item, i) => {
+            item.dataplaneInsight.subscriptions!.forEach((item, i) => {
               item.connectTime = '2021-02-19T07:06:16.384057Z'
               item.disconnectTime = '2021-03-19T07:06:16.384057Z'
               if (i === 5) {
@@ -259,9 +249,9 @@ describe('DataplaneOverview', () => {
               }
             })
           }
-          if (item.dataplane.networking.inbound?.length === 2) {
-            item.dataplane.networking.inbound[0].state = 'NotReady'
-            item.dataplane.networking.inbound[1].state = 'NotReady'
+          if (item.dataplane!.networking!.inbound?.length === 2) {
+            item.dataplane!.networking!.inbound[0].state = 'NotReady'
+            item.dataplane!.networking!.inbound[1].state = 'NotReady'
           }
           return item
         }, {
@@ -280,7 +270,7 @@ describe('DataplaneOverview', () => {
       async ({ fixture }) => {
         const actual = await fixture.setup((item) => {
           if (typeof item.dataplaneInsight !== 'undefined') {
-            item.dataplaneInsight.subscriptions.forEach((item, i) => {
+            item.dataplaneInsight.subscriptions!.forEach((item, i) => {
               item.connectTime = '2021-02-19T07:06:16.384057Z'
               item.disconnectTime = '2021-03-19T07:06:16.384057Z'
               if (i === 5) {
@@ -288,9 +278,9 @@ describe('DataplaneOverview', () => {
               }
             })
           }
-          if (item.dataplane.networking.inbound?.length === 2) {
-            item.dataplane.networking.inbound[0].state = 'NotReady'
-            item.dataplane.networking.inbound[1].state = 'NotReady'
+          if (item.dataplane!.networking!.inbound?.length === 2) {
+            item.dataplane!.networking!.inbound[0].state = 'NotReady'
+            item.dataplane!.networking!.inbound[1].state = 'NotReady'
           }
           return item
         }, {
@@ -310,7 +300,7 @@ describe('DataplaneOverview', () => {
       async ({ fixture }) => {
         const actual = await fixture.setup((item) => {
           if (typeof item.dataplaneInsight !== 'undefined') {
-            item.dataplaneInsight.subscriptions.forEach((item, i) => {
+            item.dataplaneInsight.subscriptions!.forEach((item, i) => {
               item.connectTime = '2021-02-19T07:06:16.384057Z'
               item.disconnectTime = '2021-03-19T07:06:16.384057Z'
               if (i === 5) {
@@ -318,9 +308,9 @@ describe('DataplaneOverview', () => {
               }
             })
           }
-          if (item.dataplane.networking.inbound?.length === 2) {
-            item.dataplane.networking.inbound[0].state = 'NotReady'
-            item.dataplane.networking.inbound[1].state = 'NotReady'
+          if (item.dataplane!.networking!.inbound?.length === 2) {
+            item.dataplane!.networking!.inbound[0].state = 'NotReady'
+            item.dataplane!.networking!.inbound[1].state = 'NotReady'
           }
           return item
         }, {
@@ -341,12 +331,18 @@ describe('DataplaneOverview', () => {
       "if state isn't set we default it to Ready",
       async ({ fixture }) => {
         const actual = await fixture.setup((item) => {
-          if (item.dataplane.networking.inbound?.length === 1) {
-            item.dataplane.networking.inbound[0] = {
-              port: 1,
-              tags: {
-                'kuma.io/service': 'service-name',
-              },
+          const inboundList = item.dataplane!.networking!.inbound
+          if (inboundList?.length === 1) {
+            type Inbound = NonNullable<typeof inboundList>[number] & {
+              tags: Record<string, string>
+            }
+            const { state: _, ...inbound } = inboundList[0] as Inbound
+            inbound.port = 1
+            inbound.tags = {
+              'kuma.io/service': 'service-name',
+            }
+            inboundList[0] = {
+              ...inbound,
             }
           }
           return item
@@ -362,8 +358,8 @@ describe('DataplaneOverview', () => {
       "if state is set we don't overwrite it",
       async ({ fixture }) => {
         const actual = await fixture.setup((item) => {
-          if (item.dataplane.networking.inbound?.length === 1) {
-            item.dataplane.networking.inbound[0].state = 'NotReady'
+          if (item.dataplane!.networking!.inbound?.length === 1) {
+            item.dataplane!.networking!.inbound[0].state = 'NotReady'
           }
           return item
         }, {
@@ -377,12 +373,16 @@ describe('DataplaneOverview', () => {
   })
   describe('dataplane.config', () => {
     test(
-      'config is derived from Dataplane and based on DataplaneOverview data',
+      'config (used for display) contains the correct fields, no more, no less',
       async ({ fixture }) => {
         const expected = {
           type: 'Dataplane',
           name: 'dp-name',
           mesh: 'dp-mesh',
+          kri: 'kri_dp_dp-mesh___dp-name_',
+          labels: {
+            'kuma.io/display-name': 'dp-name',
+          },
           creationTime: '2021-02-19T07:06:16.384057Z',
           modificationTime: '2021-02-29T07:06:00.00Z',
           networking: {
@@ -397,14 +397,126 @@ describe('DataplaneOverview', () => {
         const actual = await fixture.setup((item) => {
           item.name = expected.name
           item.mesh = expected.mesh
-          item.creationTime = expected.creationTime
-          item.modificationTime = expected.modificationTime
-          item.dataplane.networking = expected.networking
+          item.kri = expected.kri
+          // creationTime/modificationTime aren't yet in the OAS schema
+          ;(item as typeof item & { creationTime?: string, modificationTime?: string }).creationTime = expected.creationTime
+          ;(item as typeof item & { creationTime?: string, modificationTime?: string }).modificationTime = expected.modificationTime
+          item.dataplane!.networking = expected.networking
+          item.labels = {
+            'kuma.io/display-name': 'dp-name',
+          }
 
           return item
         })
 
         expect(actual.config).toStrictEqual(expected)
       })
+  })
+  describe('status', () => {
+    test('variations of connection, inbounds and listeners', async ({ fixture }) => {
+      ([
+        {
+          inbounds: [],
+          listeners: [],
+          subscriptions: [{ connectTime: '2021-02-19T10:00:00Z' }],
+          status: 'online',
+        },
+        {
+          inbounds: [{ state: 'Ready' }],
+          listeners: [],
+          subscriptions: [{ connectTime: '2021-02-19T10:00:00Z' }],
+          status: 'online',
+        },
+        {
+          inbounds: [],
+          listeners: [{ state: 'Ready' }],
+          subscriptions: [{ connectTime: '2021-02-19T10:00:00Z' }],
+          status: 'online',
+        },
+        {
+          inbounds: [{ state: 'NotReady' }],
+          listeners: [],
+          subscriptions: [{ connectTime: '2021-02-19T10:00:00Z' }],
+          status: 'offline',
+        },
+        {
+          inbounds: [],
+          listeners: [{ state: 'NotReady' }],
+          subscriptions: [{ connectTime: '2021-02-19T10:00:00Z' }],
+          status: 'offline',
+        },
+        {
+          inbounds: [{ state: 'Ready' }, { state: 'NotReady' }],
+          listeners: [],
+          subscriptions: [{ connectTime: '2021-02-19T10:00:00Z' }],
+          status: 'partially_degraded',
+        },
+        {
+          inbounds: [],
+          listeners: [{ state: 'Ready' }, { state: 'NotReady' }],
+          subscriptions: [{ connectTime: '2021-02-19T10:00:00Z' }],
+          status: 'partially_degraded',
+        },
+        {
+          inbounds: [{ state: 'Ready' } , { state: 'NotReady' }],
+          listeners: [{ state: 'Ready' }, { state: 'NotReady' }],
+          subscriptions: [{ connectTime: '2021-02-19T10:00:00Z' }],
+          status: 'partially_degraded',
+        },
+        {
+          inbounds: [],
+          listeners: [],
+          subscriptions: [{ connectTime: '2021-02-19T10:00:00Z', disconnectTime: '2021-02-19T11:00:00Z' }],
+          status: 'disconnected_cp',
+        },
+        {
+          inbounds: [{ state: 'Ready' }],
+          listeners: [],
+          subscriptions: [{ connectTime: '2021-02-19T10:00:00Z', disconnectTime: '2021-02-19T11:00:00Z' }],
+          status: 'disconnected_cp',
+        },
+        {
+          inbounds: [],
+          listeners: [{ state: 'Ready' }],
+          subscriptions: [{ connectTime: '2021-02-19T10:00:00Z', disconnectTime: '2021-02-19T11:00:00Z' }],
+          status: 'disconnected_cp',
+        },
+        {
+          inbounds: [{ state: 'Ready' }],
+          listeners: [{ state: 'Ready' }],
+          subscriptions: [{ connectTime: '2021-02-19T10:00:00Z', disconnectTime: '2021-02-19T11:00:00Z' }],
+          status: 'disconnected_cp',
+        },
+      ] as const).forEach(async ({ inbounds, listeners, subscriptions, status }) => {
+        const actual = await fixture.setup((item) => {
+          item.name = 'test-zone-ingress'
+          item.dataplane!.networking!.inbound?.forEach((item, i) => {
+            item.state = inbounds[i]?.state
+          })
+          item.dataplane!.networking!.listeners?.forEach((item, i) => {
+            item.state = listeners[i]?.state
+          })
+          item.dataplaneInsight = {
+            ...item.dataplaneInsight,
+            subscriptions: item.dataplaneInsight?.subscriptions?.map((item, i) => {
+              item.connectTime = subscriptions[i]?.connectTime
+              item.disconnectTime = 'disconnectTime' in subscriptions[i] ? subscriptions[i]?.disconnectTime : undefined
+              return item
+            }) ?? [],
+          }
+
+          return item
+        }, {
+          env: {
+            KUMA_DATAPLANE_ZONEPROXY_TYPE: 'ingress',
+            KUMA_SUBSCRIPTION_COUNT: String(subscriptions.length),
+            KUMA_DATAPLANEINBOUND_COUNT: String(inbounds.length),
+            KUMA_DATAPLANELISTENER_COUNT: String(listeners.length),
+          },
+        })
+
+        expect(actual.status).toStrictEqual(status)
+      })
+    })
   })
 })

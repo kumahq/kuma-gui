@@ -24,7 +24,7 @@ offset:
     type: integer
 filter:
   in: query
-  name: filter
+  description: filter by labels when multiple filters are present, they are ANDed
   required: false
   schema:
     type: object
@@ -33,4 +33,5 @@ filter:
         type: string
       value:
         type: string
-
+  example:
+    label.k8s.kuma.io/namespace: my-ns

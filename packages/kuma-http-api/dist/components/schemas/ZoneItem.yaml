@@ -1,0 +1,34 @@
+type: object
+properties:
+  creationTime:
+    description: Time at which the resource was created
+    type: string
+    format: date-time
+    readOnly: true
+  enabled:
+    description: |-
+      enable allows to turn the zone on/off and exclude the whole zone from
+      balancing traffic on it
+    type: boolean
+  kri:
+    description: Kuma Resource Identifier (KRI) of the given resource
+    type: string
+    readOnly: true
+  labels:
+    type: object
+    additionalProperties:
+      type: string
+  modificationTime:
+    description: Time at which the resource was updated
+    type: string
+    format: date-time
+    readOnly: true
+  name:
+    type: string
+    maxLength: 253
+    pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$
+  type:
+    type: string
+required:
+  - type
+  - name

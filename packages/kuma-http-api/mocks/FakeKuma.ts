@@ -115,7 +115,7 @@ sWWnRiRqtJ6pNYTI3+qy4Y/pBcsX9rAFAlMGaNZiyo77Hd8C2gGTraj1T2qwKhAf
 jcrw4Z/qOwintpvJJVIrNKELr/zfQv5ugop05YC2h+rF1eSdwOGyzltnyunwi5kV
 gbXR5RnEs0hDxugaIknJMKk1b0g=
 -----END CERTIFICATE-----`
-    const encode = typeof window?.btoa === 'function' ? window.btoa : (str: string) => Buffer.from(str).toString('base64')
+    const encode = typeof globalThis?.btoa === 'function' ? globalThis.btoa : (str: string) => Buffer.from(str).toString('base64')
     return base64 ? encode(cert) : cert
   }
 
@@ -156,7 +156,7 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
     return k8s ? this.k8s.dataplaneSuffix() : ''
   }
 
-  inboundState() {
+  state() {
     return this.faker.helpers.arrayElement(['Ready', 'NotReady', 'Ignored'])
   }
 
@@ -176,6 +176,13 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
     const d = this.faker.date.past(options)
     // e.g. '2021-07-13T08:41:04Z'
     return `${d.toISOString().slice(0, -5)}Z`
+  }
+
+  timespan() {
+    return ((modificationTime) => ({
+      creationTime: this.date({ refDate: modificationTime }),
+      modificationTime,
+    }))(this.date())
   }
 
   connection<T>(_: T, i: number, arr: T[]) {
@@ -221,39 +228,6 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
     return JSON.stringify(deepmerge(subscriptionConfig({ faker: this.faker }), config), null, 4)
   }
 
-  globalInsightServices({ min = 0, max = 30 }: { min?: number, max?: number } = {}) {
-    const total = this.faker.number.int({ min, max })
-
-    const internalTotal = this.faker.number.int({ min: 0, max: total })
-    const externalTotal = this.faker.number.int({ min: 0, max: total - internalTotal })
-    const gatewayBuiltinTotal = this.faker.number.int({ min: 0, max: total - internalTotal - externalTotal })
-    const gatewayDelegatedTotal = total - internalTotal - externalTotal - gatewayBuiltinTotal
-
-    return {
-      external: {
-        total: externalTotal,
-      },
-      gatewayBuiltin: this.partitionInto({
-        total: gatewayBuiltinTotal,
-        online: Number,
-        offline: Number,
-        partiallyDegraded: Number,
-      }, gatewayBuiltinTotal),
-      gatewayDelegated: this.partitionInto({
-        total: gatewayDelegatedTotal,
-        online: Number,
-        offline: Number,
-        partiallyDegraded: Number,
-      }, gatewayDelegatedTotal),
-      internal: this.partitionInto({
-        total: internalTotal,
-        online: Number,
-        offline: Number,
-        partiallyDegraded: Number,
-      }, internalTotal),
-    }
-  }
-
   /**
    * Returns a random policy type status object.
    */
@@ -291,6 +265,58 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
       ...additionalTags,
     }
   }
+  labels({ name, mesh, zone, namespace, env }: { name?: string, mesh?: string, zone?: string, namespace?: string, env?: string } = {}): Record<string, string> {
+    const additional = Object.fromEntries(
+      this.faker.helpers.multiple(
+        () => [
+          this.faker.helpers.arrayElement([
+            this.faker.word.noun(),
+            'k8s.kuma.io/service-name',
+            'not-kuma.io/service',
+            'not/kuma.io/service',
+          ]),
+          this.faker.word.noun(),
+        ],
+        { count: this.faker.number.int({ min: 1, max: 3 }) },
+      ),
+    )
+
+    // example labels from a dataplane
+    // we don't currently use them all in the app itself
+
+    // app: grpc-service
+    // k8s.kuma.io/namespace: kuma-runner-ns
+    // k8s.kuma.io/service-account: default
+    // kuma.io/display-name: grpc-service-84d864559f-j8hnd
+    // kuma.io/env: kubernetes
+    // kuma.io/mesh: kuma-runner
+    // kuma.io/origin: zone
+    // kuma.io/proxy-type: sidecar
+    // kuma.io/workload: default
+    // kuma.io/zone: east
+
+    return {
+      ...(zone ? {
+        'kuma.io/origin': 'zone',
+        'kuma.io/zone': zone,
+      } : {
+        'kuma.io/origin': 'global',
+      }),
+      ...(name ? {
+        'kuma.io/display-name': name,
+      } : {}),
+      ...(mesh ? {
+        'kuma.io/mesh': mesh,
+      } : {}),
+      ...(namespace ? {
+        'k8s.kuma.io/namespace': namespace,
+      } : {}),
+      ...(env ? {
+        'kuma.io/env': env,
+      } : {}),
+      ...additional,
+    }
+  }
   /**
    * @deprecated we should avoid these resource specific "import-like" helpers
    */
@@ -299,7 +325,7 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
     const supportedBackends = [issuedBackend].concat(this.faker.helpers.multiple(() => this.faker.word.noun()))
 
     return {
-      certificateExpirationTime: this.faker.date.anytime(),
+      certificateExpirationTime: this.date(),
       lastCertificateRegeneration: '2023-10-02T12:40:13.956741929Z',
       certificateRegenerations: this.faker.number.int(),
       issuedBackend,
@@ -460,14 +486,51 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
       'MeshMultiZoneService',
       'MeshService',
       'Secret',
+      'HostnameGenerator',
     ] as const
     const items = [...resources, ...this.policyNames({ min: Number.MAX_SAFE_INTEGER })]
 
     return this.faker.helpers.arrayElements(items, minmax({ min: 0, max: items.length }, count))
   }
 
-  kri({ shortName, mesh, zone, namespace, name, sectionName }: Partial<{ shortName: string, mesh: string, zone: string, namespace: string, name: string, sectionName: string }> = {}) {
-    return `kri_${shortName ?? this.faker.word.noun()}_${mesh ?? this.faker.word.noun()}_${zone ?? this.faker.word.noun()}_${namespace ?? this.k8s.namespace()}_${name ?? this.faker.word.noun()}_${sectionName ?? this.faker.word.noun()}`
+  shortName(resourceName?: string) {
+    const resourceNames = new Map([
+      ['Dataplane', 'dp'],
+      ['HostnameGenerator', 'hg'],
+      ['Mesh', 'm'],
+      ['MeshAccessLog', 'mal'],
+      ['MeshCircuitBreaker', 'mcb'],
+      ['MeshExternalService', 'extsvc'],
+      ['MeshFaultInjection', 'mfi'],
+      ['MeshGateway', 'mgw'],
+      ['MeshHTTPRoute', 'mhttpr'],
+      ['MeshHealthCheck', 'mhc'],
+      ['MeshIdentity', 'mid'],
+      ['MeshLoadBalancingStrategy', 'mlbs'],
+      ['MeshMetric', 'mm'],
+      ['MeshMultiZoneService', 'mzsvc'],
+      ['MeshPassthrough', 'mp'],
+      ['MeshProxyPatch', 'mpp'],
+      ['MeshRateLimit', 'mrl'],
+      ['MeshRetry', 'mr'],
+      ['MeshService', 'msvc'],
+      ['MeshTCPRoute', 'mtcpr'],
+      ['MeshTLS', 'mtls'],
+      ['MeshTimeout', 'mt'],
+      ['MeshTrace', 'mtr'],
+      ['MeshTrafficPermission', 'mtp'],
+      ['MeshTrust', 'mtrust'],
+      ['MeshZoneAddress', 'mza'],
+      ['Workload', 'wl'],
+      ['ZoneEgress', 'ze'],
+      ['ZoneIngress', 'zi'],
+      ['Zone', 'z'],
+    ])
+    return resourceNames.get(resourceName ?? this.faker.helpers.arrayElement([...resourceNames.keys()])) ?? ''
+  }
+
+  kri({ resourceName, shortName, mesh, zone, namespace, name, displayName, sectionName }: Partial<{ resourceName: string, shortName: string, mesh: string, zone: string, namespace: string, name: string, displayName: string, sectionName: string }> = {}) {
+    return `kri_${shortName ?? this.shortName(resourceName)}_${mesh ?? this.faker.word.noun()}_${zone ?? this.faker.word.noun()}_${namespace ?? this.k8s.namespace()}_${displayName ?? name ?? this.faker.word.noun()}_${sectionName ?? ''}`
   }
 
   contextualKri({ context, name }: { context: string, name: string }) {

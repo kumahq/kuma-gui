@@ -5,11 +5,13 @@ import {
 } from '@kong/kongponents'
 import { createHighlighterCore } from 'shiki/core'
 import { createJavaScriptRegexEngine } from 'shiki/engine/javascript'
+import { defineCustomElement, inject } from 'vue'
 
 import {
-  XAboutCard,
   XAction,
   XActionGroup,
+  XAccordionList,
+  XAccordionItem,
   XAlert,
   XAnonymous,
   XBadge,
@@ -34,10 +36,12 @@ import {
   XModal,
   XNotification,
   XNotificationHub,
+  XPreCode,
   XProgress,
   XPrompt,
   XProvider,
   XRadio,
+  XRouter,
   XSearch,
   XSelect,
   XTable,
@@ -45,14 +49,20 @@ import {
   XTeleportSlot,
   XTeleportTemplate,
   XTheme,
+  XTimespan,
   XTooltip,
   XWindow,
   XErrorState,
 } from './components'
 import { vStyle, vIcon }  from './directives/'
-import type { Plugin } from 'vue'
+import type { CodeToHastOptions } from 'shiki/core'
+import type { App, Plugin, InjectionKey } from 'vue'
 
 export * from './components'
+
+const elements = [
+  ['x-pre-code', XPreCode],
+] as const
 
 const components = [
   ['XAlert', XAlert],
@@ -63,6 +73,8 @@ const components = [
   //
   ['XAction', XAction],
   ['XActionGroup', XActionGroup],
+  ['XAccordionList', XAccordionList],
+  ['XAccordionItem', XAccordionItem],
   ['XAnonymous', XAnonymous],
   ['XBadge', XBadge],
   ['XBreadcrumbs', XBreadcrumbs],
@@ -84,17 +96,18 @@ const components = [
   ['XPrompt', XPrompt],
   ['XProvider', XProvider],
   ['XProgress', XProgress],
+  ['XRouter', XRouter],
   ['XSelect', XSelect],
   ['XTabs', XTabs],
   ['XTable', XTable],
   ['XTeleportTemplate', XTeleportTemplate],
   ['XTeleportSlot', XTeleportSlot],
   ['XTheme', XTheme],
+  ['XTimespan', XTimespan],
   ['XTooltip', XTooltip],
   ['XDisclosure', XDisclosure],
   ['XDownload', XDownload],
   ['XDrawer', XDrawer],
-  ['XAboutCard', XAboutCard],
   ['XInputSwitch', XInputSwitch],
   ['XCheckbox', XCheckBox],
   ['XWindow', XWindow],
@@ -122,6 +135,8 @@ declare module 'vue' {
     XInput: typeof XInput
     XAction: typeof XAction
     XActionGroup: typeof XActionGroup
+    XAccordionList: typeof XAccordionList
+    XAccordionItem: typeof XAccordionItem
     XBadge: typeof XBadge
     XCopyButton: typeof XCopyButton
     XCodeBlock: typeof XCodeBlock
@@ -139,16 +154,17 @@ declare module 'vue' {
     XPrompt: typeof XPrompt
     XProvider: typeof XProvider
     XProgress: typeof XProgress
+    XRouter: typeof XRouter
     XSelect: typeof XSelect
     XTabs: typeof XTabs
     XTable: typeof XTable
     XTeleportTemplate: typeof XTeleportTemplate
     XTeleportSlot: typeof XTeleportSlot
     XTheme: typeof XTheme
+    XTimespan: typeof XTimespan
     XTooltip: typeof XTooltip
     XDisclosure: typeof XDisclosure
     XDownload: typeof XDownload
-    XAboutCard: typeof XAboutCard
     XInputSwitch: typeof XInputSwitch
     XCheckbox: typeof XCheckBox
     XWindow: typeof XWindow
@@ -161,6 +177,7 @@ declare module 'vue' {
 declare const typeSymbol: unique symbol
 type Uri<T = unknown> = { [typeSymbol]: T }
 type TypeOf<T> = T extends Uri<infer UriType> ? UriType : never
+type InjectionHooks<T extends Uri[]> = { [K in keyof T]: T[K] extends Uri ? () => TypeOf<T[K]> : never }
 //
 
 /* nano-container */
@@ -175,53 +192,140 @@ const nano = (map = new Map<Uri, unknown>()) => {
   }
   return { singleton, uri }
 }
+type Container = ReturnType<typeof nano>
 /* */
+
+const createInjections = <T extends Uri[]>(...tokens: T): InjectionHooks<T> => {
+  return tokens.map((token) => {
+    return () => {
+      type Service = TypeOf<typeof token>
+      type Getter = () => Service
+      const service = inject(token as unknown as InjectionKey<Getter>) as () => TypeOf<typeof token>
+      if(typeof service === 'undefined') {
+        throw new Error('Unable to find injection ${token}')
+      }
+      return service()
+    }
+  }) as InjectionHooks<T>
+}
+const createBuilder = (container: Container) => {
+  const { singleton, uri } = container
+  const build = (app: App) => {
+    const builder = {
+      service: <T>(uri: Uri<T>, getter: () => T) => {
+        app.provide(uri as unknown as InjectionKey<typeof getter>, singleton(uri, getter))
+        return builder
+      },
+    }
+    return builder
+  }
+  return { build, uri }
+}
+
+const { uri } = nano()
+
+export const syntaxHighlighter = {
+  options: {
+    themes: {
+      dark: 'catppuccin-latte',
+      light: 'catppuccin-latte',
+    },
+    structure: 'inline',
+  } satisfies Partial<CodeToHastOptions>,
+  highlight: async () => createHighlighterCore({
+    langs: [
+      import('shiki/langs/json.mjs'),
+      import('shiki/langs/yaml.mjs'),
+      import('shiki/langs/bash.mjs'),
+    ],
+    themes: [
+      {
+        name: 'catppuccin-latte',
+        default: (await import('shiki/themes/catppuccin-latte.mjs')).default,
+      },
+    ],
+    engine: createJavaScriptRegexEngine(),
+  }),
+}
+
 const deps = {
   i18n: {
     t: (str: string, _values?: Record<string, string>, _options?: Record<string, unknown>) => str,
     locale: 'en-us',
   },
+  routerElement: () => document.body,
   protocolHandler: (href: string) => href,
-  syntaxHighlighter: async () => {
-    return createHighlighterCore({
-      langs: [
-        import('shiki/langs/json.mjs'),
-        import('shiki/langs/yaml.mjs'),
-        import('shiki/langs/bash.mjs'),
-      ],
-      themes: [
-        {
-          name: 'catppuccin-mocha',
-          default: (await import('shiki/themes/catppuccin-mocha.mjs')).default,
-        },
-      ],
-      engine: createJavaScriptRegexEngine(),
-    })
+  syntaxHighlighter,
+  href: (_to: unknown) => {
+    return ''
   },
+  push: (_href: string) => {},
 }
-const { singleton, uri } = nano()
 const tokens = {
   i18n: uri<typeof deps.i18n>('x.i18n'),
-  protocolHandler: uri<typeof deps.protocolHandler>('x.action.protocolhandler'),
   syntaxHighlighter: uri<typeof deps.syntaxHighlighter>('x.code-block.syntaxhighlighter'),
+  protocolHandler: uri<typeof deps.protocolHandler>('x.action.protocolhandler'),
+  href: uri<typeof deps.href>('x.action.href'),
+  push: uri<typeof deps.href>('x.router.push'),
+  routerElement: uri<HTMLElement>('x.router.routerElement'),
 }
-
-export const useI18n = singleton(tokens.i18n, () => deps.i18n)
-export const useProtocolHandler = singleton(tokens.protocolHandler, () => deps.protocolHandler)
-export const useSyntaxHighlighter = singleton(tokens.syntaxHighlighter, () => {
-  const syntax = deps.syntaxHighlighter()
-  return async () => syntax
-})
 
 const plugin: Plugin = {
   install: (app, options: Partial<typeof deps> = {}) => {
-    Object.assign(deps, options)
+    const services = {
+      ...deps,
+      ...options,
+    }
+
+
+    const customElement = (name: string, item: Parameters<typeof defineCustomElement>[0]) => {
+      if (typeof customElements === 'undefined' || typeof customElements.get(name) !== 'undefined') {
+        return
+      }
+      customElements.define(name, defineCustomElement(item, {
+        // NOTE(llm): no shadow root, so document styles (kongponents etc.) apply as normal
+        shadowRoot: false,
+        // each element is its own app root, so nothing we provide here reaches
+        // it, we therefore re-install ourselves with the same services
+        configureApp: (elementApp) => {
+          elementApp.use(plugin, services)
+        },
+      }))
+    }
+
+    const { build } = createBuilder(nano())
+    build(app)
+      .service(tokens.syntaxHighlighter, () => services.syntaxHighlighter)
+      .service(tokens.protocolHandler, () => services.protocolHandler)
+      .service(tokens.href, () => services.href)
+      .service(tokens.push, () => services.push)
+      .service(tokens.i18n, () => services.i18n)
+      .service(tokens.routerElement, services.routerElement)
+
     components.forEach(([name, item]) => {
       app.component(name, item)
     })
     directives.forEach(([name, item]) => {
       app.directive(name, item)
     })
+    elements.forEach(([name, item]) => {
+      customElement(name, item)
+    })
   },
 }
+export const [
+  useI18n,
+  useSyntaxHighlighter,
+  useProtocolHandler,
+  useHref,
+  usePush,
+  useRouterElement,
+] = createInjections(
+  tokens.i18n,
+  tokens.syntaxHighlighter,
+  tokens.protocolHandler,
+  tokens.href,
+  tokens.push,
+  tokens.routerElement,
+)
 export default plugin

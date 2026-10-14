@@ -1,0 +1,9 @@
+get:
+  operationId: getZoneOverviewList
+  responses:
+    '200':
+      $ref: '../components/responses/GetZoneOverviewListResponse.yaml'
+    '400':
+      $ref: '../components/responses/BadRequest.yaml'
+    '500':
+      $ref: '../components/responses/Internal.yaml'

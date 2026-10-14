@@ -3,7 +3,9 @@
     :name="props.routeName"
     v-slot="{ can, t, uri, me, route }"
   >
-    <AppView>
+    <AppView
+      :notifications="true"
+    >
       <template #title>
         <h1>
           <RouteTitle
@@ -11,15 +13,16 @@
           />
         </h1>
       </template>
+
       <template #actions>
         <ControlPlaneActionGroup />
       </template>
 
       <XLayout
-        type="stack"
+        variant="y-stack"
       >
         <DataSource
-          :src="uri(PolicySources, '/policy-types', {})"
+          :src="uri(ResourceSource, '/resource-type-descriptors', {})"
           v-slot="{ data: resources }"
         >
           <DataSource
@@ -34,80 +37,78 @@
           </DataSource>
         </DataSource>
         <XLayout
-          type="columns"
+          variant="columns"
         >
           <XCard
             v-if="can('use zones')"
           >
-            <div class="card-header">
-              <div class="card-title">
-                <h2>
-                  {{ t('main-overview.detail.zone_control_planes.title') }}
-                </h2>
-
-                <XAction
-                  :to="{ name: 'zone-cp-list-view' }"
+            <XLayout variant="y-stack">
+              <XLayout variant="action-group">
+                <XLayout
+                  variant="inline"
                 >
-                  {{ t('main-overview.detail.about.view_all') }}
-                </XAction>
-              </div>
-              <div
-                class="card-actions"
-              >
+                  <h2>
+                    {{ t('main-overview.detail.zone_control_planes.title') }}
+                  </h2>
+                  <XAction
+                    :to="{ name: 'zone-cp-list-view' }"
+                  >
+                    {{ t('main-overview.detail.about.view_all') }}
+                  </XAction>
+                </XLayout>
                 <XTeleportSlot name="control-plane-detail-view-zone-actions" />
-              </div>
-            </div>
+              </XLayout>
 
-            <DataLoader
-              :src="uri(ZoneSources, '/zone-cps', {}, {
-                page: 1,
-                size: 10,
-              })"
-              variant="list"
-              v-slot="{ data }"
-            >
-              <ZoneControlPlanesList
-                data-testid="zone-control-planes-details"
-                :items="data.items"
-                :storage="me"
-              />
-            </DataLoader>
+              <DataLoader
+                :src="uri(ZoneSources, '/zone-cps', {}, {
+                  page: 1,
+                  size: 10,
+                })"
+                variant="list"
+                v-slot="{ data: [data] }"
+              >
+                <ZoneControlPlanesList
+                  data-testid="zone-control-planes-details"
+                  :items="data.items"
+                  :storage="me"
+                />
+              </DataLoader>
+            </XLayout>
           </XCard>
 
           <XCard>
-            <div class="card-header">
-              <div class="card-title">
-                <h2>
-                  {{ t('main-overview.detail.meshes.title') }}
-                </h2>
-
-                <XAction
-                  :to="{ name: 'mesh-list-view' }"
+            <XLayout variant="y-stack">
+              <XLayout variant="action-group">
+                <XLayout
+                  variant="inline"
                 >
-                  {{ t('main-overview.detail.about.view_all') }}
-                </XAction>
-              </div>
-              <div
-                class="card-actions"
-              >
+                  <h2>
+                    {{ t('main-overview.detail.meshes.title') }}
+                  </h2>
+                  <XAction
+                    :to="{ name: 'mesh-list-view' }"
+                  >
+                    {{ t('main-overview.detail.about.view_all') }}
+                  </XAction>
+                </XLayout>
                 <XTeleportSlot name="control-plane-detail-view-mesh-actions" />
-              </div>
-            </div>
+              </XLayout>
 
-            <DataLoader
-              :src="uri(MeshSources, '/mesh-insights', {}, {
-                page: 1,
-                size: 10,
-              })"
-              variant="list"
-              v-slot="{ data }"
-            >
-              <MeshInsightsList
-                data-testid="meshes-details"
-                :items="data.items"
-                :storage="me"
-              />
-            </DataLoader>
+              <DataLoader
+                :src="uri(MeshSources, '/mesh-insights', {}, {
+                  page: 1,
+                  size: 10,
+                })"
+                variant="list"
+                v-slot="{ data: [data] }"
+              >
+                <MeshInsightsList
+                  data-testid="meshes-details"
+                  :items="data.items"
+                  :storage="me"
+                />
+              </DataLoader>
+            </XLayout>
           </XCard>
         </XLayout>
       </XLayout>
@@ -135,7 +136,7 @@ import { sources as ControlPlaneSources } from '../sources'
 import { useControlPlaneStatus, useControlPlaneActionGroup } from '@/app/control-planes'
 import { useMeshInsightsList } from '@/app/meshes'
 import { sources as MeshSources } from '@/app/meshes/sources'
-import { sources as PolicySources } from '@/app/policies/sources'
+import { sources as ResourceSource } from '@/app/resources/sources'
 import { useZoneControlPlanesList } from '@/app/zones'
 import { sources as ZoneSources } from '@/app/zones/sources'
 
@@ -146,21 +147,3 @@ const ControlPlaneActionGroup = useControlPlaneActionGroup()
 const ZoneControlPlanesList = useZoneControlPlanesList()
 const MeshInsightsList = useMeshInsightsList()
 </script>
-
-<style lang="scss" scoped>
-.card-header {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: $kui-space-50;
-  // Makes card header the same height as buttons so that they align with or without buttons present.
-  min-height: 32px;
-}
-
-.card-title {
-  display: flex;
-  gap: $kui-space-40;
-  align-items: baseline;
-}
-</style>

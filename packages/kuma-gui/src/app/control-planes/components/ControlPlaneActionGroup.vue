@@ -8,9 +8,6 @@
         {{ t("main-overview.action_menu.toggle_button") }}
       </XAction>
     </template>
-    <XAction :to="{ name: 'hostname-generator-root-view' }">
-      {{ t("main-overview.action_menu.items.hostname_generators") }}
-    </XAction>
 
     <slot name="actions" />
   </XActionGroup>

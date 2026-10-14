@@ -1,8 +1,20 @@
 import _124 from './kuma.io/latest_version'
 import _999 from './src/_kri/_'
+import _997 from './src/_kri/kri_dp__.ts'
+import _996 from './src/_kri/kri_extsvc__.ts'
+import _985 from './src/_kri/kri_hg__.ts'
+import _986 from './src/_kri/kri_mal__.ts'
+import _995 from './src/_kri/kri_mfi__.ts'
+import _993 from './src/_kri/kri_mhttpr__.ts'
+import _992 from './src/_kri/kri_mid__.ts'
+import _998 from './src/_kri/kri_msvc__.ts'
+import _990 from './src/_kri/kri_mtrust__.ts'
+import _989 from './src/_kri/kri_mza__.ts'
+import _991 from './src/_kri/kri_mzsvc__.ts'
+import _987 from './src/_kri/kri_wl__.ts'
+import _984 from './src/_kri/kri_z__.ts'
 import _3 from './src/_resources'
 import _1 from './src/config'
-import _4 from './src/dataplanes/_overview'
 import _5 from './src/global-insight'
 import _200 from './src/hostnamegenerators'
 import _201 from './src/hostnamegenerators/_'
@@ -13,13 +25,13 @@ import _16 from './src/meshes/_'
 import _17 from './src/meshes/_/circuit-breakers'
 import _18 from './src/meshes/_/circuit-breakers/_'
 import _125 from './src/meshes/_/circuit-breakers/_/_resources/dataplanes'
+import _234 from './src/meshes/_/dataplanes'
 import _19 from './src/meshes/_/dataplanes/_'
 import _231 from './src/meshes/_/dataplanes/_/_inbounds/_/_policies'
 import _123 from './src/meshes/_/dataplanes/_/_layout'
 import _232 from './src/meshes/_/dataplanes/_/_outbounds/_/_policies.ts'
 import _22 from './src/meshes/_/dataplanes/_/_overview'
 import _233 from './src/meshes/_/dataplanes/_/_policies.ts'
-import _128 from './src/meshes/_/dataplanes/_/_rules'
 import _122 from './src/meshes/_/dataplanes/_/clusters'
 import _20 from './src/meshes/_/dataplanes/_/policies'
 import _121 from './src/meshes/_/dataplanes/_/stats'
@@ -41,12 +53,13 @@ import _428 from './src/meshes/_/dataplanes/redis-54754f5b57-xl2tw.kuma-demo/_ov
 import _430 from './src/meshes/_/dataplanes/redis-54754f5b57-xl2tw.kuma-demo/_rules'
 import _429 from './src/meshes/_/dataplanes/redis-54754f5b57-xl2tw.kuma-demo/stats'
 import _129 from './src/meshes/_/dataplanes/test-dataplane/_rules'
-import _23 from './src/meshes/_/external-services'
-import _24 from './src/meshes/_/external-services/_'
 import _27 from './src/meshes/_/fault-injections'
 import _28 from './src/meshes/_/fault-injections/_'
 import _29 from './src/meshes/_/health-checks'
 import _30 from './src/meshes/_/health-checks/_'
+import _245 from './src/meshes/_/meshaccesslogs'
+import _246 from './src/meshes/_/meshaccesslogs/_'
+import _247 from './src/meshes/_/meshaccesslogs/_/_resources/dataplanes'
 import _138 from './src/meshes/_/meshexternalservices'
 import _139 from './src/meshes/_/meshexternalservices/_'
 import _172 from './src/meshes/_/meshexternalservices/_/_hostnames'
@@ -55,30 +68,24 @@ import _53 from './src/meshes/_/meshfaultinjections/_'
 import _54 from './src/meshes/_/meshfaultinjections/_/_resources/dataplanes'
 import _31 from './src/meshes/_/meshgatewayroutes'
 import _32 from './src/meshes/_/meshgatewayroutes/_'
-import _33 from './src/meshes/_/meshgateways'
-import _34 from './src/meshes/_/meshgateways/_'
-import _130 from './src/meshes/_/meshgateways/_/_resources/dataplanes'
-import _131 from './src/meshes/_/meshgateways/_/_rules'
-import _134 from './src/meshes/_/meshgateways/test-meshgateway/_'
-import _135 from './src/meshes/_/meshgateways/test-meshgateway/_rules'
 import _132 from './src/meshes/_/meshhttproutes'
 import _133 from './src/meshes/_/meshhttproutes/_'
-import _241 from './src/meshes/_/meshidentities/_'
-import _242 from './src/meshes/_/meshidentities/_/_.ts'
+import _242 from './src/meshes/_/meshidentities/_.ts'
+import _241 from './src/meshes/_/meshidentities.ts'
 import _140 from './src/meshes/_/meshmultizoneservices'
 import _141 from './src/meshes/_/meshmultizoneservices/_'
 import _171 from './src/meshes/_/meshmultizoneservices/_/_hostnames'
 import _136 from './src/meshes/_/meshservices'
 import _137 from './src/meshes/_/meshservices/_'
 import _170 from './src/meshes/_/meshservices/_/_hostnames'
-import _243 from './src/meshes/_/meshtrusts/_'
-import _244 from './src/meshes/_/meshtrusts/_/_.ts'
+import _243 from './src/meshes/_/meshtrusts'
+import _244 from './src/meshes/_/meshtrusts/_.ts'
+import _251 from './src/meshes/_/meshzoneaddresses/_.ts'
+import _250 from './src/meshes/_/meshzoneaddresses.ts'
 import _35 from './src/meshes/_/proxytemplates'
 import _36 from './src/meshes/_/proxytemplates/_'
 import _37 from './src/meshes/_/rate-limits'
 import _38 from './src/meshes/_/retries'
-import _25 from './src/meshes/_/service-insights'
-import _26 from './src/meshes/_/service-insights/_'
 import _39 from './src/meshes/_/timeouts'
 import _40 from './src/meshes/_/traffic-logs'
 import _41 from './src/meshes/_/traffic-logs/_'
@@ -88,30 +95,20 @@ import _44 from './src/meshes/_/traffic-routes'
 import _45 from './src/meshes/_/traffic-traces'
 import _46 from './src/meshes/_/traffic-traces/_'
 import _47 from './src/meshes/_/virtual-outbounds'
-import _400 from './src/meshes/_/workloads/_'
-import _401 from './src/meshes/_/workloads/_/index'
+import _400 from './src/meshes/_/workloads'
+import _401 from './src/meshes/_/workloads/_'
 import _2 from './src/policies'
-import _126 from './src/zone-ingresses/_'
-import _48 from './src/zone-ingresses/_/_overview'
-import _9 from './src/zone-ingresses/_overview'
-import _127 from './src/zoneegresses/_'
-import _49 from './src/zoneegresses/_/_overview'
-import _153 from './src/zoneegresses/_/clusters'
-import _152 from './src/zoneegresses/_/stats'
-import _149 from './src/zoneegresses/_/xds'
-import _10 from './src/zoneegresses/_overview'
-import _151 from './src/zoneingresses/_/clusters'
-import _150 from './src/zoneingresses/_/stats'
-import _148 from './src/zoneingresses/_/xds'
 import _8 from './src/zones'
 import _50 from './src/zones/_'
 import _12 from './src/zones/_/_overview'
 import _11 from './src/zones/_overview'
 
+export const remote = {
+  // stats
+  '/latest_version': _124,
+}
 export const fs = {
   // static/testing
-  '/meshes/:mesh/meshgateways/test-meshgateway': _134,
-  '/meshes/:mesh/meshgateways/test-meshgateway/_rules': _135,
   '/meshes/:mesh/dataplanes/default-gateway-instance-1-86cbb55644-6rxhg.kuma-demo/_overview': _228,
   '/meshes/:mesh/dataplanes/default-gateway-instance-1-86cbb55644-6rxhg.kuma-demo/stats': _229,
   '/meshes/:mesh/dataplanes/default-gateway-instance-1-86cbb55644-6rxhg.kuma-demo/_rules': _230,
@@ -129,50 +126,30 @@ export const fs = {
   '/meshes/:mesh/dataplanes/grpc-service-75b4ccdfd5-z2jmp.kuma-demo/_rules': _630,
   '/meshes/:mesh/dataplanes/test-dataplane/_rules': _129,
   ///
-  // stats
-  'https://kuma.io/latest_version': _124,
   '/config': _1,
   '/policies': _2,
   '/global-insight': _5,
-  // onboarding
-  '/dataplanes/_overview': _4,
   // zones
   '/zones': _8,
   '/zones/_overview': _11,
   '/zones/:name': _50,
   '/zones/:name/_overview': _12,
-  '/zone-ingresses/_overview': _9,
-  '/zone-ingresses/:name/_overview': _48,
-  '/zone-ingresses/:name': _126,
-  '/zoneingresses/:name/xds': _148,
-  '/zoneingresses/:name/stats': _150,
-  '/zoneingresses/:name/clusters': _151,
-  '/zoneegresses/_overview': _10,
-  '/zoneegresses/:name': _127,
-  '/zoneegresses/:name/_overview': _49,
-  '/zoneegresses/:name/xds': _149,
-  '/zoneegresses/:name/stats': _152,
-  '/zoneegresses/:name/clusters': _151,
   // meshes
   '/mesh-insights': _13,
   '/mesh-insights/:mesh': _14,
   '/meshes': _15,
-  '/meshes/:mesh': _16,
+  '/meshes/:name': _16,
+  '/meshes/:mesh/dataplanes': _234,
   '/meshes/:mesh/dataplanes/_overview': _21,
   '/meshes/:mesh/dataplanes/:name': _19,
   '/meshes/:mesh/dataplanes/:name/_overview': _22,
   '/meshes/:mesh/dataplanes/:name/_layout': _123,
-  '/meshes/:mesh/dataplanes/:name/_rules': _128,
   '/meshes/:mesh/dataplanes/:name/policies': _20,
   '/meshes/:mesh/dataplanes/:name/xds': _120,
   '/meshes/:mesh/dataplanes/:name/stats': _121,
   '/meshes/:mesh/dataplanes/:name/clusters': _122,
   '/meshes/:mesh/meshgatewayroutes': _31,
   '/meshes/:mesh/meshgatewayroutes/:name': _32,
-  '/meshes/:mesh/meshgateways': _33,
-  '/meshes/:mesh/meshgateways/:name': _34,
-  '/meshes/:mesh/meshgateways/:name/_resources/dataplanes': _130,
-  '/meshes/:mesh/meshgateways/:name/_rules': _131,
   '/meshes/:mesh/meshservices': _136,
   '/meshes/:mesh/meshservices/:name': _137,
   '/meshes/:mesh/meshmultizoneservices': _140,
@@ -185,6 +162,9 @@ export const fs = {
   '/meshes/:mesh/meshmultizoneservices/:serviceName/_hostnames': _171,
   '/meshes/:mesh/meshexternalservices/:serviceName/_hostnames': _172,
   // policies
+  '/meshes/:mesh/meshaccesslogs': _245,
+  '/meshes/:mesh/meshaccesslogs/:name': _246,
+  '/meshes/:mesh/meshaccesslogs/:name/_resources/dataplanes': _247,
   '/meshes/:mesh/meshfaultinjections': _52,
   '/meshes/:mesh/meshfaultinjections/:name': _53,
   '/meshes/:mesh/meshfaultinjections/:name/_resources/dataplanes': _54,
@@ -197,11 +177,8 @@ export const fs = {
   '/meshes/:mesh/meshidentities/:name': _242,
   '/meshes/:mesh/meshtrusts': _243,
   '/meshes/:mesh/meshtrusts/:name': _244,
-  // legacy mesh
-  '/meshes/:mesh/service-insights': _25,
-  '/meshes/:mesh/service-insights/:name': _26,
-  '/meshes/:mesh/external-services': _23,
-  '/meshes/:mesh/external-services/:name': _24,
+  '/meshes/:mesh/meshzoneaddresses': _250,
+  '/meshes/:mesh/meshzoneaddresses/:name': _251,
   // legacy policies
   '/meshes/:mesh/circuit-breakers': _17,
   '/meshes/:mesh/circuit-breakers/:name': _18,
@@ -237,29 +214,31 @@ export const fs = {
   // Mesh
   '/_kri/kri_m_:kri': _16,
   // MeshService
-  '/_kri/kri_msvc_:kri': _137,
+  '/_kri/kri_msvc_:kri': _998,
   // Dataplane
-  '/_kri/kri_dp_:kri': _22,
+  '/_kri/kri_dp_:kri': _997,
   // MeshExternalService
-  '/_kri/kri_extsvc_:kri': _139,
+  '/_kri/kri_extsvc_:kri': _996,
   // MeshFaultInjection
-  '/_kri/kri_mfi_:kri': _53,
-  // MeshGateway
-  '/_kri/kri_mgw_:kri': _34,
+  '/_kri/kri_mfi_:kri': _995,
   // MeshHTTPRoute
-  '/_kri/kri_mhttpr_:kri': _133,
+  '/_kri/kri_mhttpr_:kri': _993,
   // MeshIdentity
-  '/_kri/kri_mid_:kri': _242,
+  '/_kri/kri_mid_:kri': _992,
   // MeshMultiZoneService
-  '/_kri/kri_mzsvc_:kri': _141,
+  '/_kri/kri_mzsvc_:kri': _991,
   // MeshTrust
-  '/_kri/kri_mtrust_:kri': _244,
-  // ZoneEgress
-  '/_kri/kri_ze_:kri': _127,
-  // ZoneIngress
-  '/_kri/kri_zi_:kri': _126,
+  '/_kri/kri_mtrust_:kri': _990,
+  // MeshZoneAddress
+  '/_kri/kri_mza_:kri': _989,
   // Workload
-  '/_kri/kri_wl_:kri': _401,
+  '/_kri/kri_wl_:kri': _987,
+  // MeshAccessLog
+  '/_kri/kri_mal_:kri': _986,
+  // HostnameGenerator
+  '/_kri/kri_hg_:kri': _985,
+  // Zone
+  '/_kri/kri_z_:kri': _984,
   // generic kri -> catches anything that is not matched above
   '/_kri/:kri': _999,
 }

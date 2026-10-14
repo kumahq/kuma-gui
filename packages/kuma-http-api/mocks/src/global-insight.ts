@@ -1,75 +1,59 @@
 import type { Dependencies, ResponseHandler } from '#mocks'
+import type { paths } from '@kumahq/kuma-http-api'
+
+type GlobalInsight = paths['/global-insight']['get']['responses']['200']['content']['application/json']
 
 export default ({ fake, env }: Dependencies): ResponseHandler => (_req) => {
   const resourceCount = parseInt(env('KUMA_ACTIVE_RESOURCE_COUNT', `${Number.MAX_SAFE_INTEGER}`))
-
   const meshTotal = parseInt(env('KUMA_MESH_COUNT', `${fake.number.int({ min: 1, max: 100 })}`))
+
   const policyTotal = fake.number.int({ min: 1, max: 100 })
-
   const serviceTotal = parseInt(env('KUMA_SERVICE_COUNT', `${fake.number.int({ min: 1, max: 30 })}`))
-
   const dataplaneTotal = parseInt(env('KUMA_DATAPLANE_COUNT', `${fake.number.int({ min: 1, max: 100 })}`))
-  const gatewayBuiltinTotal = fake.number.int({ min: 0, max: 20 })
-  const gatewayDelegatedTotal = fake.number.int({ min: 0, max: 20 })
-
   const zoneControlPlaneTotal = parseInt(env('KUMA_ZONE_COUNT', `${fake.number.int({ min: 1, max: 100 })}`))
-  const zoneControlPlaneOnline = fake.number.int({ min: 0, max: zoneControlPlaneTotal })
 
-  const zoneEgressTotal = parseInt(env('KUMA_ZONEEGRESS_COUNT', `${fake.number.int({ min: 1, max: 100 })}`))
-  const zoneEgressOnline = fake.number.int({ min: 0, max: zoneEgressTotal })
-
-  const zoneIngressTotal = parseInt(env('KUMA_ZONEINGRESS_COUNT', `${fake.number.int({ min: 1, max: 100 })}`))
-  const zoneIngressOnline = fake.number.int({ min: 0, max: zoneIngressTotal })
+  const internalTotal = fake.number.int({ min: 0, max: serviceTotal })
+  const externalTotal = fake.number.int({ min: 0, max: serviceTotal - internalTotal })
 
   return {
     headers: {
+      ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
     },
     body: {
       createdAt: fake.kuma.nanodate(),
-      dataplanes: {
-        gatewayBuiltin: fake.kuma.partitionInto({
-          online: Number,
-          offline: Number,
-          partiallyDegraded: Number,
-          total: gatewayBuiltinTotal,
-        }, gatewayBuiltinTotal),
-        gatewayDelegated: fake.kuma.partitionInto({
-          online: Number,
-          offline: Number,
-          partiallyDegraded: Number,
-          total: gatewayDelegatedTotal,
-        }, gatewayDelegatedTotal),
-        standard: fake.kuma.partitionInto({
-          online: Number,
-          offline: Number,
-          partiallyDegraded: Number,
-          total: dataplaneTotal,
-        }, dataplaneTotal),
-      },
+      dataplanes: fake.kuma.partitionInto({
+        online: Number,
+        offline: Number,
+        partiallyDegraded: Number,
+        total: dataplaneTotal,
+      }, dataplaneTotal),
       meshes: {
         total: meshTotal,
       },
       policies: {
         total: policyTotal,
       },
-      services: fake.kuma.globalInsightServices({ max: serviceTotal }),
+      services: {
+        external: {
+          total: externalTotal,
+        },
+        internal: fake.kuma.partitionInto({
+          total: internalTotal,
+          online: Number,
+          offline: Number,
+          partiallyDegraded: Number,
+        }, internalTotal),
+      },
       zones: {
-        controlPlanes: {
+        controlPlanes: fake.kuma.partitionInto({
+          online: Number,
+          offline: Number,
           total: zoneControlPlaneTotal,
-          online: zoneControlPlaneOnline,
-        },
-        zoneEgresses: {
-          total: zoneEgressTotal,
-          online: zoneEgressOnline,
-        },
-        zoneIngresses: {
-          total: zoneIngressTotal,
-          online: zoneIngressOnline,
-        },
+        }, zoneControlPlaneTotal),
       },
       resources: {
         ...Object.fromEntries(fake.kuma.resourceNames(resourceCount).map((name) => [name, { total: fake.number.int({ min: 0, max: 20 })}])),
       },
-    },
+    } satisfies GlobalInsight,
   }
 }

@@ -1,3 +1,10 @@
+common:
+  label:
+    href:
+      kuma~io/mesh: kri://kri_m____{name}_
+  kri:
+    shortNames:
+      mesh: m
 meshes:
   docs: &meshes.docs
     type: docs
@@ -40,6 +47,7 @@ meshes:
     mesh-insights-list:
       name: 'Name'
       services: 'Services'
+      services-hybrid: 'Services (MeshServices/Services)'
       dataplanes: 'Data plane proxies (online/total)'
 
   routes:
@@ -54,6 +62,7 @@ meshes:
         data-plane-list-view: Data plane proxies
         policy-list-index-view: Policies
         workload-list-view: Workloads
+        mesh-resource-type-list-view: Resources
       overview: 'Overview'
       about:
         title: About this mesh
@@ -67,6 +76,7 @@ meshes:
         name: Name
         trust-domain: TrustDomain
         origin: Origin
+        zone: Zone
     items:
       title: Meshes
       breadcrumbs: Meshes
@@ -74,6 +84,7 @@ meshes:
         Meshes are logical groupings of services that define the scope of traffic management and security.
       collection:
         services: 'Services'
+        services-hybrid: 'Services (MeshServices/Services)'
         dataplanes: 'Data plane proxies (online/total)'
 
     overview:

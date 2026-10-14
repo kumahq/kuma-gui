@@ -66,11 +66,11 @@ const props = withDefaults(defineProps<{
 .x-copy-button {
   display: inline-flex;
   align-items: center;
-  gap: $kui-space-40;
+  gap: var(--x-space-40);
 }
 
 .text {
   min-width: 0;
-  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 </style>

@@ -5,6 +5,8 @@ Feature: mesh / policies / index
       | Alias            | Selector                                                                                 |
       | policy-type-list | [data-testid='policy-type-list']                                                         |
       | items            | [data-testid='app-collection']                                                           |
+      | dataplanes-tab   | [data-testid='data-plane-list-view-tab'] a                                               |
+      | policies-tab     | [data-testid='policy-list-index-view-tab'] a                                             |
       | detail-view      | [data-testid='policy-detail-tabs-view']                                                  |
       | items-header     | $items th                                                                                |
       | item             | $items tbody tr                                                                          |
@@ -17,73 +19,124 @@ Feature: mesh / policies / index
     And the environment
       """
       KUMA_MODE: global
-      KUMA_CIRCUITBREAKER_COUNT: 2
+      KUMA_MESHACCESSLOG_COUNT: 2
       """
-    And the URL "/meshes/default/circuit-breakers" responds with
+    And the URL "/meshes/default/meshaccesslogs" responds with
       """
       body:
         items:
-        - name: fake-cb-1
-        - name: fake-cb-2
+        - kri: kri_mal_default___fake-mal-1_
+          name: fake-mal-1
+          labels:
+            kuma.io/display-name: fake-mal-1
+        - kri: kri_mal_default___fake-mal-2_
+          name: fake-mal-2
+          labels:
+            kuma.io/display-name: fake-mal-2
       """
-    And the URL "/mesh-insights/default" responds with
+
+  Scenario: Visiting `/policies` redirects to the first policy type
+    And the URL "/_resources" responds with
       """
       body:
-        policies:
-          CircuitBreaker:
-            total: 10
-          FaultInjection:
-            total: 10
-          MeshFaultInjection:
-            total: 10
+        resources:
+          - includeInFederation': true
+            name: 'MeshAccessLog'
+            path: 'meshaccesslogs'
+            pluralDisplayName: 'Mesh Access Logs'
+            policy:
+              hasRulesTargetRef: true
+              hasToTargetRef: true
+            readOnly: false
+            scope: 'Mesh'
+            shortName: 'mal'
+            singularDisplayName: 'Mesh Access Log'
+            isInsight: false
+            adminOnly: false
       """
-  Scenario: Visiting `/policies` redirects
     When I visit the "/meshes/default/policies" URL
     And the "$item:nth-child(1)" element contains
-      | Value     |
-      | fake-cb-1 |
-    Then the URL contains "/meshes/default/policies/circuit-breakers"
+      | Value      |
+      | fake-mal-1 |
+    Then the URL contains "/meshes/default/policies/mal"
+
+  Scenario: Navigating away and back to the policies tab keeps redirecting to the first policy type
+    And the URL "/_resources" responds with
+      """
+      body:
+        resources:
+          - includeInFederation': true
+            name: 'MeshAccessLog'
+            path: 'meshaccesslogs'
+            pluralDisplayName: 'Mesh Access Logs'
+            policy:
+              hasFromTargetRef: true
+              hasRulesTargetRef: true
+              hasToTargetRef: true
+              isFromAsRules: true
+              isTargetRef: true
+            readOnly: false
+            scope: 'Mesh'
+            shortName: 'mal'
+            singularDisplayName: 'Mesh Access Log'
+            isInsight: false
+            adminOnly: false
+      """
+    When I visit the "/meshes/default/data-planes" URL
+    And I wait for 100 ms
+    And I click the "$policies-tab" element
+    And I wait for 100 ms
+    And I click the "$dataplanes-tab" element
+    And I wait for 100 ms
+    And I click the "$policies-tab" element
+    Then the URL contains "/meshes/default/policies/mal"
 
   Scenario: Listing has expected content
-    When I visit the "/meshes/default/policies/circuit-breakers" URL
+    When I visit the "/meshes/default/policies/mal" URL
     Then the "$button-docs" element exists
-    And the "$items-header" element exists 4 times
+    And the "$items-header" element exists 6 times
     And the "[data-testid='policy-list-index-view-tab'].active" element exists
     And the "$item" element exists 2 times
     And the "$item:nth-child(1)" element contains
-      | Value     |
-      | fake-cb-1 |
+      | Value      |
+      | fake-mal-1 |
 
   Scenario: Clicking the link goes to the detail page and back again
-    When I visit the "/meshes/default/policies/circuit-breakers" URL
-    Then the "$item:nth-child(1) td:nth-child(2)" element contains "fake-cb-1"
+    When I visit the "/meshes/default/policies/mal" URL
+    Then the "$item:nth-child(1) td:nth-child(2)" element contains "fake-mal-1"
     When I click the "$action-group" element
     And I click the "$view" element
-    Then the URL contains "circuit-breakers/fake-cb-1/overview"
-    And the "$detail-view" element contains "fake-cb-1"
+    Then the URL contains "/overview"
+    And the "$detail-view" element contains "fake-mal-1"
     When I click the "$breadcrumbs > .breadcrumbs-item-container:nth-child(3) > a" element
     Then the "$item" element exists 2 times
 
   Scenario: Clicking policy types in the sidebar switches listing
-    Given the URL "/meshes/default/meshfaultinjections" responds with
+    Given the environment
+      """
+      KUMA_MESHFAULTINJECTION_COUNT: 2
+      """
+    And the URL "/meshes/default/meshfaultinjections" responds with
       """
       body:
         items:
           - name: mfi-1
           - name: mfi-2
       """
-    When I visit the "/meshes/default/policies/circuit-breakers" URL
-    Then the "$item:nth-child(1) td:nth-child(2)" element contains "fake-cb-1"
+    When I visit the "/meshes/default/policies/mal" URL
+    Then the "$item:nth-child(1) td:nth-child(2)" element contains "fake-mal-1"
     When I click the "[data-testid='policy-type-link-MeshFaultInjection']" element
     Then the "$item:nth-child(1) td:nth-child(2)" element contains "mfi-1"
 
   Scenario: TargetRef-based policies show Zone and targetRef columns
-    Given the URL "/meshes/default/meshfaultinjections" responds with
+    Given the URL "/meshes/default/meshaccesslogs" responds with
       """
       body:
         items:
-          - name: mfi-1
+          - name: fake-mal-1
+            kri: kri_mal_default_zone-1__fake-mal-1_
             labels:
+              kuma.io/display-name: fake-mal-1
               kuma.io/origin: zone
               kuma.io/zone: zone-1
             spec:
@@ -91,73 +144,18 @@ Feature: mesh / policies / index
                 kind: MeshService
                 name: service-1
       """
-    When I visit the "/meshes/default/policies/meshfaultinjections" URL
-    Then the "$item:nth-child(1) td:nth-child(2)" element contains "mfi-1"
+    When I visit the "/meshes/default/policies/mal" URL
+    Then the "$item:nth-child(1) td:nth-child(2)" element contains "fake-mal-1"
     And the "$item:nth-child(1) td:nth-child(4)" element contains "zone-1"
     And the "$item:nth-child(1) td:nth-child(5)" element contains "MeshService"
     And the "$item:nth-child(1) td:nth-child(5)" element contains "service-1"
 
-  Scenario: Hides legacy policy types if there are no legacy policies applied
-    Given the URL "/mesh-insights/default" responds with
-      """
-      body:
-        policies:
-          CircuitBreaker:
-            total: 0
-          FaultInjection:
-            total: 0
-          HealthCheck:
-            total: 0
-          MeshGatewayRoute:
-            total: 0
-          ProxyTemplate:
-            total: 0
-          RateLimit:
-            total: 0
-          Retry:
-            total: 0
-          Timeout:
-            total: 0
-          TrafficLog:
-            total: 0
-          TrafficPermission:
-            total: 0
-          TrafficRoute:
-            total: 0
-          TrafficTrace:
-            total: 0
-          VirtualOutbound:
-            total: 0
-          MeshFaultInjection:
-            total: 2
-      """
-    When I visit the "/meshes/default/policies/meshfaultinjections" URL
-    Then the "[data-testid='policy-type-link-MeshFaultInjection']" element exists but the "[data-testid='policy-type-link-FaultInjection']" element doesn't exist
-
-  Scenario: Shows legacy policy types if there are any legacy policies applied
-    Given the URL "/mesh-insights/default" responds with
-      """
-      body:
-        policies:
-          CircuitBreaker:
-            total: 1
-      """
-    When I visit the "/meshes/default/policies/meshfaultinjections" URL
-    Then the "[data-testid='policy-type-link-FaultInjection']" element exists
-    And the "[data-testid='policy-type-link-MeshFaultInjection']" element exists
-
-  Scenario: Regression test: Zone column is visible when navigating from legacy policy type
-    When I visit the "/meshes/default/policies/circuit-breakers" URL
-    Then the "$items-header" element exists 4 times
-    When I click the "[data-testid='policy-type-link-MeshFaultInjection']" element
-    Then the "$items-header" element exists 6 times
-
   Scenario: Sending filters
-    When I visit the "/meshes/default/policies/meshfaultinjections" URL
+    When I visit the "/meshes/default/policies/mal" URL
     Then the "$input-search" element exists
     Then I "type" "foo namespace:bar zone:baz kuma.io/service-name:qux" into the "$input-search" element
     And I "type" "{enter}" into the "$input-search" element
-    Then the URL "/meshes/default/meshfaultinjections" was requested with
+    Then the URL "/meshes/default/meshaccesslogs" was requested with
       """
       searchParams:
         name: foo

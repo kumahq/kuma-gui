@@ -1,4 +1,4 @@
-Feature: mesh / workloads / item / overview
+Feature: mesh / dataplanes / item / overview
 
   Background:
     Given the CSS selectors
@@ -7,11 +7,20 @@ Feature: mesh / workloads / item / overview
     And the environment
       """
       KUMA_DATAPLANE_COUNT: 1
+      KUMA_MESHSERVICE_MODE: Exclusive
       """
-    And the URL "/meshes/default/dataplanes/dataplane-1/_overview" responds with
+    And the URL "/_kri/kri_dp_default_zone-1_kuma-demo_dataplane-1_" responds with
       """
       body:
-        name: dataplane-1
+        name: dataplane-1.kuma-demo
+        kri: kri_dp_default_zone-1_kuma-demo_dataplane-1_
+        labels:
+          kuma.io/display-name: dataplane-1
+      """
+    And the URL "/meshes/default/dataplanes/dataplane-1.kuma-demo/_overview" responds with
+      """
+      body:
+        name: dataplane-1.kuma-demo
         kri: kri_dp_default_zone-1_kuma-demo_dataplane-1_
         mesh: default
         labels:
@@ -19,6 +28,8 @@ Feature: mesh / workloads / item / overview
           kuma.io/display-name: dataplane-1
           kuma.io/zone: zone-1
           kuma.io/origin: zone
+          kuma.io/listener-zoneingress: enabled
+          kuma.io/listener-zoneegress: enabled
         dataplane:
           networking:
             inbound:
@@ -27,7 +38,9 @@ Feature: mesh / workloads / item / overview
       """
 
   Scenario: The about section has the expected content
-    When I visit the "meshes/default/data-planes/dataplane-1/overview" URL
+    When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_dataplane-1_/overview" URL
     Then the "$about-section" element exists
     And the "$about-section" element contains "zone-1"
     And the "$about-section" element contains "kuma.io/origin:zone"
+    And the "$about-section" element contains "ZoneIngress"
+    And the "$about-section" element contains "ZoneEgress"

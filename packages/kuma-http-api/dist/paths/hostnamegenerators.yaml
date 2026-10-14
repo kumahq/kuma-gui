@@ -1,6 +1,34 @@
+post:
+  operationId: postHostnameGenerator
+  summary: Creates HostnameGenerator entity
+  description: Creates a resource using the name in the body. An existing resource is never modified. Requires Kuma 3.0 or later.
+  requestBody:
+    description: Resource to create
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/HostnameGeneratorItem.yaml'
+  responses:
+    '201':
+      $ref: '../components/responses/HostnameGeneratorCreateOrUpdateSuccessResponse.yaml'
+    '400':
+      description: Invalid resource
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/Error.yaml'
+    '409':
+      description: A resource with this identity already exists
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/Error.yaml'
+  tags:
+    - HostnameGenerator
 get:
   operationId: getHostnameGeneratorList
-  summary: Returns a list of HostnameGenerator in the mesh.
+  summary: Returns a list of HostnameGenerator.
   parameters:
     - name: offset
       in: query
@@ -20,7 +48,7 @@ get:
         minimum: 1
     - name: filter
       in: query
-      description: 'filter by labels when multiple filters are present, they are ANDed'
+      description: filter by labels when multiple filters are present, they are ANDed
       required: false
       schema:
         type: object
@@ -33,6 +61,6 @@ get:
         label.k8s.kuma.io/namespace: my-ns
   responses:
     '200':
-      $ref: "../components/responses/HostnameGeneratorList.yaml"
+      $ref: '../components/responses/HostnameGeneratorList.yaml'
   tags:
     - HostnameGenerator

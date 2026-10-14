@@ -8,8 +8,8 @@
     v-slot="{ route, t, uri }"
   >
     <DataSource
-      :src="uri(sources, '/workloads/:wl', {
-        wl: route.params.wl,
+      :src="uri(sources, '/workloads/:kri', {
+        kri: route.params.wl,
       })"
       v-slot="{ data, result }"
     >
@@ -38,25 +38,22 @@
         <template
           #title
         >
-          <XProgress
-            v-if="typeof data === 'undefined'"
-            variant="line"
-          />
-          <XLayout
-            v-else
-            size="small"
+          <DataLoader
+            :data="[data]"
+            variant="header"
+            v-slot="{ data: [workload] }"
           >
-            <h1>
-              <XCopyButton
-                :text="data.name"
-              />
-            </h1>
-            <XBadge
-              :appearance="t(`common.status.appearance.${data.status.state}`, undefined, { defaultMessage: 'neutral' })"
+            <XLayout
+              variant="y-stack"
+              size="small"
             >
-              {{ t(`http.api.value.${data.status.state}`) }}
-            </XBadge>
-          </XLayout>
+              <h1>
+                <RouteTitle
+                  :title="workload.name"
+                />
+              </h1>
+            </XLayout>
+          </DataLoader>
         </template>
 
         <XTabs

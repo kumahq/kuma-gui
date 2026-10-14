@@ -1,16 +1,18 @@
 import type { Dependencies, ResponseHandler } from '#mocks'
-import type { components } from '@kumahq/kuma-http-api'
+import type { paths } from '@kumahq/kuma-http-api'
 
-type DataplaneNetworkingLayout = components['schemas']['DataplaneNetworkingLayout']
-type DataplaneInbound = components['schemas']['DataplaneInbound']
-type DataplaneOutbound = components['schemas']['DataplaneOutbound']
+type DataplaneNetworkingLayout = paths['/meshes/{mesh}/dataplanes/{name}/_layout']['get']['responses']['200']['content']['application/json']
+type DataplaneInbound = DataplaneNetworkingLayout['inbounds'][number]
+type DataplaneOutbound = DataplaneNetworkingLayout['outbounds'][number]
+// @TODO(types) rmeove the clusters form here once we are on v3 as its already in the spec
+type DataplaneListener = DataplaneNetworkingLayout['listeners'][number] & { clusters: unknown }
 
 export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
   const mesh = req.params.mesh as string
   const name = req.params.name as string
 
   const parts = String(name).split('.')
-  const displayName = parts.slice(0, -1).join('.')
+  const displayName = parts.slice(0, -1).join('.') || name
   const nspace = parts.at(-1) ?? ''
 
   const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
@@ -28,7 +30,7 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
       port,
       protocol: fake.kuma.protocol(),
       kri: fake.kuma.kri({
-        shortName: fake.helpers.arrayElement(['msvc', 'mzsvc', 'extsvc']),
+        resourceName: fake.helpers.arrayElement(['MeshService', 'MeshMultiZoneService', 'MeshExternalService']),
         mesh,
         namespace: nspace,
         name: fake.word.noun(),
@@ -36,22 +38,33 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
       }),
     }
   })
+  const listenerCount = parseInt(env('KUMA_DATAPLANELISTENER_COUNT', `${fake.number.int({ min: 0, max: 50 })}`))
+  const listeners = Array.from({ length: listenerCount }).map(() => ({
+    port: fake.number.int({ min: 1, max: 65535 }),
+  }))
+  const zone = fake.word.noun()
+
 
   return {
-    headers: {},
+    headers: {
+      'Status-Code': '200',
+      ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
+    },
     body: {
       kri: fake.kuma.kri({
-        shortName: 'dp',
+        resourceName: 'Dataplane',
         mesh,
+        zone,
         namespace: nspace,
         name: displayName,
-        sectionName: 'default',
+        sectionName: '',
       }),
+      spiffeId: fake.kuma.spiffeId({ mesh, namespace: nspace, sa: displayName }),
       labels: {
         'kuma.io/display-name': displayName,
         'kuma.io/origin': fake.kuma.origin(),
         'kuma.io/mesh': mesh || fake.word.noun(),
-        'kuma.io/zone': fake.word.noun(),
+        'kuma.io/zone': zone,
         ...(k8s
           ? {
             'k8s.kuma.io/namespace': nspace,
@@ -62,8 +75,9 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
         const sectionName = fake.helpers.arrayElement(['default', 'httpport', port.toString(), 'ipv4', 'ipv6'])
         return {
           kri: fake.kuma.kri({
-            shortName: 'dp',
+            resourceName: 'Dataplane',
             mesh,
+            zone,
             namespace: nspace,
             name: displayName,
             sectionName,
@@ -80,6 +94,42 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
           protocol,
           proxyResourceName: kri,
         } satisfies DataplaneOutbound
+      }),
+      listeners: listeners.map(({ port }) => {
+        const type = fake.helpers.arrayElement(['ZoneIngress', 'ZoneEgress'])
+        const kri = fake.kuma.kri({
+          resourceName: 'Dataplane',
+          mesh,
+          zone,
+          namespace: nspace,
+          name: displayName,
+          sectionName: String(port),
+        })
+        return {
+          kri,
+          port,
+          proxyResourceName: fake.kuma.contextualKri({ context: `${type.toLowerCase()}_dp`, name: String(port) }),
+          type,
+          clusters: Array.from({ length: 2 }).map(_ => {
+            const port = fake.internet.port()
+            // I'm not totally sure whether these should be random,
+            // but it feels like they should be same mesh/nspace but cross zone
+            // feel free to change is necessary as we are just filling these out for now
+            return {
+              kri: fake.kuma.kri({
+                resourceName: 'Dataplane',
+                mesh,
+                zone: fake.word.noun(),
+                namespace: nspace,
+                name: fake.word.noun(),
+                sectionName: String(port),
+              }),
+              port,
+              protocol: fake.kuma.protocol(),
+              proxyResourceName: fake.kuma.contextualKri({ context: `${type.toLowerCase()}_dp`, name: String(port) }),
+            }
+          }),
+        } satisfies DataplaneListener
       }),
     } satisfies DataplaneNetworkingLayout,
   }

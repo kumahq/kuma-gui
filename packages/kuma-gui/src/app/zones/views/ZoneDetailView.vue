@@ -5,86 +5,97 @@
       zone: '',
       subscription: '',
     }"
-    v-slot="{ t, uri }"
+    v-slot="{ t, uri, r }"
   >
-    <DataSource
-      :src="uri(sources, '/control-plane/outdated/:version', {
-        version: props.data.zoneInsight.version?.kumaCp?.version ?? '-',
-      })"
-      v-slot="{ data: version }"
+    <RouteTitle
+      :render="false"
+      :title="t('zone-cps.routes.item.title', { name: props.data?.name })"
+    />
+    <AppView
+      :docs="t('zones.href.docs.cta')"
+      :notifications="true"
     >
-      <AppView
-        :docs="t('zones.href.docs.cta')"
-        :notifications="true"
+      <XCard
+        data-testid="zone-about-section"
       >
-        <template
-          v-for="{ bool, key, params } in [
-            {
-              bool: props.data.zoneInsight.store === 'memory',
-              key: 'store-memory',
-            },
-            {
-              bool: !props.data.zoneInsight.version?.kumaCp?.kumaCpGlobalCompatible,
-              key: 'global-cp-incompatible',
-              params: {
-                zoneCpVersion: props.data.zoneInsight.version?.kumaCp?.version ?? '-',
-                globalCpVersion: version?.version ?? '',
-              },
-            },
-            {
-              bool: (props.data.zoneInsight.connectedSubscription?.status.total.responsesRejected ?? 0) > 0,
-              key: 'global-nack-response',
-            },
-          ]"
-          :key="key"
-        >
-          <XNotification
-            :notify="bool"
-            :data-testid="`warning-${key}`"
-            :uri="`zone-cps.notifications.${key}.${props.data.id}`"
-          >
-            <XI18n
-              :path="`zone-cps.notifications.${key}`"
-              :params="Object.fromEntries(Object.entries(params ?? {}))"
-            >
-              <template
-                v-if="key === 'global-nack-response'"
-                #link
-              >
-                <XAction
-                  data-action
-                  :to="{
-                    name: 'zone-cp-subscription-summary-view',
-                    params: {
-                      subscription: props.data.zoneInsight.connectedSubscription?.id,
-                    },
-                  }"
-                >
-                  zone control plane summary
-                </XAction>
-              </template>
-            </XI18n>
-          </XNotification>
+        <XTimespan
+          :start="props.data && 'creationTime' in props.data ? props.data.creationTime : undefined"
+          :end="props.data && 'modificationTime' in props.data ? props.data.modificationTime : undefined"
+        />
+        <template #title>
+          {{ t('zone-cps.detail.about.title') }}
         </template>
-        <XLayout
-          data-testid="detail-view-details"
-          type="stack"
+        <DataLoader
+          :data="[props.data]"
+          v-slot="{ data: [zone] }"
         >
-          <XAboutCard
-            :title="t('zone-cps.detail.about.title')"
-            :created="props.data.creationTime"
-            :modified="props.data.modificationTime"
-            class="about-section"
-            data-testid="zone-about-section"
+          <DataLoader
+            :src="uri(sources, '/control-plane/outdated/:version', {
+              version: zone.zoneInsight.version?.kumaCp?.version ?? '-',
+            })"
+            v-slot="{ data: [version] }"
           >
-            <XLayout>
+            <template
+              v-for="{ bool, key, params } in [
+                {
+                  bool: zone.zoneInsight.store === 'memory',
+                  key: 'store-memory',
+                  params: {},
+                },
+                {
+                  bool: zone.zoneInsight.subscriptions.length > 0 && !zone.zoneInsight.version?.kumaCp?.kumaCpGlobalCompatible,
+                  key: 'global-cp-incompatible',
+                  params: {
+                    zoneCpVersion: zone.zoneInsight.version?.kumaCp?.version ?? '-',
+                    globalCpVersion: version?.version ?? '',
+                  },
+                },
+                {
+                  bool: (zone.zoneInsight.connectedSubscription?.status.total.responsesRejected ?? 0) > 0,
+                  key: 'global-nack-response',
+                  params: {},
+                },
+              ]"
+              :key="key"
+            >
+              <XNotification
+                :notify="bool"
+                :data-testid="`warning-${key}`"
+                :uri="`zone-cps.notifications.${key}.${zone.id}`"
+              >
+                <XI18n
+                  :path="`zone-cps.notifications.${key}`"
+                  :params="params"
+                >
+                  <template
+                    v-if="key === 'global-nack-response'"
+                    #link
+                  >
+                    <XAction
+                      data-action
+                      :to="{
+                        name: 'zone-cp-subscription-summary-view',
+                        params: {
+                          subscription: zone.zoneInsight.connectedSubscription?.id,
+                        },
+                      }"
+                    >
+                      zone control plane summary
+                    </XAction>
+                  </template>
+                </XI18n>
+              </XNotification>
+            </template>
+            <XLayout
+              variant="y-stack"
+            >
               <XDl variant="x-stack">
                 <div>
                   <dt>
                     {{ t('http.api.property.status') }}
                   </dt>
                   <dd>
-                    <StatusBadge :status="props.data.state" />
+                    <KumaStatusBadge :status="zone.state" />
                   </dd>
                 </div>
                 <div
@@ -97,11 +108,11 @@
                     {{ t('zone-cps.routes.item.version') }}
                   </dt>
                   <dd>
-                    <XLayout type="separated">
+                    <XLayout variant="x-stack">
                       <XBadge
                         :appearance="version?.outdated === true ? 'warning' : 'decorative'"
                       >
-                        {{ props.data.zoneInsight.version?.kumaCp?.version ?? '—' }}
+                        {{ zone.zoneInsight.version?.kumaCp?.version ?? '—' }}
                       </XBadge>
                       <template
                         v-if="version?.outdated === true"
@@ -122,8 +133,10 @@
                     {{ t('http.api.property.type') }}
                   </dt>
                   <dd>
-                    <XBadge appearance="decorative">
-                      {{ t(`common.product.environment.${props.data.zoneInsight.environment || 'unknown'}`) }}
+                    <XBadge
+                      appearance="decorative"
+                    >
+                      {{ t(`common.product.environment.${zone.zoneInsight.environment || 'unknown'}`) }}
                     </XBadge>
                   </dd>
                 </div>
@@ -133,46 +146,44 @@
                   </dt>
                   <dd>
                     <XBadge appearance="decorative">
-                      {{ props.data.zoneInsight.authenticationType || t('common.not_applicable') }}
+                      {{ zone.zoneInsight.authenticationType || t('common.not_applicable') }}
                     </XBadge>
                   </dd>
                 </div>
-
-                <template
-                  v-for="labels in [Object.entries(props.data.labels)]"
-                  :key="typeof labels"
-                >
-                  <div v-if="labels.length > 0">
-                    <dt>{{ t('services.routes.item.labels') }}</dt>
-                    <dd>
-                      <XLayout
-                        variant="separated"
-                        truncate
+                <div v-if="Object.keys(zone.labels).length > 0">
+                  <dt>Labels</dt>
+                  <dd>
+                    <XLayout
+                      variant="separated"
+                    >
+                      <XAction
+                        v-for="(value, key) in zone.labels"
+                        :key="key"
+                        :href="t(`common.label.href.${key.replaceAll('.', '~')}`, {
+                          mesh: '',
+                          zone: '',
+                          namespace: '',
+                          name: value,
+                        }, { defaultMessage: '' })"
                       >
-                        <template
-                          v-for="kumaRe in [/^(.+\.)?kuma\.io\//]"
-                          :key="typeof kumaRe"
+                        <XBadge
+                          :variant="r('kuma.label').test(key) ? 'reserved-kv' : 'kv'"
                         >
-                          <XBadge
-                            v-for="[key, value] in labels"
-                            :key="key"
-                            :appearance="kumaRe.test(key) ? 'info' : 'decorative'"
-                          >
-                            {{ key }}:{{ value }}
-                          </XBadge>
-                        </template>
-                      </XLayout>
-                    </dd>
-                  </div>
-                </template>
+                          {{ key }}:<strong>{{ value }}</strong>
+                        </XBadge>
+                      </XAction>
+                    </XLayout>
+                  </dd>
+                </div>
               </XDl>
 
               <XLayout
-                v-if="props.data.zoneInsight.subscriptions.length > 0"
+                v-if="zone.zoneInsight.subscriptions.length > 0"
+                variant="y-stack"
                 data-testid="about-zone-cp-subscriptions"
                 class="about-subsection"
               >
-                <XLayout type="separated">
+                <XLayout variant="inline">
                   <h3>{{ t('zone-cps.routes.item.subscriptions.title') }}</h3>
                   <XAction
                     data-action
@@ -185,7 +196,7 @@
                   </XAction>
                 </XLayout>
                 <template
-                  v-for="subscription in [props.data.zoneInsight.connectedSubscription]"
+                  v-for="subscription in [zone.zoneInsight.connectedSubscription]"
                   :key="typeof subscription"
                 >
                   <template v-if="!subscription?.disconnectTime && subscription?.connectTime">
@@ -216,7 +227,7 @@
                         </dt>
                         <dd>
                           <XBadge appearance="info">
-                            {{ subscription.version?.kumaCp.version ?? t('common.unknown') }}
+                            {{ subscription.version?.kumaCp?.version || t('common.unknown') }}
                           </XBadge>
                         </dd>
                       </div>
@@ -228,33 +239,24 @@
                 </template>
               </XLayout>
             </XLayout>
-          </XAboutCard>
-        </XLayout>
-      </AppView>
-    </DataSource>
+          </DataLoader>
+        </DataLoader>
+      </XCard>
+    </AppView>
   </RouteView>
 </template>
 
 <script lang="ts" setup>
 import type { ZoneOverview } from '../data'
-import StatusBadge from '@/app/common/StatusBadge.vue'
 import { sources } from '@/app/control-planes/sources'
 
 const props = defineProps<{
-  data: ZoneOverview
+  data: ZoneOverview | Error | undefined
 }>()
 </script>
 <style lang="scss" scoped>
 .about-subsection {
-  border-top: $kui-border-width-10 solid $kui-color-border;
-  padding-top: $kui-space-70;
-}
-
-:deep(.about-section .about-section-content) {
-  display: block !important;
-
-  h3 {
-    color: $kui-color-text;
-  }
+  border-top: var(--x-border-width-10) solid var(--x-color-border);
+  padding-top: var(--x-space-70);
 }
 </style>

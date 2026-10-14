@@ -39,6 +39,6 @@ onBeforeUnmount(() => {
 </script>
 <style lang="scss">
 .error {
-  margin-top: $kui-space-60;
+  margin-top: var(--x-space-60);
 }
 </style>

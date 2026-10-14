@@ -7,10 +7,21 @@
         class="aside"
       >
         <slot name="aside">
-          <TagList
+          <XAction
             v-if="props.service.length > 0"
-            :tags="[{label: 'kuma.io/service', value: props.service}]"
-          />
+            :href="t(`common.label.href.${`kuma.io/service`.replaceAll('.', '~')}`, {
+              mesh: '',
+              zone: '',
+              namespace: '',
+              name: props.service.replaceAll('_', '~'),
+            }, { defaultMessage: '' })"
+          >
+            <XBadge
+              variant="reserved-kv"
+            >
+              kuma.io/service:<strong>{{ props.service }}</strong>
+            </XBadge>
+          </XAction>
         </slot>
       </div>
       <div class="title">
@@ -141,6 +152,10 @@
             <dt>{{ t('data-planes.components.service_traffic_card.cx') }}</dt>
             <dd>{{ t('common.formats.integer', { value: props.traffic.tcp?.[`${props.direction}_cx_total`] }) }}</dd>
           </div>
+          <div>
+            <dt>{{ t('data-planes.components.service_traffic_card.cx_active') }}</dt>
+            <dd>{{ t('common.formats.integer', { value: props.traffic.tcp?.[`${props.direction}_cx_active`] }) }}</dd>
+          </div>
           <div
             v-if="typeof props.traffic.tcp?.[`${props.direction}_cx_tx_bytes_total`] !== 'undefined'"
             data-testid="bytes-received"
@@ -159,18 +174,19 @@
       </XDl>
     </template>
     <template v-else>
-      <XProgress
-        variant="line"
-      />
+      <slot name="empty">
+        <XProgress
+          variant="line"
+        />
+      </slot>
     </template>
   </DataCard>
 </template>
 <script lang="ts" setup>
 import formatBytes from 'pretty-bytes'
 
+import DataCard from '../data-card/DataCard.vue'
 import { useI18n } from '@/app/application'
-import DataCard from '@/app/common/data-card/DataCard.vue'
-import TagList from '@/app/common/TagList.vue'
 const { t } = useI18n()
 const props = withDefaults(defineProps<{
   protocol: string
@@ -189,16 +205,16 @@ const props = withDefaults(defineProps<{
 <style lang="scss" scoped>
 .aside {
   float: right;
-  margin-bottom: $kui-space-40;
-  margin-left: $kui-space-40;
+  margin-bottom: var(--x-space-40);
+  margin-left: var(--x-space-40);
 }
 .title {
   float: left;
-  font-size: $kui-font-size-40;
+  font-size: var(--x-font-size-40);
   display: flex;
   align-items: center;
   flex: 1 1 auto;
-  gap: $kui-space-40;
+  gap: var(--x-space-40);
 }
 .protocol {
   align-self: start;

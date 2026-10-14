@@ -2,7 +2,7 @@
   <RouteView
     name="hostname-generator-list-view"
     :params="{
-      name: '',
+      kri: '',
       page: 1,
       size: 15,
       s: '',
@@ -24,13 +24,12 @@
         default-path="common.i18n.ignore-error"
       />
       <XCard>
-        <XLayout>
+        <XLayout variant="y-stack">
           <search>
             <form
               @submit.prevent
             >
               <XSearch
-                class="search-field"
                 :keys="['name', 'namespace', ...(can('use zones') ? ['zone'] : []), 'label']"
                 :value="route.params.s"
                 @change="(s) => route.update({ s, page: 1 })"
@@ -45,7 +44,7 @@
               search: route.params.s,
             })"
             variant="list"
-            v-slot="{ data }"
+            v-slot="{ data: [data] }"
           >
             <DataCollection
               type="hostname-generators"
@@ -64,7 +63,7 @@
                   { ...me.get('headers.actions'), label: t('hostname-generators.common.actions'), key: 'actions', hideLabel: true },
                 ]"
                 :items="data.items"
-                :is-selected-row="(item) => item.name === route.params.name"
+                :is-selected-row="(item) => item.name === route.params.kri"
                 @resize="me.set"
               >
                 <template #name="{ row: item }">
@@ -76,7 +75,7 @@
                       :to="{
                         name: 'hostname-generator-summary-view',
                         params: {
-                          name: item.id,
+                          kri: item.kri,
                         },
                         query: {
                           page: route.params.page,
@@ -90,15 +89,19 @@
                   </XCopyButton>
                 </template>
 
+                <template #zone="{ row: item }">
+                  <XAction
+                    v-if="item.zone.length > 0"
+                    :href="`kri://${Kri.toString({ shortName: 'z', name: item.zone })}`"
+                  >
+                    {{ item.zone }}
+                  </XAction>
+                </template>
+
                 <template #actions="{ row: item }">
                   <XActionGroup>
                     <XAction
-                      :to="{
-                        name: 'hostname-generator-detail-view',
-                        params: {
-                          name: item.id,
-                        },
-                      }"
+                      :href="`kri://${item.kri}`"
                     >
                       {{ t('common.collection.actions.view') }}
                     </XAction>
@@ -106,14 +109,14 @@
                 </template>
               </AppCollection>
               <RouterView
-                v-if="data.items && route.params.name"
+                v-if="data.items && route.params.kri"
                 v-slot="child"
               >
                 <XDrawer
                   @close="route.replace({
                     name: 'hostname-generator-list-view',
                     params: {
-                      name: '',
+                      kri: '',
                     },
                     query: {
                       page: route.params.page,
@@ -139,9 +142,5 @@
 <script lang="ts" setup>
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
+import { Kri } from '@/app/kuma'
 </script>
-<style lang="scss" scoped>
-.search-field {
-  width: 100%;
-}
-</style>

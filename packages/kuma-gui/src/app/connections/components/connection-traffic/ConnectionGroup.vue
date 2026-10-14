@@ -16,18 +16,17 @@ const props = defineProps<{
 <style lang="scss" scoped>
 .type-passthrough,
 .type-outbound {
-  padding: $kui-space-40;
-  border-radius: $kui-border-radius-40;
+  padding: var(--x-space-40);
+  border-radius: var(--x-border-radius-40);
 }
 .service-traffic-group {
   &.type-passthrough {
-    /* TODO(jc): This border color is in the design but doesn't seem to be in @kong/design-tokens */
-    border-color: #00D6A4; // $kui-color-green-40;
-    background-color: $kui-color-background-success-weakest;
+    border-color: var(--x-color-green-40);
+    background-color: var(--x-color-background-success-weakest);
   }
   &.type-outbound {
-    border-color: $kui-color-border-primary-weak;
-    background-color: $kui-color-background-primary-weakest;
+    border-color: var(--x-color-border-primary-weak);
+    background-color: var(--x-color-background-primary-weakest);
   }
   &.type-inbound {
     padding: 0;

@@ -1,16 +1,20 @@
+import type { paths } from '@kumahq/kuma-http-api'
 import { Dataplane } from './Dataplane'
 import { DataplaneInsight } from './DataplaneInsight'
 import { DataplaneNetworking } from './DataplaneNetworking'
-import type { PaginatedApiListResponse } from '@/types/api.d'
+import { Kri } from '@/app/kuma/kri'
 import type {
-  DataPlaneOverview as PartialDataplaneOverview,
   LabelValue,
 } from '@/types/index.d'
+
+type KumaDataplaneOverviewCollection = paths['/meshes/{mesh}/dataplanes/_overview']['get']['responses']['200']['content']['application/json']
+type KumaDataplaneOverview = KumaDataplaneOverviewCollection['items'][number]
 
 const states = {
   online: 'online',
   offline: 'offline',
   partiallyDegraded: 'partially_degraded',
+  disconnectedCp: 'disconnected_cp',
 } as const
 const dpTypes = {
   builtin: 'builtin',
@@ -19,67 +23,128 @@ const dpTypes = {
 } as const
 
 export const DataplaneOverview = {
-  fromObject(item: PartialDataplaneOverview) {
+  // TODO: use export type KumaDataplaneOverview = NonNullable<components['schemas']['DataplaneOverviewWithMeta']>
+  fromObject(item: KumaDataplaneOverview) {
     const dataplaneInsight = DataplaneInsight.fromObject(item.dataplaneInsight)
 
-    const networking = DataplaneNetworking.fromObject(item.dataplane.networking)
+    const networking = DataplaneNetworking.fromObject(item.dataplane?.networking ?? {})
 
     const tags = getTags(networking)
     const isCertExpired = getIsCertExpired(dataplaneInsight)
     const isCertExpiresSoon = getIsCertExpiresSoon(dataplaneInsight)
-    const services = tags.filter((tag) => tag.label === 'kuma.io/service').map(({ value }) => value)
-    const zone = tags.find((tag) => tag.label === 'kuma.io/zone')?.value
-    const labels = typeof item.labels !== 'undefined' ? item.labels : {}
+
+    const labels = item.labels ?? {}
+    const id = item.name
+    const mesh = item.mesh
+    // check for label first, fallback to tags
+    const zone = labels['kuma.io/origin'] === 'zone' && labels['kuma.io/zone'] ? labels['kuma.io/zone'] : tags.find((tag) => tag.label === 'kuma.io/zone')?.value ?? ''
+    const namespace = labels['k8s.kuma.io/namespace'] ?? ''
+    const name = labels['kuma.io/display-name'] ?? item.name
+
+    const kri = item.kri ?? Kri.toString({ shortName: 'dp', mesh, zone, namespace, name })
+
+    // TODO(types): services are only used for legacy-services / service-insights
+    // get all tags and labels with kuma.io/service
+    // uniquify and and sort
+    const services = Array.from(new Set([
+      ...tags.filter((tag) => tag.label === 'kuma.io/service').map(({ value }) => value),
+      ...(labels['kuma.io/service'] ? [labels['kuma.io/service']] : []),
+    ])).sort((a, b) => a.localeCompare(b)).map((service) => ({
+      name: service,
+      // we encode `kuma.io/service: name_of_something_svc` by turning
+      // the _'s into ~'s so this replaceAll puts them back
+      kri: Kri.toString({ shortName: '$hostport', mesh, zone, namespace, name: service.replaceAll('_', '~') }),
+    }))
+
+
 
     return {
       ...item,
-      id: item.name,
-      name: labels['kuma.io/display-name'] ?? item.name,
-      namespace: labels['k8s.kuma.io/namespace'] ?? '',
+      kri,
+      name,
+      mesh,
+      labels,
+      // TODO: refactor once `creationTime` and `modificationTime` and in OAS
+      creationTime: ('creationTime' in item ? item.creationTime : '') as string | undefined ?? '',
+      modificationTime: ('modificationTime' in item ? item.modificationTime : '') as string | undefined ?? '',
+      // aliases
+      id,
+      namespace,
+      zone,
+
+      dataplaneInsight,
       dataplane: {
         networking,
       },
-      labels,
-      dataplaneInsight,
-      dataplaneType: networking.type === 'gateway' ? dpTypes.builtin : typeof networking.gateway !== 'undefined' ? dpTypes.delegated : dpTypes.standard,
+      dataplaneType: (() => {
+        switch (true) {
+          case networking.type === 'gateway':
+            return dpTypes.builtin
+          case 'gateway' in networking:
+            return dpTypes.delegated
+          default:
+            return dpTypes.standard
+        }
+      })(),
+      zoneProxyTypes: [
+        ...labels['kuma.io/listener-zoneingress'] ? ['zone-ingress'] : [],
+        ...labels['kuma.io/listener-zoneegress'] ? ['zone-egress'] : [],
+      ],
       status: (() => {
-        const state = typeof dataplaneInsight.connectedSubscription !== 'undefined' ? states.online : states.offline
-        if (networking.gateway) {
+        const state = typeof dataplaneInsight.connectedSubscription !== 'undefined' ? states.online : states.disconnectedCp
+        if ('gateway' in networking || state === states.disconnectedCp) {
           return state
         }
 
-        const unhealthyInbounds = networking.inbounds.filter((inbound) => inbound.state !== 'Ready')
+        const networkEndpoints = networking.inbounds
+        const unhealthy = networkEndpoints.filter((endpoint) => endpoint.state !== 'Ready')
         switch (true) {
-          case unhealthyInbounds.length === networking.inbounds.length:
-            // All inbounds being unhealthy means the Dataplane is offline.
+          case unhealthy.length === 0:
+            // No unhealthy network endpoints means the Dataplane is online.
+            return states.online
+          case unhealthy.length === networkEndpoints.length:
+            // All network endpoints being unhealthy means the Dataplane is offline.
             return states.offline
-          case unhealthyInbounds.length > 0:
-            // Some inbounds being unhealthy means the Dataplane is partially degraded.
+          case unhealthy.length > 0:
+            // Some network endpoints being unhealthy means the Dataplane is partially degraded.
             return states.partiallyDegraded
           default:
-            // All inbounds being healthy means the Dataplane’s status is determined by whether it’s connected to a control plane.
+            // All network endpoints being healthy means the Dataplane’s status is determined by whether it’s connected to a control plane.
             return state
         }
       })(),
       isCertExpired,
       isCertExpiresSoon,
+      // TODO(types): services are only used for legacy-services / service-insights
       services,
-      zone,
+      // config should only contain non-defaulted values
+      // because we want to show what the API responded with
+      // we then copy over things that should be on the Entity, but
+      // are only on the EntityOverview
       config: {
         ...Dataplane.fromObject({
+          // bare minimum props to keep TS happy
+          // plus a splat of the original Entity
           type: 'Dataplane',
           name: item.name,
           mesh: item.mesh,
           ...item.dataplane,
         }).config,
+
+        // the things we copy over
+        // kri is always missing and we always purposefully add and generate ourselves
+        kri,
+        // we only copy these over if they exist
         ...(typeof item.labels !== 'undefined' ? { labels: item.labels } : {}),
-        creationTime: item.creationTime,
-        modificationTime: item.modificationTime,
+
+        // TODO: refactor once `creationTime` and `modificationTime` and in OAS
+        ...('creationTime' in item && typeof item.creationTime !== 'undefined' ? { creationTime: item.creationTime } : {}),
+        ...('modificationTime' in item && typeof item.modificationTime !== 'undefined' ? { modificationTime: item.modificationTime } : {}),
       },
     }
   },
 
-  fromCollection(partialDataplaneOverviews: PaginatedApiListResponse<PartialDataplaneOverview>) {
+  fromCollection(partialDataplaneOverviews: KumaDataplaneOverviewCollection) {
     return {
       ...partialDataplaneOverviews,
       items: Array.isArray(partialDataplaneOverviews.items)
@@ -88,7 +153,8 @@ export const DataplaneOverview = {
     }
   },
 }
-function getTags({ gateway, inbounds }: DataplaneNetworking): LabelValue[] {
+function getTags(networking: DataplaneNetworking): LabelValue[] {
+  const { inbounds } = networking
   let tags: string[] = []
   const separator = '='
 
@@ -98,7 +164,8 @@ function getTags({ gateway, inbounds }: DataplaneNetworking): LabelValue[] {
       .map(([key, value]) => `${key}${separator}${value}`)
   }
 
-  if (gateway) {
+  if ('gateway' in networking) {
+    const gateway = networking.gateway as { tags: Record<string, string>}
     tags = Object.entries(gateway.tags ?? {}).map(([key, value]) => `${key}${separator}${value}`)
   }
 
@@ -119,8 +186,12 @@ function getIsCertExpired({ mTLS }: DataplaneInsight): boolean {
 function getIsCertExpiresSoon({ mTLS }: DataplaneInsight): boolean {
   if (!mTLS?.certificateExpirationTime) return false
   const expiryTime = new Date(mTLS.certificateExpirationTime).getTime()
-  const weekBefore = expiryTime - 3_600_000 * 24 * 7
-  return Date.now() > weekBefore && Date.now() < expiryTime
+  let expiresSoonThreshold = 1_000 * 60 * 60 * 24 / 5 // 1/5 of 1 day = 4.8 hours
+  if(mTLS?.lastCertificateRegeneration) {
+    const creationTime = new Date(mTLS.lastCertificateRegeneration).getTime()
+    expiresSoonThreshold = (expiryTime - creationTime) / 5
+  }
+  return Date.now() > expiryTime - expiresSoonThreshold && Date.now() < expiryTime
 }
 
 export type DataplaneOverview = ReturnType<typeof DataplaneOverview.fromObject>

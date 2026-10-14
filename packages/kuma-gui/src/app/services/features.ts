@@ -1,9 +1,12 @@
-import { Mesh } from '@/app/meshes/data'
 import type { Features } from '@kumahq/settings/can'
+
 export const features = () => {
   return {
-    'use service-insights': (_can: unknown, mesh: Mesh) => {
-      return mesh.meshServices.mode !== 'Exclusive'
+    'use service-insights': (_can: unknown, _mesh: unknown) => {
+      return false
+    },
+    'use mesh-services': (_can: unknown, _mesh: unknown) => {
+      return true
     },
   }
 }

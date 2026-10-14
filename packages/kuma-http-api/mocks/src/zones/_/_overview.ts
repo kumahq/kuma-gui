@@ -1,4 +1,9 @@
 import type { Dependencies, ResponseHandler } from '#mocks'
+import type { paths } from '@kumahq/kuma-http-api'
+
+// @TODO(types): once the types are correct here we can remove the omit
+type ZoneOverviewResponse = Omit<paths['/zones/{name}/_overview']['get']['responses']['200']['content']['application/json'], 'labels' | 'mesh'>
+
 export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
   const params = req.params
   const subscriptionCount = parseInt(env('KUMA_SUBSCRIPTION_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
@@ -9,13 +14,13 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
 
   return {
     headers: {
+      ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
       'Status-Code': env('KUMA_STATUS_CODE', '200'),
     },
     body: {
       type: 'ZoneOverview',
-      name: params.name,
-      creationTime: '2021-02-19T08:06:15.380674+01:00',
-      modificationTime: '2021-02-19T08:06:15.380674+01:00',
+      name: String(params.name),
+      ...fake.kuma.timespan(),
       zone: {
         ...(fake.datatype.boolean()
           ? {
@@ -97,6 +102,6 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
           }
           : {}),
       },
-    },
+    } satisfies ZoneOverviewResponse,
   }
 }

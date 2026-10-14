@@ -1,57 +1,54 @@
-Feature: mesh / mesh-identity
+Feature: mesh / mesh-trust
 
   Background:
     Given the CSS selectors
-      | Alias              | Selector                            |
-      | meshtrusts-listing | [data-testid="mesh-trusts-listing"] |
-      | summary            | [data-testid="slideout-container"]  |
-
-  Scenario: MeshTrusts are listed in mesh overview
-    Given the URL "/meshes/default/meshtrusts" responds with
-      """
-      body:
-        items:
-          - name: trust-1
-            spec:
-              origin:
-                kri: kri_mid_default_default_foo_bar_baz
-      """
-    When I visit the "/meshes/default" URL
-    Then the "$meshtrusts-listing" element exists
-    And the "$meshtrusts-listing" element contains "trust-1"
-    And the "$meshtrusts-listing" element contains "kri_mid_default_default_foo_bar_baz"
-
-  Scenario: Clicking on mesh trust item opens summary view
-    Given the URL "/meshes/default/meshtrusts" responds with
+      | Alias              | Selector                                  |
+      | meshtrusts-listing | [data-testid="mesh-trusts-listing"]       |
+      | item               | $meshtrusts-listing tbody tr              |
+      | summary            | [data-testid="slideout-container"]        |
+      | summary-title      | $summary [data-testid='slideout-title']   |
+      | detail-view        | [data-testid='mesh-resource-detail-view'] |
+    And the URL "/meshes/default/meshtrusts" responds with
       """
       body:
         items:
           - name: trust-1
             mesh: default
+            kri: kri_mtrust_default___trust-1_
+            labels:
+              kuma.io/display-name: trust-1
+              kuma.io/origin: zone
+              kuma.io/zone: zone-1
             spec:
+              trustDomain: default.zone-1.mesh.local
+            status:
               origin:
                 kri: kri_mid_default_default_foo_bar_baz
       """
+
+  Scenario: MeshTrusts are listed in mesh overview
     When I visit the "/meshes/default" URL
-    Then I click the "$meshtrusts-listing a:first" element
+    Then the "$meshtrusts-listing" element exists
+    And the "$meshtrusts-listing th" element exists 4 times
+    And the "$item:nth-child(1)" element contains
+      | Value                               |
+      | trust-1                             |
+      | zone-1                              |
+      | default.zone-1.mesh.local           |
+      | kri_mid_default_default_foo_bar_baz |
+
+  Scenario: Clicking on mesh trust item opens summary view
+    When I visit the "/meshes/default" URL
+    Then I click the "$item:nth-child(1) td:first-child a" element
     Then the URL contains "/meshes/default/overview/meshtrust/kri_mtrust_default___trust-1_"
     And the "$summary" element exists
-    And the "$summary" element contains "trust-1"
+    And the "$summary-title" element contains "trust-1"
     And the "$summary [data-testid='k-code-block']" element exists
     And the "$summary [data-testid='k-code-block']" element contains "type: MeshTrust"
     And the "$summary [data-testid='k-code-block']" element contains "mesh: default"
     And the "$summary [data-testid='k-code-block']" element contains "name: trust-1"
 
   Scenario: Clicking on an origin opens the summary tray of mesh identity
-    Given the URL "/meshes/default/meshtrusts" responds with
-      """
-      body:
-        items:
-          - name: trust-1
-            spec:
-              origin:
-                kri: kri_mid_default_default_foo_bar_baz
-      """
     And the URL "/meshes/default/meshidentities" responds with
       """
       body:
@@ -59,11 +56,17 @@ Feature: mesh / mesh-identity
           - name: bar
       """
     When I visit the "/meshes/default" URL
-    Then I click the "$meshtrusts-listing tbody tr:first-child td:nth-child(3) a" element
+    Then I click the "$item:nth-child(1) td:nth-child(4) a" element
     Then the URL contains "/meshes/default/overview/meshidentity/kri_mid_default_default_foo_bar_baz"
     And the "$summary" element exists
-    And the "$summary" element contains "bar"
+    And the "$summary-title" element contains "bar"
     And the "$summary [data-testid='k-code-block']" element exists
     And the "$summary [data-testid='k-code-block']" element contains "type: MeshIdentity"
     And the "$summary [data-testid='k-code-block']" element contains "mesh: default"
     And the "$summary [data-testid='k-code-block']" element contains "name: bar"
+
+  Scenario: Navigating to resource detail page
+    When I visit the "/meshes/default" URL
+    Then I click the "$item:nth-child(1) td:first-child a" element
+    Then I click the "$summary-title a" element
+    Then the "$detail-view" element contains "trust-1"

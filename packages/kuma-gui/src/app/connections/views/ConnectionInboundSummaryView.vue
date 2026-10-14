@@ -22,7 +22,10 @@
     >
       <AppView>
         <template #title>
-          <XLayout size="small">
+          <XLayout
+            variant="y-stack"
+            size="small"
+          >
             <h2>
               Inbound {{ route.params.connection.replace('localhost', '').replace('_', ':') }}
             </h2>
@@ -61,6 +64,7 @@
           <component
             :is="child.Component"
             :data="items[0]"
+            :overview="props.overview"
             :networking="props.networking"
           />
         </RouterView>
@@ -70,10 +74,12 @@
 </template>
 
 <script lang="ts" setup>
+import type { ConnectionOverview } from '../data'
 import type { DataplaneInbound, DataplaneNetworking } from '@/app/data-planes/data/'
 
 const props = defineProps<{
   data: DataplaneInbound[]
+  overview: ConnectionOverview | Error | undefined
   networking: DataplaneNetworking
   routeName: string
 }>()

@@ -33,8 +33,8 @@ table {
 }
 :deep(tr) {
   th, td {
-    padding-block-start: $kui-space-40;
-    padding-block-end: $kui-space-40;
+    padding-block-start: var(--x-space-40);
+    padding-block-end: var(--x-space-40);
   }
 }
 
@@ -46,10 +46,10 @@ table.variant-kv {
     }
   }
   :deep(thead tr) {
-    border-block-end: $kui-border-width-10 solid $kui-color-border;
+    border-block-end: var(--x-border-width-10) solid var(--x-color-border);
   }
   :deep(tr):not(:first-child) {
-    border-block-start: $kui-border-width-10 solid $kui-color-border;
+    border-block-start: var(--x-border-width-10) solid var(--x-color-border);
   }
   :deep(tr) {
     display: flex;
@@ -60,10 +60,10 @@ table.variant-kv {
     }
     th[scope="row"] {
       & {
-        font-weight: $kui-font-weight-regular;
+        font-weight: var(--x-font-weight-regular);
       }
       + td {
-        font-weight: $kui-font-weight-bold;
+        font-weight: var(--x-font-weight-bold);
         text-align: right;
         li {
           list-style-type: none;

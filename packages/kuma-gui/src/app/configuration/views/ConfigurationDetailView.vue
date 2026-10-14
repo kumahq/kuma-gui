@@ -29,7 +29,7 @@
       <XCard>
         <DataLoader
           :src="uri(sources, `/config`, {})"
-          v-slot="{ data }"
+          v-slot="{ data: [data] }"
         >
           <XCodeBlock
             data-testid="code-block-configuration"

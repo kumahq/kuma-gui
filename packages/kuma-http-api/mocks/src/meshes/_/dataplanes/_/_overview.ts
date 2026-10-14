@@ -1,12 +1,25 @@
 import type { Dependencies, ResponseHandler } from '#mocks'
+import type { paths } from '@kumahq/kuma-http-api'
+
+// @TODO(types): once the types are correct here we can remove the omit
+type DataplaneOverviewResponse = paths['/meshes/{mesh}/dataplanes/{name}/_overview']['get']['responses']['200']['content']['application/json']
+type DataplaneInsight = Omit<NonNullable<DataplaneOverviewResponse['dataplaneInsight']>, 'metadata'> & { metadata?: { features?: string[] } }
+type DataplaneOverviewBody = Omit<DataplaneOverviewResponse, 'dataplaneInsight'> & { dataplaneInsight?: DataplaneInsight }
+
 export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
-  const kri = req.params.kri as string | undefined
+  const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
   const [
-    mesh = req.params.mesh as string,
-    _zone,
-    _namespace,
-    name = req.params.name as string,
-  ] = kri?.split('_') ?? ''
+    mesh,
+    zone,
+    nspace,
+    displayName,
+  ] = [
+    String(req.params.mesh), // mesh
+    fake.helpers.arrayElement(['', fake.word.noun()]), // zone
+    // with k8s the request.name MUST be use the correct `name.ns` format
+    ...(k8s ? String(req.params.name).split('.').toReversed() : ['', String(req.params.name)]), // nspace, displayName
+  ]
+  const name = String(req.params.name)
 
   // use a seed based on the name to keep ports and ip address the same across
   // _overview, stats and rules
@@ -20,63 +33,101 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
   //
 
   fake.kuma.seed()
-  const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
+
   const isMtlsEnabledOverride = env('KUMA_MTLS_ENABLED', '')
   const defaultType = env('KUMA_DATAPLANE_TYPE', '')
-  const unifiedResourceNaming = env('KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED', '')
+  const defaultZoneProxyType = env('KUMA_DATAPLANE_ZONEPROXY_TYPE', '')
   const isTlsIssuedMeshIdentity = env('KUMA_DATAPLANE_TLS_ISSUED_MESHIDENTITY', `${fake.datatype.boolean()}`) === 'true'
-  const isUnifiedResourceNamingEnabled = unifiedResourceNaming.length ? unifiedResourceNaming === 'true' : fake.datatype.boolean()
   const isTransparentProxyingEnabled = env('KUMA_DATAPLANE_TRANSPARENT_PROXY', `${fake.datatype.boolean()}`) === 'true'
   const isBindOutboundsEnabled = env('KUMA_DATAPLANE_BIND_OUTBOUNDS', `${fake.datatype.boolean()}`) === 'true'
   const isTcpAccesslogViaNamedPipeEnabled = env('KUMA_DATAPLANE_TCP_ACCESSLOG_VIA_NAMED_PIPE', `${fake.datatype.boolean()}`) === 'true'
 
   const outboundCount = parseInt(env('KUMA_DATAPLANEOUTBOUND_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
+  const listenersCount = parseInt(env('KUMA_DATAPLANELISTENER_COUNT', `${fake.number.int({ min: 1, max: 5 })}`))
   const subscriptionCount = parseInt(env('KUMA_SUBSCRIPTION_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
 
-  const type = (() => {
+  const type = ((type) => {
     switch (true) {
-      case defaultType === 'builtin':
+      case type === 'builtin':
       case name.includes('-builtin'):
         return 'BUILTIN'
-      case defaultType === 'delegated':
+      case type === 'delegated':
       case name.includes('-delegated'):
         return 'DELEGATED'
       default:
         return 'STANDARD'
     }
-  })()
+  })(defaultType)
+  const zoneProxyType = ((type) => {
+    switch(true) {
+      case type === 'ingress-egress':
+      case name.includes('-ingress') && name.includes('-egress'):
+        return 'INGRESS-EGRESS'
+      case type === 'ingress':
+      case name.includes('-ingress'):
+        return 'INGRESS'
+      case type === 'egress':
+      case name.includes('-egress'):
+        return 'EGRESS'
+      default:
+        return ''
+    }
+  })(defaultZoneProxyType)
 
-  const isMultizone = fake.datatype.boolean()
   const isMtlsEnabled = isTlsIssuedMeshIdentity || (isMtlsEnabledOverride !== '' ? isMtlsEnabledOverride === 'true' : fake.datatype.boolean())
 
   const service = fake.word.noun()
 
-  const parts = String(name).split('.')
-  const displayName = parts.slice(0, -1).join('.')
-  const nspace = parts.pop()
-
   return {
-    headers: {},
+    headers: {
+      ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
+    },
     body: {
       type: 'DataplaneOverview',
       mesh,
       name,
+      labels: {
+        ...fake.kuma.labels({
+          ...(name.includes('ingress') && { 'kuma.io/listener-zoneingress': 'enabled' }),
+          ...(name.includes('egress') && { 'kuma.io/listener-zoneegress': 'enabled' }),
+          name: displayName,
+          mesh,
+          ...(zone ? { zone } : {}),
+          ...(k8s ? { namespace: nspace } : {}),
+          ...(k8s ? { env: 'kubernetes' } : { env: 'universal'}),
+        }),
+      },
       ...((modificationTime) => ({
         creationTime: fake.kuma.date({ refDate: modificationTime }),
         modificationTime,
       }))(fake.kuma.date()),
+      kri: fake.kuma.kri({ resourceName: 'Dataplane', mesh, zone, namespace: k8s ? nspace : '', name: displayName, sectionName: '' }),
       dataplane: {
         networking: {
           address,
           ...(fake.datatype.boolean() ? {
             advertisedAddress: fake.internet.ip(),
           } : {}),
+          ...(zoneProxyType !== '' && {
+            listeners: Array.from({ length: listenersCount }).map((_, i) => {
+              const isIngress = zoneProxyType === 'INGRESS-EGRESS' ? fake.datatype.boolean() : zoneProxyType.includes('INGRESS')
+              const port = fake.internet.port()
+              return {
+                address,
+                port,
+                name: fake.helpers.arrayElement([String(port), `${isIngress ? 'ingress' : 'egress'}-port`]),
+                state: fake.helpers.arrayElement(['Ready', 'NotReady'] as const),
+                type: isIngress ? 'ZoneIngress' : 'ZoneEgress',
+              }
+            }),
+          }),
           ...(type === 'STANDARD' ? {
             // normal proxies have inbound and outbound
             inbound: Array.from({ length: inboundCount }).map((_, i) => {
               return {
                 address,
                 port: ports[i].port,
+                protocol: ports[i].protocol,
                 // these aren't synced, if they need seed syncing please move
                 // above with address
                 ...(fake.datatype.boolean() ? {
@@ -88,16 +139,17 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
                 tags: fake.kuma.tags({
                   protocol: ports[i].protocol,
                   service,
-                  zone: isMultizone && fake.datatype.boolean() ? fake.word.noun() : undefined,
+                  zone: zone && fake.datatype.boolean() ? fake.word.noun() : undefined,
                 }),
                 ...(fake.datatype.boolean() ? {
-                  state: fake.kuma.inboundState(),
+                  state: fake.kuma.state(),
                 } : {}),
                 ...(fake.datatype.boolean() && { name: `${fake.word.noun()}-port` }),
               }
             }),
             outbound: Array.from({ length: outboundCount }).map((_, _i) => {
               return {
+                address: fake.internet.ipv4(),
                 port: fake.internet.port(),
                 tags: fake.kuma.tags({ service }),
               }
@@ -107,25 +159,29 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
             gateway: {
               tags: fake.kuma.tags({
                 service,
-                zone: isMultizone && fake.datatype.boolean() ? fake.word.noun() : undefined,
+                zone: zone && fake.datatype.boolean() ? fake.word.noun() : undefined,
               }),
               type,
             },
           }),
+          ...(outboundCount > 0 && {transparentProxying: {
+            reachableBackends: {
+              refs: fake.helpers.arrayElements(Array.from({ length: outboundCount }).map(() => service), { min: 0, max: outboundCount }).map((service) => ({
+                kind: fake.helpers.arrayElement(['MeshService', 'MeshExternalService', 'MeshMultiZoneService']),
+                labels: {
+                  ...fake.kuma.labels(),
+                  'kuma.io/service': service,
+                },
+                port: fake.internet.port(),
+              })),
+            },
+          }}),
         },
       },
-      ...(k8s
-        ? {
-          labels: {
-            'kuma.io/display-name': displayName,
-            'k8s.kuma.io/namespace': nspace,
-          },
-        }
-        : {}),
       dataplaneInsight: {
         ...(isMtlsEnabled ? {
           mTLS: isTlsIssuedMeshIdentity ? {
-            issuedBackend: fake.kuma.kri({ shortName: 'mid', mesh: mesh as string, sectionName: '' }),
+            issuedBackend: fake.kuma.kri({ resourceName: 'MeshIdentity', mesh: mesh as string, sectionName: '' }),
           } : fake.kuma.dataplaneMtls(),
         } : {}),
         subscriptions: Array.from({ length: subscriptionCount }).map((item, i, arr) => {
@@ -191,11 +247,10 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
           features: [
             ...(isTcpAccesslogViaNamedPipeEnabled ? ['feature-tcp-accesslog-via-named-pipe'] : []),
             ...(isTransparentProxyingEnabled ? ['feature-transparent-proxy-in-dataplane-metadata'] : []),
-            ...(isUnifiedResourceNamingEnabled ? ['feature-unified-resource-naming'] : []),
             ...(isBindOutboundsEnabled ? ['feature-bind-outbounds'] : []),
           ],
         },
       },
-    },
+    } satisfies DataplaneOverviewBody,
   }
 }

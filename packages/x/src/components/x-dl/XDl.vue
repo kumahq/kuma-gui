@@ -22,7 +22,7 @@ dl {
   :deep(> div) {
     display: flex;
     align-items: baseline;
-    gap: $kui-space-30;
+    gap: var(--x-space-30);
   }
   :has(dd) :deep(dt) {
     display: flex;
@@ -40,8 +40,8 @@ dl.variant-x-stack {
   }
   & {
     flex-wrap: wrap;
-    row-gap: $kui-space-30;
-    column-gap: $kui-space-70;
+    row-gap: var(--x-space-30);
+    column-gap: var(--x-space-70);
   }
 }
 </style>

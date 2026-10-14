@@ -36,11 +36,9 @@
           >
             <search>
               <form
-                class="search-form"
                 @submit.prevent
               >
                 <XSearch
-                  class="search-field"
                   :keys="['name', 'namespace', ...(can('use zones') ? ['zone'] : []), 'label']"
                   :value="route.params.s"
                   @change="(s) => route.update({ page: 1, s })"
@@ -51,18 +49,18 @@
               :data="[data]"
               :errors="[error]"
               variant="list"
+              v-slot="{ data: [workloads] }"
             >
               <DataCollection
-                v-if="typeof data !== 'undefined'"
-                :items="data.items"
-                :total="data.total"
+                type="workloads"
+                :items="workloads.items"
+                :total="workloads.total"
                 :page="route.params.page"
                 :page-size="route.params.size"
                 @change="route.update"
               >
                 <AppCollection
-                  :items="data.items"
-                  type="workload" 
+                  :items="workloads.items"
                   :headers="[
                     { ...me.get('headers.name'), label: t('workloads.routes.items.headers.name'), key: 'name' },
                     { ...me.get('headers.namespace'), label: t('workloads.routes.items.headers.namespace'), key: 'namespace' },
@@ -97,12 +95,7 @@
                   <template #zone="{ row: item }">
                     <XAction
                       v-if="item.zone"
-                      :to="{
-                        name: 'zone-cp-detail-view',
-                        params: {
-                          zone: item.zone,
-                        },
-                      }"
+                      :href="`kri://${Kri.toString({ shortName: 'z', name: item.zone })}`"
                     >
                       {{ item.zone }}
                     </XAction>
@@ -117,12 +110,7 @@
                   <template #actions="{ row: item }">
                     <XActionGroup>
                       <XAction
-                        :to="{
-                          name: 'workload-detail-view',
-                          params: {
-                            wl: item.kri,
-                          },
-                        }"
+                        :href="`kri://${item.kri}`"
                       >
                         {{ t('common.collection.actions.view') }}
                       </XAction>
@@ -165,10 +153,6 @@
 
 <script setup lang="ts">
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
+import { Kri } from '@/app/kuma'
 import { sources } from '@/app/workloads/sources'
 </script>
-<style scoped lang="scss">
-.search-field {
-  width: 100%;
-}
-</style>

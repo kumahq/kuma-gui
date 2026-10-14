@@ -1,0 +1,5 @@
+description: A response containing the overview of a zone.
+content:
+  application/json:
+    schema:
+      $ref: '../schemas/ZoneOverviewWithMeta.yaml'

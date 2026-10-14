@@ -25,12 +25,11 @@
           </template>
 
           <XLayout
-            type="stack"
+            variant="y-stack"
           >
             <header>
               <XLayout
-                type="separated"
-                justify="end"
+                variant="action-group"
               >
                 <XSelect
                   :label="t('subscriptions.routes.item.format')"
@@ -52,7 +51,7 @@
 
             <template v-if="route.params.output === 'structured'">
               <XLayout
-                type="stack"
+                variant="y-stack"
                 data-testid="structured-view"
               >
                 <XTable
@@ -60,7 +59,7 @@
                 >
                   <tr
                     v-for="[key, value] in [
-                      [t('http.api.property.version'), item.version?.kumaCp?.version ?? '-'],
+                      [t('http.api.property.version'), item.instance.version || '-'],
                       [t('http.api.property.connectTime'), t('common.formats.datetime', { value: Date.parse(item.connectTime ?? '') })],
                       ...(item.disconnectTime ? [[t('http.api.property.disconnectTime'), t('common.formats.datetime', { value: Date.parse(item.disconnectTime) })]] : []),
                       [t('subscriptions.routes.item.headers.responses'), `${item.status.total.responsesSent}/${item.status.total.responsesAcknowledged}`],
@@ -101,7 +100,7 @@
                     #default="{ items }"
                   >
                     <XLayout
-                      type="stack"
+                      variant="y-stack"
                     >
                       <slot name="default" />
                       <template
@@ -128,7 +127,7 @@
                                   {{ t('subscriptions.routes.item.headers.type') }}
                                 </th>
                                 <th>
-                                  {{ t('subscriptions.routes.item.headers.stat') }}
+                                  {{ t('subscriptions.routes.item.headers.nacked') }}
                                 </th>
                               </tr>
                             </thead>
@@ -140,7 +139,7 @@
                                 <th
                                   scope="row"
                                 >
-                                  {{ t(`http.api.property.${key}`) }}
+                                  {{ key }}
                                 </th>
                                 <td>
                                   {{ value.responsesRejected }}
@@ -170,7 +169,7 @@
                                 <th
                                   scope="row"
                                 >
-                                  {{ t(`http.api.property.${key}`) }}
+                                  {{ key }}
                                 </th>
                                 <td>
                                   {{ value.responsesSent }}/{{ value.responsesAcknowledged }}

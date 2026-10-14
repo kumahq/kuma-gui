@@ -19,7 +19,10 @@
       >
         <AppView>
           <template #title>
-            <XLayout size="small">
+            <XLayout
+              variant="y-stack"
+              size="small"
+            >
               <h2>
                 {{ props.routeName.includes('inbound') ? `Inbound ${'port' in items[0] ? `:${items[0].port}` : route.params.connection}` : `Outbound ${Kri.fromString(route.params.connection).name}` }}
               </h2>
@@ -37,7 +40,7 @@
             :selected="route.child()?.name"
           >
             <template
-              v-for="{ name } in route.children"
+              v-for="{ name } in (items[0].type.startsWith('Zone') ? route.children.filter((item) => !item.name.includes('clusters')) : route.children)"
               :key="name"
               #[`${name}-tab`]
             >
@@ -59,7 +62,7 @@
               :is="child.Component"
               :data="items[0]"
               :networking="props.networking"
-              :data-plane-overview="props.dataPlaneOverview"
+              :overview="props.overview"
             />
           </RouterView>
         </AppView>
@@ -68,7 +71,7 @@
   </RouteView>
 </template>
 
-<script lang="ts" generic="T extends { proxyResourceName: string }" setup>
+<script lang="ts" generic="T extends { proxyResourceName: string, type: string }" setup>
 import type { DataplaneNetworking, DataplaneOverview } from '@/app/data-planes/data/'
 import { Kri } from '@/app/kuma'
 
@@ -76,6 +79,6 @@ const props = defineProps<{
   data?: T[]
   networking: DataplaneNetworking
   routeName: string
-  dataPlaneOverview: DataplaneOverview
+  overview: DataplaneOverview
 }>()
 </script>

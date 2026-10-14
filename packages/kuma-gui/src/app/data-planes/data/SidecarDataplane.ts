@@ -1,3 +1,4 @@
+import { Kri } from '@/app/kuma'
 import type { ApiKindListResponse } from '@/types/api.d'
 import type {
   LabelValue,
@@ -31,7 +32,7 @@ function getPolicyTypeEntries(sidecarDataplanes: PartialSidecarDataplane[]): Pol
     const { type, service } = sidecarDataplane
 
     // The `service` field, when set, represents the name of the destination service of traffic.
-    const destinationTags: LabelValue[] = typeof service === 'string' && service !== '' ? [{ label: 'kuma.io/service', value: service }] : []
+    const destinationLabels: LabelValue[] = typeof service === 'string' && service !== '' ? [{ label: 'kuma.io/service', value: service }] : []
     const name = type === 'inbound' || type === 'outbound' ? sidecarDataplane.name : null
 
     for (const [policyTypeName, policies] of Object.entries(sidecarDataplane.matchedPolicies)) {
@@ -45,7 +46,7 @@ function getPolicyTypeEntries(sidecarDataplanes: PartialSidecarDataplane[]): Pol
       const policyTypeEntry = policyTypeEntriesByType.get(policyTypeName)!
 
       for (const policy of policies) {
-        const connections = getPolicyTypeEntryConnections(policy, sidecarDataplane, destinationTags, name)
+        const connections = getPolicyTypeEntryConnections(policy, sidecarDataplane, destinationLabels, name)
 
         policyTypeEntry.connections.push(...connections)
       }
@@ -58,26 +59,27 @@ function getPolicyTypeEntries(sidecarDataplanes: PartialSidecarDataplane[]): Pol
 
   return policyTypeEntries
 }
-function getPolicyTypeEntryConnections(policy: MatchedPolicyType, sidecarDataplane: SidecarDataplane, destinationTags: LabelValue[], name: string | null): PolicyTypeEntryConnection[] {
+function getPolicyTypeEntryConnections(policy: MatchedPolicyType, sidecarDataplane: SidecarDataplane, destinationLabels: LabelValue[], name: string | null): PolicyTypeEntryConnection[] {
   const config = policy.conf && Object.keys(policy.conf).length > 0 ? policy.conf : undefined
   const origins = [{
     name: policy.name,
     mesh: policy.mesh,
     type: policy.type,
+    kri: Kri.toString({ shortName: `~${policy.type.toLowerCase()}`, mesh: policy.mesh, name: policy.name }),
   }]
 
   const policyTypeEntryConnections: PolicyTypeEntryConnection[] = []
 
   if (sidecarDataplane.type === 'inbound' && Array.isArray(policy.sources)) {
     for (const { match } of policy.sources) {
-      const sourceTags: LabelValue[] = [{ label: 'kuma.io/service', value: match['kuma.io/service'] }]
-      const connection: PolicyTypeEntryConnection = { sourceTags, destinationTags, name, config, origins }
+      const sourceLabels: LabelValue[] = [{ label: 'kuma.io/service', value: match['kuma.io/service'] }]
+      const connection: PolicyTypeEntryConnection = { sourceTags: sourceLabels, destinationTags: destinationLabels, name, config, origins }
 
       policyTypeEntryConnections.push(connection)
     }
   } else {
-    const sourceTags: LabelValue[] = []
-    const connection: PolicyTypeEntryConnection = { sourceTags, destinationTags, name, config, origins }
+    const sourceLabels: LabelValue[] = []
+    const connection: PolicyTypeEntryConnection = { sourceTags: sourceLabels, destinationTags: destinationLabels, name, config, origins }
 
     policyTypeEntryConnections.push(connection)
   }

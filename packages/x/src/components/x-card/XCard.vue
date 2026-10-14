@@ -1,46 +1,90 @@
 <template>
-  <KCard
-    :class="{ 'in-x-action': xAction }"
+  <template
+    v-if="created.length > 0 || modified.length > 0"
   >
-    <template
-      v-for="(_, slotName) in slots"
-      :key="slotName"
-      #[slotName]="slotProps"
+    <AppAboutSection
+      v-bind="attrs"
+      :created="created"
+      :modified="modified"
     >
-      <slot
-        :name="slotName"
-        v-bind="(slotProps)"
-      />
-    </template>
-  </KCard>
+      <template
+        v-for="(_, slotName) in slots"
+        :key="slotName"
+        #[slotName]="slotProps"
+      >
+        <slot
+          :name="slotName"
+          v-bind="(slotProps)"
+        />
+      </template>
+    </AppAboutSection>
+  </template>
+  <template
+    v-else
+  >
+    <KCard
+      v-bind="attrs"
+      :class="{ 'in-x-action': xAction }"
+    >
+      <template
+        v-for="(_, slotName) in slots"
+        :key="slotName"
+        #[slotName]="slotProps"
+      >
+        <slot
+          :name="slotName"
+          v-bind="(slotProps)"
+        />
+      </template>
+    </KCard>
+  </template>
 </template>
 
 <script lang="ts" setup>
 import { KCard } from '@kong/kongponents'
-import { inject } from 'vue'
+import { AppAboutSection } from '@kong-ui-public/app-layout'
+import { inject, provide, ref, useAttrs } from 'vue'
 
+const attrs = useAttrs()
 const slots = defineSlots()
 const xAction = inject<{} | undefined>('x-action', undefined)
+
+const created = ref('')
+const modified = ref('')
+
+provide('x-card', {
+  created,
+  modified,
+})
 </script>
 <style lang="scss" scoped>
 /* copied from kong/kongponents KRadio::card=true */
-$kongponentsTransitionDurTimingFunc: var(--kui-animation-duration-20, $kui-animation-duration-20) ease-in-out;
 .in-x-action {
   & {
     cursor: pointer;
     border: 0;
-    box-shadow: var(--kui-shadow-border, $kui-shadow-border);
-    transition: box-shadow $kongponentsTransitionDurTimingFunc, background-color $kongponentsTransitionDurTimingFunc;
+    box-shadow: var(--x-shadow-border);
+    transition: box-shadow var(--x-animation-duration-20) ease-in-out, background-color var(--x-animation-duration-20) ease-in-out;
   }
   &:hover {
-    box-shadow: var(--kui-shadow-border-primary-weak, $kui-shadow-border-primary-weak);
+    box-shadow: var(--x-shadow-border-primary-weak);
   }
   &:active {
-    box-shadow: var(--kui-shadow-border-primary-strongest, $kui-shadow-border-primary-strongest);
+    box-shadow: var(--x-shadow-border-primary-strongest);
   }
 
   &:focus-visible {
-    box-shadow: var(--kui-shadow-border-primary-weak, $kui-shadow-border-primary-weak), var(--kui-shadow-focus, $kui-shadow-focus);
+    box-shadow: var(--x-shadow-border-primary-weak), var(--x-shadow-focus);
+  }
+}
+
+/* smaller fonts for AppAboutSection */
+:deep(.about-section-content) {
+  & {
+    display: block !important;
+  }
+  * {
+    font-size: var(--x-font-size-20);
   }
 }
 </style>

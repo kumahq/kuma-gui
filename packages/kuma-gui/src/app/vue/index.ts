@@ -23,13 +23,13 @@ export type GlobalDefinition = [string, unknown]
 const $ = {
   app: token<(App: VueApp) => Promise<VueApp>>('vue.app'),
   router: token<Router>('vue.router'),
+  routing: token<RouteRecordRaw[]>('vue.routing'),
 
   components: token('vue.components'),
   directives: token<DirectiveDefinition[]>('vue.directives'),
   plugins: token<PluginDefinition[]>('vue.plugins'),
   globals: token<GlobalDefinition[]>('vue.globals'),
-  routes: token<RouteRecordRaw[]>('vue.routes'),
-  routesLabel: token<RouteRecordRaw[]>('vue.routes.label'),
+  routes: token<RouteRecordRaw[]>('vue.routes.label'),
   navigationGuards: token<NavigationGuard[]>('vue.routes.navigation.guards'),
   routeWalkers: token<RouteWalkerDefinition[]>('vue.routes.walkers'),
   componentWalkers: token<ComponentWalkerDefinition[]>('vue.components.walkers'),
@@ -142,7 +142,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       },
       arguments: [
         app.env,
-        $.routes,
+        $.routing, // the tree
         $.navigationGuards,
         $.routeWalkers,
       ],
@@ -162,19 +162,24 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       ],
     }],
 
-    // TODO(jc): Label decoration. Make it so we can decorate labels
-    // Temporarily turn the routesLabel label into routes for decoration
-    // purposes
-    [$.routes, {
+    [$.routing, { // the tree
       service: (routes: RouteRecordRaw[]) => routes,
       arguments: [
-        $.routesLabel,
+        $.routes, // the label
       ],
     }],
     //
 
     // TODO(jc): Make it so we don't need to provide a [] empty default for
     // labels
+    [token('application.routes'), {
+      service: () => {
+        return []
+      },
+      labels: [
+        $.routes,
+      ],
+    }],
     [token('application.routes.navigation.guards'), {
       service: () => {
         return []

@@ -1,0 +1,41 @@
+<template>
+  <RouteView
+    name="data-plane-root-view"
+    :params="{
+      mesh: '',
+      proxy: '',
+    }"
+    v-slot="{ route, uri }"
+  >
+    <DataLoader
+      :src="uri(sources, '/dataplanes/:kri', {
+        kri: route.params.proxy,
+      })"
+      v-slot="{ data: [dataPlane] }"
+    >
+      <DataLoader
+        :src="uri(sources, '/meshes/:mesh/dataplane-overviews/:name', {
+          mesh: route.params.mesh,
+          name: dataPlane.id,
+        })"
+        v-slot="{ data: [data] }"
+      >
+        <RouterView v-slot="{ Component }">
+          <component
+            :is="Component"
+            :data="data"
+            :mesh="props.mesh"
+          />
+        </RouterView>
+      </DataLoader>
+    </DataLoader>
+  </RouteView>
+</template>
+
+<script setup lang="ts">
+import { sources } from '@/app/data-planes/sources'
+import type { Mesh } from '@/app/meshes/data'
+const props = defineProps<{
+  mesh: Mesh
+}>()
+</script>

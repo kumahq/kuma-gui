@@ -2,17 +2,17 @@
   <RouteView
     name="hostname-generator-summary-view"
     :params="{
-      name: '',
+      kri: '',
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
       format: String,
     }"
-    v-slot="{ route, t, can, uri }"
+    v-slot="{ route, t, can, uri, r }"
   >
     <DataCollection
       :items="props.items"
-      :predicate="item => item.id === route.params.name"
+      :predicate="item => item.kri === route.params.kri"
     >
       <template
         #item="{ item }"
@@ -21,13 +21,7 @@
           <template #title>
             <h2>
               <XAction
-                :to="{
-                  name: 'hostname-generator-detail-view',
-                  params: {
-                    name: route.params.name,
-                  },
-
-                }"
+                :href="`kri://${item.kri}`"
               >
                 <RouteTitle
                   :title="t('hostname-generators.routes.item.title', { name: item.name })"
@@ -37,12 +31,11 @@
           </template>
 
           <XLayout
-            type="stack"
+            variant="y-stack"
           >
             <header>
               <XLayout
-                type="separated"
-                size="max"
+                variant="action-group"
               >
                 <h3>
                   {{ t('hostname-generators.routes.item.config') }}
@@ -92,12 +85,7 @@
                   </th>
                   <td>
                     <XAction
-                      :to="{
-                        name: 'zone-cp-detail-view',
-                        params: {
-                          zone: item.zone,
-                        },
-                      }"
+                      :href="`kri://${Kri.toString({ shortName: 'z', name: item.zone })}`"
                     >
                       {{ item.zone }}
                     </XAction>
@@ -110,6 +98,35 @@
                     {{ t('hostname-generators.common.template') }}
                   </th>
                   <td>{{ item.spec.template }}</td>
+                </tr>
+                <tr
+                  v-if="Object.keys(item.labels).length > 0"
+                >
+                  <th scope="row">
+                    Labels
+                  </th>
+                  <td>
+                    <XLayout
+                      variant="separated"
+                    >
+                      <XAction
+                        v-for="(value, key) in item.labels"
+                        :key="key"
+                        :href="t(`common.label.href.${key.replaceAll('.', '~')}`, {
+                          mesh: '',
+                          zone: item.zone,
+                          namespace: item.namespace,
+                          name: value,
+                        }, { defaultMessage: '' })"
+                      >
+                        <XBadge
+                          :variant="r('kuma.label').test(key) ? 'reserved-kv' : 'kv'"
+                        >
+                          {{ key }}:<strong>{{ value }}</strong>
+                        </XBadge>
+                      </XAction>
+                    </XLayout>
+                  </td>
                 </tr>
               </XTable>
             </template>
@@ -131,10 +148,10 @@
 
             <template v-else>
               <DataLoader
-                :src="uri(sources, '/hostname-generators/:name/as/kubernetes', {
-                  name: route.params.name,
+                :src="uri(sources, '/hostname-generators/:kri/as/kubernetes', {
+                  kri: route.params.kri,
                 })"
-                v-slot="{ data: k8sConfig }"
+                v-slot="{ data: [k8sConfig] }"
               >
                 <XCodeBlock
                   data-testid="codeblock-yaml-k8s"
@@ -161,6 +178,7 @@
 import { sources } from '../sources'
 import { YAML } from '@/app/application'
 import type { HostnameGenerator } from '@/app/hostname-generators/data'
+import { Kri } from '@/app/kuma'
 const props = defineProps<{
   items: HostnameGenerator[]
 }>()

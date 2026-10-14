@@ -3,6 +3,7 @@ common:
     ignore-error: ""
   product:
     name: Kuma
+    # any variables here MUST be added to the debug overwrite in kuma/debug.ts
     docs: |
       https://kuma.io/docs/{ major, select,
         0 {dev}
@@ -100,6 +101,7 @@ common:
       NotReady: danger
       Unavailable: danger
       partially_degraded: warning
+      disconnected_cp: warning
 
 components:
   status-badge:
@@ -162,6 +164,8 @@ http:
       offline: 'Offline'
       partiallyDegraded: 'Partially degraded'
       partially_degraded: 'Partially degraded'
+      disconnectedCp: 'Not connected to CP'
+      disconnected_cp: 'Not connected to CP'
       notAvailable: 'Information not available'
       not_available: 'Information not available'
       disabled: 'Disabled'

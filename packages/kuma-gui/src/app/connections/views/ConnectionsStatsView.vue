@@ -18,45 +18,50 @@
     <AppView>
       <XCard>
         <DataLoader
-          :src="uri(sources, '/connections/stats/for/:proxyType/:name/:mesh/:socketAddress', {
-            proxyType: ({ ingresses: 'zone-ingress', egresses: 'zone-egress'})[route.params.proxyType] ?? 'dataplane',
-            name: route.params.proxy,
-            mesh: route.params.mesh || '*',
-            socketAddress: props.networking.inboundAddress,
-          })"
-          v-slot="{ data: statsData, refresh }"
+          :data="[props.data, props.networking]"
+          v-slot="{ data: [overviewData, networkingData] }"
         >
-          <XWindow
-            :resize="true"
-            v-slot="{ resize }"
+          <DataLoader
+            :src="uri(sources, '/connections/stats/for/:proxyType/:name/:mesh/:socketAddress', {
+              proxyType: ({ ingresses: 'zone-ingress', egresses: 'zone-egress'})[route.params.proxyType] ?? 'dataplane',
+              name: overviewData.id,
+              mesh: route.params.mesh || '*',
+              socketAddress: networkingData.inboundAddress,
+            })"
+            v-slot="{ data: [statsData], refresh }"
           >
-            <div
-              ref="$el"
+            <XWindow
+              :resize="true"
+              v-slot="{ resize }"
             >
-              <XCodeBlock
-                :max-height="`${(resize?.target?.innerHeight ?? 0) - ($el?.getBoundingClientRect().top + 200)}`"
-                language="json"
-                :code="statsData.raw"
-                is-searchable
-                :query="route.params.codeSearch"
-                :is-filter-mode="route.params.codeFilter"
-                :is-reg-exp-mode="route.params.codeRegExp"
-                @query-change="route.update({ codeSearch: $event })"
-                @filter-mode-change="route.update({ codeFilter: $event })"
-                @reg-exp-mode-change="route.update({ codeRegExp: $event })"
+              <div
+                ref="$el"
               >
-                <template #primary-actions>
-                  <XAction
-                    action="refresh"
-                    appearance="primary"
-                    @click="refresh"
-                  >
-                    Refresh
-                  </XAction>
-                </template>
-              </XCodeBlock>
-            </div>
-          </XWindow>
+                <XCodeBlock
+                  :max-height="`${(resize?.target?.innerHeight ?? 0) - ($el?.getBoundingClientRect().top + 200)}`"
+                  language="json"
+                  :code="statsData.raw"
+                  is-searchable
+                  :query="route.params.codeSearch"
+                  :is-filter-mode="route.params.codeFilter"
+                  :is-reg-exp-mode="route.params.codeRegExp"
+                  @query-change="route.update({ codeSearch: $event })"
+                  @filter-mode-change="route.update({ codeFilter: $event })"
+                  @reg-exp-mode-change="route.update({ codeRegExp: $event })"
+                >
+                  <template #primary-actions>
+                    <XAction
+                      action="refresh"
+                      appearance="primary"
+                      @click="refresh"
+                    >
+                      Refresh
+                    </XAction>
+                  </template>
+                </XCodeBlock>
+              </div>
+            </XWindow>
+          </DataLoader>
         </DataLoader>
       </XCard>
     </AppView>
@@ -64,11 +69,13 @@
 </template>
 
 <script lang="ts" setup>
+import type { ConnectionOverview } from '../data'
 import { sources } from '../sources'
 import type { DataplaneNetworking } from '@/app/data-planes/data'
 
 const props = defineProps<{
-  networking: DataplaneNetworking
+  networking: DataplaneNetworking | Error | undefined
   routeName: string
+  data: ConnectionOverview | Error | undefined
 }>()
 </script>

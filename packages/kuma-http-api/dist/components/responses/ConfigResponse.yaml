@@ -1,0 +1,6 @@
+description: The control plane configuration.
+content:
+  application/json:
+    schema:
+      type: object
+      additionalProperties: true

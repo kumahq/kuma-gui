@@ -6,17 +6,18 @@
       </div>
     </div>
     <DataLoader
-      :data="[props.globalInsight]"
+      :data="[props.globalInsight, props.resources]"
+      v-slot="{ data: [globalInsightData, resourcesData] }"
     >
       <XLayout
-        v-if="props.globalInsight && !(props.globalInsight instanceof Error)"
-        type="columns"
+        variant="columns"
         class="columns-with-borders"
       >
-        <ResourceStatus
+        <KumaResourceStatus
           v-if="props.canUseZones"
-          :total="props.globalInsight.zones.controlPlanes.total"
+          :total="globalInsightData.zones.controlPlanes.total"
           data-testid="zone-control-planes-status"
+          data-actionable
         >
           <template #icon>
             <img
@@ -27,13 +28,21 @@
           </template>
 
           <template #title>
-            {{ t('main-overview.detail.about.zone_control_planes') }}
+            <XAction
+              data-action
+              :to="{
+                name: 'zone-cp-list-view',
+              }"
+            >
+              {{ t('main-overview.detail.about.zone_control_planes') }}
+            </XAction>
           </template>
-        </ResourceStatus>
+        </KumaResourceStatus>
 
-        <ResourceStatus
-          :total="props.globalInsight.meshes.total"
+        <KumaResourceStatus
+          :total="globalInsightData.meshes.total"
           data-testid="meshes-status"
+          data-actionable
         >
           <template #icon>
             <img
@@ -44,19 +53,26 @@
           </template>
 
           <template #title>
-            {{ t('main-overview.detail.about.meshes') }}
+            <XAction
+              data-action
+              :to="{
+                name: 'mesh-list-view',
+              }"
+            >
+              {{ t('main-overview.detail.about.meshes') }}
+            </XAction>
           </template>
-        </ResourceStatus>
+        </KumaResourceStatus>
         <template
-          v-for="insight in [props.globalInsight]"
+          v-for="insight in [globalInsightData]"
           :key="typeof insight"
         >
           <template
             v-for="meshServicesGeneric in [(['MeshService', 'MeshMultiZoneService', 'MeshExternalService'] as const).reduce((acc, curr) => ({ total: acc.total + insight.resources[curr].total }), { total: 0 })]"
             :key="typeof meshServicesGeneric"
           >
-            <ResourceStatus
-              :total="meshServicesGeneric.total || props.globalInsight.services.internal.total"
+            <KumaResourceStatus
+              :total="meshServicesGeneric.total || globalInsightData.services.internal.total"
               data-testid="services-status"
             >
               <template #icon>
@@ -74,7 +90,7 @@
               </template>
 
               <template
-                v-if="meshServicesGeneric.total && props.globalInsight.services.internal.total > 0"
+                v-if="meshServicesGeneric.total && globalInsightData.services.internal.total > 0"
                 #description
               >
                 <XI18n
@@ -83,10 +99,10 @@
               </template>
 
               <template
-                v-if="meshServicesGeneric.total && props.globalInsight.services.internal.total > 0"
+                v-if="meshServicesGeneric.total && globalInsightData.services.internal.total > 0"
                 #body
               >
-                <ResourceStatus :total="props.globalInsight.services.internal.total">
+                <KumaResourceStatus :total="globalInsightData.services.internal.total">
                   <template #description>
                     <XI18n
                       path="main-overview.detail.about.descriptions.internal_services"
@@ -100,14 +116,14 @@
                       />
                     </XIcon>
                   </template>
-                </ResourceStatus>
+                </KumaResourceStatus>
               </template>
-            </ResourceStatus>
+            </KumaResourceStatus>
           </template>
         </template>
 
-        <ResourceStatus
-          :total="props.globalInsight.dataplanes.standard.total"
+        <KumaResourceStatus
+          :total="globalInsightData.dataplanes.total"
           data-testid="data-plane-proxies-status"
         >
           <template #icon>
@@ -121,52 +137,48 @@
           <template #title>
             {{ t('main-overview.detail.about.data_plane_proxies') }}
           </template>
-        </ResourceStatus>
-        <ResourceStatus
-          :total="policyTotal"
-          data-testid="policies-status"
-        >
-          <template #icon>
-            <img
-              class="icon"
-              src="@/assets/images/policy.svg?url"
-              alt=""
-            >
-          </template>
+        </KumaResourceStatus>
 
-          <template #title>
-            {{ t('main-overview.detail.about.policies') }}
-          </template>
-        </ResourceStatus>
+        <template
+          v-for="policies in [(resourcesData?.resources ?? []).filter((resource) => typeof resource.policy !== 'undefined')]"
+          :key="typeof policies"
+        >
+          <KumaResourceStatus
+            :total="Object.entries(globalInsightData.resources).reduce((prev, [key, { total }]) => {
+              return policies.find((type) => type.name === key) ? prev + total : prev
+            }, 0)"
+            data-testid="policies-status"
+          >
+            <template #icon>
+              <img
+                class="icon"
+                src="@/assets/images/policy.svg?url"
+                alt=""
+              >
+            </template>
+
+            <template #title>
+              {{ t('main-overview.detail.about.policies') }}
+            </template>
+          </KumaResourceStatus>
+        </template>
       </XLayout>
     </DataLoader>
   </XCard>
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
-
 import { useI18n } from '@/app/application'
-import ResourceStatus from '@/app/common/ResourceStatus.vue'
 import type { GlobalInsight } from '@/app/control-planes/data'
-import type { ResourceCollection } from '@/app/policies/data'
+import type { ResourceTypeDescriptorCollection } from '@/app/resources/data'
 
 const { t } = useI18n()
 
 const props = defineProps<{
   globalInsight?: GlobalInsight | Error
-  resources?: ResourceCollection
+  resources?: ResourceTypeDescriptorCollection
   canUseZones: boolean
 }>()
-const policyTotal = computed(() => {
-  if(props.globalInsight && !(props.globalInsight instanceof Error) && props.resources?.policyTypes) {
-    const policyTypes = props.resources?.policyTypes.map(item => item.name)
-    return Object.entries(props.globalInsight.resources).reduce((prev, [key, { total }]) => {
-      return policyTypes.includes(key) ? prev + total : prev
-    }, 0)
-  }
-  return 0
-})
 </script>
 
 <style lang="scss" scoped>
@@ -177,13 +189,13 @@ const policyTotal = computed(() => {
 }
 
 .card-header {
-  margin-bottom: $kui-space-50;
+  margin-bottom: var(--x-space-50);
   min-height: 42px;
 }
 
 .icon {
-  height: $kui-icon-size-30;
-  width: $kui-icon-size-30;
+  height: var(--x-icon-size-30);
+  width: var(--x-icon-size-30);
 }
 
 // 639px <-> 39.938rem (with base 16px font-size)

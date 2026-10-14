@@ -1,0 +1,36 @@
+{
+  "name": "@kumahq/gherkin-web",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Gherkin/cucumber steps supporting several browser runners",
+  "author": "Kong",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts",
+      "types": "./src/index.ts"
+    },
+    "./cypress/node": {
+      "import": "./src/cypress/node.ts"
+    },
+    "./cypress/browser": {
+      "import": "./src/cypress/browser.ts"
+    },
+    "./playwright": {
+      "import": "./src/playwright/index.ts"
+    }
+  },
+  "dependencies": {
+    "@cucumber/cucumber": "^13.2.1",
+    "@kumahq/fake-api": "*",
+    "@playwright/test": "^1.63.0",
+    "deepmerge": "^4.3.1",
+    "esbuild": "^0.28.2",
+    "js-yaml": "^5.4.2",
+    "path-to-regexp": "^8.4.2",
+    "playwright-bdd": "^9.2.1"
+  },
+  "devDependencies": {
+    "@kumahq/config": "*"
+  }
+}

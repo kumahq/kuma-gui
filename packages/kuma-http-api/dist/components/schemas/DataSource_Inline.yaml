@@ -1,6 +1,0 @@
-type: object
-properties:
-  inline:
-    description: Data source is inline bytes.
-    type: string
-    format: byte

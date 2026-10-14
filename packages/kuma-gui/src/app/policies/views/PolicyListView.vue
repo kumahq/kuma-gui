@@ -12,7 +12,7 @@
     v-slot="{ route, t, can, uri, me }"
   >
     <DataCollection
-      :predicate="(policyType) => typeof policyType !== 'undefined' && policyType.path === route.params.policyPath"
+      :predicate="(policyType) => typeof policyType !== 'undefined' && [policyType.shortName, policyType.path].includes(route.params.policyPath)"
       :items="props.policyTypes ?? []"
     >
       <template #empty>
@@ -22,52 +22,54 @@
       </template>
       <template #item="{ item: type }">
         <AppView>
-          <div class="stack">
-            <XCard>
-              <header>
-                <div>
-                  <XBadge
-                    v-if="type.policy.hasFromTargetRef"
-                    appearance="neutral"
-                  >
-                    {{ t('policies.collection.inbound') }}
-                  </XBadge>
-
-                  <XBadge
-                    v-if="type.policy.hasToTargetRef"
-                    appearance="neutral"
-                  >
-                    {{ t('policies.collection.outbound') }}
-                  </XBadge>
-
-                  <XAction
-                    action="docs"
-                    :href="t('policies.href.docs', { name: type.name })"
-                    data-testid="policy-documentation-link"
-                  >
-                    <span class="visually-hidden">{{ t('common.documentation') }}</span>
-                  </XAction>
-                </div>
-                <h3
-                  v-icon-start="{name: type.name, size: '60', default: 'policy'}"
+          <XCard>
+            <header>
+              <div>
+                <XBadge
+                  v-if="type.policy?.hasFromTargetRef"
+                  appearance="neutral"
                 >
-                  {{ t('policies.collection.title', { name: type.name }) }}
-                </h3>
-              </header>
-              <XI18n
-                :path="`policies.type.${type.name}.description`"
-                default-path="policies.collection.description"
-              />
-            </XCard>
+                  {{ t('policies.collection.inbound') }}
+                </XBadge>
 
-            <XCard>
+                <XBadge
+                  v-if="type.policy?.hasToTargetRef"
+                  appearance="neutral"
+                >
+                  {{ t('policies.collection.outbound') }}
+                </XBadge>
+
+                <XAction
+                  action="docs"
+                  :href="t('policies.href.docs', { name: type.name })"
+                  data-testid="policy-documentation-link"
+                >
+                  <span class="visually-hidden">{{ t('common.documentation') }}</span>
+                </XAction>
+              </div>
+              <h3
+                v-icon-start="{name: type.name, size: '60', default: 'policy'}"
+              >
+                {{ t('policies.collection.title', { name: type.name }) }}
+              </h3>
+            </header>
+            <XI18n
+              :path="`policies.type.${type.name}.description`"
+              default-path="policies.collection.description"
+            />
+          </XCard>
+
+          <XCard>
+            <XLayout
+              variant="y-stack"
+            >
               <search>
                 <form
                   @submit.prevent
                 >
                   <XSearch
                     class="search-field"
-                    :keys="['name', 'namespace', ...(can('use zones') && type.policy.isTargetRef ? ['zone'] : []), 'label']"
+                    :keys="['name', 'namespace', ...(can('use zones') && type.policy?.isTargetRef ? ['zone'] : []), 'label']"
                     :value="route.params.s"
                     @change="(s) => route.update({ s })"
                   />
@@ -76,14 +78,14 @@
               <DataLoader
                 :src="uri(sources, '/meshes/:mesh/policy-path/:path', {
                   mesh: route.params.mesh,
-                  path: route.params.policyPath,
+                  path: type.path,
                 }, {
                   page: route.params.page,
                   size: route.params.size,
                   search: route.params.s,
                 })"
                 variant="list"
-                v-slot="{ data, refresh }"
+                v-slot="{ data: [data], refresh }"
               >
                 <DataCollection
                   :items="data.items"
@@ -130,12 +132,12 @@
                         { ...me.get('headers.role'), label: 'Role', key: 'role', hideLabel: true },
                         { ...me.get('headers.name'), label: 'Name', key: 'name' },
                         { ...me.get('headers.namespace'), label: 'Namespace', key: 'namespace' },
-                        ...(can('use zones') && type.policy.isTargetRef ? [{ ...me.get('headers.zone'), label: 'Zone', key: 'zone' }] : []),
-                        ...(type.policy.isTargetRef ? [{ ...me.get('headers.targetRef'), label: 'Target ref', key: 'targetRef' }] : []),
+                        ...(can('use zones') && type.policy?.isTargetRef ? [{ ...me.get('headers.zone'), label: 'Zone', key: 'zone' }] : []),
+                        ...(type.policy?.isTargetRef ? [{ ...me.get('headers.targetRef'), label: 'Target ref', key: 'targetRef' }] : []),
                         { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
                       ]"
                       :items="data.items"
-                      :is-selected-row="(row) => row.id === route.params.policy"
+                      :is-selected-row="(row) => row.kri === route.params.policy"
                       @resize="me.set"
                     >
                       <template
@@ -153,7 +155,7 @@
                         <template
                           v-else
                         >
-                            &nbsp;
+                          &nbsp;
                         </template>
                       </template>
 
@@ -164,8 +166,8 @@
                             name: 'policy-summary-view',
                             params: {
                               mesh: row.mesh,
-                              policyPath: type.path,
-                              policy: row.id,
+                              policyPath: route.params.policyPath,
+                              policy: row.kri,
                             },
                             query: {
                               page: route.params.page,
@@ -190,12 +192,7 @@
                       <template #zone="{ row }">
                         <template v-if="row.zone">
                           <XAction
-                            :to="{
-                              name: 'zone-cp-detail-view',
-                              params: {
-                                zone: row.zone,
-                              },
-                            }"
+                            :href="`kri://${Kri.toString({ shortName: 'z', name: row.zone })}`"
                           >
                             {{ row.zone }}
                           </XAction>
@@ -218,7 +215,7 @@
                               params: {
                                 mesh: item.mesh,
                                 policyPath: type.path,
-                                policy: item.id,
+                                policy: item.kri,
                               },
                             }"
                           >
@@ -256,8 +253,8 @@
                   </XDrawer>
                 </RouterView>
               </DataLoader>
-            </XCard>
-          </div>
+            </XLayout>
+          </XCard>
         </AppView>
       </template>
     </DataCollection>
@@ -265,13 +262,14 @@
 </template>
 
 <script lang="ts" setup>
-import { usePolicyActionGroup } from '../'
-import type { PolicyResourceType } from '../data'
-import { sources } from '../sources'
 import { useDataEmptyState } from '@/app/application'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
+import { Kri } from '@/app/kuma'
+import { usePolicyActionGroup } from '../'
+import { sources } from '../sources'
+import type { ResourceTypeDescriptor } from '@/app/resources/data'
 const props = defineProps<{
-  policyTypes?: PolicyResourceType[]
+  policyTypes?: ResourceTypeDescriptor[]
 }>()
 const PolicyActionGroup = usePolicyActionGroup()
 
@@ -282,32 +280,27 @@ header {
   display: flow-root;
 }
 header > * {
-  margin-bottom: $kui-space-40;
+  margin-bottom: var(--x-space-40);
 }
 header > div {
   float: right;
   display: flex;
-  gap: $kui-space-40;
+  gap: var(--x-space-40);
   align-items: flex-start;
 }
 header > h3 {
   margin-top: 0;
   float: left;
 }
-search form {
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-  align-items: stretch;
-  flex-wrap: wrap;
-  gap: $kui-space-70;
-  margin-bottom: $kui-space-70;
-}
 .app-collection:deep(:is(th, td):nth-child(1)) {
   padding-right: 0 !important;
   width: 16px !important;
 }
+search form {
+  display: flex;
+}
 .search-field {
   flex: 1;
+  width: 0;
 }
 </style>

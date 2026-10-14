@@ -1,109 +1,99 @@
 import createClient from 'openapi-fetch'
 
-import { MeshIdentity } from './data/MeshIdentity'
-import type { KumaMeshIdentity } from './data/MeshIdentity'
-import { MeshTrust } from './data/MeshTrust'
-import type { KumaMeshTrust } from './data/MeshTrust'
+import { Resource, ResourceTypeDescriptor } from './data'
 import { defineSources } from '@/app/application'
-import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import type { paths } from '@kumahq/kuma-http-api'
 
-export const sources = (api: KumaApi) => {
+type DynamicPathGlobal = 'hostnamegenerators'
+type DynamicPathMesh = 'meshaccesslogs'
+
+type Options = {
+  baseUrl: string
+  fetch: typeof fetch
+}
+export const sources = ({ baseUrl, fetch }: Options) => {
   const http = createClient<paths>({
-    baseUrl: '',
-    fetch: api.client.fetch,
+    baseUrl,
+    fetch,
   })
   return defineSources({
-    '/meshes/:mesh/meshidentities': async (params) => {
-      const { mesh } = params
-  
-      const res = await http.GET('/meshes/{mesh}/meshidentities', {
+    '/resource-type-descriptors': async () => {
+      const response = await http.GET('/_resources')
+
+      const normalized = ResourceTypeDescriptor.fromCollection(response.data!)
+      return {
+        ...normalized,
+        resources: normalized.resources.filter((resource) => {
+          return ['insight', 'secret'].every((excluded) => !resource.name.toLowerCase().includes(excluded))
+        }),
+      }
+    },
+
+    '/resources/:path': async (params) => {
+      const { path, size } = params
+      const offset = params.size * (params.page - 1)
+      const search = Resource.search(params.search)
+
+      const response = await http.GET(`/${path as DynamicPathGlobal}`, {
+        params: {
+          query: {
+            size,
+            offset,
+            ...search,
+          },
+        },
+      })
+
+      return Resource.fromCollection(response.data!)
+    },
+
+    '/resources/:path/for/:mesh': async (params) => {
+      const { mesh, path, size } = params
+      const offset = params.size * (params.page - 1)
+      const search = Resource.search(params.search)
+
+      const response = await http.GET(`/meshes/{mesh}/${path as DynamicPathMesh}`, {
         params: {
           path: {
             mesh,
           },
-        },
-      })
-  
-      return MeshIdentity.fromCollection(res.data!)
-    },
-
-    '/meshidentities/:mid': async (params) => {
-      const { mid } = params
-  
-      const res = await http.GET('/_kri/{kri}', {
-        params: {
-          path: {
-            kri: mid,
+          query: {
+            size,
+            offset,
+            ...search,
           },
         },
       })
-  
-      return MeshIdentity.fromObject(res.data as KumaMeshIdentity)
+
+      return Resource.fromCollection(response.data!)
     },
 
-    '/meshidentities/:mid/as/kubernetes': async (params) => {
-      const { mid } = params
-  
-      const res = await http.GET('/_kri/{kri}', {
+    '/resource/:kri': async (params) => {
+      const response = await http.GET('/_kri/{kri}', {
         params: {
           path: {
-            kri: mid,
+            kri: params.kri,
           },
-          // @ts-ignore
+        },
+      })
+
+      return Resource.fromObject(response.data!)
+    },
+
+    '/resource/:kri/as/kubernetes': async (params) => {
+      const response = await http.GET('/_kri/{kri}', {
+        params: {
+          path: {
+            kri: params.kri,
+          },
+          // @ts-expect-error - query parameter not listed in OAS
           query: {
             format: 'kubernetes',
           },
         },
       })
-  
-      return res.data
-    },
 
-    '/meshes/:mesh/meshtrusts': async (params) => {
-      const { mesh } = params
-  
-      const res = await http.GET('/meshes/{mesh}/meshtrusts', {
-        params: {
-          path: {
-            mesh,
-          },
-        },
-      })
-  
-      return MeshTrust.fromCollection(res.data!)
-    },
-
-    '/meshtrusts/:mtrust': async (params) => {
-      const { mtrust } = params
-  
-      const res = await http.GET('/_kri/{kri}', {
-        params: {
-          path: {
-            kri: mtrust,
-          },
-        },
-      })
-  
-      return MeshTrust.fromObject(res.data as KumaMeshTrust)
-    },
-
-    '/meshtrusts/:mtrust/as/kubernetes': async (params) => {
-      const { mtrust } = params
-  
-      const res = await http.GET('/_kri/{kri}', {
-        params: {
-          path: {
-            kri: mtrust,
-          },
-          // @ts-ignore
-          query: {
-            format: 'kubernetes',
-          },
-        },
-      })
-  
-      return res.data
+      return response.data!
     },
   })
 }

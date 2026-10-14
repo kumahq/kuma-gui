@@ -1,3 +1,10 @@
+common:
+  label:
+    href:
+      kuma~io/workload: kri://kri_wl_{mesh}_{zone}_{namespace}_{name}_
+  kri:
+    shortNames:
+      workload: wl
 workloads:
   href:
     docs:
@@ -27,3 +34,5 @@ workloads:
         namespace: Namespace
         dpps: DP proxies (connected / healthy / total)
         actions: Actions
+  x-empty-state:
+    title: There are no workloads present

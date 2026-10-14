@@ -13,6 +13,7 @@ Feature: HostnameGenerator summary
       body:
         items:
           - name: <HostnameGenerator>
+            kri: kri_hg__bend_e-mail_local-mesh-external-service_
       """
     When I visit the "/hostname-generators/<HostnameGenerator>" URL
     Then the "$select-preference" element exists
@@ -27,5 +28,5 @@ Feature: HostnameGenerator summary
     And the "$structured-view" element exists
 
     Examples:
-      | HostnameGenerator           |
-      | local-mesh-external-service |
+      | HostnameGenerator                                |
+      | kri_hg__bend_e-mail_local-mesh-external-service_ |

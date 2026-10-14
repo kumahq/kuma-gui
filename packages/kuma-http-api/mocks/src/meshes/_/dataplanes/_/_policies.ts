@@ -1,13 +1,15 @@
 import type { Dependencies, ResponseHandler } from '#mocks'
-import type { components } from '@kumahq/kuma-http-api'
+import type { paths } from '@kumahq/kuma-http-api'
 
-type PoliciesList = components['schemas']['PoliciesList']
-type PolicyConf = components['schemas']['PolicyConf']
+type PoliciesList = paths['/meshes/{mesh}/dataplanes/{name}/_policies']['get']['responses']['200']['content']['application/json']
+type PolicyConf = PoliciesList['policies'][number]
 
 export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
   const mesh = req.params.mesh as string
   return {
-    headers: {},
+    headers: {
+      ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
+    },
     body: {
       policies: Array.from({ length: fake.number.int({ min: 1, max: 3 })}).map((_, i) => {
         const kind = fake.kuma.policyName()
@@ -96,7 +98,7 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
           })(),
           origins: Array.from({ length: fake.number.int({ min: 1, max: 3 })}).map(() => {
             return {
-              kri: fake.kuma.kri({ shortName: 'policy', mesh }),
+              kri: fake.kuma.kri({ resourceName: kind, mesh }),
             }
           }),
         }

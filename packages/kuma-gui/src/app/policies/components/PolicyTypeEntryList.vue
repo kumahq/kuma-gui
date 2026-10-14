@@ -1,9 +1,9 @@
 <template>
-  <AccordionList
+  <XAccordionList
     :initially-open="[]"
     multiple-open
   >
-    <AccordionItem
+    <XAccordionItem
       v-for="(policyTypeEntry, index) in items"
       :key="index"
     >
@@ -33,12 +33,28 @@
             is-clickable
           >
             <template #sourceTags="{ row }: { row: PolicyTypeEntryConnection }">
-              <TagList
+              <XLayout
                 v-if="row.sourceTags.length > 0"
-                class="tag-list"
-                should-truncate
-                :tags="row.sourceTags"
-              />
+                variant="separated"
+                truncate
+              >
+                <XAction
+                  v-for="{ value, label } in row.sourceTags"
+                  :key="label"
+                  :href="t(`common.label.href.${label.replaceAll('.', '~')}`, {
+                    mesh: '',
+                    zone: '',
+                    namespace: '',
+                    name: value.replaceAll('_', '~'),
+                  }, { defaultMessage: '' })"
+                >
+                  <XBadge
+                    :variant="r('kuma.label').test(label) ? 'reserved-kv' : 'kv'"
+                  >
+                    {{ label }}:<strong>{{ value }}</strong>
+                  </XBadge>
+                </XAction>
+              </XLayout>
 
               <template v-else>
                 —
@@ -46,12 +62,28 @@
             </template>
 
             <template #destinationTags="{ row }: { row: PolicyTypeEntryConnection }">
-              <TagList
+              <XLayout
                 v-if="row.destinationTags.length > 0"
-                class="tag-list"
-                should-truncate
-                :tags="row.destinationTags"
-              />
+                variant="separated"
+                truncate
+              >
+                <XAction
+                  v-for="{ value, label } in row.destinationTags"
+                  :key="label"
+                  :href="t(`common.label.href.${label.replaceAll('.', '~')}`, {
+                    mesh: '',
+                    zone: '',
+                    namespace: '',
+                    name: value.replaceAll('_', '~'),
+                  }, { defaultMessage: '' })"
+                >
+                  <XBadge
+                    :variant="r('kuma.label').test(label) ? 'reserved-kv' : 'kv'"
+                  >
+                    {{ label }}:<strong>{{ value }}</strong>
+                  </XBadge>
+                </XAction>
+              </XLayout>
 
               <template v-else>
                 —
@@ -80,7 +112,7 @@
                       params: {
                         mesh: origin.mesh,
                         policyPath: props.types[origin.type]?.path ?? '',
-                        policy: origin.name,
+                        policy: origin.kri,
                       },
                     }"
                   >
@@ -110,25 +142,26 @@
           </KTableView>
         </div>
       </template>
-    </AccordionItem>
-  </AccordionList>
+    </XAccordionItem>
+  </XAccordionList>
 </template>
 
 <script lang="ts" setup>
 
 import { KTableView } from '@kong/kongponents'
 
-import type { PolicyResourceType } from '../data'
-import { YAML } from '@/app/application'
-import AccordionItem from '@/app/common/AccordionItem.vue'
-import AccordionList from '@/app/common/AccordionList.vue'
-import TagList from '@/app/common/TagList.vue'
+import { YAML, useI18n, useRegExp } from '@/app/application'
 import type { PolicyTypeEntry, PolicyTypeEntryConnection } from '@/types/index.d'
+import type { ResourceTypeDescriptor } from '@/app/resources/data'
 
 const props = defineProps<{
   items: PolicyTypeEntry[]
-  types: Partial<Record<string, PolicyResourceType>>
+  types: Partial<Record<string, ResourceTypeDescriptor>>
 }>()
+
+
+const { t } = useI18n()
+const { r } = useRegExp()
 
 function getCellAttributes({ headerKey }: any): Record<string, string> {
   return { class: `cell-${headerKey}` }
@@ -138,17 +171,13 @@ function getCellAttributes({ headerKey }: any): Record<string, string> {
 <style lang="scss" scoped>
 .policy-type-heading {
   font-size: inherit;
-  font-weight: $kui-font-weight-regular;
+  font-weight: var(--x-font-weight-regular);
 }
 
 .policy-list {
   display: flex;
   flex-direction: column;
-  gap: $kui-space-40;
+  gap: var(--x-space-40);
 }
 
-.tag-list {
-  display: flex;
-  margin-top: $kui-space-20;
-}
 </style>

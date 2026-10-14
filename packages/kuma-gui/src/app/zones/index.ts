@@ -6,10 +6,10 @@ import { features } from './features'
 import locales from './locales/en-us/index.yaml'
 import { routes } from './routes'
 import { sources } from './sources'
+import type { Can, Env } from '@/app/application'
 import { services as subscriptions } from '@/app/subscriptions'
-import egressLocales from '@/app/zone-egresses/locales/en-us/index.yaml'
-import ingressLocales from '@/app/zone-ingresses/locales/en-us/index.yaml'
 import type { ServiceDefinition } from '@kumahq/container'
+import type { Component } from 'vue'
 import type { RouteRecordRaw } from 'vue-router'
 
 type Token = ReturnType<typeof token>
@@ -17,6 +17,7 @@ type Token = ReturnType<typeof token>
 const $ = {
   ZoneControlPlanesList: token<typeof ZoneControlPlanesList>('zones.components.ZoneControlPlanesList'),
   ZoneActionGroup: token<typeof ZoneActionGroup>('zones.components.ZoneActionGroup'),
+  ZoneAppNavigator: token<Component | undefined>('zones.components.ZoneAppNavigator'),
 }
 
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
@@ -27,12 +28,36 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
     [$.ZoneActionGroup, {
       service: () => ZoneActionGroup,
     }],
+    [token('zones.kri'), {
+      service: (can: Can) => {
+        return [
+          ({ shortName, kri }: { shortName: string, kri: string }) => {
+            if(shortName === 'z') {
+              if(can('use zones')) {
+                return {
+                  name: 'zone-cp-detail-view',
+                  params: {
+                    zone: kri,
+                  },
+                }
+              }
+            }
+          },
+        ]
+      },
+      arguments: [
+        app.can,
+      ],
+      labels: [
+        app.kriHandlers,
+      ],
+    }],
     [token('zones.routes'), {
-      service: (can) => {
+      service: (can: Can) => {
         return [
           (item: RouteRecordRaw) => {
-            if (item.name === 'control-plane-root-view') {
-              item.children = (item.children ?? []).concat(routes(can))
+            if (can('use zones') && item.name === 'control-plane-root-view') {
+              item.children = (item.children ?? []).concat(routes())
             }
           },
         ]
@@ -45,9 +70,13 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       ],
     }],
     [token('zone.sources'), {
-      service: sources,
+      service: (fetch: typeof globalThis.fetch, env: Env) => sources({
+        fetch,
+        baseUrl: env('KUMA_API_URL'),
+      }),
       arguments: [
-        app.api,
+        app.fetch,
+        app.env,
       ],
       labels: [
         app.sources,
@@ -64,18 +93,6 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
     }],
     [token('zones.locales'), {
       service: () => locales,
-      labels: [
-        app.enUs,
-      ],
-    }],
-    [token('zone-egresses.locales'), {
-      service: () => egressLocales,
-      labels: [
-        app.enUs,
-      ],
-    }],
-    [token('zones-ingresses.locales'), {
-      service: () => ingressLocales,
       labels: [
         app.enUs,
       ],

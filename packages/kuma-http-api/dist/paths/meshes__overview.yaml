@@ -1,0 +1,9 @@
+get:
+  operationId: getMeshOverviewList
+  responses:
+    '200':
+      $ref: '../components/responses/GetMeshOverviewListResponse.yaml'
+    '400':
+      $ref: '../components/responses/BadRequest.yaml'
+    '500':
+      $ref: '../components/responses/Internal.yaml'

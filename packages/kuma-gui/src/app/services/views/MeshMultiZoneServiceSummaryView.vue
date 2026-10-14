@@ -3,17 +3,17 @@
     name="mesh-multi-zone-service-summary-view"
     :params="{
       mesh: '',
-      service: '',
+      kri: '',
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
       format: String,
     }"
-    v-slot="{ route, t, uri }"
+    v-slot="{ route, t, uri, r }"
   >
     <DataCollection
       :items="props.items"
-      :predicate="item => item.id === route.params.service"
+      :predicate="item => item.kri === route.params.kri"
     >
       <template
         #item="{ item }"
@@ -26,7 +26,7 @@
                   name: 'mesh-multi-zone-service-detail-view',
                   params: {
                     mesh: route.params.mesh,
-                    service: route.params.service,
+                    kri: route.params.kri,
                   },
 
                 }"
@@ -39,12 +39,11 @@
           </template>
 
           <XLayout
-            type="stack"
+            variant="y-stack"
           >
             <header>
               <XLayout
-                type="separated"
-                size="max"
+                variant="action-group"
               >
                 <h3>
                   {{ t('services.routes.item.config') }}
@@ -83,8 +82,7 @@
                   </th>
                   <td>
                     <XLayout
-                      type="separated"
-                      truncate
+                      variant="separated"
                     >
                       <KumaPort
                         v-for="connection in item.spec.ports"
@@ -103,8 +101,7 @@
                   </th>
                   <td>
                     <XLayout
-                      type="separated"
-                      truncate
+                      variant="separated"
                     >
                       <XBadge
                         v-for="(value, key) in item.spec.selector.meshService.matchLabels"
@@ -113,6 +110,35 @@
                       >
                         {{ key }}:{{ value }}
                       </XBadge>
+                    </XLayout>
+                  </td>
+                </tr>
+                <tr
+                  v-if="Object.keys(item.labels).length > 0"
+                >
+                  <th scope="row">
+                    Labels
+                  </th>
+                  <td>
+                    <XLayout
+                      variant="separated"
+                    >
+                      <XAction
+                        v-for="(value, key) in item.labels"
+                        :key="key"
+                        :href="t(`common.label.href.${key.replaceAll('.', '~')}`, {
+                          mesh: item.mesh,
+                          zone: item.zone,
+                          namespace: item.namespace,
+                          name: value,
+                        }, { defaultMessage: '' })"
+                      >
+                        <XBadge
+                          :variant="r('kuma.label').test(key) ? 'reserved-kv' : 'kv'"
+                        >
+                          {{ key }}:<strong>{{ value }}</strong>
+                        </XBadge>
+                      </XAction>
                     </XLayout>
                   </td>
                 </tr>
@@ -136,11 +162,10 @@
 
             <template v-else>
               <DataLoader
-                :src="uri(sources, '/meshes/:mesh/mesh-multi-zone-service/:name/as/kubernetes', {
-                  mesh: route.params.mesh,
-                  name: route.params.service,
+                :src="uri(sources, '/mesh-multi-zone-service/:kri/as/kubernetes', {
+                  kri: route.params.kri,
                 })"
-                v-slot="{ data: k8sConfig }"
+                v-slot="{ data: [k8sConfig] }"
               >
                 <XCodeBlock
                   data-testid="codeblock-yaml-k8s"

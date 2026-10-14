@@ -1,5 +1,5 @@
 import type { Can } from '@/app/application'
-import { routes as dataPlanes } from '@/app/legacy-data-planes/routes'
+import { routes as dataPlanes } from '@/app/data-planes/routes'
 import type { RouteRecordRaw } from 'vue-router'
 
 export const routes = (can: Can) => {
@@ -10,32 +10,7 @@ export const routes = (can: Can) => {
         name: 'service-detail-index-view',
         children: [
           {
-            path: 'internal/:service',
-            name: 'service-detail-tabs-view',
-            component: () => import('@/app/services/views/ServiceDetailTabsView.vue'),
-            children: [
-              {
-                path: 'overview',
-                name: 'service-detail-view',
-                component: () => import('@/app/services/views/ServiceDetailView.vue'),
-                children: dataPlanes().summary('service'),
-              },
-            ],
-          },
-          {
-            path: 'external/:service',
-            name: 'external-service-detail-tabs-view',
-            component: () => import('@/app/external-services/views/ExternalServiceDetailTabsView.vue'),
-            children: [
-              {
-                path: 'overview',
-                name: 'external-service-detail-view',
-                component: () => import('@/app/external-services/views/ExternalServiceDetailView.vue'),
-              },
-            ],
-          },
-          {
-            path: 'mesh-services/:service',
+            path: 'mesh-services/:kri',
             name: 'mesh-service-detail-tabs-view',
             component: () => import('@/app/services/views/MeshServiceDetailTabsView.vue'),
             children: [
@@ -55,7 +30,7 @@ export const routes = (can: Can) => {
           ...(can('use zones')
             ? [
               {
-                path: 'mesh-multi-zone-services/:service',
+                path: 'mesh-multi-zone-services/:kri',
                 name: 'mesh-multi-zone-service-detail-tabs-view',
                 component: () => import('@/app/services/views/MeshMultiZoneServiceDetailTabsView.vue'),
                 children: [
@@ -63,14 +38,13 @@ export const routes = (can: Can) => {
                     path: 'overview',
                     name: 'mesh-multi-zone-service-detail-view',
                     component: () => import('@/app/services/views/MeshMultiZoneServiceDetailView.vue'),
-                    children: dataPlanes().summary('mesh-multi-zone-service'),
                   },
                 ],
               },
             ]
             : []),
           {
-            path: 'mesh-external-services/:service',
+            path: 'mesh-external-services/:kri',
             name: 'mesh-external-service-detail-tabs-view',
             component: () => import('@/app/services/views/MeshExternalServiceDetailTabsView.vue'),
             children: [
@@ -95,22 +69,12 @@ export const routes = (can: Can) => {
           component: () => import('@/app/services/views/ServiceListTabsView.vue'),
           children: [
             {
-              path: 'internal',
-              name: 'service-list-view',
-              component: () => import('@/app/services/views/ServiceListView.vue'),
-            },
-            {
-              path: 'external',
-              name: 'external-service-list-view',
-              component: () => import('@/app/external-services/views/ExternalServiceListView.vue'),
-            },
-            {
               path: 'mesh-services',
               name: 'mesh-service-list-view',
               component: () => import('@/app/services/views/MeshServiceListView.vue'),
               children: [
                 {
-                  path: ':service',
+                  path: ':kri',
                   name: 'mesh-service-summary-view',
                   component: () => import('@/app/services/views/MeshServiceSummaryView.vue'),
                 },
@@ -124,7 +88,7 @@ export const routes = (can: Can) => {
                   component: () => import('@/app/services/views/MeshMultiZoneServiceListView.vue'),
                   children: [
                     {
-                      path: ':service',
+                      path: ':kri',
                       name: 'mesh-multi-zone-service-summary-view',
                       component: () => import('@/app/services/views/MeshMultiZoneServiceSummaryView.vue'),
                     },
@@ -138,7 +102,7 @@ export const routes = (can: Can) => {
               component: () => import('@/app/services/views/MeshExternalServiceListView.vue'),
               children: [
                 {
-                  path: ':service',
+                  path: ':kri',
                   name: 'mesh-external-service-summary-view',
                   component: () => import('@/app/services/views/MeshExternalServiceSummaryView.vue'),
                 },

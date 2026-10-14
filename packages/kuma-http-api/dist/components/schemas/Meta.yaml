@@ -8,10 +8,14 @@ properties:
     description: the mesh this resource is part of
     type: string
     example: default
+    maxLength: 253
+    pattern: ^[0-9a-z-_.]*$
   name:
     description: the name of the resource
     type: string
     example: my-resource
+    maxLength: 253
+    pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$
   kri:
     description: Kuma Resource Identifier (KRI) of the given resource
     type: string
@@ -20,10 +24,14 @@ properties:
     x-go-name: KRI
   labels:
     description: |
-      Labels of the resource. Note: certain system labels are immutable after creation:
-      - `kuma.io/origin`: Resource origin (zone/global). Immutable.
-      - `kuma.io/zone`: Zone where resource originated. Immutable.
-      - `kuma.io/display-name`: Display name for the resource. Immutable.
+      Labels of the resource.
+
+      Labels documented as `readOnly` are always computed by the control plane; a value supplied by the
+      user is overwritten or rejected. The remaining documented labels can be set by the user, and the
+      control plane only fills in a default when they are absent. `kuma.io/origin` and `kuma.io/zone` are
+      immutable after creation.
+
+      Every other key under `kuma.io/` or `k8s.kuma.io/` is reserved and rejected.
     type: object
     example:
       k8s.kuma.io/namespace: kuma-system
@@ -32,6 +40,75 @@ properties:
       kuma.io/origin: zone
     additionalProperties:
       type: string
+    patternProperties:
+      ^kuma\.io/display-name$:
+        type: string
+        readOnly: true
+        description: Display name of the resource. Always computed by the control plane.
+      ^kuma\.io/origin$:
+        type: string
+        readOnly: true
+        description: Whether the resource originated on a zone or on global. Always computed by the control plane, and immutable.
+      ^k8s\.kuma\.io/namespace$:
+        type: string
+        readOnly: true
+        description: Namespace the object lives in. Always computed by the control plane on Kubernetes.
+      ^kuma\.io/policy-role$:
+        type: string
+        readOnly: true
+        description: Role driving namespaced policy matching. Always computed by the control plane for namespaced policies on Kubernetes.
+      ^k8s\.kuma\.io/service-account$:
+        type: string
+        readOnly: true
+        description: Service account of the workload. Always computed by the control plane on Kubernetes.
+      ^kuma\.io/workload$:
+        type: string
+        readOnly: true
+        description: Workload the resource belongs to. Always computed by the control plane.
+      ^kuma\.io/listener-zoneingress$:
+        type: string
+        readOnly: true
+        description: Set to `enabled` when the proxy has a zone ingress listener. Always computed by the control plane.
+      ^kuma\.io/listener-zoneegress$:
+        type: string
+        readOnly: true
+        description: Set to `enabled` when the proxy has a zone egress listener. Always computed by the control plane.
+      ^kuma\.io/managed-by$:
+        type: string
+        readOnly: true
+        description: Component that generated the resource. Set by the control plane, cannot be set manually.
+      ^kuma\.io/deletion-grace-period-started-at$:
+        type: string
+        readOnly: true
+        description: When the control plane started the grace period before deleting a generated `MeshService` no proxy serves. Set by the control plane, cannot be set manually.
+      ^k8s\.kuma\.io/service-name$:
+        type: string
+        readOnly: true
+        description: Kubernetes `Service` a generated `MeshService` is derived from. Set by the control plane, cannot be set manually.
+      ^k8s\.kuma\.io/is-headless-service$:
+        type: string
+        readOnly: true
+        description: Whether the Kubernetes `Service` a generated `MeshService` is derived from is headless. Set by the control plane, cannot be set manually.
+      ^kuma\.io/mesh$:
+        type: string
+        description: Mesh the resource belongs to. Defaults to `default` when unset.
+      ^kuma\.io/zone$:
+        type: string
+        description: Zone the resource originated in. Defaults to the name of the zone it was applied on when unset, and is immutable afterwards.
+      ^kuma\.io/env$:
+        type: string
+        description: Environment the resource was applied in. Defaults to `universal` or `kubernetes` when unset.
+      ^kuma\.io/kds-sync$:
+        type: string
+        enum:
+          - enabled
+          - disabled
+        description: Whether the resource is synced to the other control planes over KDS. Overrides the default of its type.
+      ^kuma\.io/effect$:
+        type: string
+        enum:
+          - shadow
+        description: Set to `shadow` on a policy to keep it out of the proxy configuration while the Inspect API still reports it.
 required:
   - type
   - mesh

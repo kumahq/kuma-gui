@@ -23,14 +23,14 @@
             v-slot="hub"
           >
             <XLayout
-              type="stack"
+              variant="y-stack"
               size="small"
             >
               <aside
                 v-if="hub?.notifications?.size > 0"
               >
                 <XLayout
-                  type="stack"
+                  variant="y-stack"
                 >
                   <template
                     v-for="[variant, value] in hub.notifications"
@@ -71,20 +71,14 @@
                 />
               </nav>
 
-              <section
-                :class="{
-                  'is-fullscreen': props.fullscreen,
-                }"
-              >
+              <section>
                 <XLayout
-                  type="stack"
+                  variant="y-stack"
                 >
                   <header
                     v-if="slots.title || slots.actions"
                     class="app-view-title-bar"
                   >
-                    <KongIcon v-if="props.fullscreen" />
-
                     <template
                       v-if="summary.length > 0"
                     >
@@ -143,36 +137,36 @@
 </template>
 
 <script lang="ts" setup>
-import { KongIcon } from '@kong/icons'
 import { ROUTE_VIEW_PARENT } from '@kumahq/routing/vue'
-import { nextTick , provide, inject, watch, ref, onBeforeUnmount , useId } from 'vue'
+import { useProtocolHandler } from '@kumahq/x'
+import { nextTick, provide, inject, watch, ref, onBeforeUnmount , useId } from 'vue'
 
 
 import type { RouteViewService } from '@kumahq/routing/vue'
-type AppView = {
-  addBreadcrumbs: (items: BreadcrumbItem[], sym: symbol) => void
-  removeBreadcrumbs: (sym: symbol) => void
-}
 import type { XBreadcrumbs } from '@kumahq/x'
 import type { ComponentInstance } from 'vue'
 
-type BreadcrumbItem = ComponentInstance<typeof XBreadcrumbs>['$props']['items'][number]
-type Breadcrumbs = Map<symbol, BreadcrumbItem[]>
 
+type BreadcrumbItem = ComponentInstance<typeof XBreadcrumbs>['$props']['items'][number]
+type XBreadcrumbItem = BreadcrumbItem & { href?: string }
+type Breadcrumbs = Map<symbol, BreadcrumbItem[]>
+type AppView = {
+  addBreadcrumbs: (items: XBreadcrumbItem[], sym: symbol) => void
+  removeBreadcrumbs: (sym: symbol) => void
+}
 
 const props = withDefaults(defineProps<{
-  breadcrumbs?: BreadcrumbItem[] | null
-  fullscreen?: boolean
+  breadcrumbs?: XBreadcrumbItem[] | null
   docs?: string
   notifications?: boolean
 }>(), {
   breadcrumbs: null,
-  fullscreen: false,
   docs: '',
   notifications: false,
 })
 const slots = defineSlots()
 
+const protocolHandler = useProtocolHandler()
 const id = useId()
 const routeView = inject<RouteViewService>(ROUTE_VIEW_PARENT)!
 
@@ -192,7 +186,7 @@ const refreshBreadcrumbs = (map: Breadcrumbs) => {
 }
 
 const appView: AppView = {
-  addBreadcrumbs: (items: BreadcrumbItem[] | undefined, sym: symbol) => {
+  addBreadcrumbs: (items: XBreadcrumbItem[] | undefined, sym: symbol) => {
     if (typeof items !== 'undefined') {
       if (map.has(sym)) {
         const current = map.get(sym)
@@ -204,7 +198,17 @@ const appView: AppView = {
           return
         }
       }
-      map.set(sym, items)
+      const breadcrumbs = items.map(item => {
+        if(item.href && item.href.includes('://')) {
+          const { href: _href, ...rest } = item
+          return {
+            ...rest,
+            to: protocolHandler(item.href),
+          }
+        }
+        return item
+      })
+      map.set(sym, breadcrumbs)
       refreshBreadcrumbs(map)
     }
   },
@@ -221,7 +225,7 @@ if (!hasParent) {
 }
 const parent: AppView = hasParent || appView
 
-watch(() => props.breadcrumbs, (items: BreadcrumbItem[] | null) => {
+watch(() => props.breadcrumbs, (items: XBreadcrumbItem[] | null) => {
   if (items !== null) {
     parent.addBreadcrumbs(items, symbol)
   }
@@ -238,18 +242,6 @@ onBeforeUnmount(() => {
   position: relative;
   left: -3px;
 }
-.is-fullscreen {
-  .app-view-title-bar {
-    padding: $kui-space-80 $kui-space-90;
-    border-bottom: $kui-border-width-10 solid $kui-color-border;
-  }
-  .app-view-title-bar h1 {
-    margin-left: $kui-space-40;
-    padding-left: $kui-space-40;
-    border-left: $kui-border-width-10 solid $kui-color-border;
-    font-size: $kui-font-size-60;
-  }
-}
 .k-tabs + .route-view > .app-view .app-view-title-bar {
   margin-bottom: 20px;
 }
@@ -257,7 +249,7 @@ onBeforeUnmount(() => {
 
 <style lang="scss" scoped>
 .app-view {
-  font-size: $kui-font-size-30;
+  font-size: var(--x-font-size-30);
 }
 .app-view-title-bar {
   display: flex;
@@ -273,13 +265,13 @@ onBeforeUnmount(() => {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  gap: $kui-space-60;
+  gap: var(--x-space-60);
 }
 .notifications {
   padding: 0;
 }
 .notifications li {
-  margin-left: $kui-space-60;
+  margin-left: var(--x-space-60);
 }
 .notifications li:only-child {
   list-style-type: none;

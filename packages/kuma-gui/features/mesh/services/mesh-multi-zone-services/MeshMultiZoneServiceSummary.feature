@@ -23,6 +23,7 @@ Feature: MeshMultiZoneService summary
         body:
           items:
           - name: monitor-proxy-0.kuma-demo
+            kri: kri_mzsvc_default_zone-1_kuma-demo_monitor-proxy-0_
             labels:
               kuma.io/display-name: monitor-proxy-0
               k8s.kuma.io/namespace: kuma-demo
@@ -42,5 +43,5 @@ Feature: MeshMultiZoneService summary
       And the "$structured-view" element exists
 
       Examples:
-        | URL                                                                         |
-        | /meshes/default/services/mesh-multi-zone-services/monitor-proxy-0.kuma-demo |
+        | URL                                                                                                   |
+        | /meshes/default/services/mesh-multi-zone-services/kri_mzsvc_default_zone-1_kuma-demo_monitor-proxy-0_ |

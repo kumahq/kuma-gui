@@ -14,7 +14,7 @@
   >
     <DataCollection
       :items="props.items"
-      :predicate="item => item.id === route.params.policy"
+      :predicate="item => item.kri === route.params.policy"
       :find="true"
     >
       <template #empty>
@@ -34,7 +34,7 @@
       >
         <template
           v-for="item in [policies[0]]"
-          :key="item.id"
+          :key="item.kri"
         >
           <AppView>
             <template #title>
@@ -66,14 +66,13 @@
               <template #header>
                 <header>
                   <XLayout
-                    type="separated"
-                    size="max"
+                    variant="action-group"
                   >
                     <h3>
                       {{ t('policies.routes.item.config') }}
                     </h3>
                     <div
-                      v-for="options in [['structured', 'universal', 'k8s']]"
+                      v-for="options in [['structured', 'universal', 'k8s'] as string[]]"
                       :key="typeof options"
                     >
                       <XSelect
@@ -114,12 +113,11 @@
 
               <template v-else-if="route.params.format === 'k8s'">
                 <DataLoader
-                  :src="uri(sources, '/meshes/:mesh/policy-path/:path/policy/:name/as/kubernetes', {
-                    mesh: route.params.mesh,
-                    path: route.params.policyPath,
-                    name: route.params.policy,
+                  :src="uri(sources, '/policy-path/:path/policy/:kri/as/kubernetes', {
+                    path: props.policyType.path,
+                    kri: route.params.policy,
                   })"
-                  v-slot="{ data: yaml }"
+                  v-slot="{ data: [yaml] }"
                 >
                   <XCodeBlock
                     data-testid="codeblock-yaml-k8s"
@@ -144,12 +142,13 @@
 </template>
 
 <script lang="ts" setup>
-import PolicySummary from '../components/PolicySummary.vue'
-import type { Policy, PolicyResourceType } from '../data'
-import { sources } from '../sources'
+import { sources } from '@/app/policies/sources'
+import PolicySummary from '@/app/policies/components/PolicySummary.vue'
+import type { Policy } from '../data'
+import type { ResourceTypeDescriptor } from '@/app/resources/data'
 
 const props = defineProps<{
   items: Policy[]
-  policyType: PolicyResourceType
+  policyType: ResourceTypeDescriptor
 }>()
 </script>

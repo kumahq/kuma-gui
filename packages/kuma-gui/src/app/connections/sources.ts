@@ -1,7 +1,10 @@
+import createClient from 'openapi-fetch'
+
+import { ConnectionXdsConfig } from './data/ConnectionXdsConfig'
 import type { DataSourceResponse } from '@/app/application'
 import { defineSources } from '@/app/application'
 import { Stat, ConnectionCollection } from '@/app/connections/data/'
-import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
+import type { paths } from '@kumahq/kuma-http-api'
 
 export type StatsSource = DataSourceResponse<{
   inbounds: Record<string, any>
@@ -41,38 +44,78 @@ const filter = (data: Record<string, unknown>, cb: (key: string, arr: unknown[])
     }, [] as typeof configs),
   }
 }
-export const sources = (api: KumaApi) => {
+type Options = {
+  baseUrl: string
+  fetch: typeof fetch
+}
+export const sources = ({ baseUrl, fetch }: Options) => {
+  const http = createClient<paths>({
+    baseUrl,
+    fetch,
+  })
   return defineSources({
     '/connections/stats/for/:proxyType/:name/:mesh/:socketAddress': async (params) => {
       const { name, mesh, socketAddress, proxyType } = params
 
-      const res = await (() => {
+      const res = await (async () => {
         switch (proxyType) {
-          case 'dataplane':
-            return api.getDataplaneStats({
-              mesh,
-              dppName: name,
+          case 'dataplane': {
+            const res = await http.GET('/meshes/{mesh}/dataplanes/{dataplane}/stats', {
+              parseAs: 'text',
+              params: {
+                path: {
+                  mesh,
+                  dataplane: name,
+                },
+              },
             })
-          case 'zone-ingress':
-            return api.getZoneIngressStats({
-              name,
+            return res.data ?? ''
+          }
+          case 'zone-ingress': {
+            // @ts-expect-error @TODO zone proxies no longer exist
+            const res = await http.GET('/zoneingresses/{name}/stats', {
+              parseAs: 'text',
+              params: {
+                path: {
+                  name,
+                },
+              },
             })
-          case 'zone-egress':
-            return api.getZoneEgressStats({
-              name,
+            return res.data ?? ''
+          }
+          case 'zone-egress': {
+            // @ts-expect-error @TODO zone proxies no longer exist
+            const res = await http.GET('/zoneegresses/{name}/stats', {
+              parseAs: 'text',
+              params: {
+                path: {
+                  name,
+                },
+              },
             })
+            return res.data ?? ''
+          }
           default:
             throw new Error('incorrect value for proxyType')
         }
       })()
       const connections = ConnectionCollection.fromObject(Stat.fromCollection(res))
 
-      let inbounds, outbounds, passthrough
+      let inbounds, outbounds, passthrough, listeners
       if (proxyType === 'dataplane') {
         // pick out the listeners/inbounds that start with our ip address (the.ip.address.1_port000)
         inbounds = params.socketAddress === 'localhost' || params.socketAddress === 'self_inbound'
           ? Object.fromEntries(Object.entries(connections.cluster).filter(([key, _value]) => key.startsWith('localhost_') || key.startsWith('self_inbound')))
           : Object.fromEntries(Object.entries(connections.listener).filter(([key, value]) => key.startsWith(`${params.socketAddress}_`) && !value.$clusterName.startsWith('_')))
+
+        listeners = {
+          ...Object.fromEntries(Object.entries(connections.listener).filter(([key]) => key.startsWith('self_zone'))),
+        }
+
+        inbounds = {
+          ...inbounds,
+          ...listeners,
+        }
 
         outbounds = Object.fromEntries(Object.entries(connections.cluster).filter(([key, _value]) => ![
           // if we don't exclude localhost_ we end up with  a `localhost_`
@@ -107,21 +150,44 @@ export const sources = (api: KumaApi) => {
 
     '/connections/clusters/for/:proxyType/:name/:mesh': async (params) => {
       const { name, mesh, proxyType } = params
-      const res = await (() => {
+      const res = await (async () => {
         switch (proxyType) {
-          case 'dataplane':
-            return api.getDataplaneClusters({
-              mesh,
-              dppName: name,
+          case 'dataplane': {
+            const res = await http.GET('/meshes/{mesh}/dataplanes/{dataplane}/clusters', {
+              parseAs: 'text',
+              params: {
+                path: {
+                  mesh,
+                  dataplane: name,
+                },
+              },
             })
-          case 'zone-ingress':
-            return api.getZoneIngressClusters({
-              name,
+            return res.data ?? ''
+          }
+          case 'zone-ingress': {
+            // @ts-expect-error @TODO zone proxies no longer exist
+            const res = await http.GET('/zoneingresses/{name}/clusters', {
+              parseAs: 'text',
+              params: {
+                path: {
+                  name,
+                },
+              },
             })
-          case 'zone-egress':
-            return api.getZoneEgressClusters({
-              name,
+            return res.data ?? ''
+          }
+          case 'zone-egress': {
+            // @ts-expect-error @TODO zone proxies no longer exist
+            const res = await http.GET('/zoneegresses/{name}/clusters', {
+              parseAs: 'text',
+              params: {
+                path: {
+                  name,
+                },
+              },
             })
+            return res.data ?? ''
+          }
           default:
             throw new Error('incorrect value for proxyType')
         }
@@ -130,27 +196,50 @@ export const sources = (api: KumaApi) => {
     },
     '/connections/xds/for/:proxyType/:name/:mesh/:endpoints': async (params) => {
       const { mesh, name, endpoints, proxyType } = params
-      const res = await (() => {
+      const res = await (async () => {
         switch (proxyType) {
-          case 'dataplane':
-            return api.getDataplaneXds({
-              mesh,
-              dppName: name,
-            }, {
-              include_eds: endpoints,
+          case 'dataplane': {
+            const res = await http.GET('/meshes/{mesh}/dataplanes/{dataplane}/xds', {
+              params: {
+                path: {
+                  mesh,
+                  dataplane: name,
+                },
+                query: {
+                  include_eds: endpoints === 'true' ? true : false,
+                },
+              },
             })
-          case 'zone-ingress':
-            return api.getZoneIngressXds({
-              name,
-            }, {
-              include_eds: endpoints,
+            return res.data!
+          }
+          case 'zone-ingress': {
+            // @ts-expect-error @TODO zone proxies no longer exist
+            const res = await http.GET('/zoneingresses/{name}/xds', {
+              params: {
+                path: {
+                  name,
+                },
+                query: {
+                  include_eds: endpoints,
+                },
+              },
             })
-          case 'zone-egress':
-            return api.getZoneEgressXds({
-              name,
-            }, {
-              include_eds: endpoints,
+            return res.data!
+          }
+          case 'zone-egress': {
+            // @ts-expect-error @TODO zone proxies no longer exist
+            const res = await http.GET('/zoneegresses/{name}/xds', {
+              params: {
+                path: {
+                  name,
+                },
+                query: {
+                  include_eds: endpoints,
+                },
+              },
             })
+            return res.data!
+          }
           default:
             throw new Error('incorrect value for proxyType')
         }
@@ -161,33 +250,56 @@ export const sources = (api: KumaApi) => {
     '/connections/xds/for/:proxyType/:name/:mesh/outbound/:outbound/endpoints/:endpoints': async (params) => {
       const { name, mesh, outbound, endpoints, proxyType } = params
 
-      const res = await (() => {
+      const res = await (async () => {
         switch (proxyType) {
-          case 'dataplane':
-            return api.getDataplaneXds({
-              mesh,
-              dppName: name,
-            }, {
-              include_eds: endpoints,
+          case 'dataplane': {
+            const res = await http.GET('/meshes/{mesh}/dataplanes/{dataplane}/xds', {
+              params: {
+                path: {
+                  mesh,
+                  dataplane: name,
+                },
+                query: {
+                  include_eds: endpoints === 'true' ? true : false,
+                },
+              },
             })
-          case 'zone-ingress':
-            return api.getZoneIngressXds({
-              name,
-            }, {
-              include_eds: endpoints,
+            return res.data!
+          }
+          case 'zone-ingress': {
+            // @ts-expect-error @TODO zone proxies no longer exist
+            const res = await http.GET('/zoneingresses/{name}/xds', {
+              params: {
+                path: {
+                  name,
+                },
+                query: {
+                  include_eds: endpoints,
+                },
+              },
             })
-          case 'zone-egress':
-            return api.getZoneEgressXds({
-              name,
-            }, {
-              include_eds: endpoints,
+            return res.data!
+          }
+          case 'zone-egress': {
+            // @ts-expect-error @TODO zone proxies no longer exist
+            const res = await http.GET('/zoneegresses/{name}/xds', {
+              params: {
+                path: {
+                  name,
+                },
+                query: {
+                  include_eds: endpoints,
+                },
+              },
             })
+            return res.data!
+          }
           default:
             throw new Error('incorrect value for proxyType')
         }
-      })()
+      })() as Record<string, unknown> // @TODO zone proxies removal needed this
 
-      return filter(res, (key: string, arr: unknown[]) => {
+      const filtered = filter(res, (key: string, arr: unknown[]) => {
         switch (key) {
           case 'dynamic_listeners':
             // this one won't work yet see
@@ -196,49 +308,76 @@ export const sources = (api: KumaApi) => {
             return arr.filter(item => prop(item, 'name') && (item.name === `outbound:${outbound}` || item.name === outbound))
           case 'dynamic_active_clusters':
             // dynamic_active_clusters[].cluster.name === outbound
-            return arr.filter(item => prop(item, 'cluster') && prop(item.cluster, 'name') && item.cluster?.name === outbound)
-          case 'dynamic_endpoint_configs':
+            return arr.filter(item => prop(item, 'cluster') && ((prop(item.cluster, 'name') && (item.cluster.name === outbound) || (prop(item.cluster, 'alt_stat_name') && item.cluster.alt_stat_name === outbound))))
+          case 'dynamic_endpoint_configs': {
+            // prefixed outbound is i.e. `default:demo-app_kuma-demo_zone-1_msvc_5050` instead of `default_demo-app_kuma-demo_zone-1_msvc_5050`
+            const prefixedOutbound = `${outbound.split('_')[0]}:${outbound.split('_').slice(1).join('_')}`
             // dynamic_endpoint_configs[].endpoint_config.cluster_name === outbound
-            return arr.filter(item => prop(item, 'endpoint_config') && prop(item.endpoint_config, 'cluster_name') && item.endpoint_config?.cluster_name === outbound)
+            return arr.filter(item => prop(item, 'endpoint_config') && prop(item.endpoint_config, 'cluster_name') && (item.endpoint_config?.cluster_name === outbound || item.endpoint_config?.cluster_name === prefixedOutbound))
+          }
         }
         return []
       })
+      return ConnectionXdsConfig.fromCollection(filtered)
     },
     '/connections/xds/for/:proxyType/:name/:mesh/inbound/:inbound': async (params) => {
       const { name, mesh, inbound, proxyType } = params
 
       // we don't ask for endpoints because we don't need them for inbound filtering
-      const res = await (() => {
+      const res = await (async () => {
         switch (proxyType) {
-          case 'dataplane':
-            return api.getDataplaneXds({
-              mesh,
-              dppName: name,
-            }, {
-              include_eds: false,
+          case 'dataplane': {
+            const res = await http.GET('/meshes/{mesh}/dataplanes/{dataplane}/xds', {
+              params: {
+                path: {
+                  mesh,
+                  dataplane: name,
+                },
+                query: {
+                  include_eds: false,
+                },
+              },
             })
-          case 'zone-ingress':
-            return api.getZoneIngressXds({
-              name,
-            }, {
-              include_eds: false,
+            return res.data!
+          }
+          case 'zone-ingress': {
+            // @ts-expect-error @TODO(types) zone proxies no longer exist
+            const res = await http.GET('/zoneingresses/{name}/xds', {
+              params: {
+                path: {
+                  name,
+                },
+                query: {
+                  include_eds: 'false',
+                },
+              },
             })
-          case 'zone-egress':
-            return api.getZoneEgressXds({
-              name,
-            }, {
-              include_eds: false,
+            return res.data!
+          }
+          case 'zone-egress': {
+            // @ts-expect-error @TODO(types) zone proxies no longer exist
+            const res = await http.GET('/zoneegresses/{name}/xds', {
+              params: {
+                path: {
+                  name,
+                },
+                query: {
+                  include_eds: 'false',
+                },
+              },
             })
+            return res.data!
+          }
           default:
             throw new Error('incorrect value for proxyType')
         }
-      })()
+      })() as Record<string, unknown> // @TODO zone proxies removal needed this
 
       return filter(res, (key: string, arr: unknown[]) => {
         switch (key) {
           case 'dynamic_listeners':
             // dynamic_listeners[].name === 'inbound:<ignored>:0000'
-            return arr.filter((item = {}) => prop(item, 'name') && typeof item.name === 'string' && ((item.name.startsWith('inbound:') && item.name?.endsWith(`:${inbound}`) || item.name === inbound )))
+            return arr.filter((item = {}) => prop(item, 'name') && typeof item.name === 'string' && ((item.name.startsWith('inbound:') && item.name?.endsWith(`:${inbound}`) || item.name === inbound)))
           case 'dynamic_active_clusters':
             // dynamic_active_clusters[].cluster.name === '<ignored>:0000'
             return arr.filter(item => prop(item, 'cluster') && prop(item.cluster, 'name') && ((typeof item.cluster.name === 'string' && item.cluster?.name?.endsWith(`:${inbound}`) || item.cluster.name === inbound)))

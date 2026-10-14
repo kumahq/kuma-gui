@@ -1,6 +1,6 @@
 <template>
   <component
-    :is="(props.type === 'separated' || variant === 'separated') && props.truncate ? KTruncate : 'div'"
+    :is="props.variant === 'separated' && props.truncate ? KTruncate : 'div'"
     :class="['x-layout', variant, props.size, justify]"
   >
     <slot name="default" />
@@ -17,56 +17,68 @@ type XComponent<T extends abstract new (...args: any) => any> = {
 }
 
 const props = withDefaults(defineProps<{
-  variant?: '' | 'x-stack' | 'y-stack' | 'separated' | 'columns'
+  variant: 'x-stack' | 'y-stack' | 'separated' | 'columns' | 'action-group' | 'inline'
   size?: 'small' | 'normal' | 'large' | 'max'
   justify?: 'start' | 'around' | 'between' | 'end'
   truncate?: boolean
-  /** @deprecated please use `variant` */
-  type?: 'stack' | 'separated' | 'columns'
 }>(), {
-  variant: '',
-  type: 'stack',
   size: 'normal',
   // @ts-ignore because we need  to apply a runtime default depending on the variant
   justify: '',
   truncate: false,
 })
-const table = inject<XComponent<typeof XTable>>('x-table')
-const variant = computed(() => props.variant.length > 0 ? props.variant : (props.type === 'stack' ? 'y-stack' : props.type))
-// when inside a kv table default is `end`, otherwise its `start`
-const justify = computed(() => table?.props.variant !== 'kv' ? props.justify || 'start' : props.justify || 'end')
+const table = inject<XComponent<typeof XTable> | undefined>('x-table', undefined)
+// when inside a kv table default is `end` or action-group default is `end`,
+// otherwise its `start`
+const justify = computed(() => table?.props.variant === 'kv' || props.variant === 'action-group' ? props.justify || 'end' : props.justify || 'start')
 
 </script>
 <style lang="scss" scoped>
 .y-stack.large > * + * {
-  margin-block-start: $kui-space-100;
+  margin-block-start: var(--x-space-100);
 }
 .y-stack.normal > * + * {
-  margin-block-start: $kui-space-70;
+  margin-block-start: var(--x-space-70);
 }
 .y-stack.small > * + * {
-  margin-block-start: $kui-space-40;
+  margin-block-start: var(--x-space-40);
 }
 .x-stack {
   display: flex;
   width: 100%;
   flex-wrap: nowrap;
 }
-.separated:not(.k-truncate) {
+.action-group {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  /* make sure any conditional actions leave the same room for headers */
+  min-height: var(--x-space-90);
+  /* anything not action-like will be header on explantory text on the left */
+  & > :deep(:where(.x-layout, .x-i18n, p, header, h1, h2, h3, h4, h5, h6):first-child) {
+    flex-grow: 1;
+  }
+}
+:where(.inline, .separated):not(.k-truncate) {
   display: inline-flex;
   width: 100%;
   align-items: center;
   flex-wrap: wrap;
 }
-:is(.x-stack, .separated:not(.k-truncate)) {
+:is(
+  .x-stack,
+  .inline:not(.k-truncate),
+  .separated:not(.k-truncate),
+  .action-group
+) {
   &.small {
-    gap: $kui-space-20;
+    gap: var(--x-space-20);
   }
   &.normal {
-    gap: $kui-space-40;
+    gap: var(--x-space-40);
   }
   &.large {
-    gap: $kui-space-80;
+    gap: var(--x-space-80);
   }
   &.start {
     justify-content: flex-start;
@@ -88,7 +100,7 @@ const justify = computed(() => table?.props.variant !== 'kv' ? props.justify || 
 
   display: flex;
   flex-wrap: wrap;
-  gap: $kui-space-80;
+  gap: var(--x-space-80);
 }
 
 .columns > * {

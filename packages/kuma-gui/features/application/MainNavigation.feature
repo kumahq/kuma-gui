@@ -2,13 +2,14 @@ Feature: application / MainNavigation
 
   Background:
     Given the CSS selectors
-      | Alias              | Selector                                   |
-      | main-nav           | .app-sidebar                               |
-      | control-planes-nav | [data-testid='control-planes-navigator'] a |
-      | meshes-nav         | [data-testid='meshes-navigator'] a         |
-      | zones-nav          | [data-testid='zones-navigator'] a          |
-      | zone-egresses-nav  | [data-testid='zone-egresses-navigator'] a  |
-      | configuration-nav  | [data-testid='configuration-navigator'] a  |
+      | Alias              | Selector                                            |
+      | main-nav           | .app-sidebar                                        |
+      | control-planes-nav | [data-testid='control-planes-navigator'] a          |
+      | meshes-nav         | [data-testid='meshes-navigator'] a                  |
+      | zones-nav          | [data-testid='zones-navigator'] a                   |
+      | zone-egresses-nav  | [data-testid='zone-egresses-navigator'] a           |
+      | resources-nav      | [data-testid='control-plane-resources-navigator'] a |
+      | configuration-nav  | [data-testid='configuration-navigator'] a           |
 
   Scenario Outline: The navigation shows <Element> exists for <Mode>
     Given the environment
@@ -19,9 +20,10 @@ Feature: application / MainNavigation
     Then the "<Element>" element exists
 
     Examples:
-      | Element            | Mode   |
-      | $zones-nav         | global |
-      | $zone-egresses-nav | zone   |
+      | Element        | Mode   |
+      | $zones-nav     | global |
+      | $resources-nav | global |
+      | $resources-nav | zone   |
 
   Scenario Outline: The navigation shows <Element> doesn't exist for <Mode>
     Given the environment
@@ -34,6 +36,7 @@ Feature: application / MainNavigation
     Examples:
       | Element            | Mode   |
       | $zone-egresses-nav | global |
+      | $zone-egresses-nav | zone   |
       | $zones-nav         | zone   |
 
   Scenario Outline: Visiting the "<Title>" page
@@ -54,6 +57,7 @@ Feature: application / MainNavigation
       | Selector            | Title               |
       | $control-planes-nav | Overview            |
       | $zones-nav          | Zone control planes |
+      | $resources-nav      | Resources           |
       | $configuration-nav  | Configuration       |
 
   Scenario: Pagination deeplinking
@@ -93,11 +97,12 @@ Feature: application / MainNavigation
       body:
         items:
         - name: monitor-proxy-0.kuma-demo
+          kri: kri_msvc_default__kuma-demo_monitor-proxy-0_
           labels:
             kuma.io/display-name: monitor-proxy-0
             k8s.kuma.io/namespace: kuma-demo
       """
-    When I visit the "/meshes/default/services/mesh-services/monitor-proxy-0.kuma-demo" URL
+    When I visit the "/meshes/default/services/mesh-services/kri_msvc_default__kuma-demo_monitor-proxy-0_" URL
     Then the URL contains "format=yaml"
     And the "[data-testid='k-code-block']" element exists
 
@@ -123,21 +128,5 @@ Feature: application / MainNavigation
     And the "[data-testid='zone-control-planes-status']" element exists
 
   Scenario: Secondary navigation
-    When I visit the "/meshes/default/data-planes/dp-name/stats" URL
+    When I visit the "/meshes/default/data-planes/kri_dp_default__kuma-demo_dp-name_/stats" URL
     And the "[data-testid='data-plane-stats-view-tab'].active" element exists
-
-  Scenario: Tertiary navigation
-    Given the environment
-      """
-      KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: false
-      """
-    When I visit the "/meshes/default/data-planes/dp-name/overview/inbound/localhost_51112/stats" URL
-    And the URL "/meshes/default/dataplanes/dp-name/_overview" responds with
-      """
-      body:
-        dataplane:
-          networking:
-            inbound:
-              - port: 51112
-      """
-    And the "[data-testid='data-plane-connection-inbound-summary-stats-view-tab'].active" element exists

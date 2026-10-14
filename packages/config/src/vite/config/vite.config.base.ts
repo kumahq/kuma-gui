@@ -7,6 +7,7 @@ import type { UserConfig, UserConfigFn } from 'vite'
 
 export const defineConfig: UserConfigFn = () => ({
   base: './',
+  envPrefix: 'KUMA_',
   server: {
     port: 8080,
   },

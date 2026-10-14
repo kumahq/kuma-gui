@@ -5,7 +5,7 @@
       mesh: '',
       environment: String,
     }"
-    v-slot="{ route, t, uri, me }"
+    v-slot="{ route, t, uri, me, can }"
   >
     <RouteTitle
       :title="t('meshes.routes.overview.title')"
@@ -19,13 +19,13 @@
       v-slot="{ data }"
     >
       <DataSource
-        :src="uri(resourceSources, '/meshes/:mesh/meshidentities', {
+        :src="uri(meshIdentitiesSources, '/meshes/:mesh/meshidentities', {
           mesh: route.params.mesh,
         })"
         v-slot="{ data: meshIdentities }"
       >
         <DataSource
-          :src="uri(resourceSources, '/meshes/:mesh/meshtrusts', {
+          :src="uri(meshTrustsSources, '/meshes/:mesh/meshtrusts', {
             mesh: route.params.mesh,
           })"
           v-slot="{ data: meshTrusts }"
@@ -36,168 +36,46 @@
           >
             <DataLoader
               :data="[meshIdentities, meshTrusts]"
+              v-slot="{ data: [meshIdentitiesData, meshTrustsData] }"
             >
               <XNotification
-                :notify="!props.mesh.mtlsBackend && meshIdentities!.items.length === 0"
+                :notify="!props.mesh.mtlsBackend && meshIdentitiesData.items.length === 0"
                 :uri="`meshes.notifications.mtls-warning:${props.mesh.id}`"
               >
-                <XI18n
-                  path="meshes.notifications.mtls-warning"
-                />
+                <XI18n path="meshes.notifications.mtls-warning" />
               </XNotification>
               <XNotification
-                :notify="mesh.meshServices.mode === 'Disabled'"
-                :uri="`meshes.notifications.mesh-service-activation:${route.params.mesh}`"
+                :notify="!can('use mesh-services', props.mesh)"
+                :uri="`meshes.notifications.mesh-service-activation:${props.mesh.id}`"
                 variant="info"
               >
-                <XI18n
-                  path="meshes.notifications.mesh-service-activation"
-                />
+                <XI18n path="meshes.notifications.mesh-service-activation" />
               </XNotification>
-              <XLayout
-                type="stack"
-              >
-                <XAboutCard
-                  :title="t('meshes.routes.item.about.title')"
-                  :created="props.mesh.creationTime"
-                  :modified="props.mesh.modificationTime"
-                  class="about-section"
-                  data-testid="mesh-about-section"
-                >
-                  <XDl
-                    variant="x-stack"
-                  >
-                    <template
-                      v-for="policy in ['MeshTrafficPermission', 'MeshMetric', 'MeshAccessLog', 'MeshTrace']"
-                      :key="policy"
-                    >
-                      <template
-                        v-for="stats in [data?.policies?.[policy] ?? { total: 0 }]"
-                        :key="typeof stats"
-                      >
-                        <XNotification
-                          :notify="policy === 'MeshTrafficPermission' && props.mesh.mtlsBackend && stats.total === 0"
-                          :uri="`meshes.notifications.mtp-warning:${props.mesh.id}`"
-                        >
-                          <XI18n
-                            path="meshes.notifications.mtp-warning"
-                          />
-                        </XNotification>
-                        <div>
-                          <dt>
-                            <XAction
-                              :to="{
-                                name: 'policy-list-view',
-                                params: {
-                                  mesh: route.params.mesh,
-                                  policyPath: `${policy.toLowerCase()}s`,
-                                },
-                              }"
-                            >
-                              {{ policy }}
-                            </XAction>
-                          </dt>
-                          <dd>
-                            <XBadge
-                              :appearance="stats.total > 0 ? 'success' : 'neutral'"
-                            >
-                              {{ stats.total > 0 ? t('meshes.detail.enabled') : t('meshes.detail.disabled') }}
-                            </XBadge>
-                          </dd>
-                        </div>
-                      </template>
-                    </template>
-                    <div
-                      data-testid="mesh-mtls"
-                    >
-                      <dt>
-                        {{ t('http.api.property.mtls') }}
-                      </dt>
-                      <dd>
-                        <XLayout type="separated">
-                          <XBadge
-                            v-if="props.mesh.mtlsBackend"
-                            appearance="info"
-                          >
-                            {{ props.mesh.mtlsBackend.type }} / {{ props.mesh.mtlsBackend.name }}
-                          </XBadge>
-                          <template
-                            v-for="identity in meshIdentities?.items"
-                            :key="identity.name"
-                          >
-                            <XAction
-                              :to="{
-                                name: 'mesh-identity-summary-view',
-                                params: {
-                                  mid: identity.kri,
-                                },
-                              }"
-                            >
-                              <XBadge appearance="info">
-                                MeshIdentity / {{ identity.name }}
-                              </XBadge>
-                            </XAction>
-                          </template>
-                          <XBadge
-                            v-if="!props.mesh.mtlsBackend && !meshIdentities?.items?.length"
-                            appearance="neutral"
-                          >
-                            {{ t('meshes.detail.disabled') }}
-                          </XBadge>
-                        </XLayout>
-                      </dd>
-                    </div>
-
-                    <template
-                      v-for="labels in [Object.entries(props.mesh.labels)]"
-                      :key="typeof labels"
-                    >
-                      <div v-if="labels.length > 0">
-                        <dt>{{ t('services.routes.item.labels') }}</dt>
-                        <dd>
-                          <XLayout
-                            variant="separated"
-                            truncate
-                          >
-                            <template
-                              v-for="kumaRe in [/^(.+\.)?kuma\.io\//]"
-                              :key="typeof kumaRe"
-                            >
-                              <XBadge
-                                v-for="[key, value] in labels"
-                                :key="key"
-                                :appearance="kumaRe.test(key) ? 'info' : 'decorative'"
-                              >
-                                {{ key }}:{{ value }}
-                              </XBadge>
-                            </template>
-                          </XLayout>
-                        </dd>
-                      </div>
-                    </template>
-                  </XDl>
-                </XAboutCard>
-
-                <XCard
-                  v-if="meshTrusts?.items?.length"
-                  data-testid="mesh-trusts-listing"
-                >
+              <XLayout variant="y-stack">
+                <MeshStatus
+                  :mesh="props.mesh"
+                  :mesh-identities="meshIdentitiesData.items"
+                  :policies="data?.policies"
+                />
+                <XCard v-if="meshTrustsData.items.length">
                   <template #title>
                     {{ t('meshes.routes.item.mesh-trusts.title') }}
                   </template>
                   <DataCollection
                     type="mesh-trusts"
-                    :items="meshTrusts?.items"
+                    :items="meshTrustsData.items"
+                    v-slot="{ items }"
                   >
                     <AppCollection
+                      data-testid="mesh-trusts-listing"
                       type="mesh-trusts-collection"
-                      :items="meshTrusts?.items"
+                      :items="items"
                       :headers="[
                         { ...me.get('headers.identity'), label: t('meshes.routes.item.mesh-trusts.name'), key: 'name' },
+                        ...(can('use zones') ? [{ label: t('meshes.routes.item.mesh-trusts.zone'), key: 'zone' }] : []),
                         { ...me.get('headers.type'), label: t('meshes.routes.item.mesh-trusts.trust-domain'), key: 'trustDomain' },
                         { ...me.get('headers.origin'), label: t('meshes.routes.item.mesh-trusts.origin'), key: 'origin' },
                       ]"
-
                       @resize="me.set"
                     >
                       <template #name="{ row: item }">
@@ -205,7 +83,7 @@
                           class="name-link"
                           :title="item.name"
                           :to="{
-                            name: 'mesh-trust-summary-view',
+                            name: 'mesh-mesh-trust-summary-view',
                             params: {
                               mtrust: item.kri,
                             },
@@ -218,28 +96,31 @@
                           <b>{{ item.name }}</b>
                         </XAction>
                       </template>
-                      <template #trustDomain="{ row: item }">
-                        <XBadge
-                          appearance="decorative"
+                      <template #zone="{ row: item }">
+                        <XAction
+                          v-if="item.zone.length > 0"
+                          :href="`kri://${Kri.toString({ shortName: 'z', name: item.zone })}`"
                         >
+                          {{ item.zone }}
+                        </XAction>
+                      </template>
+                      <template #trustDomain="{ row: item }">
+                        <XBadge appearance="decorative">
                           {{ item.spec.trustDomain }}
                         </XBadge>
                       </template>
                       <template #origin="{ row: item }">
                         <XAction
-                          v-if="item.spec.origin.kri.length > 0"
+                          v-if="item.status.origin.kri.length > 0"
                           :to="{
-                            name: 'mesh-identity-summary-view',
+                            name: 'mesh-mesh-identity-summary-view',
                             params: {
-                              mid: item.spec.origin.kri,
+                              mid: item.status.origin.kri,
                             },
                           }"
-                          data-action
                         >
-                          <XBadge
-                            appearance="decorative"
-                          >
-                            {{ item.spec.origin.kri }}
+                          <XBadge appearance="decorative">
+                            {{ item.status.origin.kri }}
                           </XBadge>
                         </XAction>
                       </template>
@@ -249,34 +130,58 @@
 
                 <XCard>
                   <XLayout
-                    type="columns"
+                    variant="columns"
                     class="columns-with-borders"
                   >
-                    <ResourceStatus
-                      v-if="props.mesh.meshServices.mode === 'Exclusive'"
+                    <KumaResourceStatus
+                      v-if="can('use mesh-services', props.mesh) && !can('use service-insights', props.mesh)"
                       :total="data?.resources.MeshServiceGeneric.total ?? 0"
-                      data-testid="services-status"
+                      data-testid="mesh-services-status"
+                      data-actionable
                     >
                       <template #title>
-                        {{ t('meshes.detail.services') }}
+                        <XAction
+                          data-action
+                          :to="{
+                            name: 'service-list-tabs-view',
+                          }"
+                        >
+                          {{ t('meshes.detail.services') }}
+                        </XAction>
                       </template>
-                    </ResourceStatus>
-                    <ResourceStatus
-                      v-else-if="props.mesh.meshServices.mode === 'Disabled'"
+                    </KumaResourceStatus>
+                    <KumaResourceStatus
+                      v-else-if="!can('use mesh-services', props.mesh)"
                       :total="data?.services.total ?? 0"
                       data-testid="services-status"
+                      data-actionable
                     >
                       <template #title>
-                        {{ t('meshes.detail.services') }}
+                        <XAction
+                          data-action
+                          :to="{
+                            name: 'service-list-tabs-view',
+                          }"
+                        >
+                          {{ t('meshes.detail.services') }}
+                        </XAction>
                       </template>
-                    </ResourceStatus>
-                    <ResourceStatus
+                    </KumaResourceStatus>
+                    <KumaResourceStatus
                       v-else
                       :total="data?.resources.MeshServiceGeneric.total ?? 0"
                       data-testid="mesh-services-status"
+                      data-actionable
                     >
                       <template #title>
-                        {{ t('meshes.detail.services') }}
+                        <XAction
+                          data-action
+                          :to="{
+                            name: 'service-list-tabs-view',
+                          }"
+                        >
+                          {{ t('meshes.detail.services') }}
+                        </XAction>
                       </template>
 
                       <template
@@ -290,63 +195,79 @@
                         v-if="data?.resources.MeshServiceGeneric.total && data?.services.total > 0"
                         #body
                       >
-                        <ResourceStatus
+                        <KumaResourceStatus
                           :total="data?.services.total ?? 0"
                           data-testid="services-status"
                         >
                           <template #description>
                             {{ t('meshes.detail.services') }}
 
-                            <XIcon
-                              name="info"
-                            >
-                              <XI18n
-                                path="meshes.detail.infos.services"
-                              />
+                            <XIcon name="info">
+                              <XI18n path="meshes.detail.infos.services" />
                             </XIcon>
                           </template>
-                        </ResourceStatus>
+                        </KumaResourceStatus>
                       </template>
-                    </ResourceStatus>
+                    </KumaResourceStatus>
 
-                    <ResourceStatus
+                    <KumaResourceStatus
                       :total="data?.dataplanesByType.standard.total ?? 0"
                       :online="data?.dataplanesByType.standard.online ?? 0"
                       data-testid="data-plane-proxies-status"
+                      data-actionable
                     >
                       <template #title>
-                        {{ t('meshes.detail.data_plane_proxies') }}
+                        <XAction
+                          data-action
+                          :to="{
+                            name: 'data-plane-list-view',
+                          }"
+                        >
+                          {{ t('meshes.detail.data_plane_proxies') }}
+                        </XAction>
                       </template>
-                    </ResourceStatus>
+                    </KumaResourceStatus>
 
                     <DataSource
-                      :src="uri(policySources, '/policy-types', {})"
+                      :src="uri(resourceSources, '/resource-type-descriptors', {})"
                       v-slot="{ data: resources }"
                     >
                       <template
-                        v-for="policyTypes in [resources?.policyTypes.map(item => item.name)]"
-                        :key="typeof policyTypes"
+                        v-for="policies in [(resources?.resources ?? []).filter((resource) => typeof resource.policy !== 'undefined')]"
+                        :key="typeof policies"
                       >
-                        <ResourceStatus
-                          :total="Object.entries(data?.resources || {}).reduce((prev, [key, { total }]) => {
-                            return (policyTypes || []).includes(key) ? prev + total : prev
-                          }, 0)"
-                          data-testid="policies-status"
+                        <template
+                          v-for="policyTypes in [policies.map(item => item.name)]"
+                          :key="typeof policyTypes"
                         >
-                          <template #title>
-                            {{ t('meshes.detail.policies') }}
-                          </template>
-                        </ResourceStatus>
+                          <KumaResourceStatus
+                            :total="Object.entries(data?.resources || {}).reduce((prev, [key, { total }]) => {
+                              return (policyTypes || []).includes(key) ? prev + total : prev
+                            }, 0)"
+                            data-actionable
+                            data-testid="policies-status"
+                          >
+                            <template #title>
+                              <XAction
+                                data-action
+                                :to="{
+                                  name: 'policy-list-index-view',
+                                }"
+                              >
+                                {{ t('meshes.detail.policies') }}
+                              </XAction>
+                            </template>
+                          </KumaResourceStatus>
+                        </template>
                       </template>
                     </DataSource>
                   </XLayout>
                 </XCard>
 
                 <XCard>
-                  <XLayout>
+                  <XLayout variant="y-stack">
                     <XLayout
-                      type="separated"
-                      justify="end"
+                      variant="action-group"
                     >
                       <div
                         v-for="options in [['universal', 'k8s']]"
@@ -384,7 +305,7 @@
                         :src="uri(sources, '/meshes/:name/as/kubernetes', {
                           name: route.params.mesh,
                         })"
-                        v-slot="{ data: k8sConfig }"
+                        v-slot="{ data: [k8sConfig] }"
                       >
                         <XCodeBlock
                           data-testid="codeblock-yaml-k8s"
@@ -397,9 +318,7 @@
                 </XCard>
               </XLayout>
 
-              <RouterView
-                v-slot="child"
-              >
+              <RouterView v-slot="child">
                 <XDrawer
                   v-if="child.route.name !== route.name"
                   @close="route.replace({
@@ -414,8 +333,8 @@
                 >
                   <component
                     :is="child.Component"
-                    :mesh-identities="meshIdentities?.items"
-                    :mesh-trusts="meshTrusts?.items"
+                    :mesh-identities="meshIdentitiesData.items"
+                    :mesh-trusts="meshTrustsData.items"
                   />
                 </XDrawer>
               </RouterView>
@@ -428,29 +347,19 @@
 </template>
 
 <script lang="ts" setup>
+import { useMeshStatus } from '../'
 import type { Mesh } from '../data'
 import { sources } from '../sources'
 import { YAML } from '@/app/application'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
-import ResourceStatus from '@/app/common/ResourceStatus.vue'
-import { sources as policySources } from '@/app/policies/sources'
+import { Kri } from '@/app/kuma'
+import { sources as meshIdentitiesSources } from '@/app/mesh-identities/sources'
+import { sources as meshTrustsSources } from '@/app/mesh-trusts/sources'
 import { sources as resourceSources } from '@/app/resources/sources'
 
 const props = defineProps<{
   mesh: Mesh
 }>()
+
+const MeshStatus = useMeshStatus()
 </script>
-<style lang="scss" scoped>
-.about-subsection {
-  border-top: $kui-border-width-10 solid $kui-color-border;
-  padding-top: $kui-space-70;
-}
-
-:deep(.about-section .about-section-content) {
-  display: block !important;
-
-  h3 {
-    color: $kui-color-text;
-  }
-}
-</style>

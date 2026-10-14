@@ -1,7 +1,9 @@
 import type { Dependencies, ResponseHandler } from '#mocks'
 export default (_deps: Dependencies): ResponseHandler => (_req) => {
   return {
-    headers: {},
+    headers: {
+      'Content-Type': 'text/plain',
+    },
     body: `
 cluster.demo-app-2_kuma-demo_svc_5000.version_text: "0cf2a6f1-173d-440b-92ca-aab3c16da95c"
 cluster.demo-app_kuma-demo_svc_5000.version_text: "0cf2a6f1-173d-440b-92ca-aab3c16da95c"

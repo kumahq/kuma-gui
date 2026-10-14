@@ -7,21 +7,26 @@ import { sources } from './sources'
 import ControlPlaneActionGroup from '@/app/control-planes/components/ControlPlaneActionGroup.vue'
 import ControlPlaneStatus from '@/app/control-planes/components/ControlPlaneStatus.vue'
 import type { ServiceDefinition } from '@kumahq/container'
+import type { Env } from '@/app/application'
 
 type Token = ReturnType<typeof token>
 
 const $ = {
-  sources: token<ReturnType<typeof sources>>('control-planes.sources'),
   ControlPlaneStatus: token<typeof ControlPlaneStatus>('control-planes.components.ControlPlaneStatus'),
   ControlPlaneActionGroup: token<typeof ControlPlaneActionGroup>('control-planes.components.ControlPlaneActionGroup'),
 }
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   return [
-    [$.sources, {
-      service: sources,
+    [token('control-planes.sources'), {
+      service: (fetch: typeof globalThis.fetch, env: Env) => sources({
+        fetch,
+        baseUrl: env('KUMA_API_URL'),
+        versionUrl: env('KUMA_VERSION_URL'),
+        version: env('KUMA_VERSION'),
+      }),
       arguments: [
+        app.fetch,
         app.env,
-        app.api,
       ],
       labels: [
         app.sources,
@@ -40,7 +45,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
     }],
     [$.ControlPlaneActionGroup, {
       service: () => {
-        return ControlPlaneActionGroup
+        return undefined
       },
     }],
     [token('control-planes.routes'), {

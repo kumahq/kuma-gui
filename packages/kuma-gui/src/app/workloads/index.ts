@@ -5,23 +5,59 @@ import locales from './locales/en-us/index.yaml'
 import { routes } from './routes'
 import { sources } from './sources'
 import type { ServiceDefinition } from '@kumahq/container'
+import type { RouteRecordRaw } from 'vue-router'
+import type { Env } from '@/app/application'
 
 type Token = ReturnType<typeof token>
 
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   return [
-    [token('workloads.routes'), {
+    [token('workloads.kri'), {
       service: () => {
-        return [routes()]
+        return [
+          ({ shortName, mesh, kri }: { shortName: string, mesh: string, kri: string }) => {
+            if(shortName === 'wl') {
+              return {
+                name: 'workload-detail-view',
+                params: {
+                  mesh,
+                  wl: kri,
+                },
+              }
+            }
+          },
+        ]
       },
       labels: [
-        app.routes,
+        app.kriHandlers,
+      ],
+    }],
+    [token('workloads.routes'), {
+      service: () => {
+        const _routes = routes()
+        return [
+          (item: RouteRecordRaw) => {
+            if (item.name === 'mesh-detail-tabs-view') {
+              item.children = (item.children ?? []).concat(_routes.items())
+            }
+            if(item.name === 'mesh') {
+              item.children = (item.children ?? []).concat(_routes.item())
+            }
+          },
+        ]
+      },
+      labels: [
+        app.routeWalkers,
       ],
     }],
     [token('workloads.sources'), {
-      service: sources,
+      service: (fetch: typeof globalThis.fetch, env: Env) => sources({
+        fetch,
+        baseUrl: env('KUMA_API_URL'),
+      }),
       arguments: [
-        app.api,
+        app.fetch,
+        app.env,
       ],
       labels: [
         app.sources,

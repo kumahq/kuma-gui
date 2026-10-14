@@ -9,11 +9,11 @@
       codeRegExp: false,
       format: String,
     }"
-    v-slot="{ route, t, uri, can }"
+    v-slot="{ route, t, uri, can, r }"
   >
     <DataCollection
       :items="props.items"
-      :predicate="item => item.id === route.params.proxy"
+      :predicate="item => item.kri === route.params.proxy"
     >
       <template #empty>
         <XEmptyState>
@@ -36,7 +36,10 @@
         >
           <AppView>
             <template #title>
-              <XLayout size="small">
+              <XLayout
+                variant="y-stack"
+                size="small"
+              >
                 <h2
                   v-icon-start="`dataplane-${item.dataplaneType}`"
                 >
@@ -44,7 +47,7 @@
                     :to="{
                       name: 'data-plane-detail-view',
                       params: {
-                        proxy: item.id,
+                        proxy: item.kri,
                       },
                     }"
                   >
@@ -61,11 +64,10 @@
               </XLayout>
             </template>
 
-            <XLayout>
+            <XLayout variant="y-stack">
               <header>
                 <XLayout
-                  type="separated"
-                  size="max"
+                  variant="action-group"
                 >
                   <h3>
                     {{ t('data-planes.routes.item.config') }}
@@ -97,7 +99,7 @@
 
             <template v-if="route.params.format === 'structured'">
               <XLayout
-                type="stack"
+                variant="y-stack"
                 size="large"
                 data-testid="structured-view"
               >
@@ -130,15 +132,31 @@
                     </th>
                     <td>
                       <XAction
-                        :to="{
-                          name: 'zone-cp-detail-view',
-                          params: {
-                            zone: item.zone,
-                          },
-                        }"
+                        :href="`kri://${Kri.toString({ shortName: 'z', name: item.zone })}`"
                       >
                         {{ item.zone }}
                       </XAction>
+                    </td>
+                  </tr>
+                  <tr v-if="item.zoneProxyTypes.length > 0">
+                    <th scope="row">
+                      {{ t('data-planes.type.zone-proxy') }}
+                    </th>
+                    <td>
+                      <XLayout
+                        variant="separated"
+                      >
+                        <XBadge
+                          v-if="item.zoneProxyTypes.includes('zone-ingress')"
+                        >
+                          {{ t(`data-planes.type.zone-ingress`) }}
+                        </XBadge>
+                        <XBadge
+                          v-if="item.zoneProxyTypes.includes('zone-egress')"
+                        >
+                          {{ t(`data-planes.type.zone-egress`) }}
+                        </XBadge>
+                      </XLayout>
                     </td>
                   </tr>
                   <tr>
@@ -149,26 +167,73 @@
                       {{ t('common.formats.datetime', { value: Date.parse(item.modificationTime) }) }}
                     </td>
                   </tr>
+                  <tr
+                    v-if="Object.keys(item.labels).length > 0"
+                  >
+                    <th scope="row">
+                      Labels
+                    </th>
+                    <td>
+                      <XLayout
+                        variant="separated"
+                      >
+                        <XAction
+                          v-for="(value, key) in item.labels"
+                          :key="key"
+                          :href="t(`common.label.href.${key.replaceAll('.', '~')}`, {
+                            mesh: item.mesh,
+                            zone: item.zone,
+                            namespace: item.namespace,
+                            name: value,
+                          }, { defaultMessage: '' })"
+                        >
+                          <XBadge
+                            :variant="r('kuma.label').test(key) ? 'reserved-kv' : 'kv'"
+                          >
+                            {{ key }}:<strong>{{ value }}</strong>
+                          </XBadge>
+                        </XAction>
+                      </XLayout>
+                    </td>
+                  </tr>
                 </XTable>
 
                 <XLayout
-                  v-if="item.dataplane.networking.gateway"
-                  type="stack"
+                  v-if="'gateway' in item.dataplane.networking && typeof item.dataplane.networking.gateway !== 'undefined'"
+                  variant="y-stack"
                 >
                   <h3>{{ t('data-planes.routes.item.gateway') }}</h3>
 
                   <XTable
                     variant="kv"
                   >
-                    <tr>
+                    <tr
+                      v-if="Object.keys(item.dataplane.networking.gateway.tags ?? {}).length > 0"
+                    >
                       <th scope="row">
                         {{ t('http.api.property.tags') }}
                       </th>
                       <td>
-                        <TagList
-                          alignment="right"
-                          :tags="item.dataplane.networking.gateway.tags"
-                        />
+                        <XLayout
+                          variant="separated"
+                        >
+                          <XAction
+                            v-for="(value, key) in item.dataplane.networking.gateway.tags"
+                            :key="key"
+                            :href="t(`common.label.href.${key.replaceAll('.', '~')}`, {
+                              mesh: item.mesh,
+                              zone: item.zone,
+                              namespace: item.namespace,
+                              name: value.replaceAll('_', '~'),
+                            }, { defaultMessage: '' })"
+                          >
+                            <XBadge
+                              :variant="r('kuma.label').test(key) ? 'reserved-kv' : 'kv'"
+                            >
+                              {{ key }}:<strong>{{ value }}</strong>
+                            </XBadge>
+                          </XAction>
+                        </XLayout>
                       </td>
                     </tr>
                     <tr>
@@ -190,6 +255,7 @@
                   v-slot="{ items : inbounds }"
                 >
                   <XLayout
+                    variant="y-stack"
                     data-testid="dataplane-inbounds"
                   >
                     <h3>{{ t('data-planes.routes.item.inbounds') }}</h3>
@@ -197,6 +263,7 @@
                     <XLayout
                       v-for="(inbound, index) in inbounds"
                       :key="index"
+                      variant="y-stack"
                       class="inbound"
                     >
                       <h4 v-if="inbound.tags['kuma.io/service']">
@@ -230,15 +297,33 @@
                             </XBadge>
                           </td>
                         </tr>
-                        <tr>
+                        <tr
+                          v-if="Object.keys(inbound.tags).length > 0"
+                        >
                           <th scope="row">
                             {{ t('http.api.property.tags') }}
                           </th>
                           <td>
-                            <TagList
-                              alignment="right"
-                              :tags="inbound.tags"
-                            />
+                            <XLayout
+                              variant="separated"
+                            >
+                              <XAction
+                                v-for="(value, key) in inbound.tags"
+                                :key="key"
+                                :href="t(`common.label.href.${key.replaceAll('.', '~')}`, {
+                                  mesh: item.mesh,
+                                  zone: item.zone,
+                                  namespace: item.namespace,
+                                  name: value.replaceAll('_', '~'),
+                                }, { defaultMessage: '' })"
+                              >
+                                <XBadge
+                                  :variant="r('kuma.label').test(key) ? 'reserved-kv' : 'kv'"
+                                >
+                                  {{ key }}:<strong>{{ value }}</strong>
+                                </XBadge>
+                              </XAction>
+                            </XLayout>
                           </td>
                         </tr>
                         <tr>
@@ -257,15 +342,18 @@
                 <DataCollection
                   v-if="item.dataplaneType === 'standard'"
                   :items="item.dataplane.networking.outbounds"
+                  :empty="false"
                   v-slot="{ items: outbounds }"
                 >
                   <XLayout
+                    variant="y-stack"
                     data-testid="dataplane-outbounds"
                   >
                     <h3>{{ t('data-planes.routes.item.outbounds') }}</h3>
                     <XLayout
                       v-for="(outbound, index) in outbounds"
                       :key="index"
+                      variant="y-stack"
                       class="inbound"
                       size="small"
                     >
@@ -281,16 +369,32 @@
                         variant="kv"
                       >
                         <tr
-                          v-if="Object.keys(outbound.tags).length"
+                          v-if="Object.keys(outbound.tags).length > 0"
                         >
                           <th scope="row">
                             {{ t('http.api.property.tags') }}
                           </th>
                           <td>
-                            <TagList
-                              alignment="right"
-                              :tags="outbound.tags"
-                            />
+                            <XLayout
+                              variant="separated"
+                            >
+                              <XAction
+                                v-for="(value, key) in outbound.tags"
+                                :key="key"
+                                :href="t(`common.label.href.${key.replaceAll('.', '~')}`, {
+                                  mesh: item.mesh,
+                                  zone: item.zone,
+                                  namespace: item.namespace,
+                                  name: value.replaceAll('_', '~'),
+                                }, { defaultMessage: '' })"
+                              >
+                                <XBadge
+                                  :variant="r('kuma.label').test(key) ? 'reserved-kv' : 'kv'"
+                                >
+                                  {{ key }}:<strong>{{ value }}</strong>
+                                </XBadge>
+                              </XAction>
+                            </XLayout>
                           </td>
                         </tr>
                         <tr>
@@ -325,11 +429,10 @@
 
             <template v-else>
               <DataLoader
-                :src="uri(sources, '/meshes/:mesh/dataplanes/:name/as/kubernetes', {
-                  mesh: route.params.mesh,
-                  name: route.params.proxy,
+                :src="uri(sources, '/dataplanes/:kri/as/kubernetes', {
+                  kri: item.kri,
                 })"
-                v-slot="{ data: k8sConfig }"
+                v-slot="{ data: [k8sConfig] }"
               >
                 <XCodeBlock
                   data-testid="codeblock-yaml-k8s"
@@ -356,7 +459,7 @@
 import { DataplaneOverview } from '../data'
 import { sources } from '../sources'
 import { YAML } from '@/app/application'
-import TagList from '@/app/common/TagList.vue'
+import { Kri } from '@/app/kuma'
 
 const props = defineProps<{
   items: DataplaneOverview[]

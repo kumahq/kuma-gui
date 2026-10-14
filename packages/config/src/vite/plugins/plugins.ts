@@ -1,19 +1,37 @@
-import { load, DEFAULT_SCHEMA, Type } from 'js-yaml'
+import { load, CORE_SCHEMA, defineScalarTag, mergeTag } from 'js-yaml'
 import markdown from 'markdown-it'
+import { markdownFence } from '@kumahq/x/vite'
+import { execSync } from 'node:child_process'
+import { dirname } from 'node:path'
+import { fileURLToPath } from 'node:url'
 
 import type { Plugin } from 'vite'
 
+export const playwrightBdd = (src ='features/**/*.feature'): Plugin => {
+  const playwrightBdd = dirname(fileURLToPath(import.meta.resolve('playwright-bdd')))
+  return {
+    name: 'playwrightBdd',
+    configureServer(server) {
+      server.watcher.add(src)
+      server.watcher.on('change', (path) => {
+        if(path.endsWith('.feature')) {
+          execSync(`node ${playwrightBdd}/cli/index.js`, { stdio: 'inherit' })
+        }
+      })
+    },
+  }
+}
 
 export const yamlLoader = (): Plugin => {
   const md = markdown(
     {
       html: true,
     },
-  )
-  const schema = DEFAULT_SCHEMA.extend(
-    new Type('tag:yaml.org,2002:text/markdown', {
-      kind: 'scalar',
-      construct: (data) => {
+  ).use(markdownFence)
+  const schema = CORE_SCHEMA.withTags(
+    mergeTag,
+    defineScalarTag('tag:yaml.org,2002:text/markdown', {
+      resolve: (data) => {
         // We only currently use !!text/markdown within yaml for out locales/i18n text
         // for which we use FormatJS under the hood. FormatJS requires you to escape any XML/HTML looking
         // things, plus ICU '{' and '}', hence this replace.
@@ -24,13 +42,14 @@ export const yamlLoader = (): Plugin => {
           .replace(/%7B/g, '{')
           .replace(/%7D/g, '}')
       },
+      identify: () => false,
     }),
   )
   return {
     name: 'yamlLoader',
     transform: async (code, filename) => {
       if (/\.ya?ml$/.test(filename)) {
-        const json = load(code, { schema, filename, onWarning: (warning) => console.warn(warning.toString())})
+        const json = load(code, { schema, filename })
         return {
           code: `export default ${JSON.stringify(json)};`,
           map: { mappings: '' },
@@ -47,6 +66,7 @@ export const vuePluginConfig = () => ({
       whitespace: 'preserve' as const,
       isCustomElement: (item: string) => [
         'search',
+        'x-pre-code',
       ].includes(item),
     },
   },

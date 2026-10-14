@@ -13,14 +13,13 @@ import { routes } from './routes'
 import I18n from './services/i18n/I18n'
 import storage from './services/storage'
 import { difference } from '@/app/application/polyfills/Set.prototype.difference'
-import { services as kuma } from '@/app/kuma'
 import type { ServiceDefinition } from '@kumahq/container'
 import type { Component } from 'vue'
 import type { RouteRecordRaw } from 'vue-router'
 
 export { runInDebug } from './utilities'
 export { defineSources, ValidationError, useUri } from '@kumahq/data'
-export { useDataSourcePool } from '@kumahq/data/vue'
+export { useDataSourcePool, useData } from '@kumahq/data/vue'
 export type { DataSourceResponse, TypeOf } from '@kumahq/data'
 
 // temporary Set.prototype.difference polyfill
@@ -70,7 +69,7 @@ const $ = {
   env: token<Env>('application.env'),
   vars: token('application.env.vars'),
 
-  fetch: token<typeof fetch>('application.fetch'),
+  fetch: token<typeof globalThis.fetch>('application.fetch'),
   can: token<Can>('application.can'),
   features: token('application.can.features'),
 
@@ -84,6 +83,7 @@ const $ = {
   errorHandler: token<(e: Error) => void>('application.error.handler'),
 
   i18n: token<{t: ReturnType<typeof I18n>['t']}>('i18n'),
+  regexp: token<{r: (str: string) => RegExp}>('i18n'),
   enUs: token('i18n.locale.enUs'),
 
   storage: token<ReturnType<typeof storage>>('application.storage'),
@@ -131,10 +131,10 @@ const addRouteName = (item: RouteRecordRaw) => {
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   return [
     [token('application.plugins'), {
-      service: (dataSourcePool, can, env, i18n) => {
+      service: (dataSourcePool, can, env, i18n, regexp) => {
         return [
           [Data, { dataSourcePool }],
-          [Routing, { can, env, i18n }],
+          [Routing, { can, env, i18n, regexp}],
         ]
       },
       arguments: [
@@ -142,6 +142,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
         $.can,
         $.env,
         $.i18n,
+        $.regexp,
       ],
       labels: [
         app.plugins,
@@ -204,6 +205,19 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
         app.env,
       ],
     }],
+    [$.regexp, {
+      service: () => {
+        // @TODO regexps will move to locales/yaml
+        const re = new Map<string, RegExp>([
+          // NOTE: regexp for kuma labels only
+          // we don't use this for matching URLs
+          // only to color labels grey or blue (currently)
+          ['kuma.label', /^(.+\.)?kuma\.io\//],
+        ])
+        //
+        return { r: (str: string) => re.has(str) ? re.get(str) : new RegExp('') }
+      },
+    }],
 
     [$.fetch, {
       service: () => fetch,
@@ -255,6 +269,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
         $.getDataSourceCacheKeyPrefix,
       ],
     }],
+
     [token('application.datasource.data-uri'), {
       service: () => {
         return {
@@ -267,7 +282,6 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
         app.sources,
       ],
     }],
-    ...kuma(app),
   ]
 }
 export const TOKENS = $
@@ -275,11 +289,13 @@ export const [
   useEnv,
   useCan,
   useI18n,
+  useRegExp,
   useDataEmptyState,
 ] = createInjections(
   $.env,
   $.can,
   $.i18n,
+  $.regexp,
   $.DataEmptyState,
 )
 export { YAML, get } from './utilities'

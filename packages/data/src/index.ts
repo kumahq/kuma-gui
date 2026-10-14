@@ -1,28 +1,34 @@
 import { compile } from 'path-to-regexp'
 
 import CallableEventSource from './CallableEventSource'
-import type { Creator, Destroyer } from './DataSourcePool'
+import type { Creator, Destroyer, EventSource } from './DataSourcePool'
 export { default as DataSourcePool } from './DataSourcePool'
+
 // reusable Type Utility for easy to use Types within Vue templates
 export type DataSourceResponse<T> = {
   data: T | undefined
   error: Error | undefined
+  result: T | Error | undefined
   refresh: () => void
 }
 
-export type NonNullableArray<T extends unknown[]> = {
+export type NonNullableArray<T extends unknown[]> = [...{
   [K in keyof T]: NonNullable<T[K]>
-}
+}]
 
-export type NullableArray<T extends unknown[]> = {
+export type ArrayExclude<T extends unknown[], U> = [...{
+  [K in keyof T]: Exclude<T[K], U>
+}]
+
+export type NullableArray<T extends unknown[]> = [...{
   [K in keyof T]: T[K] | undefined
-}
+}]
 
 /**
  * Only use if `DataLoader` itself can't infer the type, i.e. because provided `:src` is a `string`.
  */
-export type DataLoaderResponse<TSrcResponse extends DataSourceResponse<unknown>, TData extends unknown[] = never> = {
-  data: [TData] extends [never] ? NonNullable<TSrcResponse['data']> : NonNullableArray<[TSrcResponse['data'], ...TData]>
+export type DataLoaderResponse<TSrcResponse extends DataSourceResponse<unknown> = never, TData extends unknown[] = []> = {
+  data: TSrcResponse extends never ? NonNullableArray<[...TData]> : NonNullableArray<[TSrcResponse['data'], ...TData]>
   error?: TSrcResponse['error']
 }
 
@@ -164,3 +170,31 @@ export const destroy: Destroyer = (_src, source) => {
 }
 
 export class ValidationError extends Error {}
+
+const waitForEvent = async <T extends Event>(target: EventTarget, event: string, signal?: AbortController['signal']): Promise<T> => {
+  const res = new Promise<T>((resolve) => {
+    target.addEventListener(
+      event,
+      (e) => resolve(e as T),
+      {
+        once: true,
+        signal,
+      },
+    )
+  })
+  return res
+}
+           
+export const waitFor = async <T extends EventSource>(source: T) => {
+  const controller = new AbortController()
+  const event = await Promise.race([
+    waitForEvent<MessageEvent>(source, 'message', controller.signal),
+    waitForEvent<ErrorEvent>(source, 'error', controller.signal),
+  ])
+  controller.abort()
+  if (event instanceof ErrorEvent) {
+    throw event.error
+  } else {
+    return event.data
+  }
+}

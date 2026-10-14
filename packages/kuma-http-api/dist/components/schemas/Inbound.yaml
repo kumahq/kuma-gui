@@ -6,7 +6,7 @@ properties:
     type: object
     additionalProperties:
       type: string
-    x-go-type: 'map[string]string'
+    x-go-type: map[string]string
   port:
     type: integer
 required:

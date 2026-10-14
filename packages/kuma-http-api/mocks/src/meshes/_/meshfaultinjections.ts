@@ -1,7 +1,10 @@
 import type { Dependencies, ResponseHandler } from '#mocks'
+import type { paths } from '@kumahq/kuma-http-api'
+
+type MeshFaultInjectionsResponse = paths['/meshes/{mesh}/meshfaultinjections']['get']['responses']['200']['content']['application/json']
 
 export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) => {
-  const { mesh } = req.params
+  const mesh = String(req.params.mesh)
   const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
   const { offset, total, next, pageTotal } = pager(
     env('KUMA_MESHFAULTINJECTION_COUNT', `${fake.number.int({ min: 1, max: 1000 })}`),
@@ -13,7 +16,9 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
   const queryNamespace = req.url.searchParams.get('filter[labels.k8s.kuma.io/namespace]')
 
   return {
-    headers: {},
+    headers: {
+      ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
+    },
     body: {
       total,
       items: Array.from({ length: pageTotal }).map((_, i) => {
@@ -24,6 +29,7 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
         const nspace = queryNamespace ?? fake.k8s.namespace()
         return {
           type: 'MeshFaultInjection',
+          kri: fake.kuma.kri({resourceName: 'MeshFaultInjection', mesh, zone: fake.word.noun(), namespace: nspace, name: displayName}),
           mesh,
           name: `${displayName}${k8s ? `.${nspace}` : ''}`,
           creationTime: '2022-01-25T13:58:29.381342+01:00',
@@ -38,12 +44,8 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
             }
             : {}),
           spec: {
-            from: [
+            rules: [
               {
-                targetRef: {
-                  kind: 'MeshService',
-                  name: fake.word.noun(),
-                },
                 default: {
                   http: [
                     {
@@ -60,6 +62,6 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
         }
       }),
       next,
-    },
+    } satisfies MeshFaultInjectionsResponse,
   }
 }

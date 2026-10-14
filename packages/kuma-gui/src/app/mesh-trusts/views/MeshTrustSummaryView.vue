@@ -1,0 +1,87 @@
+<template>
+  <RouteView
+    :name="props.routeName"
+    :params="{
+      mesh: '',
+      mtrust: '',
+      environment: String,
+    }"
+    v-slot="{ route, t, uri }"
+  >
+    <DataLoader
+      :src="uri(sources, '/meshtrusts/:mtrust', {
+        mtrust: route.params.mtrust,
+      })"
+      v-slot="{ data: [data] }"
+    >
+      <AppView>
+        <template #title>
+          <h2
+            v-icon-start="'mesh-trust'"
+          >
+            <XAction
+              :href="`kri://${data.kri}`"
+            >
+              <RouteTitle
+                :title="t('mesh-trusts.routes.item.title', { name: data.name })"
+              />
+            </XAction>
+          </h2>
+        </template>
+        <XLayout
+          variant="action-group"
+        >
+          <div
+            v-for="options in [['universal', 'k8s']]"
+            :key="typeof options"
+          >
+            <XSelect
+              :label="t('mesh-trusts.routes.item.format')"
+              :selected="route.params.environment"
+              @change="(value) => {
+                route.update({ environment: value })
+              }"
+              @vue:before-mount="$event?.props?.selected && options.includes($event.props.selected) && $event.props.selected !== route.params.environment && route.update({ environment: $event.props.selected })"
+            >
+              <template
+                v-for="value in options"
+                :key="value"
+                #[`${value}-option`]
+              >
+                {{ t(`mesh-trusts.routes.item.formats.${value}`) }}
+              </template>
+            </XSelect>
+          </div>
+        </XLayout>
+        <template v-if="route.params.environment === 'universal'">
+          <XCodeBlock
+            language="yaml"
+            :code="YAML.stringify(data.raw)"
+          />
+        </template>
+        <template v-else>
+          <DataLoader
+            :src="uri(sources, '/meshtrusts/:mtrust/as/kubernetes', {
+              mtrust: route.params.mtrust,
+            })"
+            v-slot="{ data: [k8sYaml] }"
+          >
+            <XCodeBlock
+              language="yaml"
+              :code="YAML.stringify(k8sYaml)"
+            />
+          </DataLoader>
+        </template>
+      </AppView>
+    </DataLoader>
+  </RouteView>
+</template>
+
+<script lang="ts" setup>
+import { YAML } from '@/app/application'
+import { sources } from '@/app/mesh-trusts/sources'
+
+const props = defineProps<{
+  routeName: string
+}>()
+</script>

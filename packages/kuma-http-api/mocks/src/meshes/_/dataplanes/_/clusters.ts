@@ -15,7 +15,10 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (req) => {
 
   if (type === 'gateway_builtin') {
     return {
-      headers: {},
+      headers: {
+        ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
+        'Content-Type': 'text/plain',
+      },
       body: `meshtrace:opentelemetry::observability_name::meshtrace_opentelemetry
 meshtrace:opentelemetry::default_priority::max_connections::1024
 meshtrace:opentelemetry::default_priority::max_pending_requests::1024
@@ -310,7 +313,10 @@ ${service}::10.244.0.2:8080::success_rate::-1
 ${service}::10.244.0.2:8080::local_origin_success_rate::-1`
   }).join('\n')
   return {
-    headers: {},
+    headers: {
+      ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
+      'Content-Type': 'text/plain',
+    },
     body: `${inbounds}
 ${outbounds}
 access_log_sink::observability_name::access_log_sink
@@ -428,6 +434,6 @@ ads_cluster::10.43.138.71:5678::sub_zone::
 ads_cluster::10.43.138.71:5678::canary::false
 ads_cluster::10.43.138.71:5678::priority::0
 ads_cluster::10.43.138.71:5678::success_rate::-1
-ads_cluster::10.43.138.71:5678::local_origin_success_rate::-1`,
+ads_cluster::10.43.138.71:5678::local_origin_success_rate::-1` satisfies string,
   }
 }

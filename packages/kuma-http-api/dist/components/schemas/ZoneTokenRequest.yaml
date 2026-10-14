@@ -1,0 +1,15 @@
+type: object
+properties:
+  zone:
+    description: Name of the zone
+    type: string
+  scope:
+    description: Scope of the token. Kuma defines no built-in scopes, distributions may register their own
+    type: array
+    items:
+      type: string
+  validFor:
+    description: How long the token is valid for, e.g. 24h
+    type: string
+required:
+  - zone

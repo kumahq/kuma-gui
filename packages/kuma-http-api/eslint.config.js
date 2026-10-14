@@ -5,7 +5,7 @@ import { eslint } from '@kumahq/config'
 const config = [
   ...eslint(),
   {
-    'ignores': ['index.d.ts'],
+    'ignores': ['index.d.ts', 'v2.d.ts', 'kuma', 'generated'],
   },
 ]
 

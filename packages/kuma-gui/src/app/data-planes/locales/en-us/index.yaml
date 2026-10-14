@@ -1,11 +1,11 @@
 data-planes:
   notifications:
+    # @TODO(types) the select here is to temporarily support v2/v3
     recommend-reachable: !!text/markdown |
-      We've identified outbound services that would benefit from using { mode, select,
-        Exclusive { <a href="{KUMA_DOCS_URL}/production/dp-config/transparent-proxying/#reachable-backends" target="_blank">Reachable Backends</a> }
-        ReachableBackends { <a href="{KUMA_DOCS_URL}/production/dp-config/transparent-proxying/#reachable-backends" target="_blank">Reachable Backends</a> }
-        other { <a href="{KUMA_DOCS_URL}/production/dp-config/transparent-proxying/#reachable-services" target="_blank">Reachable Services</a> }
-      } to dramatically improve performance.
+      To ensure optimal performance and resource usage, this data plane proxy should be configured with { mode, select,
+        reachableservices { <a href="{KUMA_DOCS_URL}/production/dp-config/transparent-proxying/#reachable-services" target="_blank">Reachable Services</a> }
+        other { <a href="{KUMA_DOCS_URL}/production/dp-config/transparent-proxying/#reachable-backends" target="_blank">Reachable Backends</a> }
+      } for its outbound services.
     dp-cp-incompatible: !!text/markdown |
       Unsupported version of Kuma DP (**{ kumaDp }**)
     envoy-dp-incompatible: !!text/markdown |
@@ -17,8 +17,10 @@ data-planes:
     certificate-expires-soon: !!text/markdown |
       The certificate for this dataplane will expire soon
     no-mtls: !!text/markdown |
-      This data plane proxy does not have mTLS configured, yet —
-      <a href="{KUMA_DOCS_URL}/policies/mutual-tls?{KUMA_UTM_QUERY_PARAMS}" target="_blank">Learn about certificates in {KUMA_PRODUCT_NAME}</a>
+      This data plane proxy does not have mTLS configured, yet — { mode, select,
+        mutualtls { <a href="{KUMA_DOCS_URL}/policies/mutual-tls?{KUMA_UTM_QUERY_PARAMS}" target="_blank">Learn about certificates in {KUMA_PRODUCT_NAME}</a> }
+        other { <a href="{KUMA_DOCS_URL}/resources/meshidentity?{KUMA_UTM_QUERY_PARAMS}" target="_blank">Learn about MeshIdentity in {KUMA_PRODUCT_NAME}</a> }
+      }.
     stats-not-enhanced: !!text/markdown |
       The below view is not enhanced with runtime stats (Error loading stats: **{ error }**)
     networking-transparent-proxying: !!text/markdown |
@@ -27,7 +29,9 @@ data-planes:
     abnormal-traffic-stats: !!text/markdown |
       Abnormal traffic stats detected. Investigate the traffic patterns of individually marked inbounds and outbounds.
     dataplane-offline: !!text/markdown |
-      The dataplane is offline, so we either cannot retrieve any information or the information currently displayed may be out of date.
+      The dataplane is offline, so no traffic information is available.
+    dataplane-disconnected-cp: !!text/markdown |
+      The dataplane is not connected to the control plane, so we either cannot retrieve any information or the information currently displayed may be out of date.
 
   x-empty-state:
     title: There are no data planes present
@@ -39,6 +43,7 @@ data-planes:
       4xx: 4xx
       5xx: 5xx
       cx: Total connections
+      cx_active: Active connections
       tx: Bytes sent
       rx: Bytes received
       grpc_success: Successful
@@ -128,6 +133,8 @@ data-planes:
         supported_backends:
           title: Supported CAs
         managed_externally: The certificate is managed externally
+        spiffeId:
+          title: SPIFFE ID
       subscriptions:
         title: XDS connections
         description: !!text/markdown |
@@ -166,3 +173,6 @@ data-planes:
     standard: 'Proxy'
     builtin: 'Built-in gateway'
     delegated: 'Delegated gateway'
+    zone-proxy: 'Zone proxy'
+    zone-ingress: 'ZoneIngress'
+    zone-egress: 'ZoneEgress'

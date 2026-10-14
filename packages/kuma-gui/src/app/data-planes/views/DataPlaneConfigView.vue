@@ -17,10 +17,9 @@
     />
     <AppView>
       <XCard>
-        <XLayout>
+        <XLayout variant="y-stack">
           <XLayout
-            type="separated"
-            justify="end"
+            variant="action-group"
           >
             <div
               v-for="options in [['universal', 'k8s']]"
@@ -46,11 +45,10 @@
           </XLayout>
           <template v-if="route.params.environment === 'universal'">
             <DataLoader
-              :src="uri(sources, `/meshes/:mesh/dataplanes/:name`, {
-                mesh: route.params.mesh,
-                name: route.params.proxy,
+              :src="uri(sources, `/dataplanes/:kri`, {
+                kri: route.params.proxy,
               })"
-              v-slot="{ data }"
+              v-slot="{ data: [data] }"
             >
               <XCodeBlock
                 data-testid="codeblock-yaml-universal"
@@ -68,11 +66,10 @@
           </template>
           <template v-else>
             <DataLoader
-              :src="uri(sources, `/meshes/:mesh/dataplanes/:name/as/kubernetes`, {
-                mesh: route.params.mesh,
-                name: route.params.proxy,
+              :src="uri(sources, `/dataplanes/:kri/as/kubernetes`, {
+                kri: route.params.proxy,
               })"
-              v-slot="{ data: k8sConfig }"
+              v-slot="{ data: [k8sConfig] }"
             >
               <XCodeBlock
                 data-testid="codeblock-yaml-k8s"

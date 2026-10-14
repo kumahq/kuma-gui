@@ -1,5 +1,6 @@
 /**
  * Utility type for annotating API responses for collection resources.
+ * @deprecated
  *
  * **Example**:
  *
@@ -18,61 +19,4 @@ export interface ApiKindListResponse<ResourceType> extends ApiListResponse<Resou
 
 export interface PaginatedApiListResponse<ResourceType> extends ApiListResponse<ResourceType> {
   next: string | null
-}
-
-export interface PaginationParameters {
-  size?: number
-  offset?: number
-  filter?: Record<string, string>
-}
-
-export interface SingleResourceParameters {
-  /**
-   * Returns a resource in the requested format
-   */
-  format?: 'universal' | 'k8s' | 'kubernetes'
-
-  /**
-   * Overrides the namespace of a resource.
-   */
-  namespace?: string
-}
-
-export interface DataPlaneOverviewParameters extends PaginationParameters {
-  /**
-   * **Example**: `?gateway=delegated`
-   */
-  gateway?: 'builtin' | 'delegated' | 'true' | 'false'
-
-  /**
-   * Filters objects by their `name` field using “contains” semantic.
-   *
-   * **Example**: `?name=gateway`
-   */
-  name?: string
-
-  /**
-   * **Example**: `?tag=kuma.io/service:foo&tag=version:v1`
-   */
-  tag?: string | string[]
-}
-
-export interface ServiceInsightsParameters extends PaginationParameters {
-  name?: string
-
-  /**
-   * Filters objects by service type.
-   *
-   * **Example**: `?type=internal,gateway_builtin,gateway_delegated`
-   */
-  type?: string
-}
-
-export interface ExternalServicesParameters extends PaginationParameters {
-  name?: string
-
-  /**
-   * **Example**: `?tag=kuma.io/service:foo&tag=version:v1`
-   */
-  tag?: string | string[]
 }

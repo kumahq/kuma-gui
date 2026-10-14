@@ -1,4 +1,4 @@
-import { routes as dataPlanes } from '@/app/legacy-data-planes/routes'
+import { routes as dataPlanes } from '@/app/data-planes/routes'
 import type { RouteRecordRaw } from 'vue-router'
 
 export const routes = () => {
@@ -25,16 +25,6 @@ export const routes = () => {
     ]
   }
 
-  const summary = (): RouteRecordRaw[] => {
-    return [
-      {
-        path: ':wl',
-        name: 'workload-summary-view',
-        component: () => import('@/app/workloads/views/WorkloadSummaryView.vue'),
-      },
-    ]
-  }
-
   return {
     items: (): RouteRecordRaw[] => {
       return [
@@ -42,11 +32,16 @@ export const routes = () => {
           path: 'workloads',
           name: 'workload-list-view',
           component: () => import('@/app/workloads/views/WorkloadListView.vue'),
-          children: [...summary()],
+          children: [
+            {
+              path: ':wl',
+              name: 'workload-summary-view',
+              component: () => import('@/app/workloads/views/WorkloadSummaryView.vue'),
+            },
+          ],
         },
       ]
     },
     item,
-    summary,
   }
 }

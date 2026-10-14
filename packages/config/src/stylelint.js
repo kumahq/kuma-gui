@@ -8,21 +8,22 @@ export function createStylelintConfig() {
     ],
     plugins: [
       '@stylistic/stylelint-plugin',
-      '@kong/design-tokens/stylelint-plugin',
+      '@kong/stylelint-plugin-design-tokens',
     ],
     ignoreFiles: [
       'dist/**/*',
     ],
     rules: {
-      '@stylistic/selector-combinator-space-before': 'always',
-      '@stylistic/selector-combinator-space-after': 'always',
-      '@kong/design-tokens/use-proper-token': [
+      '@kong/stylelint-plugin-design-tokens/use-proper-token': [
         true,
         {
           disableFix: true,
           severity: 'error',
         },
       ],
+      '@kong/stylelint-plugin-design-tokens/token-var-usage': true,
+      '@stylistic/selector-combinator-space-before': 'always',
+      '@stylistic/selector-combinator-space-after': 'always',
       'no-duplicate-selectors': [null],
     },
   }

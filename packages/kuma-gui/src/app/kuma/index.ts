@@ -1,14 +1,18 @@
-import { token, createInjections } from '@kumahq/container'
+import Kongponents from '@kong/kongponents'
+import { token } from '@kumahq/container'
+import X, { syntaxHighlighter } from '@kumahq/x'
 
 import { vars } from './env'
 import locales from './locales/en-us/index.yaml'
 import { ValidationError } from '@/app/application'
+import { Kri, createFetch } from '@/app/kuma'
 import KumaPort from '@/app/kuma/components/kuma-port/KumaPort.vue'
+import KumaResourceStatus from '@/app/kuma/components/kuma-resource-status/KumaResourceStatus.vue'
+import KumaStatusBadge from '@/app/kuma/components/kuma-status-badge/KumaStatusBadge.vue'
 import KumaTargetRef from '@/app/kuma/components/kuma-target-ref/KumaTargetRef.vue'
 import { ApiError } from '@/app/kuma/services/kuma-api/ApiError'
-import KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
-import { RestClient } from '@/app/kuma/services/kuma-api/RestClient'
 import type { ServiceDefinition } from '@kumahq/container'
+import type { Router, RouteLocationAsRelative } from 'vue-router'
 
 export * from './utils'
 export { Kri } from './kri'
@@ -18,13 +22,10 @@ type Token = ReturnType<typeof token>
 declare module 'vue' {
   export interface GlobalComponents {
     KumaPort: typeof KumaPort
+    KumaResourceStatus: typeof KumaResourceStatus
     KumaTargetRef: typeof KumaTargetRef
+    KumaKumaStatusBadge: typeof KumaStatusBadge
   }
-}
-export const TOKENS = {
-  httpClient: token<RestClient>('httpClient'),
-  api: token<KumaApi>('KumaApi'),
-  htmlVars: token('kuma.html.vars'),
 }
 function getConfig() {
   const pathConfigNode = document.querySelector('#kuma-config')
@@ -50,11 +51,151 @@ function normalizeBaseUrl(url: string): string {
   url = !url.includes('://') && !url.startsWith('/') ? `/${url}` : url
   return stripTrailingSlashes(url)
 }
+type Handler = (item: { shortName: string, mesh: string, name: string, kri: string}) => RouteLocationAsRelative | undefined
 
+const href = (router: Router) => (to: RouteLocationAsRelative) => {
+  try {
+    return router.resolve({
+      params: router.currentRoute.value.params,
+      ...to,
+    }).href
+  } catch(e) {
+    if (e instanceof Error) {
+      e.message = `${e.toString()}: ${JSON.stringify(to)}`
+    }
+    console.error(e)
+  }
+  return ''
+}
+const push = (router: Router) => (href: string) => {
+  const base = router.options.history.base
+  const h = href.startsWith(base) ? href.substring(base.length) : href
+  return router.push(h.length > 0 ? h : '/')
+}
+export const TOKENS = {
+  htmlVars: token('kuma.html.vars'),
+  protocolHandler: token('kuma.protocolHandler'),
+  kriHandlers: token('kuma.kriHandlers'),
+  dataSource: token<<T>(src: string) => Promise<T>>('app.dataSource'),
+  syntaxHighlighter: token('kuma.syntaxHighlighter'),
+  href: token<ReturnType<typeof href>>('kuma.router.href'),
+  routerPush: token<ReturnType<typeof push>>('kuma.router.push'),
+  routerElement: token<() => HTMLElement | null>('kuma.router.element'),
+}
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   return [
+    [app.protocolHandler, {
+      service: (router: Router, handlers: Handler[]) => {
+        // add a default catchall to the end of the handlers
+        handlers.push(
+          ({ mesh, kri }) => {
+            // mesh-scoped resources live under a mesh, global-scoped
+            // resources are reachable via the top-level resources tab
+            return mesh.length > 0
+              ? {
+                name: 'mesh-resource-detail-view',
+                params: {
+                  mesh,
+                  kri,
+                },
+              }
+              : {
+                name: 'control-plane-resource-detail-view',
+                params: {
+                  kri,
+                },
+              }
+          },
+        )
+        //
+
+        return (href: string) => {
+          const kriProto = 'kri://'
+          switch (true) {
+            // KRIs
+            case href.startsWith(kriProto): {
+              const kri = href.substring(kriProto.length)
+              const item = Kri.fromString(kri)
+              const args = {
+                ...item,
+                kri,
+              }
+
+              const to = handlers.reduce((prev, handler) => {
+                return typeof prev === 'undefined' ? handler(args) : prev
+              }, undefined as ReturnType<Handler>)
+
+              if (to) {
+                try {
+                  return router.resolve(to).href
+                } catch(e) {
+                  // log the error, don't throw it
+                  // anything errors we just don't show the link
+                  console.error(e)
+                  return ''
+                }
+              }
+              return ''
+            }
+          }
+          // if its not a KRI just pass it back
+          return href
+        }
+      },
+      arguments: [
+        app.router,
+        app.kriHandlers,
+      ],
+    }],
+    [app.kriHandlers, {
+      service: () => [],
+    }],
+    [token('kuma.plugins'), {
+      service: (i18n, syntaxHighlighter, protocolHandler, href, push, routerElement) => {
+        return [
+          [Kongponents],
+          [X, {
+            i18n,
+            syntaxHighlighter,
+            protocolHandler,
+            href,
+            push,
+            routerElement,
+          }],
+        ]
+      },
+      arguments: [
+        app.i18n,
+        app.syntaxHighlighter,
+        app.protocolHandler,
+        app.href,
+        app.routerPush,
+        app.routerElement,
+      ],
+      labels: [
+        app.plugins,
+      ],
+    }],
     [app.storagePrefix, {
       service: () => 'kumahq.kuma-gui',
+    }],
+    [app.fetch, {
+      service: () => createFetch(fetch),
+    }],
+    [app.routerElement, {
+      service: () => () => document.querySelector('.kuma-application'),
+    }],
+    [app.href, {
+      service: href,
+      arguments: [
+        app.router,
+      ],
+    }],
+    [app.routerPush, {
+      service: push,
+      arguments: [
+        app.router,
+      ],
     }],
     [app.htmlVars, {
       service: getConfig,
@@ -66,20 +207,6 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       ],
       labels: [
         app.vars,
-      ],
-    }],
-    // KumaAPI
-    [app.httpClient, {
-      service: RestClient,
-      arguments: [
-        app.env,
-      ],
-    }],
-    [app.api, {
-      service: KumaApi,
-      arguments: [
-        app.httpClient,
-        app.env,
       ],
     }],
 
@@ -102,6 +229,10 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       },
     }],
 
+    [app.syntaxHighlighter, {
+      service: () => syntaxHighlighter,
+    }],
+
     [token('kuma.components.not-found'), {
       service: () => [
         () => import('@/app/kuma/views/KumaNotFoundView.vue'),
@@ -115,7 +246,9 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       service: () => {
         return [
           ['KumaPort', KumaPort],
+          ['KumaResourceStatus', KumaResourceStatus],
           ['KumaTargetRef', KumaTargetRef],
+          ['KumaStatusBadge', KumaStatusBadge],
         ]
       },
       labels: [
@@ -125,8 +258,3 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
 
   ]
 }
-export const [
-  useKumaApi,
-] = createInjections(
-  TOKENS.api,
-)

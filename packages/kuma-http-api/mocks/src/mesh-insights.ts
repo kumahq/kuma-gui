@@ -1,4 +1,12 @@
 import type { Dependencies, ResponseHandler } from '#mocks'
+import type { paths } from '@kumahq/kuma-http-api'
+
+type MeshInsights = paths['/mesh-insights']['get']['responses']['200']['content']['application/json']
+// @TODO(types): once the types are correct here we can remove the omit
+type MeshInsightsResponse = Omit<MeshInsights, 'items'> & {
+  items: Omit<MeshInsights['items'][number], 'labels' | 'kri' | 'mesh'>[]
+}
+
 export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) => {
   const query = req.url.searchParams
   const { offset, total, next, pageTotal } = pager(
@@ -6,11 +14,15 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
     req,
     '/mesh-insights',
   )
+  const isMtlsEnabled = env('KUMA_MTLS_ENABLED', `${fake.datatype.boolean()}`) === 'true'
+  const meshIdentityCount = parseInt(env('KUMA_MESHIDENTITY_COUNT', `${fake.number.int({ min: 1, max: 3 })}`))
 
   const nameQuery = query.get('name')
 
   return {
-    headers: {},
+    headers: {
+      ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
+    },
     body: {
       total,
       items: Array.from({ length: pageTotal }).map((_, i) => {
@@ -21,27 +33,49 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
         const serviceTotal = parseInt(env('KUMA_SERVICE_COUNT', `${fake.number.int({ min: 1, max: 30 })}`))
         const max = env('KUMA_DATAPLANE_COUNT', '30') === '0' ? 0 : 30
 
-        const { standard, gatewayBuiltin, gatewayDelegated } = fake.kuma.partitionInto({
-          standard: Number,
-          gatewayBuiltin: Number,
-          gatewayDelegated: Number,
+        // split the count into types
+        const { standardTotal, gatewayBuiltinTotal, gatewayDelegatedTotal } = fake.kuma.partitionInto({
+          standardTotal: Number,
+          gatewayBuiltinTotal: Number,
+          gatewayDelegatedTotal: Number,
         }, max)
 
-        const gatewaysTotal = gatewayBuiltin + gatewayDelegated
-        const gateway = fake.kuma.partitionInto({
-          total: gatewaysTotal,
+        // dp types
+        const standard = fake.kuma.partitionInto({
+          total: standardTotal,
           online: Number,
           partiallyDegraded: Number,
           offline: Number,
-        }, gatewaysTotal)
+        }, standardTotal)
 
-        const dataplanesTotal = standard + gateway.total
-        const dataplanes = fake.kuma.partitionInto({
-          total: dataplanesTotal,
+        const gatewayBuiltin = fake.kuma.partitionInto({
+          total: gatewayBuiltinTotal,
           online: Number,
           partiallyDegraded: Number,
           offline: Number,
-        }, dataplanesTotal)
+        }, gatewayBuiltinTotal)
+
+        const gatewayDelegated = fake.kuma.partitionInto({
+          total: gatewayDelegatedTotal,
+          online: Number,
+          partiallyDegraded: Number,
+          offline: Number,
+        }, gatewayDelegatedTotal)
+
+        // aggregations of types/categories
+        const gateway = {
+          total: gatewayBuiltin.total + gatewayDelegated.total,
+          online: gatewayBuiltin.online + gatewayDelegated.online,
+          partiallyDegraded: gatewayBuiltin.partiallyDegraded + gatewayDelegated.partiallyDegraded,
+          offline: gatewayBuiltin.offline + gatewayDelegated.offline,
+        }
+        const dataplanes = {
+          total: standard.total + gateway.total,
+          online: standard.online + gateway.online,
+          partiallyDegraded: standard.partiallyDegraded + gateway.partiallyDegraded,
+          offline: standard.offline + gateway.offline,
+        }
+        const dataplanesTotal = dataplanes.total
 
         return {
           type: 'MeshInsight',
@@ -106,28 +140,39 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
               },
             },
           },
-          mTLS: {
-            issuedBackends: {
-              'ca-2': {
-                total: 2,
-                online: 2,
-              },
-              'ca-1': {
-                total: 0,
-                online: 0,
-              },
-            },
-            supportedBackends: {
-              'ca-2': {
-                total: 6,
-                online: 6,
-              },
-              'ca-1': {
-                total: 6,
-                online: 6,
-              },
-            },
-          },
+          mTLS: (() => {
+            if(!isMtlsEnabled) return {}
+
+            // Each mesh-identity has a corresponding mesh-trust sharing the same
+            // kri sections (mesh, zone, namespace, name) — only the shortName differs.
+            const mtlsMidBackends = Array.from({ length: meshIdentityCount }, (_, j) => ({
+              mesh: name,
+              zone: fake.helpers.arrayElement(['', fake.word.noun()]),
+              namespace: fake.helpers.arrayElement(['', fake.word.noun()]),
+              displayName: fake.word.noun(),
+            }))
+            const mtlsBackends = fake.helpers.arrayElements(['ca-1', 'ca-2', 'ca-3'])
+            const dpStats = () => {
+              const { total, online } = fake.kuma.partitionInto({ total: dataplanesTotal, online: Number, offline: Number }, dataplanesTotal)
+              return {
+                total,
+                online,
+              }
+            }
+
+            return {
+              issuedBackends: Object.fromEntries(
+                mtlsMidBackends.length > 0 ?
+                  mtlsMidBackends.map((sections) => [fake.kuma.kri({ resourceName: 'MeshIdentity', ...sections, sectionName: '' }), dpStats()]) :
+                  mtlsBackends.map((backend) => [backend, dpStats()]),
+              ),
+              supportedBackends: Object.fromEntries(
+                mtlsMidBackends.length > 0 ?
+                  mtlsMidBackends.map((sections) => [fake.kuma.kri({ resourceName: 'MeshTrust', ...sections, sectionName: '' }), dpStats()]) :
+                  mtlsBackends.map((backend) => [backend, dpStats()]),
+              ),
+            }
+          })(),
           services: {
             total: serviceTotal,
             ...fake.kuma.partitionInto({
@@ -138,6 +183,6 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
         }
       }),
       next,
-    },
+    } satisfies MeshInsightsResponse,
   }
 }

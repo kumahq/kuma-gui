@@ -3,10 +3,9 @@
   "extends": "@kumahq/config/tsconfig/node",
   "compilerOptions": {
     "types": [
-      "node",
-      "cypress"
+      "node"
     ]
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "src/cypress.ts"]
 }

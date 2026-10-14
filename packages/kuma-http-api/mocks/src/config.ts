@@ -1,11 +1,16 @@
 import type { Dependencies, ResponseHandler } from '#mocks'
+import type { paths } from '@kumahq/kuma-http-api'
+
+type ConfigResponse = paths['/config']['get']['responses']['200']['content']['application/json']
 
 export default ({ env, fake }: Dependencies): ResponseHandler => (_req) => {
   const mode = env('KUMA_MODE', 'global') === 'global' ? 'global' : 'zone'
   const zoneName = mode === 'zone' ? fake.word.noun() : undefined
 
   return {
-    headers: {},
+    headers: {
+      ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
+    },
     body: {
       access: {
         static: {
@@ -259,6 +264,6 @@ export default ({ env, fake }: Dependencies): ResponseHandler => (_req) => {
         dataplaneStatusFlushInterval: '10s',
         nackBackoff: '5s',
       },
-    },
+    } satisfies ConfigResponse,
   }
 }

@@ -4,41 +4,51 @@ Feature: mesh / dataplanes / overview / summary / Inbound
     Given the CSS selectors
       | Alias                  | Selector                                        |
       | summary                | [data-testid='slideout-container']              |
+      | title                  | $summary [data-testid='slideout-title']         |
+      | protocol               | $summary [data-testid='protocol']               |
       | inbound-policies-rules | $summary [data-testid='inbound-policies-rules'] |
       | inbound-policies-rule  | $inbound-policies-rules li:first-of-type        |
     And the environment
       """
-      KUMA_DATAPLANE_RUNTIME_UNIFIED_RESOURCE_NAMING_ENABLED: true
       KUMA_MESHSERVICE_MODE: Exclusive
       KUMA_DATAPLANEINBOUND_COUNT: 1
       KUMA_DATAPLANE_TYPE: standard
+      KUMA_DATAPLANE_RULE_COUNT: 1
+      """
+    And the URL "/_kri/kri_dp_default_zone-1_kuma-demo_service-less_" responds with
+      """
+      body:
+        name: service-less.kuma-demo
+        kri: kri_dp_default_zone-1_kuma-demo_service-less_
+        labels:
+          kuma.io/display-name: service-less
       """
 
   Scenario: Inbound summary overview shows expected content
-    Given the URL "/meshes/default/dataplanes/service-less/_layout" responds with
+    Given the URL "/meshes/default/dataplanes/service-less.kuma-demo/_layout" responds with
       """
       body:
         inbounds:
-          - kri: kri_dp_default_numeric_kuma-system_service-less_http
+          - kri: kri_dp_default_numeric_kuma-demo_service-less_http
             port: 12345
             protocol: http
             proxyResourceName: self_inbound_http
       """
-    And the URL "/meshes/default/dataplanes/service-less/_inbounds/kri_dp_default_numeric_kuma-system_service-less_http/_policies" responds with
+    And the URL "/meshes/default/dataplanes/service-less.kuma-demo/_inbounds/kri_dp_default_numeric_kuma-demo_service-less_http/_policies" responds with
       """
       body:
         policies:
           - kind: MeshFaultInjection
             rules:
               - conf:
-                  delay: 
+                  delay:
                     percentage: 10
                     fixedDelay: 100ms
                 kri: kri_mfi_default_pigsty_jury_innovation_appliance
             origins:
               - kri: kri_mfi_default_pigsty_jury_innovation_appliance
       """
-    And the URL "/meshes/default/dataplanes/service-less/_overview" responds with
+    And the URL "/meshes/default/dataplanes/service-less.kuma-demo/_overview" responds with
       """
       body:
         dataplane:
@@ -46,32 +56,29 @@ Feature: mesh / dataplanes / overview / summary / Inbound
             inbound:
               - name: http
                 port: 12345
+                protocol: http
+      # prove that we use protocol over the tag
                 tags:
-                  kuma.io/protocol: http
+                  kuma.io/protocol: tcp
       """
-    When I visit the "/meshes/default/data-planes/service-less/overview/inbound/self_inbound_http/overview" URL
-    And the "$summary" element exists
-    And the "$summary" element contains "Inbound :12345"
-    And the "$summary" element contains "HTTP"
+    When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_service-less_/overview/inbound/self_inbound_http/overview" URL
+    And the "$title" element contains "Inbound :12345"
+    And the "$protocol" element contains "HTTP"
     And the "$inbound-policies-rule" element contains "MeshFaultInjection"
     And the "$inbound-policies-rule" element contains "kri_mfi_default_pigsty_jury_innovation_appliance"
-    And the "$inbound-policies-rule [data-testid='k-code-block']" element exists
+    And the "$inbound-policies-rule table:first-of-type [data-testid='k-code-block']" element exists
 
   Scenario: Clicking on origin leads to policy detail view
-    Given the environment
-      """
-      KUMA_DATAPLANE_RULE_COUNT: 1
-      """
-    And the URL "/meshes/default/dataplanes/service-less/_layout" responds with
+    And the URL "/meshes/default/dataplanes/service-less.kuma-demo/_layout" responds with
       """
       body:
         inbounds:
-          - kri: kri_dp_default_numeric_kuma-system_service-less_http
+          - kri: kri_dp_default_numeric_kuma-demo_service-less_http
             port: 12345
             protocol: http
             proxyResourceName: self_inbound_http
       """
-    And the URL "/meshes/default/dataplanes/service-less/_inbounds/kri_dp_default_numeric_kuma-system_service-less_http/_policies" responds with
+    And the URL "/meshes/default/dataplanes/service-less.kuma-demo/_inbounds/kri_dp_default_numeric_kuma-demo_service-less_http/_policies" responds with
       """
       body:
         policies:
@@ -81,7 +88,7 @@ Feature: mesh / dataplanes / overview / summary / Inbound
             origins:
               - kri: kri_mfi_default_pigsty_jury_the-policy-name_appliance
       """
-    And the URL "/meshes/default/dataplanes/service-less/_overview" responds with
+    And the URL "/meshes/default/dataplanes/service-less.kuma-demo/_overview" responds with
       """
       body:
         dataplane:
@@ -92,6 +99,6 @@ Feature: mesh / dataplanes / overview / summary / Inbound
                 tags:
                   kuma.io/protocol: http
       """
-    When I visit the "/meshes/default/data-planes/service-less/overview/inbound/self_inbound_http/overview" URL
+    When I visit the "/meshes/default/data-planes/kri_dp_default_zone-1_kuma-demo_service-less_/overview/inbound/self_inbound_http/overview" URL
     Then I click on the "$inbound-policies-rule table tr:first-of-type td a" element
-    Then the URL contains "/gui/meshes/default/policies/meshfaultinjections/kri_mfi_default_pigsty_jury_the-policy-name_appliance/overview/overview"
+    Then the URL contains "/gui/meshes/default/policies/kri_mfi_default_pigsty_jury_the-policy-name_appliance/overview"

@@ -1,0 +1,5 @@
+description: A response containing the identity of the authenticated user.
+content:
+  application/json:
+    schema:
+      $ref: '../schemas/WhoAmI.yaml'

@@ -42,12 +42,12 @@ jobs:
     name: |
       Updating ${{ matrix.package.name }} from ${{ matrix.package.source }}
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: ./.github/actions/bootstrap/
         with:
           install-cmd: |
             make install
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: ${{ matrix.package.source }}
           ref: ${{ env.BRANCH }}
@@ -65,14 +65,14 @@ jobs:
           echo '=========='
           echo 'Diff:'
           git -C packages/kuma-http-api --no-pager diff --unified=0
-      - uses: actions/create-github-app-token@29824e69f54612133e76f7eaac726eef6c875baf # v2.2.1
+      - uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
         if: ${{ github.event_name != 'pull_request' }}
         id: github-app-token
         with:
           # no owner and no repositories as we only want access to this repository
           app-id: ${{ secrets.APP_ID }}
           private-key: ${{ secrets.APP_PRIVATE_KEY }}
-      - uses: peter-evans/create-pull-request@c0f553fe549906ede9cf27b5156039d195d2ece0 # v8.1.0
+      - uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
         if: ${{ github.event_name != 'pull_request' }}
         with:
           token: ${{ steps.github-app-token.outputs.token }}

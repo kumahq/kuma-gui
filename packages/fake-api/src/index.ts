@@ -1,15 +1,22 @@
+import { pathToRegexp } from 'path-to-regexp'
 import { URLPattern } from 'urlpattern-polyfill'
+
+type JSONPrimitive = string | number | boolean | null
+type JSONArray = JSONValue[]
+type JSONObject = { [key: string]: JSONValue | undefined }
+type JSONComposite = JSONArray | JSONObject
+type JSONValue = JSONPrimitive | JSONComposite
 
 export type RestRequest = {
   method: string
-  params: Record<string, string | readonly string[]>
+  params: Record<string, string | string[]>
   body: Record<string, any>
   url: URL
 }
 
 export type MockResponse = {
   headers?: Record<string, string>
-  body: string | Record<string, unknown>
+  body: JSONValue
 } | undefined
 
 export type ResponseHandler = (req: RestRequest) => MockResponse
@@ -27,6 +34,12 @@ export type FS<TDependencies extends object = {}> = Record<string, MockEndpoint<
 
 export function escapeRoute(route: string): string {
   return route.replaceAll('+', '\\+')
+}
+
+export const addOrigin = <T>(fs: Record<string, T>, origin: string) => {
+  return Object.fromEntries(Object.entries(fs).map(([route, response]) => {
+    return [route.includes('://') ? route : `${origin}${route}`, response]
+  }))
 }
 
 
@@ -66,7 +79,29 @@ export const Cookie = {
       })
       .filter(([key, _value]) => key.startsWith(prefix)))
   },
+  // @TODO: please expand to ` | Record<string, string> | Record<string, unknown>` when needed
+  stringify: (cookies: { name: string, value: string }[]) => {
+    switch(true) {
+      case Array.isArray(cookies):
+        return cookies.map((c) => `${c.name}=${c.value}`).join('; ')
+      default:
+        return ''
+    }
+  },
 }
+export const routeToRegexp = (route: string) => {
+  const url = new URL(route, !route.includes('://') ? 'http://localhost' : undefined)
+  // escape `:`s for pathToRegexp's named segments (/:segment/)
+  const origin = url.origin.replaceAll(':', '\\:')
+  const { regexp } = pathToRegexp(`${route.includes('://') ? origin : ''}${url.pathname}`)
+  // remove the end of pathToRegexps regexp
+  // and replace it with optional `/` and optional `?<optional chars>`
+  const re = new RegExp(
+    regexp.toString().replace('(?:\\/$)?$/i', '(?:\\/)?(\\?.*)?$').substring(1), 'i',
+  )
+  return re
+}
+
 export const createFetchSync = <T extends object = {}>({ dependencies, fs }: { dependencies: Dependencies<T>, fs: FS }) => {
   const router = new Router(fs)
   return (url: string, options: RequestInit & { body?: Record<string, string>, headers?: Record<string, string | string[] | undefined>}) => {
@@ -92,10 +127,10 @@ export const createFetchSync = <T extends object = {}>({ dependencies, fs }: { d
     }
     return {
       json: () => {
-        return response.body
+        return response.body as any
       },
       text: () => {
-        return response.body.toString()
+        return JSON.stringify(response.body)
       },
       headers: new Map(Object.entries(response.headers ?? {})),
     }

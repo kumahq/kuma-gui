@@ -33,21 +33,15 @@
         v-if="data"
         #title
       >
-        <XLayout size="small">
+        <XLayout
+          variant="y-stack"
+          size="small"
+        >
           <h1>
-            <XCopyButton
-              :text="props.data.name"
-            >
-              <RouteTitle
-                :title="t('data-planes.routes.item.title', { name: props.data.name })"
-              />
-            </XCopyButton>
+            <RouteTitle
+              :title="t('data-planes.routes.item.title', { name: props.data.name })"
+            />
           </h1>
-          <XBadge
-            :appearance="t(`common.status.appearance.${props.data.status}`, undefined, { defaultMessage: 'neutral' })"
-          >
-            {{ t(`http.api.value.${props.data.status}`) }}
-          </XBadge>
         </XLayout>
         <XNotification
           :notify="props.data.status === 'offline'"
@@ -56,6 +50,15 @@
         >
           <XI18n
             path="data-planes.notifications.dataplane-offline"
+          />
+        </XNotification>
+        <XNotification
+          :notify="props.data.status === 'disconnected_cp'"
+          data-testid="warning-dataplane-disconnected-cp"
+          :uri="`data-planes.notifications.dataplane-disconnected-cp.${props.data.id}`"
+        >
+          <XI18n
+            path="data-planes.notifications.dataplane-disconnected-cp"
           />
         </XNotification>
       </template>
@@ -129,7 +132,7 @@
                     #footer-actions
                   >
                     <XLayout
-                      type="separated"
+                      variant="inline"
                     >
                       <XDownload
                         @start="toggle"
@@ -139,7 +142,7 @@
                           variant="spinner"
                           :src="downloading ? uri(sources, '/meshes/:mesh/dataplanes/:name/as/tarball/:spec', {
                             mesh: route.params.mesh,
-                            name: route.params.proxy,
+                            name: props.data.id,
                             spec: JSON.stringify(
                               specs,
                             ),
@@ -157,7 +160,7 @@
                               show-icon
                             >
                               <XI18n
-                                t="data-planes.routes.item.download.error"
+                                path="data-planes.routes.item.download.error"
                               />
                             </XAlert>
                           </template>

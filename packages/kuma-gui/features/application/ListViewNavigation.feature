@@ -16,7 +16,6 @@ Feature: application / ListViewNavigation
     Then the "<DetailViewSelector>" element exists
 
     Examples:
-      | URL                      | DetailViewSelector                  |
-      | /zones                   | [data-testid='zone-cp-detail-view'] |
-      | /meshes                  | [data-testid='mesh-detail-view']    |
-      | /meshes/default/services | [data-testid='service-detail-view'] |
+      | URL     | DetailViewSelector                  |
+      | /zones  | [data-testid='zone-cp-detail-view'] |
+      | /meshes | [data-testid='mesh-detail-view']    |

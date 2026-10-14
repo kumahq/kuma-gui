@@ -3,8 +3,8 @@
     <!-- whilst we don't use the addresses here, -->
     <!-- we want to make sure they are retrieved/correctly set -->
     <DataSource
-      :src="`/control-plane/addresses`"
-      v-slot="{ data: addresses }: ControlPlaneAddressesSource"
+      :src="uri(sources, `/control-plane/addresses`, {})"
+      v-slot="{ data: addresses }"
     >
       <RouteView
         v-if="typeof addresses !== 'undefined'"
@@ -48,16 +48,6 @@
               }"
             />
             <AppNavigator
-              v-else
-              v-icon-start="`zone-egress`"
-              data-testid="zone-egresses-navigator"
-              :active="child.name === 'zone-egress-index-view'"
-              label="ZoneEgresses"
-              :to="{
-                name: 'zone-egress-list-view',
-              }"
-            />
-            <AppNavigator
               v-icon-start="`mesh`"
               v-style="'--icon-name-start: var(--icon-mesh)'"
               :active="child.name === 'mesh-index-view'"
@@ -65,6 +55,20 @@
               label="Meshes"
               :to="{
                 name: 'mesh-index-view',
+              }"
+            />
+            <AppNavigator
+              v-icon-start="`policy`"
+              data-testid="control-plane-resources-navigator"
+              :active="
+                [
+                  'control-plane-resource-type-list-view',
+                  'control-plane-resource-detail-view',
+                  'hostname-generator-root-view',
+                ].includes(child.name)"
+              label="Resources"
+              :to="{
+                name: 'control-plane-resource-type-list-view',
               }"
             />
           </template>
@@ -102,8 +106,9 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
+import { useUri } from '@/app/application'
 import AppNavigator from '@/app/application/components/app-navigator/AppNavigator.vue'
-import type { ControlPlaneAddressesSource } from '@/app/control-planes/sources'
+import { sources } from '@/app/control-planes/sources'
 import ApplicationShell from '@/app/kuma/components/ApplicationShell.vue'
 import type { RouteRecordRaw } from 'vue-router'
 
@@ -111,6 +116,7 @@ type StringNamedRouteRecordRaw = RouteRecordRaw & {
   name: string
 }
 const router = useRouter()
+const uri = useUri()
 const children: StringNamedRouteRecordRaw[] = (router.getRoutes().find((route) => route.name === 'control-plane-root-view')?.children.map(item => {
   item.name = String(item.name)
   return item as StringNamedRouteRecordRaw

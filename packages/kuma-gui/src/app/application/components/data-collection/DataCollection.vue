@@ -4,7 +4,7 @@
   >
     <template
       v-for="item in [props.items.find(props.predicate)]"
-      :key="item"
+      :key="typeof item"
     >
       <slot
         v-if="item"
@@ -41,7 +41,7 @@
     <XLayout
       v-else
       class="data-collection"
-      type="stack"
+      variant="y-stack"
     >
       <div>
         <slot

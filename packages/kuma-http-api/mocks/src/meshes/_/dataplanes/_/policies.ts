@@ -5,7 +5,9 @@ export default ({ fake }: Dependencies): ResponseHandler => (req) => {
 
   if (req.params.name.includes('-builtin')) {
     return {
-      headers: {},
+      headers: {
+        ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
+      },
       body: {
         kind: 'MeshGatewayDataplane',
         gateway: {
@@ -185,7 +187,9 @@ export default ({ fake }: Dependencies): ResponseHandler => (req) => {
     }
   }
   return {
-    headers: {},
+    headers: {
+      ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
+    },
     body: {
       kind: 'SidecarDataplane',
       total: 7,

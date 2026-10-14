@@ -1,4 +1,5 @@
 import type { RouteRecordRaw } from 'vue-router'
+
 export const routes = (): RouteRecordRaw[] => {
   return [
     {
@@ -16,3 +17,4 @@ export const routes = (): RouteRecordRaw[] => {
     },
   ]
 }
+

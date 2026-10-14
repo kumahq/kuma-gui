@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    name="policy-list-view"
+    name="policy-list-index-view"
     :params="{
       mesh: '',
       policyPath: '',
@@ -17,10 +17,10 @@
         :src="uri(meshSources, '/mesh-insights/:name', {
           name: route.params.mesh,
         }, {})"
-        v-slot="{ data: meshInsight }"
+        v-slot="{ data: meshInsightSource, error: meshInsightError }"
       >
         <DataSource
-          :src="uri(sources, '/policy-types', {})"
+          :src="uri(resourceSources, '/resource-type-descriptors', {})"
           v-slot="{ data, error }"
         >
           <XLayout
@@ -31,33 +31,32 @@
               class="policy-type-list"
               data-testid="policy-type-list"
             >
-              <!-- block on policy types but not meshInsight -->
               <DataLoader
                 :data="[data]"
                 :errors="[error]"
+                v-slot="{ data: [resourcesData] }"
               >
                 <template
-                  v-for="legacy in [typeof meshInsight?.policies === 'undefined' ? data!.policyTypes : data!.policyTypes.filter(item => {
+                  v-for="legacy in [typeof meshInsightSource?.policies === 'undefined' ? [] : resourcesData.resources.filter(item => {
                     // legacy policies are those that aren't targetRef and are also in use
-                    return !item.policy.isTargetRef && (meshInsight.policies?.[item.name]?.total ?? 0) > 0
+                    return !item.policy?.isTargetRef && (meshInsightSource.policies?.[item.name]?.total ?? 0) > 0
                   })]"
                   :key="typeof legacy"
                 >
-                  <DataCollection
-                    :predicate="typeof meshInsight?.policies === 'undefined' ? undefined : (item) => legacy.length > 0 || item.policy.isTargetRef"
-                    :items="data!.policyTypes"
-                    v-slot="{ items }"
+                  <template
+                    v-for="items in [resourcesData.resources.filter((item) => item.group === 'policy' && (legacy.length > 0 || item.shortName.length > 0))]"
+                    :key="typeof items"
                   >
                     <ul>
                       <template
-                        v-for="current in [items.find(policyType => policyType.path === route.params.policyPath)]"
-                        :key="current"
+                        v-for="current in [items.find(policyType => [policyType.shortName, policyType.path].includes(route.params.policyPath))]"
+                        :key="typeof current"
                       >
                         <li
                           v-for="(policyType, i) in items"
                           :key="policyType.path"
                           :class="{
-                            'active': current && current.path === policyType.path,
+                            'active': current && ((current.shortName.length && (current.shortName === policyType.shortName)) || current.path === policyType.path),
                           }"
                         >
                           <XAction
@@ -65,12 +64,13 @@
                               name: 'policy-list-view',
                               params: {
                                 mesh: route.params.mesh,
-                                policyPath: policyType.path,
+                                policyPath: policyType.shortName || policyType.path,
                               },
                             }"
                             :data-testid="`policy-type-link-${policyType.name}`"
-                            @vue:mounted="(vNode) => {
+                            @vue:mounted="async (vNode) => {
                               if(route.params.policyPath.length === 0 && i === 0 && vNode.props?.to) {
+                                await nextTick()
                                 route.replace(vNode.props.to)
                               }
                             }"
@@ -82,15 +82,28 @@
                               <span>
                                 {{ policyType.name }}
                               </span>
-                              <span>
-                                {{ meshInsight?.policies?.[policyType.name]?.total ?? 0 }}
-                              </span>
+                              <DataLoader
+                                variant="count"
+                                :data="[meshInsightSource]"
+                                :errors="[meshInsightError]"
+                              >
+                                <template #default="{ data: [meshInsight] }">
+                                  {{ meshInsight?.policies?.[policyType.name]?.total ?? 0 }}
+                                </template>
+                                <template #error>
+                                  <XIcon
+                                    name="warning"
+                                  >
+                                    {{ t('common.error_state.detail') }}
+                                  </XIcon>
+                                </template>
+                              </DataLoader>
                             </XLayout>
                           </XAction>
                         </li>
                       </template>
                     </ul>
-                  </DataCollection>
+                  </template>
                 </template>
               </DataLoader>
             </XCard>
@@ -98,7 +111,7 @@
               <RouterView v-slot="{ Component }">
                 <component
                   :is="Component"
-                  :policy-types="data?.policyTypes"
+                  :policy-types="data?.resources"
                 />
               </RouterView>
             </div>
@@ -109,15 +122,21 @@
   </RouteView>
 </template>
 <script lang="ts" setup>
+import { nextTick } from 'vue'
+
 import { sources as meshSources } from '@/app/meshes/sources'
-import { sources } from '@/app/policies/sources'
+import { sources as resourceSources } from '@/app/resources/sources'
 </script>
 <style lang="scss" scoped>
 .policy-type-list {
   position: sticky;
-  top: calc(var(--AppHeaderHeight) + $kui-space-70);
+  top: calc(var(--kuma-app-top) + var(--x-space-70));
   align-self: flex-start;
   max-width: 500px;
+
+  & + * {
+    flex: 1;
+  }
 }
 ul {
   list-style-type: none;
@@ -126,8 +145,8 @@ ul {
 }
 li :deep(a) {
   display: block;
-  color: $kui-color-text-neutral;
-  padding: $kui-space-40 $kui-space-60;
+  color: var(--x-color-text-neutral);
+  padding: var(--x-space-40) var(--x-space-60);
   text-decoration: none;
   :hover, :focus {
     span:first-of-type {
@@ -136,7 +155,7 @@ li :deep(a) {
   }
 }
 li.active :deep(a) {
-  background-color: $kui-color-background-primary-weakest;
+  background-color: var(--x-color-background-primary-weakest);
   color: currentColor;
 }
 </style>

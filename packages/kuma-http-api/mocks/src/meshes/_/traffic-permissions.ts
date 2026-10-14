@@ -9,7 +9,9 @@ export default ({ fake, pager }: Dependencies): ResponseHandler => (req) => {
   const nameQuery = req.url.searchParams.get('name')
 
   return {
-    headers: {},
+    headers: {
+      ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
+    },
     body: {
       total,
       next,

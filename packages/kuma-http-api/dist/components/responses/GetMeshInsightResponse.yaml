@@ -1,0 +1,5 @@
+description: A response containing the insight of a mesh.
+content:
+  application/json:
+    schema:
+      $ref: '../schemas/MeshInsightWithMeta.yaml'

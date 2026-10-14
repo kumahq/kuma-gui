@@ -1,4 +1,5 @@
 import { YAML } from '@/app/application'
+import { Kri } from '@/app/kuma'
 import { Resource } from '@/app/resources/data/Resource'
 import type { components } from '@kumahq/kuma-http-api'
 
@@ -17,14 +18,25 @@ export const Policy = {
   },
 
   fromObject(item: KumaPolicy) {
-    const labels = typeof item.labels !== 'undefined' ? item.labels : {}
+    const labels = item.labels ?? {}
+    const id = item.name
+    const mesh = item.mesh
+    const zone = labels['kuma.io/origin'] === 'zone' && labels['kuma.io/zone'] ? labels['kuma.io/zone'] : ''
+    const namespace = labels['k8s.kuma.io/namespace'] ?? ''
+    const name = labels['kuma.io/display-name'] ?? item.name
+
     return {
       ...item,
+      kri: 'kri' in item && typeof item.kri === 'string' ? item.kri : Kri.toString({ shortName: `~${item.type.toLowerCase()}`, mesh, zone, namespace, name: id }),
+      name,
+      mesh,
       labels,
-      id: item.name,
-      name: labels['kuma.io/display-name'] ?? item.name,
-      namespace: labels['k8s.kuma.io/namespace'] ?? '',
-      zone: labels['kuma.io/origin'] === 'zone' && labels['kuma.io/zone'] ? labels['kuma.io/zone'] : '',
+      creationTime: item.creationTime ?? '',
+      modificationTime: item.modificationTime ?? '',
+      // aliases
+      id,
+      namespace,
+      zone,
       // ideally this would be done upstream, or we add it to our overlays. For now we check at runtime
       role: (['producer', 'consumer', 'system', 'workload-owner'] as const).find((item) => item === labels['kuma.io/policy-role']) ?? 'system',
       config: item,

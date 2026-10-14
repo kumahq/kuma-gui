@@ -4,7 +4,6 @@
     :params="{
       mesh: '',
       policy: '',
-      policyPath: '',
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
@@ -14,10 +13,9 @@
   >
     <AppView>
       <XCard>
-        <XLayout>
+        <XLayout variant="y-stack">
           <XLayout
-            type="separated"
-            justify="end"
+            variant="action-group"
           >
             <div
               v-for="options in [['universal', 'k8s']]"
@@ -43,28 +41,32 @@
           </XLayout>
 
           <template v-if="route.params.environment === 'universal'">
-            <XCodeBlock
-              data-testid="codeblock-yaml-universal"
-              language="yaml"
-              :code="props.data.yaml"
-              is-searchable
-              :query="route.params.codeSearch"
-              :is-filter-mode="route.params.codeFilter"
-              :is-reg-exp-mode="route.params.codeRegExp"
-              @query-change="route.update({ codeSearch: $event })"
-              @filter-mode-change="route.update({ codeFilter: $event })"
-              @reg-exp-mode-change="route.update({ codeRegExp: $event })"
-            />
+            <DataLoader
+              :data="[props.data]"
+              v-slot="{ data: [policy] }"
+            >
+              <XCodeBlock
+                data-testid="codeblock-yaml-universal"
+                language="yaml"
+                :code="policy.yaml"
+                is-searchable
+                :query="route.params.codeSearch"
+                :is-filter-mode="route.params.codeFilter"
+                :is-reg-exp-mode="route.params.codeRegExp"
+                @query-change="route.update({ codeSearch: $event })"
+                @filter-mode-change="route.update({ codeFilter: $event })"
+                @reg-exp-mode-change="route.update({ codeRegExp: $event })"
+              />
+            </DataLoader>
           </template>
 
           <template v-else>
             <DataLoader
-              :src="uri(sources, '/meshes/:mesh/policy-path/:path/policy/:name/as/kubernetes', {
-                mesh: route.params.mesh,
-                path: route.params.policyPath,
-                name: route.params.policy,
+              :src="uri(sources, '/policy-path/:path/policy/:kri/as/kubernetes', {
+                path: policyType?.path ?? '',
+                kri: route.params.policy,
               })"
-              v-slot="{ data: yaml }"
+              v-slot="{ data: [yaml] }"
             >
               <XCodeBlock
                 data-testid="codeblock-yaml-k8s"
@@ -87,9 +89,11 @@
 </template>
 
 <script lang="ts" setup>
+import type { ResourceTypeDescriptor } from '@/app/resources/data'
 import type { Policy } from '../data'
 import { sources } from '../sources'
 const props = defineProps<{
-  data: Policy
+  data: Policy | Error | undefined
+  policyType: ResourceTypeDescriptor | undefined
 }>()
 </script>

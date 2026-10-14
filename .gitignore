@@ -31,3 +31,12 @@ dist
 
 # Cypress
 **/cypress/downloads/*
+
+# playwright
+**/.features-gen/*
+**/playwright-report/*
+**/test-results/*
+
+# agents/skills
+skills-lock.json
+.claude/skills

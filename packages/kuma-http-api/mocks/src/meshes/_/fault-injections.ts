@@ -10,7 +10,9 @@ export default ({ fake, pager, env }: Dependencies): ResponseHandler => (req) =>
   const queryName = req.url.searchParams.get('name')
 
   return {
-    headers: {},
+    headers: {
+      ...(fake.datatype.boolean() ? { 'Transfer-Encoding': 'chunked' } : {}),
+    },
     body: {
       total,
       items: Array.from({ length: pageTotal }).map((_, i) => {

@@ -6,42 +6,71 @@
       connection: '',
     }"
     :name="props.routeName"
-    v-slot="{ t, route, uri }"
+    v-slot="{ t, route, uri, r }"
   >
     <AppView>
-      <XLayout type="stack">
+      <XLayout variant="y-stack">
         <template
-          v-for="inbound in [props.dataPlaneOverview.dataplane.networking.inbounds.find((item) => item.port === props.data.port)]"
+          v-for="inbound in [props.overview.dataplane.networking.inbounds.find((item) => item.port === props.data.port)]"
           :key="typeof inbound"
         >
           <XTable
             v-if="inbound"
             variant="kv"
           >
-            <tr>
+            <tr v-if="inbound.type.length > 0">
+              <th scope="row">
+                Type
+              </th>
+              <td>
+                <XBadge
+                  appearance="info"
+                >
+                  {{ inbound.type }}
+                </XBadge>
+              </td>
+            </tr>
+            <tr v-if="Object.keys(inbound.tags).length > 0">
               <th scope="row">
                 Tags
               </th>
               <td>
-                <TagList
-                  :tags="inbound.tags"
-                  alignment="right"
-                />
+                <XLayout
+                  variant="separated"
+                >
+                  <XAction
+                    v-for="(value, key) in inbound.tags"
+                    :key="key"
+                    :href="t(`common.label.href.${key.replaceAll('.', '~')}`, {
+                      mesh: '',
+                      zone: '',
+                      namespace: '',
+                      name: value.replaceAll('_', '~'),
+                    }, { defaultMessage: '' })"
+                  >
+                    <XBadge
+                      :variant="r('kuma.label').test(key) ? 'reserved-kv' : 'kv'"
+                    >
+                      {{ key }}:<strong>{{ value }}</strong>
+                    </XBadge>
+                  </XAction>
+                </XLayout>
               </td>
             </tr>
-            <tr>
+            <tr v-if="inbound.protocol.length > 0">
               <th scope="row">
                 Protocol
               </th>
               <td>
                 <XBadge
+                  data-testid="protocol"
                   appearance="info"
                 >
                   {{ t(`http.api.value.${inbound.protocol}`) }}
                 </XBadge>
               </td>
             </tr>
-            <tr>
+            <tr v-if="inbound.addressPort.length > 0">
               <th scope="row">
                 Address
               </th>
@@ -79,108 +108,119 @@
         </template>
         <XLayout
           v-if="props.data"
-          type="stack"
+          variant="y-stack"
           size="small"
         >
           <h3>Policies</h3>
           <DataSource
-            :src="uri(policySources, '/policy-types', {})"
-            v-slot="{ data: policyTypesData, error: policyTypesError }"
+            :src="uri(resourceSources, '/resource-type-descriptors', {})"
+            v-slot="{ data: sourceResources, error: resourcesError }"
           >
             <DataSource
               :src="uri(policySources, '/meshes/:mesh/dataplanes/:name/policies/for/inbound/:kri', {
                 mesh: route.params.mesh,
-                name: route.params.proxy,
+                name: props.overview.id,
                 kri: props.data.kri,
               })"
-              v-slot="{ data: policiesData, error: policiesError }"
+              v-slot="{ data: sourcePolicies, error: policiesError }"
             >
               <DataLoader
-                :data="[policyTypesData, policiesData]"
-                :errors="[policyTypesError, policiesError]"
+                :data="[sourceResources, sourcePolicies]"
+                :errors="[resourcesError, policiesError]"
+                v-slot="{ data: [resourcesData, policiesData] }"
               >
                 <template
-                  v-for="policyTypes in [Object.groupBy((policyTypesData?.policyTypes ?? []), ({ name }) => name)]"
-                  :key="`${typeof policyTypes}`"
+                  v-for="policies in [resourcesData.resources.filter((resource) => typeof resource.policy !== 'undefined')]"
+                  :key="typeof policies"
                 >
-                  <AccordionList
-                    :initially-open="0"
-                    multiple-open
-                    class="stack"
-                    data-testid="inbound-policies-rules"
+                  <template
+                    v-for="policyTypes in [Object.groupBy((policies), ({ name }) => name)]"
+                    :key="`${typeof policyTypes}`"
                   >
-                    <template
-                      v-for="({ rules, kind }) in policiesData?.policies || []"
-                      :key="kind"
+                    <DataCollection
+                      :items="policiesData.policies"
+                      v-slot="{ items }"
                     >
-                      <XCard>
-                        <AccordionItem>
-                          <template #accordion-header>
-                            <span
-                              v-icon-start="{name: kind, size: '60', default: 'policy'}"
-                            >
-                              {{ kind }} ({{ rules!.length }})
-                            </span>
-                          </template>
-                          <template #accordion-content>
-                            <XLayout variant="y-stack">
-                              <XTable
-                                v-for="item in rules"
-                                :key="item.kri"
-                                variant="kv"
+                      <XAccordionList
+                        :initially-open="0"
+                        multiple-open
+                        class="stack"
+                        data-testid="inbound-policies-rules"
+                      >
+                        <template
+                          v-for="({ rules, kind }) in items"
+                          :key="kind"
+                        >
+                          <XAccordionItem
+                            :card="true"
+                          >
+                            <template #accordion-header>
+                              <span
+                                v-icon-start="{name: kind, size: '60', default: 'policy'}"
                               >
-                                <tr>
-                                  <th scope="row">
-                                    Policy origin
-                                  </th>
-                                  <td>
-                                    <template
-                                      v-for="kri in [Kri.fromString(item.kri)]"
-                                      :key="typeof kri"
-                                    >
-                                      <XAction
-                                        v-if="policyTypes[kind] && Kri.isKriString(item.kri)"
-                                        :to="{
-                                          name: 'policy-detail-view',
-                                          params: {
-                                            mesh: kri.mesh,
-                                            policyPath: policyTypes[kind]![0].path,
-                                            policy: item.kri,
-                                          },
-                                        }"
-                                      >
-                                        {{ item.kri }}
-                                      </XAction>
+                                {{ kind }} ({{ rules!.length }})
+                              </span>
+                            </template>
+                            <template #accordion-content>
+                              <XLayout variant="y-stack">
+                                <XTable
+                                  v-for="item in rules"
+                                  :key="item.kri"
+                                  variant="kv"
+                                >
+                                  <tr>
+                                    <th scope="row">
+                                      Policy origin
+                                    </th>
+                                    <td>
                                       <template
-                                        v-else
+                                        v-for="kri in [Kri.fromString(item.kri)]"
+                                        :key="typeof kri"
                                       >
-                                        {{ item.kri }}
+                                        <XAction
+                                          v-if="policyTypes[kind] && Kri.isKriString(item.kri)"
+                                          :to="{
+                                            name: 'policy-detail-view',
+                                            params: {
+                                              mesh: kri.mesh,
+                                              policyPath: policyTypes[kind]![0].path,
+                                              policy: item.kri,
+                                            },
+                                          }"
+                                        >
+                                          {{ item.kri }}
+                                        </XAction>
+                                        <template
+                                          v-else
+                                        >
+                                          {{ item.kri }}
+                                        </template>
                                       </template>
-                                    </template>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td colspan="2">
-                                    <XLayout
-                                      type="stack"
-                                      size="small"
-                                    >
-                                      <span>Config</span>
-                                      <XCodeBlock
-                                        :code="YAML.stringify(item.conf)"
-                                        language="yaml"
-                                        :show-copy-button="false"
-                                      />
-                                    </XLayout>
-                                  </td>
-                                </tr>
-                              </XTable>
-                            </XLayout>
-                          </template>
-                        </AccordionItem>
-                      </XCard>
-                    </template>
-                  </AccordionList>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td colspan="2">
+                                      <XLayout
+                                        variant="y-stack"
+                                        size="small"
+                                      >
+                                        <span>Config</span>
+                                        <XCodeBlock
+                                          :code="YAML.stringify(item.conf)"
+                                          language="yaml"
+                                          :show-copy-button="false"
+                                        />
+                                      </XLayout>
+                                    </td>
+                                  </tr>
+                                </XTable>
+                              </XLayout>
+                            </template>
+                          </XAccordionItem>
+                        </template>
+                      </XAccordionList>
+                    </DataCollection>
+                  </template>
                 </template>
               </DataLoader>
             </DataSource>
@@ -192,17 +232,15 @@
 </template>
 
 <script lang="ts" setup>
-import { DataplaneNetworkingLayout, DataplaneOverview } from '../data'
+import type { DataplaneNetworkingLayout, DataplaneOverview } from '../data'
 import { YAML } from '@/app/application'
-import AccordionItem from '@/app/common/AccordionItem.vue'
-import AccordionList from '@/app/common/AccordionList.vue'
-import TagList from '@/app/common/TagList.vue'
 import { Kri } from '@/app/kuma'
 import { sources as policySources } from '@/app/policies/sources'
+import { sources as resourceSources } from '@/app/resources/sources'
 
 const props = defineProps<{
   data: DataplaneNetworkingLayout['inbounds'][number]
-  dataPlaneOverview: DataplaneOverview
+  overview: DataplaneOverview
   routeName: string
 }>()
 </script>

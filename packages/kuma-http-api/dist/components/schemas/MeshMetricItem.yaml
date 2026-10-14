@@ -1,4 +1,4 @@
-description: 'MeshMetric enables collection and export of service mesh metrics. It configures sidecar and application metrics scraping, allows customization of which metrics are published, and supports exporting to Prometheus or OpenTelemetry backends for monitoring and observability.'
+description: MeshMetric enables collection and export of service mesh metrics. It configures sidecar and application metrics scraping, allows customization of which metrics are published, and supports exporting to Prometheus or OpenTelemetry backends for monitoring and observability.
 type: object
 properties:
   type:
@@ -10,6 +10,8 @@ properties:
     description: Mesh is the name of the Kuma mesh this resource belongs to. It may be omitted for cluster-scoped resources.
     type: string
     default: default
+    maxLength: 253
+    pattern: ^[0-9a-z-_.]*$
   kri:
     description: A unique identifier for this resource instance used by internal tooling and integrations. Typically derived from resource attributes and may be used for cross-references or indexing
     type: string
@@ -18,6 +20,8 @@ properties:
   name:
     description: Name of the Kuma resource
     type: string
+    maxLength: 253
+    pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$
   labels:
     description: The labels to help identity resources
     type: object
@@ -32,7 +36,9 @@ properties:
         type: object
         properties:
           applications:
-            description: Applications is a list of application that Dataplane Proxy will scrape
+            description: |-
+              Applications is a list of applications that Dataplane Proxy will scrape.
+              Ignored on zone-proxy-only Dataplanes (zone ingress/egress exist without a co-located workload).
             type: array
             items:
               properties:
@@ -62,14 +68,29 @@ properties:
                   description: OpenTelemetry backend configuration
                   type: object
                   properties:
-                    endpoint:
-                      description: Endpoint for OpenTelemetry collector
-                      type: string
+                    backendRef:
+                      description: |-
+                        BackendRef is a reference to a MeshOpenTelemetryBackend resource that
+                        defines the collector endpoint.
+                      type: object
+                      properties:
+                        kind:
+                          description: Kind of the backend resource.
+                          type: string
+                          enum:
+                            - MeshOpenTelemetryBackend
+                        labels:
+                          description: |-
+                            Labels to match the referenced resource. When multiple resources match,
+                            the oldest by creation time wins.
+                          type: object
+                          additionalProperties:
+                            type: string
+                      required:
+                        - kind
                     refreshInterval:
                       description: RefreshInterval defines how frequent metrics should be pushed to collector
                       type: string
-                  required:
-                    - endpoint
                 prometheus:
                   description: Prometheus backend configuration.
                   type: object
@@ -193,69 +214,77 @@ properties:
             type: string
             enum:
               - Mesh
-              - MeshSubset
-              - MeshGateway
-              - MeshService
-              - MeshExternalService
-              - MeshMultiZoneService
-              - MeshServiceSubset
-              - MeshHTTPRoute
               - Dataplane
           labels:
             description: |-
-              Labels are used to select group of MeshServices that match labels. Either Labels or
-              Name and Namespace can be used.
+              Labels are used to select referenced real resources and to carry legacy
+              service identity when a common TargetRef must still target old
+              service-tag based paths.
             type: object
             additionalProperties:
-              type: string
-          mesh:
-            description: Mesh is reserved for future use to identify cross mesh resources.
-            type: string
-          name:
-            description: |-
-              Name of the referenced resource. Can only be used with kinds: `MeshService`,
-              `MeshServiceSubset` and `MeshGatewayRoute`
-            type: string
-          namespace:
-            description: |-
-              Namespace specifies the namespace of target resource. If empty only resources in policy namespace
-              will be targeted.
-            type: string
-          proxyTypes:
-            description: |-
-              ProxyTypes specifies the data plane types that are subject to the policy. When not specified,
-              all data plane types are targeted by the policy.
-            type: array
-            items:
-              enum:
-                - Sidecar
-                - Gateway
               type: string
           sectionName:
             description: |-
               SectionName is used to target specific section of resource.
               For example, you can target port from MeshService.ports[] by its name. Only traffic to this port will be affected.
             type: string
-          tags:
-            description: |-
-              Tags used to select a subset of proxies by tags. Can only be used with kinds
-              `MeshSubset` and `MeshServiceSubset`
-            type: object
-            additionalProperties:
-              type: string
         required:
           - kind
   creationTime:
     description: Time at which the resource was created
     type: string
     format: date-time
-    example: '0001-01-01T00:00:00Z'
+    example: 1901-01-01T00:00:00.000Z
     readOnly: true
   modificationTime:
     description: Time at which the resource was updated
     type: string
     format: date-time
-    example: '0001-01-01T00:00:00Z'
+    example: 1901-01-01T00:00:00.000Z
+    readOnly: true
+  status:
+    description: Status is the current status of the Kuma MeshMetric resource.
+    type: object
+    properties:
+      conditions:
+        type: array
+        items:
+          properties:
+            message:
+              description: |-
+                message is a human readable message indicating details about the transition.
+                This may be an empty string.
+              type: string
+              maxLength: 32768
+            reason:
+              description: |-
+                reason contains a programmatic identifier indicating the reason for the condition's last transition.
+                Producers of specific condition types may define expected values and meanings for this field,
+                and whether the values are considered a guaranteed API.
+                The value should be a CamelCase string.
+                This field may not be empty.
+              type: string
+              maxLength: 1024
+              minLength: 1
+              pattern: ^[A-Za-z]([A-Za-z0-9_,:]*[A-Za-z0-9_])?$
+            status:
+              description: status of the condition, one of True, False, Unknown.
+              type: string
+              enum:
+                - 'True'
+                - 'False'
+                - Unknown
+            type:
+              description: type of condition in CamelCase or in foo.example.com/CamelCase.
+              type: string
+              maxLength: 316
+              pattern: ^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$
+          required:
+            - message
+            - reason
+            - status
+            - type
+          type: object
     readOnly: true
 required:
   - type

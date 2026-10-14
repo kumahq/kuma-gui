@@ -3,17 +3,23 @@ import { base, en } from '@faker-js/faker'
 import type { Env as Keys } from './Env'
 import FakeKuma from './FakeKuma'
 export { default as FakeKuma } from './FakeKuma'
-export { fs } from './fs'
+export * from './fs'
+
+type JSONPrimitive = string | number | boolean | null
+type JSONArray = JSONValue[]
+type JSONObject = { [key: string]: JSONValue | undefined }
+type JSONComposite = JSONArray | JSONObject
+type JSONValue = JSONPrimitive | JSONComposite
 
 export interface RestRequest {
   method: string
-  params: Record<string, string | readonly string[]>
+  params: Record<string, string | string[]>
   body: Record<string, any>
   url: URL
 }
 export type Response = {
   headers?: Record<string, string>
-  body: string | Record<string, unknown>
+  body: JSONValue
 } | undefined
 
 export type ResponseHandler = (req: RestRequest) => Response
@@ -27,7 +33,7 @@ export const pager = (total: string | number, req: RestRequest, self: string) =>
 
   const remaining = ttal - offset
   const pageTotal = Math.min(size, remaining)
-  const next = remaining <= size ? undefined : `${baseUrl}${self}?size=${size}offset=${offset + size}`
+  const next = remaining <= size ? null : `${baseUrl}${self}?size=${size}&offset=${offset + size}`
   return {
     next,
     pageTotal,
@@ -47,6 +53,6 @@ export interface Dependencies {
 export const dependencies: Dependencies = {
   fake: new FakeKuma({ locale: [base, en] }),
   pager,
-  env: (key, d = '') => d,
+  env: (_, d = '') => d,
 }
 

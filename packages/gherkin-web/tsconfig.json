@@ -1,0 +1,10 @@
+{
+  "$schema": "https://schemastore.org/tsconfig.json",
+  "extends": "@kumahq/config/tsconfig/node",
+  "compilerOptions": {
+    "lib": ["esnext", "dom"],
+  },
+  "include": ["**/*.ts"],
+  "exclude": ["node_modules", "**/cypress/**"]
+}
+

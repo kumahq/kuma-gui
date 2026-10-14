@@ -5,7 +5,7 @@
       page: 1,
       size: Number,
       mesh: '',
-      service: '',
+      kri: '',
       s: '',
     }"
     v-slot="{ route, t, can, uri, me }"
@@ -15,42 +15,22 @@
       :title="t(`services.routes.mesh-external-service-list-view.title`)"
     />
     <DataSource
-      :src="uri(egressSources, `/zone-cps/:name/egresses`, {
-        name: '*',
-      }, {
-        page: 1,
-        size: 100,
+      :src="uri(meshSources, '/mesh-insights/:name', {
+        name: route.params.mesh,
       })"
-      v-slot="{ data: egresses }"
+      v-slot="{ data: sourceMeshInsight }"
     >
       <AppView
         :docs="t('services.mesh-external-service.href.docs')"
         :notifications="true"
       >
-        <XNotification
-          :notify="!props.mesh.mtlsBackend"
-          :uri="`mes-mtls-warning.${props.mesh.id}`"
-        >
-          <XI18n
-            path="services.mesh-external-service.notifications.mtls-warning"
-          />
-        </XNotification>
-        <XNotification
-          :notify="egresses && !egresses.items.find((egress) => typeof egress.zoneEgressInsight.connectedSubscription !== 'undefined')"
-          :uri="`mes-no-zone-ingress.${props.mesh.id}`"
-        >
-          <XI18n
-            path="services.mesh-external-service.notifications.no-zone-egress"
-          />
-        </XNotification>
         <XCard>
-          <XLayout>
+          <XLayout variant="y-stack">
             <search>
               <form
                 @submit.prevent
               >
                 <XSearch
-                  class="search-field"
                   :keys="['name', 'namespace', ...(can('use zones') ? ['zone'] : []), 'label']"
                   :value="route.params.s"
                   @change="(s) => route.update({ s })"
@@ -65,9 +45,18 @@
                 size: route.params.size,
                 search: route.params.s,
               })"
+              :data="[sourceMeshInsight]"
               variant="list"
-              v-slot="{ data }"
+              v-slot="{ data: [data, meshInsight] }"
             >
+              <XNotification
+                :notify="!meshInsight.mTLS.issuedBackends"
+                :uri="`mes-mtls-warning.${props.mesh.id}`"
+              >
+                <XI18n
+                  path="services.mesh-external-service.notifications.mtls-warning"
+                />
+              </XNotification>
               <DataCollection
                 type="services"
                 :items="data.items"
@@ -86,7 +75,7 @@
                     { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
                   ]"
                   :items="data.items"
-                  :is-selected-row="(item) => item.name === route.params.service"
+                  :is-selected-row="(item) => item.kri === route.params.kri"
                   @resize="me.set"
                 >
                   <template #name="{ row: item }">
@@ -99,7 +88,7 @@
                           name: 'mesh-external-service-summary-view',
                           params: {
                             mesh: item.mesh,
-                            service: item.id,
+                            kri: item.kri,
                           },
                           query: {
                             page: route.params.page,
@@ -121,12 +110,7 @@
                     <template v-if="item.labels && item.labels['kuma.io/origin'] === 'zone' && item.labels['kuma.io/zone']">
                       <XAction
                         v-if="item.labels['kuma.io/zone']"
-                        :to="{
-                          name: 'zone-cp-detail-view',
-                          params: {
-                            zone: item.labels['kuma.io/zone'],
-                          },
-                        }"
+                        :href="`kri://${Kri.toString({ shortName: 'z', name: item.labels['kuma.io/zone'] })}`"
                       >
                         {{ item.labels['kuma.io/zone'] }}
                       </XAction>
@@ -155,7 +139,7 @@
                           name: 'mesh-external-service-detail-view',
                           params: {
                             mesh: item.mesh,
-                            service: item.id,
+                            kri: item.kri,
                           },
                         }"
                       >
@@ -165,7 +149,7 @@
                   </template>
                 </AppCollection>
                 <RouterView
-                  v-if="data.items && route.params.service"
+                  v-if="data.items && route.params.kri"
                   v-slot="child"
                 >
                   <XDrawer
@@ -199,15 +183,11 @@
 <script lang="ts" setup>
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
+import { Kri } from '@/app/kuma'
 import type { Mesh } from '@/app/meshes/data'
-import { sources as egressSources } from '@/app/zone-egresses/sources'
+import { sources as meshSources } from '@/app/meshes/sources'
 
 const props = defineProps<{
   mesh: Mesh
 }>()
 </script>
-<style lang="scss" scoped>
-.search-field {
-  width: 100%;
-}
-</style>

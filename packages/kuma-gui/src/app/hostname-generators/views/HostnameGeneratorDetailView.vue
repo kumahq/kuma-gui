@@ -2,151 +2,165 @@
   <RouteView
     name="hostname-generator-detail-view"
     :params="{
-      name: '',
+      kri: '',
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
       environment: String,
     }"
-    v-slot="{ route, t, uri, can }"
+    v-slot="{ route, t, uri, can, r }"
   >
     <RouteTitle
       :title="t('hostname-generators.routes.items.title')"
       :render="false"
     />
 
-    <DataLoader
-      :src="uri(sources, '/hostname-generators/:name', {
-        name: route.params.name,
+    <DataSource
+      :src="uri(sources, '/hostname-generators/:kri', {
+        kri: route.params.kri,
       })"
-      v-slot="{ data }"
+      v-slot="{ data: sourceData, error }"
     >
-      <AppView :docs="t('hostname-generators.href.docs')">
+      <AppView
+        :docs="t('hostname-generators.href.docs')"
+        :breadcrumbs="[
+          {
+            to: {
+              name: 'hostname-generator-list-view',
+            },
+            text: t('hostname-generators.routes.item.breadcrumbs'),
+          },
+        ]"
+      >
         <template #title>
-          <h1>
-            <XCopyButton
-              :text="data.name"
-            >
+          <DataLoader
+            :data="[sourceData]"
+            variant="header"
+            v-slot="{ data: [data] }"
+          >
+            <h1>
               <RouteTitle
                 :title="t('hostname-generators.routes.item.title', { name: data.name })"
               />
-            </XCopyButton>
-          </h1>
+            </h1>
+          </DataLoader>
         </template>
         <XLayout
-          type="stack"
+          variant="y-stack"
         >
-          <XAboutCard
-            :title="t('hostname-generators.routes.item.about.title')"
-            :created="data.creationTime"
-            :modified="data.modificationTime"
+          <XCard
             data-testid="hostname-generator-about-section"
           >
-            <XLayout
-              variant="y-stack"
+            <template #title>
+              {{ t('hostname-generators.routes.item.about.title') }}
+            </template>
+            <DataLoader
+              :data="[sourceData]"
+              :errors="[error]"
+              v-slot="{ data: [data] }"
             >
-              <XLayout>
-                <XDl>
-                  <div>
-                    <dt>
-                      {{ t('http.api.property.namespace') }}
-                    </dt>
-                    <dd>
-                      <XBadge>
-                        {{ data.namespace }}
-                      </XBadge>
-                    </dd>
-                  </div>
-                  <div v-if="can('use zones') && data.zone">
-                    <dt>
-                      {{ t('http.api.property.zone') }}
-                    </dt>
-                    <dd>
-                      <XAction
-                        :to="{
-                          name: 'zone-cp-detail-view',
-                          params: {
-                            zone: data.zone,
-                          },
-                        }"
-                      >
-                        <XBadge>
-                          {{ data.zone }}
-                        </XBadge>
-                      </XAction>
-                    </dd>
-                  </div>
-                </XDl>
-              </XLayout>
-              <template
-                v-for="labels in [{
-                  ...data.spec.selector.meshService.matchLabels,
-                  ...data.spec.selector.meshExternalService.matchLabels,
-                  ...data.spec.selector.meshMultiZoneService.matchLabels,
-                }]"
-                :key="typeof labels"
+              <XTimespan
+                :start="data.creationTime"
+                :end="data.modificationTime"
+              />
+              <XLayout
+                variant="y-stack"
               >
-                <XDl
-                  v-if="Object.keys(labels).length"
-                  variant="x-stack"
-                >
-                  <div>
-                    <dt>
-                      {{ t('http.api.property.match') }}
-                    </dt>
-                    <dd>
-                      <XLayout
-                        type="separated"
-                        truncate
-                      >
-                        <XBadge
-                          v-for="([label, value], index) in Object.entries(labels)"
-                          :key="`${label}${value}${index}`"
-                        >
-                          {{ label }}:{{ value }}
+                <XLayout variant="y-stack">
+                  <XDl>
+                    <div v-if="data.namespace">
+                      <dt>
+                        {{ t('http.api.property.namespace') }}
+                      </dt>
+                      <dd>
+                        <XBadge>
+                          {{ data.namespace }}
                         </XBadge>
-                      </XLayout>
-                    </dd>
-                  </div>
-                </XDl>
-              </template>
-              <XDl>
+                      </dd>
+                    </div>
+                    <div v-if="can('use zones') && data.zone">
+                      <dt>
+                        {{ t('http.api.property.zone') }}
+                      </dt>
+                      <dd>
+                        <XAction
+                          :href="`kri://${Kri.toString({ shortName: 'z', name: data.zone })}`"
+                        >
+                          <XBadge>
+                            {{ data.zone }}
+                          </XBadge>
+                        </XAction>
+                      </dd>
+                    </div>
+                  </XDl>
+                </XLayout>
                 <template
-                  v-for="labels in [Object.entries(data.labels)]"
+                  v-for="labels in [{
+                    ...data.spec.selector.meshService.matchLabels,
+                    ...data.spec.selector.meshExternalService.matchLabels,
+                    ...data.spec.selector.meshMultiZoneService.matchLabels,
+                  }]"
                   :key="typeof labels"
                 >
-                  <div v-if="labels.length">
+                  <XDl
+                    v-if="Object.keys(labels).length"
+                    variant="x-stack"
+                  >
+                    <div>
+                      <dt>
+                        {{ t('http.api.property.match') }}
+                      </dt>
+                      <dd>
+                        <XLayout
+                          variant="separated"
+                        >
+                          <XBadge
+                            v-for="([key, value], index) in Object.entries(labels)"
+                            :key="`${key}${value}${index}`"
+                            :variant="r('kuma.label').test(key) ? 'reserved-kv' : 'kv'"
+                          >
+                            {{ key }}:<strong>{{ value }}</strong>
+                          </XBadge>
+                        </XLayout>
+                      </dd>
+                    </div>
+                  </XDl>
+                </template>
+                <XDl>
+                  <div v-if="Object.keys(data.labels).length">
                     <dt>{{ t('hostname-generators.routes.item.labels') }}</dt>
                     <dd>
                       <XLayout
                         variant="separated"
-                        truncate
                       >
-                        <template
-                          v-for="kumaRe in [/^(.+\.)?kuma\.io\//]"
-                          :key="typeof kumaRe"
+                        <XAction
+                          v-for="(value, key) in data.labels"
+                          :key="key"
+                          :href="t(`common.label.href.${key.replaceAll('.', '~')}`, {
+                            mesh: '',
+                            zone: data.zone,
+                            namespace: data.namespace,
+                            name: value,
+                          }, { defaultMessage: '' })"
                         >
                           <XBadge
-                            v-for="[key, value] in labels"
-                            :key="key"
-                            :appearance="kumaRe.test(key) ? 'info' : 'decorative'"
+                            :variant="r('kuma.label').test(key) ? 'reserved-kv' : 'kv'"
                           >
-                            {{ key }}:{{ value }}
+                            {{ key }}:<strong>{{ value }}</strong>
                           </XBadge>
-                        </template>
+                        </XAction>
                       </XLayout>
                     </dd>
                   </div>
-                </template>
-              </XDl>
-            </XLayout>
-          </XAboutCard>
+                </XDl>
+              </XLayout>
+            </DataLoader>
+          </XCard>
 
           <XCard>
-            <XLayout>
+            <XLayout variant="y-stack">
               <XLayout
-                type="separated"
-                justify="end"
+                variant="action-group"
               >
                 <div
                   v-for="options in [['universal', 'k8s']]"
@@ -172,26 +186,32 @@
               </XLayout>
 
               <template v-if="route.params.environment === 'universal'">
-                <XCodeBlock
-                  data-testid="codeblock-yaml-universal"
-                  language="yaml"
-                  :code="YAML.stringify(data.$raw)"
-                  is-searchable
-                  :query="route.params.codeSearch"
-                  :is-filter-mode="route.params.codeFilter"
-                  :is-reg-exp-mode="route.params.codeRegExp"
-                  @query-change="route.update({ codeSearch: $event })"
-                  @filter-mode-change="route.update({ codeFilter: $event })"
-                  @reg-exp-mode-change="route.update({ codeRegExp: $event })"
-                />
+                <DataLoader
+                  :data="[sourceData]"
+                  :errors="[error]"
+                  v-slot="{ data: [data] }"
+                >
+                  <XCodeBlock
+                    data-testid="codeblock-yaml-universal"
+                    language="yaml"
+                    :code="YAML.stringify(data.$raw)"
+                    is-searchable
+                    :query="route.params.codeSearch"
+                    :is-filter-mode="route.params.codeFilter"
+                    :is-reg-exp-mode="route.params.codeRegExp"
+                    @query-change="route.update({ codeSearch: $event })"
+                    @filter-mode-change="route.update({ codeFilter: $event })"
+                    @reg-exp-mode-change="route.update({ codeRegExp: $event })"
+                  />
+                </DataLoader>
               </template>
 
               <template v-else>
                 <DataLoader
-                  :src="uri(sources, '/hostname-generators/:name/as/kubernetes', {
-                    name: route.params.name,
+                  :src="uri(sources, '/hostname-generators/:kri/as/kubernetes', {
+                    kri: route.params.kri,
                   })"
-                  v-slot="{ data: k8sConfig }"
+                  v-slot="{ data: [k8sConfig] }"
                 >
                   <XCodeBlock
                     data-testid="codeblock-yaml-k8s"
@@ -211,11 +231,12 @@
           </XCard>
         </XLayout>
       </AppView>
-    </DataLoader>
+    </DataSource>
   </RouteView>
 </template>
 
 <script lang="ts" setup>
 import { sources } from '../sources'
 import { YAML } from '@/app/application'
+import { Kri } from '@/app/kuma'
 </script>

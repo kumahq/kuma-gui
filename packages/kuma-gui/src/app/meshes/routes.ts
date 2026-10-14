@@ -1,4 +1,5 @@
-import { meshIdentityRoutes, meshTrustRoutes } from '../resources/routes'
+import { routes as meshIdentity } from '@/app/mesh-identities/routes'
+import { routes as meshTrust } from '@/app/mesh-trusts/routes'
 import type { RouteRecordRaw } from 'vue-router'
 
 export type SplitRouteRecordRaw = {
@@ -6,19 +7,12 @@ export type SplitRouteRecordRaw = {
   item: () => RouteRecordRaw[]
 }
 
-export const routes = (
-  services: SplitRouteRecordRaw,
-  gateways: SplitRouteRecordRaw,
-  dataplanes: SplitRouteRecordRaw,
-  policies: SplitRouteRecordRaw,
-  workloads: SplitRouteRecordRaw,
-): RouteRecordRaw[] => {
+export const routes = (): RouteRecordRaw[] => {
   return [
     {
       path: 'meshes',
       name: 'mesh-index-view',
       redirect: { name: 'mesh-list-view' },
-      component: () => import('@/app/meshes/views/MeshRootView.vue'),
       children: [
         {
           path: '',
@@ -42,22 +36,12 @@ export const routes = (
                   name: 'mesh-detail-view',
                   component: () => import('@/app/meshes/views/MeshDetailView.vue'),
                   children: [
-                    ...meshIdentityRoutes(),
-                    ...meshTrustRoutes(),
+                    ...meshIdentity().summary('mesh'),
+                    ...meshTrust().summary('mesh'),
                   ],
                 },
-                ...services.items(),
-                ...workloads.items(),
-                ...gateways.items(),
-                ...dataplanes.items(),
-                ...policies.items(),
               ],
             },
-            ...services.item(),
-            ...gateways.item(),
-            ...dataplanes.item(),
-            ...policies.item(),
-            ...workloads.item(),
           ],
         },
       ],
