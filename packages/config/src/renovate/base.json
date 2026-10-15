@@ -124,7 +124,7 @@
         "@kong-ui-public/app-layout"
       ],
       "prBodyNotes": [
-        "> [!IMPORTANT]\n> This package/PR should be pinned to the same version as other upstream repositories"
+        "> [!IMPORTANT]\n> This package/PR should be pinned to the same version as other downstream repositories"
       ]
     }
   ]
