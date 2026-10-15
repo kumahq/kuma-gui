@@ -157,7 +157,7 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
   }
 
   state() {
-    return this.faker.helpers.arrayElement(['Ready', 'NotReady', 'Ignored'])
+    return this.faker.helpers.arrayElement(['Ready', 'NotReady'] as const)
   }
 
   nanodate(options: { refDate?: string | Date } = {}) {
