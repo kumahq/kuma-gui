@@ -112,6 +112,20 @@
         "vue",
         "@vue/shared"
       ]
+    },
+    {
+      "description": [
+        " Warn that these packages should be pinned in line with downstream repositories"
+      ],
+      "matchPackageNames": [
+        "vue",
+        "@vue/shared",
+        "vite",
+        "@kong-ui-public/app-layout"
+      ],
+      "prBodyNotes": [
+        "> [!IMPORTANT]\n> This package/PR should be pinned to the same version as other downstream repositories"
+      ]
     }
   ]
 }
