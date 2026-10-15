@@ -115,7 +115,7 @@
     },
     {
       "description": [
-        " Warn that these packages should be pinned in line with upstream repositories"
+        " Warn that these packages should be pinned in line with downstream repositories"
       ],
       "matchPackageNames": [
         "vue",
