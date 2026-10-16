@@ -5,9 +5,6 @@
     <slot name="default" />
   </div>
 </template>
-<script lang="ts" setup>
-import '@kong-ui-public/app-layout/dist/style.css'
-</script>
 <style lang="scss">
   @keyframes icon-size-30 {
     100% {
