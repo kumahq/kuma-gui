@@ -41,3 +41,4 @@ export { default as XTeleportTemplate } from './x-teleport/XTeleportTemplate.vue
 export { default as XTooltip } from './x-tooltip/XTooltip.vue'
 export { default as XWindow } from './x-window/XWindow.vue'
 export { default as XErrorState } from './x-error-state/XErrorState.vue'
+export { default as XMarkdown } from './x-markdown/XMarkdown.vue'
