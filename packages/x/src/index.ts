@@ -54,6 +54,7 @@ import {
   XTooltip,
   XWindow,
   XErrorState,
+  XMarkdown,
 } from './components'
 import AppAboutSection from './components/x-card/AppAboutSection.vue'
 import { vStyle, vIcon } from './directives/'
@@ -81,6 +82,7 @@ const components = [
   ['XBreadcrumbs', XBreadcrumbs],
   ['XCopyButton', XCopyButton],
   ['XCodeBlock', XCodeBlock],
+  ['XMarkdown', XMarkdown],
   // temporarily global, these will be moved to become internal
   ['XReadOnlyCodeBlock', KCodeBlock],
   ['XReadWriteCodeBlock', KCodeBlock],
@@ -141,6 +143,7 @@ declare module 'vue' {
     XBadge: typeof XBadge
     XCopyButton: typeof XCopyButton
     XCodeBlock: typeof XCodeBlock
+    XMarkdown: typeof XMarkdown
     // temporarily global, these will be moved to become internal
     XReadOnlyCodeBlock: typeof KCodeBlock
     XReadWriteCodeBlock: typeof KCodeBlock
