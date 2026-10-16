@@ -262,18 +262,26 @@
 </template>
 
 <script lang="ts" setup>
+import { watch } from 'vue'
+
 import { useDataEmptyState } from '@/app/application'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import { Kri } from '@/app/kuma'
 import { usePolicyActionGroup } from '../'
 import { sources } from '../sources'
 import type { ResourceTypeDescriptor } from '@/app/resources/data'
+import { useRoute } from '@/app/vue'
 const props = defineProps<{
   policyTypes?: ResourceTypeDescriptor[]
 }>()
 const PolicyActionGroup = usePolicyActionGroup()
 
 const DataEmptyState = useDataEmptyState()
+
+const r = useRoute()
+watch(() => r.params.policyPath, () => {
+  window.scrollTo({ top: 0 })
+})
 </script>
 <style lang="scss" scoped>
 header {
