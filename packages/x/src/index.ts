@@ -7,6 +7,7 @@ import { createHighlighterCore } from 'shiki/core'
 import { createJavaScriptRegexEngine } from 'shiki/engine/javascript'
 import { defineCustomElement, inject } from 'vue'
 
+import type { Component, App, Plugin, InjectionKey } from 'vue'
 import {
   XAction,
   XActionGroup,
@@ -54,9 +55,9 @@ import {
   XWindow,
   XErrorState,
 } from './components'
-import { vStyle, vIcon }  from './directives/'
+import AppAboutSection from './components/x-card/AppAboutSection.vue'
+import { vStyle, vIcon } from './directives/'
 import type { CodeToHastOptions } from 'shiki/core'
-import type { App, Plugin, InjectionKey } from 'vue'
 
 export * from './components'
 
@@ -201,7 +202,7 @@ const createInjections = <T extends Uri[]>(...tokens: T): InjectionHooks<T> => {
       type Service = TypeOf<typeof token>
       type Getter = () => Service
       const service = inject(token as unknown as InjectionKey<Getter>) as () => TypeOf<typeof token>
-      if(typeof service === 'undefined') {
+      if (typeof service === 'undefined') {
         throw new Error('Unable to find injection ${token}')
       }
       return service()
@@ -259,7 +260,8 @@ const deps = {
   href: (_to: unknown) => {
     return ''
   },
-  push: (_href: string) => {},
+  push: (_href: string) => { },
+  AppAboutSection: AppAboutSection,
 }
 const tokens = {
   i18n: uri<typeof deps.i18n>('x.i18n'),
@@ -268,6 +270,7 @@ const tokens = {
   href: uri<typeof deps.href>('x.action.href'),
   push: uri<typeof deps.href>('x.router.push'),
   routerElement: uri<HTMLElement>('x.router.routerElement'),
+  AppAboutSection: uri<Component>('x.components.AppAboutSection'),
 }
 
 const plugin: Plugin = {
@@ -301,6 +304,7 @@ const plugin: Plugin = {
       .service(tokens.push, () => services.push)
       .service(tokens.i18n, () => services.i18n)
       .service(tokens.routerElement, services.routerElement)
+      .service(tokens.AppAboutSection, () => services.AppAboutSection)
 
     components.forEach(([name, item]) => {
       app.component(name, item)
@@ -320,6 +324,7 @@ export const [
   useHref,
   usePush,
   useRouterElement,
+  useAppAboutSection,
 ] = createInjections(
   tokens.i18n,
   tokens.syntaxHighlighter,
@@ -327,5 +332,6 @@ export const [
   tokens.href,
   tokens.push,
   tokens.routerElement,
+  tokens.AppAboutSection,
 )
 export default plugin

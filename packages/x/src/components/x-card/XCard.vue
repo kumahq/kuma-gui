@@ -42,8 +42,9 @@
 
 <script lang="ts" setup>
 import { KCard } from '@kong/kongponents'
-import { AppAboutSection } from '@kong-ui-public/app-layout'
 import { inject, provide, ref, useAttrs } from 'vue'
+
+import { useAppAboutSection } from '../../'
 
 const attrs = useAttrs()
 const slots = defineSlots()
@@ -51,6 +52,8 @@ const xAction = inject<{} | undefined>('x-action', undefined)
 
 const created = ref('')
 const modified = ref('')
+
+const AppAboutSection = useAppAboutSection()
 
 provide('x-card', {
   created,
