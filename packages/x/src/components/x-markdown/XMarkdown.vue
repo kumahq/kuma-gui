@@ -1,4 +1,5 @@
 <template>
+  <!-- It's safe to use v-html here as we only allow a set of safe elements, check setup script below -->
   <!-- eslint-disable vue/no-v-html vue/no-v-text-v-html-on-component -->
   <XLayout
     class="x-markdown"
