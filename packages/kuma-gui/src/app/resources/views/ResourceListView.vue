@@ -212,17 +212,25 @@
 </template>
 
 <script lang="ts" setup>
+import { watch } from 'vue'
+
 import type { ResourceTypeDescriptorCollection } from '../data'
 import { sources } from '../sources'
 import { useDataEmptyState } from '@/app/application'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import { Kri } from '@/app/kuma'
+import { useRoute } from '@/app/vue'
 const DataEmptyState = useDataEmptyState()
 const props = defineProps<{
   routeName: string
   routePrefix: string
   resourceTypes?: ResourceTypeDescriptorCollection
 }>()
+
+const r = useRoute()
+watch(() => r.params.shortName, () => {
+  window.scrollTo({ top: 0 })
+})
 </script>
 <style lang="scss" scoped>
 header {
