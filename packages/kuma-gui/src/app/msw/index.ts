@@ -37,9 +37,14 @@ export const services = (_: Record<string, Token>): ServiceDefinition[] => {
       service: (handlers: Handler[] = [], passthroughs: Passthrough[]) => {
         return setupWorker(...handlers).start({
           quiet: true,
-          onUnhandledRequest(req: Request, print) {
+          onUnhandledFrame({ frame, defaults }) {
+            if (frame.protocol !== 'http') {
+              defaults.warn()
+              return
+            }
+            const req = (frame.data as { request: Request }).request
             if (!passthroughs.some((passthrough) => passthrough(req))) {
-              print.warning()
+              defaults.warn()
             }
           },
         })
