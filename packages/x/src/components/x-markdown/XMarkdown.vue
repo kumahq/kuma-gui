@@ -1,9 +1,8 @@
 <template>
   <!-- It's safe to use v-html here as we only allow a set of safe elements, check setup script below -->
-  <!-- eslint-disable vue/no-v-html vue/no-v-text-v-html-on-component -->
-  <XLayout
+  <!-- eslint-disable vue/no-v-html -->
+  <div
     class="x-markdown"
-    variant="y-stack"
     v-html="md.render(props.markdown)"
   />
   <!-- eslint-enable vue/no-v-html -->
@@ -38,3 +37,8 @@ const enabledTransforms = [
 const md = new MarkdownIt('zero').enable(enabledTransforms)
 markdownFence(md)
 </script>
+<style lang="scss" scoped>
+.x-markdown > * + * {
+  margin-block-start: var(--x-space-70);
+}
+</style>
