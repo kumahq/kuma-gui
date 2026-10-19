@@ -45,9 +45,6 @@
       "patternProperties": {
         "@kumahq/ignored-example": {
           "type": "string"
-        },
-        "@kong-ui-public/app-layout": {
-          "$ref": "#/definitions/exactOnlyVersion"
         }
       },
       "additionalProperties": {

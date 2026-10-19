@@ -81,11 +81,9 @@
     {
       "description": [
         " Disable:",
-        " - `@kong-ui-public/app-layout`: downstream conflicts due to pinned versions",
         " - `escape-string-regexp`: need to stick with current version because of esm vs cjs"
       ],
       "matchPackageNames": [
-        "@kong-ui-public/app-layout",
         "escape-string-regexp"
       ],
       "enabled": false
@@ -119,12 +117,21 @@
       ],
       "matchPackageNames": [
         "vue",
-        "@vue/shared",
-        "vite",
-        "@kong-ui-public/app-layout"
+        "@vue/shared"
       ],
       "prBodyNotes": [
         "> [!IMPORTANT]\n> This package/PR should be pinned to the same version as other downstream repositories"
+      ]
+    },
+    {
+      "description": [
+        " Warn that these packages should use the same major as with downstream repositories"
+      ],
+      "matchPackageNames": [
+        "vite"
+      ],
+      "prBodyNotes": [
+        "> [!IMPORTANT]\n> This package/PR should use the same __major__ version as other downstream repositories"
       ]
     }
   ]
