@@ -597,14 +597,7 @@
                                       data-testid="dataplane-inbound"
                                       :protocol="item.protocol"
                                       :port-name="inbound?.portName"
-                                      :traffic="typeof trafficError === 'undefined' ?
-                                        traffic?.inbounds[item.stat_prefix] :
-                                        {
-                                          name: '',
-                                          protocol: item.protocol,
-                                          port: `${item.port}`,
-                                        }
-                                      "
+                                      :traffic="traffic?.inbounds[item.stat_prefix]"
                                       data-actionable
                                     >
                                       <template #state>
@@ -717,7 +710,7 @@
                       <!-- we don't want to show an error here -->
                       <!-- instead we show a No Data EmptyState -->
                       <template
-                        v-if="typeof dataplaneLayoutError === 'undefined' && typeof trafficError === 'undefined' && dataplaneLayout.outbounds.length"
+                        v-if="typeof dataplaneLayoutError === 'undefined' && dataplaneLayout.outbounds.length"
                       >
                         <ConnectionGroup
                           type="passthrough"
@@ -819,6 +812,11 @@
                                   >
                                     {{ Kri.fromString(outbound.proxyResourceName).name }}
                                   </XAction>
+
+                                  <template #empty>
+                                    No traffic data available for this outbound
+                                  </template>
+
                                   <template #body>
                                     <XDl
                                       v-for="kri in [Kri.fromString(outbound.proxyResourceName)]"
