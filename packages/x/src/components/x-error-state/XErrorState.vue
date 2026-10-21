@@ -97,8 +97,8 @@ const props = withDefaults(defineProps<{
 }>(), {
   appearance: 'warning',
 })
-const prompt = inject('x-prompt', undefined)
-const modal = inject('x-modal', undefined)
+const prompt = inject<Record<string, never> | undefined>('x-prompt', undefined)
+const modal = inject<Record<string, never> | undefined>('x-modal', undefined)
 </script>
 
 <style lang="scss" scoped>
