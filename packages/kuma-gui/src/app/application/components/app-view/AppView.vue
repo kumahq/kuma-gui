@@ -219,7 +219,7 @@ const appView: AppView = {
     }
   },
 }
-const hasParent: AppView | undefined = inject('app-view-parent', undefined)
+const hasParent = inject<AppView | undefined>('app-view-parent', undefined)
 if (!hasParent) {
   provide('app-view-parent', appView)
 }
