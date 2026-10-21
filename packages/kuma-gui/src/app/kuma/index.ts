@@ -12,6 +12,7 @@ import KumaStatusBadge from '@/app/kuma/components/kuma-status-badge/KumaStatusB
 import KumaTargetRef from '@/app/kuma/components/kuma-target-ref/KumaTargetRef.vue'
 import { ApiError } from '@/app/kuma/services/kuma-api/ApiError'
 import type { ServiceDefinition } from '@kumahq/container'
+import type { Component } from 'vue'
 import type { Router, RouteLocationAsRelative } from 'vue-router'
 
 export * from './utils'
@@ -81,6 +82,7 @@ export const TOKENS = {
   href: token<ReturnType<typeof href>>('kuma.router.href'),
   routerPush: token<ReturnType<typeof push>>('kuma.router.push'),
   routerElement: token<() => HTMLElement | null>('kuma.router.element'),
+  appAboutSection: token<Component>('kuma.components.app-about-section'),
 }
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   return [
@@ -150,8 +152,11 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
     [app.kriHandlers, {
       service: () => [],
     }],
+    [app.appAboutSection, {
+      service: () => { },
+    }],
     [token('kuma.plugins'), {
-      service: (i18n, syntaxHighlighter, protocolHandler, href, push, routerElement) => {
+      service: (i18n, syntaxHighlighter, protocolHandler, href, push, routerElement, AppAboutSection) => {
         return [
           [Kongponents],
           [X, {
@@ -161,6 +166,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
             href,
             push,
             routerElement,
+            ...(typeof AppAboutSection !== 'undefined' ? { AppAboutSection } : {}),
           }],
         ]
       },
@@ -171,6 +177,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
         app.href,
         app.routerPush,
         app.routerElement,
+        app.appAboutSection,
       ],
       labels: [
         app.plugins,
