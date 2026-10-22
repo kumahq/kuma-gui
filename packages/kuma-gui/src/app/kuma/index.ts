@@ -117,6 +117,11 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
             // KRIs
             case href.startsWith(kriProto): {
               const kri = href.substring(kriProto.length)
+
+              if(!Kri.isKriString(kri)) {
+                return ''
+              }
+
               const item = Kri.fromString(kri)
               const args = {
                 ...item,
