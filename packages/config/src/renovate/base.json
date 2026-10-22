@@ -64,7 +64,9 @@
     },
     {
       "description": [
-        "Reduce `minimumReleaseAge` for internal toolings"
+        "Reduce `minimumReleaseAge` for internal toolings",
+        " - `@kong**/**`: Kong npm packages",
+        " - `kumahq/**`: kumahq GitHub Actions and reusable workflows"
       ],
       "matchPackageNames": [
         "@kong**/**",
@@ -104,6 +106,18 @@
       "matchPackageNames": [
         "vue",
         "@vue/shared"
+      ]
+    },
+    {
+      "description": [
+        " Group kongponents and its related design system packages"
+      ],
+      "groupName": "kongponents",
+      "matchPackageNames": [
+        "@kong/kongponents",
+        "@kong/icons",
+        "@kong/design-tokens",
+        "@kong/stylelint-plugin-design-tokens"
       ]
     },
     {
