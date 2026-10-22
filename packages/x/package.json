@@ -32,7 +32,7 @@
     "markdown-it": "^15.0.2"
   },
   "devDependencies": {
-    "@kong/design-tokens": "^3.4.3",
+    "@kong/design-tokens": "^3.4.4",
     "@kumahq/config": "*"
   },
   "peerDependencies": {
