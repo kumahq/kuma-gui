@@ -1,4 +1,3 @@
-import Kongponents from '@kong/kongponents'
 import { token } from '@kumahq/container'
 import X, { syntaxHighlighter } from '@kumahq/x'
 
@@ -163,7 +162,6 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
     [token('kuma.plugins'), {
       service: (i18n, syntaxHighlighter, protocolHandler, href, push, routerElement, AppAboutSection) => {
         return [
-          [Kongponents],
           [X, {
             i18n,
             syntaxHighlighter,

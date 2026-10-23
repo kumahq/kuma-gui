@@ -14,8 +14,14 @@
     },
     "./vite": {
       "import": "./vite/index.ts"
+    },
+    "./style": {
+      "import": "./src/index.scss"
     }
   },
+  "files": [
+    "src/index.scss"
+  ],
   "scripts": {
     "help": "make help"
   },

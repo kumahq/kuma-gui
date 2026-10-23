@@ -89,6 +89,7 @@
 </template>
 
 <script lang="ts" setup generic="T extends Error & Partial<{ type: string, status: number, title: string, detail: string, instance: string, invalid_parameters: { field: string, reason: string, source: 'body' | 'header', rule?: string }[] }>">
+import { KEmptyState } from '@kong/kongponents'
 import { inject } from 'vue'
 
 const props = withDefaults(defineProps<{

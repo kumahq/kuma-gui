@@ -237,21 +237,20 @@ export function createEslintConfig(
             'search',
             // vue-router
             'RouterView',
-            // @kong/kongponents
-            'K[A-Z].*',
-            //
+            // @kumhq/x
             'X[A-Z].*',
+            // @kumahq/kuma-gui
             'Kuma[A-Z].*',
-            // @kong-ui-public/i18n
-            'I18nT',
-            // Application
-            'AppView',
+            // @kumahq/data
             'DataLoader',
             'DataSource',
             'DataSink',
-            'DataCollection',
+            // @kumahq/routing
             'RouteView',
             'RouteTitle',
+            // Application
+            'AppView',
+            'DataCollection',
             ...componentIgnorePatterns,
           ],
         }],
