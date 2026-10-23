@@ -13,7 +13,7 @@
     "@gera2ld/tarjs": "^0.3.1",
     "@kong-ui-public/i18n": "^2.5.1",
     "@kong/icons": "^1.64.0",
-    "@kong/kongponents": "^9.66.4",
+    "@kong/kongponents": "^9.66.5",
     "@kumahq/container": "*",
     "@kumahq/data": "*",
     "@kumahq/routing": "*",
