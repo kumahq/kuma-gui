@@ -39,7 +39,7 @@
     "@types/node": "^25.9.9"
   },
   "dependencies": {
-    "@apidevtools/json-schema-ref-parser": "^16.0.3",
+    "@apidevtools/json-schema-ref-parser": "^16.0.5",
     "@cucumber/gherkin-utils": "^12.0.2",
     "@eslint/js": "^10.0.1",
     "@kong/stylelint-plugin-design-tokens": "^2.0.3",
