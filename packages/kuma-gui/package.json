@@ -37,7 +37,7 @@
     "@kumahq/gherkin-web": "*",
     "@kumahq/kuma-http-api": "*",
     "@playwright/test": "^1.64.0",
-    "@vitejs/plugin-vue": "^6.0.9",
+    "@vitejs/plugin-vue": "^6.0.10",
     "@vue/test-utils": "^2.5.1",
     "jsdom": "^30.1.2",
     "msw": "^3.0.3",
