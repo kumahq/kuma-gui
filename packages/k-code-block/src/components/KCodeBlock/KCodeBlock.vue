@@ -185,8 +185,8 @@
       >
         <Virtualizer
           v-if="showLineNumbers && !singleLine"
-          v-slot="{ item: line }"
           v-bind="getVirtualizerProps(true)"
+          v-slot="{ item: line }"
         >
           <a
             :id="getLineId(line)"
@@ -206,15 +206,15 @@
         class="highlighted-code-block"
         :class="{
           'show-line-numbers': showLineNumbers,
-          'single-line': singleLine
+          'single-line': singleLine,
         }"
         data-testid="highlighted-code-block"
       >
         <Virtualizer
           v-if="showLineNumbers && !singleLine"
           ref="codeBlockLineNumbers"
-          v-slot="{ item: line }"
           v-bind="getVirtualizerProps(false)"
+          v-slot="{ item: line }"
         >
           <a
             :id="getLineId(line)"
@@ -231,12 +231,14 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, normalizeClass, onBeforeUnmount, onMounted, ref, useTemplateRef, watch } from 'vue'
-import { Virtualizer } from 'virtua/vue'
+import { KUI_COLOR_TEXT_INVERSE, KUI_COLOR_TEXT_NEUTRAL_STRONG, KUI_ICON_SIZE_30, KUI_LINE_HEIGHT_30 } from '@kong/design-tokens'
+import { CopyIcon, SearchIcon, ProgressIcon, CloseIcon, RegexIcon, FilterIcon, ArrowUpIcon, ArrowDownIcon } from '@kong/icons'
+import { KCodeBlockIconButton, KInput } from '@kong/kongponents'
 import { debounce } from 'lodash-es'
-import { copyTextToClipboard } from '../../utilities/copyTextToClipboard'
-import type { Command } from '../../utilities/ShortcutManager'
-import { ShortcutManager } from '../../utilities/ShortcutManager'
+import { Virtualizer } from 'virtua/vue'
+import { computed, nextTick, normalizeClass, onBeforeUnmount, onMounted, ref, useTemplateRef, watch } from 'vue'
+
+import { IS_MAYBE_MAC } from '../../utilities/browser'
 import {
   buildLineOffsets,
   escapeHTMLIfNeeded,
@@ -245,12 +247,13 @@ import {
   LINE_NUMBER_EXPRESSION_REGEX,
   normalizeHighlightedLines,
 } from '../../utilities/codeBlockHelpers'
-import { KCodeBlockIconButton, KInput } from '@kong/kongponents'
-import type { CodeBlockProps, CodeBlockEmits, CodeBlockSlots, CodeBlockEventData, CommandKeywords } from '@kong/kongponents'
+import { copyTextToClipboard } from '../../utilities/copyTextToClipboard'
 import { getSizeFromString } from '../../utilities/getSizeFromString'
-import { CopyIcon, SearchIcon, ProgressIcon, CloseIcon, RegexIcon, FilterIcon, ArrowUpIcon, ArrowDownIcon } from '@kong/icons'
-import { KUI_COLOR_TEXT_INVERSE, KUI_COLOR_TEXT_NEUTRAL_STRONG, KUI_ICON_SIZE_30, KUI_LINE_HEIGHT_30 } from '@kong/design-tokens'
-import { IS_MAYBE_MAC } from '../../utilities/browser'
+import type { Command } from '../../utilities/ShortcutManager'
+import { ShortcutManager } from '../../utilities/ShortcutManager'
+import type { CodeBlockProps, CodeBlockEmits, CodeBlockSlots, CodeBlockEventData, CommandKeywords } from '@kong/kongponents'
+
+
 
 const ALT_SHORTCUT_LABEL = IS_MAYBE_MAC ? 'Option' : 'Alt'
 
@@ -363,7 +366,7 @@ const finalCode = computed(() =>
 
 const maxHeightValue = computed(() => getSizeFromString(maxHeight))
 
-watch(() => code, async function() {
+watch(() => code, async function () {
   // Waits one Vue tick in which the code block is re-rendered. Only then does it make sense to emit the corresponding event. Otherwise, consuming components applying syntax highlighting would have to do this because if syntax highlighting is applied before re-rendering is done, re-rendering will effectively undo the syntax highlighting.
   await nextTick()
 
@@ -372,16 +375,16 @@ watch(() => code, async function() {
   updateMatchingLineNumbers()
 })
 
-watch(() => isRegExpMode.value, function() {
+watch(() => isRegExpMode.value, function () {
   // Updates the matching line numbers because the matches can be different for the same query between normal and regexp mode.
   updateMatchingLineNumbers()
 })
 
-watch(() => highlightedLineNumbers, function() {
+watch(() => highlightedLineNumbers, function () {
   setDefaultMatchingLineNumbers()
 }, { immediate: true, deep: true })
 
-watch(() => isShowingFilteredCode.value, function(value) {
+watch(() => isShowingFilteredCode.value, function (value) {
   if (typeof document === 'undefined') {
     return
   }
@@ -463,7 +466,7 @@ const commands: Record<CommandKeywords, Command> = {
 
 const shortcutManager = new ShortcutManager(keyMap, commands)
 
-onMounted(function() {
+onMounted(function () {
   shortcutManager.registerListener()
 
   emitCodeBlockRenderEvent()
@@ -475,7 +478,7 @@ onMounted(function() {
   }
 })
 
-onBeforeUnmount(function() {
+onBeforeUnmount(function () {
   shortcutManager.unRegisterListener()
 })
 
@@ -639,7 +642,7 @@ async function copyCode(event: Event): Promise<void> {
   if (hasCopiedCodeSuccessfully) {
     button?.setAttribute('data-tooltip-text', 'Copied code!')
 
-    window?.setTimeout(function() {
+    window?.setTimeout(function () {
       button?.removeAttribute('data-tooltip-text')
     }, 1500)
   }
