@@ -1,0 +1,3 @@
+{
+  "*.{ts,vue}": "make lint"
+}
