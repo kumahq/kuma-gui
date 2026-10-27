@@ -5,7 +5,7 @@ BDDGEN ?= $(shell $(MAKE) resolve/bin PACKAGE=playwright-bdd BIN=bddgen)
 
 .PHONY: install
 install:
-	@$(PLAYWRIGHT) install chromium --with-deps
+	@PLAYWRIGHT_HOST_PLATFORM_OVERRIDE=ubuntu24.04-x64 $(PLAYWRIGHT) install chromium --with-deps
 
 .PHONY: build
 build:
