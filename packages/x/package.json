@@ -26,7 +26,7 @@
     "help": "make help"
   },
   "dependencies": {
-    "@kong/kongponents": "^9.66.5",
+    "@kong/kongponents": "^9.66.7",
     "@kong/icons": "^1.64.0",
     "shiki": "^4.5.0",
     "@vueuse/core": "^15.0.0",
