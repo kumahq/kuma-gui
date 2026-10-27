@@ -73,7 +73,7 @@
     "stylelint-config-recommended-vue": "^2.0.0",
     "typescript": "^5.9.3",
     "vite": "^7.3.7",
-    "vitest": "^5.0.3",
+    "vitest": "^5.0.5",
     "vue-tsc": "^3.3.11"
   }
 }
