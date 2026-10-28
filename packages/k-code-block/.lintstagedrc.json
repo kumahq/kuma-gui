@@ -1,0 +1,4 @@
+{
+  "*.{cjs,js,ts,vue}": "make -j2 lint/script",
+  "*.{css,scss,vue}": "make lint/css"
+}

@@ -2,8 +2,8 @@ import {
   KPop,
   KRadio,
   KLabel,
-  KCodeBlock,
 } from '@kong/kongponents'
+import { KCodeBlock } from '@kumahq/k-code-block'
 import { createHighlighterCore } from 'shiki/core'
 import { createJavaScriptRegexEngine } from 'shiki/engine/javascript'
 

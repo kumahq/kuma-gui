@@ -1,0 +1,11 @@
+@forward "@kong/design-tokens/tokens/scss/variables";
+@use "@kong/design-tokens/tokens/scss/variables" as *;
+
+@mixin codeTypography {
+  font-family: var(--kui-font-family-code, $kui-font-family-code);
+  font-size: var(--kui-font-size-20, $kui-font-size-20);
+  font-weight: var(--kui-font-weight-regular, $kui-font-weight-regular);
+  line-height: var(--kui-line-height-30, $kui-line-height-30);
+}
+
+$kongponentsTransitionDurTimingFunc: var(--kui-animation-duration-20, $kui-animation-duration-20) ease-in-out;
