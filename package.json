@@ -8,10 +8,12 @@
   ],
   "overrides": {
     "js-yaml": "^4.1.1",
-    "glob": "^11.1.0"
+    "glob": "^11.1.0",
+    "vitest": "^4.1.12"
   },
   "devDependencies": {
-    "@kumahq/config": "*"
+    "@kumahq/config": "*",
+    "vitest": "^4.1.12"
   },
   "engines": {
     "node": ">=22.19.0",
