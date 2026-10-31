@@ -26,7 +26,7 @@
     "help": "make help"
   },
   "dependencies": {
-    "@kong/kongponents": "^9.66.7",
+    "@kong/kongponents": "^9.66.12",
     "@kong/icons": "^1.64.0",
     "shiki": "^4.5.0",
     "@vueuse/core": "^15.0.0",
@@ -38,7 +38,7 @@
     "markdown-it": "^15.0.2"
   },
   "devDependencies": {
-    "@kong/design-tokens": "^3.4.4",
+    "@kong/design-tokens": "^3.5.1",
     "@kumahq/config": "*"
   },
   "peerDependencies": {
