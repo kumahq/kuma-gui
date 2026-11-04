@@ -68,10 +68,11 @@ const href = (router: Router) => (to: RouteLocationAsRelative) => {
   }
   return ''
 }
-const push = (router: Router) => (href: string) => {
+const push = (router: Router) => (href: string, options = { replace: false }) => {
   const base = router.options.history.base
   const h = href.startsWith(base) ? href.substring(base.length) : href
-  return router.push(h.length > 0 ? h : '/')
+  const path = h.length > 0 ? h : '/'
+  return options.replace ? router.replace(path) : router.push(path)
 }
 export const TOKENS = {
   htmlVars: token('kuma.html.vars'),

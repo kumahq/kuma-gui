@@ -14,10 +14,10 @@
         v-if="href.length > 0"
       >
         <div
-          @vue:mounted="() => push(href)"
+          @vue:mounted="() => push(href, { replace: true })"
         />
       </template>
-      <component :is="KumaNotFoundView" />
+      <KumaNotFoundView />
     </template>
   </RouteView>
 </template>
