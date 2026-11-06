@@ -263,7 +263,7 @@ const deps = {
   href: (_to: unknown) => {
     return ''
   },
-  push: (_href: string) => { },
+  push: (_href: string, _options?: { replace: boolean }) => { },
   AppAboutSection: AppAboutSection,
 }
 const tokens = {
@@ -271,7 +271,7 @@ const tokens = {
   syntaxHighlighter: uri<typeof deps.syntaxHighlighter>('x.code-block.syntaxhighlighter'),
   protocolHandler: uri<typeof deps.protocolHandler>('x.action.protocolhandler'),
   href: uri<typeof deps.href>('x.action.href'),
-  push: uri<typeof deps.href>('x.router.push'),
+  push: uri<typeof deps.push>('x.router.push'),
   routerElement: uri<HTMLElement>('x.router.routerElement'),
   AppAboutSection: uri<Component>('x.components.AppAboutSection'),
 }
