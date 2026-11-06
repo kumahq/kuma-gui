@@ -1,6 +1,7 @@
 import { token } from '@kumahq/container'
 import X, { syntaxHighlighter } from '@kumahq/x'
 
+import { routes } from './routes'
 import { vars } from './env'
 import locales from './locales/en-us/index.yaml'
 import { ValidationError } from '@/app/application'
@@ -67,10 +68,11 @@ const href = (router: Router) => (to: RouteLocationAsRelative) => {
   }
   return ''
 }
-const push = (router: Router) => (href: string) => {
+const push = (router: Router) => (href: string, options = { replace: false }) => {
   const base = router.options.history.base
   const h = href.startsWith(base) ? href.substring(base.length) : href
-  return router.push(h.length > 0 ? h : '/')
+  const path = h.length > 0 ? h : '/'
+  return options.replace ? router.replace(path) : router.push(path)
 }
 export const TOKENS = {
   htmlVars: token('kuma.html.vars'),
@@ -85,6 +87,12 @@ export const TOKENS = {
 }
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   return [
+    [token('kuma.routes'), {
+      service: routes,
+      labels: [
+        app.routes,
+      ],
+    }],
     [app.protocolHandler, {
       service: (router: Router, handlers: Handler[]) => {
         // add a default catchall to the end of the handlers
@@ -116,15 +124,13 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
             // KRIs
             case href.startsWith(kriProto): {
               const kri = href.substring(kriProto.length)
-
-              if(!Kri.isKriString(kri)) {
-                return ''
-              }
-
               const item = Kri.fromString(kri)
               const args = {
                 ...item,
                 kri,
+              }
+              if(args.shortName.length === 0) {
+                return ''
               }
 
               const to = handlers.reduce((prev, handler) => {
