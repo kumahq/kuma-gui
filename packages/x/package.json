@@ -35,7 +35,7 @@
     "vue-router": "^5.3.1"
   },
   "optionalDependencies": {
-    "markdown-it": "^15.0.2"
+    "markdown-it": "^15.0.3"
   },
   "devDependencies": {
     "@kong/design-tokens": "^3.4.4",
