@@ -145,7 +145,7 @@ class UniqueId {
   }
 }
 
-let resolve: (resolved: object) => void
+let resolve: (resolved: object) => void = () => {}
 const meResponse = new Promise((r) => {
   resolve = r
 })
@@ -300,7 +300,7 @@ const routerGo = (to: RouteLocationAsRelativeGeneric & { delta: number }) => {
   routeReplace(args)
 }
 
-const hasRoot: RouteViewService | undefined = inject(ROUTE_VIEW_ROOT, undefined)
+const hasRoot = inject<RouteViewService | undefined>(ROUTE_VIEW_ROOT, undefined)
 if (!hasRoot) {
   // use the default title if we are the topmost RouteView
   setTitle(t('components.route-view.title', { name: t('common.product.name') }))
