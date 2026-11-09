@@ -49,9 +49,6 @@ Feature: mesh / dataplanes / index
                 disconnectTime: 2021-02-17T07:33:36.412683Z
               - connectTime: 2021-02-17T07:33:36.412683Z
                 disconnectTime: !!js/undefined
-        - name: fake-frontend
-          labels:
-            kuma.io/display-name: fake-frontend
       """
 
   Scenario: The Proxy listing table has the correct columns
@@ -168,12 +165,17 @@ Feature: mesh / dataplanes / index
 
   Rule: The listing can be filtered by type
 
-    Scenario: Filtering by "standard"
+    Background:
       Given the environment
         """
         KUMA_DATAPLANE_COUNT: 1
         """
-      And the URL "/meshes/default/dataplanes/_overview" responds with
+      When I visit the "/meshes/default/data-planes" URL
+      And I click the "$select-type" element
+      Then the "$select-option" element exists 6 times
+
+    Scenario: Filtering by "standard"
+      Given the URL "/meshes/default/dataplanes/_overview" responds with
         """
         body:
           items:
@@ -184,9 +186,6 @@ Feature: mesh / dataplanes / index
                 networking:
                   gateway: !!js/undefined
         """
-      When I visit the "/meshes/default/data-planes" URL
-      And I click the "$select-type" element
-      Then the "$select-option" element exists 6 times
       When I click the "$select-standard" element
       Then the URL "/meshes/default/dataplanes/_overview" was requested with
         """
@@ -200,11 +199,7 @@ Feature: mesh / dataplanes / index
         | Proxy               |
 
     Scenario: Filtering by "zone-ingress"
-      Given the environment
-        """
-        KUMA_DATAPLANE_COUNT: 1
-        """
-      And the URL "/meshes/default/dataplanes/_overview" responds with
+      Given the URL "/meshes/default/dataplanes/_overview" responds with
         """
         body:
           items:
@@ -216,9 +211,6 @@ Feature: mesh / dataplanes / index
                 networking:
                   gateway: !!js/undefined
         """
-      When I visit the "/meshes/default/data-planes" URL
-      And I click the "$select-type" element
-      Then the "$select-option" element exists 6 times
       When I click the "$select-zone-ingress" element
       Then the URL "/meshes/default/dataplanes/_overview" was requested with
         """
@@ -232,11 +224,7 @@ Feature: mesh / dataplanes / index
         | ZoneIngress         |
 
     Scenario: Filtering by "zone-egress"
-      Given the environment
-        """
-        KUMA_DATAPLANE_COUNT: 1
-        """
-      And the URL "/meshes/default/dataplanes/_overview" responds with
+      Given the URL "/meshes/default/dataplanes/_overview" responds with
         """
         body:
           items:
@@ -248,9 +236,6 @@ Feature: mesh / dataplanes / index
                 networking:
                   gateway: !!js/undefined
         """
-      When I visit the "/meshes/default/data-planes" URL
-      And I click the "$select-type" element
-      Then the "$select-option" element exists 6 times
       When I click the "$select-zone-egress" element
       Then the URL "/meshes/default/dataplanes/_overview" was requested with
         """
