@@ -212,7 +212,7 @@ export async function setupSteps({
             body: merged.body as string,
           })
         }
-      })
+      }, { times: 1 })
   })
 
   Given('the date is {string}', async ({ page }, datetime: string) => {

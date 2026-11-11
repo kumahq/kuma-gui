@@ -6,7 +6,6 @@ import {
   DataplaneOverview,
   SidecarDataplane,
   DataplaneNetworkingLayout,
-  type KumaDataplane,
 } from './data'
 import { YAML, defineSources } from '@/app/application'
 import { search } from '@/app/kuma'
@@ -14,7 +13,9 @@ import type { ApiKindListResponse as KindCollectionResponse } from '@/types/api.
 import type {
   SidecarDataplane as PartialSidecarDataplane,
 } from '@/types/index.d'
-import type { paths } from '@kumahq/kuma-http-api'
+import type { paths, components } from '@kumahq/kuma-http-api'
+
+type KumaDataplane = NonNullable<components['schemas']['DataplaneItem']>
 
 const includes = <T extends readonly string[]>(arr: T, item: string): item is T[number] => {
   return arr.includes(item as T[number])
