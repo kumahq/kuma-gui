@@ -93,6 +93,16 @@ export const search = (query: string, options: SearchOptions = {}) => {
   } as typeof rest & { tag?: string[] }
 }
 
+const reservedLabelRegex = /^(.+\.)?kuma\.io\//
+
+export const sortLabels = <T extends Record<string, string | undefined>>(labels: T): T => {
+  const entries = Object.entries(labels)
+  return Object.fromEntries([
+    ...entries.filter(([key]) => !reservedLabelRegex.test(key)),
+    ...entries.filter(([key]) => reservedLabelRegex.test(key)),
+  ]) as T
+}
+
 export function semver(version: string): { major: string, minor: string, patch: string, pre: string } {
   const [major, minor, ...patchPre] = version.split('.')
   if (isNaN(parseInt(major))) {

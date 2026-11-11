@@ -1,4 +1,4 @@
-import { Kri } from '@/app/kuma'
+import { Kri, sortLabels } from '@/app/kuma'
 import type { PaginatedApiListResponse } from '@/types/api.d'
 import type {
   PolicyDataplane as PartialPolicyDataplane,
@@ -6,7 +6,7 @@ import type {
 
 export const PolicyDataplane = {
   fromObject(item: PartialPolicyDataplane) {
-    const labels = item.labels ?? {}
+    const labels = sortLabels(item.labels ?? {})
     const id = item.name
     const mesh = item.mesh
     const zone = labels['kuma.io/origin'] === 'zone' && labels['kuma.io/zone'] ? labels['kuma.io/zone'] : ''

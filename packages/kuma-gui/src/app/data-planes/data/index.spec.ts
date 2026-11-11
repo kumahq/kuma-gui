@@ -101,6 +101,29 @@ describe('DataplaneOverview', () => {
         expect(actual.namespace).toStrictEqual('namespace')
       },
     )
+    test(
+      'manually created labels come before the ones set by Kuma',
+      async ({ fixture }) => {
+        const actual = await fixture.setup((item) => {
+          item.labels = {
+            'kuma.io/zone': 'zone',
+            'team': 'a',
+            'k8s.kuma.io/namespace': 'namespace',
+            'env': 'prod',
+          }
+          return item
+        }, {
+          env: {
+          },
+        })
+        expect(Object.keys(actual.labels)).toStrictEqual([
+          'team',
+          'env',
+          'kuma.io/zone',
+          'k8s.kuma.io/namespace',
+        ])
+      },
+    )
   })
 
   describe('dataplane.dataplaneType', () => {
