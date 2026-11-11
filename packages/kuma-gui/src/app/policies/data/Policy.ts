@@ -1,5 +1,5 @@
 import { YAML } from '@/app/application'
-import { Kri } from '@/app/kuma'
+import { Kri, sortLabels } from '@/app/kuma'
 import { Resource } from '@/app/resources/data/Resource'
 import type { components } from '@kumahq/kuma-http-api'
 
@@ -18,7 +18,7 @@ export const Policy = {
   },
 
   fromObject(item: KumaPolicy) {
-    const labels = item.labels ?? {}
+    const labels = sortLabels(item.labels ?? {})
     const id = item.name
     const mesh = item.mesh
     const zone = labels['kuma.io/origin'] === 'zone' && labels['kuma.io/zone'] ? labels['kuma.io/zone'] : ''

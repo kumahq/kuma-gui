@@ -1,4 +1,4 @@
-import { Kri } from '@/app/kuma'
+import { Kri, sortLabels } from '@/app/kuma'
 import { Resource } from '@/app/resources/data/Resource'
 import type { components } from '@kumahq/kuma-http-api'
 
@@ -21,7 +21,7 @@ export const Workload = {
       ...workload,
       id: workload.name,
       kri: workload.kri ?? Kri.toString({ shortName: 'wl', mesh, zone, namespace, name }),
-      labels: workload.labels ?? {},
+      labels: sortLabels(workload.labels ?? {}),
       name,
       namespace,
       zone,

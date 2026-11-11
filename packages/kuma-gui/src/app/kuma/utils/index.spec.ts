@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest'
 
-import { semver, search } from './'
+import { semver, search, sortLabels } from './'
 
 describe('search', () => {
   test.each([
@@ -163,5 +163,49 @@ describe('utilities', () => {
     expect(semver('10.10.1').major).toBe('10')
     expect(semver('0.9.1').minor).toBe('0.9')
     expect(semver('0.9.1-rc.10').pre).toBe('0.9.1-rc.10')
+  })
+})
+
+describe('sortLabels', () => {
+  test('puts manually created labels before the ones set by Kuma', () => {
+    const actual = sortLabels({
+      'kuma.io/zone': 'zone-1',
+      'team': 'a',
+      'k8s.kuma.io/namespace': 'ns',
+      'env': 'prod',
+      'kuma.io/origin': 'zone',
+    })
+    expect(Object.keys(actual)).toStrictEqual([
+      'team',
+      'env',
+      'kuma.io/zone',
+      'k8s.kuma.io/namespace',
+      'kuma.io/origin',
+    ])
+  })
+
+  test('keeps the values of the labels', () => {
+    const labels = {
+      'kuma.io/zone': 'zone-1',
+      'team': 'a',
+    }
+    expect(sortLabels(labels)).toStrictEqual(labels)
+  })
+
+  test('does not treat labels that only contain kuma.io as reserved', () => {
+    const actual = sortLabels({
+      'kuma.io/zone': 'zone-1',
+      'notkuma.io/foo': 'bar',
+      'example.com/kuma.io': 'baz',
+    })
+    expect(Object.keys(actual)).toStrictEqual([
+      'notkuma.io/foo',
+      'example.com/kuma.io',
+      'kuma.io/zone',
+    ])
+  })
+
+  test('handles empty labels', () => {
+    expect(sortLabels({})).toStrictEqual({})
   })
 })

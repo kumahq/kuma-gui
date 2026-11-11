@@ -1,5 +1,6 @@
 import { get } from '@/app/application'
 import { Kri } from '@/app/kuma/kri'
+import { sortLabels } from '@/app/kuma/utils'
 import { Resource } from '@/app/resources/data/Resource'
 import { SubscriptionCollection } from '@/app/subscriptions/data'
 import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
@@ -77,7 +78,7 @@ export const ZoneOverview = {
 
   fromObject: (item: KumaZoneOverview) => {
 
-    const labels = item.labels ?? {}
+    const labels = sortLabels(item.labels ?? {})
     const id = item.name
 
     const name = labels['kuma.io/display-name'] ?? item.name
