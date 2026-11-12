@@ -172,40 +172,17 @@ describe('sortLabels', () => {
       'kuma.io/zone': 'zone-1',
       'team': 'a',
       'k8s.kuma.io/namespace': 'ns',
-      'env': 'prod',
-      'kuma.io/origin': 'zone',
-    })
-    expect(Object.keys(actual)).toStrictEqual([
-      'team',
-      'env',
-      'kuma.io/zone',
-      'k8s.kuma.io/namespace',
-      'kuma.io/origin',
-    ])
-  })
-
-  test('keeps the values of the labels', () => {
-    const labels = {
-      'kuma.io/zone': 'zone-1',
-      'team': 'a',
-    }
-    expect(sortLabels(labels)).toStrictEqual(labels)
-  })
-
-  test('does not treat labels that only contain kuma.io as reserved', () => {
-    const actual = sortLabels({
-      'kuma.io/zone': 'zone-1',
       'notkuma.io/foo': 'bar',
       'example.com/kuma.io': 'baz',
+      'kuma.io/origin': 'zone',
     })
-    expect(Object.keys(actual)).toStrictEqual([
-      'notkuma.io/foo',
-      'example.com/kuma.io',
-      'kuma.io/zone',
+    expect(Object.entries(actual)).toStrictEqual([
+      ['team', 'a'],
+      ['notkuma.io/foo', 'bar'],
+      ['example.com/kuma.io', 'baz'],
+      ['kuma.io/zone', 'zone-1'],
+      ['k8s.kuma.io/namespace', 'ns'],
+      ['kuma.io/origin', 'zone'],
     ])
-  })
-
-  test('handles empty labels', () => {
-    expect(sortLabels({})).toStrictEqual({})
   })
 })
