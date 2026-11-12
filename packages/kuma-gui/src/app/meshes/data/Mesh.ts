@@ -1,3 +1,4 @@
+import { sortLabels } from '@/app/kuma/utils'
 import type { components } from '@kumahq/kuma-http-api'
 
 // @TODO(types) provide support for v2 and v3
@@ -19,7 +20,7 @@ export const Mesh = {
       ...item,
       id: item.name,
       config: item,
-      labels: item.labels ?? {},
+      labels: sortLabels(item.labels ?? {}),
       // @TODO(types) provide support for v2 and v3
       mtls: 'mtls' in item ? item.mtls as MeshBackend : undefined,
       mtlsBackend: ((mtls: MeshBackend | undefined) => {

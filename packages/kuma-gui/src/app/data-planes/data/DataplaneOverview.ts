@@ -3,6 +3,7 @@ import { Dataplane } from './Dataplane'
 import { DataplaneInsight } from './DataplaneInsight'
 import { DataplaneNetworking } from './DataplaneNetworking'
 import { Kri } from '@/app/kuma/kri'
+import { sortLabels } from '@/app/kuma/utils'
 import type {
   LabelValue,
 } from '@/types/index.d'
@@ -33,7 +34,7 @@ export const DataplaneOverview = {
     const isCertExpired = getIsCertExpired(dataplaneInsight)
     const isCertExpiresSoon = getIsCertExpiresSoon(dataplaneInsight)
 
-    const labels = item.labels ?? {}
+    const labels = sortLabels(item.labels ?? {})
     const id = item.name
     const mesh = item.mesh
     // check for label first, fallback to tags

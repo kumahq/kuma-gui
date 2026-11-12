@@ -1,4 +1,5 @@
 import { Kri } from '@/app/kuma/kri'
+import { sortLabels } from '@/app/kuma/utils'
 import type { components } from '@kumahq/kuma-http-api'
 
 type KumaMeshIdentityList = components['responses']['MeshIdentityList']['content']['application/json']
@@ -6,7 +7,7 @@ type KumaMeshIdentity = components['schemas']['MeshIdentityItem']
 
 export const MeshIdentity = {
   fromObject: (item: KumaMeshIdentity) => {
-    const labels = item.labels ?? {}
+    const labels = sortLabels(item.labels ?? {})
     const id = item.name
     const mesh = item.mesh
     const zone = labels['kuma.io/origin'] === 'zone' && labels['kuma.io/zone'] ? labels['kuma.io/zone'] : ''

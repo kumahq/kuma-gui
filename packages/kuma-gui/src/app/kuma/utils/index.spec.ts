@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest'
 
-import { semver, search } from './'
+import { semver, search, sortLabels } from './'
 
 describe('search', () => {
   test.each([
@@ -163,5 +163,26 @@ describe('utilities', () => {
     expect(semver('10.10.1').major).toBe('10')
     expect(semver('0.9.1').minor).toBe('0.9')
     expect(semver('0.9.1-rc.10').pre).toBe('0.9.1-rc.10')
+  })
+})
+
+describe('sortLabels', () => {
+  test('puts manually created labels before the ones set by Kuma', () => {
+    const actual = sortLabels({
+      'kuma.io/zone': 'zone-1',
+      'team': 'a',
+      'k8s.kuma.io/namespace': 'ns',
+      'notkuma.io/foo': 'bar',
+      'example.com/kuma.io': 'baz',
+      'kuma.io/origin': 'zone',
+    })
+    expect(Object.entries(actual)).toStrictEqual([
+      ['team', 'a'],
+      ['notkuma.io/foo', 'bar'],
+      ['example.com/kuma.io', 'baz'],
+      ['kuma.io/zone', 'zone-1'],
+      ['k8s.kuma.io/namespace', 'ns'],
+      ['kuma.io/origin', 'zone'],
+    ])
   })
 })

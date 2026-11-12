@@ -1,4 +1,5 @@
 import { Kri } from '@/app/kuma/kri'
+import { sortLabels } from '@/app/kuma/utils'
 import { Resource } from '@/app/resources/data/Resource'
 import type { components } from '@kumahq/kuma-http-api'
 
@@ -11,7 +12,7 @@ export const HostnameGenerator = {
   },
 
   fromObject(item: KumaHostnameGenerator) {
-    const labels = item.labels ?? {}
+    const labels = sortLabels(item.labels ?? {})
     const id = item.name
     const zone = labels['kuma.io/origin'] === 'zone' && labels['kuma.io/zone'] ? labels['kuma.io/zone'] : ''
     const namespace = labels['k8s.kuma.io/namespace'] ?? ''
