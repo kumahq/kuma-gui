@@ -1,4 +1,4 @@
-import { Kri, search } from '@/app/kuma'
+import { Kri, search, sortLabels } from '@/app/kuma'
 import type { components } from '@kumahq/kuma-http-api'
 
 export type KumaMeshZoneAddress = components['schemas']['MeshZoneAddressItem']
@@ -10,7 +10,7 @@ export const MeshZoneAddress = {
   },
 
   fromObject: (item: KumaMeshZoneAddress) => {
-    const labels = item.labels ?? {}
+    const labels = sortLabels(item.labels ?? {})
     const id = item.name
     const mesh = item.mesh ?? labels['kuma.io/mesh'] ?? ''
     const zone = labels['kuma.io/origin'] === 'zone' && labels['kuma.io/zone'] ? labels['kuma.io/zone'] : ''

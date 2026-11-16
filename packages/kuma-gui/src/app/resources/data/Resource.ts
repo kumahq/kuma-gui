@@ -1,4 +1,4 @@
-import { Kri, search } from '@/app/kuma'
+import { Kri, search, sortLabels } from '@/app/kuma'
 import type { paths } from '@kumahq/kuma-http-api'
 
 /**
@@ -14,7 +14,7 @@ export const Resource = {
   },
 
   fromObject(partialResource: KumaResource) {
-    const labels = 'labels' in partialResource ? partialResource.labels ?? {} : {}
+    const labels = sortLabels('labels' in partialResource ? partialResource.labels ?? {} : {})
     const mesh = 'mesh' in partialResource ? partialResource.mesh : labels['kuma.io/mesh'] ?? ''
     const namespace = labels['k8s.kuma.io/namespace'] ?? ''
     const name = labels['kuma.io/display-name'] ?? partialResource.name ?? ''
@@ -33,7 +33,7 @@ export const Resource = {
       zone,
       creationTime: 'creationTime' in partialResource ? partialResource.creationTime ?? '' : '',
       modificationTime: 'modificationTime' in partialResource ? partialResource.modificationTime ?? '' : '',
-      labels: partialResource.labels ?? {},
+      labels,
     }
   },
 
