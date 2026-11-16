@@ -4,7 +4,9 @@
     "Kong/public-shared-renovate//base/github-actions",
     "Kong/public-shared-renovate//base/javascript"
   ],
-  "dependencyDashboard": true,
+  "dependencyDashboard": {
+    "enabled": true
+  },
   "printConfig": true,
   "labels": [
     "dependencies",
