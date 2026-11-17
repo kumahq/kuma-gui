@@ -10,10 +10,7 @@
         :rel="rel"
         :item="{
           label: '',
-          to: href.length > 0 ? href : {
-            ...props.to,
-            query,
-          },
+          to: _href(props.href || props.to),
         }"
         :danger="props.appearance === 'danger' ? true : false"
       >
@@ -21,7 +18,7 @@
       </KDropdownItem>
     </template>
     <template
-      v-else-if="href.length > 0"
+      v-else-if="_href(props.href || props.to).length > 0"
     >
       <KButton
         v-if="['primary', 'secondary', 'tertiary', 'danger'].includes(props.appearance)"
@@ -29,7 +26,7 @@
         v-bind="$attrs"
         :appearance="props.appearance as ButtonAppearance"
         :size="props.size"
-        :to="href"
+        :to="_href(props.href || props.to)"
         :target="target"
         :rel="rel"
       >
@@ -56,7 +53,7 @@
         v-else
         data-testid="x-action"
         v-bind="$attrs"
-        :href="href"
+        :href="_href(props.href || props.to)"
         :class="{
           'x-action-appearance-anchor': true,
           'action-docs': props.action === 'docs',
@@ -152,15 +149,10 @@ import { KDropdownItem, KButton } from '@kong/kongponents'
 import { computed, inject, provide, useAttrs } from 'vue'
 
 
-import { useProtocolHandler, useHref } from '../../'
+import { useHref } from '../../'
 import type { ButtonAppearance } from '@kong/kongponents'
-import type { RouteLocationAsRelative } from 'vue-router'
 
-type BooleanLocationQueryValue = string | number | undefined | boolean
-type BooleanLocationQueryRaw = Record<string | number, BooleanLocationQueryValue | BooleanLocationQueryValue[]>
-type RouteLocationAsRelativeWithBooleanQuery = Omit<RouteLocationAsRelative, 'query'> & {
-  query?: BooleanLocationQueryRaw
-}
+type HrefTo = Exclude<Parameters<ReturnType<typeof useHref>>[0], string>
 
 defineSlots<{
   default(props: {
@@ -173,7 +165,7 @@ const props = withDefaults(defineProps<{
   appearance?: 'primary' | 'secondary' | 'tertiary' | 'danger' | 'anchor'
   size?: 'small' | 'medium' | 'large'
   href?: string
-  to?: RouteLocationAsRelativeWithBooleanQuery
+  to?: HrefTo
   for?: string
 }>(), {
   href: '',
@@ -185,44 +177,13 @@ const props = withDefaults(defineProps<{
 })
 
 const attrs = useAttrs()
-const protocolHandler = useProtocolHandler()
-const hrf = useHref()
+const _href = useHref()
 
 const group = inject<{
   expanded: boolean
 } | undefined>('x-action-group', undefined)
 
 
-
-const query = computed(() => {
-  return Object.entries(props.to.query ?? {}).reduce<Record<string, string | number | null | undefined>>((prev, [key, value]) => {
-    switch (true) {
-      case value === true:
-        prev[key] = null
-        break
-      case value === false:
-        prev[key] = undefined
-        break
-      default:
-        prev[key] = value as string | number | undefined
-    }
-    return prev
-  }, {})
-})
-
-const href = computed(() => {
-  switch(true) {
-    case props.href.includes('://'):
-      return protocolHandler(props.href)
-    case Object.keys(props.to).length > 0:
-      return hrf({
-        ...props.to,
-        query: query.value,
-      })
-    default:
-      return props.href
-  }
-})
 
 const isExternal = (url: string) => {
   try {
@@ -231,10 +192,10 @@ const isExternal = (url: string) => {
     return false
   }
 }
-const target = computed(() => props.href.length > 0 && props.href === href.value && isExternal(props.href) ? '_blank' : undefined)
+const target = computed(() => isExternal(_href(props.href || props.to)) ? '_blank' : undefined)
 const rel = computed(() => target.value === '_blank' ? 'noopener noreferrer' : undefined)
 
-if(href.value.length > 0 || typeof attrs.onClick === 'function' || props.for || Object.keys(props.to).length) {
+if(_href(props.href || props.to).length > 0 || typeof attrs.onClick === 'function' || props.for || Object.keys(props.to).length) {
   provide('x-action', {})
 }
 </script>

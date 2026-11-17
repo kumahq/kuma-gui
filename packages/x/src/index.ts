@@ -59,8 +59,15 @@ import {
 import AppAboutSection from './components/x-card/AppAboutSection.vue'
 import { vStyle, vIcon } from './directives/'
 import type { CodeToHastOptions } from 'shiki/core'
+import type { RouteLocationAsRelative } from 'vue-router'
 
 export * from './components'
+
+type BooleanLocationQueryValue = string | number | undefined | boolean
+type BooleanLocationQueryRaw = Record<string | number, BooleanLocationQueryValue | BooleanLocationQueryValue[]>
+type RouteLocationAsRelativeWithBooleanQuery = Omit<RouteLocationAsRelative, 'query'> & {
+  query?: BooleanLocationQueryRaw
+}
 
 const elements = [
   ['x-pre-code', XPreCode],
@@ -270,7 +277,7 @@ const tokens = {
   i18n: uri<typeof deps.i18n>('x.i18n'),
   syntaxHighlighter: uri<typeof deps.syntaxHighlighter>('x.code-block.syntaxhighlighter'),
   protocolHandler: uri<typeof deps.protocolHandler>('x.action.protocolhandler'),
-  href: uri<typeof deps.href>('x.action.href'),
+  href: uri<(to: string | RouteLocationAsRelativeWithBooleanQuery) => string>('x.action.href'),
   push: uri<typeof deps.push>('x.router.push'),
   routerElement: uri<HTMLElement>('x.router.routerElement'),
   AppAboutSection: uri<Component>('x.components.AppAboutSection'),
@@ -282,7 +289,6 @@ const plugin: Plugin = {
       ...deps,
       ...options,
     }
-
 
     const customElement = (name: string, item: Parameters<typeof defineCustomElement>[0]) => {
       if (typeof customElements === 'undefined' || typeof customElements.get(name) !== 'undefined') {
@@ -299,11 +305,36 @@ const plugin: Plugin = {
       }))
     }
 
+    const href = (to: string | RouteLocationAsRelativeWithBooleanQuery) => {
+      if (typeof to === 'string') {
+        return to.includes('://') ? services.protocolHandler(to) : to
+      }
+      if (Object.keys(to).length === 0) {
+        return ''
+      }
+      return services.href({
+        ...to,
+        query: Object.entries(to.query ?? {}).reduce<Record<string, string | number | null | undefined>>((prev, [key, value]) => {
+          switch (true) {
+            case value === true:
+              prev[key] = null
+              break
+            case value === false:
+              prev[key] = undefined
+              break
+            default:
+              prev[key] = value as string | number | undefined
+          }
+          return prev
+        }, {}),
+      })
+    }
+
     const { build } = createBuilder(nano())
     build(app)
       .service(tokens.syntaxHighlighter, () => services.syntaxHighlighter)
       .service(tokens.protocolHandler, () => services.protocolHandler)
-      .service(tokens.href, () => services.href)
+      .service(tokens.href, () => href)
       .service(tokens.push, () => services.push)
       .service(tokens.i18n, () => services.i18n)
       .service(tokens.routerElement, services.routerElement)
