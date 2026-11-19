@@ -40,8 +40,8 @@
               >
                 <XCodeBlock
                   :max-height="`${(resize?.target?.innerHeight ?? 0) - ($el?.getBoundingClientRect().top + 200)}`"
-                  language="json"
-                  :code="JSON.stringify(xds, null, 2)"
+                  language="yaml"
+                  :code="YAML.stringify(xds)"
                   is-searchable
                   :query="route.params.codeSearch"
                   :is-filter-mode="route.params.codeFilter"
@@ -76,6 +76,7 @@
 <script lang="ts" setup>
 import type { ConnectionOverview } from '../data'
 import { sources } from '../sources'
+import { YAML } from '@/app/application'
 const props = defineProps<{
   routeName: string
   data: ConnectionOverview | Error | undefined
