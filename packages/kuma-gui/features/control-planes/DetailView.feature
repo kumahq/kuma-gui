@@ -215,3 +215,44 @@ Feature: control-planes / DetailView
     Then the page title contains "Overview"
     And the "[data-testid='zone-control-planes-status']" element contains "2"
     And the "$zone-control-planes-details" element exists
+
+  Scenario: Refreshing the zones card fetches the latest zone states
+    Given the CSS selectors
+      | Alias        | Selector                                             |
+      | zone-item    | [data-testid='zone-control-planes-details'] tbody tr |
+      | zone-refresh | [data-testid='zone-control-planes-refresh']          |
+    And the environment
+      """
+      KUMA_MODE: global
+      KUMA_ZONE_COUNT: 1
+      KUMA_SUBSCRIPTION_COUNT: 1
+      """
+    And the URL "/zones/_overview" responds with
+      """
+      body:
+        items:
+          - name: zone-cp-1
+            zone:
+              enabled: true
+            zoneInsight:
+              subscriptions:
+                - connectTime: 2020-07-28T16:18:09.743141Z
+                  disconnectTime: 2020-07-28T16:18:09.743141Z
+      """
+    When I visit the "/" URL
+    Then the "$zone-item:nth-child(1)" element contains "zone-cp-1"
+    And the "$zone-item:nth-child(1)" element contains "Offline"
+    Given the URL "/zones/_overview" responds with
+      """
+      body:
+        items:
+          - name: zone-cp-1
+            zone:
+              enabled: true
+            zoneInsight:
+              subscriptions:
+                - connectTime: 2020-07-28T16:18:09.743141Z
+                  disconnectTime: !!js/undefined
+      """
+    When I click the "$zone-refresh" element
+    Then the "$zone-item:nth-child(1)" element contains "Online"

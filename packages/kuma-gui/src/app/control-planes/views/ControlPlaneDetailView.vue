@@ -42,38 +42,52 @@
           <XCard
             v-if="can('use zones')"
           >
-            <XLayout variant="y-stack">
-              <XLayout variant="action-group">
-                <XLayout
-                  variant="inline"
-                >
-                  <h2>
-                    {{ t('main-overview.detail.zone_control_planes.title') }}
-                  </h2>
-                  <XAction
-                    :to="{ name: 'zone-cp-list-view' }"
+            <DataSource
+              :src="uri(ZoneSources, '/zone-cps', {}, {
+                page: 1,
+                size: 10,
+              })"
+              v-slot="{ data, error, refresh }"
+            >
+              <XLayout variant="y-stack">
+                <XLayout variant="action-group">
+                  <XLayout
+                    variant="inline"
                   >
-                    {{ t('main-overview.detail.about.view_all') }}
+                    <h2>
+                      {{ t('main-overview.detail.zone_control_planes.title') }}
+                    </h2>
+                    <XAction
+                      :to="{ name: 'zone-cp-list-view' }"
+                    >
+                      {{ t('main-overview.detail.about.view_all') }}
+                    </XAction>
+                  </XLayout>
+                  <XAction
+                    data-testid="zone-control-planes-refresh"
+                    action="refresh"
+                    appearance="primary"
+                    @click="refresh"
+                  >
+                    {{ t('common.refresh') }}
                   </XAction>
+                  <XTeleportSlot name="control-plane-detail-view-zone-actions" />
                 </XLayout>
-                <XTeleportSlot name="control-plane-detail-view-zone-actions" />
-              </XLayout>
 
-              <DataLoader
-                :src="uri(ZoneSources, '/zone-cps', {}, {
-                  page: 1,
-                  size: 10,
-                })"
-                variant="list"
-                v-slot="{ data: [data] }"
-              >
-                <ZoneControlPlanesList
-                  data-testid="zone-control-planes-details"
-                  :items="data.items"
-                  :storage="me"
-                />
-              </DataLoader>
-            </XLayout>
+                <DataLoader
+                  :data="[data]"
+                  :errors="[error]"
+                  variant="list"
+                  v-slot="{ data: [zones] }"
+                >
+                  <ZoneControlPlanesList
+                    data-testid="zone-control-planes-details"
+                    :items="zones.items"
+                    :storage="me"
+                  />
+                </DataLoader>
+              </XLayout>
+            </DataSource>
           </XCard>
 
           <XCard>
