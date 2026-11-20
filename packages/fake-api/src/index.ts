@@ -130,7 +130,7 @@ export const createFetchSync = <T extends object = {}>({ dependencies, fs }: { d
         return response.body as any
       },
       text: () => {
-        return JSON.stringify(response.body)
+        return typeof response.body === 'string' ? response.body : JSON.stringify(response.body)
       },
       headers: new Map(Object.entries(response.headers ?? {})),
     }
