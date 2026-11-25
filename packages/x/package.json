@@ -28,7 +28,7 @@
   "dependencies": {
     "@kong/kongponents": "^9.66.16",
     "@kong/icons": "^1.64.0",
-    "shiki": "^4.5.0",
+    "shiki": "^4.6.0",
     "@vueuse/core": "^15.0.0",
     "@vue/shared": "^3.5.43",
     "vue-global-events": "^3.0.1",
