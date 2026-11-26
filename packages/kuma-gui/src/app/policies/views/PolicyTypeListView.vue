@@ -37,9 +37,9 @@
                 v-slot="{ data: [resourcesData] }"
               >
                 <template
-                  v-for="legacy in [typeof meshInsightSource?.policies === 'undefined' ? [] : resourcesData.resources.filter(item => {
+                  v-for="legacy in [typeof meshInsightSource?.resources === 'undefined' ? [] : resourcesData.resources.filter(item => {
                     // legacy policies are those that aren't targetRef and are also in use
-                    return !item.policy?.isTargetRef && (meshInsightSource.policies?.[item.name]?.total ?? 0) > 0
+                    return !item.policy?.isTargetRef && (get(meshInsightSource, item.insightPath)?.total ?? 0) > 0
                   })]"
                   :key="typeof legacy"
                 >
@@ -88,7 +88,7 @@
                                 :errors="[meshInsightError]"
                               >
                                 <template #default="{ data: [meshInsight] }">
-                                  {{ meshInsight?.policies?.[policyType.name]?.total ?? 0 }}
+                                  {{ get(meshInsight, policyType.insightPath)?.total ?? 0 }}
                                 </template>
                                 <template #error>
                                   <XIcon
@@ -126,6 +126,7 @@ import { nextTick } from 'vue'
 
 import { sources as meshSources } from '@/app/meshes/sources'
 import { sources as resourceSources } from '@/app/resources/sources'
+import { get } from '@/app/application'
 </script>
 <style lang="scss" scoped>
 .policy-type-list {
