@@ -26,8 +26,8 @@
     "help": "make help"
   },
   "dependencies": {
-    "@kong/kongponents": "^9.66.16",
-    "@kong/icons": "^1.64.0",
+    "@kong/kongponents": "^9.66.17",
+    "@kong/icons": "^1.65.0",
     "shiki": "^4.5.0",
     "@vueuse/core": "^15.0.0",
     "@vue/shared": "^3.5.43",
