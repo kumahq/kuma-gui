@@ -38,7 +38,7 @@
     "@kumahq/kuma-http-api": "*",
     "@playwright/test": "^1.64.0",
     "@vitejs/plugin-vue": "^6.0.9",
-    "@vue/test-utils": "^2.5.1",
+    "@vue/test-utils": "^2.6.0",
     "jsdom": "^30.1.2",
     "msw": "^3.0.3",
     "playwright-bdd": "^9.2.1",
