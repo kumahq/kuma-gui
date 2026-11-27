@@ -31,8 +31,8 @@
           v-slot="{ data: [raw], refresh }"
         >
           <XCodeBlock
-            language="json"
-            :code="JSON.stringify(raw, null, 2)"
+            language="yaml"
+            :code="YAML.stringify(raw)"
             is-searchable
             :query="route.params.codeSearch"
             :is-filter-mode="route.params.codeFilter"
@@ -59,6 +59,7 @@
 <script lang="ts" setup>
 import type { ConnectionOverview } from '../data'
 import { sources } from '../sources'
+import { YAML } from '@/app/application'
 import type { DataplaneNetworkingLayout, DataplaneInbound } from '@/app/data-planes/data'
 
 const props = defineProps<{
